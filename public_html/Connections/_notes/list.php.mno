@@ -1,0 +1,1 @@
+﻿<?xml version="1.0" encoding="utf-8" ?><info>	<infoitem key="UD_alumni_listing" value="name:id;datatype:int,name:kulliyyah;datatype:int,name:programme;datatype:int,name:name;datatype:string,name:address;datatype:blob,name:phone_no;datatype:string,name:handphone;datatype:string,name:email;datatype:string" /></info>
