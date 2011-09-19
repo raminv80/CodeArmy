@@ -226,13 +226,12 @@
 
 */?>
 <?php $this->load->view('includes/header2'); ?>
-			<div id="wrapper">
-				<div class="contents">
 					<div id="story-details">
 						<table cellpadding="" cellspacing="">
 							<tr>
 								<th colspan="2" width="440px">
-									<h1>nova</h1>
+									<h1><?php echo $work_data['project_name']?></h1>
+                                    <!--<h2>Status: <?php echo $work_data['status']?></h2>-->
 								</th>
 								<th width="250px" style="text-align:right;">
 									<span style="color:#38de4b; font-weight:normal;">Story creator</span>
@@ -278,7 +277,7 @@
 									<?php echo $work_data['deadline'];?>
 								</td>
 							</tr>
-							<tr>
+							<!--<tr>
 								<td colspan="2">Files required to complete the task</td>
 								<td style="float:right;">
 									<img src="<?php echo base_url() ?>public/images/files-required.png">
@@ -287,44 +286,21 @@
 										<a href="">Download All</a>
 									</div>
 								</td>
-							</tr>
+							</tr>-->
 						</table>
 					</div><!--End of the Story Details -->
 
 					<div id="story-tutorials">
-						<h1>tutorials</h1>
-						<div class="tutorial-area">
-							<p>
-								PHP Tutorials: Login: User login
-							</p>
-							<br />
-							<img src="<?php echo base_url() ?>public/images/youtube-tutorial.jpg">
-						</div>
-						<img src="<?php echo base_url() ?>public/images/youtube-divider.png" style="margin-left:10px;">
-						<div class="tutorial-area">
-							<p>
-								PHP Tutorials: Register
-							</p>
-							<br />
-							<img src="<?php echo base_url() ?>public/images/youtube-tutorial.jpg">
-						</div>
-
-						<div class="useful-links">
-							<h1>useful links</h1>
-							<div class="links">
-								<a href="">
-								<span>+</span> Learn advanced css
-								</a>
-								<br />
-								<a href="">
-								<span>+</span> Learn advanced php
-								</a>
-							</div>
-						</div>
+                    	<h1>Tutorials</h1>
+						<?php echo $work_data['tutorial'];?>
 					</div><!--End of the Story Tutorials -->
-
+					
+                    <?php 
+					//show only if story is open for bidding and user i slogged in
+					if(in_array($work_data['status'],array('open','Open','reject','Reject'))){
+					?>
 					<div id="story-bidding">
-                    	<?php echo form_open('story/setbid'); ?>
+                    	<?php if($this->session->userdata('user_id')) echo form_open('story/setbid'); ?>
 						<div class="biding-amount">
 							<h3>my bid amount for this story is</h3>
 							<span>
@@ -335,38 +311,159 @@
 						<div class="bidding-duration">
 							<h3>The number of days I commit to complete this story</h3>
 							<span>
-                                <input type="text" size="4" name="set_days" id="set_days" class="text" value="<?php echo ($work_data['deadline'])? round((strtotime($work_data['deadline']) - strtotime(date("Y-m-d"))) / (60 * 60 * 24)) : 1;?>"/>
+                                <input type="text" size="4" name="set_days" id="set_days" class="text" value="<?php $days = ($work_data['deadline'])? round((strtotime($work_data['deadline']) - strtotime(date("Y-m-d"))) / (60 * 60 * 24)) : 1; if($days<1)$days=1; echo $days?>"/>
 								days
 							</span>
 						</div>
                         <input type="hidden" name="work_id" value="<?php echo $work_data['work_id'];?>" />
 						<input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>" id="user_id">
-                        <a href="javascript:''" id="submit"><div class="proceed">
-								Proceed to test
+                        <?php if($this->session->userdata('user_id')){?>
+                       		<div class="proceed">
+								<a href="javascript:''" class="submit">Bid!</a>
 							</div>
-                        </a>
-                        <?php echo form_close(); ?>
+                        <?php }else{?>
+		                	<div class="proceed">
+								<a href="/login">Login to Bid!</a>
+							</div>
+                        <?php } ?>
+                        <?php if($this->session->userdata('user_id')) echo form_close(); ?>
 					</div><!--End of the Story Bidding -->
-					
+					<?php }else{ // Story is not open for bidding?>
+                    	<?php if($this->session->userdata('user_id') == $work_data['work_horse'] and in_array(strtolower($work_data['status']),array('in progress','redo'))){ //Current viewer is work horse of this story ?>
+                        	<!--TODO: show a time tarcker-->
+                            <div id="story-bidding">
+                                <div class="biding-amount">
+                                	<div>
+                                    	<ul>
+                                        <li><div><h3>Job status:</h3>
+                                    	<span><?php echo $work_data['status'];?></span></div></li>                                     
+                                        <li><div><h3>Champion:</h3>
+                                    	<span><?php echo $work_horse['username'];?></span></div></li>
+                                     	</ul>
+                                    </div>
+                                    <div>
+                                    <?php if((strtolower($work_data['status'])=='in progress' || strtolower($work_data['status'])=='redo') && $is_my_work){?>
+                                        <div id="job-done">
+                                            <?php echo form_open('story/submission');?>
+                                                <input type="hidden" name="id" value="<?php echo $work_data['work_id']; ?>" />
+                                                <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
+                                                <!--<input type="submit" name="submit" value="Job Done!" />-->
+                                                <div class="proceed">
+													<a href="javascript:''" class="submit">Job Done!</a>
+												</div>
+                                            <?php echo form_close(); ?>    
+                                        </div>
+                                    <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php }else{?>
+                        	<div id="story-bidding">
+                            	<?php //the viewer has no rights except viweing details of story?>
+                                <!--TODO: show time tracker-->
+                                <div class="biding-amount">
+                                	<ul>
+                                        <li><div><h3>Job status:</h3>
+                                    	<span><?php echo $work_data['status'];?></span></div></li>                                     
+                                        <li><div><h3>Champion:</h3>
+                                    	<span><?php echo $work_horse['username'];?></span></div></li>
+                                        <li><div><h3>Done at</h3>
+                                        <span><?php echo $work_data['done_at'];?></span></div></li>
+                                     </ul>
+                                </div>
+                            </div>
+                        <?php }?>
+                    <?php }?>
+                    
+                    <?php if(isset($username))if($this->session->userdata['role'] == 'admin'){ ?>
+                    <!-- bid admin tools -->
+                    <div id="story-bidding">
+                      <div id="bidding-amount">
+                        <div id="bidding" style="color:#CCC">
+                        	<div id="bid">
+                                <h1>Bidding administration</h1>
+                                <table style="font-size:12px;" cellspacing="3px" cellspacing="3px" width="100%">
+                                  <tr>
+                                    <th align="left" width="45%">Warrior</th>
+                                    <th align="left" width="24%">Payout Bid</th>
+                                    <th align="left" width="14%">Days</th>
+                                    <th align="left" width="17%">Action</th>
+                                  </tr>
+                                  
+                              <?php if($show_bid == true) { ?>      
+                                  <?php foreach($bid_data as $bid) { ?>
+                                  <tr>
+                                    <td><?php echo get_rank($bid['user_id']);?></td>
+                                    <td>RM <?php echo $bid['bid_cost']; ?></td>
+                                    <td><?php echo $bid['days']; ?></td>
+                                    <td><?php if($bid['bid_status'] == "Bid") { ?>
+                                        <?php if(strtolower($bid['work_status'])=='open' || strtolower($bid['work_status'])=='reject') {?><a href="/story/bid_accept/<?php echo $bid["bid_id"]; ?>">Accept</a><?php }else{?>No action <?php }?>
+                                      <?php } else { echo $bid['bid_status']; } ?>
+                                    </td>
+                                  </tr>
+                                  <?php } ?>
+                              <?php }else{ ?>
+                                <?php foreach($bid_data as $bid) if($bid['user_id'] == $userid){ ?>
+                                <tr>
+                                  <td><?php echo get_rank($bid['user_id']);?></td>
+                                  <td>RM <?php echo $bid['bid_cost']; ?></td>
+                                  <td><?php echo $bid['days']; ?></td>
+                                  <td><?php if($bid['bid_status'] == "Bid") { ?>Bid
+                                    <?php } else { echo $bid['bid_status']; } ?>
+                                  </td>
+                                </tr>
+                                <?php } ?>
+                              <?php } ?>
+                                </table>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--end of bid-admin tools-->
+                    <?php }?>
+                    
 					<div id="story-discussion">
 						<h1>Discuss</h1>
-                        <?php if($this->session->userdata('is_logged_in') == true) { ?>
+                        <?php if($this->session->userdata('is_logged_in') == true) {?>
 						<div class="discussions">
                         	<?php echo form_open('story/comments');?>
 							<textarea name="comments" id="comments" class="" style=""></textarea>
                             <input type="hidden" value="<?php echo $work_data['work_id']; ?>" name="story_id">
 							<input type="hidden" value="<?php echo $this->session->userdata('username'); ?>" name="user_id">
-							<a href="javascript:''" id="submit"><div class="submit">
-								Submit comment
+							<div class="submit">
+								<a href="javascript:''" class="submit">Submit comment</a>
 							</div>
-                            </a>
+
                             <?php echo form_close(); ?>
 						</div>
+                        <?php }else{?>
+                         <div class="discussions-area">
+                        	<div id="ds-left">
+								<div class="ds-avatar">
+								</div>
+								<div class="ds-info">
+									Admin
+									<br />
+									<span>Administrator</span>
+								</div>
+							</div>
+							<div id="ds-right">
+								<div class="ds-comment">
+									You must login first to leave comments.
+								</div>
+								<div class="ds-posted">
+									posted at <?php echo date('j M Y'); ?>
+								</div>
+							</div>
+							<img src="<?php echo base_url() ?>public/images/cm-divider.png">
+                          </div>
                         <?php }?>
 						<div class="discussions-area">
                         	<?php if(isset($comments))foreach($comments as $comment) { ?>
+                            <div class="comment <?php if($this->session->userdata('username')==strtolower($comment['username']))echo 'my-comment';?>">
 							<div id="ds-left">
 								<div class="ds-avatar">
+                                <?php if($comment['avatar']){?><img style="margin:0" width="40px" height="40px" src="/public/<?php echo $comment['avatar'];?>" /><?php }?>
 								</div>
 								<div class="ds-info">
 									<?php echo $comment['username']; ?>
@@ -383,12 +480,10 @@
 								</div>
 							</div>
 							<img src="<?php echo base_url() ?>public/images/cm-divider.png">
+                            </div>
                             <?php } ?>
 						</div>
                         
 					</div><!--End of the Story Discussion -->
 					
-				</div><!--End of the Contents -->
-			</div><!-- End of the Wrapper -->
-		</div><!-- End of the Container -->
 <?php $this->load->view('includes/footer2'); ?>

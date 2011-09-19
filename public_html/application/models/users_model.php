@@ -111,7 +111,10 @@ class Users_model extends CI_Model {
 			"contact" => $contact,
 			"urls" => $urls,
 			"lan_speak" => $this->input->post('lan_speak'),
-			"lan_rw" => $this->input->post('lan_rw')
+			"lan_rw" => $this->input->post('lan_rw'),
+			"gender" => $this->input->post('gender'),
+			"birthdate" => $this->input->post('birth_year').'-'.$this->input->post('birth_month').'-'.$this->input->post('birth_day'),
+			"specialization" => $this->input->post('specialization')
 		);
 		
 		if($avatar!=""){
@@ -177,11 +180,21 @@ class Users_model extends CI_Model {
 		return $data[0]['num'];
 	}
 	
+	function get_contacts(){
+		$sql = "SELECT count(*) as num from works where LOWER(status) in ('in progress', 'done' , 'redo', 'verify' , 'signoff')";
+		$result = $this->db->query($sql);
+		if($result->num_rows>0){
+			$result = $result->result_array();
+			return $result[0]['num'];
+		}else return 0;
+		
+	}
+	
 	function leaderboard_projects($limit=0){
 		if($limit>0){
-			$query = "select users.user_id, users.username, count(*) as num from users, works, user_profiles where users.user_id = works.work_horse and works.status in ('Verify', 'Signoff') group by users.user_id order by num desc limit 0,".$limit;	
+			$query = "select users.user_id, users.username, avatar, count(*) as num from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users, works where users.user_id = works.work_horse and lower(works.status) in ('verify', 'signoff') group by users.user_id, users.username, avatar order by num desc limit 0,".$limit;	
 		}else{
-			$query = "select users.user_id, users.username, count(*) as num from users, works where users.user_id = works.work_horse and works.status in ('Verify', 'Signoff') group by users.user_id order by num desc";
+			$query = "select users.user_id, users.username, avatar, count(*) as num from users, works, profiles where users.user_id = works.work_horse and lower(works.status) in ('verify', 'signoff') and users.user_id = user_profies.user_id group by users.user_id, username, avatar order by num desc";
 		}
 		$result = $this->db->query($query,array());
 		$data = $result->result_array();
@@ -190,9 +203,9 @@ class Users_model extends CI_Model {
 	
 	function leaderboard_points($limit=0){
 		if($limit>0){
-			$query = "select user_id, username, exp from users order by exp desc limit 0,".$limit;
+			$query = "select users.user_id, username, avatar, exp from users left join user_profiles on users.user_id = user_profiles.user_id order by exp desc limit 0,".$limit;
 		}else{
-			$query = "select user_id, username, exp from users order by exp desc";
+			$query = "select users.user_id, username, avatar, exp from users left join user_profiles on users.user_id = user_profiles.user_id order by exp desc";
 		}
 		$result = $this->db->query($query);
 		$data = $result->result_array();
@@ -201,9 +214,9 @@ class Users_model extends CI_Model {
 	
 	function leaderboard_time($limit=0){
 		if($limit>0){
-			$query = "select user_id, username, sum(hour(timediff(deadline, done_at))) as exp from users,works where works.work_horse = users.user_id group by user_id, username having exp>0 order by exp desc limit 0,".$limit;
+			$query = "select user_id, username, avatar, sum(hour(timediff(deadline, done_at))) as exp from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as user,works where works.work_horse = user.user_id and lower(works.status) in ('verify','signoff') group by user_id, username, avatar having exp>0 order by exp desc limit 0,".$limit;
 		}else{
-			$query = "select user_id, username, sum(hour(timediff(deadline, done_at))) as exp from users,works where works.work_horse = users.user_id group by user_id, username having exp>0 order by exp desc";
+			$query = "select user_id, username, avatar, sum(hour(timediff(deadline, done_at))) as exp from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users,works where works.work_horse = users.user_id and lower(works.status) in ('verify','signoff') group by user_id, username, avatar having exp>0 order by exp desc";
 		}
 		$result = $this->db->query($query);
 		$data = $result->result_array();
@@ -222,6 +235,55 @@ class Users_model extends CI_Model {
 		$data = $this->db->query($query, array($user_id));
 		$data = $data->result_array();	
 		return $data[0]['num'];
+	}
+	
+	function works_compeleted($user_id){
+		$sql ="SELECT count(*) as num FROM works where work_horse = ? and lower(works.status) in ('verify', 'signoff')";
+		$res = $this->db->query($sql, array($user_id));
+		$data = $res->result_array();
+		return $data[0]['num'];
+	}
+	
+	function hours_spent($user_id){
+		$sql = "select sum(hour(TIMEDIFF(done_at, assigned_at))) as num from works where (lower(works.status) in ('verify', 'signoff')) and work_horse = ?";
+		$res = $this->db->query($sql, array($user_id));
+		$data = $res->result_array();
+		return $data[0]['num'];	
+	}
+	
+	function hours_saved($user_id){
+		$sql = "select sum(hour(TIMEDIFF(deadline, done_at))) as num from works where !isnull(deadline) and (lower(works.status) in ('verify', 'signoff')) and work_horse = ?";
+		$res = $this->db->query($sql, array($user_id));
+		$data = $res->result_array();
+		return $data[0]['num'];	
+	}
+	
+	function last_task($user_id){
+		$sql = "SELECT works.*, project_name from works, project where (lower(works.status) in ('done','redo','verify','signoff','reject')) and works.project_id = project.project_id and work_horse = ? order by done_at DESC limit 0,1";
+		$res = $this->db->query($sql, array($user_id));
+		if($res->num_rows>0){
+			$data = $res->result_array();
+			return $data[0];	
+		}else{ return false;}
+	}
+	
+	function working_on($user_id){
+		$sql = "SELECT works.*, project_name from works, project where (lower(works.status) in ('in progress','redo')) and works.project_id = project.project_id and work_horse = ? order by assigned_at DESC";
+		$res = $this->db->query($sql, array($user_id));
+		if($res->num_rows>0){
+			$data = $res->result_array();
+			return $data;
+		}else{ return false;}
+	}
+	
+	function collaborators($user_id){
+		$sql = "select avatar from user_profiles where id>=(select floor(max(id) * RAND()) from user_profiles) and user_id in (select distinct work_horse from works where project_id in (SELECT DISTINCT project_id from works where works.work_horse = ?)) limit 0,6";
+		$res = $this->db->query($sql , array($user_id));
+		if($res->num_rows>0){
+			return $res->result_array();
+		}else{
+			return false;
+		}
 	}
 	
 	function notify($user_id, $subject, $message){		

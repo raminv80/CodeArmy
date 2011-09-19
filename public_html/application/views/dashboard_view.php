@@ -306,7 +306,7 @@
 									<?php echo $work_list_signoff[$i]['title'] ?></a>
 								</span>
 								</td>
-                                <td><?php echo get_rank($work_list_done[$i]['work_horse']);?></td>
+                                <td><?php echo get_rank($work_list_signoff[$i]['work_horse']);?></td>
 								<td>
 								<div class="sweat-shirt-<?php echo points_size($work_list_signoff[$i]['points']) ?>">
 									<?php echo $work_list_signoff[$i]['points'] ?></td>

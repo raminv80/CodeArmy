@@ -35,6 +35,11 @@ class Story extends CI_Controller {
 		$this->view_data['userid'] = $this->session->userdata('user_id');
 		$query = $this->stories->get_work_details($work_id);
 		$user_query = $this->stories->get_user_email($work_id);
+		$work_horse = $this->stories->get_work_horse($work_id);
+		$this->view_data['work_horse'] = NULL;
+		if(count($work_horse)>0){
+			$this->view_data['work_horse'] = $work_horse[0];
+		}
 		
 		if($query->num_rows() > 0) {
 			$data = $query->result_array();
@@ -159,8 +164,8 @@ class Story extends CI_Controller {
 		$query = $this->stories->get_work_details($work_id);
 		if($query->num_rows() > 0) {
 			$data = $query->result_array();
-		}	
-		if($this->input->post('submit') && ($data[0]['status']=='open' || $data[0]['status']=='Reject')) {
+		}
+		if($this->input->post('work_id') && ($data[0]['status']=='open' || $data[0]['status']=='Reject')) {
 			$this->stories->make_bid();
 			$work = $this->stories->get_work($this->input->post('work_id'));
 			$work_data = $work->result_array();
@@ -171,6 +176,7 @@ class Story extends CI_Controller {
 			$project_id = $data[0]['project_id'];
 			$user_id = $this->session->userdata('user_id');
 			$this->stories->log_history($user_id, $project_id, $work_id, 'bid', $this->input->post('set_cost'), $desc = '');
+			$this->session->set_flashdata('bid_message',"Thanks for bidding. We will contact you if your bidding is successful. Goodluck!");
 		}
 		
 		redirect("/story/".$work_id);
@@ -297,10 +303,16 @@ class Story extends CI_Controller {
 			$formdate_deadline->config['prefix']="deadline_";
 			$formdate_deadline->year['start'] = date('Y');
 			$formdate_deadline->year['end'] = date('Y')+5;
+			$formdate_deadline->year['selected'] = date('Y',strtotime($this->view_data['story_data']['deadline']));
+			$formdate_deadline->month['selected'] = date('m',strtotime($this->view_data['story_data']['deadline']));
+			$formdate_deadline->day['selected'] = date('d',strtotime($this->view_data['story_data']['deadline']));
 			$this->view_data['formdate_deadline'] = $formdate_deadline;
 			$formdate_biddead = new FormDate();
 			$formdate_biddead->config['prefix']="biddead_";
 			$formdate_biddead->year['start'] = date('Y');
+			$formdate_biddead->year['selected'] = date('Y',strtotime($this->view_data['story_data']['bid_deadline']));
+			$formdate_biddead->month['selected'] = date('m',strtotime($this->view_data['story_data']['bid_deadline']));
+			$formdate_biddead->day['selected'] = date('d',strtotime($this->view_data['story_data']['bid_deadline']));
 			$formdate_biddead->year['end'] = date('Y')+5;		
 			$this->view_data['formdate_biddead'] = $formdate_biddead;
 			$data = $this->projects_model->get_categories($data[0]['project_id']);
@@ -440,6 +452,39 @@ class Story extends CI_Controller {
 			$this->stories->log_history($user_id, $project_id, $story_id, 'reject', $point, $desc = '');
 			
 			redirect("/");	
+		}
+		
+		function submission(){
+			$work_id = $this->input->post('id');
+			// get stories 
+			$user_id = $this->session->userdata('user_id');
+			$this->view_data['userid'] = $this->session->userdata('user_id');
+			$query = $this->stories->get_work_details($work_id);
+		
+			if($query->num_rows() > 0) {
+				$data = $query->result_array();
+				$this->view_data['work_data'] = $data[0];
+				// get any uploaded files
+				$query = $this->stories->get_uploaded_files($work_id);
+				if($query->num_rows() > 0) {
+					$data = $query->result_array();
+					$this->view_data['files_data'] = $data; 
+				}
+				
+				$this->view_data['project_ppl'] = $this->stories->get_project_ppl($this->view_data['work_data']['project_id']);
+			
+				//get skills
+				$query4 = $this->skill_model->get_work_skills($work_id);
+				$this->view_data['skills'] = $query4;
+				
+				$this->load->helper('stories_helper');
+				$this->load->helper('user_helper');
+				$this->view_data['window_title'] = "Workpad :: Submission";
+				$this->load->view('story_submission_view', $this->view_data);		
+			} else {
+				$this->view_data['window_title'] = "Error, user story (".$work_id.") does not exist.";
+				$this->load->view('story_error_view', $this->view_data);
+			}
 		}
 				
 		private function notify($from,$fromName, $to, $cc, $subject, $message){

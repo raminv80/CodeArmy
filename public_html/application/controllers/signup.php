@@ -29,7 +29,8 @@ class Signup extends CI_Controller {
 			// verify user input
 			$this->load->library('form_validation');
 			$this->form_validation->set_rules('username', 'Username', 'required|alpha_dash|min_length[2]|max_length[30]|callback__check_username');
-			$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+			$this->form_validation->set_rules('password', 'Password', 'required|matches[passconf]|min_length[6]');
+			$this->form_validation->set_rules('passconf', 'Password Confirmation', 'required|min_length[6]');
 			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback__check_email');
 			if ($this->form_validation->run() == FALSE) {
 				$this->view_data['form_error'] = true;

@@ -133,6 +133,8 @@
 		<?php endif; ?>
 		
 		</div>
+        <div id="ajaxupload">
+        </div>
 	</div>
 	<!-- / add new stories form container ends -->
 		

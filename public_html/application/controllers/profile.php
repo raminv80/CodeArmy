@@ -56,10 +56,19 @@ class Profile extends CI_Controller {
 	// - edit profile page
 	function edit() {
 		$this->load->helper('country_helper');
+		$this->load->library('formdate');
 		$user_id = $this->session->userdata('user_id');
 		$query = $this->users_model->get_profile($user_id);
 		$data = $query->result_array();
 		$this->view_data['profile'] = $data[0];
+		$formdate_deadline = new FormDate();
+		$formdate_deadline->config['prefix']="birth_";
+		$formdate_deadline->year['start'] = date('Y')-80;
+		$formdate_deadline->year['end'] = date('Y')-7;
+		$formdate_deadline->year['selected'] = date('Y',strtotime($this->view_data['profile']['birthdate']));
+		$formdate_deadline->month['selected'] = date('m',strtotime($this->view_data['profile']['birthdate']));
+		$formdate_deadline->day['selected'] = date('d',strtotime($this->view_data['profile']['birthdate']));
+		$this->view_data['formdate_birth'] = $formdate_deadline;
 		$this->view_data['window_title'] = "Workpad :: edit user profile";
 		$this->view_data['message'] = $this->session->flashdata('message');
 		
@@ -86,8 +95,8 @@ class Profile extends CI_Controller {
 					//Image Resizing
 					$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;
 					$config['maintain_ratio'] = FALSE;
-					$config['width'] = 40;
-					$config['height'] = 40;
+					$config['width'] = 60;
+					$config['height'] = 60;
 			
 					$this->load->library('image_lib', $config);
 			

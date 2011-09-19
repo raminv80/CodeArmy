@@ -26,8 +26,20 @@
 <fieldset>
 <legend>Personal Information</legend>
 	<dl>
-	<dt><label for="full_name">Full Name</label></dt>
+		<dt><label for="full_name">Full Name</label></dt>
 		<dd><input type="text" size="30" name="full_name" value="<?php echo $profile["full_name"]; ?>" placeholder="Full Name" id="full_name" /></dd>
+        <dt><label for="gender">Gender</label></dt>
+        <dd><select name="gender">
+        	<option <?php if($profile['gender']=='male'){?>selected="selected"<?php }?> value="male">Male</option>
+            <option <?php if($profile['gender']=='female'){?>selected="selected"<?php }?> value="female">Female</option>
+            </select>
+        </dd>
+        <dt><label>Birth Date</label></dt>
+        <dd>
+        	<?=$formdate_birth->selectDay()?>    
+			<?=$formdate_birth->selectMonth()?>    
+			<?=$formdate_birth->selectYear()?>
+        </dd>
 		<dt><label for="mobile_no">Mobile No.</label></dt>
 		<dd><input type="text" size="30" name="mobile_no" value="<?php if(isset($contact->mobile_no)) { echo $contact->mobile_no; } ?>" placeholder="Mobile Number" id="mobile_no" /></dd>
 		<dt><label for="location">City</label></dt>
@@ -36,18 +48,20 @@
 		<dd><?php echo country_dropdown('country', array('MY','US','GB','DE','BR','IT','ES','AU','NZ','HK'));?> </dd>
         <dt><label for="lan_speak">Language (speak)</label></dt>
         <dd><select name="lan_speak">
-        		<option value="en">English</option>
-                <option value="bm">Bahsa Malay</option>
-                <option value="ch">Chinese</option>
+        		<option <?php if($profile['lan_speak']=='English'){?>selected="selected"<?php }?> value="English">English</option>
+                <option <?php if($profile['lan_speak']=='Bahasa Malay'){?>selected="selected"<?php }?> value="Bahasa Malay">Bahsa Malay</option>
+                <option <?php if($profile['lan_speak']=='Chinese'){?>selected="selected"<?php }?> value="Chinese">Chinese</option>
             </select>
         </dd>
         <dt><label for="lan_rw">Language (read/write)</label></dt>
         <dd><select name="lan_rw">
-        		<option value="en">English</option>
-                <option value="bm">Bahsa Malay</option>
-                <option value="ch">Chinese</option>
+        		<option <?php if($profile['lan_rw']=='English'){?>selected="selected"<?php }?> value="English">English</option>
+                <option <?php if($profile['lan_rw']=='Bahasa Malay'){?>selected="selected"<?php }?> value="Bahasa Malay">Bahsa Malay</option>
+                <option <?php if($profile['lan_rw']=='Chinese'){?>selected="selected"<?php }?> value="Chinese">Chinese</option>
             </select>
         </dd>
+        <dt><label for="specialization">Specialization</label></dt>
+        <dd><input type="text" name="specialization" value="<?php echo $profile['specialization'];?>" placeholder="specialization" id="specialization" />   </dd>
 	</dl>
     </fieldset>
 </div>

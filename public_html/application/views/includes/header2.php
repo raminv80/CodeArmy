@@ -10,6 +10,10 @@
 		<link href="<?php echo base_url() ?>public/css/style.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="<?php echo base_url() ?>public/scripts/jquery-1.4.2.min.js"></script>
 		<script type="text/javascript" src="<?php echo base_url() ?>public/scripts/script.js"></script>
+        <script type="text/javascript" language="javascript" src="<?php echo base_url() ?>public/js/jquery.carouFredSel-4.4.1-packed.js"></script>
+		<script type="text/javascript" src="<?php echo base_url() ?>public/js/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+		<script type="text/javascript" src="<?php echo base_url() ?>public/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+        
 		<script type="text/javascript"></script>
 	</head>
 	<body>
@@ -19,13 +23,15 @@
 				<div class="header-nav">
 					<ul>
 						<li><a href="<?php echo base_url() ?>">home</a></li>
-						<li><a href="/profile">profile</a></li>
-						<li><a href="">diary</a></li>
-						<li><a href="">projects</a></li>
-						<li><a href="<?php echo base_url() ?>about">about us</a></li>
+						<li><a href="#">Browse Job</a></li>
+						<li><a href="#">MyOffice</a></li>
+						<li><a href="/about">About</a></li>
+						<li><a href="#">Leaderboard</a></li>
 					</ul>
 				</div>
 				<div class="hd-right">
 
 				</div>
 			</div><!-- End of the Header -->
+            	<div id="wrapper">
+					<div class="contents">

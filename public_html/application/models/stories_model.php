@@ -172,16 +172,23 @@ class Stories_model extends CI_Model {
 		return $result;
 	}
 	
+	function get_work_horse($work_id){
+		$sql = "SELECT * FROM works, users WHERE works.work_horse = users.user_id and works.work_id = ?";
+		$result = $this->db->query($sql, array($work_id));
+		$result = $result->result_array();
+		return $result;
+	}
+	
 	// - get work list
 	function get_works_list($status='', $project_sel = NULL, $skill_sel = NULL, $cash_sel = NULL) {
                 if($status == '') {
 		$sql = "SELECT * FROM works, users WHERE users.user_id = works.creator ORDER BY works.priority DESC";
         $result = $this->db->query($sql);   
                 }elseif($status=='In progress'){
-		$sql = "SELECT * FROM works, users WHERE users.user_id = works.creator AND works.status in ('In progress','Redo') ORDER BY works.priority DESC";
+		$sql = "SELECT * FROM works, users WHERE users.user_id = works.work_horse AND works.status in ('In progress','Redo') ORDER BY works.priority DESC";
 		$result = $this->db->query($sql);
                 }elseif($status=='Done'){
-		$sql = "SELECT * FROM works, users WHERE users.user_id = works.creator AND works.status in ('Done','Verify') ORDER BY works.priority DESC";
+		$sql = "SELECT * FROM works, users WHERE users.user_id = works.work_horse AND works.status in ('Done','Verify') ORDER BY works.priority DESC";
 		$result = $this->db->query($sql);
                 }elseif($status=='Open'){
 		$sql = "SELECT work_id, priority, title, type, description, points, cost, status, creator, owner, project_id, work_horse, user_id, username, email, (select count(user_id) from bids where bids.work_id = works.work_id) as total_bids, (select count(user_id) from bids where work_id = works.work_id and created_at>= ? ) as last_week_bids, (select count(comment_body) from comments where story_id = works.work_id) as total_comments, (select count(comment_body) from comments where story_id = works.work_id and comment_created>= ? ) as last_week_comments
@@ -268,7 +275,7 @@ class Stories_model extends CI_Model {
 	}
 	
 	function get_comments($pro_id) {
-		$query = "SELECT * FROM comments WHERE story_id = ? ORDER BY comment_created DESC";
+		$query = "SELECT * FROM comments,users, user_profiles WHERE story_id = ? and users.username = comments.username and user_profiles.user_id = users.user_id ORDER BY comment_created DESC";
 		$result = $this->db->query($query, array($pro_id));
 		return $result;
 	}
@@ -552,5 +559,36 @@ class Stories_model extends CI_Model {
 		$data = $result->result_array();
 		$res['bid'] = $data[0]['point']; 
 		return $res;
+	}	
+	
+	function get_project_ppl($project_id){
+		$query = "SELECT DISTINCT work_horse, exp, username, avatar FROM works, users, user_profiles WHERE works.work_horse = users.user_id and users.user_id = user_profiles.user_id and project_id=?";
+		$query = $this->db->query($query, array($project_id));
+		$data = $query->result_array();
+		return $data;	
+	}
+	
+	//filtering functions
+	function list_projects(){
+		$sql = "SELECT project.project_id, project_name, count(work_id) as num_open_works FROM project, works where works.project_id = project.project_id and lower(works.status) in ('open','reject') group by project_id, project_name having num_open_works > 0 order by project_id";
+		$res = $this->db->query($sql);
+		$data = $res->result_array();
+		return $data;
+	}
+	
+	function list_categories($project_sel=NULL){
+		$sql = "select id, name from (select distinct category from works where project_id = ? and lower(works.status) in ('open', 'reject')) as T, categories where T.category = categories.id order by name";
+		$res = $this->db->query($sql, array($project_sel));
+		$data = $res->result_array();
+		return $data;
+	}
+	
+	function list_stories($project_sel, $cat_sel){
+		$ext = '';
+		if($cat_sel=='')$ext = 'or isnull(category)';
+		$sql = "SELECT works.*, (select count(*) as bid_num from bids where bids.work_id = works.work_id) as bids, (select count(*) as coment_num from comments where comments.story_id = works.work_id) as comments FROM works WHERE (lower(works.status) in ('open','reject')) and ((project_id = ?) OR (?='')) AND ((category = ?) $ext)";
+		$res = $this->db->query($sql, array($project_sel, $project_sel, $cat_sel, $cat_sel));
+		$data = $res->result_array();
+		return $data;
 	}
 }

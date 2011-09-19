@@ -40,6 +40,8 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
 
+define('points_per_level', 100);
+
 /* email config */
 define('admin_email', 'ramin@motionworks.com.my');
 define('email_name','Workpad');

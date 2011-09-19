@@ -31,7 +31,7 @@ class Login extends CI_Controller {
 			);
 			$this->session->set_userdata($data);
 			$this->users_model->update_last_login($query_data[0]['user_id']);
-			redirect('dashboard');
+			redirect('home');
 		}
 		else { // incorrect username or password
 			$this->view_data['login_error'] = true;
@@ -41,6 +41,6 @@ class Login extends CI_Controller {
 	
 	function logout() {
 		$this->session->sess_destroy();
-		redirect('dashboard');
+		redirect('home');
 	}
 }
