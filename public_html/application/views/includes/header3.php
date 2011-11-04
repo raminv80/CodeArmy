@@ -13,12 +13,11 @@
     <script type="text/javascript" language="javascript" src="<?php echo base_url() ?>public/js/jquery.carouFredSel-4.4.1-packed.js"></script>
 	<script type="text/javascript" src="<?php echo base_url() ?>public/js/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
     <script type="text/javascript" src="<?php echo base_url() ?>public/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-    <script type="text/javascript" src="<?php echo base_url() ?>public/js/fancybox/jquery.easing.1.3.js"></script>
+    <link href="css/ui-lightness/jquery-ui-1.8.14.custom.css" rel="stylesheet" type="text/css" />
+	<link href="css/fileUploader.css" rel="stylesheet" type="text/css" />
+	<script src="<?php echo base_url() ?>public/js/fileupload/js/jquery-ui-1.8.14.custom.min.js" type="text/javascript"></script>
+	<script src="<?php echo base_url() ?>public/js/fileupload/js/jquery.fileUploader.js" type="text/javascript"></script>
     
-    <!--<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
-    <script src="<?php echo base_url() ?>public/js/bxSlider/jquery.bxSlider.js" type="text/javascript"></script>
-	<script src="<?php echo base_url() ?>public/js/bxSlider/jquery.bxSlider.min.js" type="text/javascript"></script>-->
-	
 	<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="css/ie.css" /><![endif]-->
 </head>
 <body>

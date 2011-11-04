@@ -19,7 +19,6 @@
 									</dl>
 									<div class="summary">
 										<span class="summary-text" style="text-align:justify"><?php echo substr(strip_tags($story['description']),0,255); if(strlen(strip_tags($story['description']))>255)echo '...';?></span>
-										<span>Summary</span>
 									</div>
 									<div class="button-holder">
 										<a class="button" href="/story/<?php echo $story['work_id'];?>"><span class="left">Know More</span></a>

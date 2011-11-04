@@ -1,4 +1,6 @@
-<?php $this->load->view('includes/header2'); ?>
+<?php $this->load->view('includes/header'); ?>
+<div id="wrapper">
+	<div class="contents">
 				<div id="story-details">
 						<table cellpadding="" cellspacing="">
 							<tr>
@@ -44,29 +46,42 @@
 						</table>
 					</div><!--End of the Story Details -->
 					
+                    <?php echo form_open_multipart('story/done', array('id'=>'submit_form'));?>
 					<div id="attachments">
-                        <!-- TODO: attachment to submission 
+                        <!-- TODO: attachment to submission -->
 						<div class="attachments-area">
 							<h4>attachments</h4>
-							<div class="upload"><a href="">Upload</a></div>
+                            <ul>
+                                <!--<li><label for="attach">Attach a file (.zip &lt;50mb)</label><input name="attach" type="file" class="upload" /></li>-->
+                                <div>
+								<?php if(isset($error)) {?>
+                                		<div class="error">
+                                			<?php foreach($error as $msg){echo "<li>".$msg."</li>";}?>
+                                		</div>
+                            	<?php }?>
+								</div>
+                                <li><label for="git">Define GIT repo.</label><input type="text" name="git" /></li>
+                                <li><label for="link">Or define the link to files</label><input type="text" name="link" /></li>
+                                <li><label></label><input id="file_upload" name="file_upload" type="file" /></li>
+                            </ul>
 						</div>
-                        -->
+                        <!----->
 						<div class="secure-area" align="center">
 							<img src="/public/images/lock.png">
 							<h1>You are on a secure data transfer page.</h1>
 							<p>All your data and transactions are protected for security reason.</p><br />
-							<div id="job-done" class="continue">
-                                            <?php echo form_open('story/done');?>
-                                                <input type="hidden" name="id" value="<?php echo $work_data['work_id']; ?>" />
-                                                <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
-                                                <!--<input type="submit" name="submit" value="Job Done!" />-->
-                                                <div class="proceed">
-													<a href="javascript:''" class="submit">Continue</a>
-												</div>
-                                            <?php echo form_close(); ?>    
+							<div id="job-done" class="continue">                                            	
+                                <input type="hidden" name="id" value="<?php echo $work_data['work_id']; ?>" />
+                                <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
+                                <!--<input type="submit" name="submit" value="Job Done!" />-->
+                                <div class="proceed" style="float:none;">
+                                    <!--<a href="javascript: void(0)" class="submit1" onclick="$('#file_upload').uploadifyUpload()">Continue</a>-->
+                                    <a href="javascript: void(0)" class="submit">Continue</a>
+                                </div>
                             </div>
 						</div>
 					</div>
+                    <?php echo form_close(); ?>
 					
 					<div id="story-timeline">
 						<h1>Time tracker timeline</h1>
@@ -77,12 +92,14 @@
 						<h1>people working on this project</h1>
                         <?php foreach($project_ppl as $ppl):?>
 						<div class="collaborator">
-							<div class="avatar"><img src="/public/<?php echo $ppl['avatar'];?>" style="margin:0"></div>
+							<div class="avatar"><?php if($ppl['avatar']){?><img src="/public/<?php echo $ppl['avatar'];?>" style="margin:0"><?php }?></div>
 							<p>LVL</p>
-							<div class="level"><?php echo $ppl['exp']%50;?></div>
+							<div class="level"><?php $level = floor($ppl['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></div>
 							<div class="username"><?php echo $ppl['username'];?></div>
 						</div>
                         <?php endforeach;?>
-						<div class="arrow"></div>
+						<!--<div class="arrow"></div>-->
 					</div>
-<?php $this->load->view('includes/footer2'); ?> 
+	</div>
+</div>
+<?php $this->load->view('includes/footer'); ?> 

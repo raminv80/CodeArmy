@@ -30,7 +30,7 @@
 		
 		<div class="new-story_field">
 			<label for="description">Description</label>
-			<textarea name="description" rows="8" cols="40" class="ckeditor"><?php echo $project_data['project_desc']; ?></textarea>
+            <?php echo $this->ckeditor->editor("description", $project_data['project_desc']);?>
             <input type="submit" name="submit" value="submit" />
 		</div>
 		

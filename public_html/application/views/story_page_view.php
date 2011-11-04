@@ -225,12 +225,23 @@
 <?php $this->load->view('includes/footer_view'); ?>
 
 */?>
-<?php $this->load->view('includes/header2'); ?>
+<?php $this->load->view('includes/header'); ?>
+<div id="wrapper">
+	<div class="contents">
+					<div id="story-tutorials">
+                    	<h1>Tutorials</h1>
+                        <?php 
+						if($work_data['tutorial']){
+							echo $work_data['tutorial'];
+                        }else{
+                        	$this->load->view('includes/def_tutorial');
+                        }?>
+					</div><!--End of the Story Tutorials -->
 					<div id="story-details">
 						<table cellpadding="" cellspacing="">
 							<tr>
 								<th colspan="2" width="440px">
-									<h1><?php echo $work_data['project_name']?></h1>
+									<h1><a class="dialog_opt2" target="_blank" href="/project/<?php echo $work_data['project_id'];?>"><?php echo $work_data['project_name']?></a></h1>
                                     <!--<h2>Status: <?php echo $work_data['status']?></h2>-->
 								</th>
 								<th width="250px" style="text-align:right;">
@@ -271,29 +282,44 @@
 							</tr>
 							<tr style="border-bottom: 1px solid #23252A;">
 								
-								<td style="color:#ff0000;">
+								<td style="color:#ff0000;" colspan="3">
 									Deadline
 									<br />
 									<?php echo $work_data['deadline'];?>
 								</td>
 							</tr>
-							<!--<tr>
-								<td colspan="2">Files required to complete the task</td>
+                            <?php if(in_array(strtolower($work_data['status']),array('done','redo','verify','signoff'))){?>
+                            <?php if($work_data['attach']||$work_data['link']){?>
+							<tr>
+								<td colspan="2">Submited file</td>
 								<td style="float:right;">
-									<img src="<?php echo base_url() ?>public/images/files-required.png">
-									<br />
+                                	<?php $inf = pathinfo($work_data['attach']);if(strtolower($inf['extension'])=='zip'){?>
+									<a href="<?php echo base_url().$work_data['attach'];?>"><img src="<?php echo base_url() ?>public/images/zip.png" border="0"></a>
+                                    <?php }else{?>
+                                    <a target="_blank" href="<?php echo base_url().$work_data['attach'];?>"><img width="48" height="48" src="<?php echo base_url().$work_data['attach'];?>" border="0"></a>	
+                                    <?php }?>
+                                    <?php if($work_data['link']){?>
+                                    <a target="_blank" href="<?php echo $work_data['link'];?>"><img src="<?php echo base_url() ?>public/images/download_file.png" border="0" /></a>
+                                    <?php }?>
+<!--
 									<div class="download">
 										<a href="">Download All</a>
-									</div>
+									</div>-->
 								</td>
-							</tr>-->
+							</tr>
+                            <?php }if($work_data['git'] && trim($work_data['git'])!=''){?>
+                            <tr style="text-transform:none;">
+								<td colspan="2">Development (Forked) GIT Repository</td>
+								<td style="float:right;">
+                                	<a target="_blank" href="<?php echo $work_data['git'];?>"><?php echo $work_data['git'];?></a>
+								</td>
+							</tr>
+                            <?php }?>
+                            <?php }?>
 						</table>
 					</div><!--End of the Story Details -->
 
-					<div id="story-tutorials">
-                    	<h1>Tutorials</h1>
-						<?php echo $work_data['tutorial'];?>
-					</div><!--End of the Story Tutorials -->
+					
 					
                     <?php 
 					//show only if story is open for bidding and user i slogged in
@@ -301,6 +327,14 @@
 					?>
 					<div id="story-bidding">
                     	<?php if($this->session->userdata('user_id')) echo form_open('story/setbid'); ?>
+                        <?php
+							$msg = $this->session->flashdata('bid_message');
+							if($msg){
+								?>
+                        <div class="" style="margin:10px; color:#F90;">
+                        	<?php echo $msg;?>
+                        </div>
+                        <?php }?>
 						<div class="biding-amount">
 							<h3>my bid amount for this story is</h3>
 							<span>
@@ -319,11 +353,11 @@
 						<input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>" id="user_id">
                         <?php if($this->session->userdata('user_id')){?>
                        		<div class="proceed">
-								<a href="javascript:''" class="submit">Bid!</a>
+								<a href="javascript: void(0)" class="submit dialog_step2" style="margin-top:50px;">Bid!</a>
 							</div>
                         <?php }else{?>
 		                	<div class="proceed">
-								<a href="/login">Login to Bid!</a>
+								<a href="/login" style="margin-top:50px;">Login to Bid!</a>
 							</div>
                         <?php } ?>
                         <?php if($this->session->userdata('user_id')) echo form_close(); ?>
@@ -334,11 +368,11 @@
                             <div id="story-bidding">
                                 <div class="biding-amount">
                                 	<div>
-                                    	<ul>
+                                    	<ul style="padding-bottom:30px;">
                                         <li><div><h3>Job status:</h3>
                                     	<span><?php echo $work_data['status'];?></span></div></li>                                     
                                         <li><div><h3>Champion:</h3>
-                                    	<span><?php echo $work_horse['username'];?></span></div></li>
+                                    	<span>123<?php echo $work_horse['username'];?></span></div></li>
                                      	</ul>
                                     </div>
                                     <div>
@@ -349,7 +383,7 @@
                                                 <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
                                                 <!--<input type="submit" name="submit" value="Job Done!" />-->
                                                 <div class="proceed">
-													<a href="javascript:''" class="submit">Job Done!</a>
+													<a href="javascript: void(0)" class="submit dialog_step3">Job Done!</a>
 												</div>
                                             <?php echo form_close(); ?>    
                                         </div>
@@ -358,18 +392,22 @@
                                 </div>
                             </div>
                         <?php }else{?>
-                        	<div id="story-bidding">
+                        	<div id="story-bidding" style="background:none;">
                             	<?php //the viewer has no rights except viweing details of story?>
                                 <!--TODO: show time tracker-->
                                 <div class="biding-amount">
-                                	<ul>
-                                        <li><div><h3>Job status:</h3>
-                                    	<span><?php echo $work_data['status'];?></span></div></li>                                     
-                                        <li><div><h3>Champion:</h3>
-                                    	<span><?php echo $work_horse['username'];?></span></div></li>
-                                        <li><div><h3>Done at</h3>
-                                        <span><?php echo $work_data['done_at'];?></span></div></li>
-                                     </ul>
+                                <table cellpadding="0" cellspacing="0">
+                                	<tr>
+                                		<th>Job status</th>
+                                		<th>Champion</th>
+                                		<th>Done At</th>
+                                	</tr>
+                                	<tr>
+                                		<td><?php echo $work_data['status'];?></td>
+                                		<td><?php echo $work_horse['username'];?></td>
+                                		<td><?php echo $work_data['done_at'];?></td>
+                                	</tr>
+                                </table>
                                 </div>
                             </div>
                         <?php }?>
@@ -377,17 +415,21 @@
                     
                     <?php if(isset($username))if($this->session->userdata['role'] == 'admin'){ ?>
                     <!-- bid admin tools -->
-                    <div id="story-bidding">
+                    <div id="story-bidding" style="background:rgba(0, 0, 0, 0.4);">
                       <div id="bidding-amount">
                         <div id="bidding" style="color:#CCC">
                         	<div id="bid">
-                                <h1>Bidding administration</h1>
-                                <table style="font-size:12px;" cellspacing="3px" cellspacing="3px" width="100%">
+                                <ul>
+                                	<li><a href="/story/edit/<?php echo $work_data['work_id'];?>">Edit Story</a></li>
+                                    <li><a href="/story/dashboard">Dashboard</a></li>
+                                </ul>
+                                <h1 style="">Bidding administration</h1>
+                                <table style="font-size:12px; border:none; margin-top:10px;" cellspacing="3px" cellspacing="3px" width="100%">
                                   <tr>
-                                    <th align="left" width="45%">Warrior</th>
-                                    <th align="left" width="24%">Payout Bid</th>
-                                    <th align="left" width="14%">Days</th>
-                                    <th align="left" width="17%">Action</th>
+                                    <th align="center" width="45%" style="border:none;">Warrior</th>
+                                    <th align="center" width="24%">Payout Bid</th>
+                                    <th align="center" width="14%">Days</th>
+                                    <th align="center" width="17%">Action</th>
                                   </tr>
                                   
                               <?php if($show_bid == true) { ?>      
@@ -426,12 +468,21 @@
 						<h1>Discuss</h1>
                         <?php if($this->session->userdata('is_logged_in') == true) {?>
 						<div class="discussions">
-                        	<?php echo form_open('story/comments');?>
+                        	<?php 
+								if($this->session->userdata('role')=='admin' || $this->session->userdata('user_id')==$work_data['work_horse']){
+								echo form_open_multipart('story/comments');
+							?>
+                            	<div id="attach" style="margin: 0 0 10px 20px;">
+								<label for="file">Attach a file <span style="color:#CCC; font-size:10px" class="hint">(only zip or image less than 10MB)</span>:</label>
+                                <input type="file" name="userfile" class="fileUpload" style="color:white" >
+                                <input type="hidden" value="has_file" name="has_file" />
+                                </div>
+                            <?php }else echo form_open('story/comments');?>
 							<textarea name="comments" id="comments" class="" style=""></textarea>
                             <input type="hidden" value="<?php echo $work_data['work_id']; ?>" name="story_id">
 							<input type="hidden" value="<?php echo $this->session->userdata('username'); ?>" name="user_id">
 							<div class="submit">
-								<a href="javascript:''" class="submit">Submit comment</a>
+								<a href="javascript: void(0)" class="submit">Submit comment</a>
 							</div>
 
                             <?php echo form_close(); ?>
@@ -449,7 +500,7 @@
 							</div>
 							<div id="ds-right">
 								<div class="ds-comment">
-									You must login first to leave comments.
+									You must <a href="/login" style="color:#09F">login</a> first to leave comments.
 								</div>
 								<div class="ds-posted">
 									posted at <?php echo date('j M Y'); ?>
@@ -478,6 +529,11 @@
 								<div class="ds-posted">
 									posted at <?php echo date('j M Y', strtotime($comment['comment_created'])); ?>
 								</div>
+                                <?php if($comment['comment_file']):?>
+                                <div class="ds-posted" style="margin-right:30px">
+                                	<a href="/<?php echo $comment['comment_file'];?>">download attached</a>
+                                </div>
+                                <?php endif;?>
 							</div>
 							<img src="<?php echo base_url() ?>public/images/cm-divider.png">
                             </div>
@@ -485,5 +541,6 @@
 						</div>
                         
 					</div><!--End of the Story Discussion -->
-					
-<?php $this->load->view('includes/footer2'); ?>
+	</div>
+</div>					
+<?php $this->load->view('includes/footer'); ?>

@@ -1,10 +1,12 @@
-<?php $this->load->view('includes/header2'); ?>
+<?php $this->load->view('includes/header'); ?>
+<div id="wrapper">
+	<div class="contents">
 				<div id="map">
-					<!-- <iframe width="640" height="480" frameborder="0" scrolling="auto" marginheight="10px" marginwidth="0" src="http://maps.google.com.my/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=motionworks&amp;g=Suite+No.+29-6,+6th+Floor,+The+Boulevard,+Mid+Valley+City,+Lingkaran+Syed+Putra,+Kuala+Lumpur,+Wilayah+Persekutuan,+59200&amp;ie=UTF8&amp;t=h&amp;vpsrc=0&amp;ll=3.11852,101.67852&amp;spn=0.006295,0.006295&amp;output=embed"></iframe> -->
+					<iframe width="640" height="480" frameborder="0" scrolling="auto" marginheight="10px" marginwidth="0" src="http://maps.google.com.my/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=motionworks&amp;g=Suite+No.+29-6,+6th+Floor,+The+Boulevard,+Mid+Valley+City,+Lingkaran+Syed+Putra,+Kuala+Lumpur,+Wilayah+Persekutuan,+59200&amp;ie=UTF8&amp;t=h&amp;vpsrc=0&amp;ll=3.11852,101.67852&amp;spn=0.006295,0.006295&amp;output=embed"></iframe>
 				</div>
 				<div id="contact-us">
 					<h3>enquiry</h3>
-					<form class="contact-form" action="/contact" method="post">
+					<form class="form" action="/contact" method="post">
 						<div class="row">
 							<label for="name">Name </label>
 							<input type="text" name="name" id="name" class="text" />
@@ -20,9 +22,9 @@
 						<div class="row">
 							<label for="subject">Subject </label>
 							<select name="state" id="state">
-								<option value="AK">General</option>
-								<option value="AL">Payment issue</option>
-								<option value="AZ">Copyright issue</option>
+								<option value="General">General</option>
+								<option value="Payment Issue">Payment issue</option>
+								<option value="Copyright Issue">Copyright issue</option>
 							</select>
 						</div>
 						<div class="row">
@@ -35,13 +37,100 @@
 						</div>
 					</form>
 				</div>
-				<div id="company-show">
-					<div class="slide"></div>
-					<div class="slide"></div>
-					<div class="slide"></div>
-					<div class="slide"></div>
-					<div class="arrow"></div>
-				</div>
+				
+				<div id="slide-show">
+					<div id="foo0">
+						<ul class="mw_gallery">
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" href="public/gallery/employee.jpg" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+
+							<li>
+								<a rel="fancy_frame" class="iframe" href="http://www.youtube.com/embed/Jx2yQejrrUE?rel=0" title="Lorem ipsum dolor sit amet">
+								<img alt="" src="public/gallery/employee.jpg" />
+								</a>
+							</li>
+						</ul>
+						</div>
+						<div class="clearfix">
+						</div>
+
+					</div>
+				
 				<div id="contact-info">
 					<h3>Contact Information</h3>
 					<div class="address">
@@ -55,9 +144,11 @@
 					
 				</div>
 				
-        <?php if(isset($email_sent) && $email_sent){?>
-        <script type="text/javascript">
+	</div>
+</div>
+<?php if(isset($email_sent) && $email_sent){?>
+<script type="text/javascript">
 			$(document).ready(function(){alert('Thanks for contacting us.');});
 		</script>
         <?php }?>
-<?php $this->load->view('includes/footer2'); ?>
+<?php $this->load->view('includes/footer'); ?>

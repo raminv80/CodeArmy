@@ -13,8 +13,39 @@
     <script type="text/javascript" language="javascript" src="<?php echo base_url() ?>public/js/jquery.carouFredSel-4.4.1-packed.js"></script>
 	<script type="text/javascript" src="<?php echo base_url() ?>public/js/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
     <script type="text/javascript" src="<?php echo base_url() ?>public/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-    <script type="text/javascript" src="<?php echo base_url() ?>public/js/fancybox/jquery.easing.1.3.js"></script>
-    
+    <script type="text/javascript" src="<?php echo base_url() ?>public/js/jquery.easing.1.3.js"></script>
+    <link href="/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+
+    <script type="text/javascript" src="<?php echo base_url() ?>uploadify/swfobject.js"></script>
+    <script type="text/javascript" src="<?php echo base_url() ?>uploadify/jquery.uploadify.v2.1.4.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('#file_upload').uploadify({
+        'uploader'  : '/uploadify/uploadify.swf',
+        'script'    : '/uploadify/uploadify.php',
+        'cancelImg' : '/uploadify/cancel.png',
+        'folder'    : '/uploads',
+		'fileExt'     : '*.jpg;*.gif;*.png;*.zip',
+		'onAllComplete' : function(event,data) {
+		  alert('Your files are successfully uploaded');
+		  $('#submit_form').submit();
+		},
+		'onError': function (a, b, c, d) {
+			 if (d.status == 404)
+				alert('Could not find upload script. Use a path relative to: '+'<?= getcwd() ?>');
+			 else if (d.type === "HTTP")
+				alert('error '+d.type+": "+d.status);
+			 else if (d.type ==="File Size")
+				alert(c.name+' '+d.type+' Limit: '+Math.round(d.sizeLimit/1024)+'KB');
+			 else
+				alert('error '+d.type+": "+d.text);
+		},
+		'onComplete'  : function(event, ID, fileObj, response, data) {
+		  //alert('There are ' + data.fileCount + ' files remaining in the queue.');
+		}
+      });
+    });
+    </script>
     <!--<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
     <script src="<?php echo base_url() ?>public/js/bxSlider/jquery.bxSlider.js" type="text/javascript"></script>
 	<script src="<?php echo base_url() ?>public/js/bxSlider/jquery.bxSlider.min.js" type="text/javascript"></script>-->

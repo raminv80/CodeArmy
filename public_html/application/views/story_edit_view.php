@@ -56,12 +56,12 @@
 		
 		<div class="new-story_field">
 			<label for="description">Description</label>
-			<textarea name="description" rows="8" cols="40" class="ckeditor"><?php echo $story_data['description']; ?></textarea>
+            <?php echo $this->ckeditor->editor("description", $story_data['description']);?>
 		</div>
         
        	<div class="new-story_field">
 			<label for="tutorial">Tutorial</label>
-			<textarea name="tutorial" rows="8" cols="40" class="ckeditor"><?php echo $story_data['tutorial']; ?></textarea>
+            <?php echo $this->ckeditor->editor("tutorial", $story_data['tutorial']);?>
 		</div>
         
         <div class="new-story_field">

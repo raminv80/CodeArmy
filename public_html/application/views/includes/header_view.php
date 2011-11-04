@@ -5,7 +5,10 @@
 	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>-->
 	<!--<script src="http://code.jquery.com/jquery-latest.js"></script>-->
     <script type="text/javascript" src="<?php echo base_url() ?>public/scripts/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url() ?>public/scripts/ckeditor/ckeditor.js"></script>
+	<!--
+    <script type="text/javascript" src="<?php echo base_url() ?>public/scripts/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="<?php echo base_url() ?>public/js/ckfinder/ckfinder.js"></script>
+    -->
 	<script type="text/javascript" src="<?php echo base_url() ?>public/scripts/jquery.uniform.js" charset="utf-8"></script>
 	<script type="text/javascript" src="<?php echo base_url() ?>public/scripts/login.js" charset="utf-8"></script>
 	<script type="text/javascript" src="<?php echo base_url() ?>public/scripts/script.js"></script>
@@ -27,7 +30,7 @@
 <body>
 	<div id='container'>
 	<div id='top-nav'>
-		<a href="<?php echo base_url() ?>" id="dashboardButton"><span>Dashboard</span></a>
+		<a href="<?php echo base_url() ?>dashboard" id="dashboardButton"><span>Dashboard</span></a>
 
 		<?php if($this->session->userdata('is_logged_in') == true): ?>
 		<a href="<?php echo base_url() ?>works" id="dashboardButton"><span>My Works</span></a>

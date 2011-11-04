@@ -1,4 +1,4 @@
-<?php $this->load->view('includes/header2'); ?>
+<?php $this->load->view('includes/header'); ?>
 			<div id="wrapper">
 				<div class="contents">
 					<div id="about-us">
@@ -71,5 +71,4 @@
 				
 				</div><!--End of the Contents -->
 			</div><!-- End of the Wrapper -->
-		</div><!-- End of the Container -->
-<?php $this->load->view('includes/footer2'); ?>
+<?php $this->load->view('includes/footer'); ?>
