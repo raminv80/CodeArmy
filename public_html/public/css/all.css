@@ -1165,6 +1165,7 @@ form, fieldset {
 .skills-points{
 	float:left;
 	padding:2px 0 0;
+	width:60%;
 }
 .skills-points img{display:block;}
 .achievements-block{
@@ -1343,4 +1344,19 @@ form, fieldset {
 	content:counters(item, ".") " ";
 	counter-increment:item;
 	font:16px/18px 'DINLightAlternate';
+}
+.skill-chart-container{
+	height:33px;
+	width:98%;
+	background: url(../images/chartbar2.png) repeat-x;
+}
+.skill-chart{
+	height:17px;
+	float:left;
+	background: url(../images/chartbar.png) repeat-x;
+}
+.skill-chart-add{
+	height:17px;
+	float:left;
+	background: url(../images/chartbar1.png) repeat-x;
 }

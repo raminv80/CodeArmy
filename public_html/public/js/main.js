@@ -20,7 +20,8 @@ function initTabs()
 
 					links[j].onclick = function ()
 					{
-						var c = document.getElementById(this.href.substr(this.href.indexOf("#") + 1));
+						var id = this.href.substr(this.href.indexOf("#") + 1);
+						var c = document.getElementById(id);
 						if (c)
 						{
 							for (var i = 0; i < this.tabs.length; i++)
@@ -32,6 +33,14 @@ function initTabs()
 								}
 								this.tabs[i].className = this.tabs[i].className.replace("active", "");
 							}
+							if (this.className.indexOf("user") != -1)
+							{
+								url = '/profile/AjaxTab_';
+							}else url = '/myoffice/AjaxTab_';
+							$.post(url+(this.href.substr(this.href.indexOf("#") + 1)), function(data){
+									$('#'+id).html(data);
+								});
+							
 							this.className += " active";
 							c.style.display = "block";
 							return false;
