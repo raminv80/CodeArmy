@@ -8,8 +8,21 @@ class Projects_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function cash_loaded(){
+		$sql = "SELECT SUM(cost) as num FROM works WHERE lower(status) in ('open','reject')";
+		$res = $this->db->query($sql);
+		$res = $res->result_array();
+		return $res[0]['num'];	
+	}
+	
 	function get_all_projects() {
 		$query = "SELECT * FROM project";
+		$result = $this->db->query($query);
+		return $result->result_array();
+	}
+	
+	function get_all_categories(){
+		$query = "SELECT * FROM categories";
 		$result = $this->db->query($query);
 		return $result->result_array();
 	}

@@ -167,13 +167,13 @@ class Stories_model extends CI_Model {
 	
 	// - get work details
 	function get_work_details($work_id) {
-		$sql = "SELECT *,T.project_id as project_id, (CASE T.category WHEN NULL THEN 'General' ELSE categories.name END) as category_name FROM (SELECT work_id, priority, title, type, category, description, points, cost, status, creator, owner, works.project_id as project_id, works.created_at as created_at, work_horse, bid_deadline, deadline, assigned_at, done_at, tutorial, user_id, username, role, email, project_name FROM works, users, project WHERE works.work_id = ? AND users.user_id = works.creator AND works.project_id = project.project_id) as T LEFT JOIN categories on T.category = categories.id";
+		$sql = "SELECT *,T.project_id as project_id, (CASE T.category WHEN NULL THEN 'General' ELSE categories.name END) as category_name FROM (SELECT work_id, priority, title, type, category, description, points, cost, status, creator, owner, works.project_id as project_id, works.created_at as created_at, work_horse, bid_deadline, deadline, assigned_at, done_at, tutorial, user_id, username, role, email, project_name, attach, link, git FROM works, users, project WHERE works.work_id = ? AND users.user_id = works.creator AND works.project_id = project.project_id) as T LEFT JOIN categories on T.category = categories.id";
 		$result = $this->db->query($sql, array($work_id));
 		return $result;
 	}
 	
 	function get_work_horse($work_id){
-		$sql = "SELECT * FROM works, users WHERE works.work_horse = users.user_id and works.work_id = ?";
+		$sql = "SELECT users.* FROM works, users WHERE works.work_horse = users.user_id and works.work_id = ?";
 		$result = $this->db->query($sql, array($work_id));
 		$result = $result->result_array();
 		return $result;
@@ -280,12 +280,13 @@ class Stories_model extends CI_Model {
 		return $result;
 	}
 	
-	function create_comment() {
+	function create_comment($file) {
 		$doc = array(
 			'story_id' => $this->input->post('story_id'),
 			'username' => $this->input->post('user_id'),
 			'comment_body' => $this->input->post('comments')
 		);
+		if($file!="")$doc['comment_file'] = $file;
 		return $this->db->insert('comments', $doc);
 	}
 	
@@ -334,23 +335,29 @@ class Stories_model extends CI_Model {
         }
 		
 		function get_my_works($user_id, $status){
-			if($status == 'In progress'){
-			$query = "SELECT * FROM bids, works where bids.work_id = works.work_id and bids.user_id = ?  and bids.bid_status = 'Accepted' and works.status in ('In progress', 'Redo')";
+			if(strtolower($status) == 'in progress'){
+			$query = "SELECT * FROM works,project where project.project_id = works.project_id and works.work_horse = ? and lower(works.status) in ('in progress', 'redo')";
 			$result = $this->db->query($query, array($user_id));
-			}elseif($status=='Done'){
-			$query = "SELECT * FROM bids, works where bids.work_id = works.work_id and bids.user_id = ?  and bids.bid_status = 'Accepted' and works.status in ('Done','Verify')";
+			}elseif(strtolower($status)=='done'){
+			$query = "SELECT * FROM works, project where project.project_id = works.project_id and works.work_horse = ? and lower(works.status) in ('done','verify')";
 			$result = $this->db->query($query, array($user_id));
 			}else{
-			$query = "SELECT * FROM bids, works where bids.work_id = works.work_id and bids.user_id = ? and bids.bid_status = 'Accepted' and works.status = ?";
-			$result = $this->db->query($query, array($user_id,$status));
+			$query = "SELECT * FROM works, project where project.project_id = works.project_id and works.work_horse = ?  and lower(works.status) = ?";
+			$result = $this->db->query($query, array($user_id,strtolower($status)));
 			}
-			
 			return $result;
 		}
 		
-		function done($id){
-			$query = "update works set status = 'Done', done_at='".date('Y-m-d H:i:s')."' where work_id = ?";
-			$result = $this->db->query($query, array($id));
+		function done($id,$path=""){
+			$git = $this->input->post('git');
+			$link = $this->input->post('link');
+			if($path!=""){
+				$query = "update works set status = 'Done', git=?, link=?, attach=?, done_at='".date('Y-m-d H:i:s')."' where work_id = ?";
+				$result = $this->db->query($query, array($git, $link, $path, $id));
+			}else{
+				$query = "update works set status = 'Done', git=?, link=?, done_at='".date('Y-m-d H:i:s')."' where work_id = ?";
+				$result = $this->db->query($query, array($git, $link, $id));
+			}
 			return $result;
 		}
 		
@@ -411,11 +418,122 @@ class Stories_model extends CI_Model {
 		$work = $work[0];
 		 
 		switch($event){
+			case 'bid':
+				//first bid badge
+				$sql = "select id from achievement_set where user_id=? and achievement_id = 4";
+				$res = $this->db->query($sql, array($user_id));
+				$has_badge = $res->num_rows();
+				if($has_badge==0){
+					$doc = array(
+						'user_id' => $user_id,
+						'achievement_id' => 4,
+						'created_at' => date('Y-m-d H:i:s')
+					);
+					$this->db->insert('achievement_set',$doc);
+					$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/1stbidder.png" /></div>
+                <div class="right-column">
+                	<h3>Congradulations!</h3>
+                    <p>You just won your first badge by placing your first bid on a job. We will notify you and assign this job to you once your bidding wins in this bidding completition. Goodluck!</p>
+                </div>');
+				}
+				///end of first bid badge
+			break;
 			case 'done': $exp = 1;
+				//check if users has spent 72 hours on system and give him motionworkers badge
+				$sql = "select sum(hour(TIMEDIFF(done_at, assigned_at))) as num from works where (lower(works.status) in ('verify', 'signoff')) and work_horse = ?";
+				$res = $this->db->query($sql, array($user_id));
+				$data = $res->result_array();
+				$hours = $data[0]['num'];
+				$sql = "select id from achievement_set where user_id=? and achievement_id = 3";
+				$res = $this->db->query($sql, array($user_id));
+				$has_badge = $res->num_rows();
+				if($has_badge==0 && $hours>=72){
+					$doc = array(
+						'user_id' => $user_id,
+						'achievement_id' => 3,
+						'created_at' => date('Y-m-d H:i:s')
+					);
+					$this->db->insert('achievement_set',$doc);
+					$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/badge03.png" /></div>
+                <div class="right-column">
+                	<h3>Congradulations!</h3>
+                    <p>You won MOTIONWORKERS badge for spending 72 hours on system.</p>
+                </div>');
+				}
+				///end of motionworkers badge
 			break;
 			case 'redo': $exp = -1;
 			break;
-			case 'verify': $exp = 2;
+			case 'verify': 
+				$exp = 2;
+				//get skill set of this work
+				$sql = "select * from work_skill where work_id = ?";
+				$wres = $this->db->query($sql, array($work_id));
+				$wres = $wres->result_array();
+				foreach($wres as $dt):
+					//get skill set of user
+					$sql = "select * from skill_set where user_id = ? and skill_id = ?";
+					$sres = $this->db->query($sql, array($user_id, $dt['skill_id']));
+					if($sres->num_rows()>0){
+						//update the points of skill if user has the skill
+						$sql = "update skill_set set point = point+? where user_id = ? and skill_id = ?";
+						$this->db->query($sql, array($dt['point'], $user_id, $dt['skill_id']));
+					}else{
+						//if not add the skill for user
+						$d = array(
+							'user_id' => $user_id,
+							'skill_id' => $dt['skill_id'],
+							'point' => $dt['point']
+						);
+						$this->db->insert('skill_set', $d);
+						$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/badge02.png" /></div>
+                <div class="right-column">
+                	<h3>Congradulations!</h3>
+                    <p>You won 10PACKS badge for successfully completing 10 jobs.</p>
+                </div>');
+					}
+				endforeach;
+				
+				//check if users has finished a task before deadline and give him fastforward badge
+				$sql = "select (deadline>done_at) as num from works where work_id=? and work_horse = ?";
+				$res = $this->db->query($sql, array($work_id, $user_id));
+				$data = $res->num_rows();
+				$sql = "select id from achievement_set where user_id=? and achievement_id = 1";
+				$res = $this->db->query($sql, array($user_id));
+				$has_badge = $res->num_rows();
+				if($has_badge==0 && $data>0){
+					$doc = array(
+						'user_id' => $user_id,
+						'achievement_id' => 1,
+						'created_at' => date('Y-m-d H:i:s')
+					);
+					$this->db->insert('achievement_set',$doc);
+					$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/badge01.png" /></div>
+                <div class="right-column">
+                	<h3>Congradulations!</h3>
+                    <p>You won FAST FORWARDING BADGE bade for completing a task earlier than deadline.</p>
+                </div>');
+				}
+				///end of fastforward badge
+				
+				//check if users has finished 10 jobs successfully on system and give him 10 packs badge
+				$sql = "select count(*) as num from works where (lower(works.status) in ('signoff')) and work_horse = ?";
+				$res = $this->db->query($sql, array($user_id));
+				$data = $res->result_array();
+				$jobs = $data[0]['num'];
+				$sql = "select id from achievement_set where user_id=? and achievement_id = 2";
+				$res = $this->db->query($sql, array($user_id));
+				$has_badge = $res->num_rows();
+				if($has_badge==0 && $jobs>=10){
+					$doc = array(
+						'user_id' => $user_id,
+						'achievement_id' => 2,
+						'created_at' => date('Y-m-d H:i:s')
+					);
+					$this->db->insert('achievement_set',$doc);
+				}
+				///end of 10 packs badge
+				
 			break;
 			case 'signoff': $exp = 3;
 				if($work['deadline']!=NULL){
@@ -424,6 +542,7 @@ class Stories_model extends CI_Model {
 					$query = "update users set hour_spent = hour_spent + hour(timediff('".$work['done_at']."','".$work['assigned_at']."')) where user_id = ?";
 				}
 				$this->db->query($query,array($user_id));
+				
 			break;
 			case 'reject': $exp = -5;
 			break;
@@ -590,5 +709,59 @@ class Stories_model extends CI_Model {
 		$res = $this->db->query($sql, array($project_sel, $project_sel, $cat_sel, $cat_sel));
 		$data = $res->result_array();
 		return $data;
+	}
+	
+	function browse_stories($project_sel, $cat_sel, $skill_sel, $cash_from, $cash_to, $point, $type, $status, $work_horse, $search){
+		$sql = "SELECT cworks.*, project.project_name FROM (select works.*, users.username from works left join users on works.work_horse=users.user_id) as cworks,project WHERE project.project_id=cworks.project_id ";
+		$param = array();
+		if($project_sel!=0){
+			$sql.="AND (cworks.project_id = ?) ";
+			$param[] = $project_sel;
+		}
+		if($cat_sel!='0' and $cat_sel!='g'){
+			$sql.="AND (cworks.category = ?) ";
+			$param[] = $cat_sel;
+		}
+		if($cat_sel==='g'){
+			$sql.="AND isnull(cworks.category) ";	
+		}
+		if($skill_sel!=0){
+			$sql.="AND (cworks.work_id in (select work_id from work_skill where skill_id = ?)) ";
+			$param[] = $skill_sel;
+		}
+		if(trim($cash_from)!=''){
+			$sql.="AND (cworks.cost >= ?) ";
+			$param[] = $cash_from;
+		}
+		if(trim($cash_to)!=''){
+			$sql.="AND (cworks.cost <= ?) ";
+			$param[] = $cash_to;
+		}
+		if($point!=0){
+			$sql.="AND (cworks.points = ?) ";
+			$param[] = $point;
+		}
+		if($type!='0'){
+			$sql.="AND (cworks.type = ?) ";
+			$param[] = $type;
+		}
+		if($status!='0'){
+			$sql.="AND (lower(cworks.status) = lower(?)) ";
+			$param[] = $status;
+		}
+		if(trim($work_horse)!='' && strlen(trim($work_horse))>2){
+			$sql.="AND (cworks.username like concat(?,'%')) ";
+			$param[] = $work_horse;
+		}
+		if(trim($search)!='' && strlen(trim($search))>2){
+			$sql.="AND (cworks.title like concat('%',?,'%') OR cworks.description like concat('%',?,'%')) ";
+			$param[] = $search;
+			$param[] = $search;
+		}
+		$sql .= "ORDER BY project.project_name, cworks.title";
+		$res = $this->db->query($sql, $param);
+		if($res->num_rows()>0){
+			return $res->result_array();
+		}else return false;
 	}
 }
