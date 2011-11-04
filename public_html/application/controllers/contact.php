@@ -19,7 +19,7 @@ class Contact extends CI_Controller {
 			require(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
 
 			$mail = new PHPMailer();
-			$to = $admin_email;
+			$to = admin_email;
 			
 			$mail->IsSMTP();                                      // set mailer to use SMTP
 			$mail->SMTPAuth   = true;                  // enable SMTP authentication

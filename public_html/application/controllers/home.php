@@ -46,6 +46,7 @@ class Home extends CI_Controller {
 		$this->view_data['total_visitors'] = $this->users_model->getVisitors();
 		$this->view_data['total_contacts'] = $this->users_model->get_contacts();
 		$this->view_data['total_projects_cur_month'] = $this->projects_model->num_projects_month();
+		$this->view_data['total_projects_cash_loaded'] = $this->projects_model->cash_loaded();
 		$this->view_data['leaderboard_project'] = $this->users_model->leaderboard_projects(3);
 		$this->view_data['leaderboard_points'] = $this->users_model->leaderboard_points(3);
 		$this->view_data['leaderboard_time'] = $this->users_model->leaderboard_time(3);

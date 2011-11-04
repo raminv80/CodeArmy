@@ -23,7 +23,7 @@ class Signup extends CI_Controller {
 	// index page
 	function index() {
 		$this->view_data['window_title'] = "Signup page";
-		
+		$this->view_data['form_error'] = false;
 		// - if signup from is pass, process and add into db
 		if($this->input->post('submit')) {
 			// verify user input

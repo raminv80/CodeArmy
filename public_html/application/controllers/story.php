@@ -11,6 +11,7 @@ class Story extends CI_Controller {
 		$this->load->model('projects_model');
 		
 		$this->view_data['page_is'] = 'story';
+		$this->view_data['action'] = $this->uri->segment(2);
 		
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
@@ -19,6 +20,7 @@ class Story extends CI_Controller {
 		} 		
 		$this->load->model('stories_model', 'stories');
 		$this->load->model('users_model', 'users');
+		$this->load->helper(array('form', 'url'));
 		$this->load->library('email');
 	}
 	
@@ -255,8 +257,24 @@ class Story extends CI_Controller {
 	}
 	
 	function comments() {	
-		$this->check_authentication();	
-		$this->stories->create_comment();	
+		$this->check_authentication();
+		$path = "";
+		if($this->input->post('has_file')=='has_file'){
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'zip|gif|jpeg|png|jpg';
+			$config['max_size']	= '10240';
+			$config['overwrite'] = false;
+			$config['encrypt_name'] = true;
+			$config['remove_spaces'] = true;
+			$this->load->library('upload', $config);
+			if($this->upload->do_upload()){
+				$uploaded = $this->upload->data();
+				$path = $config['upload_path'].$uploaded['file_name'];
+			}else{
+				$path = "";
+			}
+		}
+		$this->stories->create_comment($path);	
 		$this->view_data['signup_success'] = true;
 		redirect("/story/".$this->input->post('story_id'));
 	}
@@ -297,6 +315,15 @@ class Story extends CI_Controller {
             //print_r($data);
 			$this->view_data['story_data'] = $data[0];
             $this->view_data['story_id'] = $id;
+			
+			$this->load->library('ckeditor');
+			$this->load->library('ckFinder');
+			//configure base path of ckeditor folder 
+			$this->ckeditor->basePath = base_url().'public/scripts/ckeditor/';
+			$this->ckeditor-> config['toolbar'] = 'Full';
+			$this->ckeditor->config['language'] = 'en';
+			//configure ckfinder with ckeditor config 
+			$this->ckfinder->SetupCKEditor($this->ckeditor,'/public/js/ckfinder/');
             
 			$this->load->library('formdate');
 			$formdate_deadline = new FormDate();
@@ -350,23 +377,79 @@ class Story extends CI_Controller {
 			$this->check_authentication();
 			ini_set('display_error',1);
 			error_reporting('E_ALL');
+			$has_upload_error= false;
 			if($this->input->post('csrf')==md5('storyDone')){
 				$story_id = $this->input->post('id');
-				$query = $this->stories->done($story_id);
-				$work = $this->stories->get_work($this->input->post('id'));
-				$work_data = $work->result_array();
-				$title = $work_data[0]['title'].' is completed.';
-				$point = $work_data[0]['points'];
-			
-				$message = 'User '.$this->session->userdata('username').' has completed the user story '.$work_data[0]['title'];
-				$this->notify(noreply_email,email_name, admin_email, admin_cc, $title,$message);
 				
-			    $project_id =$work_data[0]['project_id'];
-			    $user_id = $this->session->userdata('user_id');
+				$config['upload_path'] = './uploads/';
+				$config['allowed_types'] = 'zip';
+				$config['max_size']	= '51200';
+				$config['overwrite'] = false;
+				$config['encrypt_name'] = true;
+				$config['remove_spaces'] = true;
+				$this->load->library('upload', $config);
+				if (strlen($_FILES["file_upload"]["name"])>0) {
+					if($this->upload->do_upload("file_upload")){
+						$uploaded = $this->upload->data();
+						$path = $config['upload_path'].$uploaded['file_name'];
+					}else{
+						$error = array('error' => $this->upload->display_errors());
+						$this->view_data['error'] = $error;
+						$path="";
+						$has_upload_error= true;
+						///////upload error show back submission page
+						$work_id = $this->input->post('id');
+						// get stories 
+						$user_id = $this->session->userdata('user_id');
+						$this->view_data['userid'] = $this->session->userdata('user_id');
+						$query = $this->stories->get_work_details($work_id);
+						
+						if($query->num_rows() > 0) {
+							$data = $query->result_array();
+							$this->view_data['work_data'] = $data[0];
+							// get any uploaded files
+							$query = $this->stories->get_uploaded_files($work_id);
+							if($query->num_rows() > 0) {
+								$data = $query->result_array();
+								$this->view_data['files_data'] = $data; 
+							}
+							
+							$this->view_data['project_ppl'] = $this->stories->get_project_ppl($this->view_data['work_data']['project_id']);
+						
+							//get skills
+							$query4 = $this->skill_model->get_work_skills($work_id);
+							$this->view_data['skills'] = $query4;
+							
+							$this->load->helper('stories_helper');
+							$this->load->helper('user_helper');
+							$this->view_data['window_title'] = "Workpad :: Submission";
+							$this->load->view('story_submission_view', $this->view_data);		
+						} else {
+							$this->view_data['window_title'] = "Error, user story (".$work_id.") does not exist.";
+							$this->load->view('story_error_view', $this->view_data);
+						}
+						///////////////////
+					}
+				}else{
+					$path="";
+				}
+				if(!$has_upload_error){
+					$query = $this->stories->done($story_id,$path);
+					$work = $this->stories->get_work($this->input->post('id'));
+					$work_data = $work->result_array();
+					$title = $work_data[0]['title'].' is completed.';
+					$point = $work_data[0]['points'];
 				
-			    $this->stories->log_history($user_id, $project_id, $story_id, 'done', $point, $desc = '');
-
-				redirect("/story/".$story_id);
+					$message = 'User '.$this->session->userdata('username').' has completed the user story '.$work_data[0]['title'];
+					$this->notify(noreply_email,email_name, admin_email, admin_cc, $title,$message);
+					
+					$project_id =$work_data[0]['project_id'];
+					$user_id = $this->session->userdata('user_id');
+					
+					$this->stories->log_history($user_id, $project_id, $story_id, 'done', $point, $desc = '');
+	
+					redirect("/story/".$story_id);
+				}
 			}
 		}
 		
@@ -376,19 +459,19 @@ class Story extends CI_Controller {
 			$query = $this->stories->redo($story_id);
 			$work = $this->stories->get_work($story_id);
 			$work_data = $work->result_array();
-			$title = $work_data[0]['title'].' is completed.';
+			$title = $work_data[0]['title'].' needs more work.';
 			$query = $this->stories->get_user_email($story_id);
 			$user_data = $query->result_array();
 			$to = $user_data[0]['email'];
 			$message = 'The story '.$work_data[0]['title'].' needs to be redo.';
-			$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
-
+			//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+			$this->users_model->notify($user_data[0]['user_id'], $title, $message);
 			$project_id = $work_data[0]['project_id'];
 			$point = $work_data[0]['points'];
 			$user_id = $user_data[0]['user_id'];
 			$this->stories->log_history($user_id, $project_id, $story_id, 'redo', $point, $desc = '');
 							
-			redirect("/");
+			redirect("/dashboard");
 		}
 		
 		function verify($id){
@@ -397,19 +480,20 @@ class Story extends CI_Controller {
 			$query = $this->stories->verify($story_id);		
 			$work = $this->stories->get_work($story_id);
 			$work_data = $work->result_array();
-			$title = $work_data[0]['title'].' is completed.';
+			$title = $work_data[0]['title'].' is verified.';
 			$query = $this->stories->get_user_email($story_id);
 			$user_data = $query->result_array();
 			$to = $user_data[0]['email'];
 			$message = 'The story '.$work_data[0]['title'].' is verified.';
-			$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+			//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+			$this->users_model->notify($user_data[0]['user_id'], $title, $message);
 			
 			$project_id = $work_data[0]['project_id'];
 			$point = $work_data[0]['points'];
 			$user_id = $user_data[0]['user_id'];
 			$this->stories->log_history($user_id, $project_id, $story_id, 'verify', $point, $desc = '');
 			
-			redirect("/");
+			redirect("/dashboard");
 		}
 		
 		function signoff($id){
@@ -418,7 +502,7 @@ class Story extends CI_Controller {
 			$query = $this->stories->signoff($story_id);
 			$work = $this->stories->get_work($story_id);
 			$work_data = $work->result_array();
-			$title = $work_data[0]['title'].' is completed.';
+			$title = $work_data[0]['title'].' is Signedoff.';
 			$query = $this->stories->get_user_email($story_id);
 			$user_data = $query->result_array();
 			$to = $user_data[0]['email'];
@@ -430,7 +514,7 @@ class Story extends CI_Controller {
 			$user_id = $user_data[0]['user_id'];
 			$this->stories->log_history($user_id, $project_id, $story_id, 'signoff', $point, $desc = '');
 			
-			redirect("/");		
+			redirect("/dashboard");		
 		}
 		
 		function reject($id){
@@ -439,19 +523,20 @@ class Story extends CI_Controller {
 			$query = $this->stories->reject($story_id);	
 			$work = $this->stories->get_work($story_id);
 			$work_data = $work->result_array();
-			$title = $work_data[0]['title'].' is completed.';
+			$title = $work_data[0]['title'].' is rejected!';
 			$query = $this->stories->get_user_email($story_id);
 			$user_data = $query->result_array();
 			$to = $user_data[0]['email'];
 			$message = 'The story '.$work_data[0]['title'].' is rejected. As a result this story will be set to open for bidding again.';
-			$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+			//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+			$this->users_model->notify($user_data[0]['user_id'], $title, $message);
 			
 			$project_id = $work_data[0]['project_id'];
 			$point = $work_data[0]['points'];
 			$user_id = $user_data[0]['user_id'];
 			$this->stories->log_history($user_id, $project_id, $story_id, 'reject', $point, $desc = '');
 			
-			redirect("/");	
+			redirect("/dashboard");	
 		}
 		
 		function submission(){
@@ -485,6 +570,10 @@ class Story extends CI_Controller {
 				$this->view_data['window_title'] = "Error, user story (".$work_id.") does not exist.";
 				$this->load->view('story_error_view', $this->view_data);
 			}
+		}
+		
+		function upload_files(){
+				
 		}
 				
 		private function notify($from,$fromName, $to, $cc, $subject, $message){

@@ -123,7 +123,14 @@ class Projects extends CI_Controller {
 		//print_r($data);
 		$this->view_data['project_data'] = $data[0];
 		$this->view_data['project_id'] = $id;
-		
+		$this->load->library('ckeditor');
+        $this->load->library('ckFinder');
+		//configure base path of ckeditor folder 
+		  $this->ckeditor->basePath = base_url().'public/scripts/ckeditor/';
+		  $this->ckeditor-> config['toolbar'] = 'Full';
+		  $this->ckeditor->config['language'] = 'en';
+		  //configure ckfinder with ckeditor config 
+		  $this->ckfinder->SetupCKEditor($this->ckeditor,'/public/js/ckfinder/');
 		if($this->input->post('submit')) {
 						$this->load->library('form_validation');
 	

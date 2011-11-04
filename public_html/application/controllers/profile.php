@@ -7,15 +7,22 @@ class Profile extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('users_model');
+		$this->load->model('skill_model');
 		$this->load->model('stories_model','story');
 		
 		$this->view_data['page_is'] = 'signup';
-		
+		$controller = $this->uri->segment(1);
+		$action = $this->uri->segment(2);
+		$param = $this->uri->segment(3);
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
 		if($check_login == true) {
 			$this->view_data['username'] = $this->session->userdata('username');
-		} else { // - if user not login, redirect to dashboard. 
+		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
+			$referer = $controller;
+			if($action)$referer .= '/'.$action;
+			if($param)$referer .= "/".$param;
+			$this->session->set_userdata('referer', $referer); 
 			redirect("login"); 
 		}
 	}
@@ -105,7 +112,7 @@ class Profile extends CI_Controller {
 					}else{
 						$avatar = $this->upload->file_name;
 						//delete the old avatar pic
-						unlink('./public/'.$this->view_data['profile']['avatar']);
+						if($this->view_data['profile']['avatar'])unlink('./public/'.$this->view_data['profile']['avatar']);
 					}
 					
 					//$this->MUser->updateProfile($this->input->post('user_id'));
@@ -117,7 +124,8 @@ class Profile extends CI_Controller {
 			}
 
 			if($this->users_model->update_profile($user_id,$avatar)) {
-				redirect (base_url()."profile");
+				$this->session->set_flashdata('msg',"Your profie is updated.");
+				redirect (base_url()."profile/edit");
 			} else { // - if there is a problem writing to db
 				redirect(base_url()."error");
 			} 
@@ -139,7 +147,8 @@ class Profile extends CI_Controller {
 					$this->view_data['form_error'] = true;
 				} else {
 					if($this->users_model->update_password($this->session->userdata('user_id'))) {
-						redirect (base_url()."profile");
+						$this->session->set_flashdata('msg',"Your password has changed.");
+						redirect (base_url()."profile/edit_password");
 					} else { // - if there is a problem writing to db
 						redirect(base_url()."error");
 					} 
@@ -166,6 +175,76 @@ class Profile extends CI_Controller {
 		$this->view_data['message_count'] = $this->users_model->inbox_count_unread($user_id);
 		$this->view_data['window_title'] = "Workpad :: Inbox";
 		$this->load->view('profile_inbox_view', $this->view_data);	
+	}
+	
+	function cashout(){
+		$user_id = $this->session->userdata('user_id');
+		$me = $this->users_model->get_user($user_id);
+		$me = $me->result_array();
+		$me = $me[0];
+		$myProfile = $this->users_model->get_profile($user_id);
+		$myProfile = $myProfile->result_array();
+		$myProfile = $myProfile[0];
+		$this->view_data['me'] = $me;
+		$this->view_data['myProfile'] = $myProfile;
+		$this->view_data['window_title'] = "cashout";
+		$this->load->view('cashout_view', $this->view_data);
+	}
+	
+	function AjaxTab_tab_1(){
+		//Summary Tab
+		$user_id = $this->session->userdata('check_id');
+		$me = $this->users_model->get_user($user_id);
+		$me = $me->result_array();
+		$me = $me[0];
+		$myProfile = $this->users_model->get_profile($user_id);
+		if($myProfile){
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$this->view_data['myProfile'] = $myProfile;
+		}
+		$this->view_data['me'] = $me;
+		$this->view_data['works_completed'] = $this->users_model->works_compeleted($user_id);
+		$this->view_data['hours_spent']  = $this->users_model->hours_spent($user_id);
+		$this->view_data['hours_saved'] = $this->users_model->hours_saved($user_id);
+		$this->view_data['last_task'] = $this->users_model->last_task($user_id);
+		$this->view_data['working_on'] = $this->users_model->working_on($user_id);
+		$this->view_data['leaderboard_project'] = $this->users_model->leaderboard_projects(3);
+		$this->view_data['leaderboard_points'] = $this->users_model->leaderboard_points(3);
+		$this->view_data['leaderboard_time'] = $this->users_model->leaderboard_time(3);
+		$this->view_data['collaborators'] = $this->users_model->collaborators($user_id);
+		$this->view_data['last_badge'] = $this->skill_model->get_last_badge($user_id);
+		$this->view_data['my_skills'] = $this->skill_model->get_my_skills($user_id);
+		$this->load->view('Ajax_tab_1_alt', $this->view_data);	
+	}
+	
+	function AjaxTab_tab_2(){
+		//Achievement Tab
+		$user_id = $this->session->userdata('check_id');
+		$this->view_data['badges'] = $this->skill_model->get_my_badges($user_id);
+		$this->load->view('Ajax_tab_2', $this->view_data);	
+	}
+	
+	function AjaxTab_tab_7(){
+		//Personal Info Tab
+		$user_id = $this->session->userdata('check_id');
+		$me = $this->users_model->get_user($user_id);
+		$me = $me->result_array();
+		$me = $me[0];
+		$myProfile = $this->users_model->get_profile($user_id);
+		$this->view_data['profile'] = NULL;
+		if($myProfile){
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$this->view_data['profile'] = $myProfile;
+		}
+		$this->view_data['me'] = $me;
+		$this->view_data['username'] = $this->session->userdata("username");
+		$this->view_data['message'] = $this->session->flashdata('message');
+		$this->view_data['works_completed'] = $this->users_model->works_compeleted($user_id);
+		$this->view_data['hours_spent']  = $this->users_model->hours_spent($user_id);
+		$this->view_data['hours_saved'] = $this->users_model->hours_saved($user_id);
+		$this->load->view('Ajax_tab_7_alt', $this->view_data);	
 	}
 	
 }	

@@ -17,7 +17,7 @@ class Stories extends CI_Controller {
 		if($check_login == true) {
 			$this->view_data['username'] = $this->session->userdata('username');
 		} else { // - if user not login, redirect to dashboard. 
-			redirect("login"); 
+			if(strtolower($this->uri->segment(2))!='browse')redirect("login"); 
 		}	
 		$this->load->model('stories_model', 'stories');
 	}
@@ -164,5 +164,37 @@ class Stories extends CI_Controller {
 			$data = array('upload_data' => $this->upload->data());
 			$this->load->view('upload_success');
 		}
+	}
+	
+	function browse(){
+		//$project_sel, $cat_sel, $skill_sel, $cash_from, $cash_to, $point, $type, $status, $work_horse
+		$project_sel = $this->input->post('project_sel');
+		$cat_sel = $this->input->post('category_sel');
+		$skill_sel = $this->input->post('skill_sel');
+		$cash_from = $this->input->post('cash_from');
+		$cash_to = $this->input->post('cash_to');
+		$point = $this->input->post('point');
+		$type = $this->input->post('type');
+		$status = $this->input->post('status');
+		$search = $this->input->post('search');
+		$work_horse = $this->input->post('work_horse');
+		if(!$project_sel)$project_sel=0;
+		if(!$cat_sel)$cat_sel=0;
+		if(!$skill_sel)$skill_sel=0;
+		if(!$cash_from)$cash_from='';
+		if(!$cash_to)$cash_to='';
+		if(!$point)$point=0;
+		if(!$type)$type=0;
+		if(!$status)$status=0;
+		if(!$work_horse)$work_horse='';
+		if(!$search)$search='';
+		$this->view_data['stories'] = 
+			$this->stories->browse_stories($project_sel, $cat_sel, $skill_sel, $cash_from, $cash_to, $point, $type, $status, $work_horse, $search);
+		$this->view_data['projects'] = $this->projects_model->get_all_projects();
+		$this->view_data['categories'] = $this->projects_model->get_all_categories();
+		$this->view_data['skills'] = $this->skill_model->get_all_skills();
+		$this->view_data['page_is'] = 'Browse';
+		$this->view_data['window_title'] = "Workpad :: Browse Jobs";
+		$this->load->view('browse_view', $this->view_data);
 	}
 }

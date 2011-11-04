@@ -16,6 +16,7 @@ class Dashboard extends CI_Controller {
 		$check_login = $this->session->userdata('is_logged_in');
 		if($check_login == true) {
 			$this->view_data['username'] = $this->session->userdata('username');
+			$this->view_data['user_role'] = $this->session->userdata('role');
 		}
 		$this->load->model('stories_model', 'stories');
 	}
