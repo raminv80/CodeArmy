@@ -81,7 +81,7 @@
 													<h3><span>Last completed task</span></h3>
 													<ul>
                                                     	<?php if($last_task){?>
-														<li><span class="title">[<a href="/project/<?php echo $last_task['project_id'];?>"><?php echo $last_task['project_name'];?></a>]</span> <a href="/story/<?php echo $last_task['work_id'];?>"><?php echo $last_task['title'];?> </a><span class="mark">(<?php echo $last_task['status'];if((strtolower($last_task['status'])!='redo')&&(strtolower($last_task['status'])!='signoff'))echo 'ed';?>)</span></li>
+														<li><span class="title">[<a href="/project/<?php echo $last_task['project_id'];?>"><?php echo $last_task['project_name'];?></a>]</span> <a href="/story/<?php echo $last_task['work_id'];?>"><?php echo $last_task['title'];?> </a><span class="mark">(<?php echo $last_task['status'];if(in_array(strtolower($last_task['status']),array('reject'))) echo 'ed';?>)</span></li>
                                                         <?php }else{?>
                                                         <li><span class="title">Registration</span>
                                                         <?php }?>
@@ -103,7 +103,7 @@
 									</div>
 									<div class="achievements-block">
 										<div class="level-block">
-											<div class="level-box">
+											<div class="level-box1">
 												<span class="level">level</span>
 												<span class="number"><?php $level = floor($me['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></span>
 											</div>
@@ -154,7 +154,7 @@
 																	<a href="#"><img src="/public/<?php echo $leader['avatar']? $leader['avatar'] : 'images/img7.png';?>" alt="profile picture" class="alignleft" width="20" height="20" /></a>
 																</div>
 																<div class="info">
-																	<a href="#" class="name"><?php echo $leader['username'];?></a>
+																	<a href="/user/<?=$leader['user_id']?>" class="name"><?php echo $leader['username'];?></a>
 																	<span><?php echo $leader['num'];?></span>
 																</div>
 															</li>
@@ -172,7 +172,7 @@
 																	<a href="#"><img src="/public/<?php echo $leader['avatar']? $leader['avatar'] : 'images/img7.png';?>" alt="profile picture" class="alignleft" width="21" height="20" /></a>
 																</div>
 																<div class="info">
-																	<a href="#" class="name"><?php echo $leader['username'];?></a>
+																	<a href="/user/<?=$leader['user_id']?>" class="name"><?php echo $leader['username'];?></a>
 																	<span><?php echo $leader['exp'];?></span>
 																</div>
 															</li>
@@ -189,7 +189,7 @@
 																	<a href="#"><img src="/public/<?php echo $leader['avatar']? $leader['avatar'] : 'images/img7.png';?>" alt="profile picture" class="alignleft" width="21" height="20" /></a>
 																</div>
 																<div class="info">
-																	<a href="#" class="name"><?php echo $leader['username'];?></a>
+																	<a href="/user/<?=$leader['user_id']?>" class="name"><?php echo $leader['username'];?></a>
 																	<span><?php echo $leader['exp'];?></span>
 																</div>
 															</li>
@@ -204,7 +204,7 @@
 														<h3><span class="text-collaborators">collaborators</span></h3>
 														<ul>
                                                         	<?php if($collaborators)foreach($collaborators as $user):?>
-															<li><a href="#"><img src="/public/<?php echo $user['avatar']? $user['avatar'] : 'images/img7.png';?>" alt="profile picture" width="40" height="39" /></a></li>
+															<li><a href="/user/<?php echo $user['user_id'];?>"><img src="/public/<?php echo $user['avatar']? $user['avatar'] : 'images/img7.png';?>" alt="profile picture" width="40" height="39" /></a></li>
                                                             <?php endforeach;?>
 														</ul>
 													</div>

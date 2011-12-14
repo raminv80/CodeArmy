@@ -62,7 +62,7 @@
 								</div>
                                 <li><label for="git">Define GIT repo.</label><input type="text" name="git" /></li>
                                 <li><label for="link">Or define the link to files</label><input type="text" name="link" /></li>
-                                <li><label></label><input id="file_upload" name="file_upload" type="file" /></li>
+                                <li><label>Or upload a .ZIP file</label><input id="file_upload" name="file_upload" type="file" /></li>
                             </ul>
 						</div>
                         <!----->

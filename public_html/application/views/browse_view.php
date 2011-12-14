@@ -15,6 +15,7 @@ span#nextBtn{}
 Easy Slider */
 
 </style>
+
 			<div id="wrapper">
 				<div class="contents">
 					<div id="browse-tools-set">						
@@ -132,17 +133,22 @@ Easy Slider */
                     
 				</div><!--End of the Contents -->
 			</div><!-- End of the Wrapper -->
-<!--			
 <script type="text/javascript">
-	$(document).ready(function(){	
-		$(".user-story ul").easySlider();
-	});
+$('select[name="project_sel"]').change(function(){
+	$.post(
+		'/stories/Ajax_get_project_cat',
+		{ 'id': $('select[name="project_sel"]').val(), 'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>' },
+		function(data){
+			$('select[name="category_sel"]').html('<option value="0">Select Category</option><option value="g">General</option>')
+			if(data!=''){
+				data = data.split('~');
+				for(i=0;i<data.length;i++){
+					me = data[i].split(';');
+					$('select[name="category_sel"]').append('<option value="'+me[0]+'">'+me[1]+'</option>');
+				};
+			}
+		}
+	);
+});
 </script>
-
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('#slider1').bxSlider();
-  });
-</script>
--->				
 <?php $this->load->view('includes/footer'); ?>

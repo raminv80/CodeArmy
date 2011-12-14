@@ -6,20 +6,18 @@
 	<link media="all" type="text/css" rel="stylesheet" href="/public/css/style.css" />
 	<link media="all" type="text/css" rel="stylesheet" href="/public/css/autocomplete.css" />
 	<link rel="stylesheet" type="text/css" href="/public/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
-	
-	<script type="text/javascript" src="/public/js/jquery-1.6.4.min.js"></script>
-	<script type="text/javascript" src="/public/js/jquery.main.js"></script>
-	<script type="text/javascript" src="<?php echo base_url() ?>public/js/script.js"></script>
-    <script type="text/javascript" language="javascript" src="<?php echo base_url() ?>public/js/jquery.carouFredSel-4.4.1-packed.js"></script>
-	<script type="text/javascript" src="<?php echo base_url() ?>public/js/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
-    <script type="text/javascript" src="<?php echo base_url() ?>public/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-    <script type="text/javascript" src="<?php echo base_url() ?>public/js/fancybox/jquery.easing.1.3.js"></script>
+	<link type="text/css" href="/public/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+    <!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="css/ie.css" /><![endif]-->
     
-    <!--<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
-    <script src="<?php echo base_url() ?>public/js/bxSlider/jquery.bxSlider.js" type="text/javascript"></script>
-	<script src="<?php echo base_url() ?>public/js/bxSlider/jquery.bxSlider.min.js" type="text/javascript"></script>-->
-	
-	<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="css/ie.css" /><![endif]-->
+	<script type="text/javascript" src="/public/js/jquery-1.7.min.js"></script>
+	<script type="text/javascript" src="/public/js/jquery.main.js"></script>
+	<script type="text/javascript" src="/public/js/script.js"></script>
+    <script type="text/javascript" src="/public/js/jquery.carouFredSel-4.4.1-packed.js" language="javascript"></script>
+	<script type="text/javascript" src="/public/js/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+    <script type="text/javascript" src="/public/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript" src="/public/js/fancybox/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="/public/js/jquery-ui-1.8.16.custom.min.js"></script>
+
 </head>
 <body>
 	<div id="container" class="clearfix">

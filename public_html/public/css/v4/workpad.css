@@ -1,0 +1,604 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+	margin: 0;
+}
+html, body {
+	background:url(/public/images/bg.jpg);background-attachment:fixed;background-repeat:repeat;
+	height: 100%;
+}
+.wrapper {
+	min-height: 80%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -30px; /* the bottom margin is the negative value of the footer's height */
+}
+*
+#submitform {cursor:pointer; background:url(/public/images/submitBttn.png);floaT:right; margin-right:5px;border: 0;width: 135px;height: 40px;text-indent: -999px;}
+#form-home {width:300px;}
+#form-home2 {width:299px; max-width:299px;height:30px;max-height:60px;}
+label {}
+body { background:url(/public/images/bg.jpg);background-repeat:repeat;background-attachment:fixed;  margin : auto; font-family:'DINRegular'; padding:0 0 0 0;}
+a, a:visited { text-decoration:none ; color:#fff; }
+a:hover {color:#fc0}
+#push-down {width:100%; height:200px; display:block;}
+.row {padding: 0;margin: 0;float: left;width: 535px;}
+.show {float: right;text-decoration: underline; font-size: 0.85em;}
+.share-holder {float:left;}
+.WP-header { top:0; margin-top:-1px;position:fixed; z-index:100; width:100%;height:63px; background:url(/public/images/header.png); display:block; }
+.WP-header-placeholder {margin: 0 auto; width:1000px; height: 30px; padding: 15px 0 15px 0;}
+.WP-header-placeholder #MW_logo a { float:left; text-indent: -999px;background:url(/public/images/MW_logo.png); width: 395px;
+height: 65px;
+display: block;
+margin: -18px 0 0 -100px;display:block; }
+
+.WP-header-placeholder #WP-navigation { float:left; background:url(/public/images/WP-navigation.png); margin: 0 0 0 0; width: 495px; height:32px; }
+.WP-header-placeholder #WP-navigation ul {margin: 0 0 0 38px;
+padding: 0;}
+.WP-header-placeholder #WP-navigation li {text-transform:uppercase;font-family:'DINMediumAlternate';list-style:none; display:inline-block;border-top:0; border-bottom:0; border-right:0; -moz-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Firefox */-webkit-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Opera */border-image:url(/public/images/nav-border.png) 5 10 stretch; font-size:14px;padding: 6px 10px 5px 10px;color: white; }
+.WP-header-placeholder #WP-navigation li.last {border-right:1px solid #000;text-transform:uppercase;font-family:'DINMediumAlternate';list-style:none; display:inline-block;border-top:0; border-bottom:0;  -moz-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Firefox */-webkit-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Opera */border-image:url(/public/images/nav-border.png) 5 10 stretch; font-size:14px;padding: 6px 15px 5px 15px;color: white; }
+.WP-header-placeholder #WP-navigation li a {padding:0;margin:0}
+.WP-header-placeholder #WP-navigation li:hover { padding-bottom:8px;background:url(/public/images/hover.png);}
+
+.WP-main { margin:50px auto 0 auto; width: 1000px; overflow:hidden;}
+.WP-main .WP-total-amount-placeholder { width:410px; height:280px;float:left;}
+.WP-main .WP-total-amount-placeholder #WP-count-caption{ background:url(/public/images/count-caption.png) no-repeat; display:block; width:378px; height:25px; padding-bottom:20px;}
+.WP-main .WP-total-amount-placeholder #WP-number-area {	font-family:'DINMediumRegular';float:left;color:#fff;text-align:right; background:url(/public/images/number-area.png) no-repeat; padding:5px; width:140px; height:34px;}
+.WP-main .WP-total-amount-placeholder td {	font-family:'DINMediumRegular';color:#fff; font-size:1.3em;vertical-align:middle}
+
+.WP-main .WP-leaderboard-placeholder { margin-left:30px; float:left;width: 560px; height:280px; display:block; }
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard { background:url(/public/images/leaderboard-table.png); width:560px; height:280px; overflow:hidden;}
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard ol {padding: 15px 0 0 35px;color:#fff;}
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard li {padding-top:5px; height: 50px;}
+
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #mainheading {font-family:'DINRegular';color:#fff; background:url(/public/images/leaderboard-heading.png) no-repeat; width:560px; height:51px;}
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #mainheading #title {display: block; position: relative; z-index: 2; padding: 10px 0 0 48px; font-size: 1.5em;font-weight: bold;}
+
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #heading {background:url(/public/images/leaderboard-2nd-header.png) no-repeat; width:560px; height:200px; }
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content { float:left; border-top:0; border-bottom:0; border-left:0; width:185px; height:222px; /* Firefox */
+ /* Safari and Chrome */
+ /* Opera */
+}
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content #title {text-transform: uppercase; display: block; color:#1df318; text-align:center; position: relative; z-index: 2; padding: 8px 0 0 0; font-size: 1.0em;}
+
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content-last { float:left; width:184px; height:222px; border:0;}
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content-last #title {text-transform: uppercase; display: block; color:#1df318; text-align:center; position: relative; z-index: 2; padding: 8px 0 0 0; font-size: 1.0em;}
+
+.WP-main .WP-leaderboard-placeholder #icon { width:39px;}
+
+.WP-main .WP-searchbar {width: 1000px; background: url(/public/images/bg-search-form.png) no-repeat; margin-top:45px; float:left;height: 49px; overflow: hidden;}
+.WP-main .WP-searchbar form {padding: 8px 0 0 235px;color:#fff;}
+.WP-main .WP-searchbar label { padding: 2px 10px 0 0;float: left; font-size:1.4em;font-family:'DINRegular';text-transform:uppercase; padding-right:10px;}
+.WP-main .WP-searchbar #input-search {width:350px; height:30px; border-radius:5px; border:0; background:#edecec;}
+.WP-main .WP-searchbar #search-button {background: url(/public/images/searchbutton.png);margin-left: -21px;border: 0;width: 15px;height: 19px;-webkit-appearance: push-button; cursor:pointer}
+
+.WP-main .WP-howitworks {padding: 10px 0 0 0;color: white; floaT: left;}
+.WP-main .WP-howitworks  img {margin-top:15px;}
+.WP-main .WP-howitworks h1 { font-weight: normal; font-family:'DINMediumAlternate';text-transform:uppercase;}
+
+.WP-bottom-nav {width:100%; background:url(/public/images/footer-bg.png); height: 140px;margin:-100px auto;}
+.WP-bottom-nav .WP-nav-placeholder { width :675px; height : 130px; margin:0 auto;}
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content { float:left;border-top:0; border-bottom:0; -moz-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Firefox */-webkit-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Opera */border-image:url(/public/images/footer-border.png) 5 10 stretch;width: 118px;height: 140px; margin-left:10px;}
+
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #US a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/user_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #US a:hover {background:url(/public/images/user_btn.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #addnew a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/add_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #addnew a:hover {background:url(/public/images/add_btn.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #reg a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/reg_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #reg a:hover {background:url(/public/images/reg_btn.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #login a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/login_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #login a:hover {background:url(/public/images/login_btn.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #logout a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/Logout_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #logout a:hover {background:url(/public/images/Logout_btn.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder { width :675px; height : 130px; margin:0 auto;}
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content, .WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content, .WP-bottom-nav .WP-nav-placeholder-qualify #WP-nav-content { float:left;border-top:0; border-bottom:0; -moz-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Firefox */-webkit-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Opera */border-image:url(/public/images/footer-border.png) 5 10 stretch;width: 118px;height: 140px; margin-left:10px;}
+
+/*-----bid stories footer---------*/
+.WP-bottom-nav .WP-nav-placeholder-qualify { width :860px; height : 130px; margin:0 auto;}
+.WP-bottom-nav .WP-nav-placeholder-qualify img {float:left;padding: 10px 10px 10px 20px;}
+.WP-bottom-nav .WP-nav-placeholder-qualify #bid {float:left;border-radius:5px; padding: 0 0 5px 0;
+margin-top: 5px;border:0;width:60px}
+.WP-bottom-nav .WP-nav-placeholder-qualify #bid-closed {float:left;border-radius:5px; padding: 0 0 5px 0;
+margin-top: 5px;border:0;width:60px}
+.WP-bottom-nav .WP-nav-placeholder-qualify #bid-login {float:left;border-radius:5px; padding: 0 0 5px 0;
+margin-top: 5px;border:0;width:60px}
+.WP-bottom-nav .WP-nav-placeholder-qualify #days {width:60px;float:left;border:0;padding: 0 0 5px 0;
+margin-top: 5px;border-radius:5px;}
+.WP-bottom-nav .WP-nav-placeholder-qualify #WP-nav-content #details a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/details_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder-qualify #WP-nav-content  #details  a:hover {background:url(/public/images/details_btn.png) left top; }
+.WP-bottom-nav .WP-nav-placeholder-qualify #WP-nav-content #tutorial a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/tutorial_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav  .WP-nav-placeholder-qualify #WP-nav-content  #tutorial  a:hover {background:url(/public/images/tutorial_btn.png) left top; }
+.WP-bottom-nav  .WP-nav-placeholder-qualify #WP-nav-content #bid a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/bid_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav   .WP-nav-placeholder-qualify #WP-nav-content  #bid  a:hover {background:url(/public/images/bid_btn.png) left top; }
+.WP-bottom-nav  .WP-nav-placeholder-qualify #WP-nav-content #bid-closed span {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/Closed_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav  .WP-nav-placeholder-qualify #WP-nav-content #bid-login a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/login2bid_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav   .WP-nav-placeholder-qualify #WP-nav-content  #bid-login  a:hover {background:url(/public/images/login2bid_btn.png) left top; }
+
+/*----------------------user stories------------*/
+#push-down {width:100%; height:200px; display:block;}
+.header_highlight { color:#818187;}
+.accordion_child{
+color:#fff; padding: 0 15px 20px 15px;
+background: url(/public/images/accordion-bg.jpg);
+width: 1000px;
+height: 123px; overflow:hidden;}
+.accordion-table {float:left;height:115px; width:850px; font-size:0.85em; padding-top:10px;}
+.accordion-table td {padding-right:30px; border-bottom:1px solid #999999;}
+.accordionButton {	
+font-size: 1.1em;
+padding: 5px 0 5px 10px;
+background: url(/public/images/table_bg.jpg) repeat-x;
+width: 1000px;
+height: 30px; cursor:pointer;
+	}
+	
+.accordionContent {	
+	color:#fff; padding: 0 15px 20px 15px;
+background: url(/public/images/accordion-bg.jpg);
+width: 1000px;
+height: 123px; overflow:hidden;
+	}
+
+#title {font-family:'DINMediumAlternate';color:#fff; text-transform:uppercase; display: block; position: relative; padding:10px 0 0 0; z-index: 2;  font-size: 1.6em;}
+.WP-main .WP-searchbar {width: 1000px;background: url(/public/images/bg-search-form.png) no-repeat;margin-top: 10px;float: left;height: 49px;overflow: hidden;}
+.WP-main .WP-contract-placeholder { font-family:'DINRegular'; padding-top:2px;float: left;width:1000px; display:block;}
+.WP-main .WP-contract-placeholder #heading { background:url(/public/images/contract-heading.png); width:1000px; height:40px;}
+.WP-main .WP-contract-placeholder #heading #title { width:120px;font-family:'DINRegular'; float:left; font-size:1.15em; color:#fff; padding:9px; }
+
+.WP-main .WP-contract-placeholder .us_accordion { font-size:0.9em;width:1000px; }
+.WP-main .WP-contract-placeholder .us_accordion #day_date {margin-top: -5px;font-size:1.65em; float:left;}
+.WP-main .WP-contract-placeholder .us_accordion p{ width: 40px;float: left;padding: 0 0 0 6px;line-height: 12px;text-transform: uppercase;font-size: 0.7em; }
+.WP-main .WP-contract-placeholder .us-content { padding:10px;width:355px; margin-left:20px;}
+.WP-main .WP-contract-placeholder .us-content td {padding:5px;border-bottom:1px solid #3d3d3d;}
+.WP-main .WP-contract-placeholder .bid-more a { float:left;margin-left: 40px;text-indent:-999px;background:url(/public/images/bid-more.jpg);display:block; width:95px; height:145px;}
+.WP-main .WP-contract-placeholder .bid-more a:hover { float:left;margin-left: 40px;background:url(/public/images/bid-more2.jpg);display:block; width:95px; height:145px;}
+
+/*----------story bid page-------*/
+.WP-main .WP-contract-placeholder #WP-navigation li {text-transform:uppercase;font-family:'DINMediumAlternate';list-style:none; display:inline-block;border-top:0; border-bottom:0; border-right:0; -moz-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Firefox */-webkit-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Opera */border-image:url(/public/images/nav-border.png) 5 10 stretch; font-size:14px;padding: 6px 15px 5px 15px;color: white; }
+
+.WP-main .WP-qualification-placeholder { font-family:'DINMediumAlternate';width:1000px; padding:0 0 15px 0; padding: display:block}
+.WP-main .WP-qualification-placeholder #qualif-heading {background:url(/public/images/qualif-table-header.png); height:58px; display:block}
+.WP-main .WP-qualification-placeholder  #title, .WP-main .WP-comment-placeholder  #title, .WP-main .WP-allbid-placeholder  #title { font-family:'DINRegular'; float:left; font-size:1.6em; color:#fff; padding:10px 0 0 15px; }
+.WP-main .WP-qualification-placeholder #qualif-heading #position { float:right;text-align:right; font-family:'DINRegular'; font-size:1em; color:#28d227;  }
+.WP-main .WP-qualification-placeholder #qualif-heading #owner {font-family:'DINRegular';float:right;color:#fff;} 
+.WP-main .WP-qualification-placeholder #qualif-table { padding:10px 20px 5px 20px;background:url(/public/images/qualif-table-bg.png); border-bottom:1px solid #696F86;border-right:1px solid #696F86;border-left:1px solid #696F86;display:block}
+.WP-main .WP-qualification-placeholder #qualif-table #top {background:url(/public/images/qualif-top.png) no-repeat; height:35px; width:999px}
+.WP-main .WP-qualification-placeholder #qualif-table #bottom {background:url(/public/images/qualif-bottom.png) no-repeat; height:30px; width:999px}
+.WP-main .WP-qualification-placeholder #qualif-table #mid {background:url(/public/images/qualif-mid.png); width:999px;}
+.WP-main .WP-qualification-placeholder #qualif-table p {font-family:'DINRegular'; color:#fff;} 
+.WP-main .WP-qualification-placeholder #qualif-table table {padding:5px 0 5px 0;border-bottom:1px solid #696f86;text-transform: uppercase; color:#fff;width:960px;}
+.WP-main .WP-qualification-placeholder #qualif-table #inner-table { padding:0 0 10px 0; border:0; text-transform:none; vertical-align:top;width:100%;}
+.WP-main .WP-qualification-placeholder #qualif-table #inner-table h3 {padding: 7px 0 4px 0;}
+.WP-main .WP-qualification-placeholder #qualif-table #inner-table td { vertical-align:top; padding:5px 10px 0 0;}
+.WP-main .WP-qualification-placeholder #qualif-table #dateline {color:#FF0000;}
+.WP-main .WP-qualification-placeholder #qualif-table li {font-family:'DINRegular';}
+.WP-main .WP-qualification-placeholder #qualif-table img {padding: 5px  0 0 10px;}
+.WP-main .WP-qualification-placeholder #qualif-table #download_all a { background:url(/public/images/download_btn.png) left; width:154px;  height:33px; display:block }
+.WP-main .WP-qualification-placeholder #qualif-table #download_all a:hover { background:url(/public/images/download_btn.png) right; width:150px; height:33px; display:block }
+
+.WP-main .WP-comment-placeholder {color:#fff;overflow:hidden; width:610px; float:left;}
+.WP-main .WP-comment-placeholder #comment-top {background:url(/public/images/comment-top.png); width: 600px;
+height: 34px;display:block}
+.WP-main .WP-comment-placeholder #comment-mid {padding:20px 20px 20px 20px;background:url(/public/images/comment-mid.png) repeat-y; width:600px;  display:block}
+.WP-main .WP-comment-placeholder #comments-text { max-height: 100px;
+max-width: 540px;margin-left:5px;width:540px; height:80px;}
+.WP-main .WP-comment-placeholder #comments-submit {float: left;
+margin-top: -4px; margin-left:5px;background:url(/public/images/submit-comment.png); border:0; width:546px; height:22px; text-indent:-999px;}
+.WP-main .WP-comment-placeholder #comments-section { padding:25px 0 10px 0;font-family:'DINRegular';color:#fff;  }
+.WP-main .WP-comment-placeholder  #comments-section table, .WP-main .WP-allbid-placeholder #allbid-section table  {padding: 10px 0 10px 0;-moz-border-image:url(/public/images/commentborder.png) 30 30 stretch; /* Firefox */-webkit-border-image:url(/public/images/commentborder.png) 5 5 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/commentborder.png) 30 30 stretch; /* Opera */border-image:url(/public/images/commentborder.png) 30 30 stretch; border-left:0; border-right:0; border-top:0;}
+.WP-main .WP-comment-placeholder #comments-section td {vertical-align:bottom}
+.WP-main .WP-comment-placeholder #commentator, .WP-main .WP-allbid-placeholder #bidder {text-transform:uppercase; font-family:'DINRegular'}
+.WP-main .WP-comment-placeholder #level, .WP-main .WP-allbid-placeholder #level {color:#9f9f9f;font-family:'DINLightAlternate';}
+.WP-main .WP-comment-placeholder #date-comment, .WP-main .WP-allbid-placeholder #date-comment {font-style: italic;font-size: 0.8em; text-align:right; line-height:15px;text-transform: uppercase;color:#9f9f9f;font-family:'DINLightAlternate';}
+.WP-main .WP-comment-placeholder #comment-content {line-height:22px;text-align:right;font-size:0.8em}
+.WP-main .WP-comment-placeholder #comment-bottom {background:url(/public/images/comment-bottom.png); width:600px; height:26px; display:block}
+
+.WP-main .WP-allbid-placeholder {width:390px; color:#fff;overflow:hidden; float:left;}
+.WP-main .WP-allbid-placeholder #allbid-top {background:url(/public/images/allbid-top.png); width: 600px;
+height: 34px;display:block}
+.WP-main .WP-allbid-placeholder #allbid-mid {padding:0px 20px 20px 20px;background:url(/public/images/allbid-mid.png) repeat-y; width:600px;  display:block}
+.WP-main .WP-allbid-placeholder #allbid-section { padding:15px 0 10px 0;font-family:'DINRegular';color:#fff;  }
+.WP-main .WP-allbid-placeholder #allbid-content {text-transform:uppercase;line-height:22px;text-align:right;font-size:1em}
+.WP-main .WP-allbid-placeholder #allbid-bottom {background:url(/public/images/allbid-bottom.png); width:600px; height:26px; display:block}
+
+.WP-main .WP-tutorial-placeholder { width:1000px; padding:0 0 15px 0;overflow:hidden;  display:block}
+.WP-main .WP-tutorial-placeholder #useful-links {background:url(/public/images/tutorial-links.png); display:block;height:70px;}
+.WP-main .WP-tutorial-placeholder #useful-links h1 {float:left;font-family:'DINMediumAlternate';color: white; text-transform:uppercase;padding: 15px 10px 10px 20px;font-size: 1.85em;}
+.WP-main .WP-tutorial-placeholder iframe {padding-bottom:25px;}
+.WP-main .WP-tutorial-placeholder ul {margin-left:50px;float:left}
+.WP-main .WP-tutorial-placeholder li { float: left;padding: 23px 80px 0 0px; color:#fff;list-style-image:url(/public/images/list-cross.png);}
+#accept {background: #FC0;
+padding: 5px;
+margin-left: 10px;
+border-radius: 5px;
+color: #252525;}
+#social-plugin {float:right; width:340px ;}
+
+
+/*----------story browse page-------*/
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob {width: 1060px; margin:0 auto;}
+
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #home a, .WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #home a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/home_btn.png) right top; width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #home a:hover, .WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #home a:hover {background:url(/public/images/home_btn.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #myoffice a, .WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #myoffice a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/MyOffice_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #myoffice a:hover, .WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #myoffice a:hover {background:url(/public/images/MyOffice_btn.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #design a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/R&d.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content  #design  a:hover {background:url(/public/images/R&d.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #apps a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/apps_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content  #apps  a:hover {background:url(/public/images/apps_btn.png) left top; }
+
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #backend a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/back-end.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content  #backend a:hover {background:url(/public/images/back-end.png) left top; }
+
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #writingcontent a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/writecontent_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content  #writingcontent  a:hover {background:url(/public/images/writecontent_btn.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #test a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/testing.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content  #test  a:hover {background:url(/public/images/testing.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #frontend a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/front-end.png) right top;width:103px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #frontend a:hover {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/front-end.png) left top;width:103px;height:105px; display:block;}
+
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #scrum_plan a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/scrumPlan.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content  #scrum_plan  a:hover {background:url(/public/images/scrumPlan.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #burndown a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/burndownchart.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content  #burndown  a:hover {background:url(/public/images/burndownchart.png) left top; }
+
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #scrum_board a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/scrumboard.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content  #scrum_board  a:hover {background:url(/public/images/scrumboard.png) left top; }
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #find a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/find_btn.png) right top;width:103px;height:105px; display:block;}
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content  #find  a:hover {background:url(/public/images/find_btn.png) left top; }
+
+#browse-search {margin-top:5px;background:url(/public/images/browsejob-search.png); border:0; width: 200px;height: 42px;padding: 0 10px 0 10px;font-size: 1.1em;}
+#time-left, #all-cat { border:0; height: 26px;width: 215px;
+height: 26px;
+padding: 0 5px 0 5px;
+margin: 5px 0 0 3px;border-radius: 5px;}
+#browse-submit {background:url(/public/images/browsejob-filter-button.png); width:25px; height:25px; float:right;}
+
+.WP-header-placeholder .WP-profile-header {margin-top:-90px;width:210px; display:block; float:right; background:url(/public/images/profile-header-bg.png); height:140px;}
+.WP-header-placeholder .WP-profile-header #arrow {background:url(/public/images/profile-header-arrow.png); width:230px; height:15px;}
+.WP-header-placeholder .WP-profile-header li {list-style-image:url(/public/images/bullet123.png);font-size:.8em;margin-left:-17px;color: white;padding: 4px 0 4px 0;}
+.WP-header-placeholder .WP-profile-header li a {color:#fff;text-decoration:none;}
+.WP-header-placeholder .WP-profile-header li a:hover {color:#fc0;}
+.WP-header-placeholder .WP-profile-header li.last {list-style:none;font-size:.8em;margin-left:-32px;color: white;padding: 7px 0 4px 0;}
+.WP-header-placeholder .WP-profile-header ul {border-bottom: 1px solid #8e8c8a;width: 165px;
+margin-left: 4px;}
+.WP-header-placeholder .WP-profile-header #levelmeter {float:left;background:url(/public/images/level-meter.jpg); width:80px;height:8px;margin: 4px 0 0 5px;}
+.WP-header-placeholder .WP-profile-header #levelmeter #level {background:#00FF00; height:8px;}
+/*------------------- Font -----------------------*/
+
+@font-face {
+	font-family:'DINLightAlternate';
+	src: url('/public/fonts/din_lightalternate-webfont.eot');
+	src: url('/public/fonts/din_lightalternate-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/public/fonts/din_lightalternate-webfont.woff') format('woff'),
+		url('/public/fonts/din_lightalternate-webfont.ttf') format('truetype'),
+		url('/public/fonts/din_lightalternate-webfont.svg#DINLightAlternate') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family:'DINRegular';
+	src: url('/public/fonts/din-webfont.eot');
+	src: url('/public/fonts/din-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/public/fonts/din-webfont.woff') format('woff'),
+		url('/public/fonts/din-webfont.ttf') format('truetype'),
+		url('/public/fonts/din-webfont.svg#DINRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family:'DINMediumAlternate';
+	src: url('/public/fonts/din_mediumalternate-webfont.eot');
+	src: url('/public/fonts/din_mediumalternate-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/public/fonts/din_mediumalternate-webfont.woff') format('woff'),
+		url('/public/fonts/din_mediumalternate-webfont.ttf') format('truetype'),
+		url('/public/fonts/din_mediumalternate-webfont.svg#DINMediumAlternate') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family:'DINBold';
+	src: url('/public/fonts/din_bold-webfont.eot');
+	src: url('/public/fonts/din_bold-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/public/fonts/din_bold-webfont.woff') format('woff'),
+		url('/public/fonts/din_bold-webfont.ttf') format('truetype'),
+		url('/public/fonts/din_bold-webfont.svg#DINBold') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family:'DINMediumRegular';
+	src: url('/public/fonts/din_medium-webfont.eot');
+	src: url('/public/fonts/din_medium-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/public/fonts/din_medium-webfont.woff') format('woff'),
+		url('/public/fonts/din_medium-webfont.ttf') format('truetype'),
+		url('/public/fonts/din_medium-webfont.svg#DINMediumRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.calculator{
+	width:396px;
+	height:60px;
+	background:url(/public/images/bg-calculator-v4.png) no-repeat;
+	overflow:hidden;
+	padding:13px 2px 8px 9px;
+}
+.calculator span{
+	float:left;
+	width:34px;
+	text-indent:-9999px;
+	height:59px;
+	overflow:hidden;
+	margin-right:20px;
+	margin-left:10px;
+	margin-right:10px;
+	background:url(/public/images/nums-v4.png) no-repeat;
+}
+.calculator .num-1{background-position:-43px 0;}
+.calculator .num-2{background-position:-84px 0;}
+.calculator .num-3{background-position:-119px 0;}
+.calculator .num-4{background-position:-154px 0;}
+.calculator .num-5{background-position:-189px 0;}
+.calculator .num-6{background-position:-223px 0;}
+.calculator .num-7{background-position:-258px 0;}
+.calculator .num-8{background-position:-293px 0; width:36px; margin-left:9px; margin-right:9px;}
+.calculator .num-9{background-position:-331px 0;}
+
+#slideshow {
+	margin:0 auto;
+	width:1000px;
+	height:148px;
+	background:url(/public/images/html-slider.png);
+	position:relative; color:#fff;
+}
+#slideshow #slidesContainer {
+  margin:0 auto;
+  width: 860px;
+height: 148px;
+  overflow:auto; /* allow scrollbar */
+  position:relative;
+}
+#slideshow #slidesContainer .slide {
+  margin:0 auto;
+  width:1000px; /* reduce by 20 pixels of #slidesContainer to avoid horizontal scroll */
+  height:148px;
+}
+
+.control {
+  display:block;
+  width:39px;
+  height:263px;
+  text-indent:-10000px;
+  position:absolute;
+  cursor: pointer;
+}
+#leftControl {
+  top:0;
+  left:0;
+}
+#rightControl {
+  top:0;
+  right:0;
+}
+#slidetitle {FONT-SIZE: 1.2em;
+font-weight: bold;
+padding: 6px 5px 0 3px;
+float: left;}
+
+#h3slide {color: #28D227;
+padding: 15px 0 0 0;
+font-size:1.9em; margin: 0 0 0 0;}
+
+#contentslide {padding: 0 0 0 0;
+margin: -22px 0 0 2px;
+float: left;}
+
+.wp-next-page{text-align:right; width:20%; height:25px; float:left;}
+.wp-previous-page{ width:20%; height:25px; float:left}
+.wp-page-numbers{height: 25px; width:60%; float:left;}
+ul.wp-pagination{list-style:none; width:155px; margin:0 auto;}
+ul.wp-pagination li{float:left; width:25px; text-align:center; background:#333; border:1px solid; margin:2px 2px 0 2px;}
+ul.wp-pagination li.active{ background:#666;}
+
+.row {padding: 5px 0 2px 0;}
+.row label {float: left;
+width: 160px;
+text-align: left;
+}
+.row #name, .row #email, .row #password2, .row #password3 { border:0; padding:5px; width: 280px;float: left;}
+.reg-submit {cursor: pointer;
+background: url(/public/images/submitBttn.png);
+floaT: right;
+margin:10px 0 0 0;
+border: 0;
+width: 135px;
+height: 40px;
+text-indent: -999px;}
+
+/*project details page*/
+
+.project_detail {
+background: url(/public/images/qualif-table-bg.png);
+border-bottom: 1px solid #696F86;
+border-right: 1px solid #696F86;
+border-left: 1px solid #696F86;
+display: block;
+width: 978px;
+margin: 0 auto;
+padding: 0 10px 0; float:left;
+color:#fff;
+}
+.project_detail h1 {padding: 10px 0 0 15px;}
+.project_detail .loadingprogress {float:left;background:url(/public/images/loading-bar.png) no-repeat; margin:20px 0 20px 15px;width:860px; height:41px; }
+.project_detail .loadingprogress #starter {width:498px; height:61px;background:url(/public/images/loading1.png) no-repeat; margin-top: -20px;
+float: left;
+}
+
+li.collab-project-page {display:inline-block;list-style:none;padding-right: 10px;}
+.project-desc {float:left;width: 96%;
+padding: 5px 10px 0 15px;}
+.project-desc p {padding: 10px 0 10px 0;}
+
+.bidding-box {text-align: center;background:url(/public/images/qualif-table-bg.png); width:180px; height:120px; border-radius:5px; border: 1px solid #696F86;
+margin: 5px;
+float: right;}
+.bidding-box h3 {font-size: 1.2em;padding: 10px 10px 0 10px;font-family:'DINRegular';text-transform:uppercase;color:#fff;}
+.bidding-box h2 {font-family:'DINRegular';text-transform:uppercase;color:#00FF00;font-size: 2.9em;
+margin:0 5px 0 5px;
+text-align: center;}
+.bidding-box p {color:#fff;font-size: 0.9em;padding: 5px;text-transform: none !important;}
+
+.project_detail .skills-points .skill-chart-container{
+	margin-top:20px;
+    height:32px;
+    width:700px;
+    background: url(/public/images/loading-bar.png) repeat-x;margin-left: 15px;
+}
+.skill-chart-start { width:18px;height:32px;
+    float:left;margin-left:-3px;
+    background: url(/public/images/progress1.png) repeat-x;}
+.skill-chart{
+    height:32px;
+    float:left;
+    background: url(/public/images/loading1.png) repeat-x;
+}
+
+
+#project-mgmt {text-shadow: 0 1px 10px white;text-transform:uppercase !important;}
+.project_detail .skills-points{
+	padding: 2px 0 30px 10px;
+border-bottom: 1px solid #696F86;
+margin: 0 0 0 -10px;
+}
+.skills-points img{display:block;}
+#prof-mgmt-table {width:745px; text-align:left;}
+#prof-mgmt-table th {font-size: 1.5em;
+padding: 0 0 0 10px;}
+#prof-mgmt-table td {text-align: left;
+padding-left: 10px;}
+#prof-mgmt-table a {text-align:left;}
+#prof-mgmt-table a:hover {color:#fc0}
+#addnewproject a {text-indent:-999px;margin-top:15px;display:block;background:url(/public/images/addNewProjects.png) top; width:744px; height:40px;}
+#addnewproject a:hover {background:url(/public/images/addNewProjects.png) bottom; width:744px; height:40px;}
+
+/*-------------------------*/
+/*nasrul section-----*/
+#feedbackbox{
+	width:488px;
+	height:343px;
+	background:url(../../images/feedback-bg.png) no-repeat transparent;
+	padding-left:200px;
+	padding-top:95px;
+	position:relative; overflow-x:hidden;
+}
+#feedbacktext {width: 420px;max-width:420px;max-height:120px;
+height: 120px;
+border: 0;
+margin: 10px 0 0 0;}
+#registerbox{
+	width:488px;
+	height:343px;
+	background:url(../../images/registerbg.png) no-repeat transparent;
+	padding-left:200px;
+	padding-top:95px;
+	position:relative;
+}
+.close{
+	position:absolute;
+	width:21px;
+	height:21px;
+	display:block;
+	top:38px;
+	right:50px;
+}
+
+#registerbox .row, #loginbox .row{
+	width:auto;
+}
+
+#loginbox .forgot{
+	float:left;
+	color:#333;
+	margin-right:285px;
+	padding-top:10px;
+	padding-left:50px;
+}
+#loginbox .forgot:hover{
+	color:#000;
+}
+.goregister{
+	float:left;
+	padding-top:18px;
+	padding-left:50px;
+}
+.goregister p {
+	display:inline;
+}
+.goregister a{
+	display:inline;
+	color:#0785a9;
+}
+.row #name, .row #email, .row #password2, .row #password3, .row #username, .row #password1  {
+    border: 0 none;
+    float: left;
+    padding: 5px;
+    width: 410px;
+	font-size:16px;
+	line-height:30px;
+	height:23px;
+	margin-bottom:19px;
+}
+
+#username, #password1 {
+	margin-left:200px;
+}
+.reg-submit {
+    margin: 10px 55px 0 0;
+}
+
+#loginbox .reg-submit{
+	margin:0px;
+}
+
+#loginbox{
+	width:688px;
+	height:243px;
+	background:url(../../images/loginbg.png) no-repeat transparent;
+	padding-top:95px;
+	position:relative;
+}
+.clear{
+	clear:both;
+}
+.feedback-submit {cursor: pointer;
+background: url(/public/images/submitBttn123.png);
+floaT: right;
+margin: -5px 105px 0 0;
+border: 0;
+width: 135px;
+height: 40px;
+text-indent: -999px;}

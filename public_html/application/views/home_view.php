@@ -241,6 +241,9 @@
 							</li>
                             <?php endforeach;?>
 						</ul>
+                        <script type="text/javascript">
+						$('#story_list').paginate();
+						</script>
 					</div>
 				</div>
 			</div>

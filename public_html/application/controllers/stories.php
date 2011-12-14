@@ -11,13 +11,14 @@ class Stories extends CI_Controller {
 		$this->load->model('skill_model');
 		
 		$this->view_data['page_is'] = 'stories';
+		$this->view_data['action_is'] = 'browse';
 		
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
 		if($check_login == true) {
 			$this->view_data['username'] = $this->session->userdata('username');
 		} else { // - if user not login, redirect to dashboard. 
-			if(strtolower($this->uri->segment(2))!='browse')redirect("login"); 
+			if(!in_array(strtolower($this->uri->segment(2)),array('browse','ajax_get_project_cat')))redirect("login"); 
 		}	
 		$this->load->model('stories_model', 'stories');
 	}
@@ -166,6 +167,8 @@ class Stories extends CI_Controller {
 		}
 	}
 	
+	/*
+	//version 2
 	function browse(){
 		//$project_sel, $cat_sel, $skill_sel, $cash_from, $cash_to, $point, $type, $status, $work_horse
 		$project_sel = $this->input->post('project_sel');
@@ -196,5 +199,83 @@ class Stories extends CI_Controller {
 		$this->view_data['page_is'] = 'Browse';
 		$this->view_data['window_title'] = "Workpad :: Browse Jobs";
 		$this->load->view('browse_view', $this->view_data);
+	}*/
+	
+	//version 4
+	function browse($subject=''){
+		//$project_sel, $cat_sel, $skill_sel, $cash_from, $cash_to, $point, $type, $status, $work_horse
+		$project_sel = $this->input->post('project_sel');
+		$cat_sel = $this->input->post('category_sel');
+		$skill_sel = $this->input->post('skill_sel');
+		$cash_from = $this->input->post('cash_from');
+		$cash_to = $this->input->post('cash_to');
+		$point = $this->input->post('point');
+		$type = $this->input->post('type');
+		$status = $this->input->post('status');
+		$search = $this->input->post('search');
+		$time = $this->input->post('time');
+		$work_horse = $this->input->post('work_horse');
+		if(!$project_sel)$project_sel=0;
+		if(!$cat_sel)$cat_sel=0;
+		if(!$skill_sel)$skill_sel=0;
+		if(!$cash_from)$cash_from='';
+		if(!$cash_to)$cash_to='';
+		if(!$point)$point=0;
+		if(!$type)$type=0;
+		if(!$status)$status=0;
+		if(!$work_horse)$work_horse='';
+		if(!$search)$search='';
+		if($search=='Type and press ENTER')$search='';
+		if(!$time)$time=0;
+		switch($time){
+			case '0': $timeS=-1;$timeE=-1;break;
+			case '1': $timeS=-1;$timeE=1;break;
+			case '2': $timeS=1;$timeE=4;break;
+			case '3': $timeS=4;$timeE=12;break;
+			case '4': $timeS=12;$timeE=24;break;
+			case '5': $timeS=24;$timeE=3*24;break;
+			case '6': $timeS=3*24;$timeE=7*24;break;
+			case '7': $timeS=7*24;$timeE=-1;break;
+		}
+		
+		//ver4
+		$this->view_data['featherlight'] = $this->stories->featherlight($type);
+		$this->view_data['lightweight'] = $this->stories->lightweight($type);
+		$this->view_data['heavyweight'] = $this->stories->heavyweight($type);
+		$this->view_data['num_page']=6;
+		$user_id = $this->session->userdata('user_id');
+		if($user_id){
+			$myProfile = $this->users_model->get_profile($user_id);
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$me = $this->users_model->get_user($user_id);
+			$me = $me->result_array();
+			$me = $me[0];
+			$this->view_data['myProfile'] = $myProfile;
+			$this->view_data['me'] = $me;
+		}
+		//
+		
+		$this->view_data['stories'] = 
+			$this->stories->browse_stories_v4($subject, $project_sel, $cat_sel, $type, $skill_sel, $cash_from, $cash_to, $point, $search, $timeS, $timeE);
+		$this->view_data['projects'] = $this->projects_model->get_all_projects();
+		$this->view_data['categories'] = $this->projects_model->get_all_categories();
+		$this->view_data['skills'] = $this->skill_model->get_all_skills();
+		$this->view_data['page_is'] = 'Browse';
+		$this->view_data['window_title'] = "Workpad :: Browse Jobs";
+		$this->load->view('browse_view_v4', $this->view_data);
+	}
+	
+	function Ajax_get_project_cat(){
+		$id = $this->input->post('id');
+		$categories = $this->projects_model->get_categories($id);
+		$categories = $categories->result_array();
+		$c = count($categories);
+		foreach($categories as $i=>$cat):
+			echo $cat['id'];
+			echo ';';
+			echo $cat['name'];
+			if($i<$c-1)echo '~';
+		endforeach;
 	}
 }

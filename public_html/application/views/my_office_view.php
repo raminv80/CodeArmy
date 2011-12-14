@@ -1,5 +1,11 @@
-<?php $this->load->view('includes/header'); ?>
-		<div id="wrapper">
+<?php $this->load->view('includes/header4'); ?>
+	<link media="all" type="text/css" rel="stylesheet" href="/public/css/v4/myoffice/style.css" />
+	<link media="all" type="text/css" rel="stylesheet" href="/public/css/v4/myoffice/autocomplete.css" />
+	<link rel="stylesheet" type="text/css" href="/public/css/v4/myoffice/jquery.fancybox-1.3.4.css" media="screen" />
+	<link type="text/css" href="/public/css/v4/myoffice/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+    <style>.tabset li {overflow: hidden;border-bottom: 1px solid #252525; background:none !important;}</style>
+        <section style="padding-top:100px;" id="pitch">
+        <div id="wrapper">
 			<div class="contents">
 				<div class="profile-heading">
 					<div class="points-box">
@@ -61,6 +67,7 @@
 							<li><a class="tab" href="#tab_5"><span class="top"><span class="text-history">history</span></span></a></li>
 							<li><a class="tab" href="#tab_6"><span class="top"><span class="text-leaderboard">Leaderboard</span></span></a></li>
 							<li><a class="tab" href="#tab_7"><span class="top"><span class="text-personal">Personal info</span></span></a></li>
+                            <li><a class="tab" href="#tab_8"><span class="top"><p id="project-mgmt">Project Mngmnt</p></a></li>
 						</ul>
 					</div>
 					<div id="tab_1" class="tab-content">
@@ -147,7 +154,7 @@
 													<h3><span>Last completed task</span></h3>
 													<ul>
                                                     	<?php if($last_task){?>
-														<li><span class="title">[<a href="#"><?php echo $last_task['project_name'];?></a>]</span> <a href="/story/<?php echo $last_task['work_id'];?>"><?php echo $last_task['title'];?> </a><span class="mark">(<?php echo $last_task['status'];if((strtolower($last_task['status'])!='redo')&&(strtolower($last_task['status'])!='signoff'))echo 'ed';?>)</span></li>
+														<li style="width: 240px;"><span class="title">[<a href="/project/<?php echo $last_task['project_id'];?>"><?php echo $last_task['project_name'];?></a>]</span> <a href="/story/<?php echo $last_task['work_id'];?>"><?php echo $last_task['title'];?> </a><span class="mark">(<?php echo $last_task['status'];if(in_array(strtolower($last_task['status']),array('reject'))) echo 'ed';?>)</span></li>
                                                         <?php }else{?>
                                                         <li><span class="title">Registration</span>
                                                         <?php }?>
@@ -159,7 +166,7 @@
 												<h3><span class="text-currently">currently working on</span></h3>
 												<ul>
                                                 	<?php if($working_on){foreach($working_on as $work):?>
-													<li><span class="title">[<a href="#"><?php echo $work['project_name'];?></a>]</span> <a href="/story/<?php echo $work['work_id'];?>"><?php echo $work['title'];?></li>
+													<li><span class="title">[<a href="/project/<?php echo $work['project_id'];?>"><?php echo $work['project_name'];?></a>]</span> <a href="/story/<?php echo $work['work_id'];?>"><?php echo $work['title'];?></li>
                                                     <?php endforeach;}else{?>
                                                     <li>You have no active tasks at the moment</li>
                                                     <?php }?>
@@ -186,7 +193,7 @@
 										<div class="achievement-holder">
 											<h3>
 												<a href="#" class="tab">
-													<span class="text-recent">Recent Achievement</span>
+													<span style="background:none;width: 245px;text-indent:1px;font-size: 0.8em;" class="text-recent">Recent Achievement</span>
                                                     <?php if($last_badge){?>
 													<img src="/public/<?php echo $last_badge['achievement_pic'];?>" alt="achievement badge" width="133" height="121" />
                                                     <?php }else{?>
@@ -207,11 +214,11 @@
 								<div class="leaderboard-block">
 									<div class="holder">
 										<div class="frame">
-											<div class="content">
+											<div style="width: 750px;" class="content">
 												<h3><span>Leaderboard</span></h3>
 												<ul>
 													<li>
-														<strong class="title">mission completed</strong>
+														<strong style="text-align:left" class="title">mission completed</strong>
 														<ul>
 															<?php foreach($leaderboard_project as $i=>$leader):?>
 															<li>
@@ -267,7 +274,8 @@
 											<div class="collaborators-box">
 												<div class="collaborators-holder">
 													<div class="collaborators-frame">
-														<h3><span class="text-collaborators">collaborators</span></h3>
+														<h3><span class="text-collaborators" style="float: left;
+margin: 0 0 13px 10px;">collaborators</span></h3>
 														<ul>
                                                         	<?php if($collaborators)foreach($collaborators as $user):?>
 															<li><a href="/user/<?php echo $user['user_id'];?>"><img src="/public/<?php echo $user['avatar']? $user['avatar'] : 'images/img7.png';?>" alt="profile picture" width="40" height="39" /></a></li>
@@ -342,8 +350,18 @@
                             </div>    
                         </div>
 					</div>
+                    <div id="tab_8" class="tab-content">
+						<div class="tab-holder">
+							<div class="tab-frame">
+								<div class="content">
+                                	<h1>Project Management</h1>
+                                    <!-- TODO: Project Management -->
+                                </div>
+                            </div>    
+                        </div>
+					</div>
 				</div>
 			</div>
-		</div>
+            </div></section>
         <script type="text/javascript" src="/public/js/main.js"></script>
-<?php $this->load->view('includes/footer'); ?>        
+<?php $this->load->view('includes/footer4'); ?>        

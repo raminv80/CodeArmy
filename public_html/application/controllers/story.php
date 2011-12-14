@@ -12,11 +12,12 @@ class Story extends CI_Controller {
 		
 		$this->view_data['page_is'] = 'story';
 		$this->view_data['action'] = $this->uri->segment(2);
-		
+		$this->view_data['action_is'] = $this->uri->segment(2);
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
 		if($check_login == true) {
 			$this->view_data['username'] = $this->session->userdata('username');
+			$this->view_data['user_id'] = $this->session->userdata('user_id');
 		} 		
 		$this->load->model('stories_model', 'stories');
 		$this->load->model('users_model', 'users');
@@ -31,6 +32,18 @@ class Story extends CI_Controller {
 	
 	// - show work id
 	function show($work_id) {
+		//everyone can see the work details
+		$user_id = $this->session->userdata('user_id');
+		if($user_id){
+			$me = $this->users_model->get_user($user_id);
+			$me = $me->result_array();
+			$me = $me[0];
+			$myProfile = $this->users_model->get_profile($user_id);
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$this->view_data['me'] = $me;
+			$this->view_data['myProfile'] = $myProfile;
+		}
 		// get stories 
 		$this->view_data['is_my_work'] = false;
 		$user_id = $this->session->userdata('user_id');
@@ -90,11 +103,16 @@ class Story extends CI_Controller {
 			else {
 				$this->view_data['show_bid'] = false;
 			}
-			
+			$msg = $this->session->flashdata('bid_message');
+			if($msg){
+				$this->view_data['modal_message'] = $msg;
+				$this->view_data['modal_title'] = "Bid on ".$this->view_data['work_data']['title'];
+			}
 			$this->load->helper('stories_helper');
 			$this->load->helper('user_helper');
-			$this->view_data['window_title'] = "Workpad :: User Stories Details";
-			$this->load->view('story_page_view', $this->view_data);		
+			$this->view_data['window_title'] = "Workpad :: User Story - ".$this->view_data['work_data']['title'];
+			//$this->load->view('story_page_view', $this->view_data);
+			$this->load->view('story_page_v4_view', $this->view_data);
 		} 
 		
 		else {
@@ -201,6 +219,7 @@ class Story extends CI_Controller {
 	
 	function bid($work_id) {
 		$this->check_authentication();
+		//all logged users can bid
 		$this->load->helper('stories_helper');
 		$query = $this->stories->get_work_details($work_id);
 		if($query->num_rows() > 0) {
@@ -258,6 +277,7 @@ class Story extends CI_Controller {
 	
 	function comments() {	
 		$this->check_authentication();
+		//any logged user can comment
 		$path = "";
 		if($this->input->post('has_file')=='has_file'){
 			$config['upload_path'] = './uploads/';
@@ -284,31 +304,38 @@ class Story extends CI_Controller {
                $query = $this->stories->get_work_from_bid($id);
                $data = $query->result_array();
                $work_id = $data[0]['work_id'];
+			   
 			   $query = $this->stories->get_work($work_id);
 			   $data = $query->result_array();
 			   $cost = $data[0]['cost'];
+			   $project_id = $data[0]['project_id'];
 			   $query = $this->stories->get_bid($id);
 			   $data = $query->result_array();
 			   $to_id = $data[0]['user_id'];
-                              
-               $this->stories->accept_bid($id, $work_id);
-			   $work = $this->stories->get_work($work_id);
-			   $work_data = $work->result_array();
-			   $title = 'Bid on '.$work_data[0]['title'];
-			   $usr = $this->users->get_user($to_id);
-			   $usr_data = $usr->result_array();
-			   $to = $usr_data[0]['email'];
-			   $message = 'Your bid on story '.$work_data[0]['title'].' was successful';
-			   $this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+               $user_id = $this->session->userdata('user_id');
 			   
-			   $project_id =$work_data[0]['project_id'];
-			   $user_id = $usr_data[0]['user_id'];
-			   $this->stories->log_history($user_id, $project_id, $work_id, 'win', $cost, $desc = '');
+			   if($this->projects_model->is_project_owner($user_id, $project_id)){
+				   //only project owner can accept bids
+				   $this->stories->accept_bid($id, $work_id);
+				   $work = $this->stories->get_work($work_id);
+				   $work_data = $work->result_array();
+				   $title = 'Bid on '.$work_data[0]['title'];
+				   $usr = $this->users->get_user($to_id);
+				   $usr_data = $usr->result_array();
+				   $to = $usr_data[0]['email'];
+				   $message = 'Your bid on story '.$work_data[0]['title'].' was successful';
+				   $this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+				   
+				   $project_id =$work_data[0]['project_id'];
+				   $user_id = $usr_data[0]['user_id'];
+				   $this->stories->log_history($user_id, $project_id, $work_id, 'win', $cost, $desc = '');
+			   }
                redirect("/story/".$this->input->post('story_id'));
         }
         
         function edit($id) {
-			$this->check_authentication('admin');
+			$this->check_authentication();
+			$user_id = $this->session->userdata('user_id');
 			$this->view_data['window_title'] = "Edit the Story";
             $query = $this->stories->get_work_details($id);
             $data = $query->result_array();
@@ -316,233 +343,263 @@ class Story extends CI_Controller {
 			$this->view_data['story_data'] = $data[0];
             $this->view_data['story_id'] = $id;
 			
-			$this->load->library('ckeditor');
-			$this->load->library('ckFinder');
-			//configure base path of ckeditor folder 
-			$this->ckeditor->basePath = base_url().'public/scripts/ckeditor/';
-			$this->ckeditor-> config['toolbar'] = 'Full';
-			$this->ckeditor->config['language'] = 'en';
-			//configure ckfinder with ckeditor config 
-			$this->ckfinder->SetupCKEditor($this->ckeditor,'/public/js/ckfinder/');
-            
-			$this->load->library('formdate');
-			$formdate_deadline = new FormDate();
-			$formdate_deadline->config['prefix']="deadline_";
-			$formdate_deadline->year['start'] = date('Y');
-			$formdate_deadline->year['end'] = date('Y')+5;
-			$formdate_deadline->year['selected'] = date('Y',strtotime($this->view_data['story_data']['deadline']));
-			$formdate_deadline->month['selected'] = date('m',strtotime($this->view_data['story_data']['deadline']));
-			$formdate_deadline->day['selected'] = date('d',strtotime($this->view_data['story_data']['deadline']));
-			$this->view_data['formdate_deadline'] = $formdate_deadline;
-			$formdate_biddead = new FormDate();
-			$formdate_biddead->config['prefix']="biddead_";
-			$formdate_biddead->year['start'] = date('Y');
-			$formdate_biddead->year['selected'] = date('Y',strtotime($this->view_data['story_data']['bid_deadline']));
-			$formdate_biddead->month['selected'] = date('m',strtotime($this->view_data['story_data']['bid_deadline']));
-			$formdate_biddead->day['selected'] = date('d',strtotime($this->view_data['story_data']['bid_deadline']));
-			$formdate_biddead->year['end'] = date('Y')+5;		
-			$this->view_data['formdate_biddead'] = $formdate_biddead;
-			$data = $this->projects_model->get_categories($data[0]['project_id']);
-			$data = $data->result_array();
-			$this->view_data['categories'] = $data;
-			$this->view_data['skills'] = $this->skill_model->get_all_skills_with_select($id);
+			if($this->projects_model->is_project_owner($user_id, $this->view_data['story_data']['project_id'])){
+				//only product owner can edit the job
+				$this->load->library('ckeditor');
+				$this->load->library('ckFinder');
+				//configure base path of ckeditor folder 
+				$this->ckeditor->basePath = base_url().'public/scripts/ckeditor/';
+				$this->ckeditor-> config['toolbar'] = 'Full';
+				$this->ckeditor->config['language'] = 'en';
+				//configure ckfinder with ckeditor config 
+				$this->ckfinder->SetupCKEditor($this->ckeditor,'/public/js/ckfinder/');
+				
+				$this->load->library('formdate');
+				$formdate_deadline = new FormDate();
+				$formdate_deadline->config['prefix']="deadline_";
+				$formdate_deadline->year['start'] = date('Y');
+				$formdate_deadline->year['end'] = date('Y')+5;
+				$formdate_deadline->year['selected'] = date('Y',strtotime($this->view_data['story_data']['deadline']));
+				$formdate_deadline->month['selected'] = date('m',strtotime($this->view_data['story_data']['deadline']));
+				$formdate_deadline->day['selected'] = date('d',strtotime($this->view_data['story_data']['deadline']));
+				$this->view_data['formdate_deadline'] = $formdate_deadline;
+				$formdate_biddead = new FormDate();
+				$formdate_biddead->config['prefix']="biddead_";
+				$formdate_biddead->year['start'] = date('Y');
+				$formdate_biddead->year['selected'] = date('Y',strtotime($this->view_data['story_data']['bid_deadline']));
+				$formdate_biddead->month['selected'] = date('m',strtotime($this->view_data['story_data']['bid_deadline']));
+				$formdate_biddead->day['selected'] = date('d',strtotime($this->view_data['story_data']['bid_deadline']));
+				$formdate_biddead->year['end'] = date('Y')+5;		
+				$this->view_data['formdate_biddead'] = $formdate_biddead;
+				$data = $this->projects_model->get_categories($data[0]['project_id']);
+				$data = $data->result_array();
+				$this->view_data['categories'] = $data;
+				$this->view_data['skills'] = $this->skill_model->get_all_skills_with_select($id);
+				
+				if($this->input->post('submit')) {
+								$this->load->library('form_validation');
 			
-			if($this->input->post('submit')) {
-							$this->load->library('form_validation');
-		
-							$this->form_validation->set_rules('title', 'Title', 'required');
-							$this->form_validation->set_rules('type', 'Type', 'required');
-							$this->form_validation->set_rules('description', 'Description', 'required');
-							$this->form_validation->set_rules('points', 'Complexity Points', 'required');
-							$this->form_validation->set_rules('cost', 'Cost', 'required');
-							
-							if ($this->form_validation->run() == FALSE) {
-								$this->view_data['form_error'] = true;
-							} else {
-								$work_id = $this->stories->edit_user_story($id);
-								if($work_id != false) {
-									// signup successful
-									$this->view_data['success'] = true;
-									$this->view_data['work_id'] = $work_id;
-								} //else { // - if there is a problem writing to db
-									//redirect(base_url()."error");
-								//}
+								$this->form_validation->set_rules('title', 'Title', 'required');
+								$this->form_validation->set_rules('type', 'Type', 'required');
+								$this->form_validation->set_rules('description', 'Description', 'required');
+								$this->form_validation->set_rules('points', 'Complexity Points', 'required');
+								$this->form_validation->set_rules('cost', 'Cost', 'required');
+								
+								if ($this->form_validation->run() == FALSE) {
+									$this->view_data['form_error'] = true;
+								} else {
+									$work_id = $this->stories->edit_user_story($id);
+									if($work_id != false) {
+										// signup successful
+										$this->view_data['success'] = true;
+										$this->view_data['work_id'] = $work_id;
+										redirect('/project/sprint_planner/'.$this->view_data['story_data']['project_id']);
+									} //else { // - if there is a problem writing to db
+										//redirect(base_url()."error");
+									//}
+								}
 							}
-						}
-						
+			}
 			$this->load->view('story_edit_view', $this->view_data);
         }
 		
 		function done(){
 			$this->check_authentication();
-			ini_set('display_error',1);
-			error_reporting('E_ALL');
 			$has_upload_error= false;
 			if($this->input->post('csrf')==md5('storyDone')){
 				$story_id = $this->input->post('id');
-				
-				$config['upload_path'] = './uploads/';
-				$config['allowed_types'] = 'zip';
-				$config['max_size']	= '51200';
-				$config['overwrite'] = false;
-				$config['encrypt_name'] = true;
-				$config['remove_spaces'] = true;
-				$this->load->library('upload', $config);
-				if (strlen($_FILES["file_upload"]["name"])>0) {
-					if($this->upload->do_upload("file_upload")){
-						$uploaded = $this->upload->data();
-						$path = $config['upload_path'].$uploaded['file_name'];
-					}else{
-						$error = array('error' => $this->upload->display_errors());
-						$this->view_data['error'] = $error;
-						$path="";
-						$has_upload_error= true;
-						///////upload error show back submission page
-						$work_id = $this->input->post('id');
-						// get stories 
-						$user_id = $this->session->userdata('user_id');
-						$this->view_data['userid'] = $this->session->userdata('user_id');
-						$query = $this->stories->get_work_details($work_id);
-						
-						if($query->num_rows() > 0) {
-							$data = $query->result_array();
-							$this->view_data['work_data'] = $data[0];
-							// get any uploaded files
-							$query = $this->stories->get_uploaded_files($work_id);
+				$work = $this->stories->get_work($story_id);
+				$work_data = $work->result_array();
+				$user_id = $this->session->userdata('user_id');
+				if($work_data[0]['work_horse']==$user_id){
+					//only work horse can finish the job
+					$story_id = $this->input->post('id');
+					
+					$config['upload_path'] = './uploads/';
+					$config['allowed_types'] = 'zip';
+					$config['max_size']	= '51200';
+					$config['overwrite'] = false;
+					$config['encrypt_name'] = true;
+					$config['remove_spaces'] = true;
+					$this->load->library('upload', $config);
+					if (strlen($_FILES["file_upload"]["name"])>0) {
+						if($this->upload->do_upload("file_upload")){
+							$uploaded = $this->upload->data();
+							$path = $config['upload_path'].$uploaded['file_name'];
+						}else{
+							$error = array('error' => $this->upload->display_errors());
+							$this->view_data['error'] = $error;
+							$path="";
+							$has_upload_error= true;
+							///////upload error show back submission page
+							$work_id = $this->input->post('id');
+							// get stories 
+							$user_id = $this->session->userdata('user_id');
+							$this->view_data['userid'] = $this->session->userdata('user_id');
+							$query = $this->stories->get_work_details($work_id);
+							
 							if($query->num_rows() > 0) {
 								$data = $query->result_array();
-								$this->view_data['files_data'] = $data; 
+								$this->view_data['work_data'] = $data[0];
+								// get any uploaded files
+								$query = $this->stories->get_uploaded_files($work_id);
+								if($query->num_rows() > 0) {
+									$data = $query->result_array();
+									$this->view_data['files_data'] = $data; 
+								}
+								
+								$this->view_data['project_ppl'] = $this->stories->get_project_ppl($this->view_data['work_data']['project_id']);
+							
+								//get skills
+								$query4 = $this->skill_model->get_work_skills($work_id);
+								$this->view_data['skills'] = $query4;
+								
+								$this->load->helper('stories_helper');
+								$this->load->helper('user_helper');
+								$this->view_data['window_title'] = "Workpad :: Submission";
+								$this->load->view('story_submission_view', $this->view_data);		
+							} else {
+								$this->view_data['window_title'] = "Error, user story (".$work_id.") does not exist.";
+								$this->load->view('story_error_view', $this->view_data);
 							}
-							
-							$this->view_data['project_ppl'] = $this->stories->get_project_ppl($this->view_data['work_data']['project_id']);
-						
-							//get skills
-							$query4 = $this->skill_model->get_work_skills($work_id);
-							$this->view_data['skills'] = $query4;
-							
-							$this->load->helper('stories_helper');
-							$this->load->helper('user_helper');
-							$this->view_data['window_title'] = "Workpad :: Submission";
-							$this->load->view('story_submission_view', $this->view_data);		
-						} else {
-							$this->view_data['window_title'] = "Error, user story (".$work_id.") does not exist.";
-							$this->load->view('story_error_view', $this->view_data);
+							///////////////////
 						}
-						///////////////////
+					}else{
+						$path="";
 					}
-				}else{
-					$path="";
-				}
-				if(!$has_upload_error){
-					$query = $this->stories->done($story_id,$path);
-					$work = $this->stories->get_work($this->input->post('id'));
-					$work_data = $work->result_array();
-					$title = $work_data[0]['title'].' is completed.';
-					$point = $work_data[0]['points'];
-				
-					$message = 'User '.$this->session->userdata('username').' has completed the user story '.$work_data[0]['title'];
-					$this->notify(noreply_email,email_name, admin_email, admin_cc, $title,$message);
+					if(!$has_upload_error){
+						$query = $this->stories->done($story_id,$path);
+						$work = $this->stories->get_work($this->input->post('id'));
+						$work_data = $work->result_array();
+						$title = $work_data[0]['title'].' is completed.';
+						$point = $work_data[0]['points'];
 					
-					$project_id =$work_data[0]['project_id'];
-					$user_id = $this->session->userdata('user_id');
-					
-					$this->stories->log_history($user_id, $project_id, $story_id, 'done', $point, $desc = '');
-	
-					redirect("/story/".$story_id);
+						$message = 'User '.$this->session->userdata('username').' has completed the user story '.$work_data[0]['title'];
+						$this->notify(noreply_email,email_name, admin_email, admin_cc, $title,$message);
+						
+						$project_id =$work_data[0]['project_id'];
+						$user_id = $this->session->userdata('user_id');
+						
+						$this->stories->log_history($user_id, $project_id, $story_id, 'done', $point, $desc = '');
+		
+						redirect("/story/".$story_id);
+					}
 				}
 			}
 		}
 		
 		function redo($id){
-			$this->check_authentication('admin');
+			$this->check_authentication();
 			$story_id = $id;
-			$query = $this->stories->redo($story_id);
 			$work = $this->stories->get_work($story_id);
 			$work_data = $work->result_array();
-			$title = $work_data[0]['title'].' needs more work.';
-			$query = $this->stories->get_user_email($story_id);
-			$user_data = $query->result_array();
-			$to = $user_data[0]['email'];
-			$message = 'The story '.$work_data[0]['title'].' needs to be redo.';
-			//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
-			$this->users_model->notify($user_data[0]['user_id'], $title, $message);
-			$project_id = $work_data[0]['project_id'];
-			$point = $work_data[0]['points'];
-			$user_id = $user_data[0]['user_id'];
-			$this->stories->log_history($user_id, $project_id, $story_id, 'redo', $point, $desc = '');
-							
-			redirect("/dashboard");
+			$user_id = $this->session->userdata('user_id');
+			if($this->projects_model->is_scrum_master($user_id, $work_data[0]['project_id'])){
+				//only scrum master can tag as redo
+				$query = $this->stories->redo($story_id);
+				$title = $work_data[0]['title'].' needs more work.';
+				$query = $this->stories->get_user_email($story_id);
+				$user_data = $query->result_array();
+				$to = $user_data[0]['email'];
+				$message = 'The story '.$work_data[0]['title'].' needs to be redo.';
+				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+				$this->users_model->notify($user_data[0]['user_id'], $title, $message);
+				$project_id = $work_data[0]['project_id'];
+				$point = $work_data[0]['points'];
+				$user_id = $user_data[0]['user_id'];
+				$this->stories->log_history($user_id, $project_id, $story_id, 'redo', $point, $desc = '');
+			}
+			redirect("/project/scrum_board/$project_id");
 		}
 		
 		function verify($id){
-			$this->check_authentication('admin');
+			$this->check_authentication();
 			$story_id = $id;
-			$query = $this->stories->verify($story_id);		
 			$work = $this->stories->get_work($story_id);
 			$work_data = $work->result_array();
-			$title = $work_data[0]['title'].' is verified.';
-			$query = $this->stories->get_user_email($story_id);
-			$user_data = $query->result_array();
-			$to = $user_data[0]['email'];
-			$message = 'The story '.$work_data[0]['title'].' is verified.';
-			//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
-			$this->users_model->notify($user_data[0]['user_id'], $title, $message);
-			
-			$project_id = $work_data[0]['project_id'];
-			$point = $work_data[0]['points'];
-			$user_id = $user_data[0]['user_id'];
-			$this->stories->log_history($user_id, $project_id, $story_id, 'verify', $point, $desc = '');
-			
-			redirect("/dashboard");
+			$user_id = $this->session->userdata('user_id');
+			if($this->projects_model->is_scrum_master($user_id, $work_data[0]['project_id'])){
+				//only scrum master can verify
+				$query = $this->stories->verify($story_id);		
+				$title = $work_data[0]['title'].' is verified.';
+				$query = $this->stories->get_user_email($story_id);
+				$user_data = $query->result_array();
+				$to = $user_data[0]['email'];
+				$message = 'The story '.$work_data[0]['title'].' is verified.';
+				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+				$this->users_model->notify($user_data[0]['user_id'], $title, $message);
+				
+				$project_id = $work_data[0]['project_id'];
+				$point = $work_data[0]['points'];
+				$user_id = $user_data[0]['user_id'];
+				$this->stories->log_history($user_id, $project_id, $story_id, 'verify', $point, $desc = '');
+			}
+			redirect("/project/scrum_board/$project_id");
 		}
 		
 		function signoff($id){
-			$this->check_authentication('admin');
+			$this->check_authentication();
 			$story_id = $id;
-			$query = $this->stories->signoff($story_id);
 			$work = $this->stories->get_work($story_id);
 			$work_data = $work->result_array();
-			$title = $work_data[0]['title'].' is Signedoff.';
-			$query = $this->stories->get_user_email($story_id);
-			$user_data = $query->result_array();
-			$to = $user_data[0]['email'];
-			$message = 'The story '.$work_data[0]['title'].' is signed off.';
-			$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
-			
-			$project_id = $work_data[0]['project_id'];
-			$point = $work_data[0]['points'];
-			$user_id = $user_data[0]['user_id'];
-			$this->stories->log_history($user_id, $project_id, $story_id, 'signoff', $point, $desc = '');
-			
-			redirect("/dashboard");		
+			$user_id = $this->session->userdata('user_id');
+			if($this->projects_model->is_project_owner($user_id, $work_data[0]['project_id'])){
+				//only product owner can sign off the work
+				$query = $this->stories->signoff($story_id);
+				$title = $work_data[0]['title'].' is Signedoff.';
+				$query = $this->stories->get_user_email($story_id);
+				$user_data = $query->result_array();
+				$to = $user_data[0]['email'];
+				$message = 'The story '.$work_data[0]['title'].' is signed off.';
+				$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+				
+				$project_id = $work_data[0]['project_id'];
+				$point = $work_data[0]['points'];
+				$user_id = $user_data[0]['user_id'];
+				$this->stories->log_history($user_id, $project_id, $story_id, 'signoff', $point, $desc = '');
+			}
+			redirect("/project/scrum_board/$project_id");		
 		}
 		
 		function reject($id){
-			$this->check_authentication('admin');
+			$this->check_authentication();
 			$story_id = $id;
-			$query = $this->stories->reject($story_id);	
 			$work = $this->stories->get_work($story_id);
 			$work_data = $work->result_array();
-			$title = $work_data[0]['title'].' is rejected!';
-			$query = $this->stories->get_user_email($story_id);
-			$user_data = $query->result_array();
-			$to = $user_data[0]['email'];
-			$message = 'The story '.$work_data[0]['title'].' is rejected. As a result this story will be set to open for bidding again.';
-			//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
-			$this->users_model->notify($user_data[0]['user_id'], $title, $message);
-			
-			$project_id = $work_data[0]['project_id'];
-			$point = $work_data[0]['points'];
-			$user_id = $user_data[0]['user_id'];
-			$this->stories->log_history($user_id, $project_id, $story_id, 'reject', $point, $desc = '');
-			
-			redirect("/dashboard");	
+			$user_id = $this->session->userdata('user_id');
+			if($this->projects_model->is_project_owner($user_id, $work_data[0]['project_id'])){
+				//only product owner can reject the work
+				$query = $this->stories->get_user_email($story_id);
+				$user_data = $query->result_array();
+				$query = $this->stories->reject($story_id);	
+				$title = $work_data[0]['title'].' is rejected!';
+				$to = $user_data[0]['email'];
+				$message = 'The story '.$work_data[0]['title'].' is rejected. As a result this story will be set to open for bidding again.';
+				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+				$this->users_model->notify($user_data[0]['user_id'], $title, $message);
+				
+				$project_id = $work_data[0]['project_id'];
+				$point = $work_data[0]['points'];
+				$user_id = $user_data[0]['user_id'];
+				$this->stories->log_history($user_id, $project_id, $story_id, 'reject', $point, $desc = '');
+			}
+			redirect("/project/scrum_board/$project_id");	
 		}
 		
 		function submission(){
 			$work_id = $this->input->post('id');
 			// get stories 
 			$user_id = $this->session->userdata('user_id');
+			if($user_id){
+				$myProfile = $this->users_model->get_profile($user_id);
+				$myProfile = $myProfile->result_array();
+				$myProfile = $myProfile[0];
+				$me = $this->users_model->get_user($user_id);
+				$me = $me->result_array();
+				$me = $me[0];
+				$this->view_data['myProfile'] = $myProfile;
+				$this->view_data['me'] = $me;
+			}
 			$this->view_data['userid'] = $this->session->userdata('user_id');
 			$query = $this->stories->get_work_details($work_id);
 		

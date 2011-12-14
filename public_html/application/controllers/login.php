@@ -8,6 +8,7 @@ class Login extends CI_Controller {
 		parent::__construct();
 		$this->load->model('users_model');
 		$this->view_data['page_is'] = 'login';
+		$this->view_data['action_is'] = $this->uri->segment(2);
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
 		if($check_login == true) {

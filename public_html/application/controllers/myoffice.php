@@ -13,11 +13,12 @@ class Myoffice extends CI_Controller {
 		$this->load->model('stories_model', 'stories');
 		
 		$this->view_data['page_is'] = 'Myoffice';
-		
+		$this->view_data['action_is'] = $this->uri->segment(2);
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
 		if($check_login == true) {
 			$this->view_data['username'] = $this->session->userdata('username');
+			$this->view_data['user_id'] = $this->session->userdata('user_id');
 		} else { // - if user not login, redirect to dashboard. 
 			$controller = $this->uri->segment(1);
 			$action = $this->uri->segment(2);
@@ -197,6 +198,29 @@ class Myoffice extends CI_Controller {
 		$this->view_data['hours_spent']  = $this->users_model->hours_spent($user_id);
 		$this->view_data['hours_saved'] = $this->users_model->hours_saved($user_id);
 		$this->load->view('Ajax_tab_7', $this->view_data);	
+	}
+	
+	function AjaxTab_tab_8(){
+		//Personal Info Tab
+		$user_id = $this->session->userdata('user_id');
+		$me = $this->users_model->get_user($user_id);
+		$me = $me->result_array();
+		$me = $me[0];
+		$myProfile = $this->users_model->get_profile($user_id);
+		$myProfile = $myProfile->result_array();
+		$myProfile = $myProfile[0];
+		
+		$this->view_data['me'] = $me;
+		$this->view_data['profile'] = $myProfile;
+		$this->view_data['username'] = $this->session->userdata("username");
+		$this->view_data['message'] = $this->session->flashdata('message');
+		$this->view_data['works_completed'] = $this->users_model->works_compeleted($user_id);
+		$this->view_data['hours_spent']  = $this->users_model->hours_spent($user_id);
+		$this->view_data['hours_saved'] = $this->users_model->hours_saved($user_id);
+		
+		$this->view_data['projects'] = $this->projects_model->get_my_projects($user_id);
+		
+		$this->load->view('Ajax_tab_8', $this->view_data);	
 	}
 	
 }

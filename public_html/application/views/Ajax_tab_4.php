@@ -33,6 +33,18 @@
 							</p>
 							<br />
 							<a style="float:right; margin:-40px 10px -20px 0; font-size:0.8em; color:#82D1E5;" href="/story/<?php echo $work_list_inProgress[$i]['work_id'] ?>">More details</a>
+                            <?php if((strtolower($work_list_inProgress[$i]['status'])=='in progress' || strtolower($work_list_inProgress[$i]['status'])=='redo') && $user_id==$work_list_inProgress[$i]['work_horse']){?>
+                                <div id="job-done">
+                                    <?php echo form_open('story/submission');?>
+                                        <input type="hidden" name="id" value="<?php echo $work_list_inProgress[$i]['work_id']; ?>" />
+                                        <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
+                                        <!--<input type="submit" name="submit" value="Job Done!" />-->
+                                        <div class="proceed">
+                                            <a href="javascript: void(0)" class="submit dialog_step3">Job Done!</a>
+                                        </div>
+                                    <?php echo form_close(); ?>    
+                                </div>
+                            <?php } ?>
 							</td>
 						</tr>
 						<?php endfor; ?>
@@ -131,3 +143,11 @@
 			</div>
 		</div>
 	</div>
+    <script type="text/javascript">
+	$('a.submit').click(function(){
+		test = $(this);
+		var form = $(this).parents('form');
+		console.log(form);
+		form.submit();
+	});
+	</script>

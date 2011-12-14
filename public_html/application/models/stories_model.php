@@ -8,6 +8,71 @@ class Stories_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function create_draft_story($project_id, $creator_id, $data){
+		// make random id for work_id
+		$work_id = $this->_gen_id();
+		$check_work_id = $this->get_work($work_id);
+		while($check_work_id->num_rows() > 1) {
+			$work_id = $this->_gen_id();
+			$check_work_id = $this->get_work($work_id);			
+		}
+		$doc = array(
+			"work_id" => $work_id,
+			"title" => 'UserStory '.$work_id,
+			"type" => NULL,
+			"category" => NULL,
+			"description" => $data,
+			"points" => NULL,
+			"cost" => NULL,
+			"status" => 'draft',
+			"creator" => $creator_id,
+			"owner" => $creator_id,
+			"project_id" => $project_id,
+			"created_at" => date('Y-m-d H:i:s'),
+			"tutorial" => '',
+			"deadline" => NULL,
+			"bid_deadline" => NULL
+		); 
+		if($this->db->insert('works', $doc)) {
+			return $work_id;
+		}else{
+			return false;	
+		}
+	}
+	
+	function update_draft_story($project_id,$creator_id, $work_id, $data){
+		$doc = array(
+			"description" => $data
+		); 
+		if($this->db->update('works', $doc, array('work_id' => $work_id, 'project_id'=> $project_id, 'creator'=> $creator_id))) {
+			return $work_id;
+		}else{
+			return false;	
+		}
+	}
+	
+	function update_priority($project_id, $creator_id, $sprint_id, $data, $date_from, $date_to){
+		$updates=0;
+		//Check if we need to create a new sprint
+		if($sprint_id=='new'){
+			$doc = array('project_id'=>$project_id);
+			$this->db->insert('sprints',$doc);
+			$sprint_id = $this->db->insert_id();
+		}elseif(!is_numeric($sprint_id))die('Sprint_id is not valid!');
+		foreach($data as $priority=>$work_id){
+			if(trim($work_id)!=""){
+				$doc = array("priority" => $priority, "sprint" => $sprint_id);
+				$whr = array('work_id' => substr($work_id,5,strlen($work_id)-5), 'project_id'=> $project_id, 'creator'=> $creator_id);
+				$this->db->update('works', $doc, $whr);
+				if($this->db->affected_rows()>0)$updates++;
+			}
+		}
+		$doc = array("start" => $date_from, "end" => $date_to);
+		$whr = array('project_id'=> $project_id, 'id'=> $sprint_id);
+		$this->db->update('sprints', $doc, $whr);
+		return $sprint_id;
+	}
+	
 	// - create new stories
 	function create_user_story($creator_id) {
 		if($this->input->post('category')){
@@ -167,7 +232,7 @@ class Stories_model extends CI_Model {
 	
 	// - get work details
 	function get_work_details($work_id) {
-		$sql = "SELECT *,T.project_id as project_id, (CASE T.category WHEN NULL THEN 'General' ELSE categories.name END) as category_name FROM (SELECT work_id, priority, title, type, category, description, points, cost, status, creator, owner, works.project_id as project_id, works.created_at as created_at, work_horse, bid_deadline, deadline, assigned_at, done_at, tutorial, user_id, username, role, email, project_name, attach, link, git FROM works, users, project WHERE works.work_id = ? AND users.user_id = works.creator AND works.project_id = project.project_id) as T LEFT JOIN categories on T.category = categories.id";
+		$sql = "SELECT *,T.project_id as project_id, (CASE T.category WHEN NULL THEN 'General' ELSE categories.name END) as category_name FROM (SELECT work_id, priority, title, type, category, description, note, points, cost, status, creator, owner, works.project_id as project_id, works.created_at as created_at, work_horse, bid_deadline, deadline, assigned_at, done_at, tutorial, user_id, username, role, email, project_name, attach, link, git FROM works, users, project WHERE works.work_id = ? AND users.user_id = works.creator AND works.project_id = project.project_id) as T LEFT JOIN categories on T.category = categories.id";
 		$result = $this->db->query($sql, array($work_id));
 		return $result;
 	}
@@ -260,6 +325,16 @@ class Stories_model extends CI_Model {
 		return $result;
 	}
 	
+	function delete_story($project_id, $user_id, $work_id){
+		$query = "DELETE FROM works WHERE work_id = ? and creator = ? and project_id = ?";
+		$result = $this->db->query($query, array($work_id, $user_id, $project_id));
+		if($result){
+			return $work_id;
+		}else{
+			return '0';
+		}
+	}
+	
 	//check owner
 	function check_owner($pro_id, $user_id) {
 		$query = "SELECT * FROM project WHERE project_id = ? AND project_owner_id = ?";
@@ -304,7 +379,7 @@ class Stories_model extends CI_Model {
 	}
 	
 	function get_bids($work_id) {
-		$query = "SELECT a.*, b.user_id, b.username, works.status as work_status FROM bids a, users b, works WHERE a.work_id = ? AND a.user_id = b.user_id AND works.work_id=a.work_id ORDER BY bid_cost ASC, days ASC, bid_status ASC";
+		$query = "SELECT a.*, b.user_id, b.username, b.exp, works.status as work_status FROM bids a, users b, works WHERE a.work_id = ? AND a.user_id = b.user_id AND works.work_id=a.work_id ORDER BY bid_cost ASC, days ASC, bid_status ASC";
 		$result = $this->db->query($query, array($work_id));
 		return $result;
 	}
@@ -711,6 +786,74 @@ class Stories_model extends CI_Model {
 		return $data;
 	}
 	
+	function list_some_stories($num=0){
+		$sql = "select wrk.*, IFNULL(categories.name,'General') as category_name from (SELECT project.project_name, works.category, works.work_id,works.title, works.description, works.cost, works.points, works.bid_deadline, (select count(*) as bid_num from bids where bids.work_id = works.work_id) as bids, (select count(*) as coment_num from comments where comments.story_id = works.work_id) as comments FROM works, project, sprints WHERE (project.project_id = works.project_id) AND works.sprint=sprints.id AND sprints.project_id=works.project_id AND curdate()>=sprints.start AND curdate()<=sprints.end AND (lower(works.status) in ('open','reject'))) as wrk LEFT JOIN categories on wrk.category = categories.id";
+		if($num>0)$sql.=" limit ".$num;
+		$res = $this->db->query($sql);
+		$data = $res->result_array();
+		return $data;	
+	}
+	
+	function featherlight($type=0){
+		$sql='';
+		if($type!='0')$sql=" AND works.type = ?";
+		$sql = "select works.*, project.project_name as project from works, project, sprints where sprints.project_id = works.project_id and sprints.id=works.sprint and curdate()>=sprints.start and curdate()<=sprints.end and (lower(works.status) in ('open','reject')) AND works.project_id = project.project_id".$sql." and points between 1 and 3 order by cost ASC";
+		$res = $this->db->query($sql, array($type));
+		$data = $res->result_array();
+		$num = $res->num_rows();
+		if($num>0){
+			$partition = floor($num/3);
+			$index = rand(0,$partition);
+			$res = array();
+			$res[0] = $data[$index];
+			$index = rand($partition,$partition*2-1);
+			$res[1] = $data[$index];
+			$index = rand($partition*2,$num-1);
+			$res[2] = $data[$index];
+			return $res;
+		}else return false;
+	}
+	
+	function lightweight($type=0){
+		$sql='';
+		if($type!='0')$sql=" AND works.type = ?";
+		$sql = "select works.*, project.project_name as project from works, project, sprints where sprints.id=works.sprint and sprints.project_id=works.project_id and curdate()>=sprints.start and curdate()<=sprints.end and (lower(works.status) in ('open','reject')) AND works.project_id = project.project_id".$sql." and points between 5 and 13 order by cost ASC";
+		$res = $this->db->query($sql, array($type));
+		$data = $res->result_array();
+		$num = $res->num_rows();
+		if($num>0){
+			$partition = floor($num/3);
+			$index = rand(0,$partition);
+			$res = array();
+			$res[0] = $data[$index];
+			$index = rand($partition,$partition*2-1);
+			$res[1] = $data[$index];
+			$index = rand($partition*2,$num-1);
+			$res[2] = $data[$index];
+			return $res;
+		}else return false;
+	}
+	
+	function heavyweight($type=0){
+		$sql='';
+		if($type!='0')$sql=" AND works.type = ?";
+		$sql = "select works.*, project.project_name as project from works, project, sprints where sprints.id=works.sprint and sprints.project_id=works.project_id and curdate()>=sprints.start and curdate()<=sprints.end and (lower(works.status) in ('open','reject')) AND works.project_id = project.project_id".$sql." and points>=13 order by cost ASC";
+		$res = $this->db->query($sql, array($type));
+		$data = $res->result_array();
+		$num = $res->num_rows();
+		if($num>0){
+			$partition = floor($num/3);
+			$index = rand(0,$partition);
+			$res = array();
+			$res[0] = $data[$index];
+			$index = rand($partition,$partition*2-1);
+			$res[1] = $data[$index];
+			$index = rand($partition*2,$num-1);
+			$res[2] = $data[$index];
+			return $res;
+		}else return false;
+	}
+	
 	function browse_stories($project_sel, $cat_sel, $skill_sel, $cash_from, $cash_to, $point, $type, $status, $work_horse, $search){
 		$sql = "SELECT cworks.*, project.project_name FROM (select works.*, users.username from works left join users on works.work_horse=users.user_id) as cworks,project WHERE project.project_id=cworks.project_id ";
 		$param = array();
@@ -759,6 +902,71 @@ class Stories_model extends CI_Model {
 			$param[] = $search;
 		}
 		$sql .= "ORDER BY project.project_name, cworks.title";
+		$res = $this->db->query($sql, $param);
+		if($res->num_rows()>0){
+			return $res->result_array();
+		}else return false;
+	}
+	
+	function browse_stories_v4($subject, $project_sel, $cat_sel, $type, $skill_sel, $cash_from, $cash_to, $point, $search, $timeS, $timeE){
+		//$sql = "SELECT cworks.*, project.project_name FROM (select works.*, users.username from works left join users on works.work_horse=users.user_id) as cworks,project WHERE project.project_id=cworks.project_id ";
+		
+		$sql = "select cworks.*, IFNULL(categories.name,'General') as category_name from (SELECT project.project_name, works.category, works.work_id,works.title, works.description, works.cost, works.points, works.bid_deadline, (select count(*) as bid_num from bids where bids.work_id = works.work_id) as bids, (select count(*) as coment_num from comments where comments.story_id = works.work_id) as comments FROM works, project, sprints WHERE (project.project_id = works.project_id) AND works.sprint=sprints.id AND sprints.project_id=works.project_id AND curdate()>=sprints.start AND curdate()<=sprints.end AND (lower(works.status) in ('open','reject')) ";
+		
+		$param = array();
+		if($timeS!=-1){
+			$sql.="AND (hour(TIMEDIFF( NOW( ) ,  `bid_deadline` )) >= ?) ";
+			$param[] = $timeS;
+		}
+		
+		if($timeE!=-1){
+			$sql.="AND (hour(TIMEDIFF( NOW( ) ,  `bid_deadline` )) < ?) ";
+			$param[] = $timeE;
+		}
+		
+		if($project_sel!=0){
+			$sql.="AND (works.project_id = ?) ";
+			$param[] = $project_sel;
+		}
+		if($cat_sel!='0' and $cat_sel!='g'){
+			$sql.="AND (works.category = ?) ";
+			$param[] = $cat_sel;
+		}
+		if($cat_sel==='g'){
+			$sql.="AND isnull(works.category) ";	
+		}
+		if($skill_sel!=0){
+			$sql.="AND (works.work_id in (select work_id from work_skill where skill_id = ?)) ";
+			$param[] = $skill_sel;
+		}
+		if(trim($cash_from)!=''){
+			$sql.="AND (works.cost >= ?) ";
+			$param[] = $cash_from;
+		}
+		if(trim($cash_to)!=''){
+			$sql.="AND (works.cost <= ?) ";
+			$param[] = $cash_to;
+		}
+		if($point!=0){
+			$sql.="AND (works.points = ?) ";
+			$param[] = $point;
+		}
+		if($type!='0'){
+			$sql.="AND (works.type = ?) ";
+			$param[] = $type;
+		}
+		if(trim($search)!='' && strlen(trim($search))>2){
+			$sql.="AND (works.title like concat('%',?,'%') OR works.description like concat('%',?,'%')) ";
+			$param[] = $search;
+			$param[] = $search;
+		}
+		$sql.=") as cworks LEFT JOIN categories on cworks.category = categories.id ";
+		switch($subject){
+			case 'userstory':$sql .= " ORDER BY cworks.project_name, cworks.title";break;
+			case 'bids':$sql .= " ORDER BY cworks.bids";break;
+			case 'prize':$sql .= " ORDER BY cworks.cost";break;
+			default: $sql.=" ORDER BY cworks.bid_deadline ASC"; 
+		}
 		$res = $this->db->query($sql, $param);
 		if($res->num_rows()>0){
 			return $res->result_array();

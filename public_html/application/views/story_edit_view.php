@@ -36,10 +36,11 @@
 		<div class="new-story_field">
 			<label for="type">Type</label>
 			<select name="type">
-			<option value="Feature" <?php if($story_data['type'] == "Feature") { echo "selected"; }?>>Feature</option>
-			<option value="Chore" <?php if($story_data['type'] == "Chore") { echo "selected"; }?>>Chore</option>
-			<option value="Bug" <?php if($story_data['type'] == "Bug") { echo "selected"; }?>>Bug</option>
-			<option value="Milestone" <?php if($story_data['type'] == "Milestone") { echo "selected"; }?>>Milestone</option>
+			<option value="R&D" <?php if($story_data['type'] == "R&D") { echo "selected"; }?>>R&amp;D</option>
+			<option value="Frontend" <?php if($story_data['type'] == "Frontend") { echo "selected"; }?>>Frontend</option>
+			<option value="Backend" <?php if($story_data['type'] == "Backend") { echo "selected"; }?>>Backend</option>
+			<option value="Copywrite" <?php if($story_data['type'] == "Copywrite") { echo "selected"; }?>>Copywrite</option>
+            <option value="Test" <?php if($story_data['type'] == "Test") { echo "selected"; }?>>Test</option>
 			</select>
 		</div>
         
