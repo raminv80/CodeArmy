@@ -1,4 +1,4 @@
-<?php $this->load->view('includes/header'); ?>
+<?php $this->load->view('includes/header4'); ?>
 
 	<?php if(isset($profile_update_success)): ?>
 	
@@ -8,8 +8,8 @@
 	</div><!-- / signup successful message end -->
 		
 	<?php else: ?>
-	<div id="wrapper">
-	<div class="contents">
+
+				<div class="WP-main">
 <?php echo form_open_multipart('profile/edit'); ?>
 <span id="error"><?php echo $message;?></span>
 <?php 
@@ -209,7 +209,7 @@
 	<?php endif; ?>
 	</div>
 	</div>
-<?php $this->load->view('includes/footer'); ?>
+<?php $this->load->view('includes/footer4'); ?>
 
 <!--									
 <fieldset>

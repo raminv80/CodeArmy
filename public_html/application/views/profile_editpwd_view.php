@@ -1,7 +1,14 @@
-<?php $this->load->view('includes/header'); ?>
+<?php $this->load->view('includes/header4'); ?>
+<link media="all" type="text/css" rel="stylesheet" href="/public/css/style.css" />
+<style>
+.row {width: 100%;}
 
+#n_pwd, #o_pwd, #r_pwd {width:290px !important;}
+#submit {margin-top:0 !important;}
+#wrapper .contents form div.row label { width:190px; }
+</style>
 <div id="wrapper">
-<div class="contents">
+<div class="contents" style="margin-top:100px">
 	<?php echo form_open('profile/edit_password'); ?>
 
 	<div id="profile_form">
@@ -82,4 +89,4 @@
 
 	</div>
 </div>
-<?php $this->load->view('includes/footer'); ?>
+<?php $this->load->view('includes/footer4'); ?>

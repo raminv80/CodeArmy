@@ -153,20 +153,7 @@
 		-moz-border-radius: 10px;
 		-webkit-border-radius: 10px;
 		border-radius: 10px;
-		background-image: linear-gradient(bottom, rgba(185,217,250,0.2) 0%, rgba(221,255,221,0.2) 61%, rgba(255,255,255,0.2) 81%);
-		background-image: -o-linear-gradient(bottom, rgba(185,217,250,0.2) 0%, rgba(221,255,221,0.2) 61%, rgba(255,255,255,0.2) 81%);
-		background-image: -moz-linear-gradient(bottom, rgba(185,217,250,0.2) 0%, rgba(221,255,221,0.2) 61%, rgba(255,255,255,0.2) 81%);
-		background-image: -webkit-linear-gradient(bottom, rgba(185,217,250,0.2) 0%, rgba(221,255,221,0.2) 61%, rgba(255,255,255,0.2) 81%);
-		background-image: -ms-linear-gradient(bottom, rgba(185,217,250,0.2) 0%, rgba(221,255,221,0.2) 61%, rgba(255,255,255,0.2) 81%);
-		
-		background-image: -webkit-gradient(
-			linear,
-			left bottom,
-			left top,
-			color-stop(0, rgba(185,217,250,0.2)),
-			color-stop(0.61, rgba(221,255,221,0.2)),
-			color-stop(0.81, rgba(255,255,255,0.2))
-		);
+		background:url(/public/images/scrum.png);
 	}
 	
 	.story_list{
@@ -223,18 +210,28 @@ text-shadow: 0 1px 10px white;
 	}
 	
 	.user_story{
-		background: #828282;
+		
 		color: white;
-		border: 1px solid #828282;
 		padding:10px; 
 		-moz-border-radius: 5px;
 	    -webkit-border-radius: 5px;
 	    border-radius: 5px;font-family: 'DINLightAlternate';
-font-size: 1.0em;
+		font-size: 1.0em;
+		-webkit-box-shadow: 1px 2px 3px rgba(26, 50, 50, 0.36);
+		-moz-box-shadow: 1px 2px 3px rgba(26, 50, 50, 0.36);
+		box-shadow: inset 1px 2px 3px rgba(26, 50, 50, 0.36);
+		bordeR: 0;
+		background: #525B62;
+		border: 0px;
+		border-right: 1px solid #797979;
+		border-bottom: 1px solid #797979;
+		margin-bottom: 5px;
+		overflow: hidden;
+		
 	}
 	
 	.my-work{
-	border:1px solid green;
+	
 		background-color:green;	
 	}
 	.header-scrum {display: block;padding: 1px;height: 42px;background: url(/public/images/qualif-table-header.png);display: block;}

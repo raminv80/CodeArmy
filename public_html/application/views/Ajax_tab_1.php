@@ -87,7 +87,7 @@
                                                         <?php }?>
 													</ul>
 												</div>
-												<div class="button"><span class="left">cash out</span></div>
+												<!--<div class="button"><span class="left">cash out</span></div>-->
 											</div>
 											<div class="currently-task">
 												<h3><span class="text-currently">currently working on</span></h3>
@@ -141,7 +141,7 @@
 								<div class="leaderboard-block">
 									<div class="holder">
 										<div class="frame">
-											<div class="content">
+											<div style="width:100%" class="content">
 												<h3><span>Leaderboard</span></h3>
 												<ul>
 													<li>

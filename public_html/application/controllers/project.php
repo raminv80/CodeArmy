@@ -20,7 +20,7 @@ class Project extends CI_Controller {
 			$this->view_data['user_id'] = $this->session->userdata('user_id');
 			$this->view_data['user_role'] = $this->session->userdata('role');
 		}else{
-			if(in_array(strtolower($this->view_data['action_is']), array('scrum_board','sprint_planner','AjaxSaveStory','burndown_chart'))){
+			if(in_array(strtolower($this->view_data['action_is']), array('scrum_board','sprint_planner','AjaxSaveStory','burndown_chart', 'management'))){
 				$controller = $this->uri->segment(1);
 				$action = $this->uri->segment(2);
 				$param = $this->uri->segment(3);
@@ -58,7 +58,39 @@ class Project extends CI_Controller {
 		}
 	}
 	
+	public function management($id=0){
+		$user_id = $this->session->userdata('user_id');
+		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
+		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
+		if($user_id){
+			$me = $this->users_model->get_user($user_id);
+			$me = $me->result_array();
+			$me = $me[0];
+			$myProfile = $this->users_model->get_profile($user_id);
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$this->view_data['me'] = $me;
+			$this->view_data['myProfile'] = $myProfile;
+			$this->view_data['window_title'] = 'Workpad :: Project Management';
+		}
+		if($id!=0){
+			$qry = $this->projects_model->get_project_details($id);
+			if($qry->num_rows>0){
+				$qry = $qry->result_array();
+				$this->view_data['project'] = $qry[0];
+				$this->view_data['percentage'] = $this->projects_model->get_percentage($id);
+				$this->view_data['collaborators'] = $this->projects_model->get_collaborators($id);
+				$this->view_data['window_title'] = 'Workpad :: Manage '.$this->view_data['project']['project_name'];
+			}
+		}else{
+			$this->view_data['stories'] = $this->story_model->get_my_projects_stories($user_id);
+			$this->view_data['projects'] = $this->projects_model->get_my_projects_detailed($user_id);
+		}
+		$this->load->view('project_management_view', $this->view_data);
+	}
+	
 	public function sprint_planner($id=0){
+		$this->view_data['enable_sprint_locks'] = false;
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
 		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
@@ -84,7 +116,7 @@ class Project extends CI_Controller {
 		$this->load->view('sprint_plan_view', $this->view_data);
 	}
 	
-	public function scrum_board($id=0){
+	public function scrum_board($id=0, $cur_sprint=-1){
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
 		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
@@ -101,8 +133,16 @@ class Project extends CI_Controller {
 			$this->view_data['projects'] = $this->projects_model->get_my_projects($user_id);
 		}
 		if($id>0){
-			$this->view_data['works_state'] = $this->projects_model->get_worklist_state($id);	
+			if($cur_sprint==-1){
+				$cur_sprint = $this->projects_model->getCurrentSprint($id);
+				if(count($cur_sprint)>0){
+					$cur_sprint = $cur_sprint[0]['id'];
+				}else $cur_sprint = -1;
+			}
+			$this->view_data['works_state'] = $this->projects_model->get_worklist_state($id, $cur_sprint);	
 		}
+		$this->view_data['sprint_sel'] = $cur_sprint;
+		$this->view_data['sprints'] = $this->projects_model->get_sprints($id);
 		$this->view_data['window_title'] = 'Workpad :: Scrumboard';
 		$this->load->view('scrum_board_view', $this->view_data);
 	}
@@ -138,7 +178,7 @@ class Project extends CI_Controller {
 		$work_id = '0';
 		//check if this project is mine
 		if($this->projects_model->is_project_owner($user_id, $project_id))
-			$work_id = $this->story_model->delete_story($project_id, $user_id, $data);
+			$work_id = $this->story_model->delete_story_v4($project_id, $data);
 		echo $work_id;
 	}
 	
@@ -189,16 +229,16 @@ class Project extends CI_Controller {
 		$this->view_data['sprints'] = $this->projects_model->get_sprints($id);
 		$cur_sprint = $this->projects_model->getCurrentSprint($id);
 		
-		if($sprint_sel==0 && (count($cur_sprint)>0)) $sprint_sel = $cur_sprint[0]['id'];
-		$this->view_data['sprint_sel'] = $sprint_sel;
 		if($sprint_sel==0)
 			{
 				$cur_sprint = $this->projects_model->getCurrentSprint($id);
 			}else{
 				$cur_sprint = $this->projects_model->get_sprint($sprint_sel);
 			}
+		if(count($cur_sprint<1)) $cur_sprint = $this->projects_model->getFirstSprint($id);
 		$this->view_data['cur_sprint'] = $cur_sprint[0];
-		
+		if($sprint_sel==0 && (count($cur_sprint)>0)) $sprint_sel = $cur_sprint[0]['id'];
+		$this->view_data['sprint_sel'] = $sprint_sel;
 		$chart = $this->projects_model->get_chart($id, $sprint_sel);
 		$this->view_data['chart'] = $chart;
 		$this->view_data['sprint_points'] = $this->projects_model->get_sprint_points($id,$sprint_sel);

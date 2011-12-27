@@ -13,6 +13,7 @@ class User extends CI_Controller {
 		$this->load->model('stories_model', 'stories');
 		
 		$this->view_data['page_is'] = 'user';
+		$this->view_data['action_is'] = $this->uri->segment(2);
 		
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');

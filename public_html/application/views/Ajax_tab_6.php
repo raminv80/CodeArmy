@@ -39,7 +39,7 @@
                                                 <?php endforeach;?>
                                             </ul>
                                         </li>
-                                        <li style="width:30%;">
+                                        <li style="width:29%;">
                                             <strong class="title">early submission</strong>
                                             <ul>
                                                 <?php foreach($leaderboard_time as $i=>$leader):?>

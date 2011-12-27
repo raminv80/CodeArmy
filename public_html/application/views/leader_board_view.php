@@ -1,13 +1,20 @@
-<?php $this->load->view('includes/header'); ?>
+<?php $this->load->view('includes/header4'); ?>
+<link media="all" type="text/css" rel="stylesheet" href="/public/css/style.css">
+<link media="all" type="text/css" rel="stylesheet" href="/public/css/v4/workpad.css">
 <script type="text/javascript">
 	var mission_leaderboard = new Array();
 	var points_leaderboard = new Array();
 	var time_leaderboard = new Array();
 </script>
+<style>
+.WP-header-placeholder .WP-profile-header li { margin-left:20px !important; }
+.WP-header-placeholder .WP-profile-header ul {width:205px !important;}
+.WP-header-placeholder .WP-profile-header li.last {margin-left: 9px !important;}
+</style>
 			<div id="wrapper">
-				<div class="contents">
+				<div class="WP-main" style="margin-top:100px;">
 				<div class="leaderboard-block" style="float:none; width:100%; background:none;">
-					<h1 style="padding-bottom:20px;">Leaderboard</h1>
+					<h1 style="text-shadow: 0 1px 10px white;font-size: 33px;padding-bottom:20px;">Leaderboard</h1>
                                     <ul id="leader-list">
                                         <li style="width:30%;">
                                             <strong class="title">mission completed</strong>
@@ -145,4 +152,4 @@
 			}
 		});},1000);
 </script>
-<?php $this->load->view('includes/footer'); ?>
+<?php $this->load->view('includes/footer4'); ?>

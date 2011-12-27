@@ -1,4 +1,4 @@
-<?php $this->load->view('includes/header'); ?>
+<?php $this->load->view('includes/header4'); ?>
 
 <?php if(isset($profile_update_success)): ?>
 
@@ -9,6 +9,15 @@
 
 <?php else: ?>
 <div id="wrapper">
+<style>
+body {background: url(/public/images/bg.jpg) !important ;background-attachment: fixed !important ;background-repeat: repeat;}
+.content .row {width: 620px;}
+#profile_form .edit_info fieldset div.row div.text input {width: 289px;}
+#profile_form .edit_info fieldset div.row div.text select {width: 94px;float: left;height: 25px;margin-right: 5px;}
+#profile_form .edit_info fieldset {margin-top: 50px;padding-bottom: 40px;}
+.WP-header-placeholder .WP-profile-header ul {border-bottom: 1px solid #8E8C8A;width: 165px;margin-left: 44px;}
+</style>
+<link href="/public/css/style.css" media="all" rel="stylesheet" type="text/css">
 	<div class="contents">
 		<?php echo form_open_multipart('profile/edit'); ?>
 		<span id="error"><?php echo $message;?></span>
@@ -217,4 +226,4 @@
 		<?php endif; ?>
 	</div>
 </div>
-<?php $this->load->view('includes/footer'); ?>
+<?php $this->load->view('includes/footer4'); ?>

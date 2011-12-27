@@ -55,8 +55,61 @@
             </ul>
           </div>
           <?php if(isset($username)){?>
-          <div class="WP-profile-header"><ul><li><a href="/login/logout">Logout</a></li></ul><ul><li><a href="/myoffice">My Office</a></li></ul><ul><li>Edit <a href="/profile/edit">Profile</a> | <a href="/profile/edit_password">Password</a></li></ul><ul style="border-bottom:0"><li class="last"><img src="/public/<?php echo $myProfile['avatar']? $myProfile['avatar']: "images/img7.png";?>" style="float:left" width="35px" height="35px"/><p style="text-transform:uppercase;padding-left:5px;float:left;"><?php echo $myProfile['full_name'];?></p><br /><p style="padding-left:5px;float:left;">Level <?php $level = floor($me['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></p><div id="levelmeter"><div id="level" style="width:<?php echo round (($me['exp'] % points_per_level)/points_per_level*80);?>px;"></div></div><?=($level>99) ? 99: $level+1?></li></ul></div>
+          <div class="WP-profile-header"><ul><li><a href="/login/logout">Logout</a></li></ul><ul><li><a href="/myoffice">My Office</a></li></ul><ul><li>Edit <a href="/profile/edit">Profile</a> | <a href="/profile/edit_password">Password</a></li></ul><ul style="border-bottom:0"><li class="last"><img src="/public/<?php echo $myProfile['avatar']? $myProfile['avatar']: "images/img7.png";?>" style="float:left" width="35px" height="35px"/><p style="width: 155px;text-transform:uppercase;padding-left:5px;float:left;"><?php echo substr($myProfile['full_name'],0,20);?></p><br /><p style="padding-left:5px;float:left;">Level <?php $level = floor($me['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></p><div id="levelmeter"><div id="level" style="width:<?php echo round (($me['exp'] % points_per_level)/points_per_level*80);?>px;"></div></div><?=($level>99) ? 99: $level+1?></li></ul></div>
           <?php }?>
         </div>
       </div>
     </header>
+    <a id="feedbackbtn" href="#feedbackbox"><img class="feedback-button" src="/public/images/feedback.png" style="position:fixed; right: 0; padding-top: 90px;"></a>
+    
+    <script>
+	$(document).ready(function(){
+		   $("#regbtn").colorbox({inline:true, fixed:true, opacity:0.7});
+		   $("#loginbtn").colorbox({inline:true, fixed:true, opacity:0.7});
+		   $(".close").click(function(){
+				$.colorbox.close()
+			});
+		   $("#logintoreg").colorbox({inline:true, fixed:true, opacity:0.7});
+		   
+		   $("#feedbackbtn").colorbox({inline:true, fixed:true, opacity:0.7});
+ 		});
+	</script>
+    <link href="/public/css/v4/colorbox.css" media="all" rel="stylesheet" type="text/css">
+<div style="display:none">
+	<div id="feedbackbox">
+    	<a class="close" href="#1"><img src="/public/images/close.png" /></a>
+			<?php echo form_open('/home/feedback', array('class'=>'register-form')); ?>
+                            <div class="row">
+
+                              <div class="text">
+                                <input id="name" name="name" value="" type="text">
+                              </div>
+                            </div>
+                            <div class="row">
+
+                              <div class="text">
+                                <input id="email" name="email" value="" type="text">
+                              </div>
+                            </div>
+                             <div class="row"><div class="text">
+                               <textarea id="feedbacktext" name="desc"></textarea>
+                              </div>
+                            </div>
+                            <div class="row">
+							<div class="text">
+                            	<input type="hidden" name="action" value="feedback" />
+                                <input class="feedback-submit" name="submit" value="Submit" type="submit">
+                              </div>
+                            </div>
+                <?php echo form_close(); ?>
+                 <script type="text/javascript">
+    	$(document).ready(function(){
+		   $('.feedback-button').hover(function(){
+		   		$(this).animate({marginRight: "0"},200);
+		   },function(){
+		   		$(this).animate({marginRight: "-10px"},200);
+		   });
+ 		});
+    </script> 
+    </div>
+</div>

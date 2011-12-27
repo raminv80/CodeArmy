@@ -8,6 +8,7 @@ class Signup extends CI_Controller {
 		parent::__construct();
 		
 		$this->view_data['page_is'] = 'signup';
+		$this->view_data['action_is'] = 'index';
 		
 		$this->load->model('users_model');
 		
@@ -22,6 +23,17 @@ class Signup extends CI_Controller {
 	
 	// index page
 	function index() {
+		$user_id = $this->session->userdata('user_id');
+		if($user_id){
+			$me = $this->users_model->get_user($user_id);
+			$me = $me->result_array();
+			$me = $me[0];
+			$myProfile = $this->users_model->get_profile($user_id);
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$this->view_data['me'] = $me;
+			$this->view_data['myProfile'] = $myProfile;
+		}
 		$this->view_data['window_title'] = "Signup page";
 		$this->view_data['form_error'] = false;
 		// - if signup from is pass, process and add into db

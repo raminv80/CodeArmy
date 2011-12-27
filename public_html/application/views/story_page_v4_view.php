@@ -1,6 +1,6 @@
 <?php $this->load->view('includes/header4'); ?>
 <section id="pitch"><br />
-  <div class="WP-main">
+  <div class="WP-main" style="overflow:visible;">
     <div class="WP-qualification-placeholder">
       <div id="qualif-heading"><span id="title"><a class="dialog_opt2" href="/project/<?php echo $work_data['project_id'];?>"><?php echo strtoupper($work_data['project_name'])?></a></span>
         <div style="padding:9px 20px 0 0;"><span id="position">PRODUCT OWNER</span><br />
@@ -26,7 +26,7 @@
         </table>
                 <table style="padding:0;">
                   <tr>
-                    <td width="50%" style="border-right: 1px solid #696F86;border-spacing: 0;"><table id="inner-table">
+                    <td width="50%" style="vertical-align:top;border-right: 1px solid #696F86;border-spacing: 0;"><table id="inner-table">
                         <tr>
                           <td>DESCRIPTION</td>
                         </tr>
@@ -135,15 +135,15 @@
                         <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
                         <!--<input type="submit" name="submit" value="Job Done!" />-->
                         <div class="proceed">
-                            <a href="javascript: void(0)" class="submit dialog_step3">Job Done!</a>
+                            <a href="javascript: void(0)" onclick="$(this).parent().parent().submit();" id="jobdone">Job Done!</a>
                         </div>
                     <?php echo form_close(); ?>    
                 </div>
             <?php } ?>
-          </td></tr><tr><td><br />
+          </td><td>
         <!--<img style="padding:0;margin:-5px 0 0 0;float:right" src="/public/images/social-button.png" />-->
        
-       <div id="social-plugin"><iframe style="float:left;height:25px;width: 85px;" allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/tweet_button.html" style="width:60px; height:20px;"></iframe>
+       <div id="social-plugin" style="margin-top: 10px;"><iframe style="float:left;height:25px;width: 85px;" allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/tweet_button.html" style="width:60px; height:20px;"></iframe>
        <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -196,8 +196,8 @@
         <?php if($this->session->userdata('is_logged_in') == false) {?>
           <table width="550px">
             <tr>
-              <td width="50"><img src="/public/images/icon1.png" /></td>
-              <td><p id="commentator">System</p>
+              <td style="vertical-align:top;" width="50"><img src="/public/images/icon1.png" style="padding-right:3px;"/></td>
+              <td style="vertical-align:top;" ><p id="commentator">System</p>
                 <p id="level">Hint!</p></td>
               <td><p id="comment-content">You must <a href="/login" style="color:#09F">login</a> first to leave comments.</p>
                 <p id="date-comment">Posted <?php echo date('j M Y'); ?></p></td>
@@ -207,9 +207,9 @@
         <?php if(isset($comments))foreach($comments as $comment) { ?>
           <table width="550px" class="<?php if($this->session->userdata('username')==strtolower($comment['username']))echo 'my-comment';?>">
             <tr>
-              <td width="50"><?php if($comment['avatar']){?><img src="/public/<?php echo $comment['avatar'];?>" /><?php }?></td>
-              <td><p id="commentator"><?php echo $comment['username']; ?></p>
-                <p id="level"><?php if(strcasecmp($work_data['username'],$comment['username'])==0){?>product owner<?php }else{?>lvl <?php $level = floor($comment['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;;}?></p></td>
+              <td style="vertical-align:top;" width="50"><img style="padding-right:3px;" src="/public/<?php echo ($comment['avatar'])? $comment['avatar']:'images/img7.png';?>" /></td>
+              <td style="vertical-align:top;" ><p id="commentator"><?php echo $comment['username']; ?></p>
+                <p id="level"><?php if(strcasecmp($work_data['username'],$comment['username'])==0){?>product owner<?php }elseif($this->session->userdata('role')=='admin'){?>Admin<?php }else{?>lvl <?php $level = floor($comment['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;;}?></p></td>
               <td><p id="comment-content"><?php echo $comment['comment_body']; ?></p>
                 <?php if($comment['comment_file']):?>
                     <div class="ds-posted" style="margin-right:30px">
@@ -233,7 +233,7 @@
           <?php foreach($bid_data as $bid) { ?>
           <table width="350px">
             <tr>
-              <td width="40"><img src="/public/images/icon3.png" /></td>
+              <td width="40"><img src="/public/<?=($bid['avatar'])? $bid['avatar']:'images/img7.png'?>" /></td>
               <td><p id="bidder"><?php echo $bid['username']; ?></p>
                 <p id="level">lvl <?php $level = floor($bid['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></p></td>
               <td><p id="allbid-content"><?php echo number_format($bid['bid_cost']); ?> RM in <?php echo $bid['days']; ?> days</p>

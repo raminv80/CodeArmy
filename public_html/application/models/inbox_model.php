@@ -8,6 +8,31 @@ class Inbox_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function get_overwiew($user_id){
+		$result = array();
+		$sql = "SELECT count(*) as num from works where lower(status) in ('verify','signoff') and work_horse = ?";
+		$data1 = $this->db->query($sql, array($user_id));
+		$data1 = $data1->result_array();
+		$sql = "SELECT count(*) as num from works where lower(status) = 'done' and work_horse = ?";
+		$data2 = $this->db->query($sql, array($user_id));
+		$data2 = $data2->result_array();
+		$sql = "SELECT count(*) as num from bids where user_id = ?";
+		$data3 = $this->db->query($sql, array($user_id));
+		$data3 = $data3->result_array();
+		$sql = "SELECT count(*) as num from works where work_horse = ?";
+		$data4 = $this->db->query($sql, array($user_id));
+		$data4 = $data4->result_array();
+		$sql = "SELECT count(*) as num from works where lower(status) ='signoff' and work_horse = ?";
+		$data5 = $this->db->query($sql, array($user_id));
+		$data5 = $data5->result_array();
+		$result['completed'] = $data1[0]['num'];
+		$result['done'] = $data2[0]['num'];
+		$result['bids'] = $data3[0]['num'];
+		$result['assigned'] = $data4[0]['num'];
+		$result['paid'] = $data5[0]['num'];
+		return $result;
+	}
+	
 	function list_messages($user_id){
 		$sql = "SELECT * FROM inbox WHERE user_id = ? order by id desc";
 		$result = $this->db->query($sql, array($user_id));
@@ -23,5 +48,13 @@ class Inbox_model extends CI_Model {
 		if($result->num_rows()>0){
 			return $result->result_array();
 		}else return false;
+	}
+	
+	function read($id, $user_id){
+		$message_id = explode('_',$id);
+		$message_id = $message_id[1];
+		$sql = "update inbox set status = 'read' where id=? and user_id=? and status='unread'";
+		$this->db->query($sql, array($user_id, $message_id));
+		return $id;
 	}
 }

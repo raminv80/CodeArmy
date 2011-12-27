@@ -15,11 +15,56 @@ class Users_model extends CI_Model {
 			"username" => strtolower($this->input->post('username')),
 			"secret" => md5($this->input->post('password')),
 			"email" => strtolower($this->input->post('email')),
-			"created_at" => date('Y-m-d H:i:s')
+			"created_at" => date('Y-m-d H:i:s'),
+			"role" => 'user',
+			"user_status" => 'disable'
 		); 
 		$res = $this->db->insert('users', $doc);
 		$this->create_new_profile($user_id);
 		return $res;
+	}
+	
+	public function promote($user_id){
+		$query = $this->db->get_where('users', array('user_id' => $user_id));
+		if($query->num_rows()>0){
+			$query = $query->result_array();
+			$user = $query[0];
+			if($user['user_status']=='enable'){
+				if($user['role']=='user'){
+					$this->db->update('users',array('user_status'=>'enable', 'role'=>'admin'),array('user_id'=>$user_id));		
+				}
+			}else{
+				$this->db->update('users',array('user_status'=>'enable', 'role'=>'user'),array('user_id'=>$user_id));	
+			}
+		}
+	}
+	
+	public function demote($user_id){
+		$query = $this->db->get_where('users', array('user_id' => $user_id));
+		if($query->num_rows()>0){
+			$query = $query->result_array();
+			$user = $query[0];
+			if($user['role']=='admin'){
+				$this->db->update('users',array('user_status'=>'enable', 'role'=>'user'),array('user_id'=>$user_id));		
+			}else{
+				if($user['user_status']=='enable')
+				$this->db->update('users',array('user_status'=>'disable', 'role'=>'user'),array('user_id'=>$user_id));	
+			}
+		}
+	}
+	
+	public function get_all_users($sort_by=NULL){
+		$sql = "SELECT * from users ";
+		switch($sort_by):
+			case 'username': $sql.="order by username";break;
+			case 'user_id': $sql.="order by user_id";break;
+			case 'role': $sql.="order by role";break;
+			case 'status': $sql.="order by user_status";break;
+			case 'created': $sql.="order by created_at";break;
+			case 'login': $sql.="order by last_login";break;
+		endswitch;
+		$res = $this->db->query($sql);
+		return $res->result_array();
 	}
 	
 	// create new profiles
@@ -193,9 +238,9 @@ class Users_model extends CI_Model {
 	
 	function leaderboard_projects($limit=0){
 		if($limit>0){
-			$query = "select users.user_id, users.username, avatar, count(*) as num from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users, works where users.user_id = works.work_horse and lower(works.status) in ('verify', 'signoff') group by users.user_id, users.username, avatar order by num, users.exp desc limit 0,".$limit;	
+			$query = "select users.user_id, users.username, avatar, count(*) as num from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users, works where users.user_id = works.work_horse and lower(works.status) in ('verify', 'signoff') group by users.user_id, users.username, avatar order by num desc, users.exp desc limit 0,".$limit;	
 		}else{
-			$query = "select users.user_id, users.username, avatar, count(*) as num from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users, works where users.user_id = works.work_horse and lower(works.status) in ('verify', 'signoff') group by users.user_id, users.username, avatar order by num, users.exp desc";
+			$query = "select users.user_id, users.username, avatar, count(*) as num from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users, works where users.user_id = works.work_horse and lower(works.status) in ('verify', 'signoff') group by users.user_id, users.username, avatar order by num desc, users.exp desc";
 		}
 		$result = $this->db->query($query,array());
 		$data = $result->result_array();
@@ -215,9 +260,9 @@ class Users_model extends CI_Model {
 	
 	function leaderboard_time($limit=0){
 		if($limit>0){
-			$query = "select user_id, username, avatar, user.exp as xp, sum(hour(timediff(deadline, done_at))) as exp from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as user,works where works.work_horse = user.user_id and lower(works.status) in ('verify','signoff') group by user_id, username, avatar, user.exp having exp>0 order by exp, xp desc limit 0,".$limit;
+			$query = "select user_id, username, avatar, user.exp as xp, sum(hour(timediff(deadline, done_at))) as exp from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as user,works where works.work_horse = user.user_id and lower(works.status) in ('verify','signoff') group by user_id, username, avatar, user.exp having exp>0 order by exp desc, xp desc limit 0,".$limit;
 		}else{
-			$query = "select user_id, username, avatar, users.exp as xp, sum(hour(timediff(deadline, done_at))) as exp from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users,works where works.work_horse = users.user_id and lower(works.status) in ('verify','signoff') group by user_id, username, avatar, users.exp having exp>0 order by exp, xp desc";
+			$query = "select user_id, username, avatar, users.exp as xp, sum(hour(timediff(deadline, done_at))) as exp from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users,works where works.work_horse = users.user_id and lower(works.status) in ('verify','signoff') group by user_id, username, avatar, users.exp having exp>0 order by exp desc, xp desc";
 		}
 		$result = $this->db->query($query);
 		$data = $result->result_array();
@@ -310,7 +355,7 @@ class Users_model extends CI_Model {
 				'created_at' => date('Y-m-d H:i:s'),
 				'validity' => date('Y-m-d H:i:s', time()+60*60),
 			);
-			$this->notify($user['user_id'],'Password Reset',"We recieved a request regarding reseting your password. If you wish to proceed with this action click on following link: <a href='".base_url()."login/recovery/".$doc['code']."'>rest password</a>");
+			$this->notify($user['user_id'],'Password Reset',"We recieved a request regarding reseting your password. If you wish to proceed with this action click on following link: <a href='".base_url()."login/recovery/".$doc['code']."'>reset password</a>");
 			$this->db->insert('actions', $doc);
 			return "An email is sent to you containing furthur instuctions...";
 		}else return "Uername doesn't exist!";
@@ -354,6 +399,12 @@ class Users_model extends CI_Model {
 	
 		return $pass; 
 	} 
+	
+	function list_users(){
+		$sql = "SELECT * from users where user_status='enable'";
+		$res=$this->db->query($sql);
+		return $res->result_array();
+	}
 	
 	function notify($user_id, $subject, $message){		
 			ini_set('display_error',0);

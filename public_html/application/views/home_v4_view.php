@@ -1,5 +1,5 @@
 <?php $this->load->view('includes/header4'); ?>
-<a id="feedbackbtn" href="#feedbackbox"><img class="feedback-button" src="/public/images/feedback.png" style="position:fixed; right: 0; padding-top: 90px;"></a>
+<!--<a id="feedbackbtn" href="#feedbackbox"><img class="feedback-button" src="/public/images/feedback.png" style="position:fixed; right: 0; padding-top: 90px;"></a>-->
   <script type="text/javascript">
     	$(document).ready(function(){
 		   $('.feedback-button').hover(function(){
@@ -10,7 +10,7 @@
  		});
     </script> 
 <section id="pitch"><br />
-  <div class="WP-main">
+  <div class="WP-main" style="margin-top:100px;">
     <div class="WP-total-amount-placeholder">
       <div class="calculator"> <span class="num-<?php echo ($total_projects_cash_loaded/1000000)%10;?>"><?php echo ($total_projects_cash_loaded/1000000)%10;?></span> <span class="num-<?php echo ($total_projects_cash_loaded/100000)%10;?>"><?php echo ($total_projects_cash_loaded/100000)%10;?></span> <span class="num-<?php echo ($total_projects_cash_loaded/10000)%10;?>"><?php echo ($total_projects_cash_loaded/10000)%10;?></span> <span class="num-<?php echo ($total_projects_cash_loaded/1000)%10;?>"><?php echo ($total_projects_cash_loaded/1000)%10;?></span> <span class="num-<?php echo ($total_projects_cash_loaded/100)%10;?>"><?php echo ($total_projects_cash_loaded/100)%10;?></span> <span class="num-<?php echo ($total_projects_cash_loaded/10)%10;?>"><?php echo ($total_projects_cash_loaded/10)%10;?></span> <span class="num-<?php echo $total_projects_cash_loaded%10;?>"><?php echo $total_projects_cash_loaded%10;?></span> </div>
       <div id="WP-count-caption"></div>
@@ -279,7 +279,7 @@
       </div>
       <div id="comment-bottom" style="width:490px"></div>
     </div>
-    <img width="495px" src="/public/images/scrum.png">
+    <img width="495px" src="/public/images/scrum_steps.png">
     <div id="push-down">&nbsp;</div>
     <br />
     &nbsp; </div>

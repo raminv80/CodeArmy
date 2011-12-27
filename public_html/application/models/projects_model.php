@@ -9,7 +9,7 @@ class Projects_model extends CI_Model {
 	}
 	
 	function cash_loaded(){
-		$sql = "SELECT SUM(cost) as num FROM works WHERE lower(status) in ('open','reject')";
+		$sql = "SELECT SUM(cost) as num FROM works, sprints WHERE works.sprint=sprints.id and lower(status) in ('open','reject') and curdate() between sprints.start and addtime(sprints.end,'23:59:59')";
 		$res = $this->db->query($sql);
 		$res = $res->result_array();
 		return $res[0]['num'];	
@@ -27,8 +27,12 @@ class Projects_model extends CI_Model {
 		return $result->result_array();
 	}
 	
-	function get_projects($user_id) {
-		$query = "SELECT * FROM project WHERE project_owner_id=?";
+	function get_projects($user_id=0) {
+		if($user_id==0){
+			$query = "SELECT project.*, u1.username as po_username, u1.user_id as po_user_id, u2.user_id as sm_user_id, u2.username as sm_username FROM project, users as u1, users as u2 where u1.user_id = project.project_owner_id and u2.user_id = project.scrum_master_id order by project_id DESC";
+		}else{
+			$query = "SELECT * FROM project WHERE project_owner_id=?";
+		}
 		$result = $this->db->query($query, array($user_id));
 		return $result;
 	}
@@ -39,25 +43,25 @@ class Projects_model extends CI_Model {
 		return $result;
 	}
 	
-	function get_worklist_state($project_id) {
-		$query = "SELECT * FROM works WHERE project_id = ? AND lower(status) in ('open','reject') ORDER BY priority DESC";
-		$result = $this->db->query($query, array($project_id));
+	function get_worklist_state($project_id, $cur_sprint=-1) {
+		$query = "SELECT * FROM works WHERE project_id = ? AND sprint=? AND lower(status) in ('open','reject') ORDER BY priority DESC";
+		$result = $this->db->query($query, array($project_id, $cur_sprint));
 		$res = array();
 		$res['open'] = $result->result_array();
-		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND lower(status) in ('in progress','redo') AND users.user_id=works.work_horse ORDER BY priority DESC";
-		$result = $this->db->query($query, array($project_id));
+		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint=? AND lower(status) in ('in progress','redo') AND users.user_id=works.work_horse ORDER BY priority DESC";
+		$result = $this->db->query($query, array($project_id, $cur_sprint));
 		$res['progress'] = $result->result_array();
-		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND lower(status) in ('done') AND users.user_id=works.work_horse ORDER BY priority DESC";
+		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint=? AND lower(status) in ('done') AND users.user_id=works.work_horse ORDER BY priority DESC";
 		//$query = "SELECT * FROM works WHERE project_id = ? AND lower(status) in ('done') ORDER BY priority DESC";
-		$result = $this->db->query($query, array($project_id));
+		$result = $this->db->query($query, array($project_id, $cur_sprint));
 		$res['done'] = $result->result_array();
 		//$query = "SELECT * FROM works WHERE project_id = ? AND lower(status) in ('verify') ORDER BY priority DESC";
-		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND lower(status) in ('verify') AND users.user_id=works.work_horse ORDER BY priority DESC";
-		$result = $this->db->query($query, array($project_id));
+		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint = ? AND lower(status) in ('verify') AND users.user_id=works.work_horse ORDER BY priority DESC";
+		$result = $this->db->query($query, array($project_id, $cur_sprint));
 		$res['verify'] = $result->result_array();
 		//$query = "SELECT * FROM works WHERE project_id = ? AND lower(status) in ('signoff') ORDER BY priority DESC";
-		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND lower(status) in ('signoff') AND users.user_id=works.work_horse ORDER BY priority DESC";
-		$result = $this->db->query($query, array($project_id));
+		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint = ? AND lower(status) in ('signoff') AND users.user_id=works.work_horse ORDER BY priority DESC";
+		$result = $this->db->query($query, array($project_id, $cur_sprint));
 		$res['signoff'] = $result->result_array();
 		return $res;
 	}
@@ -93,6 +97,7 @@ class Projects_model extends CI_Model {
 		$res=$this->db->query($sql, array($project_id));
 		$res = $res->result_array();
 		$completed = $res[0]['num'];
+		if($total==0)return 0; else
 		return round($completed/$total*100);
 	}
 	
@@ -146,7 +151,9 @@ class Projects_model extends CI_Model {
 		$doc = array(
 			"project_name" => $this->input->post('title'),
 			"project_desc" => $this->input->post('description'),
-			"project_owner_id" => $creator_id,
+			"project_owner_id" => $this->input->post('project_owner'),
+			"scrum_master_id" => $this->input->post('scrum_master'),
+			"deployer_id" => $this->input->post('deployer'),
 			"project_created_at" => date('Y-m-d H:i:s') 
 		);
 		
@@ -164,6 +171,9 @@ class Projects_model extends CI_Model {
 		
 		$doc = array(
 			"project_name" => $this->input->post('title'),
+			"project_owner_id" => $this->input->post('project_owner'),
+			"scrum_master_id" => $this->input->post('scrum_master'),
+			"deployer_id" => $this->input->post('deployer'),
 			"project_desc" => $this->input->post('description')
 		); 
 		
@@ -194,13 +204,31 @@ class Projects_model extends CI_Model {
 		return $result->result_array();
 	}
 	
+	function get_my_projects_detailed($user_id){
+		$query = "SELECT p1.project_id, 
+						 project_desc, 
+						 project_name, 
+						 (select max(deadline) from works where works.project_id = p1.project_id) as works_deadline, 
+						 (select max(end) from sprints where sprints.project_id = p1.project_id) as sprints_deadline, 
+						 (select count(1) from bids,works where bids.work_id = works.work_id and p1.project_id = works.project_id) as bids, 
+						 (select count(1) from comments, works where works.project_id=p1.project_id and comments.story_id=works.work_id) as comments, 
+						 (select count(1) from works where works.project_id = p1.project_id and lower(works.status)!='draft') as num_works,
+						 (select count(1) from works where works.project_id = p1.project_id and lower(works.status) in ('done','verify','signoff')) as submited_works,
+						 (select count(1) from works where works.project_id = p1.project_id and lower(works.status) in ('open','redo','in progress', 'reject')) as remaining_works
+				  FROM project as p1 where project_owner_id = ?";
+		$result = $this->db->query($query, array($user_id));
+		return $result->result_array();
+	}
+	
 	function is_project_owner($user_id, $id){
+		if ($this->session->userdata('role')=='admin') return true;
 		$query = "SELECT project_id FROM project where project_owner_id = ? and project_id=?";
 		$res = $this->db->query($query, array($user_id, $id));
 		if($res->num_rows()>0){return true;}else{return false;}
 	}
 	
 	function is_scrum_master($user_id, $id){
+		if ($this->session->userdata('role')=='admin') return true;
 		$query = "SELECT project_id FROM project where scrum_master_id = ? and project_id=?";
 		$res = $this->db->query($query, array($user_id, $id));
 		if($res->num_rows()>0){return true;}else{return false;}
@@ -232,15 +260,37 @@ class Projects_model extends CI_Model {
 		return $res->result_array();
 	}
 	
+	function getFirstSprint($id){
+		$sql = "select * from sprints where project_id = ? limit 0,1";
+		$res = $this->db->query($sql, array($id));
+		return $res->result_array();
+	}
+	
 	function get_chart($project_id, $sprint_id){
-		$sql = "SELECT sum(works.points) as points, cast(history.created_at as DATE) as day FROM history, sprints, works where sprints.id = ? and sprints.project_id = ? and history.project_id = works.project_id and works.project_id = sprints.project_id and lower(works.status) in ('verify','signoff') and lower(history.event) not in ('verify','signoff') and history.created_at between sprints.start and sprints.end and history.work_id = works.work_id group by day order by day ASC";
+		$sql = "SELECT 
+					sum(works.points) as points, 
+					cast(history.created_at as DATE) as day 
+				FROM history, sprints, works 
+				WHERE 
+					sprints.id = ? and 
+					sprints.project_id = ? and 
+					history.project_id = works.project_id and 
+					works.project_id = sprints.project_id and 
+					works.work_id = history.work_id and
+					works.sprint = sprints.id and
+					lower(works.status) in ('verify','signoff') and 
+					lower(history.event) in ('verify','signoff') and 
+					lower(history.event) = 'verify' and
+					history.created_at between sprints.start and addtime(sprints.end, '23:59:59')
+				GROUP by day 
+				ORDER by day ASC";
 		$res = $this->db->query($sql,array($sprint_id, $project_id));
 		$res = $res->result_array();
 		return $res;
 	}
 	
 	function get_sprint_points($project_id, $sprint_id){
-		$sql = "select sum(works.points) as points from works, sprints where sprints.project_id = works.project_id and sprints.id = ? and sprints.project_id = ?";
+		$sql = "select sum(works.points) as points from works, sprints where sprints.project_id = works.project_id and works.sprint = sprints.id and sprints.id = ? and sprints.project_id = ?";
 		$res = $this->db->query($sql, array($sprint_id,$project_id));
 		$res = $res->result_array();
 		return $res[0]['points'];

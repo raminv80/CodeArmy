@@ -41,7 +41,7 @@ class Projects extends CI_Controller {
 		$this->view_data['window_title'] = "Workpad :: Projects Created";
 		
 		//get projects created
-		$q_projects = $this->projects_model->get_projects($user_id);
+		$q_projects = $this->projects_model->get_projects();
 		if($q_projects->num_rows() > 0) {
 			$this->view_data['projects'] = $q_projects->result_array();
 		} 
@@ -85,13 +85,12 @@ class Projects extends CI_Controller {
 	function create(){
 		$this->check_authentication('admin');
 		$user_id = $this->session->userdata('user_id');
-		
+		$this->view_data['users'] = $this->users_model->list_users();
 		if($this->input->post('submit')) {
 			$this->load->library('form_validation');
 
 			$this->form_validation->set_rules('title', 'Title', 'required');
 			$this->form_validation->set_rules('description', 'Description', 'required');
-		
 			if ($this->form_validation->run() == FALSE) {
 				$this->view_data['form_error'] = true;
 			} else {
@@ -117,7 +116,7 @@ class Projects extends CI_Controller {
 	function edit($id){
 		$this->check_authentication('admin');
 		$this->view_data['window_title'] = "Workpad :: Edit Project";
-		
+		$this->view_data['users'] = $this->users_model->list_users();
 		$query = $this->projects_model->get_project_details($id);
 		$data = $query->result_array();
 		//print_r($data);

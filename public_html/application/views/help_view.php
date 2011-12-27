@@ -1,13 +1,122 @@
-<?php $this->load->view('includes/header'); ?>
+<?php $this->load->view('includes/header4'); ?>
+		<style>
+		#help-frame {
+    height: auto;
+    margin-top: 30px;
+    width: 1000px;
+	background:rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.5);
+	box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#help-frame h3 {
+	padding:10px;
+	text-shadow: 0 1px 15px #63C0D6;
+	font-size: 22px;
+	font-weight: bold;
+	color: white;
+	text-transform: uppercase;
+	padding: 10px;
+}
+
+#help-contact h3 {
+	
+	text-shadow: 0 1px 15px #63C0D6;
+	font-size: 22px;
+	font-weight: lighter;
+	color: white;
+	text-transform: uppercase;
+	
+}
+
+#help-frame dl.question {
+	
+}
+
+#help-frame dl.question dt {
+	border-bottom:1px solid rgba(100, 100, 100, 0.2);
+	color:#FFF;
+	text-transform:none;
+	padding:10px;
+	width:auto;
+	height:24px;
+}
+
+#help-frame dl.question dt:hover, dl.question dt.selected {
+	background-color: rgba(81, 81, 81, 0.3);
+	cursor: pointer;
+}
+
+#help-frame dl.question dd {
+	background-color: rgba(81, 81, 81, 0.1);
+	padding:10px 0 10px 10px;
+	text-size:12px;
+	text-transform:none;
+	color:#7d7d7d;
+	height:auto;
+}
+
+#help-frame dl.question a {
+	float:left;
+}
+
+#help-frame div.arrow {
+	float:right;
+	background:url('../images/help-arrow.png') no-repeat 0 0;
+	height:20px;
+	width:20px;
+}
+
+#help-frame div.read {
+	background-color: rgba(0, 0, 0, 0.5);
+	height:35px;
+	
+}
+
+#help-frame div.read a {
+	float:right;
+	text-transform:none;
+	text-shadow: 0 1px 15px #63C0D6;
+	margin-right:10px;
+	padding-top:5px;
+}
+
+/*--------  -------- */
+
+#help-contact {
+	float: left;
+    height: auto;
+    margin-top: 28px;
+    padding: 20px;
+    width: 1000px;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+#help-contact h3 {
+	font-size:20px;
+}
+
+#help-contact p {
+	text-align:left;
+	color:#FFF;
+	line-height:25px;
+	margin-top:20px;
+	
+}
 		
+		
+		</style>
 		<div id="wrapper">
-				<div class="contents">
-					<div id="search">
-						<h2>search keyword</h2>
-						<div class="search-form">
-							<input type="text" maxlength="128" name="" id="form-block" size="15" value="" title="Enter the terms you wish to search for." class="form-text">
-							<input type="submit" class="" value="Search" id="form-submit" name="op">
-						</div>
+				<div class="WP-main" style="margin-top:100px">
+					<div class="WP-searchbar" style="margin-bottom:15px;">
+      <form action="http://ver2.workpad.my/stories/browse" method="post" accept-charset="utf-8" class="search-form" name="browse-tools-form">
+<div class="hidden">
+<input type="hidden" name="ci_csrf_token" value="8e2d2d555d9c01fbe8258a7095bb5d9c">
+</div>      <label>Search task</label>
+      <input id="input-search" type="text" name="search">
+      <input id="search-button" name="Submit" type="button">
+      </form>    </div>
 						<div id="help-frame">
 							<h3>payment</h3>
 							<dt>
@@ -189,4 +298,4 @@
 	
 </script>
 			
-<?php $this->load->view('includes/footer'); ?>
+<?php $this->load->view('includes/footer4'); ?>

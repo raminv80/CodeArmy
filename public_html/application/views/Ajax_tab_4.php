@@ -32,7 +32,7 @@
 								<?php echo $work_list_inProgress[$i]['description'] ?>
 							</p>
 							<br />
-							<a style="float:right; margin:-40px 10px -20px 0; font-size:0.8em; color:#82D1E5;" href="/story/<?php echo $work_list_inProgress[$i]['work_id'] ?>">More details</a>
+							<a id="moredetails" href="/story/<?php echo $work_list_inProgress[$i]['work_id'] ?>">More details</a>
                             <?php if((strtolower($work_list_inProgress[$i]['status'])=='in progress' || strtolower($work_list_inProgress[$i]['status'])=='redo') && $user_id==$work_list_inProgress[$i]['work_horse']){?>
                                 <div id="job-done">
                                     <?php echo form_open('story/submission');?>
@@ -81,12 +81,12 @@
 								<td>RM <?php echo $work_list_done[$i]['cost'] ?></td>
 							</tr>
 							<tr>
-								<td colspan="6" style="text-align:left; padding:10px 0 0 20px; color: rgb(143, 145, 148);">
+								<td colspan="6" style="text-align:left; padding:10px 0 20px 20px; color: rgb(143, 145, 148);">
 									<p>
 										<?php echo $work_list_done[$i]['description'] ?>
 									</p>
 									<br />
-									<a style="float:right; margin:-40px 10px -20px 0; font-size:0.8em; color:#82D1E5;" href="/story/<?php echo $work_list_done[$i]['work_id'] ?>">More details</a>
+									<a id="moredetails"  href="/story/<?php echo $work_list_done[$i]['work_id'] ?>">More details</a>
 								</td>
 							</tr>
 							<?php endfor; ?>
@@ -115,7 +115,7 @@
 							<?php $c = count($work_list_signoff); for($i = 0; $i < $c; $i++): ?>
 							<tr class="story-title" style="background:#3C565C;">
 								<td><?php echo $i+1;?></td>
-								<td><?php echo $work_list_inProgress[$i]['project_name'] ?></td>
+								<td><?php echo $work_list_signoff[$i]['project_name'] ?></td>
 								<td style="text-align:left; padding-left:10px;">
 								<span class="type_<?php echo $work_list_signoff[$i]['type'] ?>"> <?php echo $work_list_signoff[$i]['title'] ?> </span>
 								</td>
@@ -128,7 +128,7 @@
 										<?php echo $work_list_signoff[$i]['description'] ?>
 									</p>
 									<br />
-									<a style="float:right; margin:-40px 10px -20px 0; font-size:0.8em; color:#82D1E5;" href="/story/<?php echo $work_list_signoff[$i]['work_id'] ?>">More details</a>
+									<a id="moredetails"  href="/story/<?php echo $work_list_signoff[$i]['work_id'] ?>">More details</a>
 								</td>
 							</tr>
 							<?php endfor; ?>

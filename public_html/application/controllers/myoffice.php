@@ -57,6 +57,12 @@ class Myoffice extends CI_Controller {
 		$this->view_data['window_title'] = "Workpad :: MyOffice";
 		$this->load->view('my_office_view', $this->view_data);	
 	}
+	
+	function AjaxMessageRead(){
+		$id = $this->input->post('id');
+		$user_id = $this->session->userdata('user_id');
+		echo $this->inbox_model->read($id, $user_id);
+	}
 		
 	function AjaxTab_tab_1(){
 		//Summary Tab
@@ -157,7 +163,7 @@ class Myoffice extends CI_Controller {
 		$myProfile = $this->users_model->get_profile($user_id);
 		$myProfile = $myProfile->result_array();
 		$myProfile = $myProfile[0];
-		
+		$this->view_data['overview'] = $this->inbox_model->get_overwiew($user_id);
 		$this->view_data['history'] = $this->inbox_model->get_history($user_id);
 		
 		$this->load->view('Ajax_tab_5', $this->view_data);	

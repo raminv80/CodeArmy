@@ -8,6 +8,19 @@ class Stories_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function get_bidders($work_id){
+		$sql = "select bids.*, users.user_id, users.username, user_profiles.avatar, users.exp from bids, users, user_profiles where user_profiles.user_id = users.user_id and users.user_id = bids.user_id and bids.work_id = ?";
+		$res = $this->db->query($sql, array($work_id));
+		return $res->result_array();
+	}
+	
+	function get_my_projects_stories($user_id){
+		$sql = "SELECT story.*, users.username, users.user_id FROM (SELECT work_horse, ifnull(works.bid_deadline,'Open') as bid_deadline, status, work_id, priority, title, project.project_name, type, description, points, cost, works.project_id, (select count(user_id) from bids where bids.work_id = works.work_id) as total_bids, (select count(user_id) from bids where work_id = works.work_id and created_at>= ? ) as last_week_bids, (select count(comment_body) from comments where story_id = works.work_id) as total_comments, (select count(comment_body) from comments where story_id = works.work_id and comment_created>= ? ) as last_week_comments FROM works, project WHERE works.status!='draft' and project.project_id = works.project_id AND works.creator = ? ) as story left join users on users.user_id = story.work_horse ORDER BY CASE WHEN (lower(story.status) in ('open','reject')) then last_week_comments+last_week_bids else last_week_comments END DESC";
+ 		$last_week = date("Y-m-d H:i:s", strtotime("-1 weeks"));
+		$result = $this->db->query($sql, array($last_week, $last_week, $user_id));
+		return $result->result_array();
+	}
+	
 	function create_draft_story($project_id, $creator_id, $data){
 		// make random id for work_id
 		$work_id = $this->_gen_id();
@@ -165,7 +178,7 @@ class Stories_model extends CI_Model {
 			}
 		}else{
 			if($this->input->post('new_category')!=''){
-				$query = "select * from categores where name = ?";
+				$query = "select * from categories where name = ?";
 				$data = $this->db->query($query, array($this->input->post('new_category')));
 				if($data->num_rows()>0){
 					//if new category is not really new and we have it in database don't add it
@@ -175,8 +188,8 @@ class Stories_model extends CI_Model {
 				}else{
 					//if its a new category add it to database
 					$data = array(
-						'name' => $this->input->post('name'),
-						'project_id' => $this->input->post('project')
+						'name' => $this->input->post('new_category'),
+						'project_id' => $this->input->post('project_id')
 					);
 					$this->db->insert('categories', $data);
 					$query = "select max(id) as new_id from categories";
@@ -194,6 +207,7 @@ class Stories_model extends CI_Model {
 			"type" => $this->input->post('type'),
 			"category" => $category,
 			"description" => $this->input->post('description'),
+			"note" => $this->input->post('note'),
 			"points" => $this->input->post('points'),
 			"cost" => $this->input->post('cost'),
 			"project_id" => $this->input->post('project_id'), 
@@ -201,6 +215,7 @@ class Stories_model extends CI_Model {
 			"deadline" => $this->input->post('deadline_year').'-'.$this->input->post('deadline_month').'-'.$this->input->post('deadline_day'),
 			"bid_deadline" => $this->input->post('biddead_year').'-'.$this->input->post('biddead_month').'-'.$this->input->post('biddead_day')
 		); 
+		if(strtolower($this->input->post('status'))=='draft')$doc['status'] = 'open';
 		
 		if($this->db->update('works', $doc, array('work_id' => $id))) {
 			$query = "SELECT * FROM skill order by name";
@@ -307,7 +322,7 @@ class Stories_model extends CI_Model {
 		list($usec, $sec) = explode(' ', microtime());
 		$rand_seed = (float)$sec + ((float)$usec * 100000);
 		mt_srand($rand_seed);
-		for ($r = 0; $r<6; $r++) { $work_id .= mt_rand(0,9); }
+		for ($r = 0; $r<13; $r++) { $work_id .= mt_rand(0,9); }
 		return $work_id;
 	}
 	
@@ -328,6 +343,16 @@ class Stories_model extends CI_Model {
 	function delete_story($project_id, $user_id, $work_id){
 		$query = "DELETE FROM works WHERE work_id = ? and creator = ? and project_id = ?";
 		$result = $this->db->query($query, array($work_id, $user_id, $project_id));
+		if($result){
+			return $work_id;
+		}else{
+			return '0';
+		}
+	}
+	
+	function delete_story_v4($project_id, $work_id){
+		$query = "DELETE FROM works WHERE work_id = ? and project_id = ?";
+		$result = $this->db->query($query, array($work_id, $project_id));
 		if($result){
 			return $work_id;
 		}else{
@@ -379,7 +404,7 @@ class Stories_model extends CI_Model {
 	}
 	
 	function get_bids($work_id) {
-		$query = "SELECT a.*, b.user_id, b.username, b.exp, works.status as work_status FROM bids a, users b, works WHERE a.work_id = ? AND a.user_id = b.user_id AND works.work_id=a.work_id ORDER BY bid_cost ASC, days ASC, bid_status ASC";
+		$query = "SELECT a.*, b.user_id, b.username, b.exp, works.status as work_status, user_profiles.avatar FROM bids a, users b, works, user_profiles WHERE user_profiles.user_id = b.user_id and a.work_id = ? AND a.user_id = b.user_id AND works.work_id=a.work_id ORDER BY bid_cost ASC, days ASC, bid_status ASC";
 		$result = $this->db->query($query, array($work_id));
 		return $result;
 	}
@@ -426,6 +451,8 @@ class Stories_model extends CI_Model {
 		function done($id,$path=""){
 			$git = $this->input->post('git');
 			$link = $this->input->post('link');
+			if($git=="Github link...")$git=NULL;
+			if($link=="Add link to file...")$link=NULL;
 			if($path!=""){
 				$query = "update works set status = 'Done', git=?, link=?, attach=?, done_at='".date('Y-m-d H:i:s')."' where work_id = ?";
 				$result = $this->db->query($query, array($git, $link, $path, $id));
@@ -756,7 +783,7 @@ class Stories_model extends CI_Model {
 	}	
 	
 	function get_project_ppl($project_id){
-		$query = "SELECT DISTINCT work_horse, exp, username, avatar FROM works, users, user_profiles WHERE works.work_horse = users.user_id and users.user_id = user_profiles.user_id and project_id=?";
+		$query = "SELECT DISTINCT work_horse, exp, username, avatar, users.user_id FROM works, users, user_profiles WHERE works.work_horse = users.user_id and users.user_id = user_profiles.user_id and project_id=?";
 		$query = $this->db->query($query, array($project_id));
 		$data = $query->result_array();
 		return $data;	

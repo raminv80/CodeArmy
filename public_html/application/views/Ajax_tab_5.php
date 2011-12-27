@@ -5,7 +5,7 @@
 			<?php if(!$history){?>
 				<h4>You have not performed any actions.</h4>
 				<?php }else{?>
-				
+				<p>User placed <?=$overview['bids']?> bids. Totaly <?=$overview['completed']?> jobs out of <?=$overview['assigned']?> assigned jobs are completed. <?php if($overview['done']>0){ echo $overview['done'];?> jobs are waiting to be verified and <?php } echo $overview['paid'];?> jobs are paid.</p>
 				<table cellpadding="0" cellspacing="0" style="border:1px solid #fff;">
 					<tr>
 					<!--
@@ -18,8 +18,8 @@
 					</tr>
 					<?php if($history){foreach($history as $event):?>
 					<tr>
-						<td style="color:rgb(143, 145, 148); text-align:left; padding-left:10px;"><?php echo $event['title'];?></td>
-						<td><?php echo $event['project_name'];?></td>
+						<td style="color:rgb(143, 145, 148); text-align:left; padding-left:10px;"><a href="/story/<?=$event['work_id']?>"><?php echo $event['title'];?></a></td>
+						<td><a href="/project/<?=$event['project_id']?>"><?php echo $event['project_name'];?></a></td>
 						<td><?php echo $event['event'];?></td>
 						<td><?php echo $event['created_at'];?></td>
 					</tr>

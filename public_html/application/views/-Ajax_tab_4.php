@@ -29,7 +29,7 @@
             <tr>
               <td colspan="6" class="details"><p> <?php echo $work_list_inProgress[$i]['description'] ?> </p>
                 <br />
-                <a href="/story/<?php echo $work_list_inProgress[$i]['work_id'] ?>">More details</a></td>
+                <a id="moredetails" href="/story/<?php echo $work_list_inProgress[$i]['work_id'] ?>">More details</a></td>
             </tr>
             <?php endfor; ?>
             </table>
@@ -68,7 +68,7 @@
               <td colspan="6" class="details"><div>
                   <p> <?php echo $work_list_done[$i]['description'] ?> </p>
                   <br />
-                  <a href="/story/<?php echo $work_list_done[$i]['work_id'] ?>">More details</a> </div></td>
+                  <a id="moredetails"  href="/story/<?php echo $work_list_done[$i]['work_id'] ?>">More details</a> </div></td>
             </tr>
             <?php endfor; ?>
             </table>

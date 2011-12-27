@@ -100,7 +100,9 @@ class Story extends CI_Controller {
 			if($this->stories->check_admin($work_id, $user_id)->num_rows() > 0) {
 				$this->view_data['show_bid'] = true;
 			}
-			else {
+			elseif($this->projects_model->is_project_owner($user_id, $this->view_data['work_data']['project_id'])) {
+				$this->view_data['show_bid'] = true;
+			}else{
 				$this->view_data['show_bid'] = false;
 			}
 			$msg = $this->session->flashdata('bid_message');
@@ -190,9 +192,11 @@ class Story extends CI_Controller {
 			$work = $this->stories->get_work($this->input->post('work_id'));
 			$work_data = $work->result_array();
 			$title = 'Bid on '.$work_data[0]['title'];
-			
+			$product_owner = $this->users_model->get_user($work_data[0]['creator']);
+			if($product_owner)$product_owner = $product_owner->result_array();
+			$product_owner = $product_owner[0]['email'];
 			$message = 'User '.$this->session->userdata('username').' placed a bid on story '.$work_data[0]['title'].' with amount '.$this->input->post('set_cost').' and days '.$this->input->post('set_days');
-			$this->notify(noreply_email,email_name, admin_email, admin_cc, $title,$message);
+			$this->notify(noreply_email,email_name, $product_owner, admin_cc, $title,$message);
 			$project_id = $data[0]['project_id'];
 			$user_id = $this->session->userdata('user_id');
 			$this->stories->log_history($user_id, $project_id, $work_id, 'bid', $this->input->post('set_cost'), $desc = '');
@@ -330,7 +334,7 @@ class Story extends CI_Controller {
 				   $user_id = $usr_data[0]['user_id'];
 				   $this->stories->log_history($user_id, $project_id, $work_id, 'win', $cost, $desc = '');
 			   }
-               redirect("/story/".$this->input->post('story_id'));
+               redirect("/project/management");
         }
         
         function edit($id) {
@@ -416,7 +420,7 @@ class Story extends CI_Controller {
 					$story_id = $this->input->post('id');
 					
 					$config['upload_path'] = './uploads/';
-					$config['allowed_types'] = 'zip';
+					$config['allowed_types'] = 'zip|tgz|tar|gz|gtar';
 					$config['max_size']	= '51200';
 					$config['overwrite'] = false;
 					$config['encrypt_name'] = true;
@@ -431,7 +435,20 @@ class Story extends CI_Controller {
 							$this->view_data['error'] = $error;
 							$path="";
 							$has_upload_error= true;
+							$this->view_data['modal_title'] = 'Error';
+							$this->view_data['modal_message'] = $this->upload->display_errors();
 							///////upload error show back submission page
+							$user_id = $this->session->userdata('user_id');
+							if($user_id){
+								$me = $this->users_model->get_user($user_id);
+								$me = $me->result_array();
+								$me = $me[0];
+								$myProfile = $this->users_model->get_profile($user_id);
+								$myProfile = $myProfile->result_array();
+								$myProfile = $myProfile[0];
+								$this->view_data['me'] = $me;
+								$this->view_data['myProfile'] = $myProfile;
+							}
 							$work_id = $this->input->post('id');
 							// get stories 
 							$user_id = $this->session->userdata('user_id');

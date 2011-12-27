@@ -29,7 +29,8 @@
 		
 		<div class="new-story_field">
 			<label for="title">Title</label>
-			<input type="text" name="title" value="<?php echo $story_data['title']; ?>" placeholder="title" id="title" />
+            <span class="hint">keep it short, informative and unique</span>
+			<input type="text" maxlength="35" name="title" value="<?php echo $story_data['title']; ?>" placeholder="title" id="title" />
 			<p></p>
 		</div>
 
@@ -57,7 +58,14 @@
 		
 		<div class="new-story_field">
 			<label for="description">Description</label>
+            <span class="hint">A description should follow thi format: As a [user] i want to [do some action] so that i can [get to some goals]</span>
             <?php echo $this->ckeditor->editor("description", $story_data['description']);?>
+		</div>
+        
+        <div class="new-story_field">
+			<label for="note">Note</label>
+            <span class="hint">define required tasks, acceptance criteria and any details that can help. Remember: More input you give the better output you will recieve.</span>
+            <?php echo $this->ckeditor->editor("note", $story_data['note']);?>
 		</div>
         
        	<div class="new-story_field">
@@ -91,6 +99,7 @@
 		
         <div class="new-story_field">
         	<label>Bid Deadline</label>
+            <span class="hint">The date that you expect to find a workhorse and get the work started by.</span><br />
         	<?=$formdate_biddead->selectDay()?>    
 			<?=$formdate_biddead->selectMonth()?>    
 			<?=$formdate_biddead->selectYear()?>
@@ -98,6 +107,7 @@
         
         <div class="new-story_field">
         	<label>Deadline</label>
+            <span class="hint">The date that delivery is expected</span><br />
         	<?=$formdate_deadline->selectDay()?>    
 			<?=$formdate_deadline->selectMonth()?>    
 			<?=$formdate_deadline->selectYear()?>
@@ -125,6 +135,7 @@
 		<div class="new-story_field">
 			<label for="submit">&nbsp;</label>
             <input type="hidden" name="project_id" value="<?php echo $story_data['project_id'];?>" />
+            <input type="hidden" name="status" value="<?=$story_data['status']?>" />
 			<input type="submit" name="submit" value="Edit Story" id="submit" />
 			<p></p>
 		</div>

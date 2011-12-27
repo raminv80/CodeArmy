@@ -1,5 +1,27 @@
 <?php $this->load->view('includes/header_view'); ?>
-
+	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>-->
+	<!--<script src="http://code.jquery.com/jquery-latest.js"></script>-->
+    <script type="text/javascript" src="http://ver2.workpad.my/public/scripts/jquery-1.4.2.min.js"></script>
+	<!--
+    <script type="text/javascript" src="http://ver2.workpad.my/public/scripts/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="http://ver2.workpad.my/public/js/ckfinder/ckfinder.js"></script>
+    -->
+	<script type="text/javascript" src="http://ver2.workpad.my/public/scripts/jquery.uniform.js" charset="utf-8"></script>
+	<script type="text/javascript" src="http://ver2.workpad.my/public/scripts/login.js" charset="utf-8"></script>
+	<script type="text/javascript" src="http://ver2.workpad.my/public/scripts/script.js"></script>
+	<script type="text/javascript" charset="utf-8">
+	  $(function(){
+        $("input, textarea, select, button").uniform();
+      });
+    </script>
+	
+	
+  	<link href='http://ver2.workpad.my/public/styles/style.css' rel='stylesheet' />
+    <link media="screen" rel="stylesheet" href="http://ver2.workpad.my/public/styles/colorbox.css" />
+    <link href='http://ver2.workpad.my/public/styles/uniform.default.css' rel='stylesheet' media="screen">
+    <link href='http://ver2.workpad.my/public/styles/inettuts.css' rel="stylesheet" type="text/css" />
+    <link href='http://ver2.workpad.my/public/styles/inettuts.js.css' rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="http://ver2.workpad.my/public/scripts/colorbox/jquery.colorbox.js" charset="utf-8"></script>
 <div id="dash-wrapper">
 <div id="content">
 <?php if($user_role == 'admin') { ?>

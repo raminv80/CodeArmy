@@ -9,9 +9,14 @@ class Contact extends CI_Controller {
 		//$this->load->model('users_model');
 		
 		$this->view_data['page_is'] = 'Contact';
-		
+		$this->view_data['action_is'] = $this->uri->segment(2);
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
+	}
+	
+	function find(){
+		$this->view_data['window_title'] = "Workpad :: Find People";
+		$this->load->view('find_user_view', $this->view_data);
 	}
 	
 	function index(){

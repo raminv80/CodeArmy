@@ -45,10 +45,11 @@
 		<div class="new-story_field">
 			<label for="type">Type</label>
 			<select name="type">
-			<option <?php if($this->input->post('type')=='Feature'){?>selected="selected"<?php }?> value="Feature">Feature</option>
-			<option <?php if($this->input->post('type')=='Chore'){?>selected="selected"<?php }?> value="Chore">Chore</option>
-			<option <?php if($this->input->post('type')=='Bug'){?>selected="selected"<?php }?> value="Bug">Bug</option>
-			<option <?php if($this->input->post('type')=='Milestone'){?>selected="selected"<?php }?> value="Milestone">Milestone</option>
+			<option value="R&D" <?php if($story_data['type'] == "R&D") { echo "selected"; }?>>R&amp;D</option>
+			<option value="Frontend" <?php if($story_data['type'] == "Frontend") { echo "selected"; }?>>Frontend</option>
+			<option value="Backend" <?php if($story_data['type'] == "Backend") { echo "selected"; }?>>Backend</option>
+			<option value="Copywrite" <?php if($story_data['type'] == "Copywrite") { echo "selected"; }?>>Copywrite</option>
+            <option value="Test" <?php if($story_data['type'] == "Test") { echo "selected"; }?>>Test</option>
 			</select>
 		</div>
         

@@ -1,4 +1,9 @@
-<?php $this->load->view('includes/header'); ?>
+<?php $this->load->view('includes/header4'); ?><link media="all" type="text/css" rel="stylesheet" href="/public/css/v4/myoffice/style.css" />
+	<link media="all" type="text/css" rel="stylesheet" href="/public/css/v4/myoffice/autocomplete.css" />
+	<link rel="stylesheet" type="text/css" href="/public/css/v4/myoffice/jquery.fancybox-1.3.4.css" media="screen" />
+	<link type="text/css" href="/public/css/v4/myoffice/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+    <style>.tabset li {overflow: hidden;border-bottom: 1px solid #252525; background:none !important;}</style>
+        <section style="padding-top:100px;" id="pitch">
 		<div id="wrapper">
 			<div class="contents">
 				<div class="profile-heading">
@@ -189,7 +194,7 @@
 								<div class="leaderboard-block">
 									<div class="holder">
 										<div class="frame">
-											<div class="content">
+											<div style="width:100%" class="content">
 												<h3><span>Leaderboard</span></h3>
 												<ul>
 													<li>
@@ -334,7 +339,7 @@
                                     <!-- / profile content container ends -->
                                 </div>
                             </div>    
-                        </div>
+                        </div></div>
                                     
                                 </div>
                             </div>    
@@ -342,6 +347,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div></section>
         <script type="text/javascript" src="/public/js/main.js"></script>
-<?php $this->load->view('includes/footer'); ?>
+<?php $this->load->view('includes/footer4'); ?>

@@ -1,7 +1,175 @@
-<?php if($action_is=='submission' && $page_is=='story'){?>
-<!-- your footer for submission page -->
+<?php if($page_is=='Contact' && $action_is!='find'){?>
+<!-- contact us footer -->
 
+<div style="height:22px" class="footer">
+<?php }elseif($action_is=='management' && $page_is=='project'){?>
+<!-- project management -->
+<header>
+<div class="footer">
+<div class="WP-bottom-nav">
+  <div class="WP-nav-placeholder-browsejob" style="width: 675px;">
+    <div id="WP-nav-content" style="border-right: 3px;border-left:3px;padding-left:13px;;">
+      <div id="mydesk"><a href="javascript: show_tab('tab_4');"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-left:0; border-right: 3px;">
+      <div id="project-mgmt"><a href="/project/management"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-right: 3px;border-left:0;">
+      <div id="editprofile"><a href="/profile/edit"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-right: 3px;border-left:0;">
+      <div id="cashout"><a href="#"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-right: 3px;border-left:0;">
+      <div id="logout"><a href="/login/logout"></a></div>
+    </div>
+  </div>
+</div>
+<?php }elseif($page_is=='About'){?>
+<!-- about us footer -->
+<div style="height:22px" class="footer">
+<?php }elseif($page_is=='Help'){?>
+<!-- about us footer -->
+<div style="height:22px" class="footer">
+<?php }elseif($page_is=='Privacy'){?>
+<!-- about us footer -->
+<div style="height:22px" class="footer">
+<?php }elseif($page_is=='T&C'){?>
+<!-- terms footer -->
+<div style="height:22px" class="footer">
+<?php }elseif($page_is=='Contact' && $action_is=='find'){?>
+<!-- find people footer -->
+
+<header>
+<div class="footer">
+<div class="WP-bottom-nav">
+  <div class="WP-nav-placeholder-browsejob">
+    <div id="WP-nav-content" style="padding-left:10px;">
+      <div id="design"><a href="#design" onclick="showCategory('R&D')"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-left:0;">
+      <div id="frontend"><a href="#apps" onclick="showCategory('Frontend')"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-left:0;">
+      <div id="backend"><a href="#sw" onclick="showCategory('Backend')"></a></div>
+    </div>
+    <div id="WP-nav-content" style="width:240px; border-left:0;">
+      <div id="browsesearch"> <img align="center" style="margin-top: 10px; margin-left: 15px;"src="/public/images/searchingfor.png"> <?php echo form_open('/stories/browse' , array('class'=>'search-form', 'name' => "browse-tools-form", 'id'=>'browse-tools-form')); ?>
+        <input id="browse-search" onfocus="cleanMe(this)" type="text" value="<?php if(isset($_POST['search']) && trim($_POST['search'])!=''){echo $_POST['search'];}else{?>Type and press ENTER<?php }?>" name="search">
+        <script type="text/javascript">
+			  	function cleanMe(input){if(input.value=='Type and press ENTER')input.value='';}
+				function submitSearchForm(){$('#browse-tools-form').submit();}
+				function showCategory(cat){$('input[name="type"]').val(cat);$('#browse-tools-form').submit();}
+              </script>
+        <input type="hidden" name="type" value="<?=(isset($_POST['category']))? $_POST['category']:'0'?>"/>
+        <SELECT onchange="submitSearchForm()" type="text" id="time-left" name="time">
+          <option <?php if(isset($_POST['time'])&& $_POST['time']==0){?>selected="selected"<?php }?> value="0">Any time left...</option>
+          <option <?php if(isset($_POST['time'])&& $_POST['time']==1){?>selected="selected"<?php }?> value="1">Less than an hour</option>
+          <option <?php if(isset($_POST['time'])&& $_POST['time']==2){?>selected="selected"<?php }?> value="2">Between 1 to 4 hours</option>
+          <option <?php if(isset($_POST['time'])&& $_POST['time']==3){?>selected="selected"<?php }?> value="3">Between 4 to 12 hours</option>
+          <option <?php if(isset($_POST['time'])&& $_POST['time']==4){?>selected="selected"<?php }?> value="4">Between 12 to 24 hours</option>
+          <option <?php if(isset($_POST['time'])&& $_POST['time']==5){?>selected="selected"<?php }?> value="5">Between 1 to 3 days</option>
+          <option <?php if(isset($_POST['time'])&& $_POST['time']==6){?>selected="selected"<?php }?> value="6">Between 3 to 7 days</option>
+          <option <?php if(isset($_POST['time'])&& $_POST['time']==7){?>selected="selected"<?php }?> value="7">More than a week</option>
+        </SELECT>
+        <SELECT onchange="submitSearchForm()" type="text" id="all-cat" name="project_sel">
+          <option value="0">All Projects...</option>
+          <?php foreach($projects as $project):?>
+          <option <?php if(isset($_POST['project_sel'])&& $_POST['project_sel']==$project['project_id']){?>selected="selected"<?php }?> value="<?=$project['project_id']?>">
+          <?=ucwords($project['project_name'])?>
+          </option>
+          <?php endforeach;?>
+        </SELECT>
+        <?php echo form_close(); ?> </div>
+    </div>
+    <div id="WP-nav-content" style="border-left:0;">
+      <div id="writingcontent"><a href="#writingcontent" onclick="showCategory('Copywrite')"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-left:0;">
+      <div id="test"><a href="#test" onclick="showCategory('Test')"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-left:0;">
+      <div id="find"><a href="/contact/find"></a></div>
+    </div>
+  </div>
+</div>
+<?php }elseif(($action_is=='submission' || $action_is=='done') && $page_is=='story'){?>
+<!-- your footer for submission page -->
+<header>
+<style>
+#submit-file {background: url(/public/images/submitlink.png);border: 0;width: 163px;padding: 0 10px 0 36px;height: 26px;margin: 5px 3px 0 0;}
+#submit-zip {background: url(/public/images/upload-zip.png) no-repeat;
+border: 0;
+text-indent: -999px;
+width: 211px;
+height: 26px;
+display: block;
+padding-left: 115px;
+font-family: DINregular;
+font-size: 14px;}
+.row {width:430px;}
+.row img {padding-left:10px;}
+</style>
+<div class="footer">
+<div class="WP-bottom-nav">
+  <div class="WP-nav-placeholder-browsejob" style="width:1000px;">
+    <div id="WP-nav-content" style="padding-left:13px;;">
+      <div id="burndown"><a href="/project/burndown_chart/<?=$work_data['project_id']?>"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-left:0;">
+      <div id="scrum_board"><a href="/project/scrum_board/<?=$work_data['project_id']?>" id="board"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-left:0;">
+      <div id="essentials"><a href="#essentials" id="plan"></a></div>
+    </div>
+    <script type="text/javascript">function checkSubmitDone(){
+			if(($('input[name="check1"]:checked').length>0)&&($('input[name="check2"]:checked').length>0)){return true;}
+			else{alert('You need to check and agree to terms before submision!'); return false;}
+		}</script> 
+    <?php echo form_open_multipart('story/done', array('id'=>'submit_form', 'onsubmit'=>'return checkSubmitDone();'));?>
+    <div id="WP-nav-content" style="width: 575px;; border-left:0;">
+      <div style="padding: 20px 0 0 10px;">
+        <div class="row">
+          <input name="file_upload" type="file" id="submit-zip" value="browse">
+          <input name="git" type="text" id="submit-file" value="Github link...">
+          <input name="link" type="text" id="submit-file" value="Add link to file...">
+        </div>
+        <div class="row">
+          <input type="checkbox" name="check1" value="edit-file">
+          <img src="/public/images/tnc.png"></div>
+        <div class="row">
+          <input type="checkbox" name="check2" value="edit-file">
+          <img src="/public/images/compile.png"></div>
+        <input type="hidden" name="id" value="<?php echo $work_data['work_id']; ?>" />
+        <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
+        <input type="submit" value="submit" id="submitwork">
+      </div>
+    </div>
+    <?php echo form_close(); ?> </div>
+</div>
 <!-- end of footer for submission page -->
+<?php }elseif(strtolower($page_is)=='myoffice'){?>
+<header>
+<div class="footer">
+<div class="WP-bottom-nav">
+  <div class="WP-nav-placeholder-browsejob" style="width: 675px;">
+    <div id="WP-nav-content" style="border-right: 3px;border-left:3px;padding-left:13px;;">
+      <div id="mydesk"><a href="javascript: show_tab('tab_4');"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-right: 3px;">
+      <div id="project-mgmt"><a href="/project/management"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-right: 3px;border-left:0;">
+      <div id="editprofile"><a href="/profile/edit"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-right: 3px;border-left:0;">
+      <div id="cashout"><a href="#"></a></div>
+    </div>
+    <div id="WP-nav-content" style="border-right: 3px;border-left:0;">
+      <div id="logout"><a href="/login/logout"></a></div>
+    </div>
+  </div>
+</div>
 <?php }elseif($action_is=='show' && $page_is=='project'){?>
 
 <!-- your footer for project show page -->
@@ -27,10 +195,23 @@
 <?php }elseif($action_is=='burndown_chart'){?>
 
 <!-- start of burn chart footer -->
+<style>
+p#burndown {width:230px; text-align: left;
+font-size: 20px;
+font-weight: bold;
+float: left;
+padding: 0 5px 5px 10px;
+color: black;
+font-family: DINMediumAlternate;}
+#project-select {margin: 0 0 10px 10px;
+border-radius: 5px;
+border: 0;
+padding: 3px;}
+</style>
 <header>
 <div class="footer">
 <div class="WP-bottom-nav">
-  <div class="WP-nav-placeholder-browsejob" style="width:555px;">
+  <div class="WP-nav-placeholder-browsejob" style="width:666px;">
     <div id="WP-nav-content" style="padding-left:13px;;">
       <div id="burndown"><a href="/project/burndown_chart/<?=$project_sel?>"></a></div>
     </div>
@@ -40,13 +221,32 @@
     <div id="WP-nav-content" style="border-left:0;">
       <div id="scrum_board"><a href="/project/scrum_board/<?=$project_sel?>" id="board"></a></div>
     </div>
-    <div>
-    <script type="text/javascript">function sprintChart(){window.location.assign('/project/burndown_chart/<?=$project_sel?>/'+$('#sprintChart').val());}</script> 
-    <select name="sprint" onchange="sprintChart()" id="sprintChart">
-    	<?php foreach($sprints as $i=>$sprint):?>
-    	<option value="<?=$sprint['id']?>" <?php if($sprint_sel==$sprint['id']){?>selected="selected"<?php }?>>Sprint <?=$i+1;?></option>
+   <div id="WP-nav-content" style="width:240px; border-left:0;">
+      <p style="margin-top: 10px;" id="burndown">Project:</p>
+        <SELECT id="project-select" onchange="switchProject()" type="text" id="project_sel" name="project_sel">
+          <?php if(count($projects)<1){?>
+          <option>You have no Active Projects</option>
+          <?php }else{?>
+          <?php if($project_sel==0){?>
+          <option value="0">Please Select a Project...</option>
+          <?php }?>
+          <?php foreach($projects as $project):?>
+          <option <?php if(isset($project_sel)&& $project_sel==$project['project_id']){?>selected="selected"<?php }?> value="/project/scrum_board/<?=$project['project_id']?>">
+          <?=ucwords($project['project_name'])?>
+          </option>
+          <?php endforeach;?>
+          <?php }?>
+        </SELECT>
+        <script type="text/javascript">function switchProject(){window.location.assign($('#project_sel').val());}</script>  
+      <script type="text/javascript">function sprintChart(){window.location.assign('/project/burndown_chart/<?=$project_sel?>/'+$('#sprintChart').val());}</script>
+     <p id="burndown"> Sprint: </p>
+      <select id="sprintChart"  name="sprint" onchange="sprintChart()" id="sprintChart">
+        <?php foreach($sprints as $i=>$sprint):?>
+        <option value="<?=$sprint['id']?>" <?php if($sprint_sel==$sprint['id']){?>selected="selected"<?php }?>>Sprint
+        <?=$i+1;?>
+        </option>
         <?php endforeach;?>
-    </select>
+      </select>
     </div>
   </div>
 </div>
@@ -63,7 +263,14 @@
 <!-- developer tools -->
 <?php }?>
 <!-- Temporary for all show this footer -->
-<header>
+<style>
+#project-select {margin: 5px 0 10px 13px;
+border-radius: 5px;
+border: 0;
+padding: 3px;
+width: 210px;}
+
+</style><header>
 <div class="footer">
 <div class="WP-bottom-nav">
   <div class="WP-nav-placeholder-browsejob">
@@ -71,14 +278,14 @@
       <div id="home"><a href="/"></a></div>
     </div>
     <div id="WP-nav-content" style="border-left:0;">
-      <div id="myoffice"><a href="/myOffice"></a></div>
+      <div id="myoffice"><a href="/myoffice"></a></div>
     </div>
     <div id="WP-nav-content" style="border-left:0;">
-      <div id="sw"><a href="#sw"></a></div>
+      <div id="save"><a <?php if(!$project_owner){?>onclick="return false;"<?php }?> href="javascript: save_list();"></a></div>
     </div>
-    <div id="WP-nav-content" style="width:240px; border-left:0;">
+    <div id="WP-nav-content" style="width:240px; border-right: 0; border-left:0;">
       <div id="browsesearch"> <img align="center" style="margin-top: 10px; margin-left: 15px;"src="/public/images/searchingfor.png">
-        <SELECT onchange="switchProject()" type="text" id="project_sel" name="project_sel">
+        <SELECT id="project-select" onchange="switchProject()" type="text" id="project_sel" name="project_sel">
           <?php if(count($projects)<1){?>
           <option>You have no Active Projects</option>
           <?php }else{?>
@@ -127,13 +334,14 @@
       <div id="home"><a href="/"></a></div>
     </div>
     <div id="WP-nav-content" style="border-left:0;">
-      <div id="myoffice"><a href="/myOffice"></a></div>
+      <div id="myoffice"><a href="/myoffice"></a></div>
     </div>
     <div id="WP-nav-content" style="border-left:0;">
-      <div id="sw"><a href="#sw"></a></div>
+      <div id="save"><a href="#save"></a></div>
     </div>
-    <div id="WP-nav-content" style="width:240px; border-left:0;">
+    <div id="WP-nav-content" style="width:240px; border-right:0; border-left:0;">
       <div id="browsesearch"> <img align="center" style="margin-top: 10px; margin-left: 15px;"src="/public/images/searchingfor.png">
+        Project:
         <SELECT onchange="switchProject()" type="text" id="project_sel" name="project_sel">
           <?php if(count($projects)<1){?>
           <option>You have no Active Projects</option>
@@ -149,10 +357,19 @@
           <?php }?>
         </SELECT>
         <script type="text/javascript">function switchProject(){window.location.assign($('#project_sel').val());}</script> 
+        <script type="text/javascript">function sprintChart(){window.location.assign('/project/scrum_board/<?=$project_sel?>/'+$('#sprintChart').val());}</script> <br />
+        Sprint:
+        <select name="sprint" onchange="sprintChart()" id="sprintChart">
+          <?php foreach($sprints as $i=>$sprint):?>
+          <option value="<?=$sprint['id']?>" <?php if($sprint_sel==$sprint['id']){?>selected="selected"<?php }?>>Sprint
+          <?=$i+1;?>
+          </option>
+          <?php endforeach;?>
+        </select>
       </div>
     </div>
-    <div id="WP-nav-content" style="border-left:0;">
-      <div id="writingcontent"><a href="#writingcontent" onclick="showCategory('Copywrite')"></a></div>
+    <div id="WP-nav-content" style="padding-left:13px;;">
+      <div id="burndown"><a href="/project/burndown_chart/<?=$project_sel?>"></a></div>
     </div>
     <div id="WP-nav-content" style="border-left:0;">
       <div id="scrum_plan"><a href="/project/sprint_planner<?= ($project_sel)? '/'.$project_sel:''?>" id="plan"></a></div>
@@ -216,7 +433,7 @@
       <div id="test"><a href="#test" onclick="showCategory('Test')"></a></div>
     </div>
     <div id="WP-nav-content" style="border-left:0;">
-      <div id="find"><a href="#find"></a></div>
+      <div id="find"><a href="/contact/find"></a></div>
     </div>
   </div>
 </div>
@@ -310,7 +527,11 @@
     <?php }?>
     <!-- common footer section -->
     <?php if(isset($modal_message)){?>
-    <div id="dialog-message" title="<?=isset($modal_title)? $modal_title: 'Workpad'?>"><p><?=$modal_message?></p></div>
+    <div id="dialog-message" title="<?=isset($modal_title)? $modal_title: 'Workpad'?>">
+      <p>
+        <?=$modal_message?>
+      </p>
+    </div>
     <?php }?>
     <div class="footer-holder">
       <ul class="add-nav" >
@@ -323,6 +544,9 @@
         <li><a href="/login">Login</a></li>
         <?php }else{?>
         <li><a href="/login/logout">Logout</a></li>
+        <?php }?>
+        <?php if($this->session->userdata('role')=='admin'){?>
+        <li><a href="/admin">Admin</a></li>
         <?php }?>
       </ul>
       <p>&copy;MOTIONWORKS SDN BHD 2011</p>
@@ -343,6 +567,18 @@
 				}
 			});
 		});
+		
+	function show_tab(tab){
+		$('.tab-content').hide();
+		$('ul.tabset li a.active').removeClass('active');
+		$('a[href="#'+tab+'"]').addClass('active');
+		url = '/myoffice/AjaxTab_'+tab;
+		$.post(url, function(data){
+				$('#'+tab).html(data);
+				$('#'+tab).show();
+			});
+	}
+	
 	$('header').localScroll();
 	var currentPage=0;
 	$('#page'+currentPage).show();

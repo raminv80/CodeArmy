@@ -2,6 +2,8 @@
 <!-- your html code here -->
 <section id="user-stories"><br><br>
   <div class="WP-main">
+  
+  
     <?php if($featherlight||$lightweight||$heavyweight){?>
     <div id="slideshow">
       <span class="control" id="leftControl" style="display: block; ">Clicking moves left</span>

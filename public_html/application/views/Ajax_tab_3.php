@@ -10,7 +10,7 @@
 					<?php if($messages){?>
 					<dl class="message">
 					<?php foreach($messages as $message):?>
-						<dt class="<?php echo $message['status'];?>">
+						<dt id="msg_<?=$message['id']?>" class="<?php echo $message['status'];?>">
 							<span class="title"><?php echo $message['title'];?></span>
 							<span class="date"><?php echo $message['created_at'];?></span>
 							<div class="arrow"></div>
@@ -56,6 +56,16 @@
 	
 	$('.notification .message dt').click(function(){
 		$(this).next('dd').slideToggle(500).siblings('dd').slideUp();
+		var data = $(this).attr('id');
+		if($(this).hasClass('unread')){
+			$.post(
+			'/myoffice/AjaxMessageRead',
+			{ 'id': data, 'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>' },
+			function(msg){
+				$('#'+msg).removeClass('unread');
+				$('#'+msg).addClass('read');
+			});
+		}
 		$(this).addClass('selected').siblings('dt').removeClass('');
 		return false;
 	});

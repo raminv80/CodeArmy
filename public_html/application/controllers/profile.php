@@ -14,6 +14,7 @@ class Profile extends CI_Controller {
 		$controller = $this->uri->segment(1);
 		$action = $this->uri->segment(2);
 		$param = $this->uri->segment(3);
+		$this->view_data['action_is'] = $action;
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
 		if($check_login == true) {
@@ -62,6 +63,17 @@ class Profile extends CI_Controller {
 	
 	// - edit profile page
 	function edit() {
+		$user_id = $this->session->userdata('user_id');
+		if($user_id){
+			$me = $this->users_model->get_user($user_id);
+			$me = $me->result_array();
+			$me = $me[0];
+			$myProfile = $this->users_model->get_profile($user_id);
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$this->view_data['me'] = $me;
+			$this->view_data['myProfile'] = $myProfile;
+		}
 		$this->load->helper('country_helper');
 		$this->load->library('formdate');
 		$user_id = $this->session->userdata('user_id');

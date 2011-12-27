@@ -67,7 +67,6 @@
 							<li><a class="tab" href="#tab_5"><span class="top"><span class="text-history">history</span></span></a></li>
 							<li><a class="tab" href="#tab_6"><span class="top"><span class="text-leaderboard">Leaderboard</span></span></a></li>
 							<li><a class="tab" href="#tab_7"><span class="top"><span class="text-personal">Personal info</span></span></a></li>
-                            <li><a class="tab" href="#tab_8"><span class="top"><p id="project-mgmt">Project Mngmnt</p></a></li>
 						</ul>
 					</div>
 					<div id="tab_1" class="tab-content">
@@ -160,7 +159,7 @@
                                                         <?php }?>
 													</ul>
 												</div>
-												<div class="button"><span class="left">cash out</span></div>
+												<!--<div class="button"><span class="left">cash out</span></div>-->
 											</div>
 											<div class="currently-task">
 												<h3><span class="text-currently">currently working on</span></h3>
@@ -346,16 +345,6 @@ margin: 0 0 13px 10px;">collaborators</span></h3>
 								<div class="content">
                                 	<h1>Personal Info</h1>
                                     <!-- TODO: Personal Info -->
-                                </div>
-                            </div>    
-                        </div>
-					</div>
-                    <div id="tab_8" class="tab-content">
-						<div class="tab-holder">
-							<div class="tab-frame">
-								<div class="content">
-                                	<h1>Project Management</h1>
-                                    <!-- TODO: Project Management -->
                                 </div>
                             </div>    
                         </div>

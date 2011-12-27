@@ -1,6 +1,5 @@
 <?php $this->load->view('includes/header4'); ?>
 <script type="text/javascript">
-	//var works='<=str_replace("'","\'",json_encode($works))?>';
 	var works = new Array();
 	<?php
 		foreach($works as $sprint=>$work_list):
@@ -13,54 +12,86 @@
 			foreach($work_list['list'] as $work):
 				echo "d = new Object();\n";
 				echo "d.id='".$work['work_id']."';\n";
-				echo "d.title='".$work['title']."';\n";
+				echo "d.title='".str_replace("'","\'",$work['title'])."';\n";
 				echo "d.status='".$work['status']."';\n";
-				echo "d.description='".substr(str_replace("'","\'",str_replace(array("\n","\t"),'',strip_tags($work['description']))),0,252)."';\n";
+				echo "d.description='".substr(trim(str_replace("'","\'",str_replace(array("\n","\t"),'',strip_tags(nl2br($work['description']))))),0,252)."';\n";
 				echo "works[works.length-1].work_list.push(d);\n";
 			endforeach;
 		endforeach;
 	?>
-	//works = jQuery.parseJSON(works);
 </script>
+
 <div id="wrapper" style="padding:60px 10px 200px 10px; margin-top:10px;">
-  <div class="contents"> 
-  	<a href="javascript: save_list();">Save</a>
+  <div class="contents">
     <div id="plan_holder" class="scrum_holder">
       <div id="sprint_planner">
         <div class="scrum_column">
           <h2>Ice Box</h2>
-          <ul id="product_backlog" class="story_list">
+          <div id="product_backlog" class="story_list">
             <li class="empty_space"> <span style="margin-left: 67px;">+ Add User Story</span> </li>
-          </ul>
+          </div>
         </div>
         <div class="scrum_column">
           <h2 class="sprint-title">Sprint 1</h2>
           <ul class="timeline">
-          	<li><b>Start:</b> <input name="startSprint1" class="start" /></li>
-            <li><b>End:</b> <input name="endSprint1" class="end" /></li>
+            <li><b>Start:</b>
+              <input name="startSprint1" class="start" />
+            </li>
+            <li><b>End:</b>
+              <input name="endSprint1" class="end" />
+            </li>
           </ul>
-          <a href="javascript: remove_sprint('+num_sprints+')">Remove</a>
-          <div style=" clear:both"></div>
-          <ul id="scrum1" class="story_list">
-          </ul>
+          <div style="clear:both"></div>
+          <div class="timeline-holder">
+            <div class="datestart">
+              <p class="day_date">
+                S
+              </p>
+              <p class="monthyear_date">
+                tart Date
+              </p>
+            </div>
+            <div class="timeline-path">
+              <div class="mark" style="margin-left:15px;"></div>
+            </div>
+            <div class="dateend">
+              <p class="day_date">E</p>
+              <p class="monthyear_date">nd Date</p>
+            </div>
+          </div>
+          <div id="scrum1" class="story_list"> </div>
         </div>
         <div class="add_sprint"></div>
       </div>
-    </div>  
+    </div>
   </div>
 </div>
-<div id="dialog-confirm" title="Remove the Sprint?">
-	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'Selected Sprint will be deleted and all user stories under it will move to Icebox. Are you sure?'</p>
+<div style="display:none" id="dialog-confirm" title="Remove the Sprint?">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'Selected Sprint will be deleted and all user stories under it will move to Icebox. Are you sure?'</p>
 </div>
 <input type="hidden" id="buffer" />
 <style type="text/css">
-	.locked{background:#F60;}
-	ul.options{display:none;}
-	.sprint-title{width:130px; float:left;}
+	#remove {background: black;
+padding: 5px;
+margin: 10px 0 5px 6px;
+float: left;
+border-radius: 5px; opacity:.6}
+#remove:hover {opacity:.9;}
+	
+	.locked{background:#2d2d2d; font-family:"DINRegular";}
+	ul.options{margin:3px 0 0 -40px; float: left; padding-top:4px;display:none;width:280px; border-top:1px ridge #414a4e;}
+	.sprint-title{
+		width: 279px;
+		background: url(/public/images/qualif-table-header.png);
+		float: left;
+		margin: 0;
+		padding: 10px 10px 10px 11px;text-shadow: 0 1px 10px white;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;}
 	.timeline {
 		list-style: none;
-		float: left;
-		margin: 10px 0;
+		float: right;
+		margin: -45px 5px 0 0;
 		padding: 0;
 		width: 139px;
 		font-size: 13px;
@@ -68,7 +99,8 @@
 		text-align: right;
 	}
 	
-	.start, .end { width: 70px; border:none;}
+	.start, .end { width: 70px; border:none; }
+	
 	.scrum_holder{
 		width:1140;
 		overflow-x:scroll;
@@ -76,7 +108,7 @@
 	#sprint_planner{
 		width: 920px;
 	}
-	
+	ul.options li {display:inline-block;padding-right:15px;padding-bottom:5px;margin-top:5px;}
 	#scrum_board{width:2000px;}
 	.add_sprint{
 		width: 15px;
@@ -98,7 +130,7 @@
 	    border-radius: 5px;
 		
 	}
-	.scrum_column{
+	.scrum_column{margin-right: 5px;
 		float:left;
 		width:300px;
 		min-height:400px;
@@ -106,7 +138,8 @@
 		-moz-border-radius: 10px;
 		-webkit-border-radius: 10px;
 		border-radius: 10px;
-		background-image: linear-gradient(bottom, rgba(185,217,250,0.2) 0%, rgba(221,255,221,0.2) 61%, rgba(255,255,255,0.2) 81%);
+		background:url(/public/images/scrum.png);
+		/*background-image: linear-gradient(bottom, rgba(185,217,250,0.2) 0%, rgba(221,255,221,0.2) 61%, rgba(255,255,255,0.2) 81%);
 		background-image: -o-linear-gradient(bottom, rgba(185,217,250,0.2) 0%, rgba(221,255,221,0.2) 61%, rgba(255,255,255,0.2) 81%);
 		background-image: -moz-linear-gradient(bottom, rgba(185,217,250,0.2) 0%, rgba(221,255,221,0.2) 61%, rgba(255,255,255,0.2) 81%);
 		background-image: -webkit-linear-gradient(bottom, rgba(185,217,250,0.2) 0%, rgba(221,255,221,0.2) 61%, rgba(255,255,255,0.2) 81%);
@@ -119,7 +152,7 @@
 			color-stop(0, rgba(185,217,250,0.2)),
 			color-stop(0.61, rgba(221,255,221,0.2)),
 			color-stop(0.81, rgba(255,255,255,0.2))
-		);
+		);*/
 	}
 	
 	.story_list{
@@ -132,10 +165,50 @@
 	.story_list li{
 		list-style:none;
 		margin: 0 5px;
+		font-size: 14px;
 	}
-	#sprint_planner .story_list li{
-		cursor:move;
+	.datestart, .dateend {float:left;padding:8px;}
+	.timeline-holder {margin: 10px 0 10px 2px;float: left; width:298px;}
+	.title_story {font-family: DINregular;font-size: 16px;float: left;width:230px;padding: 0 5px 0 0;}
+	.status {padding: 0 0 0 5px;}
+	.short_story {	margin: 5px 10px 10px 0;; float: left;
+					line-height: 17px;
+					font-size: 13px;
+					color: #D9D9D9; }
+	.day_date { color:#fff; letter-spacing:-2px;
+			margin-top: -5px;
+			font-size: 30px;
+			float: left;}
+	.monthyear_date { width:30px;
+		 	color:#fff;
+			margin: 0;
+			font-size: 11px;
+			float: left;}
+	.timeline-path {
+			background:url(/public/images/time-line.png) left; float:left; width:155px; height:15px;margin: 15px 0 0 -5px;}
+	.timeline-path .mark {background:url(/public/images/time-line.png) right; width:11px; height:15px; margin-top:-3px;}
+	#sprint_planner .story_list li.user_story{
+		cursor:move;OVERFLOW:HIDDEN;
+		-webkit-box-shadow: 1px 2px 3px rgba(26, 50, 50, 0.36);
+		-moz-box-shadow: 1px 2px 3px rgba(26, 50, 50, 0.36);
+		box-shadow: inset 1px 2px 3px rgba(26, 50, 50, 0.36);
+		bordeR: 0;
+		background: #525B62;
+		border: 0px;
+		border-right: 1px solid #797979;
+		border-bottom: 1px solid #797979;
+		margin-bottom: 5px;
 	}
+	
+	
+	
+	.story_list a#view { text-indent:-99999px; display:block; background:url(/public/images/vieweditdelete.png) left top; width: 58px;}
+	.story_list a#view:hover {background:url(/public/images/vieweditdelete.png) left bottom;}
+	.story_list a#edit {text-indent:-99999px; display:block; background:url(/public/images/vieweditdelete.png) -62px top; width: 52px;}
+	.story_list a#edit:hover { background:url(/public/images/vieweditdelete.png) -62px bottom;}
+	.story_list a#delete {text-indent:-99999px; display:block; background:url(/public/images/vieweditdelete.png) -114px top; width: 64px;}
+	.story_list a#delete:hover {background:url(/public/images/vieweditdelete.png) -114px bottom;}
+	
 	
 	h1, h2, h3, h4, h5, h6 {
 	color: white;
@@ -143,8 +216,8 @@
 	text-transform: uppercase;
 	}
 	h2 {
-	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	font-weight: bold;
+	font-family: "DINRegular";
+	
 	margin: 10px;
 	font-size: 1.5em;
 	}
@@ -155,53 +228,92 @@
 	}
 	.story_list li.empty_space{
 		cursor:pointer;
+		margin: 0 5px 5px 5px;
 	}
 	
 	h2{
-		font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
-		font-weight:bold;
+		font-family:"DINRegular";
+		
 		margin: 10px;
 		font-size:1.5em;
 	}
 	
 	.empty_space, .add_sprint{
+		background: none !important;
+		border: #CCC thin dashed !important;
+		font-size: 17px !important;
+		color: white;
+		cursor: pointer !important;
 		-moz-border-radius: 5px;
 	    -webkit-border-radius: 5px;
 	    border-radius: 5px;
-		border:#CCC thin dashed;
-		
-		margin:2px;
+		margin:2px 2px 10px 0; 
 	}
 	
 	.empty_space:hover{
-		background: #ccc;
+		background: #ccc !important;
+		color:#000 !important;
 	}
 	
-	.user_story{
-		background:yellow;
-		padding:10px;
-		color:black;
+	.user_story{font-family:"DINLightAlternate";
+		background:#fff;
+		padding:10px 0 10px 10px;
+		color:#fff;
 		border: 1px solid black;
 		-moz-border-radius: 5px;
 	    -webkit-border-radius: 5px;
 	    border-radius: 5px;
+		
 	}
+	.user_story:hover {opacity:1}
 	
 	.my-work{
 		background-color:green;	
 	}
+	.status{font-size:9px;}
 	
 	.ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+	
+	.Reject{background:url(/public/images/planner-badges.png) left; width:36px; height:50px;float: right;margin: -5px 1px -5px 0;}
+	.Redo {background:url(/public/images/planner-badges.png) -36px; width:36px; height:50px;float: right;margin: -5px 1px -5px 0;}
+	.draft {background:url(/public/images/planner-badges.png) -72px; width:36px; height:50px;float: right;margin: -5px 1px -5px 0;}
+	.Signoff {background:url(/public/images/planner-badges.png) -108px; width:36px; height:50px;float: right;margin: -5px 1px -5px 0;}
+	.Verify {background:url(/public/images/planner-badges.png) -144px; width:36px; height:50px;float: right;margin: -5px 1px -5px 0;}
+	.Done {background:url(/public/images/planner-badges.png) -180px;; width:36px; height:50px;float: right;margin: -5px 1px -5px 0;}
+	.open {background:url(/public/images/planner-badges.png) -216px; width:36px; height:50px;float: right;margin: -5px 1px -5px 0;}
+	.Progress{background:url(/public/images/planner-badges.png) -251px; width:36px; height:50px;float: right;margin: -5px 1px -5px 0;}
+
 </style>
 <script type="text/javascript">
 $(init);
 function init(){
 	$('#product_backlog').sortable({cancel: '.empty_space', connectWith: '#scrum1'});
 	$('#scrum1').sortable({connectWith:'#product_backlog'});
-	$('input[name="startSprint1"]').datepicker({ dateFormat: 'yy-mm-dd' });
-	$('input[name="endSprint1"]').datepicker({ dateFormat: 'yy-mm-dd' });
+	$('input[name="startSprint1"]').datepicker({ dateFormat: 'yy-mm-dd',
+	'onSelect': function(date,ins){
+			s = new Date(date.substr(0,4),date.substr(5,2) - 1,date.substr(8,2));
+			$('.day_date',$(this).parent().parent().parent()).first().html($.datepicker.formatDate('dd', s));
+			$('.monthyear_date',$(this).parent().parent().parent()).first().html($.datepicker.formatDate('M yy', s));
+		} 
+	});
+	$('input[name="endSprint1"]').datepicker({ dateFormat: 'yy-mm-dd', 
+	'onSelect': function(date,ins){
+			s = new Date(date.substr(0,4),date.substr(5,2) - 1,date.substr(8,2));
+			$('.day_date',$(this).parent().parent().parent()).last().html($.datepicker.formatDate('dd', s));
+			$('.monthyear_date',$(this).parent().parent().parent()).last().html($.datepicker.formatDate('M yy', s));
+		} 
+	});
+	$('.datestart').click(function(){$('input[name="startSprint1"]').datepicker('show')});
+	$('.dateend').click(function(){$('input[name="endSprint1"]').datepicker('show')});
 	populate(works);
-	lockSprint(<?=$curSprint?>);
+	<?php if($enable_sprint_locks){?>lockSprint(<?=$curSprint?>);<?php }?>
+}
+
+function percentage(start,end){
+	t = (end-start)/(1000*24*60*60);
+	now = new Date(<?=date('Y')?>,<?=date('m')?>-1,<?=date('d')?>);
+	c = (end-now)/(1000*24*60*60);
+	return c/t;
 }
 
 function lockSprint(i){
@@ -290,10 +402,30 @@ function populate(works){
 			cur_sprint.data('sprint_id',sprint_id);
 			$('.start',cur_sprint.parent()).val(sprint_from);
 			$('.end',cur_sprint.parent()).val(sprint_to);
+			if(sprint_from!=''){
+				s = new Date(sprint_from.substr(0,4),sprint_from.substr(5,2)-1,sprint_from.substr(8,2));
+				$('.day_date',cur_sprint.parent()).first().html($.datepicker.formatDate('dd', s));
+				$('.monthyear_date',cur_sprint.parent()).first().html($.datepicker.formatDate('M yy', s));
+			}
+			if(sprint_to!=''){
+				e = new Date(sprint_to.substr(0,4),sprint_to.substr(5,2)-1,sprint_to.substr(8,2));
+				$('.day_date',cur_sprint.parent()).last().html($.datepicker.formatDate('dd', e));
+				$('.monthyear_date',cur_sprint.parent()).last().html($.datepicker.formatDate('M yy', e));
+			}
+			if(sprint_from!='' && sprint_to!=''){
+				var percent = percentage(s,e);
+				if(percent>=0 && percent <=1){
+					$('.mark',cur_sprint.parent()).css({'margin-left': Math.round(percent*145)});
+				}else{
+					$('.mark',cur_sprint.parent()).hide();
+				}
+			}else{
+				$('.mark',cur_sprint.parent()).hide();
+			}
 			for(i=0;i<work_list.length;i++){
 				var data=work_list[i];
 				entry = data.description;
-				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><span class="title_story">'+data.title+'</span>:<span class="status">'+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a href="/story/'+data.id+'">view</a><li><a href="/story/edit/'+data.id+'">edit</a></li></li><li><a onclick="deleteUserStory(\''+data.id+'\')" href="javascript:void(0)">Delete</a></li></ul></li>');
+				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options" ><li><a id="view" href="/story/'+data.id+'">view</a><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" id="delete" href="javascript:void(0)">Delete</a></li></ul></li>');
 			}
 		}else if(sprint_id!=0 && !first_sprint){//add a new sprint
 			$('.add_sprint').click();
@@ -301,10 +433,25 @@ function populate(works){
 			cur_sprint.data('sprint_id', sprint_id);
 			$('.start',cur_sprint.parent()).val(sprint_from);
 			$('.end',cur_sprint.parent()).val(sprint_to);
+			if(sprint_from!=''){
+				s = new Date(sprint_from.substr(0,4),sprint_from.substr(5,2)-1,sprint_from.substr(8,2));
+				$('.day_date',cur_sprint.parent()).first().html($.datepicker.formatDate('dd', s));
+				$('.monthyear_date',cur_sprint.parent()).first().html($.datepicker.formatDate('M yy', s));
+			}
+			if(sprint_to!=''){
+				e = new Date(sprint_to.substr(0,4),sprint_to.substr(5,2)-1,sprint_to.substr(8,2));
+				$('.day_date',cur_sprint.parent()).last().html($.datepicker.formatDate('dd', e));
+				$('.monthyear_date',cur_sprint.parent()).last().html($.datepicker.formatDate('M yy', e));
+			}
+			if(sprint_from!='' && sprint_to!=''){
+				$('.mark',cur_sprint.parent()).css({'margin-left': Math.round(percentage(s,e)*145)});
+			}else{
+				$('.mark',cur_sprint.parent()).hide();
+			}
 			for(i=0;i<work_list.length;i++){
 				var data=work_list[i];
 				entry = data.description;
-				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><span class="title_story">'+data.title+'</span>:<span class="status">'+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a href="/story/'+data.id+'">view</a></li><li><a href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" href="javascript:void(0)">Delete</a></li></ul></li>');
+				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+data.id+'">view</a></li><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" href="javascript:void(0)" id="delete">Delete</a></li></ul></li>');
 			}
 		}
 		if(sprint_id==0){//ice box
@@ -313,7 +460,7 @@ function populate(works){
 			for(i=0;i<work_list.length;i++){
 				var data=work_list[i];
 				entry = data.description;
-				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><span class="title_story">'+data.title+'</span>:<span class="status">'+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a href="/story/'+data.id+'">view</a></li><li><a href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" href="javascript:void(0)">Delete</a></li></ul></li>');
+				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+data.id+'">view</a></li><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" id="delete" href="javascript:void(0)">Delete</a></li></ul></li>');
 			}
 		}
 	}
@@ -349,9 +496,29 @@ $('.add_sprint').click(function(){
 		num_sprints++;
 		obj = $('#sprint_planner');
 		obj.width(obj.width()+460);
-		$(this).before('<div class="scrum_column"><h2 class="sprint-title">Sprint '+num_sprints+'</h2><ul class="timeline"><li><b>Start:</b> <input name="startSprint'+num_sprints+'" class="start" /></li><li><b>End:</b> <input name="endSprint'+num_sprints+'" class="end" /></li></ul><a href="javascript: remove_sprint('+num_sprints+')">Remove</a><div style=" clear:both"></div><ul id="scrum'+num_sprints+'" class="story_list"></ul></div>');
-		$('input[name="startSprint'+num_sprints+'"]').datepicker({ dateFormat: 'yy-mm-dd' });
-		$('input[name="endSprint'+num_sprints+'"]').datepicker({ dateFormat: 'yy-mm-dd' });
+		$(this).before('<div class="scrum_column"><h2 class="sprint-title">Sprint '+num_sprints+'</h2><ul class="timeline"><li><b>Start:</b> <input name="startSprint'+num_sprints+'" class="start" /></li><li><b>End:</b> <input name="endSprint'+num_sprints+'" class="end" /></li></ul><div style="clear:both"></div><div class="timeline-holder"><div class="datestart"><p class="day_date">S</p><p class="monthyear_date">tart Date</p></div><div class="timeline-path"><div class="mark" style="margin-left:15px;"></div></div><div class="dateend"><p class="day_date">E</p><p class="monthyear_date">nd Date</p></div></div><a id="remove" href="javascript:  remove_sprint('+num_sprints+')">Remove</a><div style=" clear:both"></div><div id="scrum'+num_sprints+'" class="story_list"></div></div>');
+		tmpCurSprint = $('#scrum'+num_sprints).parent();
+		$('input[name="startSprint'+num_sprints+'"]', tmpCurSprint).datepicker({ dateFormat: 'yy-mm-dd',
+		'onSelect': function(date,ins){
+				s = new Date(date.substr(0,4),date.substr(5,2) - 1,date.substr(8,2));
+				$('.day_date',$(this).parent().parent().parent()).first().html($.datepicker.formatDate('dd', s));
+				$('.monthyear_date',$(this).parent().parent().parent()).first().html($.datepicker.formatDate('M yy', s));
+			} 
+		});
+		$('input[name="endSprint'+num_sprints+'"]', tmpCurSprint).datepicker({ dateFormat: 'yy-mm-dd', 
+		'onSelect': function(date,ins){
+				s = new Date(date.substr(0,4),date.substr(5,2) - 1,date.substr(8,2));
+				$('.day_date',$(this).parent().parent().parent()).last().html($.datepicker.formatDate('dd', s));
+				$('.monthyear_date',$(this).parent().parent().parent()).last().html($.datepicker.formatDate('M yy', s));
+			} 
+		});
+		//console.log($('.datestart',tmpCurSprint));
+		$('.datestart',tmpCurSprint).click(function(){
+				$('.start',$(this).parent().parent()).datepicker('show');
+			});
+		$('.dateend',tmpCurSprint).click(function(){
+				$('.end',$(this).parent().parent()).datepicker('show');
+			});
 		//connect sprints with eachothers
 		for(j=num_sprints;j>0;j--){
 			buffer = '#product_backlog';
@@ -401,15 +568,7 @@ function saveUserStory(obj){
 			{ 'data': entry, 'work_id': work_id, 'project_id': <?=$project_sel?>, 'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>' },
 			function(msg){
 				if(msg!='0')
-					obj.replaceWith('<li id="work_'+msg+'" class="user_story ui-state-default"><span class="title_story">'+title+'</span>:<span class="status">Draft</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a href="/story/'+msg+'">view</a></li><li><a href="/story/edit/'+msg+'">edit</a></li><li><a onclick="deleteUserStory(\''+msg+'\')" href="javascript:void(0)">Delete</a></li></ul></li>');
-				/*$('#product_backlog').sortable({
-					'containment':'#product_backlog',
-					'revert':true,
-					'snap':'.empty_space',
-					'axis':'y',
-					'snapMode':'outer',
-					'stack': '#product_backlog',
-				});*/
+					obj.replaceWith('<li id="work_'+msg+'" class="user_story ui-state-default"><div class="draft"></div><span class="title_story">'+title+'</span>:<span class="status">Draft</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+msg+'">view</a></li><li><a id="edit" href="/story/edit/'+msg+'">edit</a></li><li><a onclick="deleteUserStory(\''+msg+'\')" id="delete" href="javascript:void(0)">Delete</a></li></ul></li>');
 			});
 		}else{
 			url = "/project/AjaxSaveStory";
@@ -418,15 +577,7 @@ function saveUserStory(obj){
 			{ 'data': entry, 'project_id': <?=$project_sel?>, 'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>' },
 			function(msg){
 				if(msg!='0')
-					obj.replaceWith('<li id="work_'+msg+'" class="user_story ui-state-default"><span class="title_story">UserStory '+msg+'</span>:<br><span class="short_story">'+entry+'</span><ul class="options"><li><a href="/story/'+msg+'">view</a></li><li><a href="/story/edit/'+msg+'">edit</a></li><li><a onclick="deleteUserStory(\''+msg+'\')" href="javascript:void(0)">Delete</a></li></ul></li>');
-				/*$('#product_backlog').sortable({
-					'containment':'#product_backlog',
-					'revert':true,
-					'snap':'.empty_space',
-					'axis':'y',
-					'snapMode':'outer',
-					'stack': '#product_backlog',
-				});*/
+					obj.replaceWith('<li id="work_'+msg+'" class="user_story ui-state-default"><span class="title_story">UserStory '+msg+'</span>:<br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+msg+'">view</a></li><li><a id="edit" href="/story/edit/'+msg+'">edit</a></li><li><a id="delete" onclick="deleteUserStory(\''+msg+'\')" href="javascript:void(0)">Delete</a></li></ul></li>');
 			});
 		}
 

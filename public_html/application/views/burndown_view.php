@@ -30,14 +30,16 @@
 		startTime = new Date(<?=($cur_sprint['start'])? strtotime($cur_sprint['start']):time()?>*1000);
 		endTime = new Date(<?=($cur_sprint['end'])? strtotime($cur_sprint['end']):time()?>*1000);
 		var chart = new Array();
+		<?php $remained_points = $sprint_points;?>
 		chart.push([startTime, <?=$sprint_points?>,<?=$sprint_points?>]);
 		<?php foreach($chart as $data):?>
 		d = new Date(<?=strtotime($data['day'])*1000?>);
 		if(d!=endTime)
-			chart.push([d, <?=$data['points']?>, null]);
+			<?php $remained_points-=$data['points'];?>
+			chart.push([d, <?=$remained_points?>, null]);
 		<?php endforeach;?>
 		<?php if(count($chart)>0){?>
-		chart.push([endTime, <?=$data['points']?>,0]);
+		chart.push([endTime, <?=$remained_points?>,0]);
 		<?php }else{?>
 		chart.push([endTime, null,0]);
 		<?php }?>
