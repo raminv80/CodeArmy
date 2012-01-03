@@ -6,6 +6,7 @@ class Terms extends CI_Controller {
 		//$this->load->model('users_model');
 		
 		$this->view_data['page_is'] = 'T&C';
+		$this->view_data['action_is'] = $this->uri->segment(2);
 		$this->load->model('users_model');
 		$user_id = $this->session->userdata('user_id');
 		if($user_id){

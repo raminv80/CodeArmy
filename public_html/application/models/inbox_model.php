@@ -54,7 +54,7 @@ class Inbox_model extends CI_Model {
 		$message_id = explode('_',$id);
 		$message_id = $message_id[1];
 		$sql = "update inbox set status = 'read' where id=? and user_id=? and status='unread'";
-		$this->db->query($sql, array($user_id, $message_id));
+		$this->db->query($sql, array($message_id, $user_id));
 		return $id;
 	}
 }

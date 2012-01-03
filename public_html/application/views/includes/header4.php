@@ -28,7 +28,7 @@
 	<script type="text/javascript" src="/public/js/v4/jquery.scrollTo-1.4.2-min.js"></script>
 	<script type="text/javascript" src="/public/js/v4/jquery.localscroll-1.2.7-min.js"></script>
     <script type="text/javascript" src="/public/js/v4/jquery.colorbox.js"></script>
-   	<script type="text/javascript" src="/public/js/v4/main.js"></script> 
+   	<script type="text/javascript" src="/public/js/v4/main.js"></script>
     <script type="text/javascript">
     	$(document).ready(function(){
 		   $('.WP-profile-header').hover(function(){
@@ -55,7 +55,7 @@
             </ul>
           </div>
           <?php if(isset($username)){?>
-          <div class="WP-profile-header"><ul><li><a href="/login/logout">Logout</a></li></ul><ul><li><a href="/myoffice">My Office</a></li></ul><ul><li>Edit <a href="/profile/edit">Profile</a> | <a href="/profile/edit_password">Password</a></li></ul><ul style="border-bottom:0"><li class="last"><img src="/public/<?php echo $myProfile['avatar']? $myProfile['avatar']: "images/img7.png";?>" style="float:left" width="35px" height="35px"/><p style="width: 155px;text-transform:uppercase;padding-left:5px;float:left;"><?php echo substr($myProfile['full_name'],0,20);?></p><br /><p style="padding-left:5px;float:left;">Level <?php $level = floor($me['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></p><div id="levelmeter"><div id="level" style="width:<?php echo round (($me['exp'] % points_per_level)/points_per_level*80);?>px;"></div></div><?=($level>99) ? 99: $level+1?></li></ul></div>
+          <div class="WP-profile-header"><ul><li><a href="/login/logout">Logout</a></li></ul><ul><li><a href="/myoffice">My Office</a></li></ul><ul><li>Edit <a href="/profile/edit">Profile</a> | <a href="/profile/edit_password">Password</a></li></ul><ul style="border-bottom:0"><li class="last"><a href="/myoffice/index/tab_7"><img src="/public/<?php echo $myProfile['avatar']? $myProfile['avatar']: "images/img7.png";?>" style="float:left" width="35px" height="35px"/><p style="width: 155px;text-transform:uppercase;padding-left:5px;float:left;"><?php echo substr($myProfile['full_name'],0,20);?></p></a><br /><p style="padding-left:5px;float:left;">Level <?php $level = floor($me['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></p><div id="levelmeter"><div id="level" style="width:<?php echo round (($me['exp'] % points_per_level)/points_per_level*80);?>px;"></div></div><?=($level>99) ? 99: $level+1?></li></ul></div>
           <?php }?>
         </div>
       </div>

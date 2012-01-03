@@ -31,7 +31,7 @@ class Myoffice extends CI_Controller {
 		}	
 	}
 	
-	function index(){
+	function index($tab=''){
 		$user_id = $this->session->userdata('user_id');
 		$me = $this->users_model->get_user($user_id);
 		$me = $me->result_array();
@@ -40,6 +40,7 @@ class Myoffice extends CI_Controller {
 		$myProfile = $myProfile->result_array();
 		$myProfile = $myProfile[0];
 		
+		$this->view_data['tab'] = $tab;
 		$this->view_data['me'] = $me;
 		$this->view_data['myProfile'] = $myProfile;
 		$this->view_data['works_completed'] = $this->users_model->works_compeleted($user_id);

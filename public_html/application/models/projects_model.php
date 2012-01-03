@@ -68,21 +68,23 @@ class Projects_model extends CI_Model {
 	
 	function get_worklist_sprint($project_id){
 		$res = array();
-		$query = "SELECT id, start, end from sprints where project_id=?";
+		$query = "SELECT id, start, end, sum(works.points) as point from sprints, works where works.sprint=sprints.id and sprints.project_id=? group by sprints.id, sprints.start, sprints.end";
 		$result = $this->db->query($query, array($project_id));
 		$sprints = $result->result_array();
 		$sprints['general']['id'] = 0;
 		foreach($sprints as $sprint):
-			$query = "SELECT work_id, title, description, status from works where project_id=? and sprint=? order by sprint ASC, priority ASC";
+			$query = "SELECT work_id, title, description, status, points from works where project_id=? and sprint=? order by sprint ASC, priority ASC";
 			$result = $this->db->query($query, array($project_id, $sprint['id']));
 			$res[$sprint['id']]=array();
 			$res[$sprint['id']]['list'] = $result->result_array();
 			if($sprint['id']!=0){
 				$res[$sprint['id']]['from'] = $sprint['start'];
 				$res[$sprint['id']]['to'] = $sprint['end'];
+				$res[$sprint['id']]['point'] = $sprint['point'];
 			}else{
 				$res[$sprint['id']]['from'] = NULL;
 				$res[$sprint['id']]['to'] = NULL;
+				$res[$sprint['id']]['point'] = 0;
 			}
 		endforeach;
 		return $res;

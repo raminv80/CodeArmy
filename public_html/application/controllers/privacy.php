@@ -17,7 +17,7 @@ class Privacy extends CI_Controller {
 			$this->view_data['me'] = $me;
 		}
 		$this->view_data['page_is'] = 'Privacy';
-		
+		$this->view_data['action_is'] = $this->uri->segment(2);
 		// - check to verify if user is login...
 		$check_login = $this->session->userdata('is_logged_in');
 		if($check_login == true) {

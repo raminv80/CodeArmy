@@ -221,31 +221,31 @@ padding: 3px;}
     <div id="WP-nav-content" style="border-left:0;">
       <div id="scrum_board"><a href="/project/scrum_board/<?=$project_sel?>" id="board"></a></div>
     </div>
-   <div id="WP-nav-content" style="width:240px; border-left:0;">
+    <div id="WP-nav-content" style="width:240px; border-left:0;">
       <p style="margin-top: 10px;" id="burndown">Project:</p>
-        <SELECT id="project-select" onchange="switchProject()" type="text" id="project_sel" name="project_sel">
-          <?php if(count($projects)<1){?>
-          <option>You have no Active Projects</option>
-          <?php }else{?>
-          <?php if($project_sel==0){?>
-          <option value="0">Please Select a Project...</option>
-          <?php }?>
-          <?php foreach($projects as $project):?>
-          <option <?php if(isset($project_sel)&& $project_sel==$project['project_id']){?>selected="selected"<?php }?> value="/project/scrum_board/<?=$project['project_id']?>">
-          <?=ucwords($project['project_name'])?>
-          </option>
-          <?php endforeach;?>
-          <?php }?>
-        </SELECT>
-        <script type="text/javascript">function switchProject(){window.location.assign($('#project_sel').val());}</script>  
+      <SELECT id="project-select" onchange="switchProject()" type="text" id="project_sel" name="project_sel">
+      <?php if(count($projects)<1){?>
+      <option>You have no Active Projects</option>
+      <?php }else{?>
+      <?php if($project_sel==0){?>
+      <option value="0">Please Select a Project...</option>
+      <?php }?>
+      <?php foreach($projects as $project):?>
+      <option <?php if(isset($project_sel)&& $project_sel==$project['project_id']){?>selected="selected"<?php }?> value="/project/scrum_board/<?=$project['project_id']?>">
+      <?=ucwords($project['project_name'])?>
+      </option>
+      <?php endforeach;?>
+      <?php }?>
+      </SELECT>
+      <script type="text/javascript">function switchProject(){window.location.assign($('#project_sel').val());}</script> 
       <script type="text/javascript">function sprintChart(){window.location.assign('/project/burndown_chart/<?=$project_sel?>/'+$('#sprintChart').val());}</script>
-     <p id="burndown"> Sprint: </p>
+      <p id="burndown"> Sprint: </p>
       <select id="sprintChart"  name="sprint" onchange="sprintChart()" id="sprintChart">
-        <?php foreach($sprints as $i=>$sprint):?>
-        <option value="<?=$sprint['id']?>" <?php if($sprint_sel==$sprint['id']){?>selected="selected"<?php }?>>Sprint
-        <?=$i+1;?>
-        </option>
-        <?php endforeach;?>
+      <?php foreach($sprints as $i=>$sprint):?>
+      <option value="<?=$sprint['id']?>" <?php if($sprint_sel==$sprint['id']){?>selected="selected"<?php }?>>Sprint
+      <?=$i+1;?>
+      </option>
+      <?php endforeach;?>
       </select>
     </div>
   </div>
@@ -270,7 +270,8 @@ border: 0;
 padding: 3px;
 width: 210px;}
 
-</style><header>
+</style>
+<header>
 <div class="footer">
 <div class="WP-bottom-nav">
   <div class="WP-nav-placeholder-browsejob">
@@ -286,18 +287,18 @@ width: 210px;}
     <div id="WP-nav-content" style="width:240px; border-right: 0; border-left:0;">
       <div id="browsesearch"> <img align="center" style="margin-top: 10px; margin-left: 15px;"src="/public/images/searchingfor.png">
         <SELECT id="project-select" onchange="switchProject()" type="text" id="project_sel" name="project_sel">
-          <?php if(count($projects)<1){?>
-          <option>You have no Active Projects</option>
-          <?php }else{?>
-          <?php if($project_sel==0){?>
-          <option value="0">Please Select a Project...</option>
-          <?php }?>
-          <?php foreach($projects as $project):?>
-          <option <?php if(isset($project_sel)&& $project_sel==$project['project_id']){?>selected="selected"<?php }?> value="/project/scrum_board/<?=$project['project_id']?>">
-          <?=ucwords($project['project_name'])?>
-          </option>
-          <?php endforeach;?>
-          <?php }?>
+        <?php if(count($projects)<1){?>
+        <option>You have no Active Projects</option>
+        <?php }else{?>
+        <?php if($project_sel==0){?>
+        <option value="0">Please Select a Project...</option>
+        <?php }?>
+        <?php foreach($projects as $project):?>
+        <option <?php if(isset($project_sel)&& $project_sel==$project['project_id']){?>selected="selected"<?php }?> value="/project/scrum_board/<?=$project['project_id']?>">
+        <?=ucwords($project['project_name'])?>
+        </option>
+        <?php endforeach;?>
+        <?php }?>
         </SELECT>
         <script type="text/javascript">function switchProject(){window.location.assign($('#project_sel').val());}</script> 
       </div>
@@ -340,8 +341,7 @@ width: 210px;}
       <div id="save"><a href="#save"></a></div>
     </div>
     <div id="WP-nav-content" style="width:240px; border-right:0; border-left:0;">
-      <div id="browsesearch"> <img align="center" style="margin-top: 10px; margin-left: 15px;"src="/public/images/searchingfor.png">
-        Project:
+      <div id="browsesearch"> <img align="center" style="margin-top: 10px; margin-left: 15px;"src="/public/images/searchingfor.png"> Project:
         <SELECT onchange="switchProject()" type="text" id="project_sel" name="project_sel">
           <?php if(count($projects)<1){?>
           <option>You have no Active Projects</option>
@@ -552,52 +552,14 @@ width: 210px;}
       <p>&copy;MOTIONWORKS SDN BHD 2011</p>
     </div>
   </div>
+  <div id="modalDiv"></div>
+  <?php $this->load->view('includes/hints'); ?>
+  <?php $msg = $this->session->flashdata('alert');if($msg){?>
+  <div class="alert">
+    <div class="alert-content"> <?php echo $msg;?></div>
+  </div>
+  <?php }?>
 </header>
 </body>
-<script type="text/javascript">
-	$(function() {
-			$( "#dialog:ui-dialog" ).dialog( "destroy" );
-		
-			$( "#dialog-message" ).dialog({
-				modal: true,
-				buttons: {
-					Ok: function() {
-						$( this ).dialog( "close" );
-					}
-				}
-			});
-		});
-		
-	function show_tab(tab){
-		$('.tab-content').hide();
-		$('ul.tabset li a.active').removeClass('active');
-		$('a[href="#'+tab+'"]').addClass('active');
-		url = '/myoffice/AjaxTab_'+tab;
-		$.post(url, function(data){
-				$('#'+tab).html(data);
-				$('#'+tab).show();
-			});
-	}
-	
-	$('header').localScroll();
-	var currentPage=0;
-	$('#page'+currentPage).show();
-	$(document).ready(function (){
-		$('iframe').each(function(){
-				var url = $(this).attr("src");
-				$(this).attr("src",url+"?wmode=transparent");
-		});
-	});
-	var test;
-	
-	$('a.submit').click(function(){
-		test = $(this);
-		var form = $(this).parents('form');
-		console.log(form);
-		form.submit();
-	});
-	$('#btnBid').click(function() {
-	  $('#setBid').submit();
-	});
-</script>
+<script type="text/javascript" src="<?php echo base_url() ?>public/js/v4/footer_script.js"></script>
 </html>

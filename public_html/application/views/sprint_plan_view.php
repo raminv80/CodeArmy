@@ -7,12 +7,14 @@
 			echo "d.sprint_id='".$sprint."';\n";
 			echo "d.sprint_from='".$work_list['from']."';\n";
 			echo "d.sprint_to='".$work_list['to']."';\n";
+			echo "d.sprint_point='".$work_list['point']."';\n";
 			echo "d.work_list= new Array();\n";
 			echo "works.push(d);\n";
 			foreach($work_list['list'] as $work):
 				echo "d = new Object();\n";
 				echo "d.id='".$work['work_id']."';\n";
 				echo "d.title='".str_replace("'","\'",$work['title'])."';\n";
+				echo "d.point='".str_replace("'","\'",$work['points']? $work['points']:0)."';\n";
 				echo "d.status='".$work['status']."';\n";
 				echo "d.description='".substr(trim(str_replace("'","\'",str_replace(array("\n","\t"),'',strip_tags(nl2br($work['description']))))),0,252)."';\n";
 				echo "works[works.length-1].work_list.push(d);\n";
@@ -28,13 +30,14 @@
         <div class="scrum_column">
           <h2>Ice Box</h2>
           <div id="product_backlog" class="story_list">
+            <!-- <li class="empty_space hint_step1"> <span style="margin-left: 67px;">+ Add User Story</span> </li> -->
             <li class="empty_space"> <span style="margin-left: 67px;">+ Add User Story</span> </li>
           </div>
         </div>
         <div class="scrum_column">
           <h2 class="sprint-title">Sprint 1</h2>
           <ul class="timeline">
-            <li><b>Start:</b>
+            <li><b>Strt:</b>
               <input name="startSprint1" class="start" />
             </li>
             <li><b>End:</b>
@@ -52,6 +55,7 @@
               </p>
             </div>
             <div class="timeline-path">
+              <span class="total-burndown"></span>
               <div class="mark" style="margin-left:15px;"></div>
             </div>
             <div class="dateend">
@@ -71,12 +75,20 @@
 </div>
 <input type="hidden" id="buffer" />
 <style type="text/css">
-	#remove {background: black;
-padding: 5px;
-margin: 10px 0 5px 6px;
-float: left;
-border-radius: 5px; opacity:.6}
-#remove:hover {opacity:.9;}
+.total-burndown {
+	width: 153px;
+	display: block;
+	text-align: center;
+	margin-top: 10px;
+}
+#remove {
+opacity:0.9;
+float: Right;
+position:relative;
+top:-16px;
+left:4px;
+}
+#remove:hover {opacity:1;}
 	
 	.locked{background:#2d2d2d; font-family:"DINRegular";}
 	ul.options{margin:3px 0 0 -40px; float: left; padding-top:4px;display:none;width:280px; border-top:1px ridge #414a4e;}
@@ -91,7 +103,7 @@ border-radius: 5px; opacity:.6}
 	.timeline {
 		list-style: none;
 		float: right;
-		margin: -45px 5px 0 0;
+		margin: -45px 25px 0 0;
 		padding: 0;
 		width: 139px;
 		font-size: 13px;
@@ -287,8 +299,8 @@ border-radius: 5px; opacity:.6}
 <script type="text/javascript">
 $(init);
 function init(){
-	$('#product_backlog').sortable({cancel: '.empty_space', connectWith: '#scrum1'});
-	$('#scrum1').sortable({connectWith:'#product_backlog'});
+	$('#product_backlog').sortable({cancel: '.empty_space', connectWith: '#scrum1', remove: function(){reclac_sprint_points();}});
+	$('#scrum1').sortable({connectWith:'#product_backlog', remove: function(){reclac_sprint_points();}});
 	$('input[name="startSprint1"]').datepicker({ dateFormat: 'yy-mm-dd',
 	'onSelect': function(date,ins){
 			s = new Date(date.substr(0,4),date.substr(5,2) - 1,date.substr(8,2));
@@ -312,7 +324,7 @@ function init(){
 function percentage(start,end){
 	t = (end-start)/(1000*24*60*60);
 	now = new Date(<?=date('Y')?>,<?=date('m')?>-1,<?=date('d')?>);
-	c = (end-now)/(1000*24*60*60);
+	c = (now-start)/(1000*24*60*60);
 	return c/t;
 }
 
@@ -338,7 +350,6 @@ $('.story_list').on('mouseleave','.user_story',function(){
 	
 function save_list(){
 	jQuery.data(document.body, 'save_request', 0);
-	//TODO:will save sprints, schadules and order of user stories into datbase.
 	$('.story_list').each(function(){
 		if($(this).data('sprint_id')!==undefined){
 			//save the order into an existing sprint id
@@ -396,12 +407,14 @@ function populate(works){
 		sprint_id = works[sprint].sprint_id;
 		sprint_from = works[sprint].sprint_from;
 		sprint_to = works[sprint].sprint_to;
+		sprint_point = works[sprint].sprint_point;
 		if(sprint_id!=0 && first_sprint){//populate first sprint
 			first_sprint = false;
 			cur_sprint = $('#scrum1');
 			cur_sprint.data('sprint_id',sprint_id);
 			$('.start',cur_sprint.parent()).val(sprint_from);
 			$('.end',cur_sprint.parent()).val(sprint_to);
+			$('.total-burndown',cur_sprint.parent()).html('Total: '+sprint_point+'pt');
 			if(sprint_from!=''){
 				s = new Date(sprint_from.substr(0,4),sprint_from.substr(5,2)-1,sprint_from.substr(8,2));
 				$('.day_date',cur_sprint.parent()).first().html($.datepicker.formatDate('dd', s));
@@ -425,7 +438,8 @@ function populate(works){
 			for(i=0;i<work_list.length;i++){
 				var data=work_list[i];
 				entry = data.description;
-				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options" ><li><a id="view" href="/story/'+data.id+'">view</a><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" id="delete" href="javascript:void(0)">Delete</a></li></ul></li>');
+				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.point+'pt '+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options" ><li><a id="view" href="/story/'+data.id+'">view</a><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" id="delete" href="javascript:void(0)">Delete</a></li></ul></li>');
+				$('#work_'+data.id).data('point',data.point);
 			}
 		}else if(sprint_id!=0 && !first_sprint){//add a new sprint
 			$('.add_sprint').click();
@@ -433,6 +447,7 @@ function populate(works){
 			cur_sprint.data('sprint_id', sprint_id);
 			$('.start',cur_sprint.parent()).val(sprint_from);
 			$('.end',cur_sprint.parent()).val(sprint_to);
+			$('.total-burndown',cur_sprint.parent()).html('Total: '+sprint_point+'pt');
 			if(sprint_from!=''){
 				s = new Date(sprint_from.substr(0,4),sprint_from.substr(5,2)-1,sprint_from.substr(8,2));
 				$('.day_date',cur_sprint.parent()).first().html($.datepicker.formatDate('dd', s));
@@ -444,14 +459,20 @@ function populate(works){
 				$('.monthyear_date',cur_sprint.parent()).last().html($.datepicker.formatDate('M yy', e));
 			}
 			if(sprint_from!='' && sprint_to!=''){
-				$('.mark',cur_sprint.parent()).css({'margin-left': Math.round(percentage(s,e)*145)});
+				var percent = percentage(s,e);
+				if(percent>=0 && percent <=1){
+					$('.mark',cur_sprint.parent()).css({'margin-left': Math.round(percent*145)});
+				}else{
+					$('.mark',cur_sprint.parent()).hide();
+				}
 			}else{
 				$('.mark',cur_sprint.parent()).hide();
 			}
 			for(i=0;i<work_list.length;i++){
 				var data=work_list[i];
 				entry = data.description;
-				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+data.id+'">view</a></li><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" href="javascript:void(0)" id="delete">Delete</a></li></ul></li>');
+				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.point+'pt '+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+data.id+'">view</a></li><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" href="javascript:void(0)" id="delete">Delete</a></li></ul></li>');
+				$('#work_'+data.id).data('point',data.point);
 			}
 		}
 		if(sprint_id==0){//ice box
@@ -460,7 +481,8 @@ function populate(works){
 			for(i=0;i<work_list.length;i++){
 				var data=work_list[i];
 				entry = data.description;
-				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+data.id+'">view</a></li><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" id="delete" href="javascript:void(0)">Delete</a></li></ul></li>');
+				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.point+'pt '+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+data.id+'">view</a></li><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" id="delete" href="javascript:void(0)">Delete</a></li></ul></li>');
+				$('#work_'+data.id).data('point',data.point);
 			}
 		}
 	}
@@ -496,7 +518,7 @@ $('.add_sprint').click(function(){
 		num_sprints++;
 		obj = $('#sprint_planner');
 		obj.width(obj.width()+460);
-		$(this).before('<div class="scrum_column"><h2 class="sprint-title">Sprint '+num_sprints+'</h2><ul class="timeline"><li><b>Start:</b> <input name="startSprint'+num_sprints+'" class="start" /></li><li><b>End:</b> <input name="endSprint'+num_sprints+'" class="end" /></li></ul><div style="clear:both"></div><div class="timeline-holder"><div class="datestart"><p class="day_date">S</p><p class="monthyear_date">tart Date</p></div><div class="timeline-path"><div class="mark" style="margin-left:15px;"></div></div><div class="dateend"><p class="day_date">E</p><p class="monthyear_date">nd Date</p></div></div><a id="remove" href="javascript:  remove_sprint('+num_sprints+')">Remove</a><div style=" clear:both"></div><div id="scrum'+num_sprints+'" class="story_list"></div></div>');
+		$(this).before('<div class="scrum_column"><h2 class="sprint-title">Sprint '+num_sprints+' <a id="remove" href="javascript:  remove_sprint('+num_sprints+')"><img height="10px" width="10px" src="/public/images/icon_delete.png" border="0" /></a></h2><ul class="timeline"><li><b>Strt:</b> <input name="startSprint'+num_sprints+'" class="start" /></li><li><b>End:</b> <input name="endSprint'+num_sprints+'" class="end" /></li></ul><div style="clear:both"></div><div class="timeline-holder"><div class="datestart"><p class="day_date">S</p><p class="monthyear_date">tart Date</p></div><div class="timeline-path"><div class="mark" style="margin-left:15px;"></div><span class="total-burndown"></span></div><div class="dateend"><p class="day_date">E</p><p class="monthyear_date">nd Date</p></div></div><div style=" clear:both"><ul class="sprint-info"></div><div id="scrum'+num_sprints+'" class="story_list"></div></div>');
 		tmpCurSprint = $('#scrum'+num_sprints).parent();
 		$('input[name="startSprint'+num_sprints+'"]', tmpCurSprint).datepicker({ dateFormat: 'yy-mm-dd',
 		'onSelect': function(date,ins){
@@ -523,7 +545,7 @@ $('.add_sprint').click(function(){
 		for(j=num_sprints;j>0;j--){
 			buffer = '#product_backlog';
 			for(i=1;i<=num_sprints;i++)if(j!=i)buffer += (',#scrum'+i);
-			if(j==num_sprints)$('#scrum'+j).sortable({connectWith: buffer});
+			if(j==num_sprints)$('#scrum'+j).sortable({connectWith: buffer, remove: function(){reclac_sprint_points();}});
 			else $('#scrum'+j).sortable( "option", "connectWith", buffer );
 		}
 		//connect product backlog to sprints
@@ -555,6 +577,14 @@ $('#product_backlog').on('click','.short_story',function(){
 	});
 
 $('#product_backlog').on('click','.new_story',function(){$('input',this).focus();});
+
+function reclac_sprint_points(){
+	$('.story_list').each(function(){
+		var sum=0; 
+		$('.user_story',$(this)).each(function(){sum += Math.round($(this).data('point'));});
+		$('.total-burndown',$(this).parent()).html('Total: '+sum	+'pt');
+	});
+}
 
 function saveUserStory(obj){
 	entry = $.trim($('input', obj).val());

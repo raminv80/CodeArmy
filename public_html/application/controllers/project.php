@@ -227,7 +227,6 @@ class Project extends CI_Controller {
 		$this->view_data['project_sel'] = $id;
 		
 		$this->view_data['sprints'] = $this->projects_model->get_sprints($id);
-		$cur_sprint = $this->projects_model->getCurrentSprint($id);
 		
 		if($sprint_sel==0)
 			{
@@ -235,7 +234,7 @@ class Project extends CI_Controller {
 			}else{
 				$cur_sprint = $this->projects_model->get_sprint($sprint_sel);
 			}
-		if(count($cur_sprint<1)) $cur_sprint = $this->projects_model->getFirstSprint($id);
+		if(count($cur_sprint)<1)$cur_sprint = $this->projects_model->getFirstSprint($id);
 		$this->view_data['cur_sprint'] = $cur_sprint[0];
 		if($sprint_sel==0 && (count($cur_sprint)>0)) $sprint_sel = $cur_sprint[0]['id'];
 		$this->view_data['sprint_sel'] = $sprint_sel;

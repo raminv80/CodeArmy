@@ -17,8 +17,8 @@
                 <table class="us_accordion">
                   <tr>
                     <?php if($story['bid_deadline']!='Open'){?>
-                    <td width="130px"><div id="day_date">19</div>
-                      <p>OCT 2011</p></td>
+                    <td width="130px"><div id="day_date"><?=date('d',strtotime($story['bid_deadline']))?></div>
+                      <p><?=date('M Y',strtotime($story['bid_deadline']))?></p></td>
                     <?php }else{?>
                     <td width="130px">Open</td>
                     <?php }?>

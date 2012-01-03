@@ -353,4 +353,7 @@ margin: 0 0 13px 10px;">collaborators</span></h3>
 			</div>
             </div></section>
         <script type="text/javascript" src="/public/js/main.js"></script>
+        <?php if($tab!=''){?>
+        <script type="text/javascript">$(function(){show_tab('<?=$tab?>');});</script>
+        <?php }?>
 <?php $this->load->view('includes/footer4'); ?>        
