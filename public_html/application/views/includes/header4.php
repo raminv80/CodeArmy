@@ -28,7 +28,7 @@
 	<script type="text/javascript" src="/public/js/v4/jquery.scrollTo-1.4.2-min.js"></script>
 	<script type="text/javascript" src="/public/js/v4/jquery.localscroll-1.2.7-min.js"></script>
     <script type="text/javascript" src="/public/js/v4/jquery.colorbox.js"></script>
-   	<script type="text/javascript" src="/public/js/v4/main.js"></script>
+   	<script type="text/javascript" src="/public/js/v4/main.js"></script> 
     <script type="text/javascript">
     	$(document).ready(function(){
 		   $('.WP-profile-header').hover(function(){

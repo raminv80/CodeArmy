@@ -123,7 +123,7 @@
 								<td>RM <?php echo $work_list_signoff[$i]['cost'] ?></td>
 							</tr>
 							<tr>
-								<td colspan="6" style="text-align:left; padding:10px 0 0 20px; color: rgb(143, 145, 148);">
+								<td colspan="6" style="text-align:left; padding:10px 0 20px 20px;color: rgb(143, 145, 148);">
 									<p>
 										<?php echo $work_list_signoff[$i]['description'] ?>
 									</p>

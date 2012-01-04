@@ -58,6 +58,16 @@ class Project extends CI_Controller {
 		}
 	}
 	
+	public function remove_comment($id){
+		$comment = $this->story_model->get_comment($id);
+		if(count($comment)>0){
+			if(($comment[0]['username']==$this->session->userdata('username'))||($this->session->userdata('role')=='admin')){
+				$this->story_model->delete_comment($id);
+			}
+		}
+		redirect("/story/".$comment[0]['story_id']);
+	}
+	
 	public function management($id=0){
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);

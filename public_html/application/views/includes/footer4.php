@@ -131,8 +131,8 @@ font-size: 14px;}
       <div style="padding: 20px 0 0 10px;">
         <div class="row">
           <input name="file_upload" type="file" id="submit-zip" value="browse">
-          <input name="git" type="text" id="submit-file" value="Github link...">
-          <input name="link" type="text" id="submit-file" value="Add link to file...">
+          <input name="git" type="text" id="submit-file" onclick="this.value='';" onSetFocus="this.select()" value="Github link...">
+          <input name="link" type="text" id="submit-file" onclick="this.value='';" value="Add link to file...">
         </div>
         <div class="row">
           <input type="checkbox" name="check1" value="edit-file">

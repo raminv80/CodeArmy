@@ -196,27 +196,27 @@
         <?php if($this->session->userdata('is_logged_in') == false) {?>
           <table width="550px">
             <tr>
-              <td style="vertical-align:top;" width="50"><img src="/public/images/icon1.png" style="padding-right:3px;"/></td>
-              <td style="vertical-align:top;" ><p id="commentator">System</p>
-                <p id="level">Hint!</p></td>
-              <td><p id="comment-content">You must <a href="/login" style="color:#09F">login</a> first to leave comments.</p>
+              <td style="vertical-align:top;" width="50"><div style="float: left; width: 180px;"><img src="/public/images/icon1.png" style="float: left;padding-right:5px;"/>
+              <p id="commentator">System</p>
+                <p id="level">Hint!</p></div><p id="comment-content">You must <a href="/login" style="color:#09F">login</a> first to leave comments.</p>
                 <p id="date-comment">Posted <?php echo date('j M Y'); ?></p></td>
             </tr>
           </table>
         <?php }?>
-        <?php if(isset($comments))foreach($comments as $comment) { ?>
+        <?php if(isset($comments))foreach($comments as $comment) { 
+				$myComment = $comment['username']==$this->session->userdata('username');
+				$admin = $this->session->userdata('role')=='admin';
+		?>
           <table width="550px" class="<?php if($this->session->userdata('username')==strtolower($comment['username']))echo 'my-comment';?>">
             <tr>
-              <td style="vertical-align:top;" width="50"><img style="padding-right:3px;" src="/public/<?php echo ($comment['avatar'])? $comment['avatar']:'images/img7.png';?>" /></td>
-              <td style="vertical-align:top;" ><p id="commentator"><?php echo $comment['username']; ?></p>
-                <p id="level"><?php if(strcasecmp($work_data['username'],$comment['username'])==0){?>product owner<?php }elseif($this->session->userdata('role')=='admin'){?>Admin<?php }else{?>lvl <?php $level = floor($comment['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;;}?></p></td>
-              <td><p id="comment-content"><?php echo $comment['comment_body']; ?></p>
+              <td style="vertical-align:top;" width="50"><div style="float: left; width: 180px;"><img style="float: left;padding-right:5px;" src="/public/<?php echo ($comment['avatar'])? $comment['avatar']:'images/img7.png';?>" /><p id="commentator"><?php echo $comment['username']; ?></p>
+                <p id="level"><?php if(strcasecmp($work_data['username'],$comment['username'])==0){?>product owner<?php }elseif($this->session->userdata('role')=='admin'){?>Admin<?php }else{?>lvl <?php $level = floor($comment['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;;}?></p></div><p id="comment-content"><?php echo $comment['comment_body']; ?></p>
                 <?php if($comment['comment_file']):?>
                     <div class="ds-posted" style="margin-right:30px">
                         <a href="/<?php echo $comment['comment_file'];?>">download attached</a>
                     </div>
                 <?php endif;?>
-                <p id="date-comment">Posted <?php echo date('j M Y', strtotime($comment['comment_created'])); ?></p></td>
+                <p id="date-comment">Posted <?php echo date('j M Y', strtotime($comment['comment_created'])); ?> <?php if($myComment || $admin){?>(<a title="Remove this comment" href="/project/remove_comment/<?=$comment['comment_id']?>"><img alt="Remove Comment" src="/public/images/icon_delete.png"  /></a>)<?php }?></p></td>
             </tr>
           </table>
         <?php } ?>
@@ -233,17 +233,34 @@
           <?php foreach($bid_data as $bid) { ?>
           <table width="350px">
             <tr>
-              <td width="40"><img src="/public/<?=($bid['avatar'])? $bid['avatar']:'images/img7.png'?>" /></td>
+              <td width="40"><img style="float: left;padding-right:5px;"src="/public/<?=($bid['avatar'])? $bid['avatar']:'images/img7.png'?>" /></td>
               <td><p id="bidder"><?php echo $bid['username']; ?></p>
                 <p id="level">lvl <?php $level = floor($bid['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></p></td>
               <td><p id="allbid-content"><?php echo number_format($bid['bid_cost']); ?> RM in <?php echo $bid['days']; ?> days</p>
                 <p id="date-comment">Posted <?php echo date('j M Y',strtotime($bid['created_at']));?></p></td>
-                <?php if($show_bid){ ?>
-              <td width="60px"><?php if($bid['bid_status'] == "Bid") { ?>
-                                        <?php if(strtolower($bid['work_status'])=='open' || strtolower($bid['work_status'])=='reject') {?><a id="accept" href="/story/bid_accept/<?php echo $bid["bid_id"]; ?>">Accept</a><?php }else{?>No action <?php }?>
-                                      <?php } else { echo $bid['bid_status']; } ?>
-                                    </td>
-                <?php }?>
+                <td width="60px">
+                <?php 
+					$my_bid = ($user_id==$bid['user_id']);
+					$bid_open = (strtolower($bid['work_status'])=='open' || strtolower($bid['work_status'])=='reject');
+					$has_admin_right = $show_bid;
+					if($my_bid){
+						if($bid_open){
+							//show cancel button
+							?><a id="accept" href="/story/bid_remove/<?php echo $bid["bid_id"]; ?>">Cancel</a><?php
+						}else{
+							//show status
+							echo $bid['bid_status'];
+						}
+					}elseif(!$bid_open){
+						//show status
+						echo $bid['bid_status'];
+					}
+					if($has_admin_right && $bid_open){
+						//show accept button
+						?><a id="accept" href="/story/bid_accept/<?php echo $bid["bid_id"]; ?>">Accept</a><?php
+					}
+				?>
+                </td>
             </tr>
           </table>
           <?php }?>

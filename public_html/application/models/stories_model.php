@@ -8,6 +8,11 @@ class Stories_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function remove_bid($id,$user_id){
+		$sql = "delete from bids where bid_id=? and user_id=?";
+		$res = $this->db->query($sql, array($id, $user_id));	
+	}
+	
 	function get_bidders($work_id){
 		$sql = "select bids.*, users.user_id, users.username, user_profiles.avatar, users.exp from bids, users, user_profiles where user_profiles.user_id = users.user_id and users.user_id = bids.user_id and bids.work_id = ?";
 		$res = $this->db->query($sql, array($work_id));
@@ -259,6 +264,27 @@ class Stories_model extends CI_Model {
 		return $result;
 	}
 	
+	function get_product_owner($work_id){
+		$sql = "SELECT users.* from works, users, project where project.project_id = works.project_id and users.user_id = project.project_owner_id and works.work_id = ?";
+		$res = $this->db->query($sql, array($work_id));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function get_scrum_master($work_id){
+		$sql = "SELECT users.* from works, users, project where project.project_id = works.project_id and users.user_id = project.scrum_master_id and works.work_id = ?";
+		$res = $this->db->query($sql, array($work_id));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function get_comment_emails($work_id){
+		$sql = "SELECT DISTINCT users.email from users,works, comments where works.work_id = ? and works.work_id = comments.story_id and users.username = comments.username";
+		$res = $this->db->query($sql, array($work_id));
+		$res = $res->result_array();
+		return $res;
+	}
+	
 	// - get work list
 	function get_works_list($status='', $project_sel = NULL, $skill_sel = NULL, $cash_sel = NULL) {
                 if($status == '') {
@@ -380,6 +406,13 @@ class Stories_model extends CI_Model {
 		return $result;
 	}
 	
+	function get_comment($id){
+		$sql = "select * from comments where comment_id = ?";
+		$res = $this->db->query($sql, array($id));
+		$res = $res->result_array();
+		return $res;
+	}
+	
 	function create_comment($file) {
 		$doc = array(
 			'story_id' => $this->input->post('story_id'),
@@ -388,6 +421,11 @@ class Stories_model extends CI_Model {
 		);
 		if($file!="")$doc['comment_file'] = $file;
 		return $this->db->insert('comments', $doc);
+	}
+	
+	function delete_comment($id){
+		$sql = "delete from comments where comment_id = ?";
+		$this->db->query($sql, array($id));	
 	}
 	
 	function make_bid() {

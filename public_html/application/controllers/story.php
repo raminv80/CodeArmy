@@ -97,14 +97,14 @@ class Story extends CI_Controller {
 			$this->view_data['skills'] = $query4;
 			
 			//if owner
-			if($this->stories->check_admin($work_id, $user_id)->num_rows() > 0) {
-				$this->view_data['show_bid'] = true;
-			}
-			elseif($this->projects_model->is_project_owner($user_id, $this->view_data['work_data']['project_id'])) {
+			if(($this->session->userdata('role')=='admin')||
+			  ($this->stories->check_admin($work_id, $user_id)->num_rows() > 0)||
+			  ($this->projects_model->is_project_owner($user_id, $this->view_data['work_data']['project_id']))) {
 				$this->view_data['show_bid'] = true;
 			}else{
 				$this->view_data['show_bid'] = false;
 			}
+			
 			$msg = $this->session->flashdata('bid_message');
 			if($msg){
 				$this->view_data['modal_message'] = $msg;
@@ -298,12 +298,48 @@ class Story extends CI_Controller {
 				$path = "";
 			}
 		}
-		$this->stories->create_comment($path);	
+		$this->stories->create_comment($path);
+		
+		//email all ppl involved.
+		$work = $this->stories->get_work($this->input->post('story_id'));
+		$work = $work->result_array();
+		$wh = $this->stories->get_work_horse($this->input->post('story_id'));
+		$po = $this->stories->get_product_owner($this->input->post('story_id'));
+		$sm = $this->stories->get_scrum_master($this->input->post('story_id'));
+		$cn = $this->stories->get_comment_emails($this->input->post('story_id'));
+		$target = array();
+		$target[] = $wh[0]['email'];
+		$target[] = $po[0]['email'];
+		$target[] = $sm[0]['email'];
+		foreach($cn as $usr)$target[] = $usr['email'];
+		$to=array_unique($target);
+		$cc = admin_email;
+		$subject = "Workpad :: Comment on ".$work[0]['title'];
+		$message = "<p>User <a href='http://".$_SERVER['HTTP_HOST']."/user/".$this->session->userdata('user_id')."'>".$this->session->userdata('username')."</a> placed a comment on story <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>".$work[0]['title']."</a>:</p><p>".substr(strip_tags($this->input->post('comments')),0,500)."<br />(to read more <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>click here</a>)</p>";
+		$this->notify(noreply_email,email_name, $to, $cc, $subject, $message);
 		$this->view_data['signup_success'] = true;
 		redirect("/story/".$this->input->post('story_id'));
 	}
         
-        function bid_accept($id) {
+    function bid_remove($id) {
+			   $this->check_authentication();
+               $query = $this->stories->get_work_from_bid($id);
+               $data = $query->result_array();
+               $work_id = $data[0]['work_id'];
+			   
+			   $query = $this->stories->get_bid($id);
+			   $data = $query->result_array();
+			   $bid_user_id = $data[0]['user_id'];
+               $user_id = $this->session->userdata('user_id');
+			   
+			   if($user_id == $bid_user_id){
+				   //only project owner can accept bids
+				   $this->stories->remove_bid($id,$user_id);
+			   }
+               redirect("/story/$work_id");
+        }
+
+    function bid_accept($id) {
 			   $this->check_authentication();
                $query = $this->stories->get_work_from_bid($id);
                $data = $query->result_array();
@@ -651,34 +687,8 @@ class Story extends CI_Controller {
 		}
 				
 		private function notify($from,$fromName, $to, $cc, $subject, $message){
-			/*$config = Array(
-				'protocol' => 'smtp',
-				'smtp_host' => 'mail.aseanialangkawi.com.my',
-				'smtp_user' => 'mworks@aseanialangkawi.com.my',
-				'smtp_pass' => 'mworks123',
-			);
-			$this->load->library('email', $config);
-			$this->email->set_newline("\r\n");
-			$this->email->from($from, $fromName);
-			$this->email->to($to); 
-			$this->email->cc($cc); 
-			//$this->email->bcc('them@their-example.com'); 
-			
-			$this->email->subject($subject);
-			$this->email->message($message);	
-			
-			$this->email->send();
-			
-			echo $this->email->print_debugger();*/
-			
 			ini_set('display_error',0);
 			error_reporting('E_ALL');
-			/*echo '1';
-			$this->ci->load->helper('phpmailer');
-			echo '2';
-            send_email($from, $to, $subject, $message);
-			echo '3';*/
-//die(getcwd()."\application\helpers\phpmailer\class.phpmailer.php");			
 			require(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
 
 			$mail = new PHPMailer();
@@ -692,8 +702,13 @@ class Story extends CI_Controller {
 			$mail->Password = "work123"; // SMTP password
 			//$mail->SMTPDebug  = 1;
 			
-			$mail->SetFrom('noreply@motionworks.com.my', 'Workpad Alerts');
-			$mail->AddAddress($to);
+			//$mail->SetFrom('noreply@motionworks.com.my', 'Workpad Alerts');
+			$mail->SetFrom($from, $fromName);
+			if(is_array($to)){
+				foreach($to as $too)$mail->AddAddress($too);
+			}else{
+				$mail->AddAddress($to);
+			}
 			//$mail->AddAddress("ellen@example.com");                  // name is optional
 			//$mail->AddReplyTo("info@example.com", "Information");
 			
@@ -705,7 +720,6 @@ class Story extends CI_Controller {
 			$mail->Subject = $subject;
 			$mail->Body    = $message;
 			$mail->AltBody = $message;
-			
 			if(!$mail->Send())
 			{
 			   echo "Message could not be sent. <p>";

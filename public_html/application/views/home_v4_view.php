@@ -33,26 +33,22 @@
       <div class="WP-leaderboard">
         <div id="mainheading"><span id="title">LEADERBOARD</span></div>
         <div id="heading">
-          <div id="leaderboard-content"> <span id="title">Mission Completed</span>
-            <ol style="margin-top:20px;">
+          <div id="leaderboard-content"><table><tr><th><span id="title">Mission Completed</span></th><th><span id="title">Points Gained</span></th><th><span id="title">Early Submission</span></th></tr>
+            <tr><td><ol>
               <?php foreach($leaderboard_project as $user):?>
               <li>
-                <table style="margin: -45px 0 0 0;">
-                  <tr>
-                    <td><a href="/user/<?php echo $user['user_id'];?>"> <img style="margin-left: -5px; margin-top: 10px;" src="/public/<?php echo $user['avatar']? $user['avatar']: 'images/img7.png';?>" alt="profile picture" class="alignleft" width="39" height="39" /></a></td>
-                    <td style="vertical-align: bottom;"><div style="width:100px;" class="info"> <a href="/user/<?php echo $user['user_id'];?>" class="name"><?php echo $user['username'];?></a> <br>
-                        <span><?php echo $user['num'];?> missions</span> </div></td>
-                  </tr>
-                </table>
+                
+                  <table><tr><td><a href="/user/<?php echo $user['user_id'];?>"> <img  src="/public/<?php echo $user['avatar']? $user['avatar']: 'images/img7.png';?>" alt="profile picture" class="alignleft" width="39" height="39" /></a></td><td><a href="/user/<?php echo $user['user_id'];?>" class="name"><?php echo $user['username'];?></a> <br>
+                        <span><?php echo $user['num'];?> missions</span></td></tr></table>
               </li>
               <?php endforeach;?>
-            </ol>
-          </div>
-          <div id="leaderboard-content"><span id="title">Points Gained</span>
-            <ol style="margin-top:20px;">
+              </ol></td><td>
+         <!-- </div>
+          <div id="leaderboard-content"><span id="title">Points Gained</span>-->
+            <ol>
               <?php foreach($leaderboard_points as $user):?>
               <li>
-                <table style="margin: -45px 0 0 0;">
+                <table style="margin-top:-50px;">
                   <tr>
                     <td><a href="/user/<?php echo $user['user_id'];?>"> <img style="margin-left: -5px; margin-top: 10px;" src="/public/<?php echo $user['avatar']? $user['avatar']: 'images/img7.png';?>" alt="profile picture" class="alignleft" width="39" height="39" /></a></td>
                     <td style="vertical-align: bottom;"><div  style="width:100px;" class="info"> <a href="/user/<?php echo $user['user_id'];?>" class="name"><?php echo $user['username'];?></a> <br>
@@ -61,13 +57,13 @@
                 </table>
               </li>
               <?php endforeach;?>
-            </ol>
-          </div>
-          <div id="leaderboard-content-last"><span id="title">Early Submission</span>
-            <ol style="margin-top:20px;">
+            </ol></td><td>
+         <!-- </div>
+          <div id="leaderboard-content-last"><span id="title">Early Submission</span>-->
+            <ol>
               <?php foreach($leaderboard_time as $user):?>
               <li>
-                <table style="margin: -45px 0 0 0;">
+                <table style="margin-top:-50px;">
                   <tr>
                     <td><a href="/user/<?php echo $user['user_id'];?>"> <img style="margin-left: -5px; margin-top: 10px;" src="/public/<?php echo $user['avatar']? $user['avatar']: 'images/img7.png';?>" alt="profile picture" class="alignleft" width="39" height="39" /></a></td>
                     <td style="vertical-align: bottom;"><div  style="width:100px;" class="info"> <a href="/user/<?php echo $user['user_id'];?>" class="name"><?php echo $user['username'];?></a> <br>
@@ -76,7 +72,7 @@
                 </table>
               </li>
               <?php endforeach;?>
-            </ol>
+            </ol></td></tr></table>
           </div>
         </div>
         <div class="row" style="margin: -20px 0 0 10px;">
