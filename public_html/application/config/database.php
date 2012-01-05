@@ -43,9 +43,9 @@ $active_record = TRUE;
 
 // local db settings
 $db['development']['hostname'] = 'localhost';
-$db['development']['username'] = 'workpaddb_user';
-$db['development']['password'] = 'workdbdb_password';
-$db['development']['database'] = 'workpaddb_name';
+$db['development']['username'] = 'workpad_user';
+$db['development']['password'] = 'work123';
+$db['development']['database'] = 'workpad_db';
 $db['development']['dbdriver'] = 'mysql';
 $db['development']['dbprefix'] = '';
 $db['development']['pconnect'] = TRUE;
@@ -61,8 +61,8 @@ $db['development']['stricton'] = FALSE;
 // production db settings
 $db['production']['hostname'] = 'localhost';
 $db['production']['username'] = 'workpad_user';
-$db['production']['password'] = 'workpaddb_pass';
-$db['production']['database'] = 'workpaddb_name';
+$db['production']['password'] = 'work123';
+$db['production']['database'] = 'workpad_db';
 $db['production']['dbdriver'] = 'mysql';
 $db['production']['dbprefix'] = '';
 $db['production']['pconnect'] = TRUE;
