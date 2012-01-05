@@ -8,6 +8,8 @@ html, body {
 	background:url(/public/images/bg.jpg);background-attachment:fixed;background-repeat:repeat;
 	height: 100%;
 }
+
+a, img {border:0;}
 .wrapper {
 	min-height: 80%;
 	height: auto !important;
@@ -48,36 +50,43 @@ padding: 0;}
 .WP-main .WP-total-amount-placeholder td {	font-family:'DINMediumRegular';color:#fff; font-size:1.3em;vertical-align:middle}
 
 .WP-main .WP-leaderboard-placeholder { margin-left:30px; float:left;width: 560px; height:280px; display:block; }
-.WP-main .WP-leaderboard-placeholder .WP-leaderboard { background:url(/public/images/leaderboard-table.png); width:560px; height:280px; overflow:hidden;}
-.WP-main .WP-leaderboard-placeholder .WP-leaderboard ol {padding: 15px 0 0 35px;color:#fff;}
-.WP-main .WP-leaderboard-placeholder .WP-leaderboard li {padding-top:5px; height: 50px;}
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard { background:url(/public/images/leaderboard-table.png); width:560px; height:301px; overflow:hidden;}
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard ol {/*padding: 5px 0 0 30px;color:#fff;*/padding: 0 0 0 0;margin: 0 0 0 25px;
+color: white;
+float: left;
+}
+
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard li {margin-top:8px; height: 50px;}
 
 .WP-main .WP-leaderboard-placeholder .WP-leaderboard #mainheading {font-family:'DINRegular';color:#fff; background:url(/public/images/leaderboard-heading.png) no-repeat; width:560px; height:51px;}
 .WP-main .WP-leaderboard-placeholder .WP-leaderboard #mainheading #title {display: block; position: relative; z-index: 2; padding: 10px 0 0 48px; font-size: 1.5em;font-weight: bold;}
 
-.WP-main .WP-leaderboard-placeholder .WP-leaderboard #heading {background:url(/public/images/leaderboard-2nd-header.png) no-repeat; width:560px; height:200px; }
-.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content { float:left; border-top:0; border-bottom:0; border-left:0; width:185px; height:222px; /* Firefox */
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #heading {background:url(/public/images/leaderboard-2nd-header.png) no-repeat; width:560px; height:40px; }
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content { float:left; border-top:0; border-bottom:0; border-left:0; width:100%; height:222px; /* Firefox */
  /* Safari and Chrome */
  /* Opera */
 }
-.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content #title {text-transform: uppercase; display: block; color:#1df318; text-align:center; position: relative; z-index: 2; padding: 8px 0 0 0; font-size: 1.0em;}
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content #title {text-transform: uppercase; display: block; color:#1df318; text-align:center; position: relative; z-index: 2; padding: 8px 0 15px 0; font-size: 1.0em;}
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content th {width:190px;font-weight:normal}
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content li {list-style:decimal; floaT:left; -moz}
+
 
 .WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content-last { float:left; width:184px; height:222px; border:0;}
-.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content-last #title {text-transform: uppercase; display: block; color:#1df318; text-align:center; position: relative; z-index: 2; padding: 8px 0 0 0; font-size: 1.0em;}
+.WP-main .WP-leaderboard-placeholder .WP-leaderboard #leaderboard-content-last #title {text-transform: uppercase; display: block; color:#1df318; text-align:center; position: relative; z-index: 2; padding: 8px 0 10px 0; font-size: 1.0em;}
 
 .WP-main .WP-leaderboard-placeholder #icon { width:39px;}
-
-.WP-main .WP-searchbar {width: 1000px; background: url(/public/images/bg-search-form.png) no-repeat; margin-top:45px; float:left;height: 49px; overflow: hidden;}
+.info a#icon-user { border:0; width: 42px;height: 40px;float: left;}
+.info img {border:0;}
 .WP-main .WP-searchbar form {padding: 8px 0 0 235px;color:#fff;}
 .WP-main .WP-searchbar label { padding: 2px 10px 0 0;float: left; font-size:1.4em;font-family:'DINRegular';text-transform:uppercase; padding-right:10px;}
 .WP-main .WP-searchbar #input-search {width:350px; height:30px; border-radius:5px; border:0; background:#edecec;}
 .WP-main .WP-searchbar #search-button {background: url(/public/images/searchbutton.png);margin-left: -21px;border: 0;width: 15px;height: 19px;-webkit-appearance: push-button; cursor:pointer}
 
-.WP-main .WP-howitworks {padding: 10px 0 0 0;color: white; floaT: left;}
+.WP-main .WP-howitworks {padding: 40px 0 0 0;color: white; floaT: left;}
 .WP-main .WP-howitworks  img {margin-top:15px;}
 .WP-main .WP-howitworks h1 { font-weight: normal; font-family:'DINMediumAlternate';text-transform:uppercase;}
 
-.WP-bottom-nav {width:100%; background:url(/public/images/footer-bg.png); height: 140px;margin:-100px auto;}
+.WP-bottom-nav {width:100%; background:url(/public/images/footer-bg.png); height: 140px;margin:-2px auto;}
 .WP-bottom-nav .WP-nav-placeholder { width :675px; height : 130px; margin:0 auto;}
 .WP-bottom-nav .WP-nav-placeholder #WP-nav-content { float:left;border-top:0; border-bottom:0; -moz-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Firefox */-webkit-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Opera */border-image:url(/public/images/footer-border.png) 5 10 stretch;width: 118px;height: 140px; margin-left:10px;}
 
@@ -93,8 +102,8 @@ padding: 0;}
 .WP-bottom-nav .WP-nav-placeholder #WP-nav-content #login a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/login_btn.png) right top;width:103px;height:105px; display:block;}
 .WP-bottom-nav .WP-nav-placeholder #WP-nav-content #login a:hover {background:url(/public/images/login_btn.png) left top; }
 
-.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #logout a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/Logout_btn.png) right top;width:103px;height:105px; display:block;}
-.WP-bottom-nav .WP-nav-placeholder #WP-nav-content #logout a:hover {background:url(/public/images/Logout_btn.png) left top; }
+#WP-nav-content #logout a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/Logout_btn.png) right top;width:103px;height:105px; display:block;}
+#WP-nav-content #logout a:hover {background:url(/public/images/Logout_btn.png) left top; }
 
 .WP-bottom-nav .WP-nav-placeholder { width :675px; height : 130px; margin:0 auto;}
 .WP-bottom-nav .WP-nav-placeholder #WP-nav-content, .WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content, .WP-bottom-nav .WP-nav-placeholder-qualify #WP-nav-content { float:left;border-top:0; border-bottom:0; -moz-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Firefox */-webkit-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/footer-border.png) 5 10 stretch; /* Opera */border-image:url(/public/images/footer-border.png) 5 10 stretch;width: 118px;height: 140px; margin-left:10px;}
@@ -125,11 +134,11 @@ margin-top: 5px;border-radius:5px;}
 .header_highlight { color:#818187;}
 .accordion_child{
 color:#fff; padding: 0 15px 20px 15px;
-background: url(/public/images/accordion-bg.jpg);
+background: url(/public/images/accordion-bg.jpg) no-repeat;;
 width: 1000px;
-height: 123px; overflow:hidden;}
-.accordion-table {float:left;height:115px; width:850px; font-size:0.85em; padding-top:10px;}
-.accordion-table td {padding-right:30px; border-bottom:1px solid #999999;}
+ overflow:hidden;}
+.accordion-table {float:left;height:143px; width:850px; font-size:0.85em; padding:10px; 0 0 20px}
+.accordion-table td {font-size: 13px;padding-right:30px; border-bottom:1px solid #999999;}
 .accordionButton {	
 font-size: 1.1em;
 padding: 5px 0 5px 10px;
@@ -139,14 +148,14 @@ height: 30px; cursor:pointer;
 	}
 	
 .accordionContent {	
-	color:#fff; padding: 0 15px 20px 15px;
+	color:#fff; padding: 0;
 background: url(/public/images/accordion-bg.jpg);
 width: 1000px;
-height: 123px; overflow:hidden;
+ overflow:hidden;
 	}
 
 #title {font-family:'DINMediumAlternate';color:#fff; text-transform:uppercase; display: block; position: relative; padding:10px 0 0 0; z-index: 2;  font-size: 1.6em;}
-.WP-main .WP-searchbar {width: 1000px;background: url(/public/images/bg-search-form.png) no-repeat;margin-top: 10px;float: left;height: 49px;overflow: hidden;}
+.WP-main .WP-searchbar {width: 100%;background: #000;margin-top: 10px;float: left;height: 49px;border-radius:10px;overflow: hidden;}
 .WP-main .WP-contract-placeholder { font-family:'DINRegular'; padding-top:2px;float: left;width:1000px; display:block;}
 .WP-main .WP-contract-placeholder #heading { background:url(/public/images/contract-heading.png); width:1000px; height:40px;}
 .WP-main .WP-contract-placeholder #heading #title { width:120px;font-family:'DINRegular'; float:left; font-size:1.15em; color:#fff; padding:9px; }
@@ -156,8 +165,11 @@ height: 123px; overflow:hidden;
 .WP-main .WP-contract-placeholder .us_accordion p{ width: 40px;float: left;padding: 0 0 0 6px;line-height: 12px;text-transform: uppercase;font-size: 0.7em; }
 .WP-main .WP-contract-placeholder .us-content { padding:10px;width:355px; margin-left:20px;}
 .WP-main .WP-contract-placeholder .us-content td {padding:5px;border-bottom:1px solid #3d3d3d;}
-.WP-main .WP-contract-placeholder .bid-more a { float:left;margin-left: 40px;text-indent:-999px;background:url(/public/images/bid-more.jpg);display:block; width:95px; height:145px;}
-.WP-main .WP-contract-placeholder .bid-more a:hover { float:left;margin-left: 40px;background:url(/public/images/bid-more2.jpg);display:block; width:95px; height:145px;}
+.WP-main .WP-contract-placeholder .bid-more a { float:right;text-indent:-999px;background:url(/public/images/bid-more.jpg);display:block; width:95px; height:142px;}
+.WP-main .WP-contract-placeholder .bid-more a:hover { background:url(/public/images/bid-more2.jpg);display:block; width:95px; height:142px;}
+.WP-main .WP-contract-placeholder .more-details a { float:right;text-indent:-999px;background:url(/public/images/moredetails.jpg) left;display:block; width:94px; height:142px;}
+.WP-main .WP-contract-placeholder .more-details a:hover { background:url(/public/images/moredetails.jpg) right;display:block; width:94px; height:142px;}
+
 
 /*----------story bid page-------*/
 .WP-main .WP-contract-placeholder #WP-navigation li {text-transform:uppercase;font-family:'DINMediumAlternate';list-style:none; display:inline-block;border-top:0; border-bottom:0; border-right:0; -moz-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Firefox */-webkit-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Opera */border-image:url(/public/images/nav-border.png) 5 10 stretch; font-size:14px;padding: 6px 15px 5px 15px;color: white; }
@@ -167,7 +179,7 @@ height: 123px; overflow:hidden;
 .WP-main .WP-qualification-placeholder  #title, .WP-main .WP-comment-placeholder  #title, .WP-main .WP-allbid-placeholder  #title { font-family:'DINRegular'; float:left; font-size:1.6em; color:#fff; padding:10px 0 0 15px; }
 .WP-main .WP-qualification-placeholder #qualif-heading #position { float:right;text-align:right; font-family:'DINRegular'; font-size:1em; color:#28d227;  }
 .WP-main .WP-qualification-placeholder #qualif-heading #owner {font-family:'DINRegular';float:right;color:#fff;} 
-.WP-main .WP-qualification-placeholder #qualif-table { padding:10px 20px 5px 20px;background:url(/public/images/qualif-table-bg.png); border-bottom:1px solid #696F86;border-right:1px solid #696F86;border-left:1px solid #696F86;display:block}
+#qualif-table { padding:10px 20px 5px 20px;background:url(/public/images/qualif-table-bg.png); border-bottom:1px solid #696F86;border-right:1px solid #696F86;border-left:1px solid #696F86;display:block}
 .WP-main .WP-qualification-placeholder #qualif-table #top {background:url(/public/images/qualif-top.png) no-repeat; height:35px; width:999px}
 .WP-main .WP-qualification-placeholder #qualif-table #bottom {background:url(/public/images/qualif-bottom.png) no-repeat; height:30px; width:999px}
 .WP-main .WP-qualification-placeholder #qualif-table #mid {background:url(/public/images/qualif-mid.png); width:999px;}
@@ -179,13 +191,13 @@ height: 123px; overflow:hidden;
 .WP-main .WP-qualification-placeholder #qualif-table #dateline {color:#FF0000;}
 .WP-main .WP-qualification-placeholder #qualif-table li {font-family:'DINRegular';}
 .WP-main .WP-qualification-placeholder #qualif-table img {padding: 5px  0 0 10px;}
-.WP-main .WP-qualification-placeholder #qualif-table #download_all a { background:url(/public/images/download_btn.png) left; width:154px;  height:33px; display:block }
+.WP-main .WP-qualification-placeholder #qualif-table #download_all a { background:url(/public/images/download_btn.png) left; width:152px;  height:33px; display:block }
 .WP-main .WP-qualification-placeholder #qualif-table #download_all a:hover { background:url(/public/images/download_btn.png) right; width:150px; height:33px; display:block }
 
-.WP-main .WP-comment-placeholder {color:#fff;overflow:hidden; width:610px; float:left;}
+.WP-main .WP-comment-placeholder {color:#fff;overflow:hidden; padding-bottom: 40px; width:610px; float:left;}
 .WP-main .WP-comment-placeholder #comment-top {background:url(/public/images/comment-top.png); width: 600px;
 height: 34px;display:block}
-.WP-main .WP-comment-placeholder #comment-mid {padding:20px 20px 20px 20px;background:url(/public/images/comment-mid.png) repeat-y; width:600px;  display:block}
+.WP-main .WP-comment-placeholder #comment-mid {padding:20px 20px 20px 20px;background:url(/public/images/comment-mid.png) repeat-y; width:560px;  display:block}
 .WP-main .WP-comment-placeholder #comments-text { max-height: 100px;
 max-width: 540px;margin-left:5px;width:540px; height:80px;}
 .WP-main .WP-comment-placeholder #comments-submit {float: left;
@@ -194,9 +206,10 @@ margin-top: -4px; margin-left:5px;background:url(/public/images/submit-comment.p
 .WP-main .WP-comment-placeholder  #comments-section table, .WP-main .WP-allbid-placeholder #allbid-section table  {padding: 10px 0 10px 0;-moz-border-image:url(/public/images/commentborder.png) 30 30 stretch; /* Firefox */-webkit-border-image:url(/public/images/commentborder.png) 5 5 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/commentborder.png) 30 30 stretch; /* Opera */border-image:url(/public/images/commentborder.png) 30 30 stretch; border-left:0; border-right:0; border-top:0;}
 .WP-main .WP-comment-placeholder #comments-section td {vertical-align:bottom}
 .WP-main .WP-comment-placeholder #commentator, .WP-main .WP-allbid-placeholder #bidder {text-transform:uppercase; font-family:'DINRegular'}
-.WP-main .WP-comment-placeholder #level, .WP-main .WP-allbid-placeholder #level {color:#9f9f9f;font-family:'DINLightAlternate';}
-.WP-main .WP-comment-placeholder #date-comment, .WP-main .WP-allbid-placeholder #date-comment {font-style: italic;font-size: 0.8em; text-align:right; line-height:15px;text-transform: uppercase;color:#9f9f9f;font-family:'DINLightAlternate';}
-.WP-main .WP-comment-placeholder #comment-content {line-height:22px;text-align:right;font-size:0.8em}
+.WP-main .WP-comment-placeholder #level {color:#9f9f9f;font-family:'DINLightAlternate';font-size:12px;line-height:13px;text-transform:uppercase;}
+.WP-main .WP-allbid-placeholder #level {color:#9f9f9f;font-family:'DINLightAlternate';}
+.WP-main .WP-comment-placeholder #date-comment, .WP-main .WP-allbid-placeholder #date-comment {font-size: 0.8em; text-align:right; line-height:15px;text-transform: uppercase;color:#9f9f9f;font-family:'DINLightAlternate';}
+.WP-main .WP-comment-placeholder #comment-content {line-height:17px;margin-bottom:5px;text-align:justify;font-size:0.8em; color:#d5d5d5;}
 .WP-main .WP-comment-placeholder #comment-bottom {background:url(/public/images/comment-bottom.png); width:600px; height:26px; display:block}
 
 .WP-main .WP-allbid-placeholder {width:390px; color:#fff;overflow:hidden; float:left;}
@@ -562,15 +575,16 @@ margin: 10px 0 0 0;}
 	display:inline;
 	color:#0785a9;
 }
-.row #name, .row #email, .row #password2, .row #password3, .row #username, .row #password1  {
-    border: 0 none;
-    float: left;
-    padding: 5px;
-    width: 410px;
-	font-size:16px;
-	line-height:30px;
-	height:23px;
-	margin-bottom:19px;
+#feedbackbox .row1 #name, .row1 #email, .row1 #password2, .row1 #password3, .row1 #username, .row1 #password1  {
+    border: 0 none !important;
+    float: left !important;
+    padding: 5px 5px 5px 5px !important;
+    width: 410px !important;
+	font-size:16px !important;
+	line-height:30px !important;
+	height:23px !important;
+	margin-bottom:19px !important;
+	margin-top: 5px;
 }
 
 #username, #password1 {
@@ -595,10 +609,131 @@ margin: 10px 0 0 0;}
 	clear:both;
 }
 .feedback-submit {cursor: pointer;
-background: url(/public/images/submitBttn123.png);
-floaT: right;
-margin: -5px 105px 0 0;
+background: url(/public/images/submitBttn123.png) !important;
+floaT: right !important;
+margin: 10px 55px 0 0 !important;
 border: 0;
-width: 135px;
-height: 40px;
-text-indent: -999px;}
+width: 135px !important;
+height: 40px !important;
+text-indent: -999px;}.WP-main .WP-people-placeholder {
+color: white;
+overflow: hidden;
+width: 100% !important;
+float: left !important;
+}
+.WP-main .WP-people-placeholder #people-top {
+background: url(/public/images/people-top.png);
+width: 100%;
+height: 34px;
+display: block;
+}
+.WP-main .WP-people-placeholder #people-mid {
+padding: 20px 20px 20px 20px;
+background: url(/public/images/people-mid.png) repeat-y;
+width: 100%;float:left;
+display: block;
+}
+.WP-main .WP-people-placeholder #people-bottom {
+background: url(/public/images/people-bottom.png);
+width: 100%;
+height: 43px;float:left;
+display: block;
+}
+.WP-main .WP-people-placeholder #people-mid div.row {
+height: 46px;
+width: 639px;
+}
+.form-edit-profile {width:640px; margin:0 auto;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #submitwork {border:0;text-indent:-999px; margin: -1px 0 0 445px;text-indent:-999px;background:url(/public/images/submit.png) right top;width:102px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #submitwork:hover {text-indent:-999px; text-indent:-999px;background:url(/public/images/submit.png) left top;width:102px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #essentials a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/essentials.png) right top;width:102px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #essentials a:hover {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/essentials.png) left top;width:103px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #save a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/save.png) right top;width:102px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #save a:hover {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/save.png) left top;width:103px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #project-mgmt a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/project-mgmt.png) right top;width:102px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #project-mgmt a:hover {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/project-mgmt.png) left top;width:103px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #editprofile a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/editprofile.png) right top;width:102px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #editprofile a:hover {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/editprofile.png) left top;width:103px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #cashout a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/cashout.png) right top;width:102px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #cashout a:hover {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/cashout.png) left top;width:103px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #mydesk a {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/my_desk.png) right top;width:102px;height:105px; display:block;}
+
+.WP-bottom-nav .WP-nav-placeholder-browsejob #WP-nav-content #mydesk a:hover {text-indent:-999px; margin: 20px 0 0;text-indent:-999px;background:url(/public/images/my_desk.png) left top;width:103px;height:105px; display:block;}
+
+.find-people-1st {float:left;background:url(/public/images/find-bg.png) top; width:255px; height:255px; margin:5px 0 5px 0;}
+.find-people-1st:hover {background:url(/public/images/find-bg.png) bottom;}
+
+.find-people {float:left;background:url(/public/images/find-bg.png) top; width:255px; height:255px;margin:5px 0 5px 10px;}
+.find-people:hover {background:url(/public/images/find-bg.png) bottom;}
+
+#user-icon {float:left;padding: 13px 5px 0 15px;}
+#user-name {padding: 10px 0 2px 0;font-size:19px;width: 175px;overflow: hidden;text-transform:uppercase;color:#fff;font-family:DINRegular;float:left;}
+#job-name {padding: 2px;overflow: hidden;font-size: 0.7em;text-transform:uppercase;color:#fff;font-family:DINRegular; background:#000;float:left;}
+#tier-type {float:left;text-shadow: 0 1px 10px white;font-size:.9em;color:#fff;text-transform:uppercase;}
+#tier {float:left;margin-left:8px;}
+#badge-type {text-align: center;width: 145px;float:left;font-size:12px;text-transform:none;}
+#badge-heading {font-size:13px;font-family: DINmediumalternate;color:#fff;text-transform:uppercase;}
+#received-text {color:#a3f20c;}
+li.recent-job {padding-top:3px;font-size: 14px; color: white;}
+.level-tier {overflow:hidden; width:110px; height:120px;}
+.level-tier #level-holder {margin: 12px 0 0 14px;background:url(/public/images/level-bg.png);width:88px; height:88px;}
+.level-tier #level-holder #level {color: white;text-shadow: 0 1px 10px white;font-size: 10px;text-align:center;padding: 16px 4px 0 0;text-transform:uppercase;line-height: 14px;display: block;} 
+.level-tier #level-holder #number {color: white;font-size:33px;line-height: 27px;margin: 5px 3px 0 0;}
+.recent-job-holder {margin-top:5px;}
+
+
+.bidding-mgmt-placeholder {padding: 0 0 20px 0;float:left;background:url(/public/images/bidding-mgmt-bg.jpg); width:1000px;}
+.bidding-mgmt-placeholder .section-holder{width:915px; margin:20px auto 0 auto;}
+.bidding-mgmt-placeholder #section {padding: 25px 0 10px 0;-moz-border-image:url(/public/images/commentborder.png) 30 30 stretch; /* Firefox */-webkit-border-image:url(/public/images/commentborder.png) 5 5 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/commentborder.png) 30 30 stretch; /* Opera */border-image:url(/public/images/commentborder.png) 30 30 stretch; border-left:0; border-right:0; border-top:0;}
+.bidding-mgmt-placeholder #section #alert {background: url(/public/images/image_sprite1.png) 1px 0;width: 28px;height: 29px;}
+.bidding-mgmt-placeholder #section #user {float: left;width: 205px;text-transform: uppercase;text-shadow: 0 1px 7px white;padding-left: 15px;}
+.bidding-mgmt-placeholder #section #userlevel {float: left;width: 205px;font-size:13px;text-shadow: 0 1px 7px white;padding-left: 15px;}
+.bidding-mgmt-placeholder #section #rate-of-diff {font-size: 13px;opacity: 0.6;}
+.bidding-mgmt-placeholder #section #approvebid {background:url(/public/images/image_sprite1.png) -27px 0; width:145px; height:35px; border:0;}
+.bidding-mgmt-placeholder #section #approvebid:hover {background:url(/public/images/image_sprite1.png) -172px 0;margin-left: 3px; width:143px; height:35px; border:0;}
+.scrum_holder {}
+
+
+a#jobdone {-webkit-border-radius: 60px;
+	-moz-border-radius: 60px;
+	border: 3px solid #F6F6F6;
+    display: inline-block;
+    height: 25px;
+	font-size: 15px;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: bold;
+	padding: 3px 0 0 0;
+    text-align: center;
+    width: 150px;margin: 8px 0 5px 0;
+	background: rgb(93,172,14); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(93,172,14,1) 0%, rgba(76,107,18,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(93,172,14,1)), color-stop(100%,rgba(76,107,18,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(93,172,14,1) 0%,rgba(76,107,18,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(93,172,14,1) 0%,rgba(76,107,18,1) 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, rgba(93,172,14,1) 0%,rgba(76,107,18,1) 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5dac0e', endColorstr='#4c6b12',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, rgba(93,172,14,1) 0%,rgba(76,107,18,1) 100%); /* W3C */}
+
+a#jobdone:hover {text-decoration:underline;}
+
+.sprintplanner #sprintcolumn-top {background: url(/public/images/scrumplan-bg.png) top; border: 0; height:10px; width: 269px;}
+.sprintplanner #sprintcolumn-mid {background: url(/public/images/scrumplan-bg.png) left -15px; border: 0; width: 269px;}
+.sprintplanner #sprintcolumn-bottom {background: url(/public/images/scrumplan-bg.png) bottom; border: 0; height:10px; width: 269px;}
+.read {}
+.unread {color:#fc0 !important;
+background: url(/public/images/unread-inbox.png) no-repeat 660px 8px;
+}

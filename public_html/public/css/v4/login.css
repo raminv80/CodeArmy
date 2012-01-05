@@ -1,0 +1,225 @@
+
+#login{top:-15px;color: white;}
+.popup{
+	position:absolute;
+	top:-11px;
+	left:20px;
+	width:471px;
+	background:url(/public/images/bg-popup-top.png) no-repeat;
+	padding-top:120px;
+	overflow:hidden;
+	font:20px/21px 'DINMediumAlternate';
+	text-transform:none;color: white;
+}
+.popup-1{
+	position:absolute;
+	top:0;
+	left:1px;
+	background:#000 url(/public/images/bg-popup-1.gif) repeat-x;
+	width:400px;
+	padding:13px 13px 13px 26px;
+	font-size:14px;
+	margin:0;
+}
+.popup .holder{
+	background:url(/public/images/bg-popup-bottom.png) no-repeat 0 90%;
+	padding-bottom:141px;
+}
+.popup .frame{
+	background:url(/public/images/bg-popup-center.png) repeat-y;
+	width:100%;
+}
+.popup .frame:after{
+	display:block;
+	content:"";
+	clear:both;
+}
+.popup .content{
+	float:left;
+	margin:-114px 0 -117px;
+	width:100%;
+}
+#register .content{margin-bottom:-119px;}
+.popup .heading{
+	overflow:hidden;
+	margin-bottom:38px;
+	padding:0 14px 0 8px;
+}
+.popup-1 .heading{
+	overflow:hidden;
+	margin-bottom:12px;
+}
+.popup-1 .heading .title{
+	font-size:16px;
+	display:block;
+}
+.popup-1 .heading .holder{float:left;}
+#register .heading{margin-bottom:15px;}
+.popup .heading .title{
+	float:left;
+	font-size:27px;
+	margin:0;
+	padding:15px 56px 9px 14px; 
+	background: url(/public/images/bg-popup-title.png) no-repeat 100% 0;
+	text-transform:uppercase;
+}
+#login .heading .title{padding:15px 102px 9px 22px;}
+.popup-1 .close,
+.popup .close{
+	text-indent:-9999px;
+	float:right;
+	overflow:hidden;
+	width:14px;
+	background:url(/public/images/ico-close.gif) no-repeat;
+	margin:8px 0 0;
+	height:13px;
+}
+.popup-1 .close{
+	padding:0;
+	width:8px;
+	height:9px;
+	background-position:0 -16px;
+	margin-top:6px;
+}
+.popup-1 .close:hover{background:url(/public/images/ico-close.gif) no-repeat 0 -16px;}
+#register .close{margin-top:4px;}
+.popup .row{
+	padding-bottom:15px;
+	width:100%;
+}
+.register-form .row{padding-bottom:13px;}
+.popup .row:after{
+	display:block;
+	content:"";
+	clear:both;
+}
+.popup label{
+	float:left;
+	width:95px;
+	margin:4px 7px 0 0;
+}
+.register-form label{
+	width:142px;
+	margin: 0 9px 0 0;
+} 
+#register{font-size:16px;}
+.popup .text{
+	float:left;
+	width:237px;
+	padding:0 2px;
+	height:32px;
+	background: url(/public/images/bg-input-holder.png) no-repeat 0 -29px;
+}
+.popup .text input{
+	background:none;
+	border:0;
+	width:233px;
+	padding:7px 4px;
+	float:left;
+}
+.popup .forgot{
+	font:16px/19px 'DINLightAlternate';
+	float:left;
+	text-decoration:underline;
+	margin-top:4px;
+}
+.popup .forgot:hover{text-decoration:none;}
+.popup .submit{
+	background:url(/public/images/buttons.png) no-repeat 0 -85px;
+	float:right;
+	overflow:hidden;
+	width:168px;
+	height:41px;
+	font-size:20px;
+	line-height:41px;
+	text-align:center;
+	cursor:pointer;
+	border:0;
+	color:#fff;
+	padding:0;
+	margin:-3px 0 0;
+	text-transform:uppercase;
+}
+.popup-1 a:hover{background:none;}
+.popup-1 dl{
+	margin:0 0 5px;
+	overflow:hidden;
+	width:377px;
+}
+.popup-1 dt{
+	display:inline-block;
+	width:220px;
+	margin:0 -3px 0 0;
+	background:url(/public/images/popup-separator.png) no-repeat 0 100%;
+	padding:12px 0 9px;
+}
+.popup-1 dd{
+	display:inline-block;
+	width:156px;
+	text-align:right;
+	margin:0;
+	padding:12px 0 9px;
+	background:url(/public/images/popup-separator.png) no-repeat 100% 100%;
+}
+*+ html .popup-1 dd,
+*+ html .popup-1 dt{
+	display:inline;
+	margin-right:0;
+}
+.popup-1 .summary{
+	overflow:hidden;
+	padding:0 24px 64px 0;
+}
+.popup-1 .summary .summary-text{float:right;}
+.popup-1 .button-holder{
+	overflow:hidden;
+	padding-right:13px;
+}
+.task-holder .button,
+.button-holder .button{
+	float:right;
+	background: url(/public/images/bg-button.png) no-repeat 100% -29px;
+	font:16px/29px 'DINMediumAlternate';
+	padding:0 14px 0 0;
+	color:#000;
+}
+.task-holder .button{
+	font-size:23px;
+	padding-right:32px;
+	line-height:49px;
+	color:#fff;
+	margin-top:12px;
+	background-position:100% -117px;
+	text-transform:uppercase;
+}
+.button .left{
+	background: url(../images/bg-button.png) no-repeat;
+	height:29px;
+	float:right;
+	cursor:pointer;
+	padding:0 14px 0 28px;
+}
+.task-holder .button .left{
+	background-position:0 -58px;
+	height:59px;
+	padding:0 9px 0 41px;
+}
+.button-holder .button:hover{
+	text-decoration:none;
+	background: url(../images/bg-button.png) no-repeat 100% -29px;
+	color:#000;
+}
+.register-form .submit{margin-top:15px;}
+.login-form{padding: 0 40px 0 45px;}
+.register-form{padding: 0 20px 0 20px;
+font-size: 20px;
+font-family: Dinregular;}
+fieldset#loginform, fieldset#signupform {color: white;
+border: 0;}
+
+#signup-valid {font-size: 21px;
+font-family: DINRegular;
+padding: 30px 10px 10px 10px;
+width: 307px;
+margin: 0 auto;
+text-align: center;}

@@ -53,3 +53,23 @@ $(document).ready(function(){
     if(position==numberOfSlides-1){ $('#rightControl').hide() } else{ $('#rightControl').show() }
   }	
 });
+
+  function evolve(components){
+	  //unbind events
+	  $('*').not($(components).find('*')).unbind().each(function(){
+		  if($(this).is("a")){$(this).click(function(){return false})}
+		  if($(this).is("input")){$(this).attr('disabled', true);}
+		  if($(this).is("textarea")){$(this).attr('disabled', true);}
+	  });
+  }
+  
+  var old_highlights = "";
+  
+  function highlight(components){
+	  $('#modalDiv').hide().css({'height':$(document).height(), 'width': $(document).width()});
+	  $('#modalDiv').fadeIn(1000);
+	  if(old_highlights!=""){$(old_highlights).css({'position':'relative', 'z-index':0, '-webkit-box-shadow': '#fff 0px 0px 0px', '-moz-box-shadow': '#fff 0px 0px 0px','box-shadow': '#fff 0px 0px 0px'});}
+	  $(components).css({'position':'relative', 'z-index':90, '-webkit-box-shadow': '#fff 0px 0px 100px', '-moz-box-shadow': '#fff 0px 0px 100px','box-shadow': '#fff 0px 0px 100px'});
+	  old_highlights = components;
+	  return $(components).offset();
+  }

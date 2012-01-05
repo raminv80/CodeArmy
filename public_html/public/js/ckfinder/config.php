@@ -33,11 +33,10 @@ function CheckAuthentication()
 	$ci_session = stripslashes($ci_session);
 	$ci_session = unserialize($ci_session);
 	$ci_session_id = $ci_session['session_id'];
-	
 	$dbhost = 'localhost';
 	$dbuser = 'workpad_user';
 	$dbpass = 'work123';
-	$dbnya = 'workpad_db';
+	$dbnya = 'workpad_db2';
 	
 	$ci_session_con = mysql_connect($dbhost, $dbuser, $dbpass);
 	if (!$ci_session_con) {
@@ -66,11 +65,10 @@ $ci_session = $_COOKIE['ci_session'];
 $ci_session = stripslashes($ci_session);
 $ci_session = unserialize($ci_session);
 $ci_session_id = $ci_session['session_id'];
-
 $dbhost = 'localhost';
 $dbuser = 'workpad_user';
 $dbpass = 'work123';
-$dbnya = 'workpad_db';
+$dbnya = 'workpad_db2';
 
 $ci_session_con = mysql_connect($dbhost, $dbuser, $dbpass);
 if (!$ci_session_con) {

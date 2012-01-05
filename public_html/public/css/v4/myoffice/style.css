@@ -1566,6 +1566,18 @@ body > #container {
 	text-decoration:none;
 }
 
+.tab-holder .content .widget .widget-content .myTable p {
+	text-decoration:none;
+	color:#fff;
+	padding: 5px 0 5px 0;
+}
+.tab-holder .content .widget .widget-content .myTable #moredetails {
+	font-size: 1em;
+	color: #82D1E5;
+	text-decoration: underline;
+	text-shadow: 0 1px 15px #63C0D6; float:left;
+}
+
 /*------------- History ----------------*/
 
 
@@ -1825,7 +1837,7 @@ body > #container {
 	padding:0 0 16px 5px;
 }
 .last-task{
-	background:url(/public/images/vertical-divider.png) repeat-y 305px 0;
+	/*background:url(/public/images/vertical-divider.png) repeat-y 305px 0;*/
 	overflow:hidden;
 	padding:15px 32px 26px 9px;
 }
@@ -1856,10 +1868,12 @@ body > #container {
 	color:#b0b0b0;
 }
 .task-holder li{
-	float:left;
-	padding:0 68px 0 22px;
-	background:url(/public/images/bullet.png) no-repeat 0 3px;
-	width:240px;
+	float: left;
+	padding: 0 68px 0 22px;
+	background: url(/public/images/bullet.png) no-repeat 0 3px;
+	width: 470px;
+	font-size: 15px;
+	text-transform: none;
 }
 .task-holder .title{color:#fff;}
 .task-holder .mark{color:#a3f20c;}
@@ -2129,10 +2143,13 @@ body > #container {
 	border: 3px solid #F6F6F6;
     display: inline-block;
     height: 25px;
-    padding-top: 4px;
+	font-size: 15px;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: bold;
+	padding: 3px 0 0 0;
     text-align: center;
-    font-weight:normal;
-    width: 210px;
+    width: 150px;
 	background: rgb(93,172,14); /* Old browsers */
 	background: -moz-linear-gradient(top, rgba(93,172,14,1) 0%, rgba(76,107,18,1) 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(93,172,14,1)), color-stop(100%,rgba(76,107,18,1))); /* Chrome,Safari4+ */
@@ -2143,6 +2160,16 @@ body > #container {
 	background: linear-gradient(top, rgba(93,172,14,1) 0%,rgba(76,107,18,1) 100%); /* W3C */
 }
 
+#wrapper .contents a#jobdone {background: url(/public/images/mydesk-jobdone.png);
+text-indent: -99999px;
+bordeR: 0;
+border-radius: 0;
+width: 178px;
+height: 33px;
+margin: 0 10px 0 0;
+border: 0px; }
+
+#wrapper .contents a#jobdone:hover {background: url(/public/images/mydesk-jobdone.png) right; margin-top:1px;height:32px;}
 
 /*-------- Story Discussion section ---------*/
 
