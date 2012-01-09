@@ -73,6 +73,9 @@
 <div style="display:none" id="dialog-confirm" title="Remove the Sprint?">
   <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'Selected Sprint will be deleted and all user stories under it will move to Icebox. Are you sure?'</p>
 </div>
+<div style="display:none" id="story_dialog-confirm" title="Remove the Story?">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'Selected Story will be deleted. Are you sure?'</p>
+</div>
 <input type="hidden" id="buffer" />
 <style type="text/css">
 .total-burndown {
@@ -387,17 +390,32 @@ function save_list(){
 }
 
 function deleteUserStory(work_id){
-	$.post(
-		"/project/AjaxDeleteStory",
-		{ 'work_id': work_id, 'project_id': <?=$project_sel?>, 'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>' },
-		function(msg){
-			if(msg!='0'){
-				$('#work_'+msg).hide(1000,function(){$(this).remove();});
-			}else{
-				alert('Error: Unable to remove User Story '+msg);
+	$( "#story_dialog:ui-dialog" ).dialog( "destroy" );
+	$( "#story_dialog-confirm" ).dialog({
+		resizable: false,
+		height:240,
+		width:470,
+		modal: true,
+		buttons: {
+			"Delete Story": function() {
+				$( this ).dialog( "close" );
+				$.post(
+					"/project/AjaxDeleteStory",
+					{ 'work_id': work_id, 'project_id': <?=$project_sel?>, 'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>' },
+					function(msg){
+						if(msg!='0'){
+							$('#work_'+msg).hide(1000,function(){$(this).remove();});
+						}else{
+							alert('Error: Unable to remove User Story '+msg);
+						}
+					}
+				);
+			},
+			Cancel: function() {
+				$( this ).dialog( "close" );
 			}
 		}
-	);
+	});
 }
 
 function populate(works){
