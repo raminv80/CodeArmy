@@ -38,8 +38,8 @@
               <?php foreach($leaderboard_project as $user):?>
               <li>
                 
-                  <table><tr><td><a href="/user/<?php echo $user['user_id'];?>"> <img  src="/public/<?php echo $user['avatar']? $user['avatar']: 'images/img7.png';?>" alt="profile picture" class="alignleft" width="39" height="39" /></a></td><td><a href="/user/<?php echo $user['user_id'];?>" class="name"><?php echo $user['username'];?></a> <br>
-                        <span><?php echo $user['num'];?> missions</span></td></tr></table>
+                   <table style="margin-top:-35px;"><tr><td><a href="/user/<?php echo $user['user_id'];?>"> <img style="margin-left: -5px; margin-top: 10px;"  src="<?php echo ($user['avatar'])? '/public/'.$user['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $user['email'] ) ) );?>" alt="profile picture" class="alignleft" width="39" height="39" /></a></td> <td style="vertical-align: bottom;"><div  style="width:100px;" class="info"><a href="/user/<?php echo $user['user_id'];?>" class="name"><?php echo $user['username'];?></a> <br>
+                        <span><?php echo $user['num'];?> missions</span></div></td></tr></table>
               </li>
               <?php endforeach;?>
               </ol></td><td>
@@ -48,9 +48,9 @@
             <ol>
               <?php foreach($leaderboard_points as $user):?>
               <li>
-                <table style="margin-top:-50px;">
+                <table style="margin-top:-35px;">
                   <tr>
-                    <td><a href="/user/<?php echo $user['user_id'];?>"> <img style="margin-left: -5px; margin-top: 10px;" src="/public/<?php echo $user['avatar']? $user['avatar']: 'images/img7.png';?>" alt="profile picture" class="alignleft" width="39" height="39" /></a></td>
+                    <td><a href="/user/<?php echo $user['user_id'];?>"> <img style="margin-left: -5px; margin-top: 10px;" src="<?php echo ($user['avatar'])? '/public/'.$user['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $user['email'] ) ) );?>" alt="profile picture" class="alignleft" width="39" height="39" /></a></td>
                     <td style="vertical-align: bottom;"><div  style="width:100px;" class="info"> <a href="/user/<?php echo $user['user_id'];?>" class="name"><?php echo $user['username'];?></a> <br>
                         <span><?php echo $user['exp'];?> points</span> </div></td>
                   </tr>
@@ -63,9 +63,9 @@
             <ol>
               <?php foreach($leaderboard_time as $user):?>
               <li>
-                <table style="margin-top:-50px;">
+               <table style="margin-top:-35px;">
                   <tr>
-                    <td><a href="/user/<?php echo $user['user_id'];?>"> <img style="margin-left: -5px; margin-top: 10px;" src="/public/<?php echo $user['avatar']? $user['avatar']: 'images/img7.png';?>" alt="profile picture" class="alignleft" width="39" height="39" /></a></td>
+                    <td><a href="/user/<?php echo $user['user_id'];?>"> <img style="margin-left: -5px; margin-top: 10px;" src="<?php echo ($user['avatar'])? '/public/'.$user['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $user['email'] ) ) );?>" alt="profile picture" class="alignleft" width="39" height="39" /></a></td>
                     <td style="vertical-align: bottom;"><div  style="width:100px;" class="info"> <a href="/user/<?php echo $user['user_id'];?>" class="name"><?php echo $user['username'];?></a> <br>
                         <span><?php echo $user['exp'];?> hours</span> </div></td>
                   </tr>
@@ -75,7 +75,7 @@
             </ol></td></tr></table>
           </div>
         </div>
-        <div class="row" style="margin: -20px 0 0 10px;">
+        <div class="row" style="margin: -5px 0 0 10px;">
           <div class="share-holder"><a name="fb_share" share_url="www.workpad.my"></a></div>
           <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script> 
           <a href="/leaderboard" class="show">show full leaderboard</a> </div>
@@ -87,7 +87,7 @@
       <img src="/public/images/howitworks.png"></div>
   </div>
 </section>
-<section style="padding-top:20px;" id="user-stories">
+<section style="padding-top:20px;" id="user-stories" class="user-stories">
   <div class="WP-main">
     <div id="slideshow"> <span class="control" id="leftControl" style="display: block; ">Clicking moves left</span>
       <div id="slidesContainer" style="overflow-x: hidden; overflow-y: hidden; ">
@@ -283,49 +283,6 @@
 </section>
 
 <!-- login -->
-<section id="login_block" style="display:none;">
-  <div class="WP-main" style="background:rgba(0,0,0,0.5);">
-    <div align="center">
-      <div class="WP-comment-placeholder" style="float:none;width:500px; position:relative; top:110px;">
-        <div id="comment-top" style="width:490px"></div>
-        <div id="comment-mid" style=" padding: 20px 20px 55px 20px; height:120px;width:450px">
-        	<h1 style="margin: -50px 0 0 -15px;" id="title">LOGIN</h1>
-        	<?php echo form_open('login/validate_credentials' , array('class'=>'login-form')); ?>
-              <?php if(isset($login_error)): ?>
-              <div class="row"> <span style="color:#F60">Login Error: please check your username or password.</span> </div>
-              <?php endif; ?>
-              <div class="row">
-                <label for="username">Username</label>
-                <div class="text">
-                  <input type="text" id="username" name="username" value="<?php echo $this->input->post('username'); ?>"  />
-                </div>
-              </div>
-              <div class="row">
-                <label for="password1">Password</label>
-                <div class="text">
-                  <input type="password" name="password" id="password1" value=""  />
-                </div>
-              </div>
-              <div class="row">  
-				<a class="forgot" href="/login/recovery">Forgot your password?</a>
-                <input type="submit" class="reg-submit" name="submit" value="Submit" />
-              </div>
-            <?php echo form_close(); ?>
-            <ul class="not-a_user">
-              <li>NOT A USER? <a href="/signup" style="color:#09F"> Signup</a></li>
-            </ul>
-        </div>
-      </div>
-      <div id="comment-bottom" style="width:490px"></div>
-        <div id="push-down">&nbsp;</div>
-        <br />
-        <div id="push-down">&nbsp;</div>
-        <br />
-        &nbsp;
-    </div>
-  </div>
-</section>
-
 <div style="display:none">
 	<div id="loginbox">
     	<a class="close" href="#1"><img src="/public/images/close.png" /></a>

@@ -240,17 +240,13 @@ text-shadow: 0 1px 10px white;
 font-size: 1.5em;color: #282828;}
 </style>
 <script type="text/javascript">
+$(init);
 function init(){
-	$('#product_backlog').sortable({cancel: '.empty_space', connectWith: '#scrum1'});
-	$('#scrum1').sortable({connectWith:'#product_backlog'});
-	$('#plan').click(function(){
-		$('#plan_holder').slideDown();
-		$('#board_holder').slideUp();
-	});
-	$('#board').click(function(){
-		$('#board_holder').slideDown();
-		$('#plan_holder').slideUp();
-	});
+	var max_height = 0;
+	//find the highest height
+	$('.story_list').each(function(){if($(this).height()>max_height)max_height = $(this).height();})
+	//adjust their height to max
+	$('.story_list').css('min-height',max_height);
 }
 var num_sprints = 1; num_edits=0;
 $('.user_story').hover(

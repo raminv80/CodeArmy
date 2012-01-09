@@ -1,4 +1,9 @@
-<?php if($page_is=='Contact' && $action_is!='find'){?>
+<?php if($page_is=='story' && $action_is=='edit'){?>
+<!-- Story Edit Footer -->
+<header>
+<div style="height:22px" class="footer">
+
+<?php }elseif($page_is=='Contact' && $action_is!='find'){?>
 <!-- contact us footer -->
 
 <div style="height:22px" class="footer">
@@ -330,16 +335,16 @@ width: 210px;}
 <header>
 <div class="footer">
 <div class="WP-bottom-nav">
-  <div class="WP-nav-placeholder-browsejob">
-    <div id="WP-nav-content" style="padding-left:0;">
+  <div class="WP-nav-placeholder-browsejob" style="width:935px;">
+    <div id="WP-nav-content" style="padding-left: 10px;">
       <div id="home"><a href="/"></a></div>
     </div>
     <div id="WP-nav-content" style="border-left:0;">
       <div id="myoffice"><a href="/myoffice"></a></div>
     </div>
-    <div id="WP-nav-content" style="border-left:0;">
+   <!-- <div id="WP-nav-content" style="border-left:0;">
       <div id="save"><a href="#save"></a></div>
-    </div>
+    </div>-->
     <div id="WP-nav-content" style="width:240px; border-right:0; border-left:0;">
       <div id="browsesearch"> <img align="center" style="margin-top: 10px; margin-left: 15px;"src="/public/images/searchingfor.png"> Project:
         <SELECT onchange="switchProject()" type="text" id="project_sel" name="project_sel">
@@ -439,7 +444,7 @@ width: 210px;}
 </div>
 
 <!-- end of footer for browse page -->
-<?php }elseif($page_is=='story'){?>
+<?php }elseif($page_is=='story' && $action_is=='show'){?>
 <header>
 <div class="footer">
 <div class="WP-bottom-nav">
@@ -460,9 +465,9 @@ width: 210px;}
                 ?>
           <div class="" style="margin:10px; color:#F90;"> <?php echo $msg;?> </div>
           <?php }?>
-          <input <?php if(!($this->session->userdata('user_id') && in_array($work_data['status'],array('open','Open','reject','Reject')))){?>disabled<?php }?> id="bid" name="set_cost" type="text" value="<?php echo $work_data['cost']; ?>" />
+          <input <?php if(!($this->session->userdata('user_id') && in_array(strtolower($work_data['status']),array('open','reject')))){?>disabled<?php }?> id="bid" name="set_cost" type="text" value="<?php echo $work_data['cost']; ?>" />
           <img src="/public/images/dayscommit.png" style="padding-right:40px;" />
-          <input <?php if(!($this->session->userdata('user_id') && in_array($work_data['status'],array('open','Open','reject','Reject')))){?>disabled<?php }?> name="set_days" id="days" type="text" value="<?php $days = ($work_data['deadline'])? round((strtotime($work_data['deadline']) - strtotime(date("Y-m-d"))) / (60 * 60 * 24)) : 1; if($days<1)$days=1; echo $days?>"/>
+          <input <?php if(!($this->session->userdata('user_id') && in_array(strtolower($work_data['status']),array('open','reject')))){?>disabled<?php }?> name="set_days" id="days" type="text" value="<?php $days = ($work_data['deadline'])? round((strtotime($work_data['deadline']) - strtotime(date("Y-m-d"))) / (60 * 60 * 24)) : 1; if($days<1)$days=1; echo $days?>"/>
           <input type="hidden" name="work_id" value="<?php echo $work_data['work_id'];?>" />
           <input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>" id="user_id">
           <img style="padding:10px 10px 10px 5px;" src="/public/images/days.png" /> <img src="/public/images/ratedifficulty.png" />
@@ -475,13 +480,13 @@ width: 210px;}
 	if($this->session->userdata('user_id') && in_array($work_data['status'],array('open','Open','reject','Reject'))){
 	?>
     <div id="WP-nav-content" style="border-left:0;">
-      <div id="bid"><a id="btnBid" href="javascript:void(0)"></a></div>
+      <div id="bid"><a class="hint_dev_step3" id="btnBid" href="javascript:void(0)"></a></div>
     </div>
     <?php echo form_close(); ?>
     <?php }elseif(!$this->session->userdata('user_id')){?>
     <div id="WP-nav-content" style="border-left:0;">
       <?php $this->session->set_userdata('referer','/story/'.$work_data['work_id'])?>
-      <div id="bid-login"><a href="/login"></a></div>
+      <div id="bid-login"><a href="/login" class="hint_dev_step3"></a></div>
     </div>
     <?php }else{?>
     <div id="WP-nav-content" style="border-left:0;">
@@ -553,7 +558,7 @@ width: 210px;}
     </div>
   </div>
   <div id="modalDiv"></div>
-  <?php $this->load->view('includes/hints'); ?>
+  <?php if(!isset($modal_message)) $this->load->view('includes/hints'); ?>
   <?php $msg = $this->session->flashdata('alert');if($msg){?>
   <div class="alert">
     <div class="alert-content"> <?php echo $msg;?></div>

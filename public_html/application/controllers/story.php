@@ -44,6 +44,7 @@ class Story extends CI_Controller {
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
 		}
+		$this->view_data['action_is'] = 'show';
 		// get stories 
 		$this->view_data['is_my_work'] = false;
 		$user_id = $this->session->userdata('user_id');
@@ -194,9 +195,10 @@ class Story extends CI_Controller {
 			$title = 'Bid on '.$work_data[0]['title'];
 			$product_owner = $this->users_model->get_user($work_data[0]['creator']);
 			if($product_owner)$product_owner = $product_owner->result_array();
+			$po_name = $product_owner[0]['username'];
 			$product_owner = $product_owner[0]['email'];
-			$message = 'User '.$this->session->userdata('username').' placed a bid on story '.$work_data[0]['title'].' with amount '.$this->input->post('set_cost').' and days '.$this->input->post('set_days');
-			$this->notify(noreply_email,email_name, $product_owner, admin_cc, $title,$message);
+			$message = '<p>Hello '.$po_name.',</p><p>User <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a> placed a bid on story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> with amount '.$this->input->post('set_cost').' and days '.$this->input->post('set_days').'</p><p>Whenever you want you can refer to the bidding list of this <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">user story</a> to decide on awarding the job. You may want to study bidder\'s profiles before approving a bid.</p><p>Thank you.</p>';
+			$this->notify(noreply_email,email_name.' Bids', $product_owner, admin_cc, $title,$message);
 			$project_id = $data[0]['project_id'];
 			$user_id = $this->session->userdata('user_id');
 			$this->stories->log_history($user_id, $project_id, $work_id, 'bid', $this->input->post('set_cost'), $desc = '');
@@ -308,9 +310,9 @@ class Story extends CI_Controller {
 		$sm = $this->stories->get_scrum_master($this->input->post('story_id'));
 		$cn = $this->stories->get_comment_emails($this->input->post('story_id'));
 		$target = array();
-		$target[] = $wh[0]['email'];
-		$target[] = $po[0]['email'];
-		$target[] = $sm[0]['email'];
+		if(count($wh)>0)$target[] = $wh[0]['email'];
+		if(count($po)>0)$target[] = $po[0]['email'];
+		if(count($sm)>0)$target[] = $sm[0]['email'];
 		foreach($cn as $usr)$target[] = $usr['email'];
 		$to=array_unique($target);
 		$cc = admin_email;
@@ -339,7 +341,7 @@ class Story extends CI_Controller {
                redirect("/story/$work_id");
         }
 
-    function bid_accept($id) {
+    function bid_accept($id, $ref='') {
 			   $this->check_authentication();
                $query = $this->stories->get_work_from_bid($id);
                $data = $query->result_array();
@@ -363,19 +365,32 @@ class Story extends CI_Controller {
 				   $usr = $this->users->get_user($to_id);
 				   $usr_data = $usr->result_array();
 				   $to = $usr_data[0]['email'];
-				   $message = 'Your bid on story '.$work_data[0]['title'].' was successful';
-				   $this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+				   $message = '<h3>Congradulations!</h3><p>You are the winner! Your bid on story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> was successful. Now you may refer to the job from <a href="http://'.$_SERVER['HTTP_HOST'].'">Workpad</a>&gt;<a href="http://'.$_SERVER['HTTP_HOST'].'/myoffice">MyOffice</a>&gt;MyDesk&gt;In Progress list.</p><p>Next step is to finish the job as soon as possible and click on job is done button located in this list, or on <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'">scrumboard</a> or within <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">story detail</a> page. Here are some tips for you: <ol><li>If you are new to the project, first step is to read about the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project</a> itslef.</li><li>Go through details of the user story. If it\'s not clear or if you need any furthur info, use the \'Discuss\' section to contact the product owner and scrum master.</li><li>required files might be attached to the story or be provided later by scrum master/product owner or be presented as a link within <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project detail page</a>.</li><li>Test, test and test. Make sure everything works before submission.</li><li>For submission refer to project submission terms and essentials of this user story. You might be required to eaither use a github repository (forked from main project) or upload the files as a zip or add a remote link to the files.</li></ol></p>';
+				   $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message);
 				   
 				   $project_id =$work_data[0]['project_id'];
 				   $user_id = $usr_data[0]['user_id'];
 				   $this->stories->log_history($user_id, $project_id, $work_id, 'win', $cost, $desc = '');
 			   }
-               redirect("/project/management");
+			   if($ref=='story'){
+				   redirect("/story/$work_id");
+			   }else{
+               	   redirect("/project/story_management");
+			   }
         }
         
         function edit($id) {
 			$this->check_authentication();
 			$user_id = $this->session->userdata('user_id');
+			$me = $this->users_model->get_user($user_id);
+			$me = $me->result_array();
+			$me = $me[0];
+			$myProfile = $this->users_model->get_profile($user_id);
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$this->view_data['me'] = $me;
+			$this->view_data['myProfile'] = $myProfile;
+			
 			$this->view_data['window_title'] = "Edit the Story";
             $query = $this->stories->get_work_details($id);
             $data = $query->result_array();
@@ -526,9 +541,18 @@ class Story extends CI_Controller {
 						$work_data = $work->result_array();
 						$title = $work_data[0]['title'].' is completed.';
 						$point = $work_data[0]['points'];
-					
-						$message = 'User '.$this->session->userdata('username').' has completed the user story '.$work_data[0]['title'];
-						$this->notify(noreply_email,email_name, admin_email, admin_cc, $title,$message);
+						$project = $this->projects_model->get_project_details($work_data[0]['project_id']);
+						$project = $project->result_array();
+						$project_owner = $this->users_model->get_user($project[0]['project_owner_id']);
+						$project_owner = $project_owner->result_array();
+						$scrum_master = $this->users_model->get_user($project[0]['scrum_master_id']);
+						$scrum_master = $scrum_master->result_array();
+						
+						$message = '<p>Hello '.$project_owner[0]['username'].',</p><p>User <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a> has completed the user story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>.</p><p>Now <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$scrum_master[0]['user_id'].'">Scrum Master</a> or <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$project_owner[0]['user_id'].'">Product owner</a> is required to verify the job. For furthur actions please refer to the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'">scrumboard</a> of this project.</p><p>Regards.</p>';
+						$to = array();
+						$to[] = $project_owner[0]['email'];
+						$to[] = $scrum_master[0]['email'];
+						$this->notify(noreply_email,email_name, $to, admin_email, $title,$message);
 						
 						$project_id =$work_data[0]['project_id'];
 						$user_id = $this->session->userdata('user_id');
@@ -554,7 +578,7 @@ class Story extends CI_Controller {
 				$query = $this->stories->get_user_email($story_id);
 				$user_data = $query->result_array();
 				$to = $user_data[0]['email'];
-				$message = 'The story '.$work_data[0]['title'].' needs to be redo.';
+				$message = '<p>Hi '.$user_data[0]['username'].',</p><p>The story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> needs more work. Please refer to the discussion section of story and discuss furthur requirements with the scrum master.</p><p>Thanks.</p>';
 				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
 				$this->users_model->notify($user_data[0]['user_id'], $title, $message);
 				$project_id = $work_data[0]['project_id'];
@@ -578,7 +602,7 @@ class Story extends CI_Controller {
 				$query = $this->stories->get_user_email($story_id);
 				$user_data = $query->result_array();
 				$to = $user_data[0]['email'];
-				$message = 'The story '.$work_data[0]['title'].' is verified.';
+				$message = '<p>Hi '.$user_data[0]['username'].',</p><p>The story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a> is verified by scrum master. Now this job is awaiting for approval of product owner. Your payment will be signed off upon approval of product owner.</p><p>Regards.</p>';
 				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
 				$this->users_model->notify($user_data[0]['user_id'], $title, $message);
 				
@@ -602,9 +626,16 @@ class Story extends CI_Controller {
 				$title = $work_data[0]['title'].' is Signedoff.';
 				$query = $this->stories->get_user_email($story_id);
 				$user_data = $query->result_array();
-				$to = $user_data[0]['email'];
-				$message = 'The story '.$work_data[0]['title'].' is signed off.';
-				$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+				$project = $this->projects_model->get_project_details($work_data[0]['project_id']);
+				$project = $project->result_array();
+				$scrum_master = $this->users_model->get_user($project[0]['scrum_master_id']);
+				$scrum_master = $scrum_master->result_array();
+				
+				$to = array();
+				$to[] = $user_data[0]['email'];
+				$to[] = $scrum_master[0]['email'];
+				$message = '<p>Hello,</p><p>The story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a> is signed off.</p><p>Good job and thanks.</p>';
+				$this->notify(noreply_email,email_name, $to, admin_cc, $title,$message);
 				
 				$project_id = $work_data[0]['project_id'];
 				$point = $work_data[0]['points'];
@@ -627,10 +658,16 @@ class Story extends CI_Controller {
 				$query = $this->stories->reject($story_id);	
 				$title = $work_data[0]['title'].' is rejected!';
 				$to = $user_data[0]['email'];
-				$message = 'The story '.$work_data[0]['title'].' is rejected. As a result this story will be set to open for bidding again.';
+				$message = '<p>Hello,</p><p>unfortunately the story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a> has failed to meet requirements of product owner and is rejected. For more info please refer to the discussion section of this user sotry.</p><p>As a result this failure, story will be set to open for bidding again.</p><p>Regards.</p>';
 				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
 				$this->users_model->notify($user_data[0]['user_id'], $title, $message);
 				
+				$project = $this->projects_model->get_project_details($work_data[0]['project_id']);
+				$project = $project->result_array();
+				$scrum_master = $this->users_model->get_user($project[0]['scrum_master_id']);
+				$scrum_master = $scrum_master->result_array();
+				$to = $scrum_master[0]['email'];
+				if($user_data[0]['user_id']!=$to) $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message);
 				$project_id = $work_data[0]['project_id'];
 				$point = $work_data[0]['points'];
 				$user_id = $user_data[0]['user_id'];
@@ -687,12 +724,8 @@ class Story extends CI_Controller {
 		}
 				
 		private function notify($from,$fromName, $to, $cc, $subject, $message){
-			ini_set('display_error',0);
-			error_reporting('E_ALL');
-			require(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
-
+			require_once(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
 			$mail = new PHPMailer();
-			
 			$mail->IsSMTP();                                      // set mailer to use SMTP
 			$mail->SMTPAuth   = true;                  // enable SMTP authentication
 			//$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
@@ -701,15 +734,12 @@ class Story extends CI_Controller {
 			$mail->Username = "noreply@vakilian.net";  // SMTP username
 			$mail->Password = "work123"; // SMTP password
 			//$mail->SMTPDebug  = 1;
-			
-			//$mail->SetFrom('noreply@motionworks.com.my', 'Workpad Alerts');
 			$mail->SetFrom($from, $fromName);
 			if(is_array($to)){
 				foreach($to as $too)$mail->AddAddress($too);
 			}else{
 				$mail->AddAddress($to);
 			}
-			//$mail->AddAddress("ellen@example.com");                  // name is optional
 			//$mail->AddReplyTo("info@example.com", "Information");
 			
 			$mail->WordWrap = 50;                                 // set word wrap to 50 characters
@@ -720,13 +750,12 @@ class Story extends CI_Controller {
 			$mail->Subject = $subject;
 			$mail->Body    = $message;
 			$mail->AltBody = $message;
+			
 			if(!$mail->Send())
 			{
 			   echo "Message could not be sent. <p>";
 			   echo "Mailer Error: " . $mail->ErrorInfo;
 			   exit;
 			}
-			
-			//echo "Message has been sent";
 		}
 }

@@ -1,6 +1,6 @@
 <?php $this->load->view('includes/header4'); ?>
 <!-- your html code here -->
-<section id="user-stories"><br><br>
+<section id="user-stories" class="user-stories"><br><br>
   <div class="WP-main">
   
   
@@ -63,7 +63,7 @@
     <div class="WP-searchbar">
       <?php echo form_open('/stories/browse' , array('class'=>'search-form', 'name' => "browse-tools-form")); ?>
       <label>Search task</label>
-      <input id="input-search" type="text" name="search">
+      <input class="hint_step1" id="input-search" type="text" name="search">
       <input id="search-button" name="Submit" type="button">
       <?php echo form_close(); ?>
     </div>
@@ -83,7 +83,7 @@
                 <?php }?>
                 <td width="650px"><?=$story['project_name']?> -> <?=$story['title']?></td>
                 <td width="90px"><?=$story['bids']?></td>
-                <td>RM<?=$story['cost']?></td>
+                <td class="hint_dev_step2">RM<?=$story['cost']?></td>
               </tr>
             </table>
           </div>

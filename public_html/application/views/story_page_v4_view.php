@@ -10,7 +10,7 @@
         <table>
           <tr>
             <td width="50%">User Stories</td>
-            <td style="text-align:right;"><p><?php echo ucwords($work_data['title']); ?></p></td>
+            <td style="text-align:right;"><p><?php echo ucwords($work_data['title']); ?> (<a href="/story/edit/<?=$work_data['work_id']?>">Edit</a>)</p></td>
           </tr>
         </table>
         <table>
@@ -209,7 +209,7 @@
 		?>
           <table width="550px" class="<?php if($this->session->userdata('username')==strtolower($comment['username']))echo 'my-comment';?>">
             <tr>
-              <td style="vertical-align:top;" width="50"><div style="float: left; width: 180px;"><img style="float: left;padding-right:5px;" src="/public/<?php echo ($comment['avatar'])? $comment['avatar']:'images/img7.png';?>" /><p id="commentator"><?php echo $comment['username']; ?></p>
+              <td style="vertical-align:top;" width="50"><div style="float: left; width: 180px;"><img style="float: left;padding-right:5px;" src="<?php echo ($comment['avatar'])? '/public/'.$comment['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $comment['email'] ) ) );?>" /><p id="commentator"><?php echo $comment['username']; ?></p>
                 <p id="level"><?php if(strcasecmp($work_data['username'],$comment['username'])==0){?>product owner<?php }elseif($this->session->userdata('role')=='admin'){?>Admin<?php }else{?>lvl <?php $level = floor($comment['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;;}?></p></div><p id="comment-content"><?php echo $comment['comment_body']; ?></p>
                 <?php if($comment['comment_file']):?>
                     <div class="ds-posted" style="margin-right:30px">
@@ -233,14 +233,14 @@
           <?php foreach($bid_data as $bid) { ?>
           <table width="350px">
             <tr>
-              <td width="40"><img style="float: left;padding-right:5px;"src="/public/<?=($bid['avatar'])? $bid['avatar']:'images/img7.png'?>" /></td>
+              <td width="40"><img style="float: left;padding-right:5px;"src="<?php echo ($bid['avatar'])? '/public/'.$bid['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $bid['email'] ) ) );?>" /></td>
               <td><p id="bidder"><?php echo $bid['username']; ?></p>
                 <p id="level">lvl <?php $level = floor($bid['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></p></td>
               <td><p id="allbid-content"><?php echo number_format($bid['bid_cost']); ?> RM in <?php echo $bid['days']; ?> days</p>
                 <p id="date-comment">Posted <?php echo date('j M Y',strtotime($bid['created_at']));?></p></td>
                 <td width="60px">
                 <?php 
-					$my_bid = ($user_id==$bid['user_id']);
+					$my_bid = (isset($user_id) && ($user_id==$bid['user_id']));
 					$bid_open = (strtolower($bid['work_status'])=='open' || strtolower($bid['work_status'])=='reject');
 					$has_admin_right = $show_bid;
 					if($my_bid){
@@ -257,7 +257,7 @@
 					}
 					if($has_admin_right && $bid_open){
 						//show accept button
-						?><a id="accept" href="/story/bid_accept/<?php echo $bid["bid_id"]; ?>">Accept</a><?php
+						?><a id="accept" href="/story/bid_accept/<?php echo $bid["bid_id"]; ?>/story">Accept</a><?php
 					}
 				?>
                 </td>

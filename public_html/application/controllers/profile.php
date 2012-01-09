@@ -61,6 +61,10 @@ class Profile extends CI_Controller {
 		$this->load->view('show_profile_view', $this->view_data);
 	}
 	
+	function hide_tutorial(){
+		$this->session->set_userdata('tutorial',0);	
+	}
+	
 	// - edit profile page
 	function edit() {
 		$user_id = $this->session->userdata('user_id');

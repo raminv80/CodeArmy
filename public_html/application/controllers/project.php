@@ -99,6 +99,26 @@ class Project extends CI_Controller {
 		$this->load->view('project_management_view', $this->view_data);
 	}
 	
+	public function story_management($id='0'){
+		$user_id = $this->session->userdata('user_id');
+		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
+		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
+		if($user_id){
+			$me = $this->users_model->get_user($user_id);
+			$me = $me->result_array();
+			$me = $me[0];
+			$myProfile = $this->users_model->get_profile($user_id);
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$this->view_data['me'] = $me;
+			$this->view_data['myProfile'] = $myProfile;
+			$this->view_data['window_title'] = 'Workpad :: Project Management';
+		}
+		$this->view_data['stories'] = $this->story_model->get_my_projects_stories($user_id);
+		$this->view_data['projects'] = $this->projects_model->get_my_projects_detailed($user_id);
+		$this->load->view('project_management_view', $this->view_data);
+	}
+	
 	public function sprint_planner($id=0){
 		$this->view_data['enable_sprint_locks'] = false;
 		$user_id = $this->session->userdata('user_id');

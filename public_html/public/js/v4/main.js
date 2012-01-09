@@ -64,12 +64,24 @@ $(document).ready(function(){
   }
   
   var old_highlights = "";
+  var old_exclude = "";
   
-  function highlight(components){
-	  $('#modalDiv').hide().css({'height':$(document).height(), 'width': $(document).width()});
-	  $('#modalDiv').fadeIn(1000);
+  function highlight(components, exclude){
+	  components = $.trim(components);
+	  exclude = $.trim(exclude);
+	  if(components!='' || exclude!=''){
+		  $('#modalDiv').hide().css({'height':$(document).height(), 'width': $(document).width()});
+		  $('#modalDiv').fadeIn(1000);
+	  }
 	  if(old_highlights!=""){$(old_highlights).css({'position':'relative', 'z-index':0, '-webkit-box-shadow': '#fff 0px 0px 0px', '-moz-box-shadow': '#fff 0px 0px 0px','box-shadow': '#fff 0px 0px 0px'});}
-	  $(components).css({'position':'relative', 'z-index':90, '-webkit-box-shadow': '#fff 0px 0px 100px', '-moz-box-shadow': '#fff 0px 0px 100px','box-shadow': '#fff 0px 0px 100px'});
-	  old_highlights = components;
+	  if(components!=','){
+		  $(components).css({'position':'relative', 'z-index':90, '-webkit-box-shadow': '#fff 0px 0px 100px', '-moz-box-shadow': '#fff 0px 0px 100px','box-shadow': '#fff 0px 0px 100px'});
+		  old_highlights = components;
+	  }
+	  if(old_exclude!=""){$(old_exclude).css({'position':'relative', 'z-index':0});}
+	  if(exclude!=','){
+		  $(exclude).css({'position':'relative', 'z-index':90});
+		  old_exclude = exclude;
+  	  }
 	  return $(components).offset();
   }

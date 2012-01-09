@@ -9,6 +9,7 @@ class About extends CI_Controller {
 		//$this->load->model('users_model');
 		
 		$this->view_data['page_is'] = 'About';
+		$this->view_data['action_is'] = 'index';
 		
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');

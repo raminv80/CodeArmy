@@ -1,12 +1,17 @@
 <?php $this->load->view('includes/header4'); ?>
-
+<style type="text/css">.accordion-table a{color:#09F;}</style>
 <div id="wrapper">
   <div class="WP-main" style="margin-top:100px">
     <div class="bidding-project-placeholder">
       <div id="tabs">
         <ul>
+        <?php if($action_is=='management'){?>
           <li class="ui-state-active"><a id="#toptab3" href="#tabs-3">PROJECT MANAGEMENT</a></li>
           <li><a id="#toptab1" href="#tabs-1">STORY MANAGEMENT</a></li>
+        <?php }else{?>
+          <li><a id="#toptab3" href="#tabs-3">PROJECT MANAGEMENT</a></li>
+          <li class="ui-state-active"><a id="#toptab1" href="#tabs-1">STORY MANAGEMENT</a></li>
+        <?php }?>
         </ul>
         <div id="tabs-1" >
           <div class="WP-contract-placeholder">
@@ -51,6 +56,9 @@
                           <td width="80%">Points</td>
                           <td><?=$story['points']?></td>
                         </tr>
+                        <tr>
+                          <td colspan="2"><a href="/story/<?=$story['work_id']?>">View</a> | <a href="/story/edit/<?=$story['work_id']?>">Edit</a></td>
+                        </tr>
                       </table></td>
                   </tr>
                 </table>
@@ -88,7 +96,7 @@
                     <?php endforeach;?>
                     <?php endif;?>
                     <?php }else{?>
-                    <h3>AWARDED to <a href="/user/<?=$story['user_id']?>">
+                    <h3>AWARDED to <a style="color:#FFF" href="/user/<?=$story['user_id']?>">
                       <?=$story['username']?>
                       </a></h3>
                     <?php }?>
@@ -159,7 +167,7 @@
 		$(this).next('.accordionContent').slideToggle();
 	});
 	$(function() {
-		$( "#tabs" ).tabs();
+		$( "#tabs" ).tabs(<?php if($action_is=='story_management'){?>{ selected: 1 }<?php }?>);
 	});
 </script>
 <?php $this->load->view('includes/footer4'); ?>

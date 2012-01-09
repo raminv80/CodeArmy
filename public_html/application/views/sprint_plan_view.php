@@ -486,7 +486,12 @@ function populate(works){
 			}
 		}
 	}
-	
+	var max_height = 0;
+	//find the highest height
+	$('.story_list').each(function(){if($(this).height()>max_height)max_height = $(this).height();})
+	//adjust their height to max
+	$('.story_list').css({'min-height': max_height+'px'});
+	$('.add_sprint').css('min-height',(max_height+120));
 }
 
 var num_sprints = 1; num_edits=0;
@@ -583,6 +588,13 @@ function reclac_sprint_points(){
 		var sum=0; 
 		$('.user_story',$(this)).each(function(){sum += Math.round($(this).data('point'));});
 		$('.total-burndown',$(this).parent()).html('Total: '+sum	+'pt');
+		
+		var max_height = 0;
+		//find the highest height
+		$('.story_list').each(function(){if($(this).height()>max_height)max_height = $(this).height();})
+		//adjust their height to max
+		$('.story_list').css('min-height',max_height);
+		$('.add_sprint').css('min-height',max_height);
 	});
 }
 
@@ -622,5 +634,6 @@ $('#product_backlog').on('keypress','.new_story',event,function(){
 					$(this).remove();
 				}
 	});
+	
 </script>
 <?php $this->load->view('includes/footer4'); ?>

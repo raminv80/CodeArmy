@@ -151,7 +151,7 @@
 															<li>
 																<span class="number">#<?php echo $i+1;?></span>
 																<div class="image-holder">
-																	<a href="#"><img src="/public/<?php echo $leader['avatar']? $leader['avatar'] : 'images/img7.png';?>" alt="profile picture" class="alignleft" width="20" height="20" /></a>
+																	<a href="#"><img src="<?php echo ($leader['avatar'])? '/public/'.$leader['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $leader['email'] ) ) );?>" alt="profile picture" class="alignleft" width="20" height="20" /></a>
 																</div>
 																<div class="info">
 																	<a href="/user/<?=$leader['user_id']?>" class="name"><?php echo $leader['username'];?></a>
@@ -169,7 +169,7 @@
 															<li>
 																<span class="number">#<?php echo $i+1;?></span>
 																<div class="image-holder">
-																	<a href="#"><img src="/public/<?php echo $leader['avatar']? $leader['avatar'] : 'images/img7.png';?>" alt="profile picture" class="alignleft" width="21" height="20" /></a>
+																	<a href="#"><img src="<?php echo ($leader['avatar'])? '/public/'.$leader['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $leader['email'] ) ) );?>" alt="profile picture" class="alignleft" width="21" height="20" /></a>
 																</div>
 																<div class="info">
 																	<a href="/user/<?=$leader['user_id']?>" class="name"><?php echo $leader['username'];?></a>
@@ -186,7 +186,7 @@
 															<li>
 																<span class="number">#<?php echo $i+1;?></span>
 																<div class="image-holder">
-																	<a href="#"><img src="/public/<?php echo $leader['avatar']? $leader['avatar'] : 'images/img7.png';?>" alt="profile picture" class="alignleft" width="21" height="20" /></a>
+																	<a href="#"><img src="<?php echo ($leader['avatar'])? '/public/'.$leader['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $leader['email'] ) ) );?>" alt="profile picture" class="alignleft" width="21" height="20" /></a>
 																</div>
 																<div class="info">
 																	<a href="/user/<?=$leader['user_id']?>" class="name"><?php echo $leader['username'];?></a>
@@ -204,7 +204,7 @@
 														<h3><span class="text-collaborators">collaborators</span></h3>
 														<ul>
                                                         	<?php if($collaborators)foreach($collaborators as $user):?>
-															<li><a href="/user/<?php echo $user['user_id'];?>"><img src="/public/<?php echo $user['avatar']? $user['avatar'] : 'images/img7.png';?>" alt="profile picture" width="40" height="39" /></a></li>
+															<li><a href="/user/<?php echo $user['user_id'];?>"><img src="<?php echo ($user['avatar'])? '/public/'.$user['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $user['email'] ) ) );?>" alt="profile picture" width="40" height="39" /></a></li>
                                                             <?php endforeach;?>
 														</ul>
 													</div>

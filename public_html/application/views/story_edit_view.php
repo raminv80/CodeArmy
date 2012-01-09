@@ -1,7 +1,15 @@
-<?php $this->load->view('includes/header_view'); ?>
+<?php $this->load->view('includes/header4'); ?>
+<link href='<?php echo base_url() ?>public/styles/style.css' rel='stylesheet' />
+<link href='<?php echo base_url() ?>public/styles/uniform.default.css' rel='stylesheet' media="screen">
+<link href="/public/css/style.css" media="all" rel="stylesheet" type="text/css">
 
+<style>
+.WP-header-placeholder .WP-profile-header li { margin-left:20px !important; }
+.WP-header-placeholder .WP-profile-header ul {width:205px !important;}
+.WP-header-placeholder .WP-profile-header li.last {margin-left: 9px !important;}
+</style>
 	<!-- add new stories form container start -->
-	<div id="story-wrapper">
+	<div class="WP-main" style="margin-top:100px;">
 		<div id="content"></div>
 		
 		<?php if(isset($success)): ?>
@@ -10,8 +18,8 @@
 		
 		<?php else: ?>
 				
-		<h2>Edit Story</h2>
-		
+		<div class="WP-contract-placeholder"><div id="heading"><span id="title">Edit Story</span></div>
+		<div id="qualif-table">
 		<?php if(validation_errors()) { ?>
 		<!-- form error container start -->
 		<div class="val-error">
@@ -23,18 +31,18 @@
 		<?php echo form_open("/story/edit/".$story_id); ?>
 		<div class="new-story_field">
 		<label for="Project">Project</label>
-			<?php echo $story_data['project_name']; ?>
+			<p id="project-name"><?php echo $story_data['project_name']; ?></p>
 		</div>
 		
 		
 		<div class="new-story_field">
 			<label for="title">Title</label>
-            <span class="hint">keep it short, informative and unique</span>
-			<input type="text" maxlength="35" name="title" value="<?php echo $story_data['title']; ?>" placeholder="title" id="title" />
+            <span id="title-hint">keep it short, informative and unique</span>
+			<input type="text" style="width:265px;" maxlength="35" name="title" value="<?php echo $story_data['title']; ?>" placeholder="title" id="project-title" />
 			<p></p>
 		</div>
 
-		<div class="new-story_field">
+		<div style="width: 120px;float: left;"class="new-story_field">
 			<label for="type">Type</label>
 			<select name="type">
 			<option value="R&D" <?php if($story_data['type'] == "R&D") { echo "selected"; }?>>R&amp;D</option>
@@ -45,7 +53,7 @@
 			</select>
 		</div>
         
-        <div class="new-story_field">
+        <div style="width: 300px;float: left;" class="new-story_field">
 			<label for="type">Category</label>
 			<select name="category">
 			<option value="0" <?php if($story_data['category'] == NULL) { echo "selected"; }?>>General</option>
@@ -53,7 +61,7 @@
 			<option value="<?php echo $category['id'];?>" <?php if($story_data['category'] == $category['id']) { echo "selected"; }?>><?php echo $category['name'];?></option>
 			<?php endforeach;?>
 			</select>
-            <input value="" id="new-category" type="text" name="new_category" />
+            <input value=""  id="new-category" type="text" name="new_category" />
         </div>
 		
 		<div class="new-story_field">
@@ -75,7 +83,7 @@
         
         <div class="new-story_field">
         	<label for="skills">Required Skills</label>
-            <table id="skill-table">
+            <table width="700px" id="skill-table">
             	<thead>
                 	<th>Skill</th>
                     <th>Required Level</th>
@@ -129,14 +137,14 @@
 		
 		<div class="new-story_field">
 			<label for="cost">Cost</label>
-			RM <input type="text" name="cost" value="<?php echo $story_data['cost']; ?>" placeholder="450" id="points" />
+			RM <input type="text" name="cost" style="float:none;" value="<?php echo $story_data['cost']; ?>" placeholder="450" id="points" />
 		</div>
 		
 		<div class="new-story_field">
 			<label for="submit">&nbsp;</label>
             <input type="hidden" name="project_id" value="<?php echo $story_data['project_id'];?>" />
             <input type="hidden" name="status" value="<?=$story_data['status']?>" />
-			<input type="submit" name="submit" value="Edit Story" id="submit" />
+			<input type="submit" name="submit" value="Edit Story" id="editstory-submit" />
 			<p></p>
 		</div>
 		
@@ -146,8 +154,9 @@
 		
 		</div>
         <div id="ajaxupload">
-        </div>
+        </div></div>
+    <br /></div><div id="push-down">&nbsp;</div>
 	</div>
 	<!-- / add new stories form container ends -->
 		
-<?php $this->load->view('includes/footer_view'); ?>
+<?php $this->load->view('includes/footer4'); ?>

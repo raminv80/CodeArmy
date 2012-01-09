@@ -122,7 +122,7 @@
                                     <?php foreach($leaderboard_project as $user):?>
 										<li>
 											<a href="/user/<?php echo $user['user_id'];?>">
-                                            	<img src="/public/<?php echo $user['avatar']? $user['avatar']: 'images/img7.png';?>" alt="profile picture" class="alignleft" width="39" height="39" /></a>
+                                            	<img src="/public/<?php echo ($myProfile['avatar'])? '/public/'.$myProfile['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $me['email'] ) ) );?>" alt="profile picture" class="alignleft" width="39" height="39" /></a>
 											<div class="info">
 												<a href="/user/<?php echo $user['user_id'];?>" class="name"><?php echo $user['username'];?></a>
 												<span><?php echo $user['num'];?> missions</span>
@@ -137,7 +137,7 @@
                                     	<?php foreach($leaderboard_points as $user):?>
 										<li>
 											<a href="/user/<?php echo $user['user_id'];?>">
-                                            	<img src="/public/<?php echo $user['avatar']? $user['avatar']: 'images/img7.png';?>" alt="profile picture" class="alignleft" width="39" height="39" /></a>
+                                            	<img src="/public/<?php echo ($myProfile['avatar'])? '/public/'.$myProfile['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $me['email'] ) ) );?>" alt="profile picture" class="alignleft" width="39" height="39" /></a>
 											<div class="info">
 												<a href="/user/<?php echo $user['user_id'];?>" class="name"><?php echo $user['username'];?></a>
 												<span><?php echo $user['exp'];?> points</span>
@@ -152,7 +152,7 @@
                                     	<?php foreach($leaderboard_time as $user):?>
 										<li>
 											<a href="/user/<?php echo $user['user_id'];?>">
-                                            	<img src="/public/<?php echo $user['avatar']? $user['avatar']: 'images/img7.png';?>" alt="profile picture" class="alignleft" width="39" height="39" /></a>
+                                            	<img src="/public/<?php echo ($myProfile['avatar'])? '/public/'.$myProfile['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $me['email'] ) ) );?>" alt="profile picture" class="alignleft" width="39" height="39" /></a>
 											<div class="info">
 												<a href="/user/<?php echo $user['user_id'];?>" class="name"><?php echo $user['username'];?></a>
 												<span><?php echo $user['exp'];?> hours</span>

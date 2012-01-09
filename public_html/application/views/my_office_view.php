@@ -3,7 +3,7 @@
 	<link media="all" type="text/css" rel="stylesheet" href="/public/css/v4/myoffice/autocomplete.css" />
 	<link rel="stylesheet" type="text/css" href="/public/css/v4/myoffice/jquery.fancybox-1.3.4.css" media="screen" />
 	<link type="text/css" href="/public/css/v4/myoffice/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
-    <style>.tabset li {overflow: hidden;border-bottom: 1px solid #252525; background:none !important;}</style>
+    <style>.tabset li {overflow: hidden;border-bottom: 1px solid rgba(0, 0, 0, 0.4); background:none !important;}</style>
         <section style="padding-top:100px;" id="pitch">
         <div id="wrapper">
 			<div class="contents">
@@ -23,7 +23,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="#"><img src="/public/<?php echo $myProfile['avatar']? $myProfile['avatar']: "images/img7.png";?>" alt="profile picture" class="alignleft" width="104" height="100" /></a>
+					<a href="#"><img src="<?php echo ($myProfile['avatar'])? '/public/'.$myProfile['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $me['email'] ) ) );?>" alt="profile picture" class="alignleft" width="104" height="100" /></a>
 					<div class="main-info">
 						<h2><?php echo $me['username'];?></h2>
 						<span class="name"><?php echo $myProfile['full_name'];?></span>
@@ -223,7 +223,7 @@
 															<li>
 																<span class="number">#<?php echo $i+1;?></span>
 																<div class="image-holder">
-																	<a href="/user/<?php echo $leader['user_id'];?>"><img src="/public/<?php echo $leader['avatar']? $leader['avatar'] : 'images/img7.png';?>" alt="profile picture" class="alignleft" width="20" height="20" /></a>
+																	<a href="/user/<?php echo $leader['user_id'];?>"><img src="<?php echo ($leader['avatar'])? '/public/'.$leader['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $leader['email'] ) ) );?>" alt="profile picture" class="alignleft" width="20" height="20" /></a>
 																</div>
 																<div class="info">
 																	<a href="/user/<?php echo $leader['user_id'];?>" class="name"><?php echo $leader['username'];?></a>
@@ -241,7 +241,7 @@
 															<li>
 																<span class="number">#<?php echo $i+1;?></span>
 																<div class="image-holder">
-																	<a href="/user/<?php echo $leader['user_id'];?>"><img src="/public/<?php echo $leader['avatar']? $leader['avatar'] : 'images/img7.png';?>" alt="profile picture" class="alignleft" width="21" height="20" /></a>
+																	<a href="/user/<?php echo $leader['user_id'];?>"><img src="<?php echo ($leader['avatar'])? '/public/'.$leader['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $leader['email'] ) ) );?>" alt="profile picture" class="alignleft" width="21" height="20" /></a>
 																</div>
 																<div class="info">
 																	<a href="/user/<?php echo $leader['user_id'];?>" class="name"><?php echo $leader['username'];?></a>
@@ -277,7 +277,7 @@
 margin: 0 0 13px 10px;">collaborators</span></h3>
 														<ul>
                                                         	<?php if($collaborators)foreach($collaborators as $user):?>
-															<li><a href="/user/<?php echo $user['user_id'];?>"><img src="/public/<?php echo $user['avatar']? $user['avatar'] : 'images/img7.png';?>" alt="profile picture" width="40" height="39" /></a></li>
+															<li><a href="/user/<?php echo $user['user_id'];?>"><img src="<?php echo ($user['avatar'])? '/public/'.$user['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $user['email'] ) ) );?>" alt="profile picture" width="40" height="39" /></a></li>
                                                             <?php endforeach;?>
 														</ul>
 													</div>

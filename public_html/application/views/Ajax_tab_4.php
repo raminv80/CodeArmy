@@ -80,7 +80,7 @@
 								<td><?php echo $work_list_done[$i]['points'] ?></td>
 								<td>RM <?php echo $work_list_done[$i]['cost'] ?></td>
 							</tr>
-							<tr>
+							<tr class="toggle">
 								<td colspan="6" style="text-align:left; padding:10px 0 20px 20px; color: rgb(143, 145, 148);">
 									<p>
 										<?php echo $work_list_done[$i]['description'] ?>
@@ -122,7 +122,7 @@
 								<td><?php echo $work_list_signoff[$i]['points'] ?></td>
 								<td>RM <?php echo $work_list_signoff[$i]['cost'] ?></td>
 							</tr>
-							<tr>
+							<tr class="toggle">
 								<td colspan="6" style="text-align:left; padding:10px 0 20px 20px;color: rgb(143, 145, 148);">
 									<p>
 										<?php echo $work_list_signoff[$i]['description'] ?>
@@ -150,4 +150,6 @@
 		console.log(form);
 		form.submit();
 	});
+	$('.toggle').hide().prev().css({'cursor':'pointer'});
+	$('.toggle').prev().click(function(){$(this).next().toggle();});
 	</script>
