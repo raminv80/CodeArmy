@@ -546,6 +546,12 @@ class Stories_model extends CI_Model {
 			return $result;
 		}
 		
+		function reopen($id){
+			$query = "update works set status = 'Reject', done_at = NULL, assigned_at = NULL, work_horse = NULL where work_id = ?";
+			$result = $this->db->query($query, array($id));	
+			return $result;
+		}
+		
 		function get_user_email($work_id){
 			$query = "select users.user_id, email,username from works, users where works.work_horse = users.user_id and works.work_id = ?";
 			$result = $this->db->query($query, array($work_id));
