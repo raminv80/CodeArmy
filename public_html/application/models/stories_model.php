@@ -453,26 +453,45 @@ class Stories_model extends CI_Model {
 		return $result;	
 	}
         
-        function get_work_from_bid($id) {
-            $query = "SELECT work_id FROM bids WHERE bid_id = ?";
-            $result = $this->db->query($query, array($id));
-	    return $result;
-            
-        }
-        
-        function accept_bid($id , $work_id) {
-            $query = "UPDATE bids SET bid_status = 'Accepted' WHERE bid_id = ?";
-			$user_query = "SELECT user_id from bids where bid_id = ?";
-            $query2 = "UPDATE works SET status = 'In Progress', work_horse = ? WHERE work_id = ?";
-            $result = $this->db->query($query, array($id));
-			$user_data = $this->db->query($user_query,array($id));
-			$user = $user_data->result_array();
-			$user_id = $user[0]['user_id'];
-            $result2 = $this->db->query($query2, array($user_id,$work_id));
-	    return $result;
-        }
+	function get_work_from_bid($id) {
+		$query = "SELECT work_id FROM bids WHERE bid_id = ?";
+		$result = $this->db->query($query, array($id));
+	return $result;
 		
-		function get_my_works($user_id, $status){
+	}
+	
+	function today_bids($user_id){
+		$sql = "select count(*) as num from bids where user_id=? and DATE(careated_at) = ?";
+		$res = $this->db->query($sql, array($user_id, date('Y-m-d')));
+		$res = $res->result_array();
+		return $res[0]['num'];
+	}
+	
+	function remaining_bids($user_id){
+		$sql = "SELECT exp from users where user_id = ?";
+		$me = $this->db->query($sql, array($user_id));
+		$me = $me->result_array();
+		$me = $me[0];
+		$level = floor($me['exp'] / points_per_level)+1;$level = ($level>99) ? 99 : $level;
+		$total_bids = $this->today_bids($user_id);
+		if($level<10) return 10-$total_bids;
+		if($level>=10 && $level<25) return 15-$total_bids;
+		if($level>=25) return 20-$total_bids;
+	}
+	
+	function accept_bid($id , $work_id) {
+		$query = "UPDATE bids SET bid_status = 'Accepted' WHERE bid_id = ?";
+		$user_query = "SELECT user_id from bids where bid_id = ?";
+		$query2 = "UPDATE works SET status = 'In Progress', work_horse = ? WHERE work_id = ?";
+		$result = $this->db->query($query, array($id));
+		$user_data = $this->db->query($user_query,array($id));
+		$user = $user_data->result_array();
+		$user_id = $user[0]['user_id'];
+		$result2 = $this->db->query($query2, array($user_id,$work_id));
+	return $result;
+	}
+		
+	function get_my_works($user_id, $status){
 			if(strtolower($status) == 'in progress'){
 			$query = "SELECT * FROM works,project where project.project_id = works.project_id and works.work_horse = ? and lower(works.status) in ('in progress', 'redo')";
 			$result = $this->db->query($query, array($user_id));
@@ -484,7 +503,7 @@ class Stories_model extends CI_Model {
 			$result = $this->db->query($query, array($user_id,strtolower($status)));
 			}
 			return $result;
-		}
+	}
 		
 		function done($id,$path=""){
 			$git = $this->input->post('git');
@@ -556,6 +575,7 @@ class Stories_model extends CI_Model {
 		$work = $this->get_work($work_id);
 		$work = $work->result_array();
 		$work = $work[0];
+		$exp = 0;
 		 
 		switch($event){
 			case 'bid':

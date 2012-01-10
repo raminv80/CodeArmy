@@ -238,9 +238,9 @@ class Users_model extends CI_Model {
 	
 	function leaderboard_projects($limit=0){
 		if($limit>0){
-			$query = "select users.user_id, users.username, avatar, count(*) as num from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users, works where users.user_id = works.work_horse and lower(works.status) in ('verify', 'signoff') group by users.user_id, users.username, avatar order by num desc, users.exp desc limit 0,".$limit;	
+			$query = "select users.user_id, users.email, users.username, avatar, count(*) as num from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users, works where users.user_id = works.work_horse and lower(works.status) in ('verify', 'signoff') group by users.user_id, users.username, avatar order by num desc, users.exp desc limit 0,".$limit;	
 		}else{
-			$query = "select users.user_id, users.username, avatar, count(*) as num from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users, works where users.user_id = works.work_horse and lower(works.status) in ('verify', 'signoff') group by users.user_id, users.username, avatar order by num desc, users.exp desc";
+			$query = "select users.user_id, users.email, users.username, avatar, count(*) as num from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users, works where users.user_id = works.work_horse and lower(works.status) in ('verify', 'signoff') group by users.user_id, users.username, avatar order by num desc, users.exp desc";
 		}
 		$result = $this->db->query($query,array());
 		$data = $result->result_array();
@@ -249,9 +249,9 @@ class Users_model extends CI_Model {
 	
 	function leaderboard_points($limit=0){
 		if($limit>0){
-			$query = "select * from (select users.user_id, username, avatar, exp,hour_spent from users left join user_profiles on users.user_id = user_profiles.user_id) as t where exp>0 order by exp DESC, hour_spent desc limit 0,".$limit;
+			$query = "select * from (select users.user_id, users.email, username, avatar, exp,hour_spent from users left join user_profiles on users.user_id = user_profiles.user_id) as t where exp>0 order by exp DESC, hour_spent desc limit 0,".$limit;
 		}else{
-			$query = "select * from (select users.user_id, username, avatar, exp,hour_spent from users left join user_profiles on users.user_id = user_profiles.user_id) as t where exp>0 order by exp DESC, hour_spent desc";
+			$query = "select * from (select users.user_id,users.email, username, avatar, exp,hour_spent from users left join user_profiles on users.user_id = user_profiles.user_id) as t where exp>0 order by exp DESC, hour_spent desc";
 		}
 		$result = $this->db->query($query);
 		$data = $result->result_array();
@@ -260,9 +260,9 @@ class Users_model extends CI_Model {
 	
 	function leaderboard_time($limit=0){
 		if($limit>0){
-			$query = "select user_id, username, avatar, user.exp as xp, sum(hour(timediff(deadline, done_at))) as exp from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as user,works where works.work_horse = user.user_id and lower(works.status) in ('verify','signoff') group by user_id, username, avatar, user.exp having exp>0 order by exp desc, xp desc limit 0,".$limit;
+			$query = "select user_id, username,email, avatar, user.exp as xp, sum(hour(timediff(deadline, done_at))) as exp from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as user,works where works.work_horse = user.user_id and lower(works.status) in ('verify','signoff') group by user_id, username, avatar, user.exp having exp>0 order by exp desc, xp desc limit 0,".$limit;
 		}else{
-			$query = "select user_id, username, avatar, users.exp as xp, sum(hour(timediff(deadline, done_at))) as exp from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users,works where works.work_horse = users.user_id and lower(works.status) in ('verify','signoff') group by user_id, username, avatar, users.exp having exp>0 order by exp desc, xp desc";
+			$query = "select user_id, username, email, avatar, users.exp as xp, sum(hour(timediff(deadline, done_at))) as exp from (select users.*, avatar from users left join user_profiles on users.user_id = user_profiles.user_id) as users,works where works.work_horse = users.user_id and lower(works.status) in ('verify','signoff') group by user_id, username, avatar, users.exp having exp>0 order by exp desc, xp desc";
 		}
 		$result = $this->db->query($query);
 		$data = $result->result_array();
@@ -417,7 +417,7 @@ class Users_model extends CI_Model {
 				$to = $query[0]['email'];
 			}
 			
-			require(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
+			require_once(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
 
 			$mail = new PHPMailer();
 			
