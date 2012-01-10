@@ -71,6 +71,7 @@
 	
 	var dialogs = new Array();
 	var showDialog = new Array();
+	var target_found = false;
 	
 	function initDialogs(){
 		targetLights="";
@@ -82,7 +83,7 @@
 			dialog.hide();
 			target_class = dialog.attr('id');
 			target = $('.hint_'+target_class);
-			
+			if(target.length>0) target_found=true;
 			//build the list of highlights and excludes.
 			var hl = $(this).attr('highlight');
 			var he = $(this).attr('exclude');
@@ -141,7 +142,10 @@
 		});
 		targetLights = targetLights.slice(0, -1);
 		excludes = excludes.slice(0, -1);
-		if(targetLights!="")highlight(targetLights, excludes);
+		if(target_found && targetLights!=""){
+			highlight(targetLights, excludes);
+			console.log('asd'+targetLights+'asd')
+		}
 	}
 	
 	$(window).scroll(function(){ 
