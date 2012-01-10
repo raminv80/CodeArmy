@@ -32,8 +32,11 @@
 }
 
 .footer .add-nav li {
-	float:left; border-right:1px solid #fff;
-	padding:3px  17px 3px 18px; font-size:0.8em;
+	float: left;
+padding: 3px 17px 3px 18px;
+font-size: 0.8em;
+border-right: 1px solid rgba(255, 255, 255, 0.3);
+height: 18px;
 }
 
 .footer a {

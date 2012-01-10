@@ -30,13 +30,22 @@ form li {
 	margin-top: 40px;
 	clear: both;
 }
-	
+#title-hint {padding: 0 0 0 10px;
+color: #797979;
+font-size: 14px;
+font-style: italic;}
+#project-name {color: #E3E3E3;
+font-weight: lighter;}
+.new-story_field {padding: 10px 0 5px 0;}
 form label {
-	font-size: 10px;
-	font-weight: bold;
-	text-transform: uppercase;
-	display: block;
-	clear: both;
+	font-size: 15px;
+font-weight: bold;
+text-transform: uppercase;
+display: block;
+clear: both;
+font-family: DINRegular;
+color: white;
+padding: 5px 0 2px 0; 
 }
 
 form input {
@@ -984,10 +993,19 @@ fieldset#body {
 }
 
 #skill-table{
-	width:500px;
+	color:#fff;
+	width:660px;
 	padding-left:20px;
 }
+#skill-table td {padding:5px; border: 1px solid rgba(0, 0, 0, 0.3);
+vertical-align: middle;}
+#skill-table th {background: rgba(0, 0, 0, 0.3);padding:5px;border: 1px solid rgba(0, 0, 0, 0.3);}
+.skill-option label {font-weight: lighter;
+font-size: 13px;}
+.skill-option input[type="radio"] {margin: 0 5px 0 0;}
 
+#editstory-submit {cursor: pointer;background: url(/public/images/submitBttn123.png) !important;
+floaT: none !important;  border: 0; width: 135px !important; height: 40px !important; text-indent: -999px;}
 #new-category{
 	float:none;
 }
