@@ -108,17 +108,13 @@
         <div class="new-story_field">
         	<label>Bid Deadline</label>
             <span class="hint">The date that you expect to find a workhorse and get the work started by.</span><br />
-        	<?=$formdate_biddead->selectDay()?>    
-			<?=$formdate_biddead->selectMonth()?>    
-			<?=$formdate_biddead->selectYear()?>
+			<input type="text" name="bid_deadline" class="datepicker" value="<?php echo $story_data['bid_deadline']; ?>">
         </div>
         
         <div class="new-story_field">
         	<label>Deadline</label>
             <span class="hint">The date that delivery is expected</span><br />
-        	<?=$formdate_deadline->selectDay()?>    
-			<?=$formdate_deadline->selectMonth()?>    
-			<?=$formdate_deadline->selectYear()?>
+        	<input type="text" name="deadline" class="datepicker" value="<?php echo $story_data['deadline']; ?>">
         </div>        
         
 		<div class="new-story_field">
