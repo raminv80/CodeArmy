@@ -76,6 +76,9 @@
 <div style="display:none" id="story_dialog-confirm" title="Remove the Story?">
   <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'Selected Story will be deleted. Are you sure?'</p>
 </div>
+<div style="display:none" id="save_dialog-confirm" title="Save Sprints?">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'Sprints have been modified. Would you like to save the changes?'</p>
+</div>
 <input type="hidden" id="buffer" />
 <style type="text/css">
 .total-burndown {
@@ -300,12 +303,15 @@ left:4px;
 
 </style>
 <script type="text/javascript">
+var sprint_modified = false;
+
 $(init);
 function init(){
 	$('#product_backlog').sortable({cancel: '.empty_space', connectWith: '#scrum1', remove: function(){reclac_sprint_points();}});
 	$('#scrum1').sortable({connectWith:'#product_backlog', remove: function(){reclac_sprint_points();}});
 	$('input[name="startSprint1"]').datepicker({ dateFormat: 'yy-mm-dd',
 	'onSelect': function(date,ins){
+			sprint_modified = true;
 			s = new Date(date.substr(0,4),date.substr(5,2) - 1,date.substr(8,2));
 			$('.day_date',$(this).parent().parent().parent()).first().html($.datepicker.formatDate('dd', s));
 			$('.monthyear_date',$(this).parent().parent().parent()).first().html($.datepicker.formatDate('M yy', s));
@@ -313,6 +319,7 @@ function init(){
 	});
 	$('input[name="endSprint1"]').datepicker({ dateFormat: 'yy-mm-dd', 
 	'onSelect': function(date,ins){
+			sprint_modified = true;
 			s = new Date(date.substr(0,4),date.substr(5,2) - 1,date.substr(8,2));
 			$('.day_date',$(this).parent().parent().parent()).last().html($.datepicker.formatDate('dd', s));
 			$('.monthyear_date',$(this).parent().parent().parent()).last().html($.datepicker.formatDate('M yy', s));
@@ -322,6 +329,7 @@ function init(){
 	$('.dateend').click(function(){$('input[name="endSprint1"]').datepicker('show')});
 	populate(works);
 	<?php if($enable_sprint_locks){?>lockSprint(<?=$curSprint?>);<?php }?>
+	$('a[href*="/"]').click(function(){return ask_save($(this).attr('href'));});
 }
 
 function percentage(start,end){
@@ -384,13 +392,40 @@ function save_list(){
 				}
 				console.log('sprint '+msg+' successfuly saved.');
 			}
-			if(jQuery.data(document.body, 'save_request')==0)alert('Your project is saved successfully.');
+			if(jQuery.data(document.body, 'save_request')==0){
+				alert('Your project is saved successfully.');
+				sprint_modified = false;
+			}
 		});
 	});
 }
 
+function ask_save(href){
+	if(sprint_modified){
+		$( "#save_dialog-confirm:ui-dialog" ).dialog( "destroy" );
+		$( "#save_dialog-confirm" ).dialog({
+			resizable: false,
+			height:240,
+			width:470,
+			modal: true,
+			buttons: {
+				"SAVE": function() {
+					$( this ).dialog( "close" );
+					save_list();
+					window.location.href=href;
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+					window.location.href=href;
+				}
+			}
+		});
+	}
+	return !sprint_modified;
+}
+
 function deleteUserStory(work_id){
-	$( "#story_dialog:ui-dialog" ).dialog( "destroy" );
+	$( "#story_dialog-confirm:ui-dialog" ).dialog( "destroy" );
 	$( "#story_dialog-confirm" ).dialog({
 		resizable: false,
 		height:240,
@@ -545,6 +580,7 @@ $('.add_sprint').click(function(){
 		tmpCurSprint = $('#scrum'+num_sprints).parent();
 		$('input[name="startSprint'+num_sprints+'"]', tmpCurSprint).datepicker({ dateFormat: 'yy-mm-dd',
 		'onSelect': function(date,ins){
+				sprint_modified = true;
 				s = new Date(date.substr(0,4),date.substr(5,2) - 1,date.substr(8,2));
 				$('.day_date',$(this).parent().parent().parent()).first().html($.datepicker.formatDate('dd', s));
 				$('.monthyear_date',$(this).parent().parent().parent()).first().html($.datepicker.formatDate('M yy', s));
@@ -552,6 +588,7 @@ $('.add_sprint').click(function(){
 		});
 		$('input[name="endSprint'+num_sprints+'"]', tmpCurSprint).datepicker({ dateFormat: 'yy-mm-dd', 
 		'onSelect': function(date,ins){
+				sprint_modified = true;
 				s = new Date(date.substr(0,4),date.substr(5,2) - 1,date.substr(8,2));
 				$('.day_date',$(this).parent().parent().parent()).last().html($.datepicker.formatDate('dd', s));
 				$('.monthyear_date',$(this).parent().parent().parent()).last().html($.datepicker.formatDate('M yy', s));
@@ -602,6 +639,7 @@ $('#product_backlog').on('click','.short_story',function(){
 $('#product_backlog').on('click','.new_story',function(){$('input',this).focus();});
 
 function reclac_sprint_points(){
+	sprint_modified = true;
 	$('.story_list').each(function(){
 		var sum=0; 
 		$('.user_story',$(this)).each(function(){sum += Math.round($(this).data('point'));});
