@@ -29,4 +29,9 @@ class Help extends CI_Controller {
 		$this->view_data['window_title'] = 'Help';
 		$this->load->view('help_view', $this->view_data);
 	}
+	
+	function github(){
+		$this->view_data['window_title'] = 'How to use Github?';
+		$this->load->view('help_github_view', $this->view_data);
+	}
 }

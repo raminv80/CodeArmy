@@ -1,7 +1,7 @@
 <?php $this->load->view('includes/header4'); ?>
 <section id="pitch"><br />
   <div class="WP-main" style="overflow:visible;">
-    <div class="WP-qualification-placeholder story-details">
+    <div class="WP-qualification-placeholder">
       <div id="qualif-heading"><span id="title"><a class="dialog_opt2" href="/project/<?php echo $work_data['project_id'];?>"><?php echo strtoupper($work_data['project_name'])?></a></span>
         <div style="padding:9px 20px 0 0;"><span id="position">PRODUCT OWNER</span><br />
           <span id="owner"><?php echo strtoupper($work_data['username']); ?></span></div>

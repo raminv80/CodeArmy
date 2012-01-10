@@ -51,6 +51,9 @@
                                 </div>
                             <?php echo form_close(); ?>
                         </li>
+                        <?php if($project_owner){?>
+                        <li><a href="/story/reopen/<?=$work['work_id']?>" onclick="return confirm('Do you really want to revoke the work from current workhorse and set the story to open for bidding again?')">Revoke!</a></li>
+                        <?php }?>
                     <?php }?>
                 </ul>
             </li>
