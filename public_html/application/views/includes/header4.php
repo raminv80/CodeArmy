@@ -112,6 +112,14 @@
 		   },function(){
 		   		$(this).animate({marginRight: "-10px"},200);
 		   });
+		   
+			//Date picker
+			$(".datepicker").each(function() {
+				val = $(this).val().substring(0,10);
+				$(this).datepicker()
+					   .datepicker("option", "dateFormat", "yy-mm-dd")
+					   .datepicker("setDate" , val );
+			});
  		});
     </script> 
     </div>

@@ -148,8 +148,10 @@ class Stories_model extends CI_Model {
 			"project_id" => $this->input->post('project'), // temporary...
 			"created_at" => date('Y-m-d H:i:s'),
 			"tutorial" => $this->input->post('tutorial'),
-			"deadline" => $this->input->post('deadline_year').'-'.$this->input->post('deadline_month').'-'.$this->input->post('deadline_day'),
-			"bid_deadline" => $this->input->post('biddead_year').'-'.$this->input->post('biddead_month').'-'.$this->input->post('biddead_day')
+//			"deadline" => $this->input->post('deadline_year').'-'.$this->input->post('deadline_month').'-'.$this->input->post('deadline_day'),
+//			"bid_deadline" => $this->input->post('biddead_year').'-'.$this->input->post('biddead_month').'-'.$this->input->post('biddead_day')
+			"deadline" => $this->input->post('deadline'),
+			"bid_deadline" => $this->input->post('bid_deadline')
 		); 
 		
 		if($this->db->insert('works', $doc)) {
@@ -217,8 +219,10 @@ class Stories_model extends CI_Model {
 			"cost" => $this->input->post('cost'),
 			"project_id" => $this->input->post('project_id'), 
 			"tutorial" => $this->input->post('tutorial'),
-			"deadline" => $this->input->post('deadline_year').'-'.$this->input->post('deadline_month').'-'.$this->input->post('deadline_day'),
-			"bid_deadline" => $this->input->post('biddead_year').'-'.$this->input->post('biddead_month').'-'.$this->input->post('biddead_day')
+//			"deadline" => $this->input->post('deadline_year').'-'.$this->input->post('deadline_month').'-'.$this->input->post('deadline_day'),
+//			"bid_deadline" => $this->input->post('biddead_year').'-'.$this->input->post('biddead_month').'-'.$this->input->post('biddead_day')
+			"deadline" => $this->input->post('deadline'),
+			"bid_deadline" => $this->input->post('bid_deadline')
 		); 
 		if(strtolower($this->input->post('status'))=='draft')$doc['status'] = 'open';
 		
