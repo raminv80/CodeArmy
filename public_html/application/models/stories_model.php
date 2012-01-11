@@ -546,9 +546,11 @@ class Stories_model extends CI_Model {
 			return $result;
 		}
 		
-		function reopen($id){
+		function reopen($id, $user_id){
 			$query = "update works set status = 'Reject', done_at = NULL, assigned_at = NULL, work_horse = NULL where work_id = ?";
 			$result = $this->db->query($query, array($id));	
+			$query = "delete from bids where work_id = ? and user_id=?";
+			$result = $this->db->query($query, array($id, $user_id));
 			return $result;
 		}
 		

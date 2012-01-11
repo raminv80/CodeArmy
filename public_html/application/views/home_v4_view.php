@@ -86,6 +86,7 @@
       <h1>How it works</h1>
       <img src="/public/images/howitworks.png"></div>
   </div>
+  <div class="push"></div>
 </section>
 <section style="padding-top:20px;" id="user-stories" class="user-stories">
   <div class="WP-main">
@@ -225,6 +226,7 @@
     <br />
     &nbsp; </div>
   </div>
+  <div class="push"></div>
 </section>
 <section style="padding-top:20px;" id="addnewPrj">
   <div class="WP-main"><br />
@@ -280,6 +282,7 @@
     <br />
     &nbsp; </div>
   </div>
+  <div class="push"></div>
 </section>
 
 <!-- login -->
@@ -383,11 +386,13 @@
 		   $("#regbtn").colorbox({inline:true, fixed:true, opacity:0.7});
 		   $("#loginbtn").colorbox({inline:true, fixed:true, opacity:0.7});
 		   $(".close").click(function(){
-				$.colorbox.close()
+				$.colorbox.close();
 			});
 		   $("#logintoreg").colorbox({inline:true, fixed:true, opacity:0.7});
 		   
 		   $("#feedbackbtn").colorbox({inline:true, fixed:true, opacity:0.7});
+		   Autopush();
+		   $(window).resize(function(){Autopush();});
  		});
 	
 	function checkTerms(){
@@ -466,6 +471,17 @@
 		managePagination(currentPage);
 		if(currentPage<0)currentPage=lastPage;
 		$('#page'+currentPage).slideDown();
+	}
+	
+	function Autopush(){
+		$('section div.push').each(function(){
+			h = $(window).height() - $(this).parent().height()-170-105;
+			if(h>0) $(this).height(h);
+		});
+	}
+	
+	function Cancelpush(){
+		$('section div.push').each(function(){$(this).height(0);});
 	}
 </script>
 <?php $this->load->view('includes/footer4'); ?>

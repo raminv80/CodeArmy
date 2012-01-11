@@ -13,7 +13,17 @@ class Home extends CI_Controller {
 		
 		$this->view_data['page_is'] = 'Home';
 		$this->view_data['action_is'] = $this->uri->segment(2);
-		
+		$user_id = $this->session->userdata('user_id');
+		if($user_id){
+			$myProfile = $this->users_model->get_profile($user_id);
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$me = $this->users_model->get_user($user_id);
+			$me = $me->result_array();
+			$me = $me[0];
+			$this->view_data['myProfile'] = $myProfile;
+			$this->view_data['me'] = $me;
+		}
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
 		if($check_login == true) {
@@ -27,9 +37,9 @@ class Home extends CI_Controller {
 		$this->load->helper('stories_helper');
 		$this->load->helper('user_helper');
 		$user_id = $this->session->userdata('user_id');
-        $project_sel = $this->session->userdata('project_sel'); if($project_sel==NULL) $project_sel = '';
-		$category_sel = $this->session->userdata('category_sel'); if($category_sel==NULL) $category_sel = '';
-		$story_sel = $this->session->userdata('story_sel'); if($story_sel==NULL) $story_sel = '';
+        //$project_sel = $this->session->userdata('project_sel'); if($project_sel==NULL) $project_sel = '';
+		//$category_sel = $this->session->userdata('category_sel'); if($category_sel==NULL) $category_sel = '';
+		//$story_sel = $this->session->userdata('story_sel'); if($story_sel==NULL) $story_sel = '';
 		
 		/*
 		//used in ver 3
@@ -54,16 +64,6 @@ class Home extends CI_Controller {
 		$this->view_data['heavyweight'] = $this->stories->heavyweight();
 		$this->view_data['num_page']=6;
 		$user_id = $this->session->userdata('user_id');
-		if($user_id){
-			$myProfile = $this->users_model->get_profile($user_id);
-			$myProfile = $myProfile->result_array();
-			$myProfile = $myProfile[0];
-			$me = $this->users_model->get_user($user_id);
-			$me = $me->result_array();
-			$me = $me[0];
-			$this->view_data['myProfile'] = $myProfile;
-			$this->view_data['me'] = $me;
-		}
 		if($this->input->post('action')=='contact'){
 			$this->load->library('form_validation');
 			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
