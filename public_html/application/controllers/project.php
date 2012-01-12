@@ -271,7 +271,7 @@ class Project extends CI_Controller {
 		$chart = $this->projects_model->get_chart($id, $sprint_sel);
 		$this->view_data['chart'] = $chart;
 		$this->view_data['sprint_points'] = $this->projects_model->get_sprint_points($id,$sprint_sel);
-		
+		$this->view_data['resource_chart'] = $this->projects_model->get_resource_chart($id,$sprint_sel);
 		$this->view_data['window_title'] = 'Workpad :: Burndown Chart';
 		$this->load->view('burndown_view', $this->view_data);
 	}

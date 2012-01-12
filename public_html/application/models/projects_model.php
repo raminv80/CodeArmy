@@ -297,4 +297,11 @@ class Projects_model extends CI_Model {
 		$res = $res->result_array();
 		return $res[0]['points'];
 	}
+	
+	function get_resource_chart($project_id,$sprint_id){
+		$sql = "SELECT sum(works.points) as points, users.username FROM works, users WHERE users.user_id=works.work_horse AND works.sprint = ? AND works.project_id = ? AND lower(works.status) in ('verify','signoff') GROUP BY users.username";
+		$res = $this->db->query($sql, array($sprint_id,$project_id));
+		$res = $res->result_array();
+		return $res;
+	}
 }
