@@ -44,23 +44,23 @@ class Projects_model extends CI_Model {
 	}
 	
 	function get_worklist_state($project_id, $cur_sprint=-1) {
-		$query = "SELECT * FROM works WHERE project_id = ? AND sprint=? AND lower(status) in ('open','reject') ORDER BY priority DESC";
+		$query = "SELECT * FROM works WHERE project_id = ? AND sprint=? AND lower(status) in ('open','reject') ORDER BY priority ASC";
 		$result = $this->db->query($query, array($project_id, $cur_sprint));
 		$res = array();
 		$res['open'] = $result->result_array();
-		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint=? AND lower(status) in ('in progress','redo') AND users.user_id=works.work_horse ORDER BY priority DESC";
+		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint=? AND lower(status) in ('in progress','redo') AND users.user_id=works.work_horse ORDER BY priority ASC";
 		$result = $this->db->query($query, array($project_id, $cur_sprint));
 		$res['progress'] = $result->result_array();
-		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint=? AND lower(status) in ('done') AND users.user_id=works.work_horse ORDER BY priority DESC";
+		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint=? AND lower(status) in ('done') AND users.user_id=works.work_horse ORDER BY priority ASC";
 		//$query = "SELECT * FROM works WHERE project_id = ? AND lower(status) in ('done') ORDER BY priority DESC";
 		$result = $this->db->query($query, array($project_id, $cur_sprint));
 		$res['done'] = $result->result_array();
 		//$query = "SELECT * FROM works WHERE project_id = ? AND lower(status) in ('verify') ORDER BY priority DESC";
-		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint = ? AND lower(status) in ('verify') AND users.user_id=works.work_horse ORDER BY priority DESC";
+		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint = ? AND lower(status) in ('verify') AND users.user_id=works.work_horse ORDER BY priority ASC";
 		$result = $this->db->query($query, array($project_id, $cur_sprint));
 		$res['verify'] = $result->result_array();
 		//$query = "SELECT * FROM works WHERE project_id = ? AND lower(status) in ('signoff') ORDER BY priority DESC";
-		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint = ? AND lower(status) in ('signoff') AND users.user_id=works.work_horse ORDER BY priority DESC";
+		$query = "SELECT works.*, users.user_id as champion_id, users.username as champion FROM works, users WHERE project_id = ? AND works.sprint = ? AND lower(status) in ('signoff') AND users.user_id=works.work_horse ORDER BY priority ASC";
 		$result = $this->db->query($query, array($project_id, $cur_sprint));
 		$res['signoff'] = $result->result_array();
 		return $res;

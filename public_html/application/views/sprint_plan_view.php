@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="scrum_column">
-          <h2 class="sprint-title">Sprint 1</h2>
+          <h2 class="sprint-title">Sprint 1 <a style="height:10px;float: Right;position:relative;top:-16px;left:4px;" class="minimize" href="javascript:void(0)"><img height="10px" width="10px" border="0" src="/public/images/icon-minimize.png" /></a></a></h2>
           <ul class="timeline">
             <li><b>Strt:</b>
               <input name="startSprint1" class="start" />
@@ -87,15 +87,13 @@
 	text-align: center;
 	margin-top: 10px;
 }
-#remove {
-opacity:0.9;
-float: Right;
-position:relative;
-top:-16px;
-left:4px;
+.action-icons{
+	float: Right;
+	width: 10px;
+	font-size:8px;
 }
-#remove:hover {opacity:1;}
-	
+.action-icons img{margin:2px 2px;}
+
 	.locked{background:#2d2d2d; font-family:"DINRegular";}
 	ul.options{margin:3px 0 0 -40px; float: left; padding-top:4px;display:none;width:280px; border-top:1px ridge #414a4e;}
 	.sprint-title{
@@ -300,7 +298,7 @@ left:4px;
 	.Done {background:url(/public/images/planner-badges.png) -180px;; width:36px; height:50px;float: right;margin: -5px 1px -5px 0;}
 	.open {background:url(/public/images/planner-badges.png) -216px; width:36px; height:50px;float: right;margin: -5px 1px -5px 0;}
 	.Progress{background:url(/public/images/planner-badges.png) -251px; width:36px; height:50px;float: right;margin: -5px 1px -5px 0;}
-
+	.minimized{width:10px !important;}
 </style>
 <script type="text/javascript">
 var sprint_modified = false;
@@ -360,7 +358,7 @@ $('.story_list').on('mouseleave','.user_story',function(){
 	});
 	
 function save_list(){
-	jQuery.data(document.body, 'save_request', 0);
+	$.ajaxSetup({async:false});
 	$('.story_list').each(function(){
 		if($(this).data('sprint_id')!==undefined){
 			//save the order into an existing sprint id
@@ -378,13 +376,11 @@ function save_list(){
 		console.log('process sprint '+sprint_id);
 		console.log('sprint is from '+date_from+' to '+date_to);
 		data = JSON.stringify($(this).sortable('toArray'));
-		jQuery.data(document.body, 'save_request', jQuery.data(document.body, 'save_request')+1);
 		$.post(
 		'/project/AjaxSavePriority',
 		{ 'data': data, 'date_from': date_from, 'date_to': date_to, 'sprint_id': sprint_id, 'project_id': <?=$project_sel?>, 'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>' },
 		function(msg){
 			console.log('process done.');
-			jQuery.data(document.body, 'save_request', jQuery.data(document.body, 'save_request')-1);
 			if(msg!='0'){
 				//TODO
 				if($(this).data('sprint_id')===undefined){
@@ -392,12 +388,11 @@ function save_list(){
 				}
 				console.log('sprint '+msg+' successfuly saved.');
 			}
-			if(jQuery.data(document.body, 'save_request')==0){
-				alert('Your project is saved successfully.');
-				sprint_modified = false;
-			}
 		});
 	});
+	alert('Your project is saved successfully.');
+	sprint_modified = false;
+	$.ajaxSetup({async:true});
 }
 
 function ask_save(href){
@@ -576,7 +571,28 @@ $('.add_sprint').click(function(){
 		num_sprints++;
 		obj = $('#sprint_planner');
 		obj.width(obj.width()+460);
-		$(this).before('<div class="scrum_column"><h2 class="sprint-title">Sprint '+num_sprints+' <a id="remove" href="javascript:  remove_sprint('+num_sprints+')"><img height="10px" width="10px" src="/public/images/icon_delete.png" border="0" /></a></h2><ul class="timeline"><li><b>Strt:</b> <input name="startSprint'+num_sprints+'" class="start" /></li><li><b>End:</b> <input name="endSprint'+num_sprints+'" class="end" /></li></ul><div style="clear:both"></div><div class="timeline-holder"><div class="datestart"><p class="day_date">S</p><p class="monthyear_date">tart Date</p></div><div class="timeline-path"><div class="mark" style="margin-left:15px;"></div><span class="total-burndown"></span></div><div class="dateend"><p class="day_date">E</p><p class="monthyear_date">nd Date</p></div></div><div style=" clear:both"><ul class="sprint-info"></div><div id="scrum'+num_sprints+'" class="story_list"></div></div>');
+		//find the highest height
+		var max_height=0;
+		$('.story_list').each(function(){if($(this).height()>max_height)max_height = $(this).height();})
+		//adjust their height to max
+		$('.story_list').css({'min-height': max_height+'px'});
+		$(this).before('<div class="scrum_column"><h2 class="sprint-title">Sprint '+num_sprints+' <div class="action-icons"><a class="minimize" href="javascript:void(0)"><img height="10px" width="10px" border="0" src="/public/images/icon-minimize.png" /></a><a class="remove" href="javascript:  remove_sprint('+num_sprints+')"><img height="10px" width="10px" src="/public/images/icon_delete.png" border="0" /></a></div></h2><ul class="timeline"><li><b>Strt:</b> <input name="startSprint'+num_sprints+'" class="start" /></li><li><b>End:</b> <input name="endSprint'+num_sprints+'" class="end" /></li></ul><div style="clear:both"></div><div class="timeline-holder"><div class="datestart"><p class="day_date">S</p><p class="monthyear_date">tart Date</p></div><div class="timeline-path"><div class="mark" style="margin-left:15px;"></div><span class="total-burndown"></span></div><div class="dateend"><p class="day_date">E</p><p class="monthyear_date">nd Date</p></div></div><div style=" clear:both"><ul class="sprint-info"></div><div id="scrum'+num_sprints+'" class="story_list" style="min-height: '+max_height+'px"></div></div>');
+		$('.minimize').unbind('click');
+		$('.minimize').click(function(){
+				column = $(this).parents('.scrum_column');
+				column.addClass('minimized').find('*').hide();
+				column.append('<div style="height:'+max_height+'px;" class="maximize"></div>');
+			});
+		$('.scrum_column').off('click','.maximize');
+		$('.scrum_column').on('click','.maximize',function(){
+			console.log($(this));
+			column = $(this).parent();
+			if(column.hasClass('minimized')){
+				column.remove('.maximize');
+				column.removeClass('minimized').find('*').show();
+				$(this).remove();
+			}
+		});
 		tmpCurSprint = $('#scrum'+num_sprints).parent();
 		$('input[name="startSprint'+num_sprints+'"]', tmpCurSprint).datepicker({ dateFormat: 'yy-mm-dd',
 		'onSelect': function(date,ins){
@@ -619,7 +635,7 @@ $('.add_sprint').click(function(){
 				$('.options',this).slideUp();
 			});
 	});
-
+		
 $('#product_backlog').on('click','.empty_space',function(){
 		num_edits++;
 		$(this).after('<li class="new_story"><input id="edit'+num_edits+'" type="text"></li>');
@@ -690,6 +706,6 @@ $('#product_backlog').on('keypress','.new_story',event,function(){
 					$(this).remove();
 				}
 	});
-	
-</script>
+
+	</script>
 <?php $this->load->view('includes/footer4'); ?>
