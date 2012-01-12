@@ -2,7 +2,7 @@
 <?php
 			$open = 0; $in_progress = 0; $done = 0; $verify=0; $sign_off=0;
 			foreach($point_state as $data):
-				switch(lower($data['status'])):
+				switch(strtolower($data['status'])):
 					case 'open': $open+=$data['points'];
 					break;
 					case 'in progress': $in_progress+=$data['points'];
