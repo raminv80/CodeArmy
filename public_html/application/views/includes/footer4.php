@@ -14,7 +14,7 @@
 <div class="WP-bottom-nav">
   <div class="WP-nav-placeholder-browsejob" style="width: 675px;">
     <div id="WP-nav-content" style="border-right: 3px;border-left:3px;padding-left:13px;;">
-      <div id="mydesk"><a href="javascript: show_tab('tab_4');"></a></div>
+      <div id="myoffice"><a href="/myoffice"></a></div>
     </div>
     <div id="WP-nav-content" style="border-left:0; border-right: 3px;">
       <div id="project-mgmt"><a href="/project/management"></a></div>
