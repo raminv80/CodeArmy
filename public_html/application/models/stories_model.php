@@ -658,11 +658,6 @@ class Stories_model extends CI_Model {
 							'point' => $dt['point']
 						);
 						$this->db->insert('skill_set', $d);
-						$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/badge02.png" /></div>
-                <div class="right-column">
-                	<h3>Congradulations!</h3>
-                    <p>You won 10PACKS badge for successfully completing 10 jobs.</p>
-                </div>');
 					}
 				endforeach;
 				
@@ -696,13 +691,18 @@ class Stories_model extends CI_Model {
 				$sql = "select id from achievement_set where user_id=? and achievement_id = 2";
 				$res = $this->db->query($sql, array($user_id));
 				$has_badge = $res->num_rows();
-				if($has_badge==0 && $jobs>=10){
+				if($has_badge==0 && $jobs==10){
 					$doc = array(
 						'user_id' => $user_id,
 						'achievement_id' => 2,
 						'created_at' => date('Y-m-d H:i:s')
 					);
 					$this->db->insert('achievement_set',$doc);
+					$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/badge02.png" /></div>
+					<div class="right-column">
+						<h3>Congradulations!</h3>
+						<p>You won 10PACKS badge for successfully completing 10 jobs.</p>
+					</div>');
 				}
 				///end of 10 packs badge
 				
