@@ -169,7 +169,8 @@ class Project extends CI_Controller {
 					$cur_sprint = $cur_sprint[0]['id'];
 				}else $cur_sprint = -1;
 			}
-			$this->view_data['works_state'] = $this->projects_model->get_worklist_state($id, $cur_sprint);	
+			$this->view_data['works_state'] = $this->projects_model->get_worklist_state($id, $cur_sprint);
+			$this->view_data['point_state'] = $this->projects_model->get_work_points_state($id, $cur_sprint);
 		}
 		$this->view_data['sprint_sel'] = $cur_sprint;
 		$this->view_data['sprints'] = $this->projects_model->get_sprints($id);

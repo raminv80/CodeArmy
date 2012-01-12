@@ -66,6 +66,12 @@ class Projects_model extends CI_Model {
 		return $res;
 	}
 	
+	function get_work_points_state($project_id, $cur_sprint=-1) {
+		$query = "SELECT sum(points) as points, status FROM works WHERE project_id = ? AND sprint=? GROUP BY status";
+		$result = $this->db->query($query, array($project_id, $cur_sprint));
+		return $result->result_array();
+	}
+	
 	function get_worklist_sprint($project_id){
 		$res = array();
 		$query = "SELECT id, start, end, sum(works.points) as point from sprints, works where works.sprint=sprints.id and sprints.project_id=? group by sprints.id, sprints.start, sprints.end";

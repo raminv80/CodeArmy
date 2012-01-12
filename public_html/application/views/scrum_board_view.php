@@ -1,4 +1,25 @@
 <?php $this->load->view('includes/header4'); ?>
+<?php
+			$open = 0; $in_progress = 0; $done = 0; $verify=0; $sign_off=0;
+			foreach($point_state as $data):
+				switch(lower($data['status'])):
+					case 'open': $open+=$data['points'];
+					break;
+					case 'in progress': $in_progress+=$data['points'];
+					break;
+					case 'done': $done+=$data['points'];
+					break;
+					case 'redo': $in_progress+=$data['points'];
+					break;
+					case 'verify': $verify+=$data['points'];
+					break;
+					case 'signoff': $sign_off+=$data['points'];
+					break;
+					case 'reject': $open+=$data['points'];
+					break;
+				endswitch;
+			endforeach;
+?>
 <div id="wrapper" style="padding:100px 10px 200px 10px; ">
 
   <div class="contents"> 
@@ -21,7 +42,7 @@
     <div id="board_holder" class="scrum_holder">
       <div id="scrum_board">
         <div class="scrum_column"><div class="header-scrum">
-          <h2>Product Backlog</h2></div>
+          <h2>Backlog (<?=$open?>pt)</h2></div>
           <ul id="product_backlog_sprint_1" class="story_list">
           	<?php if(isset($works_state))foreach($works_state['open'] as $work):?>
           	<li class="user_story ui-state-default"><span class="title_story"><?=$work['title']?></span> <br><?= (($i=strpos($work['description'],'</p>'))>0)? strip_tags(substr($work['description'],0,$i)) : strip_tags($work['description']);?>
@@ -32,8 +53,9 @@
             <?php endforeach;?>
           </ul>
         </div>
+        
         <div class="scrum_column">
-          <div class="header-scrum"><h2>In Progress</h2></div>
+          <div class="header-scrum"><h2>In Progress (<?=$in_progress?>pt)</h2></div>
           <ul id="scrum1_progress" class="story_list">
           <?php if(isset($works_state))foreach($works_state['progress'] as $work):?>
           	<li class="user_story ui-state-default <?php if($user_id==$work['champion_id']){?>my-work<?php }?>"><span class="title_story"><?=$work['title']?></span><br><?= (($i=strpos($work['description'],'</p>'))>0)? strip_tags(substr($work['description'],0,$i)) : strip_tags($work['description']);?>
@@ -51,9 +73,9 @@
                                 </div>
                             <?php echo form_close(); ?>
                         </li>
-                        <?php if($project_owner){?>
-                        <li><a href="/story/reopen/<?=$work['work_id']?>" onclick="return confirm('Do you really want to revoke the work from current workhorse and set the story to open for bidding again?')">Revoke!</a></li>
-                        <?php }?>
+                    <?php }?>
+                    <?php if($project_owner){?>
+	                    <li><a href="/story/reopen/<?=$work['work_id']?>" onclick="return confirm('Do you really want to revoke the work from current workhorse and set the story to open for bidding again?')">Revoke!</a></li>
                     <?php }?>
                 </ul>
             </li>
@@ -61,7 +83,7 @@
           </ul>
         </div>
         <div class="scrum_column">
-         <div class="header-scrum"> <h2>Done</h2></div>
+         <div class="header-scrum"> <h2>Done (<?=$done?>pt)</h2></div>
           <ul id="scrum1_done" class="story_list">
           <?php if(isset($works_state))foreach($works_state['done'] as $work):?>
           	<li class="user_story ui-state-default <?php if($user_id==$work['champion_id']){?>my-work<?php }?>"><span class="title_story"><?=$work['title']?></span><br><?= (($i=strpos($work['description'],'</p>'))>0)? strip_tags(substr($work['description'],0,$i)) : strip_tags($work['description']);?>
@@ -78,7 +100,7 @@
           </ul>
         </div>
         <div class="scrum_column">
-          <div class="header-scrum"><h2>Verified</h2></div>
+          <div class="header-scrum"><h2>Verified (<?=$verify?>pt)</h2></div>
           <ul id="scrum1_verify" class="story_list">
           <?php if(isset($works_state))foreach($works_state['verify'] as $work):?>
           	<li class="user_story ui-state-default <?php if($user_id==$work['champion_id']){?>my-work<?php }?>"><span class="title_story"><?=$work['title']?></span> <br><?= (($i=strpos($work['description'],'</p>'))>0)? strip_tags(substr($work['description'],0,$i)) : strip_tags($work['description']);?>
@@ -96,7 +118,7 @@
           </ul>
         </div>
         <div class="scrum_column">
-          <div class="header-scrum"><h2>Signed off</h2></div>
+          <div class="header-scrum"><h2>Signed off (<?=$sign_off?>pt)</h2></div>
           <ul id="scrum1_signoff" class="story_list">
           <?php if(isset($works_state))foreach($works_state['signoff'] as $work):?>
           	<li class="user_story ui-state-default <?php if($user_id==$work['champion_id']){?>my-work<?php }?>"><span class="title_story"><?=$work['title']?></span><br><?= (($i=strpos($work['description'],'</p>'))>0)? strip_tags(substr($work['description'],0,$i)) : strip_tags($work['description']);?>
