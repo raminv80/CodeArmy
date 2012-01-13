@@ -74,7 +74,7 @@ class Projects_model extends CI_Model {
 	
 	function get_worklist_sprint($project_id){
 		$res = array();
-		$query = "SELECT id, start, end, sum(works.points) as point from sprints, works where works.sprint=sprints.id and sprints.project_id=? group by sprints.id, sprints.start, sprints.end";
+		$query = "SELECT id, sprint.project_id, start, end, ifnull(sum(works.points),0) as point from (select * from sprints where project_id=?) as sprint left join works on works.sprint=sprint.id  group by sprint.id, sprint.start, sprint.end";
 		$result = $this->db->query($query, array($project_id));
 		$sprints = $result->result_array();
 		$sprints['general']['id'] = 0;

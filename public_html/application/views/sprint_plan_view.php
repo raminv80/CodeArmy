@@ -585,11 +585,10 @@ $('.add_sprint').click(function(){
 			});
 		$('.scrum_column').off('click','.maximize');
 		$('.scrum_column').on('click','.maximize',function(){
-			console.log($(this));
 			column = $(this).parent();
 			if(column.hasClass('minimized')){
 				column.remove('.maximize');
-				column.removeClass('minimized').find('*').show();
+				column.removeClass('minimized').find('*:not(.options,.mark)').show();
 				$(this).remove();
 			}
 		});
