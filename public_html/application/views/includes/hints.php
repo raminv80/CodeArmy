@@ -13,7 +13,7 @@ $res = $res->result_array(); $tutorial = $res[0]['show_tutorial'];
 //if($this->session->userdata('tutorial')>0) 
 //--enable previous line if you want the close dialog button hide next dialogs too
 if($this->session->userdata('user_id') && floor($me['exp'] / points_per_level)<100){?>
-	<?php if($tutorial==1){ //bidding tutorial?>
+	<?php if($tutorial==1 || $this->session->flashdata('bidding_tutorial')){ //bidding tutorial?>
     <!-- homepage -->
     <div id="dev_step1" class="hint" exclude="user-stories">
       <div>
@@ -88,7 +88,7 @@ if($this->session->userdata('user_id') && floor($me['exp'] / points_per_level)<1
     
     <div id="dev_step7" class="hint">
       <div>
-        <div class="left-column"><img height="40px" src="/public/images/step4.jpg" /></div>
+        <div class="left-column"><img height="40px" src="/public/images/4.png" /></div>
         <div class="right-column">
           <h3>Submit!</h3>
           Add a link to github commit or upload files (ZIP) or add a remote link to files and submit. 
@@ -132,7 +132,7 @@ if($this->session->userdata('user_id') && floor($me['exp'] / points_per_level)<1
 			modal: true,
 			buttons: {
 				"Yes": function() {
-					$.ajax("/tutorial/AjaxBiddingTutorial");
+					$.ajax({url:"/tutorial/AjaxBiddingTutorial", async:false});
 					$( this ).dialog( "close" );
 					initDialogs();
 				},
