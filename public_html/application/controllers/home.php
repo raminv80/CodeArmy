@@ -65,6 +65,16 @@ class Home extends CI_Controller {
 		$this->view_data['heavyweight'] = $this->stories->heavyweight();
 		$this->view_data['num_page']=6;
 		$user_id = $this->session->userdata('user_id');
+
+		if($user_id){		
+			$my_bids = array();
+			$bids = $this->stories->get_user_bids($user_id);
+			foreach ($bids as $bid) {
+				array_push($my_bids, $bid['work_id']);
+			}
+			$this->view_data['my_bids'] = $my_bids;
+		}
+
 		if($this->input->post('action')=='contact'){
 			$this->load->library('form_validation');
 			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
