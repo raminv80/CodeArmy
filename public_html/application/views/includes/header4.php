@@ -63,7 +63,7 @@
         </div>
       </div>
     </header>
-    <a id="feedbackbtn" href="#feedbackbox"><img class="feedback-button" src="/public/images/feedback.png" style="position:fixed; right: -20px; padding-top: 90px;"></a>
+    <a id="feedbackbtn" href="#feedbackbox"><img class="feedback-button" src="/public/images/feedback.png" style="position:fixed; right: -20px; margin-top: 90px;"></a>
     
     <script>
 	$(document).ready(function(){
