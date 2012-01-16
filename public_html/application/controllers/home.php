@@ -34,6 +34,7 @@ class Home extends CI_Controller {
 	}
 	
 	function index(){
+		$this->view_data['action_is'] = 'index';
 		$this->load->helper('stories_helper');
 		$this->load->helper('user_helper');
 		$user_id = $this->session->userdata('user_id');

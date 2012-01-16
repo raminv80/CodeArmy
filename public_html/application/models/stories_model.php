@@ -8,6 +8,11 @@ class Stories_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function setTutorial($user_id, $d){
+		$sql = "UPDATE users set show_tutorial=? where user_id = ?";
+		$this->db->query($sql, array($d, $user_id));
+	}
+	
 	function remove_bid($id,$user_id){
 		$sql = "delete from bids where bid_id=? and user_id=?";
 		$res = $this->db->query($sql, array($id, $user_id));	
@@ -436,17 +441,21 @@ class Stories_model extends CI_Model {
 		$datetime = date('Y-m-d H:i:s');
 		$doc = array(
 			'work_id' => $this->input->post('work_id'),
-			'user_id' => $this->input->post('user_id'),
+			'user_id' => $this->session->userdata('user_id'),
 			'bid_cost' => $this->input->post('set_cost'),
                         'days' => $this->input->post('set_days'),
 			'created_at' => $datetime,
 			'bid_status' => 'Bid'
 		);
-		return $this->db->insert('bids', $doc);
+		$sql = "UPDATE users set show_tutorial=4 where user_id=? and show_tutorial=1";
+		if($this->session->userdata('user_id')==$this->input->post('user_id')){
+			$this->db->query($sql, array($this->input->post('user_id')));
+			return $this->db->insert('bids', $doc);
+		}
 	}
 	
 	function get_bids($work_id) {
-		$query = "SELECT a.*, b.user_id, b.username, b.exp, works.status as work_status, user_profiles.avatar FROM bids a, users b, works, user_profiles WHERE user_profiles.user_id = b.user_id and a.work_id = ? AND a.user_id = b.user_id AND works.work_id=a.work_id ORDER BY bid_cost ASC, days ASC, bid_status ASC";
+		$query = "SELECT a.*, b.user_id, b.username, b.exp, works.status as work_status, user_profiles.avatar, b.email FROM bids a, users b, works, user_profiles WHERE user_profiles.user_id = b.user_id and a.work_id = ? AND a.user_id = b.user_id AND works.work_id=a.work_id ORDER BY bid_cost ASC, days ASC, bid_status ASC";
 		$result = $this->db->query($query, array($work_id));
 		return $result;
 	}
@@ -487,12 +496,14 @@ class Stories_model extends CI_Model {
 		$query = "UPDATE bids SET bid_status = 'Accepted' WHERE bid_id = ?";
 		$user_query = "SELECT user_id from bids where bid_id = ?";
 		$query2 = "UPDATE works SET status = 'In Progress', work_horse = ? WHERE work_id = ?";
+		$query3 = "UPDATE users SET show_tutorial=2 WHERE user_id=? and show_tutorial=4";
 		$result = $this->db->query($query, array($id));
 		$user_data = $this->db->query($user_query,array($id));
 		$user = $user_data->result_array();
 		$user_id = $user[0]['user_id'];
+		$this->db->query($query3,array($user_id));
 		$result2 = $this->db->query($query2, array($user_id,$work_id));
-	return $result;
+		return $result;
 	}
 		
 	function get_my_works($user_id, $status){
@@ -632,6 +643,7 @@ class Stories_model extends CI_Model {
                     <p>You won MOTIONWORKERS badge for spending 72 hours on system.</p>
                 </div>');
 				}
+				$this->db->query("update users set show_tutorial=3 where show_tutorial=2 and user_id=?", array($user_id));
 				///end of motionworkers badge
 			break;
 			case 'redo': $exp = -1;

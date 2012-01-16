@@ -48,7 +48,7 @@
             <ul>
               <li <?php if($page_is=='Home'){?>class="active"<?php }?>><a href="<?=($page_is=='Home')? '#pitch' : '/'?>">home</a></li>
               <li <?php if($page_is=='Browse'){?>class="active"<?php } if($page_is=='Home'){?>class="hint_dev_step1"<?php }?>><a href="/stories/browse">browse</a></li>
-           	  <li <?php if($page_is=='Browse'){?>class="active"<?php }?>><a href="/myoffice">Myoffice</a></li>
+           	  <li <?php if($page_is=='Browse'){?>class="active"<?php } if($page_is=='Home'){?>class="hint_dev_step4"<?php }?>><a href="/myoffice">Myoffice</a></li>
               <li <?php if($page_is=='About'){?>class="active"<?php }?>><a href="/about">about</a></li>
               <!--<li <?php if($page_is=='Leaderboard'){?>class="active"<?php }?>><a href="#leaderboard">Leaderboard</a></li>-->
               <li class="last <?php if($page_is=='contact'){?>active<?php }?>"><a href="/contact">Contact US</a></li>
@@ -58,7 +58,7 @@
 		  	if(isset($username)){
 				$avatar = ($myProfile['avatar'])? '/public/'.$myProfile['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $me['email'] ) ) );
 			  ?>
-          <div class="WP-profile-header"><ul><li><a href="/login/logout">Logout</a></li></ul><ul><li><a href="/myoffice">My Office</a></li></ul><ul><li>Edit <a href="/profile/edit">Profile</a> | <a href="/profile/edit_password">Password</a></li></ul><ul style="border-bottom:0"><li class="last"><a href="/myoffice/index/tab_7"><img src="<?=$avatar?>" style="float:left" width="35px" height="35px"/><p style="width: 155px;text-transform:uppercase;padding-left:5px;float:left;"><?php echo substr($myProfile['full_name'],0,20);?></p></a><br /><p style="padding-left:5px;float:left;">Level <?php $level = floor($me['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></p><div id="levelmeter"><div id="level" style="width:<?php echo round (($me['exp'] % points_per_level)/points_per_level*80);?>px;"></div></div><?=($level>99) ? 99: $level+1?></li></ul></div>
+          <div class="WP-profile-header"><ul><li><a href="/login/logout">Logout</a></li></ul><ul><li><a href="/myoffice">My Office</a></li></ul><ul><li>Edit <a href="/profile/edit">Profile</a> | <a href="/profile/edit_password">Password</a></li></ul><ul style="border-bottom:0"><li class="last"><a href="/myoffice/index/tab_7"><img src="<?=$avatar?>" style="float:left" width="35px" height="35px"/><p style="width: 155px;text-transform:uppercase;padding-left:5px;float:left;"><?php echo substr(($myProfile['full_name']? $myProfile['full_name']:$me['username']),0,20);?></p></a><br /><p style="padding-left:5px;float:left;">Level <?php $level = floor($me['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></p><div id="levelmeter"><div id="level" style="width:<?php echo round (($me['exp'] % points_per_level)/points_per_level*80);?>px;"></div></div><?=($level>99) ? 99: $level+1?></li></ul></div>
           <?php }?>
         </div>
       </div>

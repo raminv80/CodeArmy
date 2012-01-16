@@ -221,7 +221,7 @@
         </div>
       </div>
       <?php endforeach;?>
-      <script type="text/javascript">var lastPage=<?=floor($i/$num_page)?></script> 
+      <script type="text/javascript">var lastPage=<?=isset($i)? floor($i/$num_page):0?></script> 
     </div>
     <br />
     &nbsp; </div>

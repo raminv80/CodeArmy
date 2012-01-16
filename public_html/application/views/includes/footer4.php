@@ -30,6 +30,12 @@
     </div>
   </div>
 </div>
+<?php }elseif(strtolower($page_is)=='login'){?>
+<!-- login us footer -->
+<div style="height:22px" class="footer">
+<?php }elseif(strtolower($page_is)=='signup'){?>
+<!-- about us footer -->
+<div style="height:22px" class="footer">
 <?php }elseif($page_is=='About'){?>
 <!-- about us footer -->
 <div style="height:22px" class="footer">
@@ -147,7 +153,7 @@ font-size: 14px;}
           <img src="/public/images/compile.png"></div>
         <input type="hidden" name="id" value="<?php echo $work_data['work_id']; ?>" />
         <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
-        <input type="submit" value="submit" id="submitwork">
+        <input class="hint_dev_step7" type="submit" value="submit" id="submitwork">
       </div>
     </div>
     <?php echo form_close(); ?> </div>
@@ -159,7 +165,7 @@ font-size: 14px;}
 <div class="WP-bottom-nav">
   <div class="WP-nav-placeholder-browsejob" style="width: 675px;">
     <div id="WP-nav-content" style="border-right: 3px;border-left:3px;padding-left:13px;;">
-      <div id="mydesk"><a href="javascript: show_tab('tab_4');"></a></div>
+      <div id="mydesk"><a class="hint_dev_step5" href="javascript: show_tab('tab_4');"></a></div>
     </div>
     <div id="WP-nav-content" style="border-right: 3px;">
       <div id="project-mgmt"><a href="/project/management"></a></div>
@@ -538,6 +544,7 @@ width: 210px;}
       </p>
     </div>
     <?php }?>
+    
     <div class="footer-holder">
       <ul class="add-nav" >
         <li ><a href="/help">Help</a></li>

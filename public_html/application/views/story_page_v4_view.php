@@ -276,8 +276,8 @@
 <section id="user-stories">
   <div class="WP-main">
     <div class="WP-tutorial-placeholder">
-      <iframe width="490" height="350" src="http://www.youtube.com/embed/0bvtOU0puzE" frameborder="0" allowfullscreen></iframe>
-      <iframe width="490" height="350" src="http://www.youtube.com/embed/0bvtOU0puzE" frameborder="0" allowfullscreen></iframe>
+      <iframe width="490" height="350" src="http://www.youtube.com/embed/oQBHecq0apQ" frameborder="0" allowfullscreen></iframe>
+      <iframe width="490" height="350" src="http://www.youtube.com/embed/ZDR433b0HJY" frameborder="0" allowfullscreen></iframe>
       <div id="useful-links">
         <h1>Useful Links</h1>
         <ul>
