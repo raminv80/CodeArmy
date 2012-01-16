@@ -31,6 +31,14 @@ class Stories_model extends CI_Model {
 		return $result->result_array();
 	}
 	
+	function get_my_projects_stories_state($user_id, $status){
+		$status = "'".implode("','",$status)."'";
+		$sql = "SELECT story.*, users.username, users.user_id FROM (SELECT work_horse, ifnull(works.bid_deadline,'Open') as bid_deadline, status, work_id, priority, title, project.project_name, type, description, points, cost, works.project_id, (select count(user_id) from bids where bids.work_id = works.work_id) as total_bids, (select count(user_id) from bids where work_id = works.work_id and created_at>= ? ) as last_week_bids, (select count(comment_body) from comments where story_id = works.work_id) as total_comments, (select count(comment_body) from comments where story_id = works.work_id and comment_created>= ? ) as last_week_comments FROM works, project WHERE works.status in (".$status.") and project.project_id = works.project_id AND works.creator = ? ) as story left join users on users.user_id = story.work_horse ORDER BY CASE WHEN (lower(story.status) in ('open','reject')) then last_week_comments+last_week_bids else last_week_comments END DESC";
+ 		$last_week = date("Y-m-d H:i:s", strtotime("-1 weeks"));
+		$result = $this->db->query($sql, array($last_week, $last_week, $user_id));
+		return $result->result_array();
+	}
+	
 	function create_draft_story($project_id, $creator_id, $data){
 		// make random id for work_id
 		$work_id = $this->_gen_id();

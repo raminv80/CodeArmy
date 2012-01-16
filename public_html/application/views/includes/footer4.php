@@ -7,7 +7,7 @@
 <!-- contact us footer -->
 
 <div style="height:22px" class="footer">
-<?php }elseif($action_is=='management' && $page_is=='project'){?>
+<?php }elseif(($action_is=='management' || $action_is=='story_management') && $page_is=='project'){?>
 <!-- project management -->
 <header>
 <div class="footer">

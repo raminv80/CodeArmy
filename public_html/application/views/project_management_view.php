@@ -1,5 +1,5 @@
 <?php $this->load->view('includes/header4'); ?>
-<style type="text/css">.accordion-table a{color:#09F;}</style>
+<style type="text/css">.accordion-table a{color:#09F;} h3{color:white; margin-top:10px;}</style>
 <div id="wrapper">
   <div class="WP-main" style="margin-top:100px">
     <div class="bidding-project-placeholder">
@@ -15,6 +15,9 @@
         </ul>
         <div id="tabs-1" >
           <div class="WP-contract-placeholder">
+          	<div style="border:dashed 1px #0CF; background-color:#333; color:#FFF; text-align:center; padding:5px;">Hint: To create, modify and perform actions on stories refer to sprint planning page of each project.</div>
+          	<?php foreach($stories_list as $list=>$stories): if(count($stories)>0){?>
+          	<h3><?=$list?></h3>
             <div id="heading"><span id="title">Bid Until</span><span style="width:520px;" id="title">user stories</span> <span style="width:108px;" id="title">Comments</span> <span style="width:60px;" id="title">bids</span> <span style="width:80px;" id="title">prize</span></div>
             <?php foreach($stories as $story):?>
             <div class="story">
@@ -105,6 +108,8 @@
               </div>
             </div>
             <?php endforeach;?>
+            <?php }?>
+            <?php endforeach;?>
           </div>
         </div>
         <div id="tabs-3">
@@ -169,5 +174,6 @@
 	$(function() {
 		$( "#tabs" ).tabs(<?php if($action_is=='story_management'){?>{ selected: 1 }<?php }?>);
 	});
+
 </script>
 <?php $this->load->view('includes/footer4'); ?>

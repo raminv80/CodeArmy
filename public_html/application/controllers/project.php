@@ -93,7 +93,14 @@ class Project extends CI_Controller {
 				$this->view_data['window_title'] = 'Workpad :: Manage '.$this->view_data['project']['project_name'];
 			}
 		}else{
-			$this->view_data['stories'] = $this->story_model->get_my_projects_stories($user_id);
+			$list = array();
+			$list['DRAFTS'] = $this->story_model->get_my_projects_stories_state($user_id,array('draft'));
+			$list['OPEN JOBS'] = $this->story_model->get_my_projects_stories_state($user_id,array('open','reject'));
+			$list['In PROGRESS'] = $this->story_model->get_my_projects_stories_state($user_id,array('in progress','redo'));
+			$list['DONE'] = $this->story_model->get_my_projects_stories_state($user_id,array('done'));
+			$list['VERIFIED'] = $this->story_model->get_my_projects_stories_state($user_id,array('verify'));
+			$list['SIGNED OFF'] = $this->story_model->get_my_projects_stories_state($user_id,array('signoff'));
+			$this->view_data['stories_list'] = $list;
 			$this->view_data['projects'] = $this->projects_model->get_my_projects_detailed($user_id);
 		}
 		$this->load->view('project_management_view', $this->view_data);
@@ -114,7 +121,14 @@ class Project extends CI_Controller {
 			$this->view_data['myProfile'] = $myProfile;
 			$this->view_data['window_title'] = 'Workpad :: Project Management';
 		}
-		$this->view_data['stories'] = $this->story_model->get_my_projects_stories($user_id);
+		$list = array();
+			$list['DRAFTS'] = $this->story_model->get_my_projects_stories_state($user_id,array('draft'));
+			$list['OPEN JOBS'] = $this->story_model->get_my_projects_stories_state($user_id,array('open','reject'));
+			$list['In PROGRESS'] = $this->story_model->get_my_projects_stories_state($user_id,array('in progress','redo'));
+			$list['DONE'] = $this->story_model->get_my_projects_stories_state($user_id,array('done'));
+			$list['VERIFIED'] = $this->story_model->get_my_projects_stories_state($user_id,array('verify'));
+			$list['SIGNED OFF'] = $this->story_model->get_my_projects_stories_state($user_id,array('signoff'));
+			$this->view_data['stories_list'] = $list;
 		$this->view_data['projects'] = $this->projects_model->get_my_projects_detailed($user_id);
 		$this->load->view('project_management_view', $this->view_data);
 	}
