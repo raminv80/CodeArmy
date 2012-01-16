@@ -253,6 +253,13 @@ class Stories extends CI_Controller {
 			$me = $me[0];
 			$this->view_data['myProfile'] = $myProfile;
 			$this->view_data['me'] = $me;
+						
+			$my_bids = array();
+			$bids = $this->stories->get_user_bids($user_id);
+			foreach ($bids as $bid) {
+				array_push($my_bids, $bid['work_id']);
+			}
+			$this->view_data['my_bids'] = $my_bids;
 		}
 		//
 		

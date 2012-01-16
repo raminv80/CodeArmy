@@ -1061,4 +1061,11 @@ class Stories_model extends CI_Model {
 			return $res->result_array();
 		}else return false;
 	}
+	
+	function get_user_bids($user_id) {
+		$sql = "select work_id from bids where user_id=\"".$user_id."\"";
+		$res = $this->db->query($sql);
+		$data = $res->result_array();
+		return $data;
+	}
 }
