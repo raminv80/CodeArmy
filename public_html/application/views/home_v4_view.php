@@ -1,14 +1,5 @@
 <?php $this->load->view('includes/header4'); ?>
 <!--<a id="feedbackbtn" href="#feedbackbox"><img class="feedback-button" src="/public/images/feedback.png" style="position:fixed; right: 0; padding-top: 90px;"></a>-->
-  <script type="text/javascript">
-    	$(document).ready(function(){
-		   $('.feedback-button').hover(function(){
-		   		$(this).animate({marginRight: "0"},200);
-		   },function(){
-		   		$(this).animate({marginRight: "-10px"},200);
-		   });
- 		});
-    </script> 
 <section id="pitch"><br />
   <div class="WP-main" style="margin-top:100px;">
     <div class="WP-total-amount-placeholder">

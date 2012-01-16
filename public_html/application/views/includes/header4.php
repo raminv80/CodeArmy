@@ -63,7 +63,7 @@
         </div>
       </div>
     </header>
-    <a id="feedbackbtn" href="#feedbackbox"><img class="feedback-button" src="/public/images/feedback.png" style="position:fixed; right: 0; padding-top: 90px;"></a>
+    <a id="feedbackbtn" href="#feedbackbox"><img class="feedback-button" src="/public/images/feedback.png" style="position:fixed; right: -20px; padding-top: 90px;"></a>
     
     <script>
 	$(document).ready(function(){
@@ -108,9 +108,9 @@
                  <script type="text/javascript">
     	$(document).ready(function(){
 		   $('.feedback-button').hover(function(){
-		   		$(this).animate({marginRight: "0"},200);
+		   		$(this).animate({marginRight: "10"},200);
 		   },function(){
-		   		$(this).animate({marginRight: "-10px"},200);
+		   		$(this).animate({marginRight: "0px"},200);
 		   });
 		   
 			//Date picker
