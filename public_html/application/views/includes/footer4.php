@@ -312,6 +312,8 @@ width: 210px;}
         <?php }?>
         </SELECT>
         <script type="text/javascript">function switchProject(){window.location.assign($('#project_sel').val());}</script> 
+        <div><input type="checkbox" name="autoscroll" id="autoscroll" value="1" onchange="auto_scroll(this.checked)" />Enable Auto Scroll</div>
+        <script type="text/javascript">function auto_scroll(checked){if(checked){$('.story_list').hover(function(){$('#plan_holder').stop().scrollTo($(this),800, {over:-2});});}else{$('.story_list').off('hover');}}</script>
       </div>
     </div>
     <div id="WP-nav-content" style="padding-left:13px;;">
@@ -377,6 +379,8 @@ width: 210px;}
           </option>
           <?php endforeach;?>
         </select>
+        <div><input type="checkbox" name="autoscroll" id="autoscroll" value="1" onchange="auto_scroll(this.checked)" />Enable Auto Scroll</div>
+        <script type="text/javascript">function auto_scroll(checked){if(checked){$('.story_list').hover(function(){$('#board_holder').stop().scrollTo($(this),400, {over:-2});});}else{$('.story_list').off('hover');}}</script>
       </div>
     </div>
     <div id="WP-nav-content" style="padding-left:13px;;">

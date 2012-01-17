@@ -277,11 +277,11 @@ var num_sprints = 1; num_edits=0;
 $('.user_story').hover(
 	function(){
 		//mouse enters story area
-		$('.options',this).slideDown();
+		$('.options',this).stop(true, true).slideDown();
 	},
 	function(){
 		//mouse leaves story area
-		$('.options',this).slideUp();
+		$('.options',this).stop(true, true).slideUp();
 	}
 );
 $('.add_sprint').click(function(){

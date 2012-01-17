@@ -351,10 +351,10 @@ function lockSprint(i){
 }
 
 $('.story_list').on('mouseenter','.user_story',function(){
-		$('.options',this).slideDown();
+		$('.options',this).stop(true, true).slideDown();
 	});
 $('.story_list').on('mouseleave','.user_story',function(){
-		$('.options',this).slideUp();
+		$('.options',this).stop(true, true).slideUp();
 	});
 	
 function save_list(){
