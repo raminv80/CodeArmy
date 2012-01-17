@@ -189,6 +189,7 @@ class Story extends CI_Controller {
 			$data = $query->result_array();
 		}
 		if($this->input->post('work_id') && ($data[0]['status']=='open' || $data[0]['status']=='Reject')) {
+			$lowest = $this->stories->get_lowest_bid($this->input->post('work_id'));
 			$this->stories->make_bid();
 			$work = $this->stories->get_work($this->input->post('work_id'));
 			$work_data = $work->result_array();
@@ -203,6 +204,18 @@ class Story extends CI_Controller {
 			$user_id = $this->session->userdata('user_id');
 			$this->stories->log_history($user_id, $project_id, $work_id, 'bid', $this->input->post('set_cost'), $desc = '');
 			$this->session->set_flashdata('bid_message',"Thanks for bidding. We will contact you if your bidding is successful. Goodluck!");
+
+			//Outbid notification
+			if(($this->input->post('set_cost') <  $lowest['bid_cost'] && $this->input->post('set_days') <  $lowest['days']) ||
+			   ($this->input->post('set_cost') <  $lowest['bid_cost'] && $this->input->post('set_days') == $lowest['days']) ||
+			   ($this->input->post('set_cost') == $lowest['bid_cost'] && $this->input->post('set_days') <  $lowest['days'])) {
+	
+				if ($lowest['user_id'] != $user_id) {
+					$title = 'Outbid on '.$work_data[0]['title'];
+					$message = '<p>Your bid on story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> has been outbid.</p><p>You may want to adjust your bid by refering to the bidding list of this <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">user story</a>.</p><p>Thank you.</p>';
+					$this->users->notify($lowest['user_id'], $title, $message);
+				}
+			};
 		}
 		
 		redirect("/story/".$work_id);
@@ -396,7 +409,7 @@ class Story extends CI_Controller {
 				   $usr = $this->users->get_user($to_id);
 				   $usr_data = $usr->result_array();
 				   $to = $usr_data[0]['email'];
-				   $message = '<h3>Congradulations!</h3><p>You are the winner! Your bid on story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> was successful. Now you may refer to the job from <a href="http://'.$_SERVER['HTTP_HOST'].'">Workpad</a>&gt;<a href="http://'.$_SERVER['HTTP_HOST'].'/myoffice">MyOffice</a>&gt;MyDesk&gt;In Progress list.</p><p>Next step is to finish the job as soon as possible and click on job is done button located in this list, or on <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'">scrumboard</a> or within <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">story detail</a> page. Here are some tips for you: <ol><li>If you are new to the project, first step is to read about the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project</a> itslef.</li><li>Go through details of the user story. If it\'s not clear or if you need any furthur info, use the \'Discuss\' section to contact the product owner and scrum master.</li><li>required files might be attached to the story or be provided later by scrum master/product owner or be presented as a link within <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project detail page</a>.</li><li>Test, test and test. Make sure everything works before submission.</li><li>For submission refer to project submission terms and essentials of this user story. You might be required to eaither use a github repository (forked from main project) or upload the files as a zip or add a remote link to the files.</li></ol></p>';
+				   $message = '<h3>Congratulations!</h3><p>You are the winner! Your bid on story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> was successful. Now you may refer to the job from <a href="http://'.$_SERVER['HTTP_HOST'].'">Workpad</a>&gt;<a href="http://'.$_SERVER['HTTP_HOST'].'/myoffice">MyOffice</a>&gt;MyDesk&gt;In Progress list.</p><p>Next step is to finish the job as soon as possible and click on job is done button located in this list, or on <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'">scrumboard</a> or within <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">story detail</a> page. Here are some tips for you: <ol><li>If you are new to the project, first step is to read about the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project</a> itslef.</li><li>Go through details of the user story. If it\'s not clear or if you need any furthur info, use the \'Discuss\' section to contact the product owner and scrum master.</li><li>required files might be attached to the story or be provided later by scrum master/product owner or be presented as a link within <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project detail page</a>.</li><li>Test, test and test. Make sure everything works before submission.</li><li>For submission refer to project submission terms and essentials of this user story. You might be required to eaither use a github repository (forked from main project) or upload the files as a zip or add a remote link to the files.</li></ol></p>';
 				   $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message);
 				   
 				   $project_id =$work_data[0]['project_id'];
