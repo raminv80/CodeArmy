@@ -26,7 +26,7 @@ class Stories_model extends CI_Model {
 
 	//Get lowest bid
 	function get_lowest_bid($work_id){
-		$sql = "select * from bids where work_id = ? order by bid_cost, days";
+		$sql = "select * from bids where work_id = ? order by bid_cost, days limit 0,1";
 		$res = $this->db->query($sql, array($work_id));
 		return $res->row_array();
 	}

@@ -206,6 +206,7 @@ class Story extends CI_Controller {
 			$this->session->set_flashdata('bid_message',"Thanks for bidding. We will contact you if your bidding is successful. Goodluck!");
 
 			//Outbid notification
+			if($lowest)
 			if(($this->input->post('set_cost') <  $lowest['bid_cost'] && $this->input->post('set_days') <  $lowest['days']) ||
 			   ($this->input->post('set_cost') <  $lowest['bid_cost'] && $this->input->post('set_days') == $lowest['days']) ||
 			   ($this->input->post('set_cost') == $lowest['bid_cost'] && $this->input->post('set_days') <  $lowest['days'])) {
