@@ -85,7 +85,7 @@
                 <td width="90px"><?=$story['bids']?></td>
                 <td class="hint_dev_step2">RM<?=$story['cost']?>
                 <!-- BID indicator -->
-                <?= in_array($story['work_id'],$my_bids)?'<img src="/public/images/bid_indicator.png" class="bid_indicator">':'' ?>
+                <?= (isset($mybids)&&in_array($story['work_id'],$my_bids))?'<img src="/public/images/bid_indicator.png" class="bid_indicator">':'' ?>
               	</td>
               </tr>
             </table>
