@@ -5,6 +5,7 @@
 	<title><?=(isset($window_title))? $window_title: 'Workpad'?></title>
 	<link href="/public/css/v4/style.css" media="all" rel="stylesheet" type="text/css">
 	<link href="/public/css/v4/workpad.css" media="all" rel="stylesheet" type="text/css">
+    <link href="/public/css/v4/sidemenu.css" media="all" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="/public/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<link type="text/css" href="/public/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
     <!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="css/ie.css" /><![endif]-->
@@ -28,6 +29,7 @@
 	<script type="text/javascript" src="/public/js/v4/jquery.scrollTo-1.4.2-min.js"></script>
 	<script type="text/javascript" src="/public/js/v4/jquery.localscroll-1.2.7-min.js"></script>
     <script type="text/javascript" src="/public/js/v4/jquery.colorbox.js"></script>
+        <script type="text/javascript" src="/public/js/v4/sidemenu.js"></script>
    	<script type="text/javascript" src="/public/js/v4/main.js"></script> 
     <script type="text/javascript">
     	$(document).ready(function(){
@@ -124,3 +126,55 @@
     </script> 
     </div>
 </div>
+
+<!-- start side menu -->
+
+<div id="side_menu" class="sidemenu_inactive">
+	<div id="sidemenubutton" class="sideopen"></div>
+    <div id="sidemenucontent">
+    	<div id="projectheader"></div>
+        <div class="projectblock">
+            	<div class="projecttitle">Workpad <span>23</span></div>
+                <div class="projectmenu">
+                	<ul>
+                    	<li><a href="#1">Project Detail</a></li>
+                        <li><a href="#1">Task List</a></li>
+                        <li><a href="#1">Burndown Chart</a></li>
+                        <li><a href="#1">Scrum Plan</a></li>
+                        <li><a href="#1">Scrum Board</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            <div class="projectblock">
+            	<div class="projecttitle">MSC 2.0<span>999</span></div>
+                <div class="projectmenu">
+                	<ul>
+                    	<li><a href="#1">Project Detail</a></li>
+                        <li><a href="#1">Task List</a></li>
+                        <li><a href="#1">Burndown Chart</a></li>
+                        <li><a href="#1">Scrum Plan</a></li>
+                        <li><a href="#1">Scrum Board</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            <div class="projectblock">
+            	<div class="projecttitle">Nova Lite<span>9</span></div>
+                <div class="projectmenu">
+                	<ul>
+                    	<li><a href="#1">Project Detail</a></li>
+                        <li><a href="#1">Task List</a></li>
+                        <li><a href="#1">Burndown Chart</a></li>
+                        <li><a href="#1">Scrum Plan</a></li>
+                        <li><a href="#1">Scrum Board</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+    </div>
+</div>
+
+<!-- end side menu -->
