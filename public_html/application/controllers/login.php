@@ -42,6 +42,9 @@ class Login extends CI_Controller {
 				'is_logged_in' => true
 			);
 			$this->session->set_userdata($data);
+			//if first time login...
+			if(!$query_data[0]['last_login'])
+				$this->session->set_flashdata('bidding_tutorial',true);
 			$this->users_model->update_last_login($query_data[0]['user_id']);
 			if($this->session->userdata('referer')){
 				redirect($this->session->userdata('referer'));

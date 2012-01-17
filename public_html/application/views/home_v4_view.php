@@ -77,16 +77,18 @@
       <h1>How it works</h1>
       <img src="/public/images/howitworks.png"></div>
   </div>
+  <div class="push"></div>
 </section>
 <section style="padding-top:20px;" id="user-stories" class="user-stories">
   <div class="WP-main">
     <div id="slideshow"> <span class="control" id="leftControl" style="display: block; ">Clicking moves left</span>
       <div id="slidesContainer" style="overflow-x: hidden; overflow-y: hidden; ">
         <div id="slideInner" style="width: 2240px; margin-left: -1680px; ">
+          <?php if(isset($featherlight) && $featherlight &&count($featherlight)>0){?>
           <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">FeatherLight Weight Tasks</span>
             <table width="860">
               <tr>
-                <?php if(isset($featherlight) && $featherlight &&count($featherlight)>0)foreach($featherlight as $task):?>
+                <?php foreach($featherlight as $task):?>
                 <td width="36%"><h3 id="h3slide">RM
                     <?=$task['cost']?>
                   </h3>
@@ -103,10 +105,12 @@
               </tr>
             </table>
           </div>
+          <?php }?>
+          <?php if(isset($lightweight) && $lightweight && count($lightweight)>0){?>
           <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Lightweight Weight Tasks</span>
             <table width="860">
               <tr>
-                <?php if(isset($lightweight) && $lightweight && count($lightweight)>0)foreach($lightweight as $task):?>
+                <?php foreach($lightweight as $task):?>
                 <td width="36%"><h3 id="h3slide">RM
                     <?=$task['cost']?>
                   </h3>
@@ -123,10 +127,12 @@
               </tr>
             </table>
           </div>
+          <?php }?>
+          <?php if(isset($heavyweight) && $heavyweight && count($heavyweight)>0){?>
           <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Heavy Weight Tasks</span>
             <table width="860">
               <tr>
-                <?php if(isset($heavyweight) && $heavyweight && count($heavyweight)>0)foreach($heavyweight as $task):?>
+                <?php foreach($heavyweight as $task):?>
                 <td width="36%"><h3 id="h3slide">RM
                     <?=$task['cost']?>
                   </h3>
@@ -143,6 +149,7 @@
               </tr>
             </table>
           </div>
+          <?php }?>
         </div>
       </div>
       <span class="control" id="rightControl" style="display: none; ">Clicking moves right</span></div>
@@ -214,11 +221,12 @@
         </div>
       </div>
       <?php endforeach;?>
-      <script type="text/javascript">var lastPage=<?=floor($i/$num_page)?></script> 
+      <script type="text/javascript">var lastPage=<?=isset($i)? floor($i/$num_page):0?></script> 
     </div>
     <br />
     &nbsp; </div>
   </div>
+  <div class="push"></div>
 </section>
 <section style="padding-top:20px;" id="addnewPrj">
   <div class="WP-main"><br />
@@ -274,6 +282,7 @@
     <br />
     &nbsp; </div>
   </div>
+  <div class="push"></div>
 </section>
 
 <!-- login -->
@@ -377,11 +386,13 @@
 		   $("#regbtn").colorbox({inline:true, fixed:true, opacity:0.7});
 		   $("#loginbtn").colorbox({inline:true, fixed:true, opacity:0.7});
 		   $(".close").click(function(){
-				$.colorbox.close()
+				$.colorbox.close();
 			});
 		   $("#logintoreg").colorbox({inline:true, fixed:true, opacity:0.7});
 		   
 		   $("#feedbackbtn").colorbox({inline:true, fixed:true, opacity:0.7});
+		   Autopush();
+		   $(window).resize(function(){Autopush();});
  		});
 	
 	function checkTerms(){
@@ -460,6 +471,17 @@
 		managePagination(currentPage);
 		if(currentPage<0)currentPage=lastPage;
 		$('#page'+currentPage).slideDown();
+	}
+	
+	function Autopush(){
+		$('section div.push').each(function(){
+			h = $(window).height() - $(this).parent().height()-170-105;
+			if(h>0) $(this).height(h);
+		});
+	}
+	
+	function Cancelpush(){
+		$('section div.push').each(function(){$(this).height(0);});
 	}
 </script>
 <?php $this->load->view('includes/footer4'); ?>

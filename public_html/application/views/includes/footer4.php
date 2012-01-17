@@ -7,14 +7,14 @@
 <!-- contact us footer -->
 
 <div style="height:22px" class="footer">
-<?php }elseif($action_is=='management' && $page_is=='project'){?>
+<?php }elseif(($action_is=='management' || $action_is=='story_management') && $page_is=='project'){?>
 <!-- project management -->
 <header>
 <div class="footer">
 <div class="WP-bottom-nav">
   <div class="WP-nav-placeholder-browsejob" style="width: 675px;">
     <div id="WP-nav-content" style="border-right: 3px;border-left:3px;padding-left:13px;;">
-      <div id="mydesk"><a href="javascript: show_tab('tab_4');"></a></div>
+      <div id="myoffice"><a href="/myoffice"></a></div>
     </div>
     <div id="WP-nav-content" style="border-left:0; border-right: 3px;">
       <div id="project-mgmt"><a href="/project/management"></a></div>
@@ -30,6 +30,12 @@
     </div>
   </div>
 </div>
+<?php }elseif(strtolower($page_is)=='login'){?>
+<!-- login us footer -->
+<div style="height:22px" class="footer">
+<?php }elseif(strtolower($page_is)=='signup'){?>
+<!-- about us footer -->
+<div style="height:22px" class="footer">
 <?php }elseif($page_is=='About'){?>
 <!-- about us footer -->
 <div style="height:22px" class="footer">
@@ -147,7 +153,7 @@ font-size: 14px;}
           <img src="/public/images/compile.png"></div>
         <input type="hidden" name="id" value="<?php echo $work_data['work_id']; ?>" />
         <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
-        <input type="submit" value="submit" id="submitwork">
+        <input class="hint_dev_step7" type="submit" value="submit" id="submitwork">
       </div>
     </div>
     <?php echo form_close(); ?> </div>
@@ -159,7 +165,7 @@ font-size: 14px;}
 <div class="WP-bottom-nav">
   <div class="WP-nav-placeholder-browsejob" style="width: 675px;">
     <div id="WP-nav-content" style="border-right: 3px;border-left:3px;padding-left:13px;;">
-      <div id="mydesk"><a href="javascript: show_tab('tab_4');"></a></div>
+      <div id="mydesk"><a class="hint_dev_step5" href="javascript: show_tab('tab_4');"></a></div>
     </div>
     <div id="WP-nav-content" style="border-right: 3px;">
       <div id="project-mgmt"><a href="/project/management"></a></div>
@@ -306,6 +312,8 @@ width: 210px;}
         <?php }?>
         </SELECT>
         <script type="text/javascript">function switchProject(){window.location.assign($('#project_sel').val());}</script> 
+        <div><input type="checkbox" name="autoscroll" id="autoscroll" value="1" onchange="auto_scroll(this.checked)" />Enable Auto Scroll</div>
+        <script type="text/javascript">function auto_scroll(checked){if(checked){$('.story_list').hover(function(){$('#plan_holder').stop().scrollTo($(this),800, {over:-2});});}else{$('.story_list').off('hover');}}</script>
       </div>
     </div>
     <div id="WP-nav-content" style="padding-left:13px;;">
@@ -371,6 +379,8 @@ width: 210px;}
           </option>
           <?php endforeach;?>
         </select>
+        <div><input type="checkbox" name="autoscroll" id="autoscroll" value="1" onchange="auto_scroll(this.checked)" />Enable Auto Scroll</div>
+        <script type="text/javascript">function auto_scroll(checked){if(checked){$('.story_list').hover(function(){$('#board_holder').stop().scrollTo($(this),400, {over:-2});});}else{$('.story_list').off('hover');}}</script>
       </div>
     </div>
     <div id="WP-nav-content" style="padding-left:13px;;">
@@ -538,6 +548,7 @@ width: 210px;}
       </p>
     </div>
     <?php }?>
+    
     <div class="footer-holder">
       <ul class="add-nav" >
         <li ><a href="/help">Help</a></li>

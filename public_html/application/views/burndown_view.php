@@ -45,7 +45,7 @@
 		<?php }?>
         data.addRows(chart);
         var options = {
-          width: 800, height: 420,
+          width: 700, height: 420,
           title: 'Sprint <?=$sprint_num+1?>',
 		  strictFirstColumnType: true,
 		  pointSize: 5,
@@ -57,9 +57,36 @@
         chart.draw(data, options);
       }
     </script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Username');
+        data.addColumn('number', 'Burn-down Points');
+        data.addRows([
+		<?php if(count($resource_chart)>0){foreach($resource_chart as $data):?>
+          ['<?=addslashes($data['username'])?>',    <?=$data['points']?>],
+		<?php endforeach;}else{?>
+		  ['no one', <?=$sprint_points?>]
+		<?php }?>
+        ]);
+
+        var options = {
+          width: 300, height: 420,
+          title: 'Burn-down/Resource'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('resource_chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
 <section id="chart" style="margin: 70px;">
   <div id="wrapper">
-    <div id="chart_div" style="margin:0 auto; width:800px"></div>
+  	<div style="width:1000px; margin:0 auto;">
+        <div id="chart_div" style="margin:0 auto; width:700px; float:left"></div>
+        <div id="resource_chart_div" style="margin:0 auto; width:300; float:left"></div>
+    </div>
   </div>
 </section>
 <?php }?>

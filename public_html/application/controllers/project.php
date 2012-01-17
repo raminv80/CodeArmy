@@ -19,6 +19,16 @@ class Project extends CI_Controller {
 			$this->view_data['username'] = $this->session->userdata('username');
 			$this->view_data['user_id'] = $this->session->userdata('user_id');
 			$this->view_data['user_role'] = $this->session->userdata('role');
+			$user_id = $this->session->userdata('user_id');
+			$me = $this->users_model->get_user($user_id);
+			$me = $me->result_array();
+			$me = $me[0];
+			$myProfile = $this->users_model->get_profile($user_id);
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$this->view_data['me'] = $me;
+			$this->view_data['myProfile'] = $myProfile;
+			$this->view_data['projects'] = $this->projects_model->get_my_projects($user_id);
 		}else{
 			if(in_array(strtolower($this->view_data['action_is']), array('scrum_board','sprint_planner','AjaxSaveStory','burndown_chart', 'management'))){
 				$controller = $this->uri->segment(1);
@@ -37,17 +47,6 @@ class Project extends CI_Controller {
 	function show($id) {
 		$qry = $this->projects_model->get_project_details($id);
 		$user_id = $this->session->userdata('user_id');
-		if($user_id){
-			$me = $this->users_model->get_user($user_id);
-			$me = $me->result_array();
-			$me = $me[0];
-			$myProfile = $this->users_model->get_profile($user_id);
-			$myProfile = $myProfile->result_array();
-			$myProfile = $myProfile[0];
-			$this->view_data['me'] = $me;
-			$this->view_data['myProfile'] = $myProfile;
-			$this->view_data['projects'] = $this->projects_model->get_my_projects($user_id);
-		}
 		if($qry->num_rows>0){
 			$qry = $qry->result_array();
 			$this->view_data['project'] = $qry[0];
@@ -72,17 +71,7 @@ class Project extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
 		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
-		if($user_id){
-			$me = $this->users_model->get_user($user_id);
-			$me = $me->result_array();
-			$me = $me[0];
-			$myProfile = $this->users_model->get_profile($user_id);
-			$myProfile = $myProfile->result_array();
-			$myProfile = $myProfile[0];
-			$this->view_data['me'] = $me;
-			$this->view_data['myProfile'] = $myProfile;
-			$this->view_data['window_title'] = 'Workpad :: Project Management';
-		}
+		$this->view_data['window_title'] = 'Workpad :: Project Management';
 		if($id!=0){
 			$qry = $this->projects_model->get_project_details($id);
 			if($qry->num_rows>0){
@@ -93,7 +82,14 @@ class Project extends CI_Controller {
 				$this->view_data['window_title'] = 'Workpad :: Manage '.$this->view_data['project']['project_name'];
 			}
 		}else{
-			$this->view_data['stories'] = $this->story_model->get_my_projects_stories($user_id);
+			$list = array();
+			$list['DRAFTS'] = $this->story_model->get_my_projects_stories_state($user_id,array('draft'));
+			$list['OPEN JOBS'] = $this->story_model->get_my_projects_stories_state($user_id,array('open','reject'));
+			$list['In PROGRESS'] = $this->story_model->get_my_projects_stories_state($user_id,array('in progress','redo'));
+			$list['DONE'] = $this->story_model->get_my_projects_stories_state($user_id,array('done'));
+			$list['VERIFIED'] = $this->story_model->get_my_projects_stories_state($user_id,array('verify'));
+			$list['SIGNED OFF'] = $this->story_model->get_my_projects_stories_state($user_id,array('signoff'));
+			$this->view_data['stories_list'] = $list;
 			$this->view_data['projects'] = $this->projects_model->get_my_projects_detailed($user_id);
 		}
 		$this->load->view('project_management_view', $this->view_data);
@@ -103,18 +99,26 @@ class Project extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
 		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
-		if($user_id){
-			$me = $this->users_model->get_user($user_id);
-			$me = $me->result_array();
-			$me = $me[0];
-			$myProfile = $this->users_model->get_profile($user_id);
-			$myProfile = $myProfile->result_array();
-			$myProfile = $myProfile[0];
-			$this->view_data['me'] = $me;
-			$this->view_data['myProfile'] = $myProfile;
-			$this->view_data['window_title'] = 'Workpad :: Project Management';
+		$this->view_data['window_title'] = 'Workpad :: Project Management';
+		if($id=='0'){
+			$list = array();
+				$list['DRAFTS'] = $this->story_model->get_my_projects_stories_state($user_id,array('draft'));
+				$list['OPEN JOBS'] = $this->story_model->get_my_projects_stories_state($user_id,array('open','reject'));
+				$list['In PROGRESS'] = $this->story_model->get_my_projects_stories_state($user_id,array('in progress','redo'));
+				$list['DONE'] = $this->story_model->get_my_projects_stories_state($user_id,array('done'));
+				$list['VERIFIED'] = $this->story_model->get_my_projects_stories_state($user_id,array('verify'));
+				$list['SIGNED OFF'] = $this->story_model->get_my_projects_stories_state($user_id,array('signoff'));
+				$this->view_data['stories_list'] = $list;
+		}else{
+			$list = array();
+				$list['DRAFTS'] = $this->story_model->get_project_stories_state($id,array('draft'));
+				$list['OPEN JOBS'] = $this->story_model->get_project_stories_state($id,array('open','reject'));
+				$list['In PROGRESS'] = $this->story_model->get_project_stories_state($id,array('in progress','redo'));
+				$list['DONE'] = $this->story_model->get_project_stories_state($id,array('done'));
+				$list['VERIFIED'] = $this->story_model->get_project_stories_state($id,array('verify'));
+				$list['SIGNED OFF'] = $this->story_model->get_project_stories_state($id,array('signoff'));
+				$this->view_data['stories_list'] = $list;
 		}
-		$this->view_data['stories'] = $this->story_model->get_my_projects_stories($user_id);
 		$this->view_data['projects'] = $this->projects_model->get_my_projects_detailed($user_id);
 		$this->load->view('project_management_view', $this->view_data);
 	}
@@ -124,18 +128,11 @@ class Project extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
 		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
-		$this->view_data['project_sel'] = $id;
-		if($user_id){
-			$me = $this->users_model->get_user($user_id);
-			$me = $me->result_array();
-			$me = $me[0];
-			$myProfile = $this->users_model->get_profile($user_id);
-			$myProfile = $myProfile->result_array();
-			$myProfile = $myProfile[0];
-			$this->view_data['me'] = $me;
-			$this->view_data['myProfile'] = $myProfile;
-			$this->view_data['projects'] = $this->projects_model->get_my_projects($user_id);
+		if(!$this->view_data['project_owner']){
+			$this->view_data['modal_message'] = "You don't have permission to edit sprints of this project but still you may preview it.";
+			$this->view_data['modal_title'] = "Sprint Preview";
 		}
+		$this->view_data['project_sel'] = $id;
 		if($id>0){
 			$this->view_data['works'] = $this->projects_model->get_worklist_sprint($id);
 		}
@@ -151,17 +148,7 @@ class Project extends CI_Controller {
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
 		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
 		$this->view_data['project_sel'] = $id;
-		if($user_id){
-			$me = $this->users_model->get_user($user_id);
-			$me = $me->result_array();
-			$me = $me[0];
-			$myProfile = $this->users_model->get_profile($user_id);
-			$myProfile = $myProfile->result_array();
-			$myProfile = $myProfile[0];
-			$this->view_data['me'] = $me;
-			$this->view_data['myProfile'] = $myProfile;
-			$this->view_data['projects'] = $this->projects_model->get_my_projects($user_id);
-		}
+		
 		if($id>0){
 			if($cur_sprint==-1){
 				$cur_sprint = $this->projects_model->getCurrentSprint($id);
@@ -169,7 +156,10 @@ class Project extends CI_Controller {
 					$cur_sprint = $cur_sprint[0]['id'];
 				}else $cur_sprint = -1;
 			}
-			$this->view_data['works_state'] = $this->projects_model->get_worklist_state($id, $cur_sprint);	
+			$this->view_data['works_state'] = $this->projects_model->get_worklist_state($id, $cur_sprint);
+			$this->view_data['point_state'] = $this->projects_model->get_work_points_state($id, $cur_sprint);
+			$sum=0;foreach($this->view_data['point_state'] as $data) $sum+=$data['points'];
+			if($sum==0)$this->view_data['modal_message'] = "There is no published user story in current selected sprint.";
 		}
 		$this->view_data['sprint_sel'] = $cur_sprint;
 		$this->view_data['sprints'] = $this->projects_model->get_sprints($id);
@@ -241,17 +231,6 @@ class Project extends CI_Controller {
 	
 	public function burndown_chart($id=0, $sprint_sel=0){
 		$user_id = $this->session->userdata('user_id');
-		if($user_id){
-			$me = $this->users_model->get_user($user_id);
-			$me = $me->result_array();
-			$me = $me[0];
-			$myProfile = $this->users_model->get_profile($user_id);
-			$myProfile = $myProfile->result_array();
-			$myProfile = $myProfile[0];
-			$this->view_data['me'] = $me;
-			$this->view_data['myProfile'] = $myProfile;
-			$this->view_data['projects'] = $this->projects_model->get_my_projects($user_id);
-		}
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
 		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
 		$this->view_data['project_sel'] = $id;
@@ -271,7 +250,7 @@ class Project extends CI_Controller {
 		$chart = $this->projects_model->get_chart($id, $sprint_sel);
 		$this->view_data['chart'] = $chart;
 		$this->view_data['sprint_points'] = $this->projects_model->get_sprint_points($id,$sprint_sel);
-		
+		$this->view_data['resource_chart'] = $this->projects_model->get_resource_chart($id,$sprint_sel);
 		$this->view_data['window_title'] = 'Workpad :: Burndown Chart';
 		$this->load->view('burndown_view', $this->view_data);
 	}

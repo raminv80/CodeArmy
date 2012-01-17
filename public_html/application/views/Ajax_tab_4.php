@@ -39,7 +39,7 @@
                                         <input type="hidden" name="id" value="<?php echo $work_list_inProgress[$i]['work_id']; ?>" />
                                         <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
                                         <!--<input type="submit" name="submit" value="Job Done!" />-->
-                                        <div class="proceed">
+                                        <div class="proceed hint_dev_step6">
                                             <a href="javascript: void(0)" class="submit dialog_step3">Job Done!</a>
                                         </div>
                                     <?php echo form_close(); ?>    

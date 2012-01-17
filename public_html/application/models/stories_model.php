@@ -8,6 +8,11 @@ class Stories_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function setTutorial($user_id, $d){
+		$sql = "UPDATE users set show_tutorial=? where user_id = ?";
+		$this->db->query($sql, array($d, $user_id));
+	}
+	
 	function remove_bid($id,$user_id){
 		$sql = "delete from bids where bid_id=? and user_id=?";
 		$res = $this->db->query($sql, array($id, $user_id));	
@@ -21,13 +26,29 @@ class Stories_model extends CI_Model {
 
 	//Get lowest bid
 	function get_lowest_bid($work_id){
-		$sql = "select * from bids where work_id = ? order by bid_cost, days";
+		$sql = "select * from bids where work_id = ? order by bid_cost, days limit 0,1";
 		$res = $this->db->query($sql, array($work_id));
 		return $res->row_array();
 	}
 	
 	function get_my_projects_stories($user_id){
 		$sql = "SELECT story.*, users.username, users.user_id FROM (SELECT work_horse, ifnull(works.bid_deadline,'Open') as bid_deadline, status, work_id, priority, title, project.project_name, type, description, points, cost, works.project_id, (select count(user_id) from bids where bids.work_id = works.work_id) as total_bids, (select count(user_id) from bids where work_id = works.work_id and created_at>= ? ) as last_week_bids, (select count(comment_body) from comments where story_id = works.work_id) as total_comments, (select count(comment_body) from comments where story_id = works.work_id and comment_created>= ? ) as last_week_comments FROM works, project WHERE works.status!='draft' and project.project_id = works.project_id AND works.creator = ? ) as story left join users on users.user_id = story.work_horse ORDER BY CASE WHEN (lower(story.status) in ('open','reject')) then last_week_comments+last_week_bids else last_week_comments END DESC";
+ 		$last_week = date("Y-m-d H:i:s", strtotime("-1 weeks"));
+		$result = $this->db->query($sql, array($last_week, $last_week, $user_id));
+		return $result->result_array();
+	}
+	
+	function get_project_stories_state($project_id, $status){
+		$status = "'".implode("','",$status)."'";
+		$sql = "SELECT story.*, users.username, users.user_id FROM (SELECT work_horse, ifnull(works.bid_deadline,'Open') as bid_deadline, status, work_id, priority, title, project.project_name, type, description, points, cost, works.project_id, (select count(user_id) from bids where bids.work_id = works.work_id) as total_bids, (select count(user_id) from bids where work_id = works.work_id and created_at>= ? ) as last_week_bids, (select count(comment_body) from comments where story_id = works.work_id) as total_comments, (select count(comment_body) from comments where story_id = works.work_id and comment_created>= ? ) as last_week_comments FROM works, project WHERE works.status in (".$status.") and project.project_id = works.project_id AND works.project_id = ? ) as story left join users on users.user_id = story.work_horse ORDER BY CASE WHEN (lower(story.status) in ('open','reject')) then last_week_comments+last_week_bids else last_week_comments END DESC";
+ 		$last_week = date("Y-m-d H:i:s", strtotime("-1 weeks"));
+		$result = $this->db->query($sql, array($last_week, $last_week, $project_id));
+		return $result->result_array();
+	}
+	
+	function get_my_projects_stories_state($user_id, $status){
+		$status = "'".implode("','",$status)."'";
+		$sql = "SELECT story.*, users.username, users.user_id FROM (SELECT work_horse, ifnull(works.bid_deadline,'Open') as bid_deadline, status, work_id, priority, title, project.project_name, type, description, points, cost, works.project_id, (select count(user_id) from bids where bids.work_id = works.work_id) as total_bids, (select count(user_id) from bids where work_id = works.work_id and created_at>= ? ) as last_week_bids, (select count(comment_body) from comments where story_id = works.work_id) as total_comments, (select count(comment_body) from comments where story_id = works.work_id and comment_created>= ? ) as last_week_comments FROM works, project WHERE works.status in (".$status.") and project.project_id = works.project_id AND works.creator = ? ) as story left join users on users.user_id = story.work_horse ORDER BY CASE WHEN (lower(story.status) in ('open','reject')) then last_week_comments+last_week_bids else last_week_comments END DESC";
  		$last_week = date("Y-m-d H:i:s", strtotime("-1 weeks"));
 		$result = $this->db->query($sql, array($last_week, $last_week, $user_id));
 		return $result->result_array();
@@ -443,17 +464,21 @@ class Stories_model extends CI_Model {
 		$datetime = date('Y-m-d H:i:s');
 		$doc = array(
 			'work_id' => $this->input->post('work_id'),
-			'user_id' => $this->input->post('user_id'),
+			'user_id' => $this->session->userdata('user_id'),
 			'bid_cost' => $this->input->post('set_cost'),
                         'days' => $this->input->post('set_days'),
 			'created_at' => $datetime,
 			'bid_status' => 'Bid'
 		);
-		return $this->db->insert('bids', $doc);
+		$sql = "UPDATE users set show_tutorial=4 where user_id=? and show_tutorial=1";
+		if($this->session->userdata('user_id')==$this->input->post('user_id')){
+			$this->db->query($sql, array($this->input->post('user_id')));
+			return $this->db->insert('bids', $doc);
+		}
 	}
 	
 	function get_bids($work_id) {
-		$query = "SELECT a.*, b.user_id, b.username, b.exp, works.status as work_status, user_profiles.avatar FROM bids a, users b, works, user_profiles WHERE user_profiles.user_id = b.user_id and a.work_id = ? AND a.user_id = b.user_id AND works.work_id=a.work_id ORDER BY bid_cost ASC, days ASC, bid_status ASC";
+		$query = "SELECT a.*, b.user_id, b.username, b.exp, works.status as work_status, user_profiles.avatar, b.email FROM bids a, users b, works, user_profiles WHERE user_profiles.user_id = b.user_id and a.work_id = ? AND a.user_id = b.user_id AND works.work_id=a.work_id ORDER BY bid_cost ASC, days ASC, bid_status ASC";
 		$result = $this->db->query($query, array($work_id));
 		return $result;
 	}
@@ -494,12 +519,14 @@ class Stories_model extends CI_Model {
 		$query = "UPDATE bids SET bid_status = 'Accepted' WHERE bid_id = ?";
 		$user_query = "SELECT user_id from bids where bid_id = ?";
 		$query2 = "UPDATE works SET status = 'In Progress', work_horse = ? WHERE work_id = ?";
+		$query3 = "UPDATE users SET show_tutorial=2 WHERE user_id=? and show_tutorial=4";
 		$result = $this->db->query($query, array($id));
 		$user_data = $this->db->query($user_query,array($id));
 		$user = $user_data->result_array();
 		$user_id = $user[0]['user_id'];
+		$this->db->query($query3,array($user_id));
 		$result2 = $this->db->query($query2, array($user_id,$work_id));
-	return $result;
+		return $result;
 	}
 		
 	function get_my_works($user_id, $status){
@@ -554,6 +581,14 @@ class Stories_model extends CI_Model {
 			$result = $this->db->query($query, array($id));
 			$query = "delete from bids where work_id = ?";
 			$result = $this->db->query($query, array($id));		
+			return $result;
+		}
+		
+		function reopen($id, $user_id){
+			$query = "update works set status = 'Reject', done_at = NULL, assigned_at = NULL, work_horse = NULL where work_id = ?";
+			$result = $this->db->query($query, array($id));	
+			$query = "delete from bids where work_id = ? and user_id=?";
+			$result = $this->db->query($query, array($id, $user_id));
 			return $result;
 		}
 		
@@ -631,6 +666,7 @@ class Stories_model extends CI_Model {
                     <p>You won MOTIONWORKERS badge for spending 72 hours on system.</p>
                 </div>');
 				}
+				$this->db->query("update users set show_tutorial=3 where show_tutorial=2 and user_id=?", array($user_id));
 				///end of motionworkers badge
 			break;
 			case 'redo': $exp = -1;
@@ -695,13 +731,18 @@ class Stories_model extends CI_Model {
 				$sql = "select id from achievement_set where user_id=? and achievement_id = 2";
 				$res = $this->db->query($sql, array($user_id));
 				$has_badge = $res->num_rows();
-				if($has_badge==0 && $jobs>=10){
+				if($has_badge==0 && $jobs==10){
 					$doc = array(
 						'user_id' => $user_id,
 						'achievement_id' => 2,
 						'created_at' => date('Y-m-d H:i:s')
 					);
 					$this->db->insert('achievement_set',$doc);
+					$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/badge02.png" /></div>
+					<div class="right-column">
+						<h3>Congradulations!</h3>
+						<p>You won 10PACKS badge for successfully completing 10 jobs.</p>
+					</div>');
 				}
 				///end of 10 packs badge
 				

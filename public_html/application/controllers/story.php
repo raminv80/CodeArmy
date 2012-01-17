@@ -206,6 +206,7 @@ class Story extends CI_Controller {
 			$this->session->set_flashdata('bid_message',"Thanks for bidding. We will contact you if your bidding is successful. Goodluck!");
 
 			//Outbid notification
+			if($lowest)
 			if(($this->input->post('set_cost') <  $lowest['bid_cost'] && $this->input->post('set_days') <  $lowest['days']) ||
 			   ($this->input->post('set_cost') <  $lowest['bid_cost'] && $this->input->post('set_days') == $lowest['days']) ||
 			   ($this->input->post('set_cost') == $lowest['bid_cost'] && $this->input->post('set_days') <  $lowest['days'])) {
@@ -353,6 +354,37 @@ class Story extends CI_Controller {
 			   }
                redirect("/story/$work_id");
         }
+
+	function reopen($work_id){ 
+	   $this->check_authentication();
+		$story_id = $work_id;
+		$work = $this->stories->get_work($story_id);
+		$work_data = $work->result_array();
+		$user_id = $this->session->userdata('user_id');
+		if($this->projects_model->is_project_owner($user_id, $work_data[0]['project_id'])){
+			//only product owner can reject the work
+			$query = $this->stories->get_user_email($story_id);
+			$user_data = $query->result_array();
+			$query = $this->stories->reopen($story_id, $work_data[0]['work_horse']);	
+			$title = $work_data[0]['title'].' is rejected!';
+			$to = $user_data[0]['email'];
+			$message = '<p>Hello,</p><p>It seems you have failed to meet expectations of product owner for the story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>. Regard to this matter, product owner has decided to revoke your assignment and the job is set to open for bidding one again. For more info please refer to the discussion section of this user sotry.</p><p>Regards.</p>';
+			$this->users_model->notify($user_data[0]['user_id'], $title, $message);
+			
+			$project = $this->projects_model->get_project_details($work_data[0]['project_id']);
+			$project = $project->result_array();
+			$scrum_master = $this->users_model->get_user($project[0]['scrum_master_id']);
+			$scrum_master = $scrum_master->result_array();
+			$to = $scrum_master[0]['email'];
+			$message = '<p>Hello,</p><p>The story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a> is not proceeding according to product owner expectations. Regard to this matter, product owner has decided to revoke the assignment and the job is set to open for bidding one again. For more info please refer to the discussion section of this user sotry.</p><p>You are recieving this email because you are assigned as Scrum Master of this story.</p><p>Regards.</p>';
+			if($user_data[0]['user_id']!=$to) $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message);
+			$project_id = $work_data[0]['project_id'];
+			$point = $work_data[0]['points'];
+			$user_id = $user_data[0]['user_id'];
+			$this->stories->log_history($user_id, $project_id, $story_id, 'reject', $point, $desc = '');
+		}
+		redirect("/project/scrum_board/$project_id");
+	}
 
     function bid_accept($id, $ref='') {
 			   $this->check_authentication();

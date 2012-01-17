@@ -2,7 +2,7 @@ $(document).ready(function(){
   var currentPosition = 0;
   var slideWidth = 860;
   var slides = $('.slide');
-  var numberOfSlides = 3;
+  var numberOfSlides = slides.length;
 
   // Remove scrollbar in JS
   $('#slidesContainer').css('overflow', 'hidden');

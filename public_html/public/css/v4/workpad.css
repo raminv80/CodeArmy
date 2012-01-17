@@ -82,7 +82,7 @@ float: left;
 .WP-main .WP-searchbar #input-search {width:350px; height:30px; border-radius:5px; border:0; background:#edecec;}
 .WP-main .WP-searchbar #search-button {background: url(/public/images/searchbutton.png);margin-left: -21px;border: 0;width: 15px;height: 19px;-webkit-appearance: push-button; cursor:pointer}
 
-.WP-main .WP-howitworks {padding: 40px 0 0 0;color: white; floaT: left;}
+.WP-main .WP-howitworks {margin: 40px 0 0 0;color: white; floaT: left;}
 .WP-main .WP-howitworks  img {margin-top:15px;}
 .WP-main .WP-howitworks h1 { font-weight: normal; font-family:'DINMediumAlternate';text-transform:uppercase;}
 
@@ -591,9 +591,10 @@ margin: 10px 0 0 0;}
 
 #username, #password1 {
 	margin-left:200px;
+	
 }
 .reg-submit {
-    margin: 10px 55px 0 0;
+    margin: 55px 55px 0 0;
 }
 
 #loginbox .reg-submit{
@@ -738,4 +739,21 @@ a#jobdone:hover {text-decoration:underline;}
 .read {}
 .unread {color:#fc0 !important;
 background: url(/public/images/unread-inbox.png) no-repeat 660px 8px;
+}
+
+
+
+#user-stories .WP-main{
+	padding-top:50px;
+}
+
+.row #username, .row #password1 {
+    border: 0 none;
+    float: left;
+    padding: 5px;
+    width: 280px;
+	font-size: 16px;
+    height: 23px;
+    line-height: 30px;
+    margin-bottom: 19px;
 }
