@@ -29,4 +29,6 @@ $(document).ready(function(){
 		},function(){
 			$(this).animate({paddingLeft : '0px'}, {queue: false})
 		})
-})
+});
+
+$(window).resize(function(){$('#sidemenucontent').height($(window.height()-220));});

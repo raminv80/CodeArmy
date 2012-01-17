@@ -155,7 +155,7 @@ if($user_id){
     <!-- start side menu -->
     <div id="side_menu" class="sidemenu_inactive">
           <div id="sidemenubutton" class="sideopen"></div>
-          <div id="sidemenucontent">
+          <div id="sidemenucontent" style="overflow-y:scroll">
         <div id="projectheader"></div>
         <?php foreach($header_projects as $project): ?>
         <div class="projectblock">
@@ -165,7 +165,7 @@ if($user_id){
               <div class="projectmenu">
             <ul>
                   <li><a href="/project/<?=$project['project_id']?>">Project Detail</a></li>
-                  <li><a href="/project/story_manegement/<?=$project['project_id']?>">Task List</a></li>
+                  <li><a href="/project/story_management/<?=$project['project_id']?>">Task List</a></li>
                   <li><a href="/project/burndown_chart/<?=$project['project_id']?>">Burndown Chart</a></li>
                   <li><a href="/project/sprint_planner/<?=$project['project_id']?>">Sprint Plan</a></li>
                   <li><a href="/project/scrum_board/<?=$project['project_id']?>">Scrum Board</a></li>

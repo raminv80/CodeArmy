@@ -15,7 +15,9 @@
         </ul>
         <div id="tabs-1" >
           <div class="WP-contract-placeholder">
+          <?php if($project_owner){?>
           	<div style="border:dashed 1px #0CF; background-color:#333; color:#FFF; text-align:center; padding:5px;">Hint: To create, modify and perform actions on stories refer to sprint planning page of each project.</div>
+          <?php }?>
           	<?php foreach($stories_list as $list=>$stories): if(count($stories)>0){?>
           	<h3><?=$list?></h3>
             <div id="heading"><span id="title">Bid Until</span><span style="width:520px;" id="title">user stories</span> <span style="width:108px;" id="title">Comments</span> <span style="width:60px;" id="title">bids</span> <span style="width:80px;" id="title">prize</span></div>

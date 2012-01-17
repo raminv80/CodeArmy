@@ -100,14 +100,25 @@ class Project extends CI_Controller {
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
 		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
 		$this->view_data['window_title'] = 'Workpad :: Project Management';
-		$list = array();
-			$list['DRAFTS'] = $this->story_model->get_my_projects_stories_state($user_id,array('draft'));
-			$list['OPEN JOBS'] = $this->story_model->get_my_projects_stories_state($user_id,array('open','reject'));
-			$list['In PROGRESS'] = $this->story_model->get_my_projects_stories_state($user_id,array('in progress','redo'));
-			$list['DONE'] = $this->story_model->get_my_projects_stories_state($user_id,array('done'));
-			$list['VERIFIED'] = $this->story_model->get_my_projects_stories_state($user_id,array('verify'));
-			$list['SIGNED OFF'] = $this->story_model->get_my_projects_stories_state($user_id,array('signoff'));
-			$this->view_data['stories_list'] = $list;
+		if($id=='0'){
+			$list = array();
+				$list['DRAFTS'] = $this->story_model->get_my_projects_stories_state($user_id,array('draft'));
+				$list['OPEN JOBS'] = $this->story_model->get_my_projects_stories_state($user_id,array('open','reject'));
+				$list['In PROGRESS'] = $this->story_model->get_my_projects_stories_state($user_id,array('in progress','redo'));
+				$list['DONE'] = $this->story_model->get_my_projects_stories_state($user_id,array('done'));
+				$list['VERIFIED'] = $this->story_model->get_my_projects_stories_state($user_id,array('verify'));
+				$list['SIGNED OFF'] = $this->story_model->get_my_projects_stories_state($user_id,array('signoff'));
+				$this->view_data['stories_list'] = $list;
+		}else{
+			$list = array();
+				$list['DRAFTS'] = $this->story_model->get_project_stories_state($id,array('draft'));
+				$list['OPEN JOBS'] = $this->story_model->get_project_stories_state($id,array('open','reject'));
+				$list['In PROGRESS'] = $this->story_model->get_project_stories_state($id,array('in progress','redo'));
+				$list['DONE'] = $this->story_model->get_project_stories_state($id,array('done'));
+				$list['VERIFIED'] = $this->story_model->get_project_stories_state($id,array('verify'));
+				$list['SIGNED OFF'] = $this->story_model->get_project_stories_state($id,array('signoff'));
+				$this->view_data['stories_list'] = $list;
+		}
 		$this->view_data['projects'] = $this->projects_model->get_my_projects_detailed($user_id);
 		$this->load->view('project_management_view', $this->view_data);
 	}
