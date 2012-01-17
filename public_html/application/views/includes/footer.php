@@ -48,7 +48,7 @@
                 <?php /*sample of content
                 <div class="left-column"><img src="<?php echo base_url();?>public/images/1stbidder.png" /></div>
                 <div class="right-column">
-                	<h3>Congradulations!</h3>
+                	<h3>Congratulations!</h3>
                     <p>You just won your first badge by placing your first bid on a job. We will notify you and assign this job to you once your bidding wins in this bidding completition. Goodluck!</p>
                 </div>
 				*/?>

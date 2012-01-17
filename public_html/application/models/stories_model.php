@@ -18,6 +18,13 @@ class Stories_model extends CI_Model {
 		$res = $this->db->query($sql, array($work_id));
 		return $res->result_array();
 	}
+
+	//Get lowest bid
+	function get_lowest_bid($work_id){
+		$sql = "select * from bids where work_id = ? order by bid_cost, days";
+		$res = $this->db->query($sql, array($work_id));
+		return $res->row_array();
+	}
 	
 	function get_my_projects_stories($user_id){
 		$sql = "SELECT story.*, users.username, users.user_id FROM (SELECT work_horse, ifnull(works.bid_deadline,'Open') as bid_deadline, status, work_id, priority, title, project.project_name, type, description, points, cost, works.project_id, (select count(user_id) from bids where bids.work_id = works.work_id) as total_bids, (select count(user_id) from bids where work_id = works.work_id and created_at>= ? ) as last_week_bids, (select count(comment_body) from comments where story_id = works.work_id) as total_comments, (select count(comment_body) from comments where story_id = works.work_id and comment_created>= ? ) as last_week_comments FROM works, project WHERE works.status!='draft' and project.project_id = works.project_id AND works.creator = ? ) as story left join users on users.user_id = story.work_horse ORDER BY CASE WHEN (lower(story.status) in ('open','reject')) then last_week_comments+last_week_bids else last_week_comments END DESC";
@@ -596,7 +603,7 @@ class Stories_model extends CI_Model {
 					$this->db->insert('achievement_set',$doc);
 					$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/1stbidder.png" /></div>
                 <div class="right-column">
-                	<h3>Congradulations!</h3>
+                	<h3>Congratulations!</h3>
                     <p>You just won your first badge by placing your first bid on a job. We will notify you and assign this job to you once your bidding wins in this bidding completition. Goodluck!</p>
                 </div>');
 				}
@@ -620,7 +627,7 @@ class Stories_model extends CI_Model {
 					$this->db->insert('achievement_set',$doc);
 					$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/badge03.png" /></div>
                 <div class="right-column">
-                	<h3>Congradulations!</h3>
+                	<h3>Congratulations!</h3>
                     <p>You won MOTIONWORKERS badge for spending 72 hours on system.</p>
                 </div>');
 				}
@@ -652,7 +659,7 @@ class Stories_model extends CI_Model {
 						$this->db->insert('skill_set', $d);
 						$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/badge02.png" /></div>
                 <div class="right-column">
-                	<h3>Congradulations!</h3>
+                	<h3>Congratulations!</h3>
                     <p>You won 10PACKS badge for successfully completing 10 jobs.</p>
                 </div>');
 					}
@@ -674,7 +681,7 @@ class Stories_model extends CI_Model {
 					$this->db->insert('achievement_set',$doc);
 					$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/badge01.png" /></div>
                 <div class="right-column">
-                	<h3>Congradulations!</h3>
+                	<h3>Congratulations!</h3>
                     <p>You won FAST FORWARDING BADGE bade for completing a task earlier than deadline.</p>
                 </div>');
 				}
