@@ -74,7 +74,7 @@
 
         var options = {
           width: 300, height: 420,
-          title: 'Burn-down/Resouce'
+          title: 'Burn-down/Resource'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('resource_chart_div'));

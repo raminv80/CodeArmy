@@ -84,10 +84,11 @@
     <div id="slideshow"> <span class="control" id="leftControl" style="display: block; ">Clicking moves left</span>
       <div id="slidesContainer" style="overflow-x: hidden; overflow-y: hidden; ">
         <div id="slideInner" style="width: 2240px; margin-left: -1680px; ">
+          <?php if(isset($featherlight) && $featherlight &&count($featherlight)>0){?>
           <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">FeatherLight Weight Tasks</span>
             <table width="860">
               <tr>
-                <?php if(isset($featherlight) && $featherlight &&count($featherlight)>0)foreach($featherlight as $task):?>
+                <?php foreach($featherlight as $task):?>
                 <td width="36%"><h3 id="h3slide">RM
                     <?=$task['cost']?>
                   </h3>
@@ -104,10 +105,12 @@
               </tr>
             </table>
           </div>
+          <?php }?>
+          <?php if(isset($lightweight) && $lightweight && count($lightweight)>0){?>
           <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Lightweight Weight Tasks</span>
             <table width="860">
               <tr>
-                <?php if(isset($lightweight) && $lightweight && count($lightweight)>0)foreach($lightweight as $task):?>
+                <?php foreach($lightweight as $task):?>
                 <td width="36%"><h3 id="h3slide">RM
                     <?=$task['cost']?>
                   </h3>
@@ -124,10 +127,12 @@
               </tr>
             </table>
           </div>
+          <?php }?>
+          <?php if(isset($heavyweight) && $heavyweight && count($heavyweight)>0){?>
           <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Heavy Weight Tasks</span>
             <table width="860">
               <tr>
-                <?php if(isset($heavyweight) && $heavyweight && count($heavyweight)>0)foreach($heavyweight as $task):?>
+                <?php foreach($heavyweight as $task):?>
                 <td width="36%"><h3 id="h3slide">RM
                     <?=$task['cost']?>
                   </h3>
@@ -144,6 +149,7 @@
               </tr>
             </table>
           </div>
+          <?php }?>
         </div>
       </div>
       <span class="control" id="rightControl" style="display: none; ">Clicking moves right</span></div>
