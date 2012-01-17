@@ -154,8 +154,6 @@ width: 1000px;
  overflow:hidden;
 	}
 
-.bid_indicator { margin-bottom:-5px;margin-right:15px;float:right }
-
 #title {font-family:'DINMediumAlternate';color:#fff; text-transform:uppercase; display: block; position: relative; padding:10px 0 0 0; z-index: 2;  font-size: 1.6em;}
 .WP-main .WP-searchbar {width: 100%;background: #000;margin-top: 10px;float: left;height: 49px;border-radius:10px;overflow: hidden;}
 .WP-main .WP-contract-placeholder { font-family:'DINRegular'; padding-top:2px;float: left;width:1000px; display:block;}
