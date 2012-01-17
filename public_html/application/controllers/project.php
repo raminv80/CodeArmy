@@ -117,6 +117,10 @@ class Project extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
 		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
+		if(!$this->view_data['project_owner']){
+			$this->view_data['modal_message'] = "You don't have permission to edit sprints of this project but still you may preview it.";
+			$this->view_data['modal_title'] = "Sprint Preview";
+		}
 		$this->view_data['project_sel'] = $id;
 		if($id>0){
 			$this->view_data['works'] = $this->projects_model->get_worklist_sprint($id);
