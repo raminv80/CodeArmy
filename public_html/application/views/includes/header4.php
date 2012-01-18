@@ -166,7 +166,7 @@ $header_tasks = $query->result_array();
           <div class="container">
         <div class="content"> 
               <!-- Slider Content Start -->
-              <div id="projectheader">Tasks</div>
+              <div id="taskheader"></div>
               <?php foreach($header_tasks as $task): ?>
               <script type="text/javascript">
 							$(function(){

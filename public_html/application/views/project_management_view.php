@@ -71,7 +71,7 @@
                 <div class="bidding-mgmt-placeholder">
                   <div class="section-holder">
                     <?php if(in_array(strtolower($story['status']), array('open','reject'))){?>
-                    <?php $bidders = $this->story_model->get_bidders($story['work_id']); if(count($bidders)>0):?>
+                    <?php $bidders = $this->stories->get_bidders($story['work_id']); if(count($bidders)>0):?>
                     <h3>BIDDERS</h3>
                     <?php foreach($bidders as $bid):?>
                     <div id="section">
