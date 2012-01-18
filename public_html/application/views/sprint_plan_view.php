@@ -27,14 +27,14 @@
   <div class="contents">
     <div id="plan_holder" class="scrum_holder">
       <div id="sprint_planner">
-        <div class="scrum_column">
+        <div class="scrum_column" id="ice_box">
           <h2>Ice Box</h2>
           <div id="product_backlog" class="story_list">
             <!-- <li class="empty_space hint_step1"> <span style="margin-left: 67px;">+ Add User Story</span> </li> -->
             <li class="empty_space"> <span style="margin-left: 67px;">+ Add User Story</span> </li>
           </div>
         </div>
-        <div class="scrum_column">
+        <div class="scrum_column" id="sprint_1">
           <h2 class="sprint-title">Sprint 1 <a style="height:10px;float: Right;position:relative;top:-16px;left:4px;" class="minimize" href="javascript:void(0)"><img height="10px" width="10px" border="0" src="/public/images/icon-minimize.png" /></a></a></h2>
           <ul class="timeline">
             <li><b>Strt:</b>
@@ -540,6 +540,20 @@ function populate(works){
 	//adjust their height to max
 	$('.story_list').css({'min-height': max_height+'px'});
 	$('.add_sprint').css('min-height',(max_height+120));
+	resume_sprint_visibility();
+}
+
+function resume_sprint_visibility(){
+	$(".scrum_column").each(function(){
+			column = $(this);
+			status = getCookie(column.attr('id') + "_<?=$project_sel?>_<?=$curSprint?>");
+			if (status === "hide"){
+				column.addClass('minimized').find('*').hide();
+				var max_height=0;
+				$('.story_list').each(function(){if($(this).height()>max_height)max_height = $(this).height();});
+				column.append('<div style="height:'+max_height+'px;" class="maximize"></div>');
+			}
+		});
 }
 
 var num_sprints = 1; num_edits=0;
@@ -576,12 +590,13 @@ $('.add_sprint').click(function(){
 		$('.story_list').each(function(){if($(this).height()>max_height)max_height = $(this).height();})
 		//adjust their height to max
 		$('.story_list').css({'min-height': max_height+'px'});
-		$(this).before('<div class="scrum_column"><h2 class="sprint-title">Sprint '+num_sprints+' <div class="action-icons"><a class="minimize" href="javascript:void(0)"><img height="10px" width="10px" border="0" src="/public/images/icon-minimize.png" /></a><a class="remove" href="javascript:  remove_sprint('+num_sprints+')"><img height="10px" width="10px" src="/public/images/icon_delete.png" border="0" /></a></div></h2><ul class="timeline"><li><b>Strt:</b> <input name="startSprint'+num_sprints+'" class="start" /></li><li><b>End:</b> <input name="endSprint'+num_sprints+'" class="end" /></li></ul><div style="clear:both"></div><div class="timeline-holder"><div class="datestart"><p class="day_date">S</p><p class="monthyear_date">tart Date</p></div><div class="timeline-path"><div class="mark" style="margin-left:15px;"></div><span class="total-burndown"></span></div><div class="dateend"><p class="day_date">E</p><p class="monthyear_date">nd Date</p></div></div><div style=" clear:both"><ul class="sprint-info"></div><div id="scrum'+num_sprints+'" class="story_list" style="min-height: '+max_height+'px"></div></div>');
+		$(this).before('<div id="col_'+num_sprints+'" class="scrum_column"><h2 class="sprint-title">Sprint '+num_sprints+' <div class="action-icons"><a class="minimize" href="javascript:void(0)"><img height="10px" width="10px" border="0" src="/public/images/icon-minimize.png" /></a><a class="remove" href="javascript:  remove_sprint('+num_sprints+')"><img height="10px" width="10px" src="/public/images/icon_delete.png" border="0" /></a></div></h2><ul class="timeline"><li><b>Strt:</b> <input name="startSprint'+num_sprints+'" class="start" /></li><li><b>End:</b> <input name="endSprint'+num_sprints+'" class="end" /></li></ul><div style="clear:both"></div><div class="timeline-holder"><div class="datestart"><p class="day_date">S</p><p class="monthyear_date">tart Date</p></div><div class="timeline-path"><div class="mark" style="margin-left:15px;"></div><span class="total-burndown"></span></div><div class="dateend"><p class="day_date">E</p><p class="monthyear_date">nd Date</p></div></div><div style=" clear:both"><ul class="sprint-info"></div><div id="scrum'+num_sprints+'" class="story_list" style="min-height: '+max_height+'px"></div></div>');
 		$('.minimize').unbind('click');
 		$('.minimize').click(function(){
 				column = $(this).parents('.scrum_column');
 				column.addClass('minimized').find('*').hide();
 				column.append('<div style="height:'+max_height+'px;" class="maximize"></div>');
+				setCookie(column.attr('id') + "_<?=$project_sel?>_<?=$curSprint?>", "hide");
 			});
 		$('.scrum_column').off('click','.maximize');
 		$('.scrum_column').on('click','.maximize',function(){
@@ -590,6 +605,7 @@ $('.add_sprint').click(function(){
 				column.remove('.maximize');
 				column.removeClass('minimized').find('*:not(.options,.mark)').show();
 				$(this).remove();
+				setCookie(column.attr('id') + "_<?=$project_sel?>_<?=$curSprint?>", "show");
 			}
 		});
 		tmpCurSprint = $('#scrum'+num_sprints).parent();
