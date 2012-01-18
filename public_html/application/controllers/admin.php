@@ -8,6 +8,7 @@ class Admin extends CI_Controller {
 		parent::__construct();
 		
 		$this->view_data['page_is'] = 'Admin';
+		$this->view_data['action_is'] = $this->uri->segment(2);
 		$controller = $this->uri->segment(1);
 		$action = $this->uri->segment(2);
 		$param = $this->uri->segment(3);
@@ -15,6 +16,7 @@ class Admin extends CI_Controller {
 		
 		$this->load->model('users_model');
 		$this->load->model('projects_model');
+		$this->load->model('stories_model', 'stories');
 		
 		$check_login = $this->session->userdata('role');
 		if($check_login == 'admin') {
@@ -29,6 +31,7 @@ class Admin extends CI_Controller {
 				$myProfile = $myProfile[0];
 				$this->view_data['me'] = $me;
 				$this->view_data['myProfile'] = $myProfile;
+				$this->view_data['username'] = $this->session->userdata('username');
 			}
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;

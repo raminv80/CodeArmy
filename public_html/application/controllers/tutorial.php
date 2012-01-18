@@ -3,10 +3,23 @@
 class Tutorial extends CI_Controller {
 	function __construct() {
 		parent::__construct();
-		$this->load->model('stories_model', 'story_model');
+		$this->load->model('projects_model');
+		$this->load->model('users_model');
+		$this->load->model('stories_model', 'stories');
 		
 		$this->view_data['page_is'] = 'Tutorial';
-		
+		$this->view_data['action_is'] = $this->uri->segment(2);
+		$user_id = $this->session->userdata('user_id');
+			if($user_id){
+				$me = $this->users_model->get_user($user_id);
+				$me = $me->result_array();
+				$me = $me[0];
+				$myProfile = $this->users_model->get_profile($user_id);
+				$myProfile = $myProfile->result_array();
+				$myProfile = $myProfile[0];
+				$this->view_data['me'] = $me;
+				$this->view_data['myProfile'] = $myProfile;
+			}
 		// - check to verify if user is login...
 		$check_login = $this->session->userdata('is_logged_in');
 		$controller = $this->uri->segment(1);
@@ -35,14 +48,14 @@ class Tutorial extends CI_Controller {
 	}
 	
 	function AjaxDisable(){
-		$this->story_model->setTutorial($this->session->userdata('user_id'), 0);	
+		$this->stories->setTutorial($this->session->userdata('user_id'), 0);	
 	}
 	
 	function AjaxBiddingTutorial(){
-		$this->story_model->setTutorial($this->session->userdata('user_id'), 1);
+		$this->stories->setTutorial($this->session->userdata('user_id'), 1);
 	}
 	
 	function AjaxSubmitJobTutorial(){
-		$this->story_model->setTutorial($this->session->userdata('user_id'), 2);
+		$this->stories->setTutorial($this->session->userdata('user_id'), 2);
 	}
 }

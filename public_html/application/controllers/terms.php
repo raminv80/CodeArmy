@@ -7,7 +7,9 @@ class Terms extends CI_Controller {
 		
 		$this->view_data['page_is'] = 'T&C';
 		$this->view_data['action_is'] = $this->uri->segment(2);
+		$this->load->model('projects_model');
 		$this->load->model('users_model');
+		$this->load->model('stories_model', 'stories');
 		$user_id = $this->session->userdata('user_id');
 		if($user_id){
 			$myProfile = $this->users_model->get_profile($user_id);

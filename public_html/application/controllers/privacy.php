@@ -3,8 +3,9 @@
 class Privacy extends CI_Controller {
 	function __construct() {
 		parent::__construct();
-		//$this->load->model('users_model');
+		$this->load->model('projects_model');
 		$this->load->model('users_model');
+		$this->load->model('stories_model', 'stories');
 		$user_id = $this->session->userdata('user_id');
 		if($user_id){
 			$myProfile = $this->users_model->get_profile($user_id);

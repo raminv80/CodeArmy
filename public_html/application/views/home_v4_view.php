@@ -1,5 +1,6 @@
 <?php $this->load->view('includes/header4'); ?>
 <!--<a id="feedbackbtn" href="#feedbackbox"><img class="feedback-button" src="/public/images/feedback.png" style="position:fixed; right: 0; padding-top: 90px;"></a>-->
+
 <section id="pitch"><br />
   <div class="WP-main" style="margin-top:100px;">
     <div class="WP-total-amount-placeholder">
@@ -190,7 +191,7 @@
               <td>RM
                 <?=$story['cost']?>
                 <!-- BID indicator -->
-                <?= (isset($mybids)&&in_array($story['work_id'],$my_bids))?'<img src="/public/images/bid_indicator.png" class="bid_indicator">':'' ?>
+                <?= (isset($my_bids)&&in_array($story['work_id'],$my_bids))?'<img src="/public/images/bid_indicator.png" class="bid_indicator">':'' ?>
               </td>
             </tr>
           </table>

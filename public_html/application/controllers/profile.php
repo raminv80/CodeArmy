@@ -8,9 +8,21 @@ class Profile extends CI_Controller {
 		parent::__construct();
 		$this->load->model('users_model');
 		$this->load->model('skill_model');
-		$this->load->model('stories_model','story');
-		
+		$this->load->model('projects_model');
+		$this->load->model('stories_model', 'stories');
+		$user_id = $this->session->userdata('user_id');
+			if($user_id){
+				$me = $this->users_model->get_user($user_id);
+				$me = $me->result_array();
+				$me = $me[0];
+				$myProfile = $this->users_model->get_profile($user_id);
+				$myProfile = $myProfile->result_array();
+				$myProfile = $myProfile[0];
+				$this->view_data['me'] = $me;
+				$this->view_data['myProfile'] = $myProfile;
+			}
 		$this->view_data['page_is'] = 'signup';
+		$this->view_data['action_is'] = $this->uri->segment(2);
 		$controller = $this->uri->segment(1);
 		$action = $this->uri->segment(2);
 		$param = $this->uri->segment(3);
@@ -39,8 +51,8 @@ class Profile extends CI_Controller {
 		$this->view_data['window_title'] = "Workpad :: user profile";
 		//$this->view_data['user_id'] = $user_id;
 		$this->view_data['profile'] = $data[0];
-		$this->view_data['exp'] = $this->story->get_exp($user_id);
-		$this->view_data['rank'] = $this->story->get_rank($user_id,true);
+		$this->view_data['exp'] = $this->stories->get_exp($user_id);
+		$this->view_data['rank'] = $this->stories->get_rank($user_id,true);
 		$this->view_data['username'] = $this->session->userdata("username");
 		$this->load->view('profile_view', $this->view_data);
 	}
@@ -50,12 +62,12 @@ class Profile extends CI_Controller {
 		$data = $query->result_array();
 		$this->view_data['window_title'] = "Workpad :: user profile";
 		$this->view_data['profile'] = $data[0];
-		$this->view_data['exp'] = $this->story->get_exp($user_id);
-		$this->view_data['rank'] = $this->story->get_rank($user_id,true);
-		$this->view_data['stats'] = $this->story->get_stats($user_id);
-		$this->view_data['badge'] = $this->story->get_rank_main_badge($user_id);
-		$this->view_data['lightspeed_medal'] = $this->story->points_last_week($user_id)>=20;
-		$this->view_data['strength'] = $this->story->points_inrow($user_id)>=40;
+		$this->view_data['exp'] = $this->stories->get_exp($user_id);
+		$this->view_data['rank'] = $this->stories->get_rank($user_id,true);
+		$this->view_data['stats'] = $this->stories->get_stats($user_id);
+		$this->view_data['badge'] = $this->stories->get_rank_main_badge($user_id);
+		$this->view_data['lightspeed_medal'] = $this->stories->points_last_week($user_id)>=20;
+		$this->view_data['strength'] = $this->stories->points_inrow($user_id)>=40;
 		$this->view_data['username'] = $this->session->userdata("username");
 		$this->view_data['message'] = $this->session->flashdata('message');
 		$this->load->view('show_profile_view', $this->view_data);

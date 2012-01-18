@@ -10,8 +10,20 @@ class Signup extends CI_Controller {
 		$this->view_data['page_is'] = 'signup';
 		$this->view_data['action_is'] = 'index';
 		
+		$this->load->model('projects_model');
 		$this->load->model('users_model');
-		
+		$this->load->model('stories_model', 'stories');
+		$user_id = $this->session->userdata('user_id');
+			if($user_id){
+				$me = $this->users_model->get_user($user_id);
+				$me = $me->result_array();
+				$me = $me[0];
+				$myProfile = $this->users_model->get_profile($user_id);
+				$myProfile = $myProfile->result_array();
+				$myProfile = $myProfile[0];
+				$this->view_data['me'] = $me;
+				$this->view_data['myProfile'] = $myProfile;
+			}
 		// a user that is already logged in can't signup a new account
 		// redirect the user to dashboard
 		$check_login = $this->session->userdata('is_logged_in');
