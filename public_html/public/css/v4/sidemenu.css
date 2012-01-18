@@ -28,10 +28,16 @@
 }
 
 #projectheader{
-	background:url(/public/images/projectheader.png) ;
+	background:url(/public/images/projectheader.png) no-repeat;
 	width:270px;
 	height:37px;
 	border-bottom:1px #333;
+}
+#taskheader {
+background: url(/public/images/taskheader.png) no-repeat;
+width: 270px;
+height: 37px;
+border-bottom: 1px #333;
 }
 .projecttitle{
 	background: url(/public/images/projecttitle.jpg) repeat-x top;
