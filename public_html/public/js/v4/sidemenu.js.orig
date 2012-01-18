@@ -21,11 +21,9 @@ $(document).ready(function(){
 		
 			$(".projecttitle").click(function(){
 					if($(this).hasClass("projectmenuactive")){
-						console.log('hide');
 						$(".projectmenu").slideUp(function(){$(".projecttitle").removeClass("projectmenuactive");});
 					}
 					else{
-						console.log('show');
 						$(".projectmenu").slideUp();
 						$(".projecttitle").removeClass("projectmenuactive");
 						$(this).next().slideDown();
@@ -40,16 +38,7 @@ $(document).ready(function(){
 				$(this).animate({paddingLeft : '0px'}, {queue: false})
 			})
 		
-		$(".projectmenu ul li a").hover(function(){
-			$(this).animate({paddingLeft : '10px'}, {queue: false})
-		},function(){
-			$(this).animate({paddingLeft : '0px'}, {queue: false})
-		})
-		
-		resize();
-		$("#scroll_container").mCustomScrollbar("vertical",400,"easeOutCirc",1.05,"auto","yes","no",0);
-		
-
+<<<<<<< HEAD
 });
 
 function setCookie(c_name,value,exdays)
@@ -76,8 +65,19 @@ function getCookie(c_name)
 }
 
 
-//$(window).resize(function(){$('#sidemenucontent').height($(window.height()-220));});
+$(window).resize(function(){$('#sidemenucontent').height($(window.height()-220));});
+=======
+		$(".projectmenu ul li a").hover(function(){
+			$(this).animate({paddingLeft : '10px'}, {queue: false})
+		},function(){
+			$(this).animate({paddingLeft : '0px'}, {queue: false})
+		})
+		
+		resize();
+		$("#scroll_container").mCustomScrollbar("vertical",400,"easeOutCirc",1.05,"auto","yes","no",0);
+		
 
+});
 
 $(window).resize(function(){
 	resize();
@@ -86,3 +86,4 @@ $(window).resize(function(){
 function resize() {
 	$('#scroll_container').css('height',$(window).height()-255);
 }
+>>>>>>> khai/master
