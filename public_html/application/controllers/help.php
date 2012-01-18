@@ -6,7 +6,9 @@ class Help extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
+		$this->load->model('projects_model');
 		$this->load->model('users_model');
+		$this->load->model('stories_model', 'stories');
 		//$this->load->model('users_model');
 		$user_id = $this->session->userdata('user_id');
 		if($user_id){

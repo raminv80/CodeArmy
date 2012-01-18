@@ -3,7 +3,9 @@
 class Tutorial extends CI_Controller {
 	function __construct() {
 		parent::__construct();
-		$this->load->model('stories_model', 'story_model');
+		$this->load->model('projects_model');
+		$this->load->model('users_model');
+		$this->load->model('stories_model', 'stories');
 		
 		$this->view_data['page_is'] = 'Tutorial';
 		
@@ -35,14 +37,14 @@ class Tutorial extends CI_Controller {
 	}
 	
 	function AjaxDisable(){
-		$this->story_model->setTutorial($this->session->userdata('user_id'), 0);	
+		$this->stories->setTutorial($this->session->userdata('user_id'), 0);	
 	}
 	
 	function AjaxBiddingTutorial(){
-		$this->story_model->setTutorial($this->session->userdata('user_id'), 1);
+		$this->stories->setTutorial($this->session->userdata('user_id'), 1);
 	}
 	
 	function AjaxSubmitJobTutorial(){
-		$this->story_model->setTutorial($this->session->userdata('user_id'), 2);
+		$this->stories->setTutorial($this->session->userdata('user_id'), 2);
 	}
 }

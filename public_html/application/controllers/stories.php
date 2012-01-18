@@ -6,9 +6,10 @@ class Stories extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
-		$this->load->model('users_model');
-		$this->load->model('projects_model');
 		$this->load->model('skill_model');
+		$this->load->model('projects_model');
+		$this->load->model('users_model');
+		$this->load->model('stories_model', 'stories');
 		
 		$this->view_data['page_is'] = 'stories';
 		$this->view_data['action_is'] = 'browse';
@@ -19,8 +20,7 @@ class Stories extends CI_Controller {
 			$this->view_data['username'] = $this->session->userdata('username');
 		} else { // - if user not login, redirect to dashboard. 
 			if(!in_array(strtolower($this->uri->segment(2)),array('browse','ajax_get_project_cat')))redirect("login"); 
-		}	
-		$this->load->model('stories_model', 'stories');
+		}
 	}
 
 	private function check_authentication($role = NULL){

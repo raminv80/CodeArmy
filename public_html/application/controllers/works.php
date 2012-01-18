@@ -3,7 +3,9 @@
 class Works extends CI_Controller {
 	function __construct() {
 		parent::__construct();
+		$this->load->model('projects_model');
 		$this->load->model('users_model');
+		$this->load->model('stories_model', 'stories');
 		
 		$this->view_data['page_is'] = 'works';
 		

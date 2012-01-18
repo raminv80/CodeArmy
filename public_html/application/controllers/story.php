@@ -9,6 +9,7 @@ class Story extends CI_Controller {
 		$this->load->model('users_model');
 		$this->load->model('skill_model');
 		$this->load->model('projects_model');
+		$this->load->model('stories_model', 'stories');
 		
 		$this->view_data['page_is'] = 'story';
 		$this->view_data['action'] = $this->uri->segment(2);

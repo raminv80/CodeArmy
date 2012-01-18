@@ -8,7 +8,7 @@ class Project extends CI_Controller {
 		parent::__construct();
 		$this->load->model('projects_model');
 		$this->load->model('users_model');
-		$this->load->model('stories_model', 'story_model');
+		$this->load->model('stories_model', 'stories');
 		
 		$this->view_data['page_is'] = 'project';
 		$this->view_data['action_is'] = $this->router->fetch_method();
@@ -58,10 +58,10 @@ class Project extends CI_Controller {
 	}
 	
 	public function remove_comment($id){
-		$comment = $this->story_model->get_comment($id);
+		$comment = $this->stories->get_comment($id);
 		if(count($comment)>0){
 			if(($comment[0]['username']==$this->session->userdata('username'))||($this->session->userdata('role')=='admin')){
-				$this->story_model->delete_comment($id);
+				$this->stories->delete_comment($id);
 			}
 		}
 		redirect("/story/".$comment[0]['story_id']);
@@ -83,12 +83,12 @@ class Project extends CI_Controller {
 			}
 		}else{
 			$list = array();
-			$list['DRAFTS'] = $this->story_model->get_my_projects_stories_state($user_id,array('draft'));
-			$list['OPEN JOBS'] = $this->story_model->get_my_projects_stories_state($user_id,array('open','reject'));
-			$list['In PROGRESS'] = $this->story_model->get_my_projects_stories_state($user_id,array('in progress','redo'));
-			$list['DONE'] = $this->story_model->get_my_projects_stories_state($user_id,array('done'));
-			$list['VERIFIED'] = $this->story_model->get_my_projects_stories_state($user_id,array('verify'));
-			$list['SIGNED OFF'] = $this->story_model->get_my_projects_stories_state($user_id,array('signoff'));
+			$list['DRAFTS'] = $this->stories->get_my_projects_stories_state($user_id,array('draft'));
+			$list['OPEN JOBS'] = $this->stories->get_my_projects_stories_state($user_id,array('open','reject'));
+			$list['In PROGRESS'] = $this->stories->get_my_projects_stories_state($user_id,array('in progress','redo'));
+			$list['DONE'] = $this->stories->get_my_projects_stories_state($user_id,array('done'));
+			$list['VERIFIED'] = $this->stories->get_my_projects_stories_state($user_id,array('verify'));
+			$list['SIGNED OFF'] = $this->stories->get_my_projects_stories_state($user_id,array('signoff'));
 			$this->view_data['stories_list'] = $list;
 			$this->view_data['projects'] = $this->projects_model->get_my_projects_detailed($user_id);
 		}
@@ -102,21 +102,21 @@ class Project extends CI_Controller {
 		$this->view_data['window_title'] = 'Workpad :: Project Management';
 		if($id=='0'){
 			$list = array();
-				$list['DRAFTS'] = $this->story_model->get_my_projects_stories_state($user_id,array('draft'));
-				$list['OPEN JOBS'] = $this->story_model->get_my_projects_stories_state($user_id,array('open','reject'));
-				$list['In PROGRESS'] = $this->story_model->get_my_projects_stories_state($user_id,array('in progress','redo'));
-				$list['DONE'] = $this->story_model->get_my_projects_stories_state($user_id,array('done'));
-				$list['VERIFIED'] = $this->story_model->get_my_projects_stories_state($user_id,array('verify'));
-				$list['SIGNED OFF'] = $this->story_model->get_my_projects_stories_state($user_id,array('signoff'));
+				$list['DRAFTS'] = $this->stories->get_my_projects_stories_state($user_id,array('draft'));
+				$list['OPEN JOBS'] = $this->stories->get_my_projects_stories_state($user_id,array('open','reject'));
+				$list['In PROGRESS'] = $this->stories->get_my_projects_stories_state($user_id,array('in progress','redo'));
+				$list['DONE'] = $this->stories->get_my_projects_stories_state($user_id,array('done'));
+				$list['VERIFIED'] = $this->stories->get_my_projects_stories_state($user_id,array('verify'));
+				$list['SIGNED OFF'] = $this->stories->get_my_projects_stories_state($user_id,array('signoff'));
 				$this->view_data['stories_list'] = $list;
 		}else{
 			$list = array();
-				$list['DRAFTS'] = $this->story_model->get_project_stories_state($id,array('draft'));
-				$list['OPEN JOBS'] = $this->story_model->get_project_stories_state($id,array('open','reject'));
-				$list['In PROGRESS'] = $this->story_model->get_project_stories_state($id,array('in progress','redo'));
-				$list['DONE'] = $this->story_model->get_project_stories_state($id,array('done'));
-				$list['VERIFIED'] = $this->story_model->get_project_stories_state($id,array('verify'));
-				$list['SIGNED OFF'] = $this->story_model->get_project_stories_state($id,array('signoff'));
+				$list['DRAFTS'] = $this->stories->get_project_stories_state($id,array('draft'));
+				$list['OPEN JOBS'] = $this->stories->get_project_stories_state($id,array('open','reject'));
+				$list['In PROGRESS'] = $this->stories->get_project_stories_state($id,array('in progress','redo'));
+				$list['DONE'] = $this->stories->get_project_stories_state($id,array('done'));
+				$list['VERIFIED'] = $this->stories->get_project_stories_state($id,array('verify'));
+				$list['SIGNED OFF'] = $this->stories->get_project_stories_state($id,array('signoff'));
 				$this->view_data['stories_list'] = $list;
 		}
 		$this->view_data['projects'] = $this->projects_model->get_my_projects_detailed($user_id);
@@ -174,7 +174,7 @@ class Project extends CI_Controller {
 		$work_id = '0';
 		//check if this project is mine
 		if($this->projects_model->is_project_owner($user_id, $project_id))
-			$work_id = $this->story_model->create_draft_story($project_id, $user_id, $data);
+			$work_id = $this->stories->create_draft_story($project_id, $user_id, $data);
 		echo $work_id;
 	}
 	
@@ -186,7 +186,7 @@ class Project extends CI_Controller {
 		$work_id = '0';
 		//check if this project is mine
 		if($this->projects_model->is_project_owner($user_id, $project_id)){
-			$work_id = $this->story_model->update_draft_story($project_id, $user_id, $id, $data);
+			$work_id = $this->stories->update_draft_story($project_id, $user_id, $id, $data);
 		}
 		echo $work_id;
 	}
@@ -198,7 +198,7 @@ class Project extends CI_Controller {
 		$work_id = '0';
 		//check if this project is mine
 		if($this->projects_model->is_project_owner($user_id, $project_id))
-			$work_id = $this->story_model->delete_story_v4($project_id, $data);
+			$work_id = $this->stories->delete_story_v4($project_id, $data);
 		echo $work_id;
 	}
 	
@@ -215,7 +215,7 @@ class Project extends CI_Controller {
 		$sprint = '0';
 		//check if this project is mine
 		if($this->projects_model->is_project_owner($user_id, $project_id))
-			$sprint = $this->story_model->update_priority($project_id, $user_id, $sprint_id, $data, $date_from, $date_to);
+			$sprint = $this->stories->update_priority($project_id, $user_id, $sprint_id, $data, $date_from, $date_to);
 		echo $sprint;	
 	}
 	

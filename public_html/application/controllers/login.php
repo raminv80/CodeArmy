@@ -6,7 +6,9 @@ class Login extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
+		$this->load->model('projects_model');
 		$this->load->model('users_model');
+		$this->load->model('stories_model', 'stories');
 		$this->view_data['page_is'] = 'login';
 		$this->view_data['action_is'] = $this->uri->segment(2);
 		// - check if user is logged in

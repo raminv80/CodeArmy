@@ -164,7 +164,7 @@ $header_tasks = $query->result_array();
     <?php foreach($header_tasks as $task): ?>
     <div class="projectblock">
           <div class="projecttitle">
-        <?=ucfirst($task['title'])?>
+        <?=ucfirst(substr($task['title'],0,20))?>
         <span id="count_<?=$task['work_id']?>"></span></div>
         <script type="text/javascript">
 		$(function(){
@@ -177,7 +177,7 @@ $header_tasks = $query->result_array();
         <ul>
               <li><a href="/story/<?=$task['work_id']?>">Story Details</a></li>
               <li><a href="/project/<?=$task['project_id']?>">Project Details</a></li>
-              <li><a href="/project/<?=$task['project_id']?>">Scrum Board</a></li>
+              <li><a href="/project/scrum_board/<?=$task['project_id']?>">Scrum Board</a></li>
               <?php echo form_open('story/submission');?>
                 <input type="hidden" name="id" value="<?php echo $task['work_id']; ?>" />
                 <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />

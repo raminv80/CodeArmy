@@ -18,6 +18,8 @@ class Dashboard extends CI_Controller {
 			$this->view_data['username'] = $this->session->userdata('username');
 			$this->view_data['user_role'] = $this->session->userdata('role');
 		}
+		$this->load->model('projects_model');
+		$this->load->model('users_model');
 		$this->load->model('stories_model', 'stories');
 	}
 	

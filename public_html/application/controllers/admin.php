@@ -15,6 +15,7 @@ class Admin extends CI_Controller {
 		
 		$this->load->model('users_model');
 		$this->load->model('projects_model');
+		$this->load->model('stories_model', 'stories');
 		
 		$check_login = $this->session->userdata('role');
 		if($check_login == 'admin') {
