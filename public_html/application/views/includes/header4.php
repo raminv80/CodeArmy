@@ -161,7 +161,7 @@ if($user_id){
         <div class="projectblock">
               <div class="projecttitle">
             <?=ucfirst($project['project_name'])?>
-            <span>23</span></div>
+            <span><?=$this->projects_model->get_percentage($project['project_id'])?>%</span></div>
               <div class="projectmenu">
             <ul>
                   <li><a href="/project/<?=$project['project_id']?>">Project Detail</a></li>
