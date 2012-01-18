@@ -29,6 +29,11 @@ $(document).ready(function(){
 		},function(){
 			$(this).animate({paddingLeft : '0px'}, {queue: false})
 		})
+		
+		resize();
+		$("#scroll_container").mCustomScrollbar("vertical",400,"easeOutCirc",1.05,"auto","yes","no",0);
+		
+
 });
 
 $(window).resize(function(){
@@ -36,5 +41,5 @@ $(window).resize(function(){
 });
 
 function resize() {
-	$('#scroll_container').css('height',$(window).height()-270);
+	$('#scroll_container').css('height',$(window).height()-255);
 }
