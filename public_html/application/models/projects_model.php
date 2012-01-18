@@ -207,8 +207,10 @@ class Projects_model extends CI_Model {
 	}
 	
 	function get_my_projects($user_id){
+		$role = $this->session->userdata('role');
+		if($role!="admin")$role="user";
 		$query = "SELECT project_id, project_name FROM project where project_owner_id = ? or ?='admin'";
-		$result = $this->db->query($query, array($user_id, $this->session->userdata('role')));
+		$result = $this->db->query($query, array($user_id, $role));
 		return $result->result_array();
 	}
 	
