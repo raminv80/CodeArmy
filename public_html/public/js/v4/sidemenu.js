@@ -31,4 +31,10 @@ $(document).ready(function(){
 		})
 });
 
-$(window).resize(function(){$('#sidemenucontent').height($(window.height()-220));});
+$(window).resize(function(){
+	resize();
+});
+
+function resize() {
+	$('#scroll_container').css('height',$(window).height()-270);
+}

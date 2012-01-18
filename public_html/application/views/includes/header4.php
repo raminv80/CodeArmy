@@ -31,6 +31,9 @@
     <script type="text/javascript" src="/public/js/v4/jquery.scrollTo-1.4.2-min.js"></script>
     <script type="text/javascript" src="/public/js/v4/jquery.localscroll-1.2.7-min.js"></script>
     <script type="text/javascript" src="/public/js/v4/jquery.colorbox.js"></script>
+    <script type="text/javascript" src="/public/js/v4/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="/public/js/v4/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="/public/js/v4/jquery.mCustomScrollbar.js"></script>
     <script type="text/javascript" src="/public/js/v4/sidemenu.js"></script>
     <script type="text/javascript" src="/public/js/v4/main.js"></script>
 	<script type="text/javascript" src="/public/js/v4/jquery.countdown.min.js"></script>
@@ -155,62 +158,74 @@ $header_projects = $this->projects_model->get_my_projects($user_id);
 $query = $this->stories->get_my_works($user_id,'In progress');
 $header_tasks = $query->result_array();
 ?>
-<!-- start side menu -->
-<div id="side_menu" class="sidemenu_inactive">
-      <div id="sidemenubutton" class="sideopen"></div>
-      <div id="sidemenucontent" style="overflow-y:scroll">
-    
-    <div id="projectheader">Tasks</div>
-    <?php foreach($header_tasks as $task): ?>
-    <div class="projectblock">
-          <div class="projecttitle">
-        <?=ucfirst(substr($task['title'],0,20))?>
-        <span id="count_<?=$task['work_id']?>"></span></div>
-        <script type="text/javascript">
-		$(function(){
-			var e = "<?=$task['deadline']?>";
-			var liftoffTime=new Date(e.substr(0,4),e.substr(5,2)-1,e.substr(8,2));
-			$('#count_<?=$task['work_id']?>').countdown({until: liftoffTime, format: 'dHMS', compact: true, layout: '{dn} {dl} {hnn}{sep}{mnn}{sep}{snn}'});
-			});
-        </script>
-          <div class="projectmenu">
-        <ul>
-              <li><a href="/story/<?=$task['work_id']?>">Story Details</a></li>
-              <li><a href="/project/<?=$task['project_id']?>">Project Details</a></li>
-              <li><a href="/project/scrum_board/<?=$task['project_id']?>">Scrum Board</a></li>
-              <?php echo form_open('story/submission');?>
-                <input type="hidden" name="id" value="<?php echo $task['work_id']; ?>" />
-                <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
-                <!--<input type="submit" name="submit" value="Job Done!" />-->
-                <li>
-                    <a href="javascript: void(0)" onclick="$(this).parent().parent().submit();">Job Done!</a>
-                </li>
-              <?php echo form_close(); ?>
-            </ul>
-      </div>
-        </div>
-    <?php endforeach;?>
-    
-    <div id="projectheader"></div>
-    <?php foreach($header_projects as $project): ?>
-    <div class="projectblock">
-          <div class="projecttitle">
-        <?=ucfirst($project['project_name'])?>
-        <span>
-            <?=$this->projects_model->get_percentage($project['project_id'])?>
-            %</span></div>
-          <div class="projectmenu">
-        <ul>
-              <li><a href="/project/<?=$project['project_id']?>">Project Detail</a></li>
-              <li><a href="/project/story_management/<?=$project['project_id']?>">Task List</a></li>
-              <li><a href="/project/burndown_chart/<?=$project['project_id']?>">Burndown Chart</a></li>
-              <li><a href="/project/sprint_planner/<?=$project['project_id']?>">Sprint Plan</a></li>
-              <li><a href="/project/scrum_board/<?=$project['project_id']?>">Scrum Board</a></li>
-            </ul>
-      </div>
-        </div>
-    <?php endforeach;?>
-  </div>
-    </div>
+    <!-- start side menu -->
+    <div id="side_menu" class="sidemenu_inactive">
+        <div id="sidemenubutton" class="sideopen"></div>
+		<div id="scroll_container">
+			<div class="customScrollBox">
+				<div class="container">
+		    		<div class="content">
+		    			<!-- Slider Content Start -->
+					    <div id="projectheader">Tasks</div>
+					    <?php foreach($header_tasks as $task): ?>
+					    <div class="projectblock">
+					          <div class="projecttitle">
+					        <?=ucfirst(substr($task['title'],0,20))?>
+					        <span id="count_<?=$task['work_id']?>"></span></div>
+					        <script type="text/javascript">
+							$(function(){
+								var e = "<?=$task['deadline']?>";
+								var liftoffTime=new Date(e.substr(0,4),e.substr(5,2)-1,e.substr(8,2));
+								$('#count_<?=$task['work_id']?>').countdown({until: liftoffTime, format: 'dHMS', compact: true, layout: '{dn} {dl} {hnn}{sep}{mnn}{sep}{snn}'});
+								});
+					        </script>
+					          <div class="projectmenu">
+					        <ul>
+					              <li><a href="/story/<?=$task['work_id']?>">Story Details</a></li>
+					              <li><a href="/project/<?=$task['project_id']?>">Project Details</a></li>
+					              <li><a href="/project/scrum_board/<?=$task['project_id']?>">Scrum Board</a></li>
+					              <?php echo form_open('story/submission');?>
+					                <input type="hidden" name="id" value="<?php echo $task['work_id']; ?>" />
+					                <input type="hidden" name="csrf" value="<?php echo md5('storyDone'); ?>" />
+					                <!--<input type="submit" name="submit" value="Job Done!" />-->
+					                <li>
+					                    <a href="javascript: void(0)" onclick="$(this).parent().parent().submit();">Job Done!</a>
+					                </li>
+					              <?php echo form_close(); ?>
+					            </ul>
+					      </div>
+					        </div>
+					    <?php endforeach;?>
+					    
+					    <div id="projectheader"></div>
+					    <?php foreach($header_projects as $project): ?>
+					    <div class="projectblock">
+					          <div class="projecttitle">
+					        <?=ucfirst($project['project_name'])?>
+					        <span>
+					            <?=$this->projects_model->get_percentage($project['project_id'])?>
+					            %</span></div>
+					          <div class="projectmenu">
+					        <ul>
+					              <li><a href="/project/<?=$project['project_id']?>">Project Detail</a></li>
+					              <li><a href="/project/story_management/<?=$project['project_id']?>">Task List</a></li>
+					              <li><a href="/project/burndown_chart/<?=$project['project_id']?>">Burndown Chart</a></li>
+					              <li><a href="/project/sprint_planner/<?=$project['project_id']?>">Sprint Plan</a></li>
+					              <li><a href="/project/scrum_board/<?=$project['project_id']?>">Scrum Board</a></li>
+					            </ul>
+					      </div>
+					        </div>
+					    <?php endforeach;?>
+				        <!-- Slider Content End -->
+					</div>
+				</div>
+				<div class="dragger_container">
+		    		<div class="dragger">&#9618;</div>
+				</div>
+			</div>
+		</div>
+     </div>
+     
+     <!-- end side menu -->
 <!-- end side menu -->
 <?php } ?>
