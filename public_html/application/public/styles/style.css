@@ -1,0 +1,1011 @@
+/*  */
+
+body {
+	background:url('../images/body_bg.jpg') repeat;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #666;
+	padding: 40px;
+}
+
+#header {
+    height: 110px;
+}
+
+#header #workpad-logo {
+	background: url("../images/workpad_logo.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 121px;
+    margin: 38px auto 0;
+    overflow: hidden;
+    width: 300px;
+}
+
+form ul {
+	list-style: none;
+	margin: 0;
+}
+	
+form li {
+	margin-bottom: 20px;
+	margin-top: 40px;
+	clear: both;
+}
+#title-hint {padding: 0 0 0 10px;
+color: #797979;
+font-size: 14px;
+font-style: italic;}
+#project-name {color: #E3E3E3;
+font-weight: lighter;}
+.new-story_field {padding: 10px 0 5px 0;}
+form label {
+	font-size: 15px;
+font-weight: bold;
+text-transform: uppercase;
+display: block;
+clear: both;
+font-family: DINRegular;
+color: white;
+padding: 5px 0 2px 0; 
+}
+
+form input {
+	float:left;
+}
+
+#header #login {
+	background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #666666;
+    margin: -130px 0 0 974px;
+    padding: 0 0 5px 5px;
+    width: 179px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    -moz-box-shadow: 0 0 5px #C0BEBE;
+}
+
+#header #login li a {
+	color: #666666;
+    font-size: 12px;
+    text-decoration: none;
+    float:left;
+    margin: -18px 0 0 121px;
+}
+
+#header #login li a:hover {
+	text-decoration: underline;
+}
+
+#header #login .username, .password {
+	width:160px;
+}
+
+#header h1 {
+	color: #FFFFFF;
+    font-size: 50px;
+    text-align: center;
+    text-shadow: 0.1em 0.1em 0.2em black;
+}
+
+#header h3 {
+	color: #FFFFFF;
+    font-size: 25px;
+    font-weight: normal;
+    margin: -26px 0 0 -85px;
+    text-align: center;
+    text-shadow: 0.1em 0.1em 0.2em black;
+}
+
+#container {
+	border-bottom: 0px solid #000;
+}
+
+#content {
+	
+}
+
+#content2 {
+	margin-top: -20px;
+}
+
+#projects-wrapper #content table {
+	width: 100%;
+	background:#FFF;
+}
+
+#worklist-wrapper #content table {
+	width: 100%;
+	background:#FFF;
+}
+
+#content .not-a_user {
+    margin-left: 18px;
+    width: 400px;
+    overflow:hidden;
+    font-size:12px;
+}
+
+#content .not-a_user a {
+	color: #743A5B;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+/*-------WRAPPERS STARTS HERE -------*/
+
+#projects_wrapper, #delete_wrapper, #prof-wrapper, #prof_edit-wrapper, #bid-wrapper, #dash-wrapper, #worklist-wrapper, #login-wrapper, #sign_up-wrapper, #story-wrapper, #pwd_edit-wrapper, #projects-wrapper {
+    display: block;
+    height: auto;
+    overflow: hidden;
+}
+
+#projects_wrapper, #prof-wrapper, #prof_edit-wrapper, #bid-wrapper {
+    -moz-border-radius: 2px 2px 2px 2px;
+    -moz-box-shadow: 0 0 5px #C0BEBE;
+    margin: 50px auto 0;
+    background: none repeat scroll 0 0 #FFFFFF;
+    width:70%;
+}
+
+#dash-wrapper, #worklist-wrapper {
+    margin: 10px auto 0;
+    width:90%;
+}
+
+#feedback-wrapper #content {
+	margin: 10px auto 0;
+    width:90%;
+}
+
+#login-wrapper, #sign_up-wrapper, #story-wrapper, #pwd_edit-wrapper, #projects-wrapper, #delete_wrapper {
+    -moz-border-radius: 2px 2px 2px 2px;
+    -moz-box-shadow: 0 0 5px #C0BEBE;
+    margin: 50px auto 0;
+    background: none repeat scroll 0 0 #FFFFFF;
+    margin: 50px auto 0;
+    overflow: hidden;
+    width:50%;
+    padding-bottom: 30px;
+}
+
+#bid-wrapper h2 {
+	background:#148ea4;
+}
+
+#sign_up-wrapper h2 {
+	background:#916948;
+}
+
+#sign_up-wrapper #content p {
+	margin-left:40px;
+	font-size:12px;
+}
+
+#login-wrapper h2 {
+	background:#743a5b;
+}
+
+/*-------PROFILE STARTS HERE -------*/
+
+#prof-wrapper h2 {
+	background:#f66e00;
+}
+
+#prof-wrapper #profile_form .avatar img {
+	border: medium none;
+    float: left;
+    height: 150px;
+    margin: 20px 0 0 50px;
+}
+
+#prof-wrapper #profile_form  .prof-rank {
+	color: #FD8321;
+    display: block;
+    font-size: 20px;
+    height: 115px;
+    overflow: hidden;
+    padding-left: 20px;
+}
+
+#prof-wrapper #profile_form .profile-info {
+	
+}
+
+#prof-wrapper #profile_form .prof-exp {
+	color: #FD8321;
+    float: left;
+    font-size: 40px;
+    margin-left: 20px;
+}
+
+#prof-wrapper #profile_form .prof-medal img {
+	margin: -50px 0 0 -145px;
+}
+
+#prof-wrapper .profile_view {
+	background:#f66e00;
+    height: 30px;
+    width: 100%;
+    display: block;
+    overflow:hidden;
+    margin-top:50px;
+    padding-top:10px;
+    
+}
+
+#prof-wrapper a {
+	color: #FFFFFF;
+    float: left;
+    font-size: 12px;
+    margin-left: 40px;
+    padding-top: 3px;
+    text-decoration: none;
+}
+
+#prof-wrapper #content a:hover {
+    text-decoration: underline;
+}
+
+#prof-wrapper #content table {
+	float: none;
+    font-size: 14px;
+    margin: 20px 0 0 40px;
+    width: 80%;
+    padding-bottom: 10px;
+}
+
+#prof-wrapper #content table th {
+	color: #000000;
+    text-align: left;
+    text-decoration: none;
+    width: 20%;
+}
+
+#prof-wrapper #content table td {
+	border-bottom: 1px dotted;
+    font-size: 12px;
+    width: 50%;
+}
+
+#prof-wrapper #footer {
+	background:#666;
+	
+}
+
+/*-------USER STORY STARTS HERE -------*/
+
+#story-wrapper .story-header-open h2 {
+	background:#916948;
+}
+
+#story-wrapper #job-bid {
+	margin:20px;
+}
+
+#story-wrapper #right-content table th {
+	background:#916948;
+}
+
+#story-wrapper .story-header-progress h2 {
+	background:#743A5B;
+}
+
+#story-wrapper .story-header-done h2 {
+	background:#3a743a;
+}
+
+#story-wrapper .story-header-paid h2 {
+	background:#148ea4;
+}
+
+
+
+#story-wrapper #content .feedback {
+	width:100%;
+}
+
+#story-wrapper {
+	-moz-border-radius: 2px 2px 2px 2px;
+    -moz-box-shadow: 0 0 5px #C0BEBE;
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding-bottom: 20px;
+    display: block;
+    height: auto;
+    margin: 60px auto 0;
+    overflow: hidden;
+    width: 70%;
+}
+
+#story-wrapper h3 {
+	padding-bottom:10px;
+}
+
+#story-wrapper dt {
+	color: #000000;
+    font-size: 14px;
+    margin: 2px 0 0 10px;
+}
+
+#story-wrapper #content #job-done form input {
+	float:none;
+}
+
+#story-wrapper #left-content dd {
+	display:block;
+	margin: 30px 0 0 2px;
+}
+
+#story-wrapper #left-content .desc dd {
+	display: block;
+    height: auto;
+    margin: 10px;
+}
+
+#story-wrapper #right-content {
+	display: block;
+    font-size: 14px;
+}
+
+#story-wrapper #right-content dd {
+	display: block;
+    margin-left: 150px;
+    margin-top: -18px;
+}
+
+#story-wrapper #right-content .id {
+    display: block;
+    font-size: 30px;
+    text-align: left;
+    font-weight: bold;
+	padding-left:10px;
+    width: 100%;
+}
+
+#story-wrapper #story_upload_wrapper {
+	font-size: 12px;
+    margin-left: 10px;
+    margin-top: 1%;
+    width: 49%;
+    margin-left: 10px;
+    margin-top: 1%;
+    width: 49%;
+}
+
+
+#story-wrapper .bid ul {
+	font-size:12px;
+}
+
+#story-wrapper #attach_file .story_uploaded {
+	font-size:12px;
+	margin-left:46px;
+	padding-bottom: 20px;
+}
+
+#story-wrapper #comments-container {
+	padding-left: 12px;
+}
+
+#story-wrapper #comments_block {
+	font-size: 12px;
+    margin: 10px 0 0 -28px;
+}
+
+#story-wrapper #comments_form {
+	display: block;
+    height: 100px;
+}
+
+
+#story-wrapper #comments_form .button {
+	margin: 6px 0 0 0;
+	display: block;
+}
+
+#story-wrapper #comments_form textarea {
+    width: 98%;
+}
+
+#story-wrapper #comments {
+	height: auto;
+    margin-top: -20px;
+}
+
+#story-wrapper #comments article .comment-user {
+    height: auto;
+    margin-left: 22px;
+    width: 94%;
+    -moz-border-radius: 2px 2px 2px 2px;
+    padding-bottom: 1px;
+}
+
+#story-wrapper #comments article .comment-user p {
+	line-height: 22px;
+    margin: 8px;
+    text-align: left;
+}
+
+#story-wrapper #comments .comment-user p.comment {
+    color: #505050;
+    font-size: 12px;
+    margin-bottom: -8px;
+}
+
+#story-wrapper #comments .comment-user .comment {
+	
+}
+
+#story-wrapper #comments .user {
+	background: none repeat scroll 0 0 #DADAD1	;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    font-style: italic;
+    padding:5px 0 5px 5px;
+}
+
+#story-wrapper #comments .user a {
+	color:#000;
+}
+
+#story-wrapper #left-content {
+	width:46%;
+	height:auto;
+	display:block;
+	float:left;
+	margin-left:15px;
+}
+
+#story-wrapper #left-content table {
+	
+}
+
+#story-wrapper #left-content table {
+    border-collapse: collapse;
+    margin: 10px;
+    width: 90%;
+}
+
+#story-wrapper #left-content table th {
+	text-align: left;
+	width: 30%;
+	height: 30px;
+	font-size:12px;
+}
+
+#story-wrapper #left-content table td {
+	font-size:12px;
+}
+
+#story-wrapper #left-content table ul li {
+	line-height:25px;
+	margin-left: -25px;
+}
+
+#story-wrapper #right-content table {
+	border: 1px solid #000000;
+    border-collapse: collapse;
+    margin: 10px;
+    width: 90%;
+}
+
+#story-wrapper #right-content table th {
+	background: none repeat scroll 0 0 #DADAD1;
+	color:#000;
+	font-size:12px;
+	border:1px solid #000;
+	height:40px;
+}
+
+#story-wrapper #right-content table td {
+	border:1px solid #000;
+	color:#a1a1a1;
+	font-size:12px;
+	border:1px solid #000;
+	text-align: center;
+	height:40px;
+	
+}
+
+#story-wrapper #right-content {
+	width:46%;
+	height:auto;
+	display:block;
+	float:left;
+	margin-left:15px;
+}
+
+#story-wrapper #right-content #bid {
+    font-size: 14px;
+    margin-top: 50px;
+}
+
+#story-wrapper #right-content #attach_file {
+	margin-left:6px;
+}
+
+#story-wrapper .new-story_field {
+	margin: 15px 0 0;
+}
+
+#story-wrapper .new-story_field p {
+	height: 10px;
+}
+
+#story-wrapper .story_created p, .story_created a {
+	margin-left:40px;
+}
+
+#story-wrapper .story_created a {
+	color: #666666;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+#story-wrapper .story_created a:hover {
+	text-decoration:underline;
+}
+
+/*-------BID VIEW STARTS HERE -------*/
+
+#bid-wrapper #content .desc, .points, .cost {
+	margin-left:40px;
+	font-size:14px;
+	width:90%;
+	
+}
+
+#bid-wrapper #content .cost {
+	margin-top: 20px;
+}
+
+#bid-wrapper #content .cost input {
+	float:none;
+}
+
+#bid-wrapper #content .cost #uniform-submit {
+	margin-top:20px;
+}
+
+/*-------PROFILE EDIT STARTS HERE -------*/
+
+#prof_edit-wrapper h2 {
+	background:#148ea4;
+}
+
+#prof_edit-wrapper dd {
+	margin: -10px 0 0 250px;
+}
+
+#pwd_edit-wrapper h2 {
+	background:#148ea4;
+}
+
+#pwd_edit-wrapper dd {
+    margin: -8px 0 0 180px;
+}
+
+#pwd_edit-wrapper .password_form dl {
+	margin-left:5%;
+}
+
+#prof_edit-wrapper #content fieldset:hover {
+	background: #fbfbfb;
+}
+
+#prof_edit-wrapper #content #bank_info {
+	margin-left: 15%;
+    width: 68%;
+}
+
+#prof_edit-wrapper #content #perso_info {
+	margin-left: 15%;
+    width: 68%;
+}
+
+#prof_edit-wrapper #content #cont_info {
+	margin-left: 15%;
+    width: 68%;
+}
+
+#prof_edit-wrapper #content #submit {
+	margin-left: 10%;
+    margin-top: -15px;
+}
+
+/*-------DASHBOARD STARTS HERE -------*/
+
+#dash-wrapper #dash_nav {
+  display: block;  
+}
+
+h2 {
+  	border-bottom: 2px dotted #000000;
+  	background:#666666;
+	color: #FFFFFF;
+	font-size: 22px;
+	height: auto;
+	margin-top: 0;
+	padding: 10px 0 10px 36px;
+	text-shadow: 0.1em 0.1em 0.2em black;
+}
+
+.admin_menu {
+	margin: 4px 0 0 150px;
+    width: 30%;
+}
+
+#dash-wrapper #content table th {
+	background: none repeat scroll 0 0 #DADAD1;
+	border:1px solid #7b7b7b;
+	font-size: 12px;
+	height:40px;
+	text-align:center;
+	color:#000000;
+}
+
+/*
+#dash-wrapper #content table {
+	border-collapse: collapse;
+}
+.admin_menu {
+	-moz-border-radius: 2px 2px 2px 2px;
+    -moz-box-shadow: 0 0 5px #C0BEBE;
+    background: none repeat scroll 0 0 #FFFFFF;
+    display: block;
+    margin: 10px auto;
+    overflow: hidden;
+    padding-top: 6px;
+    width: 81%;  
+}
+.admin_menu span.button_show {
+    
+    
+}
+.admin_menu span.button_add {
+    
+    
+}
+
+#dash-wrapper .dash_open, #dash-wrapper .dash_progress, #dash-wrapper .dash_done, #dash-wrapper .dash_signoff {
+    height:400px;
+    overflow:auto;
+    padding:20px;
+}
+
+
+
+#dash-wrapper #content table .item-left {
+	border:1px solid #7b7b7b;
+	height:40px;
+	font-size:12px;
+	text-align:left;
+	padding-left:5px;
+}
+
+#dash-wrapper #content table td {
+	border:1px solid #7b7b7b;
+	height:40px;
+	font-size:12px;
+	text-align:center;
+	padding-left:5px;
+}
+
+#dash-wrapper #content table td a {
+	color:#666;
+}
+
+#dash-wrapper #content table .details .test {
+    font-size: 12px;
+    padding: 8px;
+    width: 100%;
+}
+
+#dash-wrapper #content table .details .test p {
+    text-align: left;
+    width: 80%;
+}
+
+#dash-wrapper #content table .details .test a {
+	color: red;
+    float: left;
+    margin-left: 5px;
+    padding-bottom: 10px;
+}
+
+*/
+
+/*-- ICONS --*/
+.type_Feature {
+    background:url("../images/lightbulb.png") no-repeat left bottom;
+    padding-left : 20px;
+
+}
+.type_Bug {
+    background:url("../images/bug.png") no-repeat left bottom;
+    padding-left : 20px;
+}
+.type_Milestone {
+    background:url("../images/star.png") no-repeat left bottom;
+     padding-left : 20px;
+
+}
+.type_Chore {
+    background:url("../images/wrench.png") no-repeat left bottom;
+    padding-left : 20px;
+}
+
+.type_Feature span, .type_Chore span, .type_Bug span, .type_Milestone span {
+   text-indent:-9999px; 
+}
+.sweat-shirt-s {
+    background:url("../images/sweat_shirt-s.png") no-repeat left bottom;
+	text-align: right;
+}
+.sweat-shirt-m {
+    background:url("../images/sweat_shirt-m.png") no-repeat left bottom;
+	text-align: right;
+}
+.sweat-shirt-l {
+    background:url("../images/sweat_shirt-l.png") no-repeat left bottom;
+	text-align: right;
+}
+
+/*-------PROJECTS STARTS HERE -------*/
+
+#projects-wrapper #content table, #worklist-wrapper #content table {
+	background: none repeat scroll 0 0 #FFFFFF;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#projects-wrapper #content table th, #worklist-wrapper #content table th {
+	background:#666666;
+	border:1px solid #7b7b7b;
+	font-size: 12px;
+	height:40px;
+	text-align:center;
+	color:#FFFFFF;
+}
+
+#projects-wrapper #content table td , #worklist-wrapper #content table td {
+	border:1px solid #7b7b7b;
+	height:40px;
+	font-size:12px;
+	text-align:left;
+	padding:5px;
+}
+
+.item {width:100%;}
+/*
+#myTable .item.selected, .item:hover {cursor: pointer; background:#F1F1F1; }
+*/
+
+
+/*-------LOGIN STARTS HERE -------*/
+
+/* Login Container (default to float:right) */
+#top-nav {
+	-moz-border-radius: 2px 2px 2px 2px;
+    -moz-box-shadow: 0 0 5px #C0BEBE;
+    background: none repeat scroll 0 0 #F1F1F1;
+    border: 1px solid #DFDFDF;
+    margin: -50px 0 0;
+    width: 100%;
+}
+
+#loginContainer {
+    float: right;
+    font-size: 12px;
+    position: relative;
+    margin-right: 2px;
+}
+
+/* Login Button */
+#loginButton {
+    cursor: pointer;
+    display: block;
+    z-index: 30;
+}
+
+#dashboardButton {
+	color: #445058;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 10px;
+    padding: 7px 29px 9px 0;
+    text-decoration: none;
+    text-shadow: 1px 1px #FFFFFF;
+} 
+
+#dashboardButton:hover {
+	color:#000;
+}
+
+#sign-upButton {
+	color: #445058;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 7px 29px 9px 12px;
+    text-decoration: none;
+    text-shadow: 1px 1px #FFFFFF;
+} 
+
+#sign-upButton:hover {
+	color:#000;
+}
+
+/* Login Button Text */
+#loginButton span {
+    color:#445058; 
+    font-size:14px; 
+    font-weight:bold; 
+    text-shadow:1px 1px #fff; 
+    padding:7px 29px 9px 10px;
+    background:url(../images/loginArrow.png) no-repeat 53px 7px;
+    display:block
+}
+
+#loginButton:hover {
+	background:#f1f1f1;
+}
+
+#loginButton.active {
+	background:#f1f1f1;
+}
+
+/* Login Box */
+#loginBox {
+    position:absolute;
+    top:34px;
+    right:0;
+    display:none;
+    z-index:29;
+}
+
+/* If the Login Button has been clicked */    
+#loginButton.active {
+    border-radius:3px 3px 0 0;
+}
+
+#loginButton.active span {
+    background-position:53px -76px;
+}
+
+/* A Line added to overlap the border */
+#loginButton.active em {
+    position:absolute;
+    width:100%;
+    height:1px;
+    background:#f1f1f1;
+    bottom:-1px;
+}
+
+/* Login Form */
+#loginForm {
+    width:248px;
+    border-radius:3px 0 3px 3px;
+    -moz-border-radius: 0 0 3px 3px;
+    margin-top:2px;
+    background:#f1f1f1;
+    padding:6px;
+}
+
+#loginForm fieldset {
+    margin:0 0 12px 0;
+    display:block;
+    border:0;
+    padding:0;
+}
+
+fieldset#body {
+    background:#fff;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    padding:10px 13px;
+    margin:0;
+}
+
+#loginForm #checkbox {
+    width:auto;
+    margin:1px 9px 0 0;
+    float:left;
+    padding:0;
+    border:0;
+    *margin:-3px 9px 0 0; /* IE7 Fix */
+}
+
+
+/* Default Input */
+#loginForm input {
+    width:92%;
+}
+
+/* Sign In Button */
+#loginForm #login {
+    width:auto;
+    float:left;
+    background:#339cdf url(../images/loginbuttonbg.png) repeat-x;
+    color:#fff;
+    padding:7px 10px 8px 10px;
+    text-shadow:0px -1px #278db8;
+    border:1px solid #339cdf;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+    margin:0 12px 0 0;
+    cursor:pointer;
+    *padding:7px 2px 8px 2px; /* IE7 Fix */
+}
+
+/* Forgot your password */
+#loginForm span {
+    text-align:center;
+    display:block;
+}
+
+#loginForm span a {
+    color: #3A454D;
+    font-size: 12px;
+    text-decoration: none;
+    margin-left: -90px;
+}
+
+#loginForm span a:hover {
+    text-decoration: underline;
+    text-shadow: 1px 1px #FFFFFF;
+}
+
+.val-error {
+	background: none repeat scroll 0 0 #EBE9E9;
+    border: 1px dashed #DF2227;
+    margin-left: 40px;
+    width: 290px;
+}
+
+.val-error p {
+	color: #FF0000;
+    font-size: 13px;
+    margin-left: 25px;
+}
+
+.val-error li {
+	font-size: 12px;
+    font-weight: lighter;
+    margin: -5px 0 0 4px;
+    overflow: hidden;
+}
+
+.val-error a {
+	color: #777777;
+    font-size: 13px;
+    font-weight: normal;
+    margin-left: 10px;
+    text-decoration: underline;
+}
+
+.val-error a:hover {
+	text-decoration: underline;
+	color:#000000;
+}
+
+.skill-option {
+	float:left;
+	padding-left: 10px;
+}
+
+#skill-table{
+	color:#fff;
+	width:660px;
+	padding-left:20px;
+}
+#skill-table td {padding:5px; border: 1px solid rgba(0, 0, 0, 0.3);
+vertical-align: middle;}
+#skill-table th {background: rgba(0, 0, 0, 0.3);padding:5px;border: 1px solid rgba(0, 0, 0, 0.3);}
+.skill-option label {font-weight: lighter;
+font-size: 13px;}
+.skill-option input[type="radio"] {margin: 0 5px 0 0;}
+
+#editstory-submit {cursor: pointer;background: url(/public/images/submitBttn123.png) !important;
+floaT: none !important;  border: 0; width: 135px !important; height: 40px !important; text-indent: -999px;}
+#new-category{
+	float:none;
+}

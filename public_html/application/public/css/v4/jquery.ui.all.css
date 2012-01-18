@@ -1,0 +1,10 @@
+
+.bidding-project-placeholder .ui-tabs, .bidding-project-placeholder .ui-widget-header  {border: 0; background: none !important; position: relative; padding: 0 !important; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+.bidding-project-placeholder .ui-tabs .ui-tabs-nav { margin: 0 auto;padding: 0 !important;width: 720px;}
+.bidding-project-placeholder .ui-tabs .ui-tabs-nav li { width:341px; background:none !important;list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border: 0 !important; padding: 0; white-space: nowrap; }
+.bidding-project-placeholder .ui-tabs .ui-tabs-nav li a { text-align:center; float: left; padding: .5em 1em; text-decoration: none; }
+.bidding-project-placeholder .ui-tabs .ui-tabs-nav li.ui-tabs-selected { width:341px; margin-bottom: 0; padding-bottom: 1px; }
+.bidding-project-placeholder .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .bidding-project-placeholder .ui-tabs .ui-tabs-nav li a:hover,.bidding-project-placeholder .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .bidding-project-placeholder .ui-tabs .ui-tabs-nav li.ui-state-processing a {text-align: center; background: url(/public/images/image_sprite1.png) right; width: 307px;height: 42px;cursor:pointer; }
+.bidding-project-placeholder .ui-tabs .ui-tabs-nav li a, .bidding-project-placeholder .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { width: 307px;text-align:center;cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+.bidding-project-placeholder .ui-tabs .ui-tabs-panel { display: block; border-width: 0;padding: 30px 0 0 0 !important; background: none; }
+.bidding-project-placeholder .ui-tabs .ui-tabs-hide { display: none !important; }
