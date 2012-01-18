@@ -10,7 +10,18 @@ class Projects extends CI_Controller {
 		$this->load->model('stories_model', 'stories');
 		
 		$this->view_data['page_is'] = 'signup';
-		
+		$this->view_data['action_is'] = $this->uri->segment(2);
+		$user_id = $this->session->userdata('user_id');
+			if($user_id){
+				$me = $this->users_model->get_user($user_id);
+				$me = $me->result_array();
+				$me = $me[0];
+				$myProfile = $this->users_model->get_profile($user_id);
+				$myProfile = $myProfile->result_array();
+				$myProfile = $myProfile[0];
+				$this->view_data['me'] = $me;
+				$this->view_data['myProfile'] = $myProfile;
+			}
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
 		if($check_login == true) {

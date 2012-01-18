@@ -29,6 +29,7 @@ class Project extends CI_Controller {
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
 			$this->view_data['projects'] = $this->projects_model->get_my_projects($user_id);
+			$this->view_data['username'] = $this->session->userdata('username');
 		}else{
 			if(in_array(strtolower($this->view_data['action_is']), array('scrum_board','sprint_planner','AjaxSaveStory','burndown_chart', 'management'))){
 				$controller = $this->uri->segment(1);

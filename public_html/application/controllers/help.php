@@ -20,9 +20,10 @@ class Help extends CI_Controller {
 			$me = $me[0];
 			$this->view_data['myProfile'] = $myProfile;
 			$this->view_data['me'] = $me;
+			$this->view_data['username'] = $this->session->userdata('username');
 		}
 		$this->view_data['page_is'] = 'Help';
-		
+		$this->view_data['action_is'] = $this->uri->segment(2);
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
 	}
