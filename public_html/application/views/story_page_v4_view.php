@@ -276,15 +276,19 @@
 <section id="user-stories">
   <div class="WP-main">
     <div class="WP-tutorial-placeholder">
+      <?php if(trim($work_data['tutorial'])!=""){ echo $work_data['tutorial']; }else{?>
       <iframe width="490" height="350" src="http://www.youtube.com/embed/oQBHecq0apQ" frameborder="0" allowfullscreen></iframe>
       <iframe width="490" height="350" src="http://www.youtube.com/embed/ZDR433b0HJY" frameborder="0" allowfullscreen></iframe>
+      <?php if(count($skills)>0){?>
       <div id="useful-links">
         <h1>Useful Links</h1>
         <ul>
-          <li>Learn advanced CSS</li>
-          <li>Learn advanced php</li>
+		  <?php foreach($skills as $skill):?>
+            <li><a target="_blank" href="<?php echo $skill['desc']? $skill['desc']: '#';?>">Leran <?php echo $skill['name'];?></a></li>
+          <?php endforeach;?>
         </ul>
       </div>
+      <?php }}?>
     </div>
     <div id="push-down">&nbsp;</div>
     <br />
