@@ -162,17 +162,17 @@ $header_tasks = $query->result_array();
     
     <div id="projectheader">Tasks</div>
     <?php foreach($header_tasks as $task): ?>
-    <div class="projectblock">
-          <div class="projecttitle">
-        <?=ucfirst(substr($task['title'],0,20))?>
-        <span id="count_<?=$task['work_id']?>"></span></div>
-        <script type="text/javascript">
+    <script type="text/javascript">
 		$(function(){
 			var e = "<?=$task['deadline']?>";
 			var liftoffTime=new Date(e.substr(0,4),e.substr(5,2)-1,e.substr(8,2));
 			$('#count_<?=$task['work_id']?>').countdown({until: liftoffTime, format: 'dHMS', compact: true, layout: '{dn} {dl} {hnn}{sep}{mnn}{sep}{snn}'});
 			});
-        </script>
+    </script>
+    <div class="projectblock">
+          <div id="task_<?=$task['work_id']?>" class="projecttitle">
+        <?=ucfirst(substr($task['title'],0,20))?>
+        <span id="count_<?=$task['work_id']?>"></span></div>
           <div class="projectmenu">
         <ul>
               <li><a href="/story/<?=$task['work_id']?>">Story Details</a></li>
@@ -194,7 +194,7 @@ $header_tasks = $query->result_array();
     <div id="projectheader"></div>
     <?php foreach($header_projects as $project): ?>
     <div class="projectblock">
-          <div class="projecttitle">
+          <div id="project_<?=$project['project_id']?>"  class="projecttitle">
         <?=ucfirst($project['project_name'])?>
         <span>
             <?=$this->projects_model->get_percentage($project['project_id'])?>
