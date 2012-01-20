@@ -21,11 +21,9 @@ $(document).ready(function(){
 		
 			$(".projecttitle").click(function(){
 					if($(this).hasClass("projectmenuactive")){
-						console.log('hide');
 						$(".projectmenu").slideUp(function(){$(".projecttitle").removeClass("projectmenuactive");});
 					}
 					else{
-						console.log('show');
 						$(".projectmenu").slideUp();
 						$(".projecttitle").removeClass("projectmenuactive");
 						$(this).next().slideDown();
@@ -84,5 +82,5 @@ $(window).resize(function(){
 });
 
 function resize() {
-	$('#scroll_container').css('height',$(window).height()-255);
+	$('#scroll_container').css('height',$(window).height()-$('.footer').height()-85);
 }

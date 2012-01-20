@@ -3,6 +3,10 @@
 <header>
 <div style="height:22px" class="footer">
 
+<?php }elseif($page_is=='Admin'){?>
+<!-- Admin footer -->
+<div style="height:22px" class="footer">
+
 <?php }elseif($page_is=='Contact' && $action_is!='find'){?>
 <!-- contact us footer -->
 

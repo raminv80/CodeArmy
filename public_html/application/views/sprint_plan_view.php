@@ -63,6 +63,7 @@
               <p class="monthyear_date">nd Date</p>
             </div>
           </div>
+          <div style="clear:both"></div>
           <div id="scrum1" class="story_list"> </div>
         </div>
         <div class="add_sprint"></div>
@@ -173,6 +174,7 @@
 	
 	.story_list{
 		width: 300px;
+		padding:0;
 		margin-left:0;
 		min-height:400px;
 		-webkit-padding-start: 0;
@@ -714,7 +716,7 @@ function saveUserStory(obj){
 	}else return false;
 }
 	
-$('#product_backlog').on('keypress','.new_story',event,function(){
+$('#product_backlog').on('keypress','.new_story',function(event){
 		if(event.which==13)	
 			if(!saveUserStory($(this))){
 					$(this).next().remove();
