@@ -406,7 +406,7 @@ class Users_model extends CI_Model {
 		return $res->result_array();
 	}
 	
-	function notify($user_id, $subject, $message){		
+	function notify($user_id, $subject, $message, $category = NULL){		
 			ini_set('display_error',0);
 			error_reporting('E_ALL');
 			$q = $user_id;
@@ -450,7 +450,8 @@ class Users_model extends CI_Model {
 				"title" => $subject,
 				"message" => $message,
 				"status" => 'unread',
-				"created_at" => date('Y-m-d')
+				"created_at" => date('Y-m-d'),
+				"category" => $category
 			);
 			$this->db->insert('inbox',$data);
 			

@@ -208,9 +208,10 @@ class Story extends CI_Controller {
 			$product_owner = $this->users_model->get_user($work_data[0]['creator']);
 			if($product_owner)$product_owner = $product_owner->result_array();
 			$po_name = $product_owner[0]['username'];
+			$product_owner_id = $product_owner[0]['user_id'];
 			$product_owner = $product_owner[0]['email'];
 			$message = '<p>Hello '.$po_name.',</p><p>User <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a> placed a bid on story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> with amount '.$this->input->post('set_cost').' and days '.$this->input->post('set_days').'</p><p>Whenever you want you can refer to the bidding list of this <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">user story</a> to decide on awarding the job. You may want to study bidder\'s profiles before approving a bid.</p><p>Thank you.</p>';
-			$this->notify(noreply_email,email_name.' Bids', $product_owner, admin_cc, $title,$message);
+			$this->notify(noreply_email,email_name.' Bids', $product_owner, admin_cc, $title,$message, 'bid', $product_owner_id);
 			$project_id = $data[0]['project_id'];
 			$user_id = $this->session->userdata('user_id');
 			$this->stories->log_history($user_id, $project_id, $work_id, 'bid', $this->input->post('set_cost'), $desc = '');
@@ -225,7 +226,7 @@ class Story extends CI_Controller {
 				if ($lowest['user_id'] != $user_id) {
 					$title = 'Outbid on '.$work_data[0]['title'];
 					$message = '<p>Your bid on story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> has been outbid.</p><p>You may want to adjust your bid by refering to the bidding list of this <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">user story</a>.</p><p>Thank you.</p>';
-					$this->users->notify($lowest['user_id'], $title, $message);
+					$this->users->notify($lowest['user_id'], $title, $message, 'bid');
 				}
 			};
 		}
@@ -248,7 +249,7 @@ class Story extends CI_Controller {
 		return true;
 	}	
 	
-	function bid($work_id) {
+	/*function bid($work_id) {
 		$this->check_authentication();
 		//all logged users can bid
 		$this->load->helper('stories_helper');
@@ -282,7 +283,7 @@ class Story extends CI_Controller {
 		
 		$this->view_data['window_title'] = "bid for this work";
 		$this->load->view('story_bid_view', $this->view_data);
-	}
+	}*/
 	
 	// - The delete view
 	function delete($pro_id, $id) {
@@ -335,15 +336,17 @@ class Story extends CI_Controller {
 		$sm = $this->stories->get_scrum_master($this->input->post('story_id'));
 		$cn = $this->stories->get_comment_emails($this->input->post('story_id'));
 		$target = array();
-		if(count($wh)>0)$target[] = $wh[0]['email'];
-		if(count($po)>0)$target[] = $po[0]['email'];
-		if(count($sm)>0)$target[] = $sm[0]['email'];
-		foreach($cn as $usr)$target[] = $usr['email'];
+		$target_ids = array();
+		if(count($wh)>0){$target[] = $wh[0]['email']; $target_ids[] = $wh[0]['user_id'];}
+		if(count($po)>0){$target[] = $po[0]['email']; $target_ids[] = $po[0]['user_id'];}
+		if(count($sm)>0){$target[] = $sm[0]['email']; $target_ids[] = $sm[0]['user_id'];}
+		foreach($cn as $usr){ $target[] = $usr['email']; $target_ids[] = $usr['user_id'];}
 		$to=array_unique($target);
+		$to_id = array_unique($target_ids);
 		$cc = admin_email;
 		$subject = "Workpad :: Comment on ".$work[0]['title'];
 		$message = "<p>User <a href='http://".$_SERVER['HTTP_HOST']."/user/".$this->session->userdata('user_id')."'>".$this->session->userdata('username')."</a> placed a comment on story <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>".$work[0]['title']."</a>:</p><p>".substr(strip_tags($this->input->post('comments')),0,500)."<br />(to read more <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>click here</a>)</p>";
-		$this->notify(noreply_email,email_name, $to, $cc, $subject, $message);
+		$this->notify(noreply_email,email_name, $to, $cc, $subject, $message, 'message', $to_id);
 		$this->view_data['signup_success'] = true;
 		redirect("/story/".$this->input->post('story_id'));
 	}
@@ -380,15 +383,16 @@ class Story extends CI_Controller {
 			$title = $work_data[0]['title'].' is rejected!';
 			$to = $user_data[0]['email'];
 			$message = '<p>Hello,</p><p>It seems you have failed to meet expectations of product owner for the story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>. Regard to this matter, product owner has decided to revoke your assignment and the job is set to open for bidding one again. For more info please refer to the discussion section of this user sotry.</p><p>Regards.</p>';
-			$this->users_model->notify($user_data[0]['user_id'], $title, $message);
+			$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job');
 			
 			$project = $this->projects_model->get_project_details($work_data[0]['project_id']);
 			$project = $project->result_array();
 			$scrum_master = $this->users_model->get_user($project[0]['scrum_master_id']);
 			$scrum_master = $scrum_master->result_array();
 			$to = $scrum_master[0]['email'];
+			$to_id = $scrum_master[0]['user_id'];
 			$message = '<p>Hello,</p><p>The story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a> is not proceeding according to product owner expectations. Regard to this matter, product owner has decided to revoke the assignment and the job is set to open for bidding one again. For more info please refer to the discussion section of this user sotry.</p><p>You are recieving this email because you are assigned as Scrum Master of this story.</p><p>Regards.</p>';
-			if($user_data[0]['user_id']!=$to) $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message);
+			if($user_data[0]['user_id']!=$to) $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message, 'job', $to_id);
 			$project_id = $work_data[0]['project_id'];
 			$point = $work_data[0]['points'];
 			$user_id = $user_data[0]['user_id'];
@@ -417,13 +421,22 @@ class Story extends CI_Controller {
 				   $this->stories->accept_bid($id, $work_id);
 				   $work = $this->stories->get_work($work_id);
 				   $work_data = $work->result_array();
-				   $title = 'Bid on '.$work_data[0]['title'];
+				   $title = 'You wone the Bid on '.$work_data[0]['title'];
 				   $usr = $this->users->get_user($to_id);
 				   $usr_data = $usr->result_array();
 				   $to = $usr_data[0]['email'];
+				   $to_id = $usr_data[0]['user_id'];
 				   $message = '<h3>Congratulations!</h3><p>You are the winner! Your bid on story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> was successful. Now you may refer to the job from <a href="http://'.$_SERVER['HTTP_HOST'].'">Workpad</a>&gt;<a href="http://'.$_SERVER['HTTP_HOST'].'/myoffice">MyOffice</a>&gt;MyDesk&gt;In Progress list.</p><p>Next step is to finish the job as soon as possible and click on job is done button located in this list, or on <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'">scrumboard</a> or within <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">story detail</a> page. Here are some tips for you: <ol><li>If you are new to the project, first step is to read about the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project</a> itslef.</li><li>Go through details of the user story. If it\'s not clear or if you need any furthur info, use the \'Discuss\' section to contact the product owner and scrum master.</li><li>required files might be attached to the story or be provided later by scrum master/product owner or be presented as a link within <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project detail page</a>.</li><li>Test, test and test. Make sure everything works before submission.</li><li>For submission refer to project submission terms and essentials of this user story. You might be required to eaither use a github repository (forked from main project) or upload the files as a zip or add a remote link to the files.</li></ol></p>';
-				   $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message);
-				   
+				   $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message, 'bid', $to_id);
+				   $data = array(
+					"user_id" => $to_id,
+					"title" => "Assignment",
+					"message" => "<p>User story <a href='http://".$_SERVER['HTTP_HOST']."/story/".$work_data[0]['work_id']."'>'".$work_data[0]['title']."'</a> is assigned to you.</p>",
+					"status" => 'unread',
+					"created_at" => date('Y-m-d'),
+					"category" => 'job'
+					);
+					$this->db->insert('inbox',$data);
 				   $project_id =$work_data[0]['project_id'];
 				   $user_id = $usr_data[0]['user_id'];
 				   $this->stories->log_history($user_id, $project_id, $work_id, 'win', $cost, $desc = '');
@@ -606,9 +619,12 @@ class Story extends CI_Controller {
 						
 						$message = '<p>Hello '.$project_owner[0]['username'].',</p><p>User <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a> has completed the user story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>.</p><p>Now <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$scrum_master[0]['user_id'].'">Scrum Master</a> or <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$project_owner[0]['user_id'].'">Product owner</a> is required to verify the job. For furthur actions please refer to the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'">scrumboard</a> of this project.</p><p>Regards.</p>';
 						$to = array();
+						$to_id = array();
 						$to[] = $project_owner[0]['email'];
 						$to[] = $scrum_master[0]['email'];
-						$this->notify(noreply_email,email_name, $to, admin_email, $title,$message);
+						$to_id[] = $project_owner[0]['user_id'];
+						$to_id[] = $scrum_master[0]['user_id'];
+						$this->notify(noreply_email,email_name, $to, admin_email, $title,$message, 'job', $to_id);
 						
 						$project_id =$work_data[0]['project_id'];
 						$user_id = $this->session->userdata('user_id');
@@ -636,7 +652,7 @@ class Story extends CI_Controller {
 				$to = $user_data[0]['email'];
 				$message = '<p>Hi '.$user_data[0]['username'].',</p><p>The story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> needs more work. Please refer to the discussion section of story and discuss furthur requirements with the scrum master.</p><p>Thanks.</p>';
 				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
-				$this->users_model->notify($user_data[0]['user_id'], $title, $message);
+				$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job');
 				$project_id = $work_data[0]['project_id'];
 				$point = $work_data[0]['points'];
 				$user_id = $user_data[0]['user_id'];
@@ -660,7 +676,7 @@ class Story extends CI_Controller {
 				$to = $user_data[0]['email'];
 				$message = '<p>Hi '.$user_data[0]['username'].',</p><p>The story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a> is verified by scrum master. Now this job is awaiting for approval of product owner. Your payment will be signed off upon approval of product owner.</p><p>Regards.</p>';
 				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
-				$this->users_model->notify($user_data[0]['user_id'], $title, $message);
+				$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job');
 				
 				$project_id = $work_data[0]['project_id'];
 				$point = $work_data[0]['points'];
@@ -688,10 +704,13 @@ class Story extends CI_Controller {
 				$scrum_master = $scrum_master->result_array();
 				
 				$to = array();
+				$to_id = array();
 				$to[] = $user_data[0]['email'];
 				$to[] = $scrum_master[0]['email'];
+				$to_id[] = $user_data[0]['user_id'];
+				$to_id[] = $scrum_master[0]['user_id'];
 				$message = '<p>Hello,</p><p>The story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a> is signed off.</p><p>Good job and thanks.</p>';
-				$this->notify(noreply_email,email_name, $to, admin_cc, $title,$message);
+				$this->notify(noreply_email,email_name, $to, admin_cc, $title,$message, 'job', $to_id);
 				
 				$project_id = $work_data[0]['project_id'];
 				$point = $work_data[0]['points'];
@@ -716,14 +735,15 @@ class Story extends CI_Controller {
 				$to = $user_data[0]['email'];
 				$message = '<p>Hello,</p><p>unfortunately the story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a> has failed to meet requirements of product owner and is rejected. For more info please refer to the discussion section of this user sotry.</p><p>As a result this failure, story will be set to open for bidding again.</p><p>Regards.</p>';
 				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
-				$this->users_model->notify($user_data[0]['user_id'], $title, $message);
+				$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job');
 				
 				$project = $this->projects_model->get_project_details($work_data[0]['project_id']);
 				$project = $project->result_array();
 				$scrum_master = $this->users_model->get_user($project[0]['scrum_master_id']);
 				$scrum_master = $scrum_master->result_array();
 				$to = $scrum_master[0]['email'];
-				if($user_data[0]['user_id']!=$to) $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message);
+				$to_id = $scrum_master[0]['user_id'];
+				if($user_data[0]['user_id']!=$to) $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message, 'job', $to_id);
 				$project_id = $work_data[0]['project_id'];
 				$point = $work_data[0]['points'];
 				$user_id = $user_data[0]['user_id'];
@@ -779,7 +799,7 @@ class Story extends CI_Controller {
 				
 		}
 				
-		private function notify($from,$fromName, $to, $cc, $subject, $message){
+		private function notify($from,$fromName, $to, $cc, $subject, $message, $category=NULL, $to_id = NULL){
 			require_once(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
 			$mail = new PHPMailer();
 			$mail->IsSMTP();                                      // set mailer to use SMTP
@@ -806,6 +826,33 @@ class Story extends CI_Controller {
 			$mail->Subject = $subject;
 			$mail->Body    = $message;
 			$mail->AltBody = $message;
+			
+			if(is_array($to_id)){
+				// send to inbox
+				$data = array();
+				foreach($to_id as $user_id){
+					$data[] = array(
+						"user_id" => $user_id,
+						"title" => $subject,
+						"message" => $message,
+						"status" => 'unread',
+						"created_at" => date('Y-m-d'),
+						"category" => $category
+					);
+				}
+				$this->db->insert_batch('inbox',$data);
+			}elseif(!is_null($to_id)){
+				// send to inbox
+				$data = array(
+					"user_id" => $to_id,
+					"title" => $subject,
+					"message" => $message,
+					"status" => 'unread',
+					"created_at" => date('Y-m-d'),
+					"category" => $category
+				);
+				$this->db->insert('inbox',$data);
+			}
 			
 			if(!$mail->Send())
 			{
