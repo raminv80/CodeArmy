@@ -57,4 +57,10 @@ class Inbox_model extends CI_Model {
 		$this->db->query($sql, array($message_id, $user_id));
 		return $id;
 	}
+	
+	function get_bids($user_id){
+		$sql = "select inbox.user_id, avatar, title, message, created_at from inbox, user_profiles where inbox.user_id = user_profiles.user_id and inbox.user_id = ? and category = 'bid' and status = 'unread'";
+		$result = $this->db->query($sql, array($user_id));
+		return $result->result_array();
+	}
 }

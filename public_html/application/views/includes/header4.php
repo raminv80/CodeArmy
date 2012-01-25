@@ -224,5 +224,40 @@ $header_tasks = $query->result_array();
     </div>
 
 <!-- end side menu --> 
+<!-- end side menu --> 
+
+<!-- start bids menu -->
+<div id="bid_side_menu" class="sidemenu_inactive">
+      <div id="bid_side_menu_button" class="sideopen"></div>
+      <div id="scroll_container1">
+    <div class="customScrollBox">
+          <div class="container">
+        <div class="content"> 
+              <!-- Slider Content Start --> 
+              <span class="title">Bidding Messages</span>
+              <?php $bid_inbox=$this->inbox_model->get_bids($this->session->userdata('user_id'));foreach($bid_inbox as $message):?>
+              <div class="message_buble"> <img align="left" src="/public/images/img6.png" />
+            <p class="summary"><span class="title">
+              <?=$message['title']?>
+              : </span>
+                  <?=(strlen(strip_tags($message['message']))>50) ? substr(strip_tags($message['message']),0,50).'...' : strip_tags($message['message']);?>
+                </p>
+            <div class="desc">
+                  <?=$message['message']?>
+                </div>
+          </div>
+              <?php endforeach;?>
+              <!-- Slider Content End --> 
+            </div>
+      </div>
+          <div class="dragger_container">
+        <div class="dragger">&#9618;</div>
+      </div>
+        </div>
+  </div>
+    </div>
+
+<!-- end side menu --> 
 <!-- end side menu -->
+
 <?php } ?>
