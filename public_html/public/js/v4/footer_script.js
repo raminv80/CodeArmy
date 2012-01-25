@@ -10,6 +10,7 @@
 					}
 				}
 			});
+			$('.footer').hover(function(){$(this).fadeTo('fast',1);},function(){$(this).fadeTo('fast',0.9);});
 		});
 		
 	function show_tab(tab){
