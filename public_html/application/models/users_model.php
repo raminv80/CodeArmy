@@ -143,7 +143,8 @@ class Users_model extends CI_Model {
 			"twitter" => $this->input->post('twit'),
 			"linkedin" => $this->input->post('linkedin'),
 			"github" => $this->input->post('github'),
-			"portfolio" => $this->input->post('portfolio')						
+			"portfolio" => $this->input->post('portfolio'),
+			"skype" => $this->input->post('skype'),
 		);
 		
 		$contact = json_encode($contact);

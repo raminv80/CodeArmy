@@ -1724,12 +1724,12 @@ body > #container {
 }
 .skills-box dt{
 	float:left;
-	width:144px;
+	width:140px;
 	padding-bottom:9px;
 }
 .skills-box dd{
 	margin:6px 0 8px;
-	float:right;
+	float:left;
 	text-align:right;
 }
 .skills-box dt span{

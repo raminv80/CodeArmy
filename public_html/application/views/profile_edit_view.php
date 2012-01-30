@@ -85,6 +85,14 @@ body {background: url(/public/images/bg.jpg) !important ;background-attachment: 
 										<input type="text" size="30" name="mobile_no" value="<?php if(isset($contact->mobile_no)) { echo $contact->mobile_no; } ?>" placeholder="Mobile Number" id="mobile_no" />
 									</div>
 								</div>
+                                <div class="row">
+									<label style="width:160px;" for="skype">
+										Skype username
+									</label>
+									<div class="text">
+										<input type="text" size="35" name="skype" value="<?php if(isset($urls->skype)) { echo $urls->skype; } ?>" placeholder="Skype Username" id="skype" />
+									</div>
+								</div>
 								<div class="row">
 									<label style="width:160px;" for="location">
 										City

@@ -1,4 +1,13 @@
 <?php $this->load->view('includes/header4'); ?><link media="all" type="text/css" rel="stylesheet" href="/public/css/v4/myoffice/style.css" />
+<?php 
+ if($myProfile){
+	$contact = json_decode($profile["contact"]);
+	$urls = json_decode($profile["urls"]);
+ }else{
+	$contact = array();
+	$urls = array(); 
+ }
+?>
 	<link media="all" type="text/css" rel="stylesheet" href="/public/css/v4/myoffice/autocomplete.css" />
 	<link rel="stylesheet" type="text/css" href="/public/css/v4/myoffice/jquery.fancybox-1.3.4.css" media="screen" />
 	<link type="text/css" href="/public/css/v4/myoffice/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
@@ -34,6 +43,15 @@
 						</dl>
 					</div>
 				</div>
+                <?php if(isset($urls->skype)){?>
+                    <div id="skype_call">
+                    <!--
+                    Skype 'Skype Me™!' button
+                    http://www.skype.com/go/skypebuttons
+                    -->
+                    <script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
+                    <a href="skype:<?=$urls->skype?>?call"><img src="http://download.skype.com/share/skypebuttons/buttons/call_blue_transparent_70x23.png" style="border: none;" width="70" height="23" alt="Skype Me™!" /></a>
+                <?php }?>
 				<div class="tabs-area">
 					<div class="aside">
 						<dl class="refers">
@@ -290,15 +308,6 @@
 							<div class="tab-frame">
 								<div class="content">
                                 	<h1>Personal Info</h1>
-                                    <?php 
-									 if($myProfile){
-										$contact = json_decode($profile["contact"]);
-										$urls = json_decode($profile["urls"]);
-									 }else{
-										$contact = array();
-										$urls = array(); 
-									 }
-									?>
 									<!-- profile content container start -->
 									
                                     <div id="personal-info">
@@ -326,6 +335,9 @@
                                             <?php }?>
                                             <?php if(isset($urls->linkedin)) { ?>
                                             <li>Linkedin: <span><?php echo $urls->linkedin; ?></span></li>
+                                            <?php }?>
+                                            <?php if(isset($urls->skype)) { ?>
+                                            <li>Skype: <span><?php echo $urls->skype; ?></span></li>
                                             <?php }?>
                                             <?php if(isset($urls->github)) { ?>
                                             <li>Github: <span><?php echo $urls->github; ?></span></li>
