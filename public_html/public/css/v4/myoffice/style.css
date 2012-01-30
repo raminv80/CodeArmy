@@ -1440,7 +1440,7 @@ body > #container {
 }
 
 .tab-content .content .notification dl.message dt {
-	border-bottom:1px solid rgba(100, 100, 100, 0.2);
+	border-bottom: 1px solid #3B3B3B;
 	color:#FFF;
 	text-transform:uppercase;
 	padding:10px;
@@ -1530,13 +1530,13 @@ body > #container {
 
 .tab-holder .content table {
 	border:1px solid #24272B;
-	background-color:rgba(88, 88, 88, 0.2);
+	background: url(/public/images/tableforIE8.png) repeat;
 	margin-top:10px;
 	font-size:0.89em;
 }
 
 .tab-content .content table th {
-	background-color: rgba(0, 0, 0, 0.4);
+	background: url(/public/images/tableforIE82.png) repeat;
 /*	background:url("/public/images/bg-column-category.gif") repeat-x scroll 0 0;
 	color:#000; */
 	font-weight:lighter;
@@ -1598,7 +1598,7 @@ body > #container {
 }
 
 .tab-content .content div#personal-info {
-	background:rgba(0, 0, 0, 0.3);
+	background: url(/public/images/tableforIE82.png);
 }
 
 .tab-content .content div#personal-info ul {
@@ -2132,9 +2132,8 @@ body > #container {
 
 #wrapper .contents div.proceed {
 	float:right;
-	padding-top:10px;
-	padding-bottom:20px;
-	margin-top:-50px;
+	margin-top: -35px;
+padding: 0 20px 20px 0;
 }
 
 #wrapper .contents div.proceed a {

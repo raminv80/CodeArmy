@@ -421,7 +421,7 @@ class Story extends CI_Controller {
 				   $this->stories->accept_bid($id, $work_id);
 				   $work = $this->stories->get_work($work_id);
 				   $work_data = $work->result_array();
-				   $title = 'You wone the Bid on '.$work_data[0]['title'];
+				   $title = 'You won the Bid on '.$work_data[0]['title'];
 				   $usr = $this->users->get_user($to_id);
 				   $usr_data = $usr->result_array();
 				   $to = $usr_data[0]['email'];

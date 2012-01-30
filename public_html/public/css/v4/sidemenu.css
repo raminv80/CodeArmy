@@ -1,3 +1,67 @@
+#job_side_menu{
+	position:fixed;
+	/*background:url(/public/images/sidemenubg.jpg) repeat;*/
+	background:#fff;
+	height:100%;
+	width:290px;
+	top:0px;
+	margin-top:63px;
+	z-index:100;
+	padding: 5px;
+	left:-300px;
+	border-right:3px solid #fff;
+	color:#000 !important;
+}
+#job_side_menu_button{
+	width:21px;
+	height:27px;
+	position:absolute;
+	right:-24px;
+	cursor:pointer;
+	top: 110px;
+	color: #F60;
+	font-size: 8pt;
+}
+#job_side_menu_button.sideclose{
+	background:url(/public/images/closejob_inbox.png);
+}
+#job_side_menu_button.sideopen{
+	background:url(/public/images/openjob_inbox.png);
+}
+#job_side_menu_content {
+}
+#message_side_menu{
+	position:fixed;
+	/*background:url(/public/images/sidemenubg.jpg) repeat;*/
+	background:#fff;
+	height:100%;
+	width:290px;
+	top:0px;
+	margin-top:63px;
+	z-index:100;
+	padding: 5px;
+	left:-300px;
+	border-right:3px solid #fff;
+	color:#000 !important;
+}
+#message_side_menu_button{
+	width:21px;
+	height:27px;
+	position:absolute;
+	right:-24px;
+	cursor:pointer;
+	top: 75px;
+	color: #F60;
+	font-size: 8pt;
+}
+#message_side_menu_button.sideclose{
+	background:url(/public/images/closemessage_inbox.png);
+}
+#message_side_menu_button.sideopen{
+	background:url(/public/images/openmessage_inbox.png);
+}
+#message_side_menu_content {
+}
 #bid_side_menu{
 	position:fixed;
 	/*background:url(/public/images/sidemenubg.jpg) repeat;*/
@@ -10,6 +74,7 @@
 	padding: 5px;
 	left:-300px;
 	border-right:3px solid #fff;
+	color:#000 !important;
 }
 #bid_side_menu_button{
 	width:21px;
@@ -18,6 +83,8 @@
 	right:-24px;
 	cursor:pointer;
 	top: 40px;
+	color: #F60;
+	font-size: 8pt;
 }
 #bid_side_menu_button.sideclose{
 	background:url(/public/images/closebid_inbox.png);
@@ -29,18 +96,23 @@
 }
 .message_buble{
 	border-bottom:#ccc 1px solid;
-	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif !important;
 	font-size: 11px;
 	min-height:46px;
 	overflow:hidden;
 	text-align:justify;
+	color:#000 !important;
+	padding:2px;
 }
 .message_buble img{
 	margin: 3px 5px 0px 0;
 }
-.message_buble a{
+.message_buble a, .message_buble a:visited{
 	color: #09F;
 }
+.message_buble:hover{background-color: #E7FFFF}
+.message_buble.unread:hover{background-color: #E7FFFF}
+.message_buble.unread{background-color: #f2f4f8}
 
 #side_menu{
 	position:fixed;

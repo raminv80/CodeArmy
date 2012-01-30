@@ -224,30 +224,54 @@ $header_tasks = $query->result_array();
     </div>
 
 <!-- end side menu --> 
-<!-- end side menu --> 
 
 <!-- start bids menu -->
 <div id="bid_side_menu" class="sidemenu_inactive">
-      <div id="bid_side_menu_button" class="sideopen"></div>
+	<?php $bid_inbox=$this->inbox_model->get_bids($this->session->userdata('user_id')); ?>
+      <div id="bid_side_menu_button" class="sideopen"><?=$bid_inbox[0]!=0?$bid_inbox[0]:''?></div>
       <div id="scroll_container1">
     <div class="customScrollBox">
           <div class="container">
         <div class="content"> 
               <!-- Slider Content Start --> 
               <span class="title">Bidding Messages</span>
-              <?php $bid_inbox=$this->inbox_model->get_bids($this->session->userdata('user_id'));foreach($bid_inbox as $message):?>
-              <div class="message_buble"> <img align="left" src="/public/images/img6.png" />
-            <p class="summary"><span class="title">
-              <?=$message['title']?>
-              : </span>
+              <?php foreach($bid_inbox[1] as $message):?>
+              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <img align="left" src="/public/images/img6.png" />
+            <p class="summary">
+            	  <span class="title"><?=$message['title']?>: </span>
                   <?=(strlen(strip_tags($message['message']))>50) ? substr(strip_tags($message['message']),0,50).'...' : strip_tags($message['message']);?>
+                  <?php
+				  $d1=time();
+				  $d2=strtotime($message['created_at']);
+				  $diff = abs($d2-$d1);
+				  if($diff>0 && $diff<(60*60*24)){
+					//hour
+					$hour = floor($diff/(60*60));
+					$min = floor(($diff - $hour * (60*60))/60);
+					if($hour>0)$str = $hour.' hours and ';
+					$str.=$min.' mins ago';
+				  }elseif(($diff>=(60*60*24)) && ($diff<(60*60*24*30))){
+					//days
+					$day = floor($diff/(60*60*24));
+					if($day=1){
+						$str = $day.' day ago';
+					}else{
+						$str = $day.' days ago';
+					}
+				  }else{
+					//date
+					$str = date('d F Y',strtotime($message['created_at']));
+				  }
+				  ?>
+                  <span style="float:right; color:#999;"><?=$str?></span>
                 </p>
             <div class="desc">
                   <?=$message['message']?>
+                  <span style="float:right; color:#999;"><?=$str?></span>
                 </div>
           </div>
               <?php endforeach;?>
-              <!-- Slider Content End --> 
+<!-- bid Content End --> 
             </div>
       </div>
           <div class="dragger_container">
@@ -257,7 +281,140 @@ $header_tasks = $query->result_array();
   </div>
     </div>
 
-<!-- end side menu --> 
-<!-- end side menu -->
+<!-- end side menu for bid--> 
 
+<!-- start message menu -->
+<div id="message_side_menu" class="sidemenu_inactive">
+	<?php $message_inbox=$this->inbox_model->get_messages($this->session->userdata('user_id')); ?>
+      <div id="message_side_menu_button" class="sideopen"><?=$message_inbox[0]!=0? $message_inbox[0]:''?></div>
+      <div id="scroll_container1">
+    <div class="customScrollBox">
+          <div class="container">
+        <div class="content"> 
+              <!-- Slider Content Start --> 
+              <span class="title">Messages</span>
+              <?php foreach($message_inbox[1] as $message):?>
+              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <img align="left" src="/public/images/img6.png" />
+            <p class="summary">
+            	  <span class="title"><?=$message['title']?>: </span>
+                  <?=(strlen(strip_tags($message['message']))>50) ? substr(strip_tags($message['message']),0,50).'...' : strip_tags($message['message']);?>
+                  <?php
+				  $d1=time();
+				  $d2=strtotime($message['created_at']);
+				  $diff = abs($d2-$d1);
+				  if($diff>0 && $diff<(60*60*24)){
+					//hour
+					$hour = floor($diff/(60*60));
+					$min = floor(($diff - $hour * (60*60))/60);
+					if($hour>0)$str = $hour.' hours and ';
+					$str.=$min.' mins ago';
+				  }elseif(($diff>=(60*60*24)) && ($diff<(60*60*24*30))){
+					//days
+					$day = floor($diff/(60*60*24));
+					if($day=1){
+						$str = $day.' day ago';
+					}else{
+						$str = $day.' days ago';
+					}
+				  }else{
+					//date
+					$str = date('d F Y',strtotime($message['created_at']));
+				  }
+				  ?>
+                  <span style="float:right; color:#999;"><?=$str?></span>
+                </p>
+            <div class="desc">
+                  <?=$message['message']?>
+                  <span style="float:right; color:#999;"><?=$str?></span>
+                </div>
+          </div>
+              <?php endforeach;?>
+			<!-- message Content End --> 
+</div>
+      </div>
+          <div class="dragger_container">
+        <div class="dragger">&#9618;</div>
+      </div>
+        </div>
+  </div>
+    </div>
+
+<!-- end side menu for message --> 
+
+<!-- start jobs menu -->
+<div id="job_side_menu" class="sidemenu_inactive">
+	<?php $job_inbox=$this->inbox_model->get_jobs($this->session->userdata('user_id')); ?>
+      <div id="job_side_menu_button" class="sideopen"><?=$job_inbox[0]!=0? $job_inbox[0]:''?></div>
+      <div id="scroll_container1">
+    <div class="customScrollBox">
+          <div class="container">
+        <div class="content"> 
+              <!-- Slider Content Start --> 
+              <span class="title">Job Messages</span>
+              <?php foreach($job_inbox[1] as $message):?>
+              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <img align="left" src="/public/images/img6.png" />
+            <p class="summary">
+            	  <span class="title"><?=$message['title']?>: </span>
+                  <?=(strlen(strip_tags($message['message']))>50) ? substr(strip_tags($message['message']),0,50).'...' : strip_tags($message['message']);?>
+                  <?php
+				  $d1=time();
+				  $d2=strtotime($message['created_at']);
+				  $diff = abs($d2-$d1);
+				  if($diff>0 && $diff<(60*60*24)){
+					//hour
+					$hour = floor($diff/(60*60));
+					$min = floor(($diff - $hour * (60*60))/60);
+					if($hour>0)$str = $hour.' hours and ';
+					$str.=$min.' mins ago';
+				  }elseif(($diff>=(60*60*24)) && ($diff<(60*60*24*30))){
+					//days
+					$day = floor($diff/(60*60*24));
+					if($day=1){
+						$str = $day.' day ago';
+					}else{
+						$str = $day.' days ago';
+					}
+				  }else{
+					//date
+					$str = date('d F Y',strtotime($message['created_at']));
+				  }
+				  ?>
+                  <span style="float:right; color:#999;"><?=$str?></span>
+                </p>
+            <div class="desc">
+                  <?=$message['message']?>
+                  <span style="float:right; color:#999;"><?=$str?></span>
+                </div>
+          </div>
+              <?php endforeach;?>
+			<!-- message Content End --> 
+</div>
+      </div>
+          <div class="dragger_container">
+        <div class="dragger">&#9618;</div>
+      </div>
+        </div>
+  </div>
+    </div>
+
+<!-- end side menu for jobs --> 
 <?php } ?>
+<script type="text/javascript">
+var me_message_buble="";
+$('.message_buble').click(function(){
+	me_message_buble = $(this);
+	var data = $(this).attr('id');
+	if($(this).hasClass('unread')){
+		me_message_buble = $(this);
+		$.post(
+		'/myoffice/AjaxMessageRead',
+		{ 'id': data, 'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>' },
+		function(msg){
+			$('#'+msg).removeClass('unread');
+			$('#'+msg).addClass('read');
+			me = me_message_buble.parent().parent().parent().parent().parent().find('.sideclose');
+			me.html(me.html()-1);
+		});
+	}
+});
+</script>

@@ -13,11 +13,33 @@ $(document).ready(function(){
 		$('#bid_side_menu_button').click(function(){
 			if($("#bid_side_menu").hasClass("sidemenu_inactive")){
 				$(this).removeClass("sideopen").addClass("sideclose");
-				$("#bid_side_menu").animate({left: '0px'}).removeClass("sidemenu_inactive").addClass("sidemenu_active");				
+				$("#bid_side_menu").animate({left: '0px'}).removeClass("sidemenu_inactive").addClass("sidemenu_active");			
 			}
 			else if($("#bid_side_menu").hasClass("sidemenu_active")){
 				$(this).removeClass("sideopen").addClass("sideopen");
 				$("#bid_side_menu").animate({left: '-300px'}).removeClass("sidemenu_active").addClass("sidemenu_inactive");				
+			}
+		})
+		
+		$('#message_side_menu_button').click(function(){
+			if($("#message_side_menu").hasClass("sidemenu_inactive")){
+				$(this).removeClass("sideopen").addClass("sideclose");
+				$("#message_side_menu").animate({left: '0px'}).removeClass("sidemenu_inactive").addClass("sidemenu_active");			
+			}
+			else if($("#message_side_menu").hasClass("sidemenu_active")){
+				$(this).removeClass("sideopen").addClass("sideopen");
+				$("#message_side_menu").animate({left: '-300px'}).removeClass("sidemenu_active").addClass("sidemenu_inactive");				
+			}
+		})
+		
+		$('#job_side_menu_button').click(function(){
+			if($("#job_side_menu").hasClass("sidemenu_inactive")){
+				$(this).removeClass("sideopen").addClass("sideclose");
+				$("#job_side_menu").animate({left: '0px'}).removeClass("sidemenu_inactive").addClass("sidemenu_active");			
+			}
+			else if($("#job_side_menu").hasClass("sidemenu_active")){
+				$(this).removeClass("sideopen").addClass("sideopen");
+				$("#job_side_menu").animate({left: '-300px'}).removeClass("sidemenu_active").addClass("sidemenu_inactive");				
 			}
 		})
 		
@@ -42,6 +64,11 @@ $(document).ready(function(){
 					});
 			}
 		);
+		
+		//make inside links clickable
+		$('.message_buble a').click(function(event){
+			event.stopImmediatePropagation();
+		});
 		
 		selected = getCookie('active_menu');
 		if(selected){
@@ -80,7 +107,6 @@ $(document).ready(function(){
 		resize();
 		$("#scroll_container").mCustomScrollbar("vertical",0,"easeOutCirc",1.05,"auto","yes","yes",0);
 		$("#scroll_container1").mCustomScrollbar("vertical",0,"easeOutCirc",1.05,"auto","yes","yes",0);
-		
 
 });
 

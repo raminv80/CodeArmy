@@ -59,8 +59,52 @@ class Inbox_model extends CI_Model {
 	}
 	
 	function get_bids($user_id){
-		$sql = "select inbox.user_id, avatar, title, message, created_at from inbox, user_profiles where inbox.user_id = user_profiles.user_id and inbox.user_id = ? and category = 'bid' and status = 'unread'";
-		$result = $this->db->query($sql, array($user_id));
-		return $result->result_array();
+		$sql = "select inbox.id, inbox.user_id, avatar, title, message, created_at, status from inbox, user_profiles where inbox.user_id = user_profiles.user_id and inbox.user_id = ? and category = 'bid' and status = ? order by inbox.id desc";
+		$result = $this->db->query($sql, array($user_id,'unread'));
+		$unread = $result->num_rows();
+		if($unread<7){
+			$diff = 7 - $unread;
+			$sql.=' limit 0,?';
+			$result1 = $this->db->query($sql, array($user_id,'read',$diff));
+			$result1 = $result1->result_array();
+		}
+		$res = array();
+		$res[0] = $unread;
+		$res[1] = array_merge($result->result_array(), $result1);
+		return $res;
+	}
+	
+	function get_messages($user_id){
+		$sql = "select inbox.id, inbox.user_id, avatar, title, message, created_at, status from inbox, user_profiles where inbox.user_id = user_profiles.user_id and inbox.user_id = ? and category = 'message' and status = ? order by inbox.id desc";
+		$result = $this->db->query($sql, array($user_id,'unread'));
+		$unread = $result->num_rows();
+		$result1 = array();
+		if($unread<7){
+			$diff = 7 - $unread;
+			$sql.=' limit 0,?';
+			$result1 = $this->db->query($sql, array($user_id,'read',$diff));
+			$result1 = $result1->result_array();
+		}
+		$res = array();
+		$res[0] = $unread;
+		$res[1] = array_merge($result->result_array(), $result1);
+		return $res;
+	}
+	
+	function get_jobs($user_id){
+		$sql = "select inbox.id, inbox.user_id, avatar, title, message, created_at, status from inbox, user_profiles where inbox.user_id = user_profiles.user_id and inbox.user_id = ? and category = 'job' and status = ? order by inbox.id desc";
+		$result = $this->db->query($sql, array($user_id,'unread'));
+		$unread = $result->num_rows();
+		$result1 = array();
+		if($unread<7){
+			$diff = 7 - $unread;
+			$sql.=' limit 0,?';
+			$result1 = $this->db->query($sql, array($user_id,'read',$diff));
+			$result1 = $result1->result_array();
+		}
+		$res = array();
+		$res[0] = $unread;
+		$res[1] = array_merge($result->result_array(), $result1);
+		return $res;
 	}
 }
