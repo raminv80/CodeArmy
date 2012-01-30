@@ -394,11 +394,12 @@ class Story extends CI_Controller {
 			$message = '<p>Hello,</p><p>The story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a> is not proceeding according to product owner expectations. Regard to this matter, product owner has decided to revoke the assignment and the job is set to open for bidding one again. For more info please refer to the discussion section of this user sotry.</p><p>You are recieving this email because you are assigned as Scrum Master of this story.</p><p>Regards.</p>';
 			if($user_data[0]['user_id']!=$to) $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message, 'job', $to_id);
 			$project_id = $work_data[0]['project_id'];
+			$sprint = $work_data[0]['sprint'];
 			$point = $work_data[0]['points'];
 			$user_id = $user_data[0]['user_id'];
 			$this->stories->log_history($user_id, $project_id, $story_id, 'reject', $point, $desc = '');
 		}
-		redirect("/project/scrum_board/$project_id");
+		redirect("/project/scrum_board/$project_id/$sprint");
 	}
 
     function bid_accept($id, $ref='') {
@@ -654,11 +655,12 @@ class Story extends CI_Controller {
 				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
 				$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job');
 				$project_id = $work_data[0]['project_id'];
+				$sprint = $work_data[0]['sprint'];
 				$point = $work_data[0]['points'];
 				$user_id = $user_data[0]['user_id'];
 				$this->stories->log_history($user_id, $project_id, $story_id, 'redo', $point, $desc = '');
 			}
-			redirect("/project/scrum_board/$project_id");
+			redirect("/project/scrum_board/$project_id/$sprint");
 		}
 		
 		function verify($id){
@@ -679,11 +681,12 @@ class Story extends CI_Controller {
 				$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job');
 				
 				$project_id = $work_data[0]['project_id'];
+				$sprint = $work_data[0]['sprint'];
 				$point = $work_data[0]['points'];
 				$user_id = $user_data[0]['user_id'];
 				$this->stories->log_history($user_id, $project_id, $story_id, 'verify', $point, $desc = '');
 			}
-			redirect("/project/scrum_board/$project_id");
+			redirect("/project/scrum_board/$project_id/$sprint");
 		}
 		
 		function signoff($id){
@@ -713,11 +716,12 @@ class Story extends CI_Controller {
 				$this->notify(noreply_email,email_name, $to, admin_cc, $title,$message, 'job', $to_id);
 				
 				$project_id = $work_data[0]['project_id'];
+				$sprint = $work_data[0]['sprint'];
 				$point = $work_data[0]['points'];
 				$user_id = $user_data[0]['user_id'];
 				$this->stories->log_history($user_id, $project_id, $story_id, 'signoff', $point, $desc = '');
 			}
-			redirect("/project/scrum_board/$project_id");		
+			redirect("/project/scrum_board/$project_id/$sprint");		
 		}
 		
 		function reject($id){
@@ -745,11 +749,12 @@ class Story extends CI_Controller {
 				$to_id = $scrum_master[0]['user_id'];
 				if($user_data[0]['user_id']!=$to) $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message, 'job', $to_id);
 				$project_id = $work_data[0]['project_id'];
+				$sprint = $work_data[0]['sprint'];
 				$point = $work_data[0]['points'];
 				$user_id = $user_data[0]['user_id'];
 				$this->stories->log_history($user_id, $project_id, $story_id, 'reject', $point, $desc = '');
 			}
-			redirect("/project/scrum_board/$project_id");	
+			redirect("/project/scrum_board/$project_id/$sprint");	
 		}
 		
 		function submission(){

@@ -413,7 +413,9 @@ $('.message_buble').click(function(){
 			$('#'+msg).removeClass('unread');
 			$('#'+msg).addClass('read');
 			me = me_message_buble.parent().parent().parent().parent().parent().find('.sideclose');
-			me.html(me.html()-1);
+			val = me.html()-1;
+			if (val==0) val = '';
+			me.html(val);
 		});
 	}
 });
