@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!--stops search engine from crawling to site while in beta -->
+    <meta name="robots" content="noindex" />
     <title>
     <?=(isset($window_title))? $window_title: 'Workpad'?>
     </title>
@@ -414,7 +416,7 @@ $('.message_buble').click(function(){
 			$('#'+msg).addClass('read');
 			me = me_message_buble.parent().parent().parent().parent().parent().find('.sideclose');
 			val = me.html()-1;
-			if (val==0) val = '';
+			if (val<=0) val = '';
 			me.html(val);
 		});
 	}

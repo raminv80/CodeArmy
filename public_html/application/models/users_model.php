@@ -407,7 +407,7 @@ class Users_model extends CI_Model {
 		return $res->result_array();
 	}
 	
-	function notify($user_id, $subject, $message, $category = NULL){		
+	function notify($user_id, $subject, $message, $category = NULL, $shor_message=""){		
 			ini_set('display_error',0);
 			error_reporting('E_ALL');
 			$q = $user_id;
@@ -449,7 +449,7 @@ class Users_model extends CI_Model {
 			$data = array(
 				"user_id" => $user_id,
 				"title" => $subject,
-				"message" => $message,
+				"message" => ($shor_message=="")?$message:$shor_message,
 				"status" => 'unread',
 				"created_at" => date('Y-m-d'),
 				"category" => $category
