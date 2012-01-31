@@ -136,6 +136,9 @@ class Project extends CI_Controller {
 		$this->view_data['project_sel'] = $id;
 		if($id>0){
 			$this->view_data['works'] = $this->projects_model->get_worklist_sprint($id);
+			$this->view_data['first_sprint'] = $this->projects_model->getFirstSprint($id);
+			if(count($this->view_data['first_sprint'])>0)
+				$this->view_data['first_sprint'] = $this->view_data['first_sprint'][0]['id'];
 		}
 		$curSprint = $this->projects_model->getCurrentSprint($id);
 		$this->view_data['curSprint'] = -1;

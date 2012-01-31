@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="scrum_column" id="sprint_1">
-          <h2 class="sprint-title">Sprint 1 <a style="height:10px;float: Right;position:relative;top:-16px;left:4px;" class="minimize" href="javascript:void(0)"><img height="10px" width="10px" border="0" src="/public/images/icon-minimize.png" /></a></a></h2>
+          <h2 class="sprint-title"><a href='<?php if(isset($project_sel)){?>/project/scrum_board/<?=$project_sel?>/<?=$first_sprint?><?php }else{?>#<?php }?>'>Sprint 1</a> <a style="height:10px;float: Right;position:relative;top:-16px;left:4px;" class="minimize" href="javascript:void(0)"><img height="10px" width="10px" border="0" src="/public/images/icon-minimize.png" /></a></a></h2>
           <ul class="timeline">
             <li><b>Strt:</b>
               <input name="startSprint1" class="start" />
@@ -494,6 +494,7 @@ function populate(works){
 		}else if(sprint_id!=0 && !first_sprint){//add a new sprint
 			$('.add_sprint').click();
 			cur_sprint = $('#scrum'+num_sprints);
+			cur_sprint.parent().find('.sprint-title').html('<a href="/project/scrum_board/<?=$project_sel?>/'+sprint_id+'">SPRINT '+num_sprints+"</a>");
 			cur_sprint.data('sprint_id', sprint_id);
 			$('.start',cur_sprint.parent()).val(sprint_from);
 			$('.end',cur_sprint.parent()).val(sprint_to);
