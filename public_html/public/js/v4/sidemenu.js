@@ -43,32 +43,7 @@ $(document).ready(function(){
 			}
 		})
 		
-		$('.message_buble').each(function(){
-			$(this).data('height',$(this).height());
-			$('.desc', this).hide();
-			$(this).height(50);
-		});
-		$('.message_buble').toggle(
-			function(){
-				$(this).find('.desc').show();
-				$(this).find('.summary').hide();
-				$(this).stop(true, true).animate({height:$(this).data('height')},500, function(){
-						$("#scroll_container1").mCustomScrollbar("vertical",40,"easeOutCirc",1.05,"auto","yes","no",0);
-					});
-			},
-			function(){
-				$(this).find('.desc').hide();
-				$(this).find('.summary').show();
-				$(this).stop(true, true).animate({height:50},500, function(){
-						$("#scroll_container1").mCustomScrollbar("vertical",40,"easeOutCirc",1.05,"auto","yes","no",0);
-					});
-			}
-		);
-		
-		//make inside links clickable
-		$('.message_buble a').click(function(event){
-			event.stopImmediatePropagation();
-		});
+		setup_message_bubles();
 		
 		selected = getCookie('active_menu');
 		if(selected){
@@ -109,6 +84,55 @@ $(document).ready(function(){
 		$("#scroll_container1").mCustomScrollbar("vertical",0,"easeOutCirc",1.05,"auto","yes","yes",0);
 
 });
+
+function setup_message_bubles(){
+	$('.message_buble').each(function(){
+		$(this).data('height',$(this).height());
+		$('.desc', this).hide();
+		$(this).height(50);
+	});
+	$('.message_buble').toggle(
+		function(){
+			$(this).find('.desc').show();
+			$(this).find('.summary').hide();
+			$(this).stop(true, true).animate({height:$(this).data('height')},500, function(){
+					$("#scroll_container1").mCustomScrollbar("vertical",40,"easeOutCirc",1.05,"auto","yes","no",0);
+				});
+		},
+		function(){
+			$(this).find('.desc').hide();
+			$(this).find('.summary').show();
+			$(this).stop(true, true).animate({height:50},500, function(){
+					$("#scroll_container1").mCustomScrollbar("vertical",40,"easeOutCirc",1.05,"auto","yes","no",0);
+				});
+		}
+	);
+	
+	//make inside links clickable
+	$('.message_buble a').click(function(event){
+		event.stopImmediatePropagation();
+	});
+	
+	var me_message_buble="";
+	$('.message_buble').click(function(){
+		me_message_buble = $(this);
+		var data = $(this).attr('id');
+		if($(this).hasClass('unread')){
+			me_message_buble = $(this);
+			$.post(
+			'/myoffice/AjaxMessageRead',
+			{ 'id': data, 'ci_csrf_token': getCookie('ci_csrf_token') },
+			function(msg){
+				$('#'+msg).removeClass('unread');
+				$('#'+msg).addClass('read');
+				me = me_message_buble.parent().parent().parent().parent().parent().find('.sideclose');
+				val = me.html()-1;
+				if (val<=0) val = '';
+				me.html(val);
+			});
+		}
+	});
+}
 
 function setCookie(c_name,value,exdays)
 {

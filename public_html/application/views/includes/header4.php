@@ -237,6 +237,7 @@ $header_tasks = $query->result_array();
         <div class="content"> 
               <!-- Slider Content Start --> 
               <span class="title">Bidding Messages</span>
+              <div class="list">
               <?php foreach($bid_inbox[1] as $message):?>
               <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <img align="left" src="/public/images/img6.png" />
             <p class="summary">
@@ -250,6 +251,7 @@ $header_tasks = $query->result_array();
 					//hour
 					$hour = floor($diff/(60*60));
 					$min = floor(($diff - $hour * (60*60))/60);
+					$str="";
 					if($hour>0)$str = $hour.' hours and ';
 					$str.=$min.' mins ago';
 				  }elseif(($diff>=(60*60*24)) && ($diff<(60*60*24*30))){
@@ -273,6 +275,7 @@ $header_tasks = $query->result_array();
                 </div>
           </div>
               <?php endforeach;?>
+              </div>
 <!-- bid Content End --> 
             </div>
       </div>
@@ -295,6 +298,7 @@ $header_tasks = $query->result_array();
         <div class="content"> 
               <!-- Slider Content Start --> 
               <span class="title">Messages</span>
+              <div class="list">
               <?php foreach($message_inbox[1] as $message):?>
               <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <img align="left" src="/public/images/img6.png" />
             <p class="summary">
@@ -331,6 +335,7 @@ $header_tasks = $query->result_array();
                 </div>
           </div>
               <?php endforeach;?>
+              </div>
 			<!-- message Content End --> 
 </div>
       </div>
@@ -353,6 +358,7 @@ $header_tasks = $query->result_array();
         <div class="content"> 
               <!-- Slider Content Start --> 
               <span class="title">Job Messages</span>
+              <div class="list">
               <?php foreach($job_inbox[1] as $message):?>
               <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <img align="left" src="/public/images/img6.png" />
             <p class="summary">
@@ -389,6 +395,7 @@ $header_tasks = $query->result_array();
                 </div>
           </div>
               <?php endforeach;?>
+              </div>
 			<!-- message Content End --> 
 </div>
       </div>
@@ -401,24 +408,3 @@ $header_tasks = $query->result_array();
 
 <!-- end side menu for jobs --> 
 <?php } ?>
-<script type="text/javascript">
-var me_message_buble="";
-$('.message_buble').click(function(){
-	me_message_buble = $(this);
-	var data = $(this).attr('id');
-	if($(this).hasClass('unread')){
-		me_message_buble = $(this);
-		$.post(
-		'/myoffice/AjaxMessageRead',
-		{ 'id': data, 'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>' },
-		function(msg){
-			$('#'+msg).removeClass('unread');
-			$('#'+msg).addClass('read');
-			me = me_message_buble.parent().parent().parent().parent().parent().find('.sideclose');
-			val = me.html()-1;
-			if (val<=0) val = '';
-			me.html(val);
-		});
-	}
-});
-</script>
