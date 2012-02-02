@@ -1,5 +1,8 @@
 <?php $this->load->view('includes/header4'); ?>
 <?php
+			foreach($sprints as $i=>$sprint)if($sprint['id']==$sprint_sel)break;
+			$sprint_num=$i;
+			
 			$open = 0; $in_progress = 0; $done = 0; $verify=0; $sign_off=0;
 			foreach($point_state as $data):
 				switch(strtolower($data['status'])):
@@ -23,6 +26,7 @@
 <div id="wrapper" style="padding:100px 10px 200px 10px; ">
 
   <div class="contents"> 
+  	<h1 style="margin-left:20px"><?=$project['project_name']?> | Sprint <?=$sprint_num?></h1>
     <div id="plan_holder" class="scrum_holder">
       <div id="sprint_planner">
         <div class="scrum_column">

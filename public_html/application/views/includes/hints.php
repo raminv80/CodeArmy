@@ -175,6 +175,8 @@ if($this->session->userdata('user_id') && floor($me['exp'] / points_per_level)<1
 			img1.src = "/public/images/dialog-up.png";
 			img1 = new Image();
 			img1.src = "/public/images/dialog-up-left.png";
+			img1 = new Image();
+			img1.src = "/public/images/alertbox1.png";
 		}
 	});		
 	

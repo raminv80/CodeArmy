@@ -46,7 +46,7 @@
         data.addRows(chart);
         var options = {
           width: 700, height: 420,
-          title: 'Sprint <?=$sprint_num+1?>',
+          title: '<?= ucfirst($project['project_name']);?> | Sprint <?=$sprint_num+1?>',
 		  strictFirstColumnType: true,
 		  pointSize: 5,
 		  interpolateNulls:true,

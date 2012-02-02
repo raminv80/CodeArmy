@@ -494,7 +494,7 @@ function populate(works){
 		}else if(sprint_id!=0 && !first_sprint){//add a new sprint
 			$('.add_sprint').click();
 			cur_sprint = $('#scrum'+num_sprints);
-			cur_sprint.parent().find('.sprint-title').html('<a href="/project/scrum_board/<?=$project_sel?>/'+sprint_id+'">SPRINT '+num_sprints+"</a>");
+			cur_sprint.parent().find('.sprint-title .title').html('<a href="/project/scrum_board/<?=$project_sel?>/'+sprint_id+'">SPRINT '+num_sprints+"</a>");
 			cur_sprint.data('sprint_id', sprint_id);
 			$('.start',cur_sprint.parent()).val(sprint_from);
 			$('.end',cur_sprint.parent()).val(sprint_to);
@@ -593,7 +593,7 @@ $('.add_sprint').click(function(){
 		$('.story_list').each(function(){if($(this).height()>max_height)max_height = $(this).height();})
 		//adjust their height to max
 		$('.story_list').css({'min-height': max_height+'px'});
-		$(this).before('<div id="col_'+num_sprints+'" class="scrum_column"><h2 class="sprint-title">Sprint '+num_sprints+' <div class="action-icons"><a class="minimize" href="javascript:void(0)"><img height="10px" width="10px" border="0" src="/public/images/icon-minimize.png" /></a><a class="remove" href="javascript:  remove_sprint('+num_sprints+')"><img height="10px" width="10px" src="/public/images/icon_delete.png" border="0" /></a></div></h2><ul class="timeline"><li><b>Strt:</b> <input name="startSprint'+num_sprints+'" class="start" /></li><li><b>End:</b> <input name="endSprint'+num_sprints+'" class="end" /></li></ul><div style="clear:both"></div><div class="timeline-holder"><div class="datestart"><p class="day_date">S</p><p class="monthyear_date">tart Date</p></div><div class="timeline-path"><div class="mark" style="margin-left:15px;"></div><span class="total-burndown"></span></div><div class="dateend"><p class="day_date">E</p><p class="monthyear_date">nd Date</p></div></div><div style=" clear:both"><ul class="sprint-info"></div><div id="scrum'+num_sprints+'" class="story_list" style="min-height: '+max_height+'px"></div></div>');
+		$(this).before('<div id="col_'+num_sprints+'" class="scrum_column"><h2 class="sprint-title"><span class="title">Sprint '+num_sprints+'</span> <div class="action-icons"><a class="minimize" href="javascript:void(0)"><img height="10px" width="10px" border="0" src="/public/images/icon-minimize.png" /></a><a class="remove" href="javascript:  remove_sprint('+num_sprints+')"><img height="10px" width="10px" src="/public/images/icon_delete.png" border="0" /></a></div></h2><ul class="timeline"><li><b>Strt:</b> <input name="startSprint'+num_sprints+'" class="start" /></li><li><b>End:</b> <input name="endSprint'+num_sprints+'" class="end" /></li></ul><div style="clear:both"></div><div class="timeline-holder"><div class="datestart"><p class="day_date">S</p><p class="monthyear_date">tart Date</p></div><div class="timeline-path"><div class="mark" style="margin-left:15px;"></div><span class="total-burndown"></span></div><div class="dateend"><p class="day_date">E</p><p class="monthyear_date">nd Date</p></div></div><div style=" clear:both"><ul class="sprint-info"></div><div id="scrum'+num_sprints+'" class="story_list" style="min-height: '+max_height+'px"></div></div>');
 		$('.minimize').unbind('click');
 		$('.minimize').click(function(){
 				column = $(this).parents('.scrum_column');

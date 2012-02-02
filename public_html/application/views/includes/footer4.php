@@ -7,6 +7,10 @@
 <!-- Admin footer -->
 <div style="height:22px" class="footer">
 
+<?php }elseif($page_is=='Leaderboard'){?>
+<!-- Admin footer -->
+<div style="height:22px" class="footer">
+
 <?php }elseif($page_is=='Contact' && $action_is!='find'){?>
 <!-- contact us footer -->
 
@@ -240,7 +244,7 @@ padding: 3px;}
       <p style="margin-top: 10px;" id="burndown">Project:</p>
       <SELECT id="project-select" onchange="switchProject()" type="text" id="project_sel" name="project_sel">
       <?php if(count($projects)<1){?>
-      <option>You have no Active Projects</option>
+      <option><?=$project['project_name']?></option>
       <?php }else{?>
       <?php if($project_sel==0){?>
       <option value="0">Please Select a Project...</option>
@@ -303,7 +307,7 @@ width: 210px;}
       <div id="browsesearch"> <img align="center" style="margin-top: 10px; margin-left: 15px;"src="/public/images/searchingfor.png">
         <SELECT id="project-select" onchange="switchProject()" type="text" id="project_sel" name="project_sel">
         <?php if(count($projects)<1){?>
-        <option>You have no Active Projects</option>
+        <option><?=$project['project_name']?></option>
         <?php }else{?>
         <?php if($project_sel==0){?>
         <option value="0">Please Select a Project...</option>
@@ -361,7 +365,7 @@ width: 210px;}
       <div id="browsesearch"> <img align="center" style="margin-top: 10px; margin-left: 15px;"src="/public/images/searchingfor.png"> Project:
         <SELECT onchange="switchProject()" type="text" id="project_sel" name="project_sel">
           <?php if(count($projects)<1){?>
-          <option>You have no Active Projects</option>
+          <option><?=$project['project_name']?></option>
           <?php }else{?>
           <?php if($project_sel==0){?>
           <option value="0">Please Select a Project...</option>
