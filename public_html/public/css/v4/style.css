@@ -163,7 +163,7 @@ margin-right: 6px;
 }
 
 .alert{
-	background:url(/public/images/alertbox1.png);
+	background:url(../images/alertbox1.png);
 	display:none;
 	width:600px;
 	height:173px;
