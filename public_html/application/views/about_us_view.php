@@ -1,6 +1,6 @@
 <?php $this->load->view('includes/header4'); ?>
 			<style>
-			p {width: 410px;
+			.WP-main p {width: 410px;
 text-align: justify; padding:5px 0 10px 0;
 }
 h2 {text-transform:uppercase; color:#fff;padding-top: 10px;}
