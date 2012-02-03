@@ -26,7 +26,7 @@
 <div id="wrapper" style="padding:100px 10px 200px 10px; ">
 
   <div class="contents"> 
-  	<h1 style="margin-left:20px"><?=$project['project_name']?> | Sprint <?=$sprint_num?></h1>
+  	<h1 style="margin-left:20px"><?=$project['project_name']?> | Sprint <?=$sprint_num+1?></h1>
     <div id="plan_holder" class="scrum_holder">
       <div id="sprint_planner">
         <div class="scrum_column">
