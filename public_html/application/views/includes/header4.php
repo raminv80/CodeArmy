@@ -179,7 +179,7 @@ $header_tasks = $query->result_array();
 					        </script>
               <div class="projectblock">
             <div id="task_<?=$task['work_id']?>" class="projecttitle">
-                  <?=ucfirst(substr($task['title'],0,20))?>
+                  <?=ucfirst(substr($task['title'],0,19))?>
                   <span id="count_<?=$task['work_id']?>"></span></div>
             <div class="projectmenu">
                   <ul>
@@ -239,9 +239,8 @@ $header_tasks = $query->result_array();
               <span class="title">Bidding Messages</span>
               <div class="list">
               <?php foreach($bid_inbox[1] as $message):?>
-              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <img align="left" src="/public/images/img6.png" />
+              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <a href="/user/<?=$message['target_id']?>"><img width="39px" height="40px" align="left" src="/public/<?=$message['avatar']?>" /></a>
             <p class="summary">
-            	  <span class="title"><?=$message['title']?>: </span>
                   <?=(strlen(strip_tags($message['message']))>50) ? substr(strip_tags($message['message']),0,50).'...' : strip_tags($message['message']);?>
                   <?php
 				  $d1=time();
@@ -300,9 +299,8 @@ $header_tasks = $query->result_array();
               <span class="title">Messages</span>
               <div class="list">
               <?php foreach($message_inbox[1] as $message):?>
-              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <img align="left" src="/public/images/img6.png" />
+              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <a href="/user/<?=$message['target_id']?>"><img width="39px" height="40px" align="left" src="/public/<?=$message['avatar']?>" /></a>
             <p class="summary">
-            	  <span class="title"><?=$message['title']?>: </span>
                   <?=(strlen(strip_tags($message['message']))>50) ? substr(strip_tags($message['message']),0,50).'...' : strip_tags($message['message']);?>
                   <?php
 				  $d1=time();
@@ -361,9 +359,8 @@ $header_tasks = $query->result_array();
               <span class="title">Job Messages</span>
               <div class="list">
               <?php foreach($job_inbox[1] as $message):?>
-              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <img align="left" src="/public/images/img6.png" />
+              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <a href="/user/<?=$message['target_id']?>"><img width="39px" height="40px" align="left" src="/public/<?=$message['avatar']?>" /></a>
             <p class="summary">
-            	  <span class="title"><?=$message['title']?>: </span>
                   <?=(strlen(strip_tags($message['message']))>50) ? substr(strip_tags($message['message']),0,50).'...' : strip_tags($message['message']);?>
                   <?php
 				  $d1=time();

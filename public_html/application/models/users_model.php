@@ -407,7 +407,7 @@ class Users_model extends CI_Model {
 		return $res->result_array();
 	}
 	
-	function notify($user_id, $subject, $message, $category = NULL, $shor_message=""){		
+	function notify($user_id, $subject, $message, $category = NULL, $shor_message="", $target_id = NULL){		
 			ini_set('display_error',0);
 			error_reporting('E_ALL');
 			$q = $user_id;
@@ -448,6 +448,7 @@ class Users_model extends CI_Model {
 			// send to inbox
 			$data = array(
 				"user_id" => $user_id,
+				"target_id" => $target_id,
 				"title" => $subject,
 				"message" => ($shor_message=="")?$message:$shor_message,
 				"status" => 'unread',
