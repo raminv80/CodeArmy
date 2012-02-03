@@ -17,7 +17,13 @@ $(document).ready(function(){
 			}
 			else if($("#bid_side_menu").hasClass("sidemenu_active")){
 				$(this).removeClass("sideopen").addClass("sideopen");
-				$("#bid_side_menu").animate({left: '-300px'}).removeClass("sidemenu_active").addClass("sidemenu_inactive");				
+				$("#bid_side_menu").animate({left: '-300px'}).removeClass("sidemenu_active").addClass("sidemenu_inactive");
+				$('#bid_side_menu .message_buble').each(function(){
+					$('.desc', this).hide();
+					$('.summary', this).show();
+					$(this).height(50);
+					$(this).removeClass('show_desc');
+				});	
 			}
 		})
 		
@@ -28,18 +34,30 @@ $(document).ready(function(){
 			}
 			else if($("#message_side_menu").hasClass("sidemenu_active")){
 				$(this).removeClass("sideopen").addClass("sideopen");
-				$("#message_side_menu").animate({left: '-300px'}).removeClass("sidemenu_active").addClass("sidemenu_inactive");				
+				$("#message_side_menu").animate({left: '-300px'}).removeClass("sidemenu_active").addClass("sidemenu_inactive");
+				$('#message_side_menu .message_buble').each(function(){
+					$('.desc', this).hide();
+					$('.summary', this).show();
+					$(this).height(50);
+					$(this).removeClass('show_desc');
+				});
 			}
 		})
 		
 		$('#job_side_menu_button').click(function(){
 			if($("#job_side_menu").hasClass("sidemenu_inactive")){
 				$(this).removeClass("sideopen").addClass("sideclose");
-				$("#job_side_menu").animate({left: '0px'}).removeClass("sidemenu_inactive").addClass("sidemenu_active");			
+				$("#job_side_menu").animate({left: '0px'}).removeClass("sidemenu_inactive").addClass("sidemenu_active");		
 			}
 			else if($("#job_side_menu").hasClass("sidemenu_active")){
 				$(this).removeClass("sideopen").addClass("sideopen");
 				$("#job_side_menu").animate({left: '-300px'}).removeClass("sidemenu_active").addClass("sidemenu_inactive");				
+				$('#job_side_menu .message_buble').each(function(){
+					$('.desc', this).hide();
+					$('.summary', this).show();
+					$(this).height(50);
+					$(this).removeClass('show_desc');
+				});
 			}
 		})
 		
@@ -87,26 +105,32 @@ $(document).ready(function(){
 
 function setup_message_bubles(){
 	$('.message_buble').each(function(){
+		$('.desc', this).show();
+		$('.summary', this).hide();
 		$(this).data('height',$(this).height());
 		$('.desc', this).hide();
 		$('.summary', this).show();
+		$(this).removeClass('show_desc');
 		$(this).height(50);
 	});
-	$('.message_buble').toggle(
+	$('.message_buble').click(
 		function(){
-			$(this).find('.desc').show();
-			$(this).find('.summary').hide();
-			$(this).stop(true, true).animate({height:$(this).data('height')},500, function(){
-					$("#scroll_container1").mCustomScrollbar("vertical",40,"easeOutCirc",1.05,"auto","yes","no",0);
-				});
-		},
-		function(){
-			$(this).find('.desc').hide();
-			$(this).find('.summary').show();
-			$(this).stop(true, true).animate({height:50},500, function(){
-					$("#scroll_container1").mCustomScrollbar("vertical",40,"easeOutCirc",1.05,"auto","yes","no",0);
-				});
-		}
+				if($(this).hasClass('show_desc')){
+					$(this).find('.desc').hide();
+					$(this).find('.summary').show();
+					$(this).stop(true, true).animate({height:50},500, function(){
+							$("#scroll_container1").mCustomScrollbar("vertical",40,"easeOutCirc",1.05,"auto","yes","no",0);
+						});
+					$(this).removeClass('show_desc');
+				}else{
+					$(this).find('.desc').show();
+					$(this).find('.summary').hide();
+					$(this).stop(true, true).animate({height:$(this).data('height')},500, function(){
+							$("#scroll_container1").mCustomScrollbar("vertical",40,"easeOutCirc",1.05,"auto","yes","no",0);
+						});
+					$(this).addClass('show_desc');
+				}
+			}
 	);
 	
 	//make inside links clickable

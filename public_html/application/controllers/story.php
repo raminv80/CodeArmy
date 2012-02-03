@@ -634,6 +634,15 @@ class Story extends CI_Controller {
 						$to_id[] = $scrum_master[0]['user_id'];
 						$this->notify(noreply_email,email_name, $to, admin_email, $title,$message, 'job', $to_id, $short_message);
 						
+						$title = $work_data[0]['title'].' is submited.';
+						$query = $this->stories->get_user_email($story_id);
+						$user_data = $query->result_array();
+						$to = $user_data[0]['email'];
+						$message = '<p>Hi '.$user_data[0]['username'].',</p><p>You have submited the story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>. Once the story is verified by Scrum master and signed off by Product owner you will be credited with its value.</p><p>Thanks.</p>';
+						$short_message = '<p>Your submission of story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> is sent for verification verification. You will be credited once the story is verified by Scrum master and signed off by Product owner.</p>';
+						//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
+						$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job', NULL, $short_message);
+						
 						$project_id =$work_data[0]['project_id'];
 						$user_id = $this->session->userdata('user_id');
 						
