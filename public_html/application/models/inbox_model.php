@@ -59,7 +59,7 @@ class Inbox_model extends CI_Model {
 	}
 	
 	function get_bids($user_id){
-		$sql = "select inbox.id, inbox.target_id, inbox.user_id, avatar, title, message, created_at, status from inbox, user_profiles where inbox.target_id = user_profiles.user_id and inbox.user_id = ? and category = 'bid' and status = ? order by inbox.id desc";
+		$sql = "select inbox.*, avatar from (select inbox.id, inbox.target_id, inbox.user_id, title, message, created_at, status from inbox where inbox.user_id = ? and category = 'bid' and status = ?) as inbox left join user_profiles on inbox.target_id = user_profiles.user_id order by inbox.id desc";
 		$result = $this->db->query($sql, array($user_id,'unread'));
 		$unread = $result->num_rows();
 		$result1 = array();
@@ -76,7 +76,7 @@ class Inbox_model extends CI_Model {
 	}
 	
 	function get_messages($user_id){
-		$sql = "select inbox.id, inbox.target_id, inbox.user_id, avatar, title, message, created_at, status from inbox, user_profiles where inbox.target_id = user_profiles.user_id and inbox.user_id = ? and category = 'message' and status = ? order by inbox.id desc";
+		$sql = "select inbox.*, avatar from (select inbox.id, inbox.target_id, inbox.user_id, title, message, created_at, status from inbox where inbox.user_id = ? and category = 'message' and status = ?) as inbox left join user_profiles on inbox.target_id = user_profiles.user_id order by inbox.id desc";
 		$result = $this->db->query($sql, array($user_id,'unread'));
 		$unread = $result->num_rows();
 		$result1 = array();
@@ -93,7 +93,7 @@ class Inbox_model extends CI_Model {
 	}
 	
 	function get_jobs($user_id){
-		$sql = "select inbox.id, inbox.target_id, inbox.user_id, avatar, title, message, created_at, status from inbox, user_profiles where inbox.target_id = user_profiles.user_id and inbox.user_id = ? and category = 'job' and status = ? order by inbox.id desc";
+		$sql = "select inbox.*, avatar from (select inbox.id, inbox.target_id, inbox.user_id, title, message, created_at, status from inbox where inbox.user_id = ? and category = 'job' and status = ?) as inbox left join user_profiles on inbox.target_id = user_profiles.user_id order by inbox.id desc";
 		$result = $this->db->query($sql, array($user_id,'unread'));
 		$unread = $result->num_rows();
 		$result1 = array();

@@ -41,7 +41,7 @@
 					if(!found){
 						has_new = true;
 						//this is a new message so add it to the list
-						var html_str = '<div id="msg_'+bid.id+'" class="message_buble '+bid.status+'"><img align="left" src="/public/images/img6.png" /><p class="summary"><span class="title">'+bid.title+': </span> '+bid.message.replace(/(<([^>]+)>)/ig,"").substr(0,50)+'...</p><div class="desc" style="display:none">'+bid.message+'</div>';
+						var html_str = '<div id="msg_'+bid.id+'" class="message_buble '+bid.status+'"><a href="/user/'+bid.target_id+'"><img width="39px" height="40px" align="left" src="/public/'+bid.avatar+'" /></a><p class="summary"><span class="title">'+bid.title+': </span> '+bid.message.replace(/(<([^>]+)>)/ig,"").substr(0,50)+'...</p><div class="desc" style="display:none">'+bid.message+'</div>';
 						$('#bid_side_menu.sidemenu_active .list').prepend(html_str);
 					}
 				}
