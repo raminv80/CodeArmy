@@ -35,12 +35,12 @@ class Login extends CI_Controller {
 	// index page
 	function index() {
 		$this->view_data['main_content'] = 'login_form';
-		$this->view_data['window_title'] = "Workpad :: Login";
+		$this->view_data['window_title'] = "Login to Workpad";
 		$this->load->view('login_view', $this->view_data);
 	}	
 	
 	function validate_credentials() {
-		$this->view_data['window_title'] = "Workpad :: Login";
+		$this->view_data['window_title'] = "Login to Worpad";
 		$query = $this->users_model->validate();
 		
 		if($query != false) { // if the user's credentials validated...
@@ -67,7 +67,7 @@ class Login extends CI_Controller {
 		}
 		else { // incorrect username or password
 			$this->view_data['login_error'] = true;
-			$this->view_data['window_title'] = "Workpad :: Login";
+			$this->view_data['window_title'] = "Login to Workpad";
 			$this->load->view('login_view', $this->view_data);
 		}
 	}	
@@ -85,7 +85,7 @@ class Login extends CI_Controller {
 				$this->view_data['login_error'] = $this->users_model->reset_pass($code);	
 			}
 		}
-		$this->view_data['window_title'] = "Workpad :: Password Reset";
+		$this->view_data['window_title'] = "Reset my Password";
 		$this->load->view('recovery_view', $this->view_data);
 	}
 }

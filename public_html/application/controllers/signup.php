@@ -46,7 +46,7 @@ class Signup extends CI_Controller {
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
 		}
-		$this->view_data['window_title'] = "Signup page";
+		$this->view_data['window_title'] = "Signup | Workpad";
 		$this->view_data['form_error'] = false;
 		// - if signup from is pass, process and add into db
 		if($this->input->post('submit')) {

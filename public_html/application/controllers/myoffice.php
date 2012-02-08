@@ -65,7 +65,7 @@ class Myoffice extends CI_Controller {
 		$this->view_data['my_skills'] = $this->skill_model->get_my_skills($user_id);
 		$this->view_data['last_badge'] = $this->skill_model->get_last_badge($user_id);
 		
-		$this->view_data['window_title'] = "Workpad :: MyOffice";
+		$this->view_data['window_title'] = "MyOffice at Workpad";
 		$this->load->view('my_office_view', $this->view_data);	
 	}
 	

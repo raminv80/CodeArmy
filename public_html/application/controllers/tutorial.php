@@ -43,7 +43,7 @@ class Tutorial extends CI_Controller {
 	}
 	
 	function scrumboard(){
-		$this->view_data['window_title'] = 'Scrumboard';
+		$this->view_data['window_title'] = 'Scrumboard | Workpad';
 		$this->load->view('scrumboard_view', $this->view_data);
 	}
 	

@@ -48,7 +48,7 @@ class Profile extends CI_Controller {
 		$query = $this->users_model->get_profile($user_id);
 		//print_r($query);
 		$data = $query->result_array();
-		$this->view_data['window_title'] = "Workpad :: user profile";
+		$this->view_data['window_title'] = "My Profile | Workpad";
 		//$this->view_data['user_id'] = $user_id;
 		$this->view_data['profile'] = $data[0];
 		$this->view_data['exp'] = $this->stories->get_exp($user_id);
@@ -60,7 +60,7 @@ class Profile extends CI_Controller {
 	function show($user_id){
 		$query = $this->users_model->get_profile($user_id);
 		$data = $query->result_array();
-		$this->view_data['window_title'] = "Workpad :: user profile";
+		$this->view_data['window_title'] = "User Profile | Workpad";
 		$this->view_data['profile'] = $data[0];
 		$this->view_data['exp'] = $this->stories->get_exp($user_id);
 		$this->view_data['rank'] = $this->stories->get_rank($user_id,true);
@@ -104,7 +104,7 @@ class Profile extends CI_Controller {
 		$formdate_deadline->month['selected'] = date('m',strtotime($this->view_data['profile']['birthdate']));
 		$formdate_deadline->day['selected'] = date('d',strtotime($this->view_data['profile']['birthdate']));
 		$this->view_data['formdate_birth'] = $formdate_deadline;
-		$this->view_data['window_title'] = "Workpad :: edit user profile";
+		$this->view_data['window_title'] = "Edit my Profile | Workpad";
 		$this->view_data['message'] = $this->session->flashdata('message');
 		
 		if($this->input->post('submit')) {
@@ -164,7 +164,7 @@ class Profile extends CI_Controller {
 	}
 	
 	function edit_password() {
-		$this->view_data['window_title'] = "Workpad :: edit user password";
+		$this->view_data['window_title'] = "Edit Password";
 		
 		if($this->input->post('submit2')) {
 				$this->load->library('form_validation');
@@ -201,7 +201,7 @@ class Profile extends CI_Controller {
 		$user_id = $this->session->userdata("username");
 		$this->view_data['messages'] = $this->users_model->inbox_messages($user_id);
 		$this->view_data['message_count'] = $this->users_model->inbox_count_unread($user_id);
-		$this->view_data['window_title'] = "Workpad :: Inbox";
+		$this->view_data['window_title'] = "My Inbox | Workpad";
 		$this->load->view('profile_inbox_view', $this->view_data);	
 	}
 	
@@ -215,7 +215,7 @@ class Profile extends CI_Controller {
 		$myProfile = $myProfile[0];
 		$this->view_data['me'] = $me;
 		$this->view_data['myProfile'] = $myProfile;
-		$this->view_data['window_title'] = "cashout";
+		$this->view_data['window_title'] = "Cashout | Workpad";
 		$this->load->view('cashout_view', $this->view_data);
 	}
 	

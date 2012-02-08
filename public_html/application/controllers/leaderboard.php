@@ -39,7 +39,7 @@ class Leaderboard extends CI_Controller {
 		$this->view_data['leaderboard_points'] = $this->users_model->leaderboard_points();
 		$this->view_data['leaderboard_time'] = $this->users_model->leaderboard_time();
 		
-		$this->view_data['window_title'] = "Workpad :: Leaderboard";
+		$this->view_data['window_title'] = "Workpad Leaderboard";
 		$this->load->view('leader_board_view', $this->view_data);		
 	}
 	
@@ -65,7 +65,7 @@ class Leaderboard extends CI_Controller {
 		$this->view_data['leaderboard_project'] = $leaderboard_project;
 		$this->view_data['leaderboard_points'] = $leaderboard_points;
 		$this->view_data['leaderboard_time'] = $leaderboard_time;
-		$this->view_data['window_title'] = "Workpad :: Leaderboard";
+		$this->view_data['window_title'] = "Workpad Leaderboard";
 		$this->load->view('Ajax_leaderboard', $this->view_data);
 	}
 }

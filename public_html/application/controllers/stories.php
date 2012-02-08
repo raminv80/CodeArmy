@@ -105,7 +105,7 @@ class Stories extends CI_Controller {
 							}
 						}
 						
-						$this->view_data['window_title'] = "Workpad :: Create User Stories";
+						$this->view_data['window_title'] = "Create User Stories | Workpad";
 						$this->load->view('stories_new_view', $this->view_data);
 					
 					}
@@ -144,7 +144,7 @@ class Stories extends CI_Controller {
 						}
 					}
 					
-					$this->view_data['window_title'] = "Workpad :: Create User Stories";
+					$this->view_data['window_title'] = "Create User Stories | Workpad";
 					$this->load->view('stories_new_view', $this->view_data);
 			}
 		}
@@ -279,7 +279,7 @@ class Stories extends CI_Controller {
 		$this->view_data['categories'] = $this->projects_model->get_all_categories();
 		$this->view_data['skills'] = $this->skill_model->get_all_skills();
 		$this->view_data['page_is'] = 'Browse';
-		$this->view_data['window_title'] = "Workpad :: Browse Jobs";
+		$this->view_data['window_title'] = "Browse Jobs on Workpad";
 		$this->load->view('browse_view_v4', $this->view_data);
 	}
 	

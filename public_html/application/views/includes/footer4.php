@@ -242,7 +242,7 @@ padding: 3px;}
     </div>
     <div id="WP-nav-content" style="width:240px; border-left:0;">
       <p style="margin-top: 10px;" id="burndown">Project:</p>
-      <SELECT id="project-select" onchange="switchProject()" type="text" id="project_sel" name="project_sel">
+      <SELECT id="project-select" onchange="switchProject()" type="text" name="project_sel">
       <?php if(count($projects)<1){?>
       <option><?=$project['project_name']?></option>
       <?php }else{?>
@@ -250,13 +250,13 @@ padding: 3px;}
       <option value="0">Please Select a Project...</option>
       <?php }?>
       <?php foreach($projects as $project):?>
-      <option <?php if(isset($project_sel)&& $project_sel==$project['project_id']){?>selected="selected"<?php }?> value="/project/scrum_board/<?=$project['project_id']?>">
+      <option <?php if(isset($project_sel)&& $project_sel==$project['project_id']){?>selected="selected"<?php }?> value="/project/burndown_chart/<?=$project['project_id']?>">
       <?=ucwords($project['project_name'])?>
       </option>
       <?php endforeach;?>
       <?php }?>
       </SELECT>
-      <script type="text/javascript">function switchProject(){window.location.assign($('#project_sel').val());}</script> 
+      <script type="text/javascript">function switchProject(){window.location.assign($('#project-select').val());}</script> 
       <script type="text/javascript">function sprintChart(){window.location.assign('/project/burndown_chart/<?=$project_sel?>/'+$('#sprintChart').val());}</script>
       <p id="burndown"> Sprint: </p>
       <select id="sprintChart"  name="sprint" onchange="sprintChart()" id="sprintChart">
@@ -305,7 +305,7 @@ width: 210px;}
     </div>
     <div id="WP-nav-content" style="width:240px; border-right: 0; border-left:0;">
       <div id="browsesearch"> <img align="center" style="margin-top: 10px; margin-left: 15px;"src="/public/images/searchingfor.png">
-        <SELECT id="project-select" onchange="switchProject()" type="text" id="project_sel" name="project_sel">
+        <SELECT id="project-select" onchange="switchProject()" type="text" name="project_sel">
         <?php if(count($projects)<1){?>
         <option><?=$project['project_name']?></option>
         <?php }else{?>
@@ -313,13 +313,15 @@ width: 210px;}
         <option value="0">Please Select a Project...</option>
         <?php }?>
         <?php foreach($projects as $project):?>
-        <option <?php if(isset($project_sel)&& $project_sel==$project['project_id']){?>selected="selected"<?php }?> value="/project/scrum_board/<?=$project['project_id']?>">
+        <option <?php if(isset($project_sel)&& $project_sel==$project['project_id']){?>selected="selected"<?php }?> value="/project/sprint_planner/<?=$project['project_id']?>">
         <?=ucwords($project['project_name'])?>
         </option>
         <?php endforeach;?>
         <?php }?>
         </SELECT>
-        <script type="text/javascript">function switchProject(){window.location.assign($('#project_sel').val());}</script> 
+        <script type="text/javascript">
+		function switchProject(){ 
+			window.location.assign($('#project-select').val()); }</script> 
         <div><input type="checkbox" name="autoscroll" id="autoscroll" value="1" onchange="auto_scroll(this.checked)" />Enable Auto Scroll</div>
         <script type="text/javascript">function auto_scroll(checked){if(checked){$('.story_list').hover(function(){$('#plan_holder').stop().scrollTo($(this),800, {over:-2});});}else{$('.story_list').off('hover');}}</script>
       </div>
@@ -377,7 +379,11 @@ width: 210px;}
           <?php endforeach;?>
           <?php }?>
         </SELECT>
-        <script type="text/javascript">function switchProject(){window.location.assign($('#project_sel').val());}</script> 
+        <script type="text/javascript">
+			function switchProject(){
+				window.location.assign($('#project_sel').val());
+			}
+        </script> 
         <script type="text/javascript">function sprintChart(){window.location.assign('/project/scrum_board/<?=$project_sel?>/'+$('#sprintChart').val());}</script> <br />
         Sprint:
         <select name="sprint" onchange="sprintChart()" id="sprintChart">

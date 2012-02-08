@@ -7,6 +7,7 @@
     <title>
     <?=(isset($window_title))? $window_title: 'Workpad'?>
     </title>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <link href="/public/css/v4/style.css" media="all" rel="stylesheet" type="text/css">
     <link href="/public/css/v4/workpad.css" media="all" rel="stylesheet" type="text/css">
     <link href="/public/css/v4/sidemenu.css" media="all" rel="stylesheet" type="text/css">

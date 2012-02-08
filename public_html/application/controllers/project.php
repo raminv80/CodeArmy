@@ -53,7 +53,7 @@ class Project extends CI_Controller {
 			$this->view_data['project'] = $qry[0];
 			$this->view_data['percentage'] = $this->projects_model->get_percentage($id);
 			$this->view_data['collaborators'] = $this->projects_model->get_collaborators($id);
-			$this->view_data['window_title'] = 'Workpad | '.$this->view_data['project']['project_name'];
+			$this->view_data['window_title'] = $this->view_data['project']['project_name'].' | Workpad';
 			$this->load->view('project_show_view', $this->view_data);
 		}
 	}
@@ -72,7 +72,7 @@ class Project extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
 		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
-		$this->view_data['window_title'] = 'Workpad | Project Management';
+		$this->view_data['window_title'] = 'Project Management | Workpad';
 		if($id!=0){
 			$qry = $this->projects_model->get_project_details($id);
 			if($qry->num_rows>0){
@@ -100,7 +100,7 @@ class Project extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
 		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
-		$this->view_data['window_title'] = 'Workpad | Project Management';
+		$this->view_data['window_title'] = 'Project Management | Workpad';
 		if($id=='0'){
 			$list = array();
 				$list['DRAFTS'] = $this->stories->get_my_projects_stories_state($user_id,array('draft'));
@@ -143,7 +143,7 @@ class Project extends CI_Controller {
 		$curSprint = $this->projects_model->getCurrentSprint($id);
 		$this->view_data['curSprint'] = -1;
 		if(count($curSprint)>0)$this->view_data['curSprint'] = $curSprint[0]['id'];
-		$this->view_data['window_title'] = 'Workpad | Scrumboard';
+		$this->view_data['window_title'] = 'Scrumboard | Workpad';
 		$this->load->view('sprint_plan_view', $this->view_data);
 	}
 	
@@ -171,7 +171,7 @@ class Project extends CI_Controller {
 		$this->view_data['project'] = $this->view_data['project'][0];
 		
 		$this->view_data['sprints'] = $this->projects_model->get_sprints($id);
-		$this->view_data['window_title'] = 'Workpad | Scrumboard';
+		$this->view_data['window_title'] = 'Scrumboard | Workpad';
 		$this->load->view('scrum_board_view', $this->view_data);
 	}
 	
@@ -265,7 +265,7 @@ class Project extends CI_Controller {
 		$this->view_data['chart'] = $chart;
 		$this->view_data['sprint_points'] = $this->projects_model->get_sprint_points($id,$sprint_sel);
 		$this->view_data['resource_chart'] = $this->projects_model->get_resource_chart($id,$sprint_sel);
-		$this->view_data['window_title'] = 'Workpad | Burndown Chart';
+		$this->view_data['window_title'] = 'Burndown Chart | Workpad';
 		$this->load->view('burndown_view', $this->view_data);
 	}
 	

@@ -48,7 +48,7 @@ class Admin extends CI_Controller {
 		$q_projects = $this->projects_model->get_projects();
 		$this->view_data['projects'] = $q_projects->result_array();
 		$this->view_data['users'] = $this->users_model->get_all_users($order);
-		$this->view_data['window_title'] = "Workpad :: Administration page";
+		$this->view_data['window_title'] = "Administration page";
 		$this->load->view('admin_view', $this->view_data);
 	}
 	
@@ -89,7 +89,7 @@ class Admin extends CI_Controller {
 			}
 		}
 		
-		$this->view_data['window_title'] = "Workpad :: Create Project";
+		$this->view_data['window_title'] = "Create Project";
 		$this->load->view('project_new_view', $this->view_data);	
 	}
 	
@@ -99,7 +99,7 @@ class Admin extends CI_Controller {
 		$data = $query->result_array();
 		//print_r($data);
 		$this->view_data['project_data'] = $data[0];
-		$this->view_data['window_title'] = "Workpad :: Edit Project ".$data[0]['project_name'];
+		$this->view_data['window_title'] = "Edit Project ".$data[0]['project_name'];
 		$this->view_data['project_id'] = $id;
 		$this->load->library('ckeditor');
         $this->load->library('ckFinder');

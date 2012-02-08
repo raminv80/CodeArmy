@@ -124,7 +124,7 @@ class Story extends CI_Controller {
 			}
 			$this->load->helper('stories_helper');
 			$this->load->helper('user_helper');
-			$this->view_data['window_title'] = "Workpad :: User Story - ".$this->view_data['work_data']['title'];
+			$this->view_data['window_title'] = "User Story '".$this->view_data['work_data']['title']."' | Workpad";
 			//$this->load->view('story_page_view', $this->view_data);
 			$this->load->view('story_page_v4_view', $this->view_data);
 		} 
@@ -181,7 +181,7 @@ class Story extends CI_Controller {
 				
 		$this->load->helper('stories_helper');
 		$this->load->helper('user_helper');
-		$this->view_data['window_title'] = "Workpad :: User Stories Details";
+		$this->view_data['window_title'] = "User Stories Details | Workpad";
 		$this->load->view('story_page_view', $this->view_data);
 	}
 	
@@ -290,7 +290,7 @@ class Story extends CI_Controller {
 	// - The delete view
 	function delete($pro_id, $id) {
 		$this->check_authentication('admin');
-		$this->view_data['window_title'] = "Delete the Story";
+		$this->view_data['window_title'] = "Delete the Story | Workpad";
 
 		//$this->view_data['type'] = $type;
 		$this->view_data['id'] = $id;
@@ -441,6 +441,7 @@ class Story extends CI_Controller {
 					"message" => "<p>User story <a href='http://".$_SERVER['HTTP_HOST']."/story/".$work_data[0]['work_id']."'>'".$work_data[0]['title']."'</a> is assigned to you.</p>",
 					"status" => 'unread',
 					"created_at" => date('Y-m-d'),
+					"target_id" => $this->session->userdata('user_id'),
 					"category" => 'job'
 					);
 					$this->db->insert('inbox',$data);
@@ -467,7 +468,7 @@ class Story extends CI_Controller {
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
 			
-			$this->view_data['window_title'] = "Edit the Story";
+			$this->view_data['window_title'] = "Edit the Story | Workpad";
             $query = $this->stories->get_work_details($id);
             $data = $query->result_array();
             //print_r($data);
@@ -582,7 +583,7 @@ class Story extends CI_Controller {
 								
 								$this->load->helper('stories_helper');
 								$this->load->helper('user_helper');
-								$this->view_data['window_title'] = "Workpad :: Submission";
+								$this->view_data['window_title'] = "Submission | Workpad";
 								$this->load->view('story_submission_view', $this->view_data);		
 							} else {
 								$this->view_data['window_title'] = "Error, user story (".$work_id.") does not exist.";
@@ -803,7 +804,7 @@ class Story extends CI_Controller {
 				
 				$this->load->helper('stories_helper');
 				$this->load->helper('user_helper');
-				$this->view_data['window_title'] = "Workpad :: Submission";
+				$this->view_data['window_title'] = "Submission | Workpad";
 				$this->load->view('story_submission_view', $this->view_data);		
 			} else {
 				$this->view_data['window_title'] = "Error, user story (".$work_id.") does not exist.";

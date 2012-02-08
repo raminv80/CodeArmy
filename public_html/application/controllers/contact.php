@@ -29,7 +29,7 @@ class Contact extends CI_Controller {
 	}
 	
 	function find(){
-		$this->view_data['window_title'] = "Workpad :: Find People";
+		$this->view_data['window_title'] = "Find People";
 		$this->load->view('find_user_view', $this->view_data);
 	}
 	

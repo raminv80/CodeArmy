@@ -58,7 +58,7 @@ class Works extends CI_Controller {
 		}
 		
 		$this->view_data['have_project'] = $this->users_model->have_project($user_id);
-		$this->view_data['window_title'] = 'My Works';
+		$this->view_data['window_title'] = 'My Works | Workpad';
 		$this->load->view('works_view', $this->view_data);
 	}
 }

@@ -99,7 +99,7 @@ class Home extends CI_Controller {
 		$this->view_data['leaderboard_time'] = $this->users_model->leaderboard_time(3);
 				
 		$this->view_data['have_project'] = $this->users_model->have_project($user_id);
-		$this->view_data['window_title'] = "Workpad :: Home";
+		$this->view_data['window_title'] = "Workpad | Home";
 		//$this->load->view('home_view', $this->view_data);
 		$this->load->view('home_v4_view', $this->view_data);
 	}

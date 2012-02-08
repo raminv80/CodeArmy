@@ -49,7 +49,7 @@ class Projects extends CI_Controller {
 	function index() {
 		$this->check_authentication('admin');
 		$user_id = $this->session->userdata('user_id');
-		$this->view_data['window_title'] = "Workpad :: Projects Created";
+		$this->view_data['window_title'] = "Projects | Workpad";
 		
 		//get projects created
 		$q_projects = $this->projects_model->get_projects();
@@ -68,7 +68,7 @@ class Projects extends CI_Controller {
 	function view($project_id) {
 		$this->check_authentication('admin');
 		$user_id = $this->session->userdata('user_id');
-		$this->view_data['window_title'] = "Workpad :: Project";
+		$this->view_data['window_title'] = "Project | Workpad";
 		$this->view_data['pro_id'] = $project_id;
 		//$query = $this->projects_model->priority_sort()
 		
@@ -116,7 +116,7 @@ class Projects extends CI_Controller {
 			}
 		}
 		
-		$this->view_data['window_title'] = "Workpad :: Create Project";
+		$this->view_data['window_title'] = "Create Project | Workpad";
 		$this->load->view('project_new_view', $this->view_data);
 	}
 	
@@ -126,7 +126,7 @@ class Projects extends CI_Controller {
 	
 	function edit($id){
 		$this->check_authentication('admin');
-		$this->view_data['window_title'] = "Workpad :: Edit Project";
+		$this->view_data['window_title'] = "Edit Project | Workpad";
 		$this->view_data['users'] = $this->users_model->list_users();
 		$query = $this->projects_model->get_project_details($id);
 		$data = $query->result_array();
