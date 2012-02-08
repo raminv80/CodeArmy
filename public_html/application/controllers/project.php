@@ -143,7 +143,10 @@ class Project extends CI_Controller {
 		$curSprint = $this->projects_model->getCurrentSprint($id);
 		$this->view_data['curSprint'] = -1;
 		if(count($curSprint)>0)$this->view_data['curSprint'] = $curSprint[0]['id'];
-		$this->view_data['window_title'] = 'Scrumboard | Workpad';
+		$this->view_data['project'] = $this->projects_model->get_project_details($id);
+		$this->view_data['project'] = $this->view_data['project']->result_array();
+		$this->view_data['project'] = $this->view_data['project'][0];
+		$this->view_data['window_title'] = 'Sprint Plan of '.$this->view_data['project']['project_name'].' | Workpad';
 		$this->load->view('sprint_plan_view', $this->view_data);
 	}
 	
@@ -171,7 +174,7 @@ class Project extends CI_Controller {
 		$this->view_data['project'] = $this->view_data['project'][0];
 		
 		$this->view_data['sprints'] = $this->projects_model->get_sprints($id);
-		$this->view_data['window_title'] = 'Scrumboard | Workpad';
+		$this->view_data['window_title'] = 'Scrumboard of '.$this->view_data['project']['project_name'].' | Workpad';
 		$this->load->view('scrum_board_view', $this->view_data);
 	}
 	
@@ -265,7 +268,7 @@ class Project extends CI_Controller {
 		$this->view_data['chart'] = $chart;
 		$this->view_data['sprint_points'] = $this->projects_model->get_sprint_points($id,$sprint_sel);
 		$this->view_data['resource_chart'] = $this->projects_model->get_resource_chart($id,$sprint_sel);
-		$this->view_data['window_title'] = 'Burndown Chart | Workpad';
+		$this->view_data['window_title'] = 'Burndown Chart of '.$this->view_data['project']['project_name'].'| Workpad';
 		$this->load->view('burndown_view', $this->view_data);
 	}
 	

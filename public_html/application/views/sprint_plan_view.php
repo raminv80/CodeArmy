@@ -25,6 +25,7 @@
 
 <div id="wrapper" style="padding:60px 10px 200px 10px; margin-top:10px;">
   <div class="contents">
+  	<h1 style="margin-left:20px"><a href="/project/<?=$project_sel?>"><?=$project['project_name']?></a></h1>
     <div id="plan_holder" class="scrum_holder">
       <div id="sprint_planner">
         <div class="scrum_column" id="ice_box">

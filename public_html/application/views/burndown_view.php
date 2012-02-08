@@ -84,6 +84,7 @@
 <section id="chart" style="margin: 70px;">
   <div id="wrapper">
   	<div style="width:1000px; margin:0 auto;">
+    <h1 style="margin-left:20px"><a href="/project/<?=$project_sel?>"><?=$project['project_name']?></a> | <a href="/project/sprint_planner/<?=$project_sel?>">Sprint <?=$sprint_num+1?></a></h1>
         <div id="chart_div" style="margin:0 auto; width:700px; float:left"></div>
         <div id="resource_chart_div" style="margin:0 auto; width:300; float:left"></div>
     </div>
