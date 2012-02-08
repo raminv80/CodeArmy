@@ -311,7 +311,7 @@ class Stories_model extends CI_Model {
 	}
 	
 	function get_comment_emails($work_id){
-		$sql = "SELECT DISTINCT users.email from users,works, comments where works.work_id = ? and works.work_id = comments.story_id and users.username = comments.username";
+		$sql = "SELECT DISTINCT users.email, users.user_id from users,works, comments where works.work_id = ? and works.work_id = comments.story_id and users.username = comments.username";
 		$res = $this->db->query($sql, array($work_id));
 		$res = $res->result_array();
 		return $res;

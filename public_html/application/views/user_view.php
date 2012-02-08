@@ -52,7 +52,8 @@
                     <script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
                     <a href="skype:<?=$urls->skype?>?call"><img src="http://download.skype.com/share/skypebuttons/buttons/call_blue_transparent_70x23.png" style="border: none;" width="70" height="23" alt="Skype Me™!" /></a>
                 <?php }?>
-				<div class="tabs-area">
+                	<!-- text me section <a href=""><img src="/public/images/textme.png" style="border: none;" width="70" height="23" alt="Text me!" /></a>
+				<div class="tabs-area"> -->
 					<div class="aside">
 						<dl class="refers">
 							<dt><span>Completed</span></dt>
