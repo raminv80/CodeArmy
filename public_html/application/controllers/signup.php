@@ -62,6 +62,7 @@ class Signup extends CI_Controller {
 				if($this->users_model->create_new_user()) {
 					// signup successful
 					$this->view_data['signup_success'] = true;
+					$this->session->unset_userdata('referer');
 				} else { // - if there is a problem writing to db
 					redirect(base_url()."error");
 				} 

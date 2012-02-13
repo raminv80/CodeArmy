@@ -555,6 +555,7 @@ width: 210px;}
     </div>
     <?php }?>
     <!-- common footer section -->
+    
     <?php if(isset($modal_message)){?>
     <div id="dialog-message" title="<?=isset($modal_title)? $modal_title: 'Workpad'?>">
       <p>

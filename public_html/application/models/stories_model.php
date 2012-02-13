@@ -310,9 +310,9 @@ class Stories_model extends CI_Model {
 		return $res;
 	}
 	
-	function get_comment_emails($work_id){
-		$sql = "SELECT DISTINCT users.email, users.user_id from users,works, comments where works.work_id = ? and works.work_id = comments.story_id and users.username = comments.username";
-		$res = $this->db->query($sql, array($work_id));
+	function get_comment_emails($work_id, $user_id){
+		$sql = "SELECT DISTINCT users.email, users.user_id from users,works, comments where works.work_id = ? and works.work_id = comments.story_id and users.username = comments.username and users.user_id!= ?";
+		$res = $this->db->query($sql, array($work_id, $user_id));
 		$res = $res->result_array();
 		return $res;
 	}

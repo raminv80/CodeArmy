@@ -276,6 +276,13 @@ class Projects_model extends CI_Model {
 		return $res->result_array();
 	}
 	
+	function getLastSprintId($id){
+		$sql = "select max(id) as id from sprints where project_id = ?";
+		$res = $this->db->query($sql, array($id));
+		$res = $res->result_array();
+		if(count($res)>0){return $res[0]['id'];}else{return 0;}
+	}
+	
 	function get_chart($project_id, $sprint_id){
 		$sql = "SELECT 
 					sum(works.points) as points, 

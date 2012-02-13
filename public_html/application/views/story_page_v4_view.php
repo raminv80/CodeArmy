@@ -10,7 +10,7 @@
         <table>
           <tr>
             <td width="50%">User Stories</td>
-            <td style="text-align:right;"><p><?php echo ucwords($work_data['title']); ?> (<a href="/story/edit/<?=$work_data['work_id']?>">Edit</a>)</p></td>
+            <td style="text-align:right;"><p><?php echo ucwords($work_data['title']); ?> <?php if($show_bid){?>(<a href="/story/edit/<?=$work_data['work_id']?>">Edit</a>)<?php }?></p></td>
           </tr>
         </table>
         <table>

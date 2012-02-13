@@ -336,10 +336,10 @@ class Story extends CI_Controller {
 		$wh = $this->stories->get_work_horse($this->input->post('story_id'));
 		$po = $this->stories->get_product_owner($this->input->post('story_id'));
 		$sm = $this->stories->get_scrum_master($this->input->post('story_id'));
-		$cn = $this->stories->get_comment_emails($this->input->post('story_id'));
+		$cn = $this->stories->get_comment_emails($this->input->post('story_id'), $this->session->userdata('user_id'));
 		$target = array();
 		$target_ids = array();
-		if(count($wh)>0){$target[] = $wh[0]['email']; $target_ids[] = $wh[0]['user_id'];}
+		if(count($wh)>0){if($wh[0]['email']!=$this->session->userdata('user_id')){$target[] = $wh[0]['email']; $target_ids[] = $wh[0]['user_id'];}}
 		if(count($po)>0){$target[] = $po[0]['email']; $target_ids[] = $po[0]['user_id'];}
 		if(count($sm)>0){$target[] = $sm[0]['email']; $target_ids[] = $sm[0]['user_id'];}
 		foreach($cn as $usr){ $target[] = $usr['email']; $target_ids[] = $usr['user_id'];}

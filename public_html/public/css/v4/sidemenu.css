@@ -207,6 +207,15 @@ box-shadow: 0px 1px 1px 0px rgba(255, 255, 255, 0.7);
 #scroll_container .dragger{position:absolute; width:6px; height:60px; background:#555; text-align:center; margin-left:1px; line-height:60px; color:#666; overflow:hidden; border-left:1px solid #787878; border-right:1px solid #000; cursor:pointer;}
 #scroll_container .dragger_pressed{position:absolute; width:6px; height:60px; background:#666; text-align:center; margin-left:1px; line-height:60px; color:#777; overflow:hidden; border-left:1px solid #878787; border-right:1px solid #000; cursor:pointer;}
 
+#scroll_container3{width:285px; height:90%; position:absolute; left:0px; top:0px; margin:0; padding:10px 2px 10px 10px;}
+#scroll_container3 .customScrollBox{position:relative; height:100%; overflow:hidden;}
+#scroll_container3 .customScrollBox .container{position:relative; width:265px; top:0; float:left;}
+
+#scroll_container3 .dragger_container{position:relative; width:9px; height:100%; background:#333; float:left; margin:0 0 0 10px; cursor:pointer; box-shadow:inset 0 0 5px #000; -moz-box-shadow:inset 0 0 5px #000; -webkit-box-shadow:inset 0 0 5px #000;}
+#scroll_container3 .dragger{position:absolute; width:6px; height:60px; background:#555; text-align:center; margin-left:1px; line-height:60px; color:#666; overflow:hidden; border-left:1px solid #787878; border-right:1px solid #000; cursor:pointer;}
+#scroll_container3 .dragger_pressed{position:absolute; width:6px; height:60px; background:#666; text-align:center; margin-left:1px; line-height:60px; color:#777; overflow:hidden; border-left:1px solid #878787; border-right:1px solid #000; cursor:pointer;}
+
+
 #scroll_container1{width:285px; height:90%; position:absolute; left:0px; top:0px; margin:0; padding:10px 2px 10px 10px;}
 #scroll_container1 .customScrollBox{position:relative; height:100%; overflow:hidden;}
 #scroll_container1 .customScrollBox .container{position:relative; width:265px; top:0; float:left;}
@@ -215,4 +224,11 @@ box-shadow: 0px 1px 1px 0px rgba(255, 255, 255, 0.7);
 #scroll_container1 .dragger{position:absolute; width:6px; height:60px; background:#555; text-align:center; margin-left:1px; line-height:60px; color:#666; overflow:hidden; border-left:1px solid #787878; border-right:1px solid #000; cursor:pointer;}
 #scroll_container1 .dragger_pressed{position:absolute; width:6px; height:60px; background:#666; text-align:center; margin-left:1px; line-height:60px; color:#777; overflow:hidden; border-left:1px solid #878787; border-right:1px solid #000; cursor:pointer;}
 
+#scroll_container2{width:285px; height:90%; position:absolute; left:0px; top:0px; margin:0; padding:10px 2px 10px 10px;}
+#scroll_container2 .customScrollBox{position:relative; height:100%; overflow:hidden;}
+#scroll_container2 .customScrollBox .container{position:relative; width:265px; top:0; float:left;}
+
+#scroll_container2 .dragger_container{position:relative; width:9px; height:100%; background:#333; float:left; margin:0 0 0 10px; cursor:pointer; box-shadow:inset 0 0 5px #000; -moz-box-shadow:inset 0 0 5px #000; -webkit-box-shadow:inset 0 0 5px #000;}
+#scroll_container2 .dragger{position:absolute; width:6px; height:60px; background:#555; text-align:center; margin-left:1px; line-height:60px; color:#666; overflow:hidden; border-left:1px solid #787878; border-right:1px solid #000; cursor:pointer;}
+#scroll_container2 .dragger_pressed{position:absolute; width:6px; height:60px; background:#666; text-align:center; margin-left:1px; line-height:60px; color:#777; overflow:hidden; border-left:1px solid #878787; border-right:1px solid #000; cursor:pointer;}
 

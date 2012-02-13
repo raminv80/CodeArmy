@@ -17,12 +17,14 @@
 	function poll(){
 		//update left sliding boxes
     	$.ajax({ url: "/inbox/update_numbers", success: function(data){
+			//update their numbers
 			num_bids = data[0][0]; if(num_bids<=0)num_bids='';
 			num_msg = data[1][0]; if(num_msg<=0)num_msg='';
 			num_jobs = data[2][0]; if(num_jobs<=0)num_jobs='';
         	$('#bid_side_menu_button').html(num_bids);
 			$('#message_side_menu_button').html(num_msg);
 			$('#job_side_menu_button').html(num_jobs);
+			//and now update their data only if the slide menu is open
 			bids = data[0][1];
 			msg = data[1][1];
 			jobs = data[2][1];
@@ -41,12 +43,16 @@
 					if(!found){
 						has_new = true;
 						//this is a new message so add it to the list
-						var html_str = '<div id="msg_'+bid.id+'" class="message_buble '+bid.status+'"><a href="/user/'+bid.target_id+'"><img width="39px" height="40px" align="left" src="/public/'+bid.avatar+'" /></a><p class="summary"><span class="title">'+bid.title+': </span> '+bid.message.replace(/(<([^>]+)>)/ig,"").substr(0,50)+'...</p><div class="desc" style="display:none">'+bid.message+'</div>';
+						var avatar = bid.avatar;
+						if(!avatar){
+								avatar = 'http://www.gravatar.com/avatar/'+bid.email_hash;
+							}else{avatar="/public/"+avatar;}
+						var html_str = '<div id="msg_'+bid.id+'" class="message_buble '+bid.status+'"><a href="/user/'+bid.target_id+'"><img height="40px" align="left" src="'+avatar+'" /></a><p class="summary">'+bid.message.replace(/(<([^>]+)>)/ig,"").substr(0,50)+'...</p><div class="desc" style="display:none">'+bid.message+'</div>';
 						$('#bid_side_menu.sidemenu_active .list').prepend(html_str);
 					}
 				}
 				if(has_new){
-					setup_message_bubles();
+					setup_message_bubles();//located in sidemenu.js
 				}
 			}
 			//poll message side menu
@@ -64,12 +70,16 @@
 					if(!found){
 						has_new = true;
 						//this is a new message so add it to the list
-						var html_str = '<div id="msg_'+bid.id+'" class="message_buble '+bid.status+'"><img align="left" src="/public/images/img6.png" /><p class="summary"><span class="title">'+bid.title+': </span> '+bid.message.replace(/(<([^>]+)>)/ig,"").substr(0,50)+'...</p><div class="desc" style="display:none">'+bid.message+'</div>';
+						var avatar = bid.avatar;
+						if(!avatar){
+								avatar = 'http://www.gravatar.com/avatar/'+bid.email_hash;
+							}else{avatar="/public/"+avatar;}
+						var html_str = '<div id="msg_'+bid.id+'" class="message_buble '+bid.status+'"><a href="/user/'+bid.target_id+'"><img height="40px" align="left" src="'+avatar+'" /></a><p class="summary">'+bid.message.replace(/(<([^>]+)>)/ig,"").substr(0,50)+'...</p><div class="desc" style="display:none">'+bid.message+'</div>';
 						$('#message_side_menu.sidemenu_active .list').prepend(html_str);
 					}
 				}
 				if(has_new){
-					setup_message_bubles();
+					setup_message_bubles();//located in sidemenu.js
 				}
 			}
 			//poll job side menu
@@ -87,12 +97,16 @@
 					if(!found){
 						has_new = true;
 						//this is a new message so add it to the list
-						var html_str = '<div id="msg_'+bid.id+'" class="message_buble '+bid.status+'"><img align="left" src="/public/images/img6.png" /><p class="summary"><span class="title">'+bid.title+': </span> '+bid.message.replace(/(<([^>]+)>)/ig,"").substr(0,50)+'...</p><div class="desc" style="display:none">'+bid.message+'</div>';
+						var avatar = bid.avatar;
+						if(!avatar){
+								avatar = 'http://www.gravatar.com/avatar/'+bid.email_hash;
+							}else{avatar="/public/"+avatar;}
+						var html_str = '<div id="msg_'+bid.id+'" class="message_buble '+bid.status+'"><a href="/user/'+bid.target_id+'"><img height="40px" align="left" src="'+avatar+'" /></a><p class="summary">'+bid.message.replace(/(<([^>]+)>)/ig,"").substr(0,50)+'...</p><div class="desc" style="display:none">'+bid.message+'</div>';
 						$('#job_side_menu.sidemenu_active .list').prepend(html_str);
 					}
 				}
 				if(has_new){
-					setup_message_bubles();
+					setup_message_bubles();//located in sidemenu.js
 				}
 			}
 		}, dataType: "json", complete: do_poll, timeout: 30000 });

@@ -84,10 +84,10 @@
                 <p style="width: 155px;text-transform:uppercase;padding-left:5px;float:left;"><?php echo substr(($myProfile['full_name']? $myProfile['full_name']:$me['username']),0,20);?></p>
                 </a><br />
             <p style="padding-left:5px;float:left;">Level
-                  <?php $level = floor($me['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?>
+                  <?php $level = get_level($me['exp']); echo $level;?>
                 </p>
             <div id="levelmeter">
-                  <div id="level" style="width:<?php echo round (($me['exp'] % points_per_level)/points_per_level*80);?>px;"></div>
+                  <div id="level" style="width:<?php echo round (get_progress_bar($me['exp'])*80);?>px;"></div>
                 </div>
             <?=($level>99) ? 99: $level+1?>
           </li>
@@ -232,7 +232,7 @@ $header_tasks = $query->result_array();
 <div id="bid_side_menu" class="sidemenu_inactive">
 	<?php $bid_inbox=$this->inbox_model->get_bids($this->session->userdata('user_id')); ?>
       <div id="bid_side_menu_button" class="sideopen"><?=$bid_inbox[0]!=0?$bid_inbox[0]:''?></div>
-      <div id="scroll_container1">
+      <div id="scroll_container3">
     <div class="customScrollBox">
           <div class="container">
         <div class="content"> 
@@ -240,7 +240,8 @@ $header_tasks = $query->result_array();
               <span class="title">Bidding Messages</span>
               <div class="list">
               <?php foreach($bid_inbox[1] as $message):?>
-              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <a href="/user/<?=$message['target_id']?>"><img width="39px" height="40px" align="left" src="/public/<?=$message['avatar']?>" /></a>
+              <?php $avatar = ($message['avatar'])? '/public/'.$message['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) );?>
+              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <a href="/user/<?=$message['target_id']?>"><img width="39px" height="40px" align="left" src="<?=$avatar?>" /></a>
             <p class="summary">
                   <?=(strlen(strip_tags($message['message']))>50) ? substr(strip_tags($message['message']),0,50).'...' : strip_tags($message['message']);?>
                   <?php
@@ -300,7 +301,8 @@ $header_tasks = $query->result_array();
               <span class="title">Messages</span>
               <div class="list">
               <?php foreach($message_inbox[1] as $message):?>
-              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <a href="/user/<?=$message['target_id']?>"><img width="39px" height="40px" align="left" src="/public/<?=$message['avatar']?>" /></a>
+              <?php $avatar = ($message['avatar'])? '/public/'.$message['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) );?>
+              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <a href="/user/<?=$message['target_id']?>"><img width="39px" height="40px" align="left" src="<?=$avatar?>" /></a>
             <p class="summary">
                   <?=(strlen(strip_tags($message['message']))>50) ? substr(strip_tags($message['message']),0,50).'...' : strip_tags($message['message']);?>
                   <?php
@@ -352,7 +354,7 @@ $header_tasks = $query->result_array();
 <div id="job_side_menu" class="sidemenu_inactive">
 	<?php $job_inbox=$this->inbox_model->get_jobs($this->session->userdata('user_id')); ?>
       <div id="job_side_menu_button" class="sideopen"><?=$job_inbox[0]!=0? $job_inbox[0]:''?></div>
-      <div id="scroll_container1">
+      <div id="scroll_container2">
     <div class="customScrollBox">
           <div class="container">
         <div class="content"> 
@@ -360,7 +362,8 @@ $header_tasks = $query->result_array();
               <span class="title">Job Messages</span>
               <div class="list">
               <?php foreach($job_inbox[1] as $message):?>
-              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <a href="/user/<?=$message['target_id']?>"><img width="39px" height="40px" align="left" src="/public/<?=$message['avatar']?>" /></a>
+              <?php $avatar = ($message['avatar'])? '/public/'.$message['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) );?>
+              <div id="msg_<?=$message['id']?>" class="message_buble <?=$message['status']?>"> <a href="/user/<?=$message['target_id']?>"><img width="39px" height="40px" align="left" src="<?=$avatar?>" /></a>
             <p class="summary">
                   <?=(strlen(strip_tags($message['message']))>50) ? substr(strip_tags($message['message']),0,50).'...' : strip_tags($message['message']);?>
                   <?php

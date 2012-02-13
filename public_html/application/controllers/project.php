@@ -150,6 +150,32 @@ class Project extends CI_Controller {
 		$this->load->view('sprint_plan_view', $this->view_data);
 	}
 	
+	public function print_sprints($id=0){
+		$this->view_data['enable_sprint_locks'] = false;
+		$user_id = $this->session->userdata('user_id');
+		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
+		$this->view_data['scrum_master'] = $this->projects_model->is_scrum_master($user_id, $id);
+		if(!$this->view_data['project_owner']){
+			$this->view_data['modal_message'] = "You don't have permission to edit sprints of this project but still you may preview it.";
+			$this->view_data['modal_title'] = "Sprint Preview";
+		}
+		$this->view_data['project_sel'] = $id;
+		if($id>0){
+			$this->view_data['works'] = $this->projects_model->get_worklist_sprint($id);
+			$this->view_data['first_sprint'] = $this->projects_model->getFirstSprint($id);
+			if(count($this->view_data['first_sprint'])>0)
+				$this->view_data['first_sprint'] = $this->view_data['first_sprint'][0]['id'];
+		}
+		$curSprint = $this->projects_model->getCurrentSprint($id);
+		$this->view_data['curSprint'] = -1;
+		if(count($curSprint)>0)$this->view_data['curSprint'] = $curSprint[0]['id'];
+		$this->view_data['project'] = $this->projects_model->get_project_details($id);
+		$this->view_data['project'] = $this->view_data['project']->result_array();
+		$this->view_data['project'] = $this->view_data['project'][0];
+		$this->view_data['window_title'] = 'Sprint Plan of '.$this->view_data['project']['project_name'].' | Workpad';
+		$this->load->view('sprint_plan_print', $this->view_data);
+	}
+	
 	public function scrum_board($id=0, $cur_sprint=-1){
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);
@@ -161,7 +187,12 @@ class Project extends CI_Controller {
 				$cur_sprint = $this->projects_model->getCurrentSprint($id);
 				if(count($cur_sprint)>0){
 					$cur_sprint = $cur_sprint[0]['id'];
-				}else $cur_sprint = -1;
+				}else {
+					$last_sprint = $this->projects_model->getLastSprintId($id);
+					if($last_sprint>0){
+						$cur_sprint = $last_sprint;
+					}else $cur_sprint = -1;
+				}
 			}
 			$this->view_data['works_state'] = $this->projects_model->get_worklist_state($id, $cur_sprint);
 			$this->view_data['point_state'] = $this->projects_model->get_work_points_state($id, $cur_sprint);

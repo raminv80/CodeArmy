@@ -768,3 +768,7 @@ background: url(/public/images/unread-inbox.png) no-repeat 660px 8px;
 	-khtml-opacity: 0.9;
 	opacity:0.9
 }
+.aside {
+width: 215px;
+float: left;
+}
