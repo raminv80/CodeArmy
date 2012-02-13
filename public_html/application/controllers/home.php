@@ -81,7 +81,11 @@ class Home extends CI_Controller {
 			$this->form_validation->set_rules('description', 'Description', 'required');
 			if ($this->form_validation->run() == FALSE) {
 				$this->view_data['form_error'] = true;
+				$this->view_data['modal_title'] = "Add Project Request";
+				$this->view_data['modal_message'] = validation_errors();
 			} else {
+				$this->view_data['modal_title'] = "Add Project Request";
+				$this->view_data['modal_message'] = "Your request is recieved. We will contact you once your application is processed. Thank you.";
 				if($this->contact())$this->session->set_flashdata('contact','Your request is recieved. We will contact you once your application is processed. Thank you.');
 			}
 		}

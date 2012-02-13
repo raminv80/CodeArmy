@@ -258,7 +258,7 @@
             </tr>
             <tr>
               <td style="vertical-align:top"><label>Project Description</label></td>
-              <td><textarea id="form-home2" name="desc"></textarea></td>
+              <td><textarea id="form-home2" name="description"></textarea></td>
             </tr>
             <tr>
               <td><label>Payment Budget</label></td>
