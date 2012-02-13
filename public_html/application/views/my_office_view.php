@@ -15,7 +15,7 @@
 									<img class="alignleft" src="/public/images/ico-flag.png" alt="flag" width="41" height="64" />
 									<div class="text-holder">
 										<span class="points-left">points left</span>
-										<span class="left-number" style="text-shadow: 0 1px 10px white;font-size: 22px;font-weight: lighter; background:none; text-indent:0; color:white; font-weight:bold;"><?php echo points_per_level - ($me['exp'] % points_per_level);?></span>
+										<span class="left-number" style="text-shadow: 0 1px 10px white;font-size: 22px;font-weight: lighter; background:none; text-indent:0; color:white; font-weight:bold;"><?php echo $this->gamemech->points_left($me['exp']);?></span>
 										<span class="earned">total earned</span>
 										<span class="earned-number"><?php echo $me['exp'];?></span>
 									</div>
@@ -177,7 +177,7 @@
 										<div class="level-block">
 											<div class="level-box">
 												<span class="level">level</span>
-												<span class="number"><?php $level = floor($me['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></span>
+												<span class="number"><?php $level = $this->gamemech->get_level($me['exp']); echo $level;?></span>
 											</div>
 											<strong class="title">
                                             	<a href="#" class="tier">

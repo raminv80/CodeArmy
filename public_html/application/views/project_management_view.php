@@ -84,7 +84,7 @@
                                 <?=$bid['username']?>
                               </p>
                               <p id="userlevel">Level
-                                <?php $level = floor($bid['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?>
+                                <?php $level = $this->gamemech->get_level($bid['exp']); echo $level;?>
                               </p></td>
                             <td width="445px">Bid <span style="color:#00FF00">RM
                               <?=$bid['bid_cost']?>

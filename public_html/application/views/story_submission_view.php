@@ -160,7 +160,7 @@
       <div id="people-mid">
         <ul style="margin: 10px 0 20px -40px;">
           <?php foreach($project_ppl as $ppl):?>
-          <li class="collab-project-page"><a title="<?php echo $ppl['username'];?>, Level <?php $level = floor($ppl['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?>" href="/user/<?=$ppl['user_id']?>"><img src="/public/<?php echo ($ppl['avatar'])? $ppl['avatar']: 'images/img7.png';?>" alt="<?php echo $ppl['username'];?>" width="50" height="49" /></a></li>
+          <li class="collab-project-page"><a title="<?php echo $ppl['username'];?>, Level <?php $level = $this->gamemech->get_level($ppl['exp']); echo $level;?>" href="/user/<?=$ppl['user_id']?>"><img src="/public/<?php echo ($ppl['avatar'])? $ppl['avatar']: 'images/img7.png';?>" alt="<?php echo $ppl['username'];?>" width="50" height="49" /></a></li>
           <?php endforeach;?>
         </ul>
       </div>

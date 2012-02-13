@@ -103,9 +103,9 @@
 									</div>
 									<div class="achievements-block">
 										<div class="level-block">
-											<div class="level-box1">
+											<div class="level-box">
 												<span class="level">level</span>
-												<span class="number"><?php $level = floor($me['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></span>
+												<span class="number"><?php $level = $this->gamemech->get_level($me['exp']); echo $level;?></span>
 											</div>
 											<strong class="title">
                                             <a href="#" class="tier">

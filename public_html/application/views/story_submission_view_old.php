@@ -94,7 +94,7 @@
 						<div class="collaborator">
 							<div class="avatar"><?php if($ppl['avatar']){?><img src="/public/<?php echo $ppl['avatar'];?>" style="margin:0"><?php }?></div>
 							<p>LVL</p>
-							<div class="level"><?php $level = floor($ppl['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></div>
+							<div class="level"><?php $level = $this->gamemech->get_level($ppl['exp']); echo $level;?></div>
 							<div class="username"><?php echo $ppl['username'];?></div>
 						</div>
                         <?php endforeach;?>

@@ -210,7 +210,7 @@
           <table width="550px" class="<?php if($this->session->userdata('username')==strtolower($comment['username']))echo 'my-comment';?>">
             <tr>
               <td style="vertical-align:top;" width="50"><div style="float: left; width: 180px;"><img style="float: left;padding-right:5px;" src="<?php echo ($comment['avatar'])? '/public/'.$comment['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $comment['email'] ) ) );?>" /><p id="commentator"><?php echo $comment['username']; ?></p>
-                <p id="level"><?php if(strcasecmp($work_data['username'],$comment['username'])==0){?>product owner<?php }elseif($this->session->userdata('role')=='admin'){?>Admin<?php }else{?>lvl <?php $level = floor($comment['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;;}?></p></div><p id="comment-content"><?php echo $comment['comment_body']; ?></p>
+                <p id="level"><?php if(strcasecmp($work_data['username'],$comment['username'])==0){?>product owner<?php }elseif($this->session->userdata('role')=='admin'){?>Admin<?php }else{?>lvl <?php $level = $this->gamemech->get_level($comment['exp']);echo $level;}?></p></div><p id="comment-content"><?php echo $comment['comment_body']; ?></p>
                 <?php if($comment['comment_file']):?>
                     <div class="ds-posted" style="margin-right:30px">
                         <a href="/<?php echo $comment['comment_file'];?>">download attached</a>
@@ -235,7 +235,7 @@
             <tr>
               <td width="40"><img style="float: left;padding-right:5px;"src="<?php echo ($bid['avatar'])? '/public/'.$bid['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $bid['email'] ) ) );?>" /></td>
               <td><p id="bidder"><?php echo $bid['username']; ?></p>
-                <p id="level">lvl <?php $level = floor($bid['exp'] / points_per_level)+1;echo ($level>99) ? 99 : $level;?></p></td>
+                <p id="level">lvl <?php $level = $this->gamemech->get_level($bid['exp']);echo  $level;?></p></td>
               <td><p id="allbid-content"><?php echo number_format($bid['bid_cost']); ?> RM in <?php echo $bid['days']; ?> days</p>
                 <p id="date-comment">Posted <?php echo date('j M Y',strtotime($bid['created_at']));?></p></td>
                 <td width="60px">

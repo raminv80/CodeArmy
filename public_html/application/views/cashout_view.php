@@ -9,7 +9,7 @@
 							<img class="alignleft" src="/public/images/ico-flag.png" alt="flag" width="41" height="64" />
 							<div class="text-holder">
 								<span class="points-left">points left</span>
-								<span class="left-number"><?php echo points_per_level - $me['exp'] % points_per_level;?></span>
+								<span class="left-number"><?php echo $this->gamemech->points_left($me['exp']);?></span>
 								<span class="earned">total earned</span>
 								<span class="earned-number"><?php echo $me['exp'];?></span>
 							</div>

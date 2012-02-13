@@ -84,10 +84,10 @@
                 <p style="width: 155px;text-transform:uppercase;padding-left:5px;float:left;"><?php echo substr(($myProfile['full_name']? $myProfile['full_name']:$me['username']),0,20);?></p>
                 </a><br />
             <p style="padding-left:5px;float:left;">Level
-                  <?php $level = get_level($me['exp']); echo $level;?>
+                  <?php $level = $this->gamemech->get_level($me['exp']); echo $level;?>
                 </p>
             <div id="levelmeter">
-                  <div id="level" style="width:<?php echo round (get_progress_bar($me['exp'])*80);?>px;"></div>
+                  <div id="level" style="width:<?php echo round ($this->gamemech->get_progress_bar($me['exp'])*80);?>px;"></div>
                 </div>
             <?=($level>99) ? 99: $level+1?>
           </li>

@@ -12,7 +12,7 @@ $res=$this->db->query($sql, array($this->session->userdata('user_id')));
 $res = $res->result_array(); $tutorial = $res[0]['show_tutorial'];
 //if($this->session->userdata('tutorial')>0) 
 //--enable previous line if you want the close dialog button hide next dialogs too
-if($this->session->userdata('user_id') && floor($me['exp'] / points_per_level)<100){?>
+if($this->session->userdata('user_id') && $this->gamemech->get_level($me['exp'])<100){?>
 	<?php if($tutorial==1 || $this->session->flashdata('bidding_tutorial')){ //bidding tutorial?>
     <!-- homepage -->
     <div id="dev_step1" class="hint" exclude="user-stories">

@@ -50,7 +50,7 @@ class Login extends CI_Controller {
 				'username' => $this->input->post('username'),
 				'user_id' => $query_data[0]['user_id'],
 				'role' => $query_data[0]['role'],
-				'level' => min(floor($query_data[0]['exp'] / points_per_level)+1, 99),
+				'level' => $this->gamemech->get_level($query_data[0]['exp']),
 				'tutorial' => $query_data[0]['show_tutorial'],
 				'is_logged_in' => true
 			);
