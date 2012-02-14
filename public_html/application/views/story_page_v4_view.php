@@ -99,10 +99,12 @@
             <?php if(isset($work_data['attach'])){?>
             <td width="50%">Files required to complete the task</td>
             <td style="text-align:right;">
-            	<?php if(isset($work_data['attach'])){$inf = pathinfo($work_data['attach']);if(strtolower($inf['extension'])=='zip'){?>
+            	<?php if(isset($work_data['attach'])){
+					$inf = pathinfo($work_data['attach']);
+					if(strtolower($inf['extension'])=='zip'){?>
             	<a href="<?php echo base_url().$work_data['attach'];?>"><img src="/public/images/zip.png" /></a>
 				<?php }else{?>
-            	<a target="_blank" href="<?php echo base_url().$work_data['attach'];?>"><img width="48" height="48" src="<?php echo base_url().$work_data['attach'];?>" border="0"></a>
+            	<a target="_blank" href="<?php echo base_url().$work_data['attach'];?>"><img src="/public/images/compressed.png" border="0"></a>
                 <?php }?>
                 <td width="155"><div align="center" id="download_all"><a href="<?php echo base_url().$work_data['attach'];?>"></a></div></td>
                 <?php }?>
@@ -110,7 +112,7 @@
             <?php }if(isset($work_data['git']) && trim($work_data['git'])!=''){?>
             <td width="50%">Development (Forked) GIT Repository</td>
             <td style="text-align:right;">
-            	<a target="_blank" href="<?php echo $work_data['git'];?>"><?php echo $work_data['git'];?></a>
+            	<a target="_blank" href="<?php echo $work_data['git'];?>"><img src="/public/images/github.png" /></a>
             </td>
             <td width="155">&nbsp;</td>
             <?php }if(isset($work_data['link']) && trim($work_data['link'])!=''){?>

@@ -437,7 +437,7 @@ function deleteUserStory(work_id){
 					{ 'work_id': work_id, 'project_id': <?=$project_sel?>, 'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>' },
 					function(msg){
 						if(msg!='0'){
-							$('#work_'+msg).hide(1000,function(){$(this).remove();});
+							$('#work_'+msg).hide(1000,function(){$(this).remove();reclac_sprint_points();});
 						}else{
 							alert('Error: Unable to remove User Story '+msg);
 						}
