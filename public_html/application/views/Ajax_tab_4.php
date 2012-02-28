@@ -12,7 +12,7 @@
 						<tr>
 							<th class="" width="5%">No.</th>
 							<th class="" width="15%">Project</th>
-							<th class="" width="50%">User Story Title</th>
+							<th class="" width="50%">Job Title</th>
 							<th class="" width="10%">Sweat Points</th>
 							<th class="" width="10%">Payout</th>
 						</tr>
@@ -66,7 +66,7 @@
 							<tr>
 								<th class="" width="5%">No.</th>
 								<th class="" width="15%">Project</th>
-								<th class="" width="50%">User Story Title</th>
+								<th class="" width="50%">Job Title</th>
 								<th class="" width="10%">Sweat Points</th>
 								<th class="" width="10%">Payout</th>
 							</tr>
@@ -108,7 +108,7 @@
 							<tr>
 								<th class="" width="5%">No.</th>
 								<th class="" width="15%">Project</th>
-								<th class="" width="50%">User Story Title</th>
+								<th class="" width="50%">Job Title</th>
 								<th class="" width="10%">Sweat Points</th>
 								<th class="" width="10%">Payout</th>
 							</tr>

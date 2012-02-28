@@ -61,6 +61,7 @@ color: white;
 					foreach ($this->form_validation->_error_array as $this_error){
 						$display .= '<li>' . $this_error . '</li>';
 					}
+					if(isset($captcha_error))$display .= "<li>".$captcha_error."</li>";
 					$display .= '</ul>';
 					$display .= '</div>';
 					echo $display;
@@ -87,9 +88,18 @@ color: white;
                 </div>
               </div>
               <div class="row">
-                <label for="password3">Re-type Password</label>
+                <label for="password3">Re-type Pass</label>
                 <div class="text">
                   <input id="password3-signup" name="passconf" type="password" value=""  />
+                </div>
+              </div>
+              <div class="row">
+              Please re-eneter following phasrase...
+              </div>
+              <div class="row">
+                <label for="captcha"><?=$captcha;?></label>
+                <div class="text">
+                  <input id="captcha" name="captcha" type="text" value=""  />
                 </div>
               </div>
               <div class="row">

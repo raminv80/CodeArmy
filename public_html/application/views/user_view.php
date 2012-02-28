@@ -1,6 +1,6 @@
 <?php $this->load->view('includes/header4'); ?><link media="all" type="text/css" rel="stylesheet" href="/public/css/v4/myoffice/style.css" />
 <?php 
- if($myProfile){
+ if($usrProfile){
 	$contact = json_decode($profile["contact"]);
 	$urls = json_decode($profile["urls"]);
  }else{
@@ -17,19 +17,19 @@
 			<div class="contents">
 				<div class="profile-heading">
 					
-					<a href="#"><img src="/public/<?php echo ($myProfile && isset($myProfile['avatar']))? $myProfile['avatar']:"images/img7.png";?>" alt="profile picture" class="alignleft" width="104" height="100" /></a>
+					<a href="#"><img src="/public/<?php echo ($usrProfile && isset($usrProfile['avatar']))? $usrProfile['avatar']:"images/img7.png";?>" alt="profile picture" class="alignleft" width="104" height="100" /></a>
 					<div class="main-info">
-						<h2><?php echo $me['username'];?></h2>
-						<span class="name"><?php echo ($myProfile)? $myProfile['full_name'] : "";?></span>
+						<h2><?php echo $usr['username'];?></h2>
+						<span class="name"><?php echo ($usrProfile)? $usrProfile['full_name'] : "";?></span>
 						<div class="row">
-                        	<?php if($myProfile){?>
+                        	<?php if($usrProfile){?>
 							<span class="sex">
-							<?php if(isset($myProfile['gender'])) echo $myProfile['gender']; 
-								  if(isset($myProfile['birthdate'])) echo ', '.(date('Y')-date('Y', strtotime($myProfile['birthdate'])));
+							<?php if(isset($usrProfile['gender'])) echo $usrProfile['gender']; 
+								  if(isset($usrProfile['birthdate'])) echo ', '.(date('Y')-date('Y', strtotime($usrProfile['birthdate'])));
 							?></span>
                             <?php }?>
 							<div class="specialization">
-								<span class="left"><?php echo ($myProfile)? $myProfile['specialization'] : "";?></span>
+								<span class="left"><?php echo ($usrProfile)? $usrProfile['specialization'] : "";?></span>
 							</div>
 						</div>
 					</div>
@@ -37,9 +37,9 @@
 						<strong class="text-language">language</strong>
 						<dl>
 							<dt>spoken</dt>
-							<dd><?php echo ($myProfile && isset($myProfile['lan_speak']))? $myProfile['lan_speak']: 'English';?></dd>
+							<dd><?php echo ($usrProfile && isset($usrProfile['lan_speak']))? $usrProfile['lan_speak']: 'English';?></dd>
 							<dt>read / write</dt>
-							<dd><?php echo ($myProfile && isset($myProfile['lan_rw']))? $myProfile['lan_rw']: 'English';?></dd>
+							<dd><?php echo ($usrProfile && isset($usrProfile['lan_rw']))? $usrProfile['lan_rw']: 'English';?></dd>
 						</dl>
 					</div>
 				</div>
@@ -151,7 +151,7 @@
 										<div class="task-holder">
 											<div class="last-task">
 												<div class="holder">
-													<h3><span>Last completed task</span></h3>
+													<h3><span>Last completed job</span></h3>
 													<ul>
                                                     	<?php if($last_task){?>
 														<li><span class="title">[<a href="#"><?php echo $last_task['project_name'];?></a>]</span> <a href="/story/<?php echo $last_task['work_id'];?>"><?php echo $last_task['title'];?> </a><span class="mark">(<?php echo $last_task['status'];if((strtolower($last_task['status'])!='redo')&&(strtolower($last_task['status'])!='signoff'))echo 'ed';?>)</span></li>
@@ -168,7 +168,7 @@
                                                 	<?php if($working_on){foreach($working_on as $work):?>
 													<li><span class="title">[<a href="#"><?php echo $work['project_name'];?></a>]</span> <a href="/story/<?php echo $work['work_id'];?>"><?php echo $work['title'];?></li>
                                                     <?php endforeach;}else{?>
-                                                    <li>You have no active tasks at the moment</li>
+                                                    <li>You have no active job at the moment</li>
                                                     <?php }?>
 												</ul>
 											</div>
@@ -178,7 +178,7 @@
 										<div class="level-block">
 											<div class="level-box">
 												<span class="level">level</span>
-												<span class="number"><?php $level = $this->gamemech->get_level($me['exp']); echo $level;?></span>
+												<span class="number"><?php $level = $this->gamemech->get_level($usr['exp']); echo $level;?></span>
 											</div>
 											<strong class="title">
                                             	<a href="#" class="tier">
@@ -315,15 +315,15 @@
                                     <div id="personal-info">
                                     	<ul class="details">
                                         	<!--<li><img src="/public/<?php echo $profile['avatar'];?>" /></li>-->
-                                        	<li>username: <span><?php echo $me['username'];?></span></li>
+                                        	<li>username: <span><?php echo $usr['username'];?></span></li>
                                             <?php if(isset($username)):?>
-                                            <li>Email: <span><a href="mailto:<?php echo $me['email'];?>"><?php echo $me['email'];?></a></span></li>
+                                            <li>Email: <span><a href="mailto:<?php echo $usr['email'];?>"><?php echo $usr['email'];?></a></span></li>
                                             <?php endif;?>
-                                            <li>Exp: <span><?php echo $me['exp'];?></span></li>
+                                            <li>Exp: <span><?php echo $usr['exp'];?></span></li>
                                             <li>hours spent: <span><?php echo $hours_spent;?> hour(s)</span></li>
                                             <li>Works done: <span><?php echo $works_completed;?> jobs</span></li>
                                             <li>Early submission: <span><?php echo $hours_saved;?> hour(s)</span></li>
-                                            <?php if($myProfile){?>
+                                            <?php if($usrProfile){?>
                                             <li>Gender: <span><?php echo $profile['gender'];?></span></li>
                                             <li>Birthdate:<span> <?php echo $profile['birthdate'];?></span></li>
                                             <li>Specilization: <span><?php echo $profile['specialization'];?></span></li>

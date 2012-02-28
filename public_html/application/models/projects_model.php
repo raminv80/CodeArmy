@@ -79,7 +79,7 @@ class Projects_model extends CI_Model {
 		$sprints = $result->result_array();
 		$sprints['general']['id'] = 0;
 		foreach($sprints as $sprint):
-			$query = "SELECT work_id, title, description, status, points from works where project_id=? and sprint=? order by sprint ASC, priority ASC";
+			$query = "SELECT work_id, title, description, status, points from works where project_id=? and sprint=? order by sprint ASC, priority ASC, created_at DESC";
 			$result = $this->db->query($query, array($project_id, $sprint['id']));
 			$res[$sprint['id']]=array();
 			$res[$sprint['id']]['list'] = $result->result_array();

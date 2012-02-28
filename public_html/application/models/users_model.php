@@ -176,7 +176,31 @@ class Users_model extends CI_Model {
 	
 	function update_last_login($user_id){
 		$doc2 = array(
-			"last_login" => date('Y-m-d H:i:s')
+			"last_login" => date('Y-m-d H:i:s'),
+			"attempt" => 0
+		);
+		return $this->db->update('users', $doc2, array('user_id' => $user_id));	
+	}
+	
+	function show_attempt_captcha($username){
+		$sql = "SELECT * from users where username=? and attempt>3";
+		$this->db->query($sql, array($username));
+		if($query->num_rows == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	function attempt($username){
+		$sql = "update users set attempt = attempt+1 where username = ?";
+		$this->db->query($sql, array($username));
+	}
+	
+	function reset_attempt($user_id){
+		$doc2 = array(
+			"attempt" => 0
 		);
 		return $this->db->update('users', $doc2, array('user_id' => $user_id));	
 	}
@@ -324,7 +348,7 @@ class Users_model extends CI_Model {
 	}
 	
 	function collaborators($user_id){
-		$sql = "select avatar, user_id from user_profiles where user_id != ? and user_id in (select distinct work_horse from works where project_id in (SELECT DISTINCT project_id from works where works.work_horse = ?)) limit 0,6";
+		$sql = "select avatar, users.user_id, users.email from user_profiles, users where users.user_id=user_profiles.user_id and users.user_id != ? and users.user_id in (select distinct work_horse from works where project_id in (SELECT DISTINCT project_id from works where works.work_horse = ?))";
 		$res = $this->db->query($sql , array($user_id, $user_id));
 		if($res->num_rows>0){
 			return $res->result_array();

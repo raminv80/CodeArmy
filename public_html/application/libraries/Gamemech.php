@@ -9,6 +9,8 @@ class Gamemech {
 	}
 	
 	function get_progress_bar($exp){
+		$lvl = floor($exp / points_per_level)+1;
+		if($lvl>99) return 1;
 		return ($exp % points_per_level)/points_per_level;
 	}
 	

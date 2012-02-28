@@ -53,8 +53,8 @@ class User extends CI_Controller {
 			$myProfile = $myProfile->result_array();
 			$myProfile = $myProfile[0];
 		}
-		$this->view_data['me'] = $me;
-		$this->view_data['myProfile'] = $myProfile;
+		$this->view_data['usr'] = $me;
+		$this->view_data['usrProfile'] = $myProfile;
 		$this->view_data['profile'] = $myProfile;
 		$this->view_data['works_completed'] = $this->users_model->works_compeleted($user_id);
 		$this->view_data['hours_spent']  = $this->users_model->hours_spent($user_id);

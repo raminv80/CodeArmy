@@ -60,6 +60,26 @@ class Home extends CI_Controller {
 		*/
 		
 		//ver4
+		$this->load->helper('captcha');
+		$vals = array(
+			'img_path'	 => 'public/captcha/',
+			'img_url'	 => 'http://workpad.local/public/captcha/',
+    		'font_path'	 => 'public/fonts/DIN.ttf'
+			);
+		
+		$cap = create_captcha($vals);
+
+		$data = array(
+			'captcha_time'	=> $cap['time'],
+			'ip_address'	=> $this->input->ip_address(),
+			'word'	 => $cap['word']
+			);
+		
+		$query = $this->db->insert_string('captcha', $data);
+		$this->db->query($query);
+
+		$this->view_data['captcha'] = $cap['image'];
+		
 		$this->view_data['featherlight'] = $this->stories->featherlight();
 		$this->view_data['lightweight'] = $this->stories->lightweight();
 		$this->view_data['heavyweight'] = $this->stories->heavyweight();

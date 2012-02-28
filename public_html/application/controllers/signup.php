@@ -59,15 +59,51 @@ class Signup extends CI_Controller {
 			if ($this->form_validation->run() == FALSE) {
 				$this->view_data['form_error'] = true;
 			} else {
-				if($this->users_model->create_new_user()) {
-					// signup successful
-					$this->view_data['signup_success'] = true;
-					$this->session->unset_userdata('referer');
-				} else { // - if there is a problem writing to db
-					redirect(base_url()."error");
-				} 
+				// First, delete old captchas
+				$expiration = time()-7200; // Two hour limit
+				$this->db->query("DELETE FROM captcha WHERE captcha_time < ".$expiration);	
+				
+				// Then see if a captcha exists:
+				$sql = "SELECT COUNT(*) AS count FROM captcha WHERE word = ? AND ip_address = ? AND captcha_time > ?";
+				$binds = array($_POST['captcha'], $this->input->ip_address(), $expiration);
+				$query = $this->db->query($sql, $binds);
+				$row = $query->row();
+				
+				if ($row->count == 0)
+				{
+					$this->view_data['captcha_error'] = "You must submit the pharase that appears in the image.";
+					$this->view_data['form_error'] = true;
+				}else{
+					if($this->users_model->create_new_user()) {
+						// signup successful
+						$this->view_data['signup_success'] = true;
+						$this->session->unset_userdata('referer');
+					} else { // - if there is a problem writing to db
+						redirect(base_url()."error");
+					} 
+				}
 			}
-		} 
+		}
+
+		$this->load->helper('captcha');
+		$vals = array(
+			'img_path'	 => 'public/captcha/',
+			'img_url'	 => 'http://workpad.local/public/captcha/',
+    		'font_path'	 => 'public/fonts/DIN.ttf'
+			);
+		
+		$cap = create_captcha($vals);
+
+		$data = array(
+			'captcha_time'	=> $cap['time'],
+			'ip_address'	=> $this->input->ip_address(),
+			'word'	 => $cap['word']
+			);
+		
+		$query = $this->db->insert_string('captcha', $data);
+		$this->db->query($query);
+
+		$this->view_data['captcha'] = $cap['image'];
 		$this->load->view('signup_view', $this->view_data);
 	}
 	

@@ -86,7 +86,7 @@
       <div id="slidesContainer" style="overflow-x: hidden; overflow-y: hidden; ">
         <div id="slideInner" style="width: 2240px; margin-left: -1680px; ">
           <?php if(isset($featherlight) && $featherlight &&count($featherlight)>0){?>
-          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">FeatherLight Weight Tasks</span>
+          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">FeatherLight Weight Jobs</span>
             <table width="860">
               <tr>
                 <?php foreach($featherlight as $task):?>
@@ -108,7 +108,7 @@
           </div>
           <?php }?>
           <?php if(isset($lightweight) && $lightweight && count($lightweight)>0){?>
-          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Lightweight Weight Tasks</span>
+          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Lightweight Weight Jobs</span>
             <table width="860">
               <tr>
                 <?php foreach($lightweight as $task):?>
@@ -130,7 +130,7 @@
           </div>
           <?php }?>
           <?php if(isset($heavyweight) && $heavyweight && count($heavyweight)>0){?>
-          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Heavy Weight Tasks</span>
+          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Heavy Weight Jobs</span>
             <table width="860">
               <tr>
                 <?php foreach($heavyweight as $task):?>
@@ -154,14 +154,14 @@
         </div>
       </div>
       <span class="control" id="rightControl" style="display: none; ">Clicking moves right</span></div>
-    <span id="title">Search Contracts</span>
+    <span id="title">Search Jobs</span>
     <div class="WP-searchbar"> <?php echo form_open('/stories/browse' , array('class'=>'search-form', 'name' => "browse-tools-form")); ?>
-      <label>Search task</label>
+      <label>Search Jobs</label>
       <input id="input-search" type="text" name="search">
       <input id="search-button" name="Submit" type="button">
       <?php echo form_close(); ?> </div>
     <div class="WP-contract-placeholder">
-      <div id="heading"><span id="title">Deadline</span><span style="width:620px;" id="title">user stories</span> <span style="width:100px;" id="title">bids</span> <span style="width:80px;" id="title">prize</span></div>
+      <div id="heading"><span id="title">Deadline</span><span style="width:620px;" id="title">Project Name > Job Title</span> <span style="width:100px;" id="title">bids</span> <span style="width:80px;" id="title">prize</span></div>
       <?php foreach($stories as $i=>$story):?>
       <?php if($i%$num_page==0 and $i!=0){?>
     </div>
@@ -346,6 +346,10 @@
                                 <input id="password3" name="passconf" value="" type="password">
                               </div>
                             </div>
+							<div class="captcha">
+                              <?=$captcha;?>
+                              <input id="captcha" name="captcha" type="text" value=""  />
+							</div>
                             <input class="reg-submit" name="submit" value="Submit" type="submit">
                 <?php echo form_close(); ?>
     </div>

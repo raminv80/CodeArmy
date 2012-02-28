@@ -150,7 +150,7 @@
 										<div class="task-holder">
 											<div class="last-task">
 												<div class="holder">
-													<h3><span>Last completed task</span></h3>
+													<h3><span>Last completed job</span></h3>
 													<ul>
                                                     	<?php if($last_task){?>
 														<li style="width: 240px;"><span class="title">[<a href="/project/<?php echo $last_task['project_id'];?>"><?php echo $last_task['project_name'];?></a>]</span> <a href="/story/<?php echo $last_task['work_id'];?>"><?php echo $last_task['title'];?> </a><span class="mark">(<?php echo $last_task['status'];if(in_array(strtolower($last_task['status']),array('reject'))) echo 'ed';?>)</span></li>

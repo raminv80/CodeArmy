@@ -10,7 +10,7 @@
       <div id="slidesContainer" style="overflow-x: hidden; overflow-y: hidden; ">
         <div id="slideInner" style="width: 2240px; margin-left: -1680px; ">
           <?php if($featherlight){?>
-          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">FeatherLight Weight Tasks</span>
+          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">FeatherLight Weight Jobs</span>
             <table width="860">
               <tr>
               	<?php foreach($featherlight as $task):?>
@@ -25,7 +25,7 @@
           </div>
           <?php }?>
           <?php if($lightweight){?>
-          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Lightweight Weight Tasks</span>
+          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Lightweight Weight Jobs</span>
             <table width="860">
               <tr>
               	<?php foreach($lightweight as $task):?>
@@ -40,7 +40,7 @@
           </div>
           <?php }?>
           <?php if($heavyweight){?>
-          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Heavy Weight Tasks</span>
+          <div class="slide" style="float: left; width: 860px; "> <span id="slidetitle">Heavy Weight Jobs</span>
             <table width="860">
               <tr>
                 <?php foreach($heavyweight as $task):?>
@@ -59,16 +59,16 @@
       <span class="control" id="rightControl" style="display: none; ">Clicking moves right</span>
     </div>
     <?php }?>
-    <span id="title">Search Contracts</span>
+    <span id="title">Search Jobs</span>
     <div class="WP-searchbar">
       <?php echo form_open('/stories/browse' , array('class'=>'search-form', 'name' => "browse-tools-form")); ?>
-      <label>Search task</label>
+      <label>Search Jobs</label>
       <input class="hint_step1" id="input-search" type="text" name="search">
       <input id="search-button" name="Submit" type="button">
       <?php echo form_close(); ?>
     </div>
     <div class="WP-contract-placeholder">
-      <div id="heading"><span id="title">Deadline</span><span style="width:620px;" id="title"><a href="/stories/browse/userstory">user stories</a></span> <span style="width:100px;" id="title"><a href="/stories/browse/bids">bids</a></span> <span style="width:80px;" id="title"><a href="/stories/browse/prize">prize</a></span></div>
+      <div id="heading"><span id="title">Deadline</span><span style="width:620px;" id="title"><a href="/stories/browse/userstory">Job Title</a></span> <span style="width:100px;" id="title"><a href="/stories/browse/bids">bids</a></span> <span style="width:80px;" id="title"><a href="/stories/browse/prize">prize</a></span></div>
       <?php if($stories){foreach($stories as $i=>$story):?>
       <div class="story">
           <div class="accordionButton">
@@ -117,7 +117,7 @@
       </div>
       <?php endforeach;}else{?>
       	<div class="empty-search-res">
-        	Oopse!There's nothing to do <?php if(isset($_POST['type'])&&$_POST['type']!='0'){?>under '<?=$_POST['type']?>' user stories<?php }?>
+        	Oopse!There's no jobs <?php if(isset($_POST['type'])&&$_POST['type']!='0'){?>under '<?=$_POST['type']?>' category<?php }?>
             to match your search criteria.
         </div>
       <?php }?>
