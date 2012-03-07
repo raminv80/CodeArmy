@@ -124,13 +124,13 @@ class Story extends CI_Controller {
 			}
 			$this->load->helper('stories_helper');
 			$this->load->helper('user_helper');
-			$this->view_data['window_title'] = "User Story '".$this->view_data['work_data']['title']."' | Workpad";
+			$this->view_data['window_title'] = us_dev." '".$this->view_data['work_data']['title']."' | Workpad";
 			//$this->load->view('story_page_view', $this->view_data);
 			$this->load->view('story_page_v4_view', $this->view_data);
 		} 
 		
 		else {
-			$this->view_data['window_title'] = "Error, user story (".$work_id.") does not exist.";
+			$this->view_data['window_title'] = "Error, ".us_dev." (".$work_id.") does not exist.";
 			$this->load->view('story_error_view', $this->view_data);
 		}
 	}
@@ -210,8 +210,8 @@ class Story extends CI_Controller {
 			$po_name = $product_owner[0]['username'];
 			$product_owner_id = $product_owner[0]['user_id'];
 			$product_owner = $product_owner[0]['email'];
-			$message = '<p>Hello '.$po_name.',</p><p>User <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a> placed a bid on story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> with amount '.$this->input->post('set_cost').' and days '.$this->input->post('set_days').'</p><p>Whenever you want you can refer to the bidding list of this <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">user story</a> to decide on awarding the job. You may want to study bidder\'s profiles before approving a bid.</p><p>Thank you.</p>';
-			$short_message = '<p>User <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a> placed a bid on story <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> with amount '.$this->input->post('set_cost').' and days '.$this->input->post('set_days').'</p>';
+			$message = '<p>Hello '.$po_name.',</p><p>User <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a> placed a bid on '.us_manager.' <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> with amount '.$this->input->post('set_cost').' and days '.$this->input->post('set_days').'</p><p>Whenever you want you can refer to the bidding list of this <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.us_manager.'</a> to decide on awarding the '.us_manager.'. You may want to study bidder\'s profiles before approving a bid.</p><p>Thank you.</p>';
+			$short_message = '<p>User <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a> placed a bid on '.us_manager.' <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a> with amount '.$this->input->post('set_cost').' and days '.$this->input->post('set_days').'</p>';
 			$this->notify(noreply_email,email_name.' Bids', $product_owner, admin_cc, $title,$message, 'bid', $product_owner_id, $short_message, $this->session->userdata('user_id'));
 			$project_id = $data[0]['project_id'];
 			$user_id = $this->session->userdata('user_id');
@@ -226,8 +226,8 @@ class Story extends CI_Controller {
 	
 				if ($lowest['user_id'] != $user_id) {
 					$title = 'Outbid on '.$work_data[0]['title'];
-					$message = '<p>Your bid on job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\' has been outbid.</p><p>You may want to adjust your bid by refering to the bidding list of this <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">user story</a>.</p><p>Thank you.</p>';
-					$short_message = '<p><a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.ucfirst($this->session->userdata('username')).'</a> outbided you on job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\'.</p>';
+					$message = '<p>Your bid on '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\' has been outbid.</p><p>You may want to adjust your bid by refering to the bidding list of this <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.us_dev.'</a>.</p><p>Thank you.</p>';
+					$short_message = '<p><a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.ucfirst($this->session->userdata('username')).'</a> outbided you on '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\'.</p>';
 					$this->users->notify($lowest['user_id'], $title, $message, 'bid',NULL, $short_message, $this->session->userdata('user_id'));
 				}
 			};
@@ -254,7 +254,7 @@ class Story extends CI_Controller {
 	// - The delete view
 	function delete($pro_id, $id) {
 		$this->check_authentication('admin');
-		$this->view_data['window_title'] = "Delete the Story | Workpad";
+		$this->view_data['window_title'] = "Delete the ".ucwords(us_dev)." | Workpad";
 
 		//$this->view_data['type'] = $type;
 		$this->view_data['id'] = $id;
@@ -311,7 +311,7 @@ class Story extends CI_Controller {
 		$to_id = array_unique($target_ids);
 		$cc = admin_email;
 		$subject = "Workpad | Comment on ".$work[0]['title'];
-		$message = "<p>User <a href='http://".$_SERVER['HTTP_HOST']."/user/".$this->session->userdata('user_id')."'>".$this->session->userdata('username')."</a> placed a comment on job \'<a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>".$work[0]['title']."</a>\':</p><p>".substr(strip_tags($this->input->post('comments')),0,500)."<br />(to read more <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>click here</a>)</p>";
+		$message = "<p>User <a href='http://".$_SERVER['HTTP_HOST']."/user/".$this->session->userdata('user_id')."'>".$this->session->userdata('username')."</a> placed a comment on ".us_dev." \'<a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>".$work[0]['title']."</a>\':</p><p>".substr(strip_tags($this->input->post('comments')),0,500)."<br />(to read more <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>click here</a>)</p>";
 		$short_message = "<p><a href='http://".$_SERVER['HTTP_HOST']."/user/".$this->session->userdata('user_id')."'>".ucfirst($this->session->userdata('username'))."</a> commented on <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>".$work[0]['title']."</a>: \"".substr(strip_tags($this->input->post('comments')),0,500)."\"</p>";
 		$this->notify(noreply_email,email_name, $to, $cc, $subject, $message, 'message', $to_id, $short_message,$this->session->userdata('user_id'));
 		$this->view_data['signup_success'] = true;
@@ -349,8 +349,8 @@ class Story extends CI_Controller {
 			$query = $this->stories->reopen($story_id, $work_data[0]['work_horse']);	
 			$title = $work_data[0]['title'].' is rejected!';
 			$to = $user_data[0]['email'];
-			$message = '<p>Hello,</p><p>It seems you have failed to meet expectations of product owner for the job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\'. Regard to this matter, product owner has decided to revoke your assignment and the job is set to open for bidding once again. For more info please refer to the discussion section of this job.</p><p>Regards.</p>';
-			$short_message = '<p><a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">Product owner</a> revoked your assignment on job <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a> and the job is set to open for bidding again.</p>';
+			$message = '<p>Hello,</p><p>It seems you have failed to meet expectations of '.po_dev.' for the '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\'. Regard to this matter, '.po_dev.' has decided to revoke your assignment and the '.us_dev.' is set to open for bidding once again. For more info please refer to the discussion section of this '.us_dev.'.</p><p>Regards.</p>';
+			$short_message = '<p><a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.po_dev.'</a> revoked your assignment on '.us_dev.' <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a> and the '.us_dev.' is set to open for bidding again.</p>';
 			$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job', $short_message, $this->session->userdata('user_id'));
 			
 			$project = $this->projects_model->get_project_details($work_data[0]['project_id']);
@@ -359,8 +359,8 @@ class Story extends CI_Controller {
 			$scrum_master = $scrum_master->result_array();
 			$to = $scrum_master[0]['email'];
 			$to_id = $scrum_master[0]['user_id'];
-			$message = '<p>Hello,</p><p>The story \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is not proceeding according to product owner expectations. Regard to this matter, product owner has decided to revoke the assignment and the job is set to open for bidding one again. For more info please refer to the discussion section of this user sotry.</p><p>You are recieving this email because you are assigned as Scrum Master of this story.</p><p>Regards.</p>';
-			$short_message = '<p>The story \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is not proceeding according to product owner expectations. Regard to this matter, <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">Product owner</a> has decided to revoke the assignment and the job is set to open for bidding one again.</p>';
+			$message = '<p>Hello,</p><p>The '.us_manager.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is not proceeding according to '.po_manager.' expectations. Regard to this matter, '.po_manager.' has decided to revoke the assignment and the '.us_manager.' is set to open for bidding one again. For more info please refer to the discussion section of this user sotry.</p><p>You are recieving this email because you are assigned as '.sm_manager.' of this '.us_manager.'.</p><p>Regards.</p>';
+			$short_message = '<p>The '.us_manager.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is not proceeding according to '.po_manager.' expectations. Regard to this matter, <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.po_manager.'</a> has decided to revoke the assignment and the '.us_manager.' is set to open for bidding one again.</p>';
 			if($user_data[0]['user_id']!=$to) $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message, 'job', $to_id, $short_message, $this->session->userdata('user_id'));
 			$project_id = $work_data[0]['project_id'];
 			$sprint = $work_data[0]['sprint'];
@@ -396,13 +396,13 @@ class Story extends CI_Controller {
 				   $usr_data = $usr->result_array();
 				   $to = $usr_data[0]['email'];
 				   $to_id = $usr_data[0]['user_id'];
-				   $message = '<h3>Congratulations!</h3><p>You are the winner! Your bid on job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\' was successful. Now you may refer to the job from <a href="http://'.$_SERVER['HTTP_HOST'].'">Workpad</a>&gt;<a href="http://'.$_SERVER['HTTP_HOST'].'/myoffice">MyOffice</a>&gt;MyDesk&gt;In Progress list.</p><p>Next step is to finish the job as soon as possible and click on job is done button located in this list, or on <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'/'.$work_data[0]['sprint'].'">scrumboard</a> or within <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">job detail</a> page. Here are some tips for you: <ol><li>If you are new to the project, first step is to read about the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project</a> itslef.</li><li>Go through details of the job. If it\'s not clear or if you need any furthur info, use the \'Discuss\' section to contact the product owner and scrum master.</li><li>required files might be attached to the story or be provided later by scrum master/product owner or be presented as a link within <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project detail page</a>.</li><li>Test, test and test. Make sure everything works before submission.</li><li>For submission refer to project submission terms and essentials of this job. You might be required to eaither use a github repository (forked from main project) or upload the files as a zip or add a remote link to the files.</li></ol></p>';
-				   $short_message = '<p>Congradulations! You won the bidding on \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\'. Finish the job before deadline for maximum points.</p>';
+				   $message = '<h3>Congratulations!</h3><p>You are the winner! Your bid on '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\' was successful. Now you may refer to the '.us_dev.' from <a href="http://'.$_SERVER['HTTP_HOST'].'">Workpad</a>&gt;<a href="http://'.$_SERVER['HTTP_HOST'].'/myoffice">MyOffice</a>&gt;MyDesk&gt;In Progress list.</p><p>Next step is to finish the '.us_dev.' as soon as possible and click on '.us_dev.' is done button located in this list, or on <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'/'.$work_data[0]['sprint'].'">'.sb_dev.'</a> or within <a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.us_dev.' detail</a> page. Here are some tips for you: <ol><li>If you are new to the project, first step is to read about the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project</a> itslef.</li><li>Go through details of the '.us_dev.'. If it\'s not clear or if you need any furthur info, use the \'Discuss\' section to contact the '.po_dev.' and '.sm_dev.'.</li><li>required files might be attached to the '.us_dev.' or be provided later by '.sm_dev.'/'.po_dev.' or be presented as a link within <a href="http://'.$_SERVER['HTTP_HOST'].'/project/'.$work_data[0]['project_id'].'">project detail page</a>.</li><li>Test, test and test. Make sure everything works before submission.</li><li>For submission refer to project submission terms and essentials of this '.us_dev.'. You might be required to eaither use a github repository (forked from main project) or upload the files as a zip or add a remote link to the files.</li></ol></p>';
+				   $short_message = '<p>Congradulations! You won the bidding on \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\'. Finish the '.us_dev.' before deadline for maximum points.</p>';
 				   $this->notify(noreply_email,email_name, $to, admin_cc, $title,$message, 'bid', $to_id, $short_message, $this->session->userdata('user_id'));
 				   $data = array(
 					"user_id" => $to_id,
 					"title" => "Assignment",
-					"message" => "<p>User story <a href='http://".$_SERVER['HTTP_HOST']."/story/".$work_data[0]['work_id']."'>'".$work_data[0]['title']."'</a> is assigned to you.</p>",
+					"message" => "<p>".us_dev." <a href='http://".$_SERVER['HTTP_HOST']."/story/".$work_data[0]['work_id']."'>'".$work_data[0]['title']."'</a> is assigned to you.</p>",
 					"status" => 'unread',
 					"created_at" => date('Y-m-d'),
 					"target_id" => $this->session->userdata('user_id'),
@@ -432,7 +432,7 @@ class Story extends CI_Controller {
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
 			
-			$this->view_data['window_title'] = "Edit the Story | Workpad";
+			$this->view_data['window_title'] = "Edit the ".ucfirst(us_dev)." | Workpad";
             $query = $this->stories->get_work_details($id);
             $data = $query->result_array();
             //print_r($data);
@@ -550,7 +550,7 @@ class Story extends CI_Controller {
 								$this->view_data['window_title'] = "Submission | Workpad";
 								$this->load->view('story_submission_view', $this->view_data);		
 							} else {
-								$this->view_data['window_title'] = "Error, user story (".$work_id.") does not exist.";
+								$this->view_data['window_title'] = "Error, ".us_dev." (".$work_id.") does not exist.";
 								$this->load->view('story_error_view', $this->view_data);
 							}
 							///////////////////
@@ -571,8 +571,8 @@ class Story extends CI_Controller {
 						$scrum_master = $this->users_model->get_user($project[0]['scrum_master_id']);
 						$scrum_master = $scrum_master->result_array();
 						
-						$message = '<p>Hello '.$project_owner[0]['username'].',</p><p>User <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a> has completed the user story \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\'.</p><p>Now <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$scrum_master[0]['user_id'].'">Scrum Master</a> or <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$project_owner[0]['user_id'].'">Product owner</a> is required to verify the job. For furthur actions please refer to the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'/'.$work_data[0]['sprint'].'">scrumboard</a> of this project.</p><p>Regards.</p>';
-						$short_message = '<p>Story \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a\'> is completed by <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a>. Please verify this story on the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'/'.$work_data[0]['sprint'].'">scrumboard</a>.</p>';
+						$message = '<p>Hello '.$project_owner[0]['username'].',</p><p>User <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a> has completed the '.us_manager.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\'.</p><p>Now <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$scrum_master[0]['user_id'].'">'.sm_manager.'</a> or <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$project_owner[0]['user_id'].'">'.po_manager.'</a> is required to verify the '.us_manager.'. For furthur actions please refer to the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'/'.$work_data[0]['sprint'].'">'.sb_manager.'</a> of this project.</p><p>Regards.</p>';
+						$short_message = '<p>Story \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a\'> is completed by <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.$this->session->userdata('username').'</a>. Please verify this story on the <a href="http://'.$_SERVER['HTTP_HOST'].'/project/scrum_board/'.$work_data[0]['project_id'].'/'.$work_data[0]['sprint'].'">'.sb_manager.'</a>.</p>';
 						$to = array();
 						$to_id = array();
 						$to[] = $project_owner[0]['email'];
@@ -587,8 +587,8 @@ class Story extends CI_Controller {
 						$query = $this->stories->get_user_email($story_id);
 						$user_data = $query->result_array();
 						$to = $user_data[0]['email'];
-						$message = '<p>Hi '.$user_data[0]['username'].',</p><p>You have submited the job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\'. Once the job is verified by Scrum master and signed off by Product owner you will be credited with its value.</p><p>Thanks.</p>';
-						$short_message = '<p>Your submission of job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\' is sent for verification. You will be credited once the job is verified by Scrum master and signed off by Product owner.</p>';
+						$message = '<p>Hi '.$user_data[0]['username'].',</p><p>You have submited the '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\'. Once the '.us_dev.' is verified by '.sm_dev.' and signed off by '.po_dev.' you will be credited with its value.</p><p>Thanks.</p>';
+						$short_message = '<p>Your submission of '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\' is sent for verification. You will be credited once the '.us_dev.' is verified by '.sm_dev.' and signed off by '.po_dev.'.</p>';
 						//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
 						$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job', $short_message, $user_id);
 						
@@ -616,8 +616,8 @@ class Story extends CI_Controller {
 				$query = $this->stories->get_user_email($story_id);
 				$user_data = $query->result_array();
 				$to = $user_data[0]['email'];
-				$message = '<p>Hi '.$user_data[0]['username'].',</p><p>The story \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\' needs more work. Please refer to the discussion section of job and discuss furthur requirements with the scrum master.</p><p>Thanks.</p>';
-				$short_message = '<p>Story \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\' needs more work. Please refer to the discussion section of job and discuss furthur requirements with the scrum master.</p>';
+				$message = '<p>Hi '.$user_data[0]['username'].',</p><p>The '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\' needs more work. Please refer to the discussion section of '.us_dev.' and discuss furthur requirements with the '.sm_dev.' or '.po_dev.'.</p><p>Thanks.</p>';
+				$short_message = '<p>'.ucwords(us_dev).' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$work_data[0]['work_id'].'">'.$work_data[0]['title'].'</a>\' needs more work. Please refer to the discussion section of '.us_dev.' and discuss furthur requirements with the '.sm_dev.' or '.po_dev.'.</p>';
 				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
 				$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job', $short_message, $this->session->userdata('user_id'));
 				$project_id = $work_data[0]['project_id'];
@@ -646,8 +646,9 @@ class Story extends CI_Controller {
 				$query = $this->stories->get_user_email($story_id);
 				$user_data = $query->result_array();
 				$to = $user_data[0]['email'];
-				$message = '<p>Hi '.$user_data[0]['username'].',</p><p>The job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is verified by scrum master. Now this job is awaiting for approval of product owner. The payment will be signed off upon approval of product owner.</p><p>Regards.</p>';
-				$short_message = '<p>Job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is verified by <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">Scrum master</a>. Now this job is awaiting for approval of product owner.</p>';
+				$message = '<p>Hi '.$user_data[0]['username'].',</p><p>The '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is verified by '.sm_dev.'. Now this '.us_dev.' is awaiting for approval of '.po_dev.'. The payment will be signed off upon approval of '.po_dev.'.</p><p>Regards.</p>';
+				$short_message = '<p>'.ucwords(us_dev).' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is verified by <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.sm_dev.'</a>. Now this '.us_dev.' is awaiting for approval of <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$project_owner[0]['user_id'].'">'.po_dev.'</a>.</p>';
+				$short_message_for_po = '<p>'.ucwords(us_dev).' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is verified by <a href="http://'.$_SERVER['HTTP_HOST'].'/user/'.$this->session->userdata('user_id').'">'.sm_dev.'</a>. Now this '.us_dev.' is awaiting for approval of you as '.po_manager.'.</p>';
 				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
 				$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job', $short_message, $this->session->userdata('user_id'));
 				$this->users_model->notify($project_owner[0]['user_id'], $title, $message, 'job', $short_message, $this->session->userdata('user_id'));
@@ -686,8 +687,8 @@ class Story extends CI_Controller {
 				$to_id[] = $user_data[0]['user_id'];
 				if($scrum_master[0]['user_id']!=$user_data[0]['user_id'])
 					$to_id[] = $scrum_master[0]['user_id'];
-				$message = '<p>Hello,</p><p>The job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is signed off.</p><p>Good job and thanks.</p>';
-				$short_message = '<p>The job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is signed off.</p><p>Good job and thanks.</p>';
+				$message = '<p>Hello,</p><p>The '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is signed off.</p><p>Good job and thanks.</p>';
+				$short_message = '<p>The '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' is signed off.</p><p>Good job and thanks.</p>';
 				$this->notify(noreply_email,email_name, $to, admin_cc, $title,$message, 'job', $to_id, $short_message, $user_id);
 				
 				$project_id = $work_data[0]['project_id'];
@@ -712,8 +713,8 @@ class Story extends CI_Controller {
 				$query = $this->stories->reject($story_id);	
 				$title = $work_data[0]['title'].' is rejected!';
 				$to = $user_data[0]['email'];
-				$message = '<p>Hello,</p><p>unfortunately the job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' has failed to meet requirements of product owner and is rejected. For more info please refer to the discussion section of this user sotry.</p><p>As a result this failure, story will be set to open for bidding again.</p><p>Regards.</p>';
-				$short_message = '<p>unfortunately the job \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' has failed to meet requirements of product owner and is rejected.</p>';
+				$message = '<p>Hello,</p><p>unfortunately the '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' has failed to meet requirements of '.po_dev.' and is rejected. For more info please refer to the discussion section of this user sotry.</p><p>As a result this failure, '.us_dev.' will be set to open for bidding again.</p><p>Regards.</p>';
+				$short_message = '<p>unfortunately the '.us_dev.' \'<a href="http://'.$_SERVER['HTTP_HOST'].'/story/'.$story_id.'">'.$work_data[0]['title'].'</a>\' has failed to meet requirements of '.po_dev.' and is rejected.</p>';
 				//$this->notify(admin_email,email_name, $to, admin_cc, $title,$message);
 				$this->users_model->notify($user_data[0]['user_id'], $title, $message, 'job', $short_message, $user_id);
 				
@@ -771,7 +772,7 @@ class Story extends CI_Controller {
 				$this->view_data['window_title'] = "Submission | Workpad";
 				$this->load->view('story_submission_view', $this->view_data);		
 			} else {
-				$this->view_data['window_title'] = "Error, user story (".$work_id.") does not exist.";
+				$this->view_data['window_title'] = "Error, ".us_dev." (".$work_id.") does not exist.";
 				$this->load->view('story_error_view', $this->view_data);
 			}
 		}

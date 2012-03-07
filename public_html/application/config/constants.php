@@ -52,3 +52,17 @@ define('noreply_email','noreplay@workpad.com');
 /*authentication configuration*/
 define('role_error','login');
 define('login_error','login');
+
+define('po_dev','product owner');
+define('sm_dev','scrum master');
+define('sb_dev','scrum board');
+define('sp_dev','sprint planner');
+define('bd_dev', 'burndown chart');
+define('us_dev', 'job');
+
+define('po_manager','product owner');
+define('sm_manager','scrum master');
+define('sb_manager','scrum board');
+define('sp_manager','sprint planner');
+define('bd_manager', 'burndown chart');
+define('us_manager', 'user story');//user story
