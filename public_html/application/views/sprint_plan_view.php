@@ -8,6 +8,7 @@
 			echo "d.sprint_from='".$work_list['from']."';\n";
 			echo "d.sprint_to='".$work_list['to']."';\n";
 			echo "d.sprint_point='".$work_list['point']."';\n";
+			echo "d.sprint_cost='".$work_list['cost']."';\n";
 			echo "d.work_list= new Array();\n";
 			echo "works.push(d);\n";
 			foreach($work_list['list'] as $work):
@@ -15,6 +16,7 @@
 				echo "d.id='".$work['work_id']."';\n";
 				echo "d.title='".str_replace("'","\'",$work['title'])."';\n";
 				echo "d.point='".str_replace("'","\'",$work['points']? $work['points']:0)."';\n";
+				echo "d.cost='".str_replace("'","\'",$work['cost']? $work['cost']:0)."';\n";
 				echo "d.status='".$work['status']."';\n";
 				echo "d.description='".substr(trim(str_replace("'","\'",str_replace(array("\n","\t"),'',strip_tags(nl2br($work['description']))))),0,252)."';\n";
 				echo "works[works.length-1].work_list.push(d);\n";
@@ -459,13 +461,16 @@ function populate(works){
 		sprint_from = works[sprint].sprint_from;
 		sprint_to = works[sprint].sprint_to;
 		sprint_point = works[sprint].sprint_point;
+		sprint_cost = works[sprint].sprint_cost;
 		if(sprint_id!=0 && first_sprint){//populate first sprint
 			first_sprint = false;
 			cur_sprint = $('#scrum1');
 			cur_sprint.data('sprint_id',sprint_id);
 			$('.start',cur_sprint.parent()).val(sprint_from);
 			$('.end',cur_sprint.parent()).val(sprint_to);
-			$('.total-burndown',cur_sprint.parent()).html('Total: '+sprint_point+'pt');
+			if(isNaN(sprint_point))sprint_point=0;
+			if(isNaN(sprint_cost))sprint_cost=0;
+			$('.total-burndown',cur_sprint.parent()).html('Total: '+sprint_point+'pt, '+sprint_cost+'RM');
 			if(sprint_from!=''){
 				s = new Date(sprint_from.substr(0,4),sprint_from.substr(5,2)-1,sprint_from.substr(8,2));
 				$('.day_date',cur_sprint.parent()).first().html($.datepicker.formatDate('dd', s));
@@ -489,8 +494,11 @@ function populate(works){
 			for(i=0;i<work_list.length;i++){
 				var data=work_list[i];
 				entry = data.description;
-				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.point+'pt '+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options" ><li><a id="view" href="/story/'+data.id+'">view</a><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" id="delete" href="javascript:void(0)">Delete</a></li></ul></li>');
+				if(isNaN(data.point))data.point=0;
+				if(isNaN(data.cost))data.cost=0;
+				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.point+'pt '+data.cost+'RM '+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options" ><li><a id="view" href="/story/'+data.id+'">view</a><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" id="delete" href="javascript:void(0)">Delete</a></li></ul></li>');
 				$('#work_'+data.id).data('point',data.point);
+				$('#work_'+data.id).data('cost',data.cost);
 			}
 		}else if(sprint_id!=0 && !first_sprint){//add a new sprint
 			$('.add_sprint').click();
@@ -499,7 +507,9 @@ function populate(works){
 			cur_sprint.data('sprint_id', sprint_id);
 			$('.start',cur_sprint.parent()).val(sprint_from);
 			$('.end',cur_sprint.parent()).val(sprint_to);
-			$('.total-burndown',cur_sprint.parent()).html('Total: '+sprint_point+'pt');
+			if(isNaN(sprint_point))sprint_point=0;
+			if(isNaN(sprint_cost))sprint_cost=0;
+			$('.total-burndown',cur_sprint.parent()).html('Total: '+sprint_point+'pt, '+sprint_cost+'RM');
 			if(sprint_from!=''){
 				s = new Date(sprint_from.substr(0,4),sprint_from.substr(5,2)-1,sprint_from.substr(8,2));
 				$('.day_date',cur_sprint.parent()).first().html($.datepicker.formatDate('dd', s));
@@ -523,8 +533,11 @@ function populate(works){
 			for(i=0;i<work_list.length;i++){
 				var data=work_list[i];
 				entry = data.description;
-				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.point+'pt '+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+data.id+'">view</a></li><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" href="javascript:void(0)" id="delete">Delete</a></li></ul></li>');
+				if(isNaN(data.point))data.point=0;
+				if(isNaN(data.cost))data.cost=0;
+				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.point+'pt '+data.cost+'RM '+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+data.id+'">view</a></li><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" href="javascript:void(0)" id="delete">Delete</a></li></ul></li>');
 				$('#work_'+data.id).data('point',data.point);
+				$('#work_'+data.id).data('cost',data.cost);
 			}
 		}
 		if(sprint_id==0){//ice box
@@ -533,8 +546,11 @@ function populate(works){
 			for(i=0;i<work_list.length;i++){
 				var data=work_list[i];
 				entry = data.description;
-				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.point+'pt '+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+data.id+'">view</a></li><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" id="delete" href="javascript:void(0)">Delete</a></li></ul></li>');
+				if(isNaN(data.point))data.point=0;
+				if(isNaN(data.cost))data.cost=0;
+				cur_sprint.append('<li id="work_'+data.id+'" class="user_story ui-state-default"><div class="'+data.status+'"></div><span class="title_story">'+data.title+'</span><span class="status">'+data.point+'pt '+data.cost+'RM '+data.status+'</span><br><span class="short_story">'+entry+'</span><ul class="options"><li><a id="view" href="/story/'+data.id+'">view</a></li><li><a id="edit" href="/story/edit/'+data.id+'">edit</a></li><li><a onclick="deleteUserStory(\''+data.id+'\')" id="delete" href="javascript:void(0)">Delete</a></li></ul></li>');
 				$('#work_'+data.id).data('point',data.point);
+				$('#work_'+data.id).data('cost',data.cost);
 			}
 		}
 	}
@@ -676,9 +692,11 @@ $('#product_backlog').on('click','.new_story',function(){$('input',this).focus()
 function reclac_sprint_points(){
 	sprint_modified = true;
 	$('.story_list').each(function(){
-		var sum=0; 
-		$('.user_story',$(this)).each(function(){sum += Math.round($(this).data('point'));});
-		$('.total-burndown',$(this).parent()).html('Total: '+sum	+'pt');
+		var sum=0; var cost = 0;
+		$('.user_story',$(this)).each(function(){sum += Math.round($(this).data('point'));cost += Math.round($(this).data('cost'));});
+		if(isNaN(sum))sum=0;
+		if(isNaN(cost))cost=0;
+		$('.total-burndown',$(this).parent()).html('Total: '+sum	+'pt, '+cost+'RM');
 		
 		var max_height = 0;
 		//find the highest height

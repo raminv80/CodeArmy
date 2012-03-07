@@ -1,5 +1,6 @@
 <?php $this->load->view('includes/header4'); ?>
 <?php
+			$i = -1;
 			foreach($sprints as $i=>$sprint)if($sprint['id']==$sprint_sel)break;
 			$sprint_num=$i;
 			

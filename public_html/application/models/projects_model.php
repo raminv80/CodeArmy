@@ -74,12 +74,12 @@ class Projects_model extends CI_Model {
 	
 	function get_worklist_sprint($project_id){
 		$res = array();
-		$query = "SELECT id, sprint.project_id, start, end, ifnull(sum(works.points),0) as point from (select * from sprints where project_id=?) as sprint left join works on works.sprint=sprint.id  group by sprint.id, sprint.start, sprint.end";
+		$query = "SELECT id, sprint.project_id, start, end, ifnull(sum(works.points),0) as point, ifnull(sum(works.cost),0) as cost from (select * from sprints where project_id=?) as sprint left join works on works.sprint=sprint.id  group by sprint.id, sprint.start, sprint.end";
 		$result = $this->db->query($query, array($project_id));
 		$sprints = $result->result_array();
 		$sprints['general']['id'] = 0;
 		foreach($sprints as $sprint):
-			$query = "SELECT work_id, title, description, status, points from works where project_id=? and sprint=? order by sprint ASC, priority ASC, created_at DESC";
+			$query = "SELECT work_id, title, description, status, points, cost from works where project_id=? and sprint=? order by sprint ASC, priority ASC, created_at DESC";
 			$result = $this->db->query($query, array($project_id, $sprint['id']));
 			$res[$sprint['id']]=array();
 			$res[$sprint['id']]['list'] = $result->result_array();
@@ -87,10 +87,12 @@ class Projects_model extends CI_Model {
 				$res[$sprint['id']]['from'] = $sprint['start'];
 				$res[$sprint['id']]['to'] = $sprint['end'];
 				$res[$sprint['id']]['point'] = $sprint['point'];
+				$res[$sprint['id']]['cost'] = $sprint['cost'];
 			}else{
 				$res[$sprint['id']]['from'] = NULL;
 				$res[$sprint['id']]['to'] = NULL;
 				$res[$sprint['id']]['point'] = 0;
+				$res[$sprint['id']]['cost'] = 0;
 			}
 		endforeach;
 		return $res;

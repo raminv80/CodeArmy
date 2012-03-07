@@ -23,6 +23,7 @@ a, img {border:0;}
 label {}
 body { background:url(/public/images/bg.jpg);background-repeat:repeat;background-attachment:fixed;  margin : auto; font-family:'DINRegular'; padding:0 0 0 0;}
 a, a:visited { text-decoration:none ; color:#fff; }
+p a,p a:visited { text-decoration:none ; color:#ccf; }
 a:hover {color:#fc0}
 #push-down {width:100%; height:200px; display:block;}
 .row {padding: 0;margin: 0;float: left;width: 535px;}

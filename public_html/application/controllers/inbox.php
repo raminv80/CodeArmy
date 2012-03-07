@@ -42,10 +42,12 @@ class Inbox extends CI_Controller {
 	}
 	
 	function update_numbers(){
-		$bid_inbox=$this->inbox_model->get_bids($this->session->userdata('user_id'));
-		$message_inbox=$this->inbox_model->get_messages($this->session->userdata('user_id'));
-		$job_inbox=$this->inbox_model->get_jobs($this->session->userdata('user_id'));
-		echo json_encode(array($bid_inbox, $message_inbox, $job_inbox));
+		if($this->session->userdata('is_logged_in')){
+			$bid_inbox=$this->inbox_model->get_bids($this->session->userdata('user_id'));
+			$message_inbox=$this->inbox_model->get_messages($this->session->userdata('user_id'));
+			$job_inbox=$this->inbox_model->get_jobs($this->session->userdata('user_id'));
+			echo json_encode(array($bid_inbox, $message_inbox, $job_inbox));
+		}else{echo json_encode(array(array(), array(), array()));}
 	}
 	
 }
