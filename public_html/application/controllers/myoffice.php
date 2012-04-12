@@ -105,6 +105,7 @@ class Myoffice extends CI_Controller {
 		$this->view_data['leaderboard_time'] = $this->users_model->leaderboard_time(3);
 		$this->view_data['collaborators'] = $this->users_model->collaborators($user_id);
 		$this->view_data['last_badge'] = $this->skill_model->get_last_badge($user_id);
+		$this->view_data['all_skills'] = $this->skill_model->get_other_skills($user_id);
 		$this->view_data['my_skills'] = $this->skill_model->get_my_skills($user_id);
 		$this->load->view('Ajax_tab_1', $this->view_data);	
 	}
