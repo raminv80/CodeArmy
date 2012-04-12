@@ -177,6 +177,26 @@ class Projects_model extends CI_Model {
 		}
 	}
 	
+	function create_project_v5($creator_id){
+		$doc = array(
+			"project_name" => $this->input->post('title'),
+			"project_desc" => $this->input->post('description'),
+			"project_owner_id" => $creator_id,
+			"scrum_master_id" => $creator_id,
+			"deployer_id" => $creator_id,
+			"project_created_at" => date('Y-m-d H:i:s') 
+		);
+		
+		if($this->db->insert('project', $doc)) {
+			$query = "select max(project_id) as num from project";
+			$result = $this->db->query($query, array());
+			$data = $result->result_array();
+			return $data[0]['num'];	
+		} else {
+			return false;
+		}
+	}
+	
 	function edit_project($id) {
 		
 		$doc = array(
@@ -184,6 +204,21 @@ class Projects_model extends CI_Model {
 			"project_owner_id" => $this->input->post('project_owner'),
 			"scrum_master_id" => $this->input->post('scrum_master'),
 			"deployer_id" => $this->input->post('deployer'),
+			"project_desc" => $this->input->post('description')
+		); 
+		
+		if($this->db->update('project', $doc, array('project_id' => $id))) {
+			return $id;		
+		} else {
+			return false;
+		}
+		
+	}
+	
+	function edit_project_v5($id) {
+		
+		$doc = array(
+			"project_name" => $this->input->post('title'),
 			"project_desc" => $this->input->post('description')
 		); 
 		

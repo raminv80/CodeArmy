@@ -235,11 +235,12 @@
       <div id="comment-top" style="width:490px"></div>
       <div id="comment-mid" style=" padding: 20px 20px 55px 20px; width:450px">
         <h1 style="margin: -50px 0 0 -15px;" id="title">Add New Projects</h1>
-        <?php echo form_open_multipart('/', array('onsubmit'=>'return checkTerms();')); ?>
+        <?php if(isset($username)) echo form_open_multipart('/', array('onsubmit'=>'return checkTerms();')); ?>
           <table cellpadding="3" style="font-size:0.9em">
           	<tr>
             	<td colspan="2" style="color:yellow"><?php echo validation_errors().$this->session->flashdata('contact'); ?></td>
             </tr>
+            <?php /*ver4
             <tr>
               <td width="200px"><label>Name</label></td>
               <td><input id="form-home" type="text" name="name"></td>
@@ -251,15 +252,16 @@
             <tr>
               <td><label>Contact</label></td>
               <td><input id="form-home" type="text" name="contact"></td>
-            </tr>
+            </tr> */?>
             <tr>
               <td><label>Project Title</label></td>
-              <td><input id="form-home" type="text" name="title"></td>
+              <td><input <?php if(!isset($username)){?>disabled="disabled"<?php }?> id="form-home" type="text" name="title"></td>
             </tr>
             <tr>
               <td style="vertical-align:top"><label>Project Description</label></td>
-              <td><textarea id="form-home2" name="description"></textarea></td>
+              <td><textarea <?php if(!isset($username)){?>disabled="disabled"<?php }?> id="form-home2" name="description"></textarea></td>
             </tr>
+            <?php /* ver4
             <tr>
               <td><label>Payment Budget</label></td>
               <td><input id="form-home" type="text" name="budget"></td>
@@ -268,12 +270,19 @@
               <td><label>Dateline</label></td>
               <td><input id="form-home" type="text" name="dateline"></td>
             </tr>
+			*/?>
           </table>
-          <input type="hidden" name="action" value="contact" />
-          <input style="margin: 10px 0 0 5px;" type="checkbox" name="terms">
+          <?php if(isset($username)){?>
+          <input type="hidden" name="action" value="create_project" />
+          <?php }?>
+          <input <?php if(!isset($username)){?>disabled="disabled"<?php }?> style="margin: 10px 0 0 5px;" type="checkbox" name="terms">
           <span style="padding-left:5px; font-size:0.9em;">I agree to the <a href="#">terms and condition</a></span><br>
           <br>
+          <?php if(!isset($username)){?>
+          <a href="/login">Login to Create your Project</a>
+          <?php }else{?>
           <input id="submitform"  type="submit" value="Submit">
+          <?php }?>
         <?php echo form_close();?>
       </div>
       <div id="comment-bottom" style="width:490px"></div>

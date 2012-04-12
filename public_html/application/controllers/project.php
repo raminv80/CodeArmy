@@ -58,6 +58,49 @@ class Project extends CI_Controller {
 		}
 	}
 	
+	//ver5
+	function edit_project($id){
+		//$this->view_data['users'] = $this->users_model->list_users();
+		$user_id = $this->session->userdata('user_id');
+		$query = $this->projects_model->get_project_details($id);
+		$data = $query->result_array();
+		//print_r($data);
+		$this->view_data['project_data'] = $data[0];
+		if($this->view_data['project_data']['project_owner_id']==$user_id){
+			$this->view_data['window_title'] = "Edit Project ".$data[0]['project_name'];
+			$this->view_data['project_id'] = $id;
+			$this->load->library('ckeditor');
+			$this->load->library('ckFinder');
+			//configure base path of ckeditor folder 
+			  $this->ckeditor->basePath = base_url().'public/scripts/ckeditor/';
+			  $this->ckeditor-> config['toolbar'] = 'Full';
+			  $this->ckeditor->config['language'] = 'en';
+			  //configure ckfinder with ckeditor config 
+			  $this->ckfinder->SetupCKEditor($this->ckeditor,'/public/js/ckfinder/');
+			if($this->input->post('submit')) {
+				$this->load->library('form_validation');
+	
+				$this->form_validation->set_rules('title', 'Title', 'required');
+				$this->form_validation->set_rules('description', 'Description', 'required');
+			
+				if ($this->form_validation->run() == FALSE) {
+					$this->view_data['form_error'] = true;
+				} else {
+					$project_id = $this->projects_model->edit_project_v5($id);
+					if($project_id != false) {
+						redirect('project/'.$id);
+					} else { // - if there is a problem writing to db
+						redirect(base_url()."error");
+					}
+				}
+			}
+			
+			$this->load->view('project_edit_view_v5', $this->view_data);
+		}else{
+			redirect(base_url()."error");
+		}
+	}
+	
 	public function remove_comment($id){
 		$comment = $this->stories->get_comment($id);
 		if(count($comment)>0){

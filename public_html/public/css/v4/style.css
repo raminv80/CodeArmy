@@ -189,3 +189,14 @@ margin-right: 6px;
 	font-size:24px;
 	margin-bottom: 20px;
 }
+
+/* ver 5 css */
+
+.edit_project{
+	text-indent: -99999px;
+	display: block;
+	background: url(/public/images/vieweditdelete.png) -62px top;
+	width: 52px;
+	margin:20px 10px;
+	height:18px;
+}

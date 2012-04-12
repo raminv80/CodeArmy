@@ -30,11 +30,11 @@
                                                     	<?php if($my_skills){foreach($my_skills as $skill):?>
                                                         <div id="css" class="skill-chart-container">
                                                         	<?php
-																$last_point = $this->session->flashdata('skill-'.$skill['id']);
+																$claim = $skill['claim'];
 																$point = $skill['point'];
-																if($last_point){
+																if(($claim - $point) > 0){
 																	$point = $last_point;
-																	$add_point = $skill['point'] - $last_point;
+																	$add_point = $claim - $point;
 																}else{
 																	$add_point = 0;
 																}

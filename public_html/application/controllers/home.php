@@ -59,6 +59,23 @@ class Home extends CI_Controller {
 		$this->view_data['total_projects_cur_month'] = $this->projects_model->num_projects_month();
 		*/
 		
+		//ver5
+		if($this->input->post('action') == "create_project") {
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('title', 'Title', 'required');
+			$this->form_validation->set_rules('description', 'Description', 'required');
+			if ($this->form_validation->run() == FALSE) {
+				$this->view_data['form_error'] = true;
+			} else {
+				$project_id = $this->projects_model->create_project_v5($this->session->userdata('user_id'));
+				if($project_id != false) {
+					redirect('project/'.$project_id);
+				} else { // - if there is a problem writing to db
+					redirect(base_url()."error");
+				}
+			}
+		}
+		
 		//ver4
 		$this->load->helper('captcha');
 		$vals = array(
@@ -127,6 +144,7 @@ class Home extends CI_Controller {
 		//$this->load->view('home_view', $this->view_data);
 		$this->load->view('home_v4_view', $this->view_data);
 	}
+	
 	
 	function AjaxProjectSel(){
 		$project_id = $this->input->post('project_sel');
