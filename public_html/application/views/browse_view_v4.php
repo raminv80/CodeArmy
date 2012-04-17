@@ -63,9 +63,31 @@
     <div class="WP-searchbar">
       <?php echo form_open('/stories/browse' , array('class'=>'search-form', 'name' => "browse-tools-form")); ?>
       <label>Search Jobs</label>
-      <input class="hint_step1" id="input-search" type="text" name="search">
+      <input class="hint_step1" id="input-search" type="text" name="search" value="<?=$inputs['search']?>">
       <input id="search-button" name="Submit" type="button">
       <?php echo form_close(); ?>
+    </div>
+	<div id="hot_latest_tabs">
+    	<ul>
+            <li>
+            <?=form_open('/stories/browse')?>
+                <?php foreach($inputs as $index=>$input) if($input && !in_array($index, array("search","order"))):?>
+                <input type="hidden" name="<?=$index?>" value="<?=$input?>" />
+                <?php endif?>
+                <input type="hidden" name="order" value="latest" />
+                <a href="javascript: void(0)" class="submit <?php if($inputs['order']=="latest"){?>order_sel<?php }?>">Latest Jobs</a>
+            <?=form_close();?>
+            </li>
+            <li>
+            <?=form_open('/stories/browse')?>
+                <?php foreach($inputs as $index=>$input) if($input && !in_array($index, array("search","order"))):?>
+                <input type="hidden" name="<?=$index?>" value="<?=$input?>" />
+                <?php endif?>
+                <input type="hidden" name="order" value="hottest" />
+                <a href="javascript: void(0)" class="submit <?php if($inputs['order']=="hottest"){?>order_sel<?php }?>">Hottest Jobs</a>
+            <?=form_close();?>
+            </li>
+        </ul>
     </div>
     <div class="WP-contract-placeholder">
       <div id="heading"><span id="title">Deadline</span><span style="width:620px;" id="title"><a href="/stories/browse/userstory">Job Title</a></span> <span style="width:100px;" id="title"><a href="/stories/browse/bids">bids</a></span> <span style="width:80px;" id="title"><a href="/stories/browse/prize">prize</a></span></div>

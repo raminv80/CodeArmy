@@ -138,12 +138,17 @@
 		});
 	});
 	var test;
-	
+
 	$('a.submit').click(function(){
 		test = $(this);
 		var form = $(this).parents('form');
 		form.submit();
 	});
+	
+	$('a.add_skill_show').click(function(){
+		$(this).html('+ Add').next('div').slideToggle();
+	});
+	
 	$('#btnBid').click(function() {
 	  $('.hint').hide();
 	  show_loading();

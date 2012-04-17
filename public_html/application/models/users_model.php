@@ -370,7 +370,7 @@ class Users_model extends CI_Model {
 	
 	function reset_pass_notify($username){
 		$user = $this->get_user($username,'username');
-		if($user->num_rows()>0){
+		if($user && $user->num_rows()>0){
 			$user = $user->result_array();
 			$user = $user[0];
 			$doc = array(
@@ -432,7 +432,7 @@ class Users_model extends CI_Model {
 	}
 	
 	function notify($user_id, $subject, $message, $category = NULL, $shor_message="", $target_id = NULL){		
-			ini_set('display_error',0);
+			ini_set('display_error',1);
 			error_reporting('E_ALL');
 			$q = $user_id;
 			
@@ -485,7 +485,7 @@ class Users_model extends CI_Model {
 			{
 			   echo "Message could not be sent. <p>";
 			   echo "Mailer Error: " . $mail->ErrorInfo;
-			   exit;
+			   exit; die();
 			}
 			
 	}

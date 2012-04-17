@@ -49,6 +49,17 @@
 		   });
  		});
     </script>
+<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-30934262-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+</script>
     </head>
     <body>
 <header>
@@ -58,8 +69,8 @@
           <div id="WP-navigation">
         <ul>
               <li <?php if($page_is=='Home'){?>class="active"<?php }?>><a href="<?=($page_is=='Home')? '#pitch' : '/'?>">home</a></li>
-              <li <?php if($page_is=='Browse'){?>class="active"<?php } if($page_is=='Home'){?>class="hint_dev_step1"<?php }?>><a href="/stories/browse">browse</a></li>
-              <li <?php if($page_is=='Browse'){?>class="active"<?php } if($page_is=='Home'){?>class="hint_dev_step4"<?php }?>><a href="/myoffice">Myoffice</a></li>
+              <li <?php if($page_is=='Browse'){?>class="active"<?php } if($page_is=='Home'){?>class="hint_dev_step1"<?php }?>><a href="/stories/browse">browse jobs</a></li>
+              <li <?php if($page_is=='Browse'){?>class="active"<?php } if($page_is=='Home'){?>class="hint_dev_step4"<?php }?>><a href="/myoffice">Dashboard</a></li>
               <li <?php if($page_is=='About'){?>class="active"<?php }?>><a href="/about">about</a></li>
               <!--<li <?php if($page_is=='Leaderboard'){?>class="active"<?php }?>><a href="#leaderboard">Leaderboard</a></li>-->
               <li class="last <?php if($page_is=='contact'){?>active<?php }?>"><a href="/contact">Contact US</a></li>
@@ -74,7 +85,7 @@
               <li><a href="/login/logout">Logout</a></li>
             </ul>
         <ul>
-              <li><a href="/myoffice">My Office</a></li>
+              <li><a href="/myoffice">Dashboard</a></li>
             </ul>
         <ul>
               <li>Edit <a href="/profile/edit">Profile</a> | <a href="/profile/edit_password">Password</a></li>
@@ -93,6 +104,10 @@
           </li>
             </ul>
       </div>
+          <?php }else{?>
+          <div id="header-login-register" style="float:right; margin: 6px">
+          	<a href="/login">Login</a> | <a href="/signup">Register</a>
+          </div>
           <?php }?>
         </div>
   </div>

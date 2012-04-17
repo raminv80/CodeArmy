@@ -99,7 +99,7 @@ class Skill_model extends CI_Model {
 	}
 	
 	function spend_claim_point($user_id, $point){
-		$sql = "select claims from users where user_id = ? and claims>?";
+		$sql = "select claims from users where user_id = ? and claims>=?";
 		$res = $this->db->query($sql , array($user_id, $point));
 		if($res->num_rows()>0){
 			$sql = "UPDATE users set claims = (claims - ?) WHERE user_id = ?";

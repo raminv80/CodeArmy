@@ -118,22 +118,22 @@
         </div>        
         
 		<div class="new-story_field">
-			<label for="points">Complexity Points</label>
+			<label for="points">Hours required (complexity points)</label>
 			<select name="points">
-			<option value="1" <?php if($story_data['points'] == 1) { echo "selected"; }?>>1 point</option>
-			<option value="2" <?php if($story_data['points'] == 2) { echo "selected"; }?>>2 points</option>
-			<option value="3" <?php if($story_data['points'] == 3) { echo "selected"; }?>>3 points</option>
-			<option value="5" <?php if($story_data['points'] == 5) { echo "selected"; }?>>5 points</option>
-			<option value="8" <?php if($story_data['points'] == 8) { echo "selected"; }?>>8 points</option>
-			<option value="13" <?php if($story_data['points'] == 13) { echo "selected"; }?>>13 points</option>
-			<option value="20" <?php if($story_data['points'] == 20) { echo "selected"; }?>>20 points</option>
-			<option value="40" <?php if($story_data['points'] == 40) { echo "selected"; }?>>40 points</option>
+			<option value="1" <?php if($story_data['points'] == 1) { echo "selected"; }?>>1 hour</option>
+			<option value="2" <?php if($story_data['points'] == 2) { echo "selected"; }?>>2 hours</option>
+			<option value="3" <?php if($story_data['points'] == 3) { echo "selected"; }?>>3 hours</option>
+			<option value="5" <?php if($story_data['points'] == 5) { echo "selected"; }?>>5 hours</option>
+			<option value="8" <?php if($story_data['points'] == 8) { echo "selected"; }?>>8 hours</option>
+			<option value="13" <?php if($story_data['points'] == 13) { echo "selected"; }?>>13 hours</option>
+			<option value="20" <?php if($story_data['points'] == 20) { echo "selected"; }?>>20 hours</option>
+			<option value="40" <?php if($story_data['points'] == 40) { echo "selected"; }?>>40 hours</option>
 			</select>
 		</div>
 		
 		<div class="new-story_field">
 			<label for="cost">Cost</label>
-			RM <input type="text" name="cost" style="float:none;" value="<?php echo $story_data['cost']; ?>" placeholder="450" id="points" />
+			<span style="color:white">RM </span><input type="text" name="cost" style="float:none;" value="<?php echo $story_data['cost']; ?>" placeholder="450" id="points" />
 		</div>
 		
 		<div class="new-story_field">

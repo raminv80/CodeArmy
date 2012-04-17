@@ -77,7 +77,7 @@
 										<div class="skills-box">
 											<div class="holder">
 												<div class="frame">
-                                                	<div>Points to spend: <?=$me['claims']?> pts</div>
+                                                	<div id="remaining_points">Skill Points: <?=$me['claims']?></div>
 													<dl>
                                                     	<?php if($my_skills){foreach($my_skills as $skill):?>
                                                         <dt><span style="text-shadow: 0 1px 10px white;font-size: 20px;font-weight: lighter; background:none; text-indent:0;"><?php echo $skill['name'];?></span></dt>
@@ -151,12 +151,14 @@
                                                         <?php }?>
                                                     </div>
 												</div>
-                                                <div class="frame">
+                                                <div class="frame" style="padding:0">
                                                 	<?php if(!$my_skills){?>
                                                 	<p>Skill points can be acheieved by finishing jobs but that's not the only way to show what you are good at. You have been rewarded <?=$me['claims']?> points for claiming your skills. Use them wise and tell the world what you are good at! </p>
                                                     <?php }?>
-                                                    <?php echo form_open('/myoffice', array('name'=> 'add_skill'))?>
-                                                    <p>Add 
+                                                    <div id="add_skill"> 
+                                                    <?php echo form_open('/myoffice', array('name'=> 'add_skill', 'style'=>'margin:0;'))?>
+                                                    	<a href="javascript: void(0)" class="add_skill_show">+ Add a Skill</a>
+                                                        <div style="display:none">
                                                     	<select name="skill" >
                                                             <optgroup label="Hard Skills">
                                                             	<?php foreach($all_skills as $skill)if($skill['type']=="hard"):?>
@@ -171,8 +173,9 @@
                                                         </select>
                                                     Skill to the skill set
                                                     <input type="submit" value="Go" name="add_skill" />
-                                                    .</p>
+                                                    </div>
                                                     <?php echo form_close();?>
+                                                    </div>
                                                 </div>
 											</div>
 										</div>

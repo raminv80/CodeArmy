@@ -315,7 +315,7 @@
                 </div>
               </div>
               <div class="row">  
-				<a class="forgot" href="http://ver2.workpad.my/login/recovery">Forgot your password?</a>
+				<a class="forgot" href="http://<?=$_SERVER['HTTP_HOST']?>/login/recovery">Forgot your password?</a>
                 <input class="reg-submit" name="submit" value="Submit" type="submit">
               </div>
               <div class="clear"></div>
@@ -355,11 +355,11 @@
                                 <input id="password3" name="passconf" value="" type="password">
                               </div>
                             </div>
-							<div class="captcha">
+							<div class="row captcha" style="margin:0px 0 0 -10px;">
                               <?=$captcha;?>
-                              <input id="captcha" name="captcha" type="text" value=""  />
+                              <input id="captcha" name="captcha" type="text" maxlength="8" value="" style="font-size: 16px;line-height: 30px;height: 23px;width:80px; position:relative; top:-5px; "  />
 							</div>
-                            <input class="reg-submit" name="submit" value="Submit" type="submit">
+                            <input class="reg-submit" name="submit" value="Submit" type="submit" style="margin:0 55px 0 0">
                 <?php echo form_close(); ?>
     </div>
 </div>
