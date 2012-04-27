@@ -77,7 +77,7 @@ class Story extends CI_Controller {
 			$this->view_data['is_my_work'] = true;
 	
 			$this->view_data['work_data'] = $data[0];
-			
+			$this->view_data['subscribed'] = $this->stories->subscribed($user_id,$work_id);
 			// get project
 			//$q_pid = $this->stories->get_project_name($data[0]['project_id']);
 			//$r_pid = $q_pid->result_array();
@@ -316,6 +316,71 @@ class Story extends CI_Controller {
 		$this->notify(noreply_email,email_name, $to, $cc, $subject, $message, 'message', $to_id, $short_message,$this->session->userdata('user_id'));
 		$this->view_data['signup_success'] = true;
 		redirect("/story/".$this->input->post('story_id'));
+	}
+	
+	function comments_v5() {
+		$this->check_authentication();
+		
+		//any logged user can comment
+		$path = "";
+		if($this->input->post('has_file')=='has_file'){
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'zip|gif|jpeg|png|jpg';
+			$config['max_size']	= '10240';
+			$config['overwrite'] = false;
+			$config['encrypt_name'] = true;
+			$config['remove_spaces'] = true;
+			$this->load->library('upload', $config);
+			if($this->upload->do_upload('files')){
+				$uploaded = $this->upload->data();
+				$path = $config['upload_path'].$uploaded['file_name'];
+			}else{
+				$path = "";
+			}
+		}
+		$comment_id = $this->stories->create_comment($path);
+		
+		//email all ppl involved.
+		$work = $this->stories->get_work($this->input->post('story_id'));
+		$work = $work->result_array();
+		$wh = $this->stories->get_work_horse($this->input->post('story_id'));
+		$po = $this->stories->get_product_owner($this->input->post('story_id'));
+		$sm = $this->stories->get_scrum_master($this->input->post('story_id'));
+		$cn = $this->stories->get_comment_emails($this->input->post('story_id'), $this->session->userdata('user_id'));
+		$work_id = $this->input->post('story_id');
+		$target = array();
+		$target_ids = array();
+		if(count($wh)>0){if($wh[0]['email']!=$this->session->userdata('user_id')){if($this->stories->subscribed($wh[0]['user_id'],$work_id)){$target[] = $wh[0]['email']; $target_ids[] = $wh[0]['user_id'];}}}
+		if(count($po)>0){if($this->stories->subscribed($po[0]['user_id'],$work_id)){$target[] = $po[0]['email']; $target_ids[] = $po[0]['user_id'];}}
+		if(count($sm)>0){if($this->stories->subscribed($sm[0]['user_id'],$work_id)){$target[] = $sm[0]['email']; $target_ids[] = $sm[0]['user_id'];}}
+		foreach($cn as $usr){ if($this->stories->subscribed($usr['user_id'],$work_id)){$target[] = $usr['email']; $target_ids[] = $usr['user_id'];}}
+		$to=array_unique($target);
+		$to_id = array_unique($target_ids);
+		$cc = admin_email;
+		$subject = "Workpad | Comment on ".$work[0]['title'];
+		$message = "<p>User <a href='http://".$_SERVER['HTTP_HOST']."/user/".$this->session->userdata('user_id')."'>".$this->session->userdata('username')."</a> placed a comment on ".us_dev." \'<a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>".$work[0]['title']."</a>\':</p><p>".substr(strip_tags($this->input->post('comments')),0,500)."<br />(to read more <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>click here</a>)</p>";
+		$short_message = "<p><a href='http://".$_SERVER['HTTP_HOST']."/user/".$this->session->userdata('user_id')."'>".ucfirst($this->session->userdata('username'))."</a> commented on <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>".$work[0]['title']."</a>: \"".substr(strip_tags($this->input->post('comments')),0,500)."\"</p>";
+		if(count($to_id)>0)
+			$this->notify(noreply_email,email_name, $to, $cc, $subject, $message, 'message', $to_id, $short_message,$this->session->userdata('user_id'));
+		$this->view_data['signup_success'] = true;
+		
+		//pusher
+		require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+		$user = $this->users_model->get_user($this->session->userdata('user_id'));
+		$user = $user->result_array(); $user = $user[0];
+		$pusher = new Pusher('0aacc348a446e96739e2', 'f63f88767155269e4c98', '18954');
+		$data = array(
+			'comment'=>$this->input->post('comments'), 
+			'user_id'=>$this->session->userdata('user_id'), 
+			'file' => $path, 
+			'date' => date('d m Y'), 
+			'avatar'=>$this->users_model->get_avatar($this->session->userdata('user_id')), 
+			'username' => $user['username'], 
+			'title' => $this->users_model->getWorkTitle($this->session->userdata('user_id'), $this->input->post('story_id')),
+			'comment_id' => $comment_id,
+			'story_id' => $work[0]['work_id']
+		);
+		$pusher->trigger('test_channel', 'new_comment_'.$work[0]['work_id'], $data);
 	}
         
     function bid_remove($id) {
@@ -823,7 +888,8 @@ class Story extends CI_Controller {
 						"category" => $category
 					);
 				}
-				$this->db->insert_batch('inbox',$data);
+				if(count($data)>0)
+					$this->db->insert_batch('inbox',$data);
 			}elseif(!is_null($to_id)){
 				// send to inbox
 				$data = array(
@@ -843,6 +909,74 @@ class Story extends CI_Controller {
 			   echo "Message could not be sent. <p>";
 			   echo "Mailer Error: " . $mail->ErrorInfo;
 			   exit;
+			}
+		}
+		
+		private function email($from,$fromName, $to, $cc, $subject, $message, $category=NULL, $to_id = NULL, $shor_message = "", $target_id = NULL){
+			require_once(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
+			$mail = new PHPMailer();
+			$mail->IsSMTP();                                      // set mailer to use SMTP
+			$mail->SMTPAuth   = true;                  // enable SMTP authentication
+			//$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
+			$mail->Host       = "mail.vakilian.net";      // sets GMAIL as the SMTP server
+			//$mail->Port       = 110;                   // set the SMTP port for the GMAIL server
+			$mail->Username = "noreply@vakilian.net";  // SMTP username
+			$mail->Password = "work123"; // SMTP password
+			//$mail->SMTPDebug  = 1;
+			$mail->SetFrom($from, $fromName);
+			if(is_array($to)){
+				foreach($to as $too)$mail->AddAddress($too);
+			}else{
+				$mail->AddAddress($to);
+			}
+			//$mail->AddReplyTo("info@example.com", "Information");
+			
+			$mail->WordWrap = 50;                                 // set word wrap to 50 characters
+			//$mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+			//$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+			$mail->IsHTML(true);                                  // set email format to HTML
+			
+			$mail->Subject = $subject;
+			$mail->Body    = $message;
+			$mail->AltBody = $message;
+			
+			if(!$mail->Send())
+			{
+			   echo "Message could not be sent. <p>";
+			   echo "Mailer Error: " . $mail->ErrorInfo;
+			   exit;
+			}
+		}
+		
+		private function inbox($from,$fromName, $to, $cc, $subject, $message, $category=NULL, $to_id = NULL, $shor_message = "", $target_id = NULL){
+			if(is_array($to_id)){
+				// send to inbox
+				$data = array();
+				foreach($to_id as $user_id){
+					$data[] = array(
+						"user_id" => $user_id,
+						"title" => $subject,
+						"target_id" => $target_id,
+						"message" => ($shor_message=="")?$message:$shor_message,
+						"status" => 'unread',
+						"created_at" => date('Y-m-d'),
+						"category" => $category
+					);
+				}
+				if(count($data)>0)
+					$this->db->insert_batch('inbox',$data);
+			}elseif(!is_null($to_id)){
+				// send to inbox
+				$data = array(
+					"user_id" => $to_id,
+					"target_id" => $target_id,
+					"title" => $subject,
+					"message" => ($shor_message=="")?$message:$shor_message,
+					"status" => 'unread',
+					"created_at" => date('Y-m-d'),
+					"category" => $category
+				);
+				$this->db->insert('inbox',$data);
 			}
 		}
 }

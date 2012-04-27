@@ -236,6 +236,12 @@ class Projects_model extends CI_Model {
 		return $result;
 	}
 	
+	function get_project_details_v5($id){
+		$query = "select project.*, (select count(1) from bids, works where works.work_id=bids.work_id and works.project_id = ?) as bids, 0 as comments from project where project_id = ?";
+		$result = $this->db->query($query, array($id, $id));
+		return $result;
+	}
+	
 	//get all categories for selected project id
 	function get_categories($project_id){
 		$query = "select * from categories where project_id = ? or ?=0";

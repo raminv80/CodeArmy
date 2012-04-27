@@ -129,6 +129,27 @@ class Users_model extends CI_Model {
 			}		
 	}
 	
+	function get_avatar($user_id){
+		$profile = $this->get_profile($user_id);
+		$user = $this->get_user($user_id);
+		$user = $user->result_array();
+		$user = $user[0];
+		$profile = $profile->result_array();
+		$profile = $profile[0];
+		return ($profile['avatar'])? '/public/'.$profile['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $user['email'] ) ) );	
+	}
+	
+	function getWorkTitle($user_id, $story_id){
+		$res = $this->db->get_where('works', array('work_id' => $story_id));
+		$res = $res->result_array();
+		if(strcmp($res[0]['owner'], $user_id)==0) return 'Product owner';
+		$user = $this->get_user($user_id);
+		$user = $user->result_array();
+		$user = $user[0];
+		if($user['role']=='admin') return 'Admin';
+		return 'lvl '.$this->gamemech->get_level($user['exp']);
+	}
+	
 	//update profile
 	function update_profile($user_id,$avatar) {
 		//structure the profile data
@@ -382,7 +403,7 @@ class Users_model extends CI_Model {
 			);
 			$this->notify($user['user_id'],'Password Reset',"We recieved a request regarding reseting your password. If you wish to proceed with this action click on following link: <a href='".base_url()."login/recovery/".$doc['code']."'>reset password</a>");
 			$this->db->insert('actions', $doc);
-			return "An email is sent to you containing furthur instuctions...";
+			return "An email is sent to you containing further instuctions...";
 		}else return "Uername doesn't exist!";
 	}
 	
@@ -398,7 +419,7 @@ class Users_model extends CI_Model {
 				$user = $user[0];
 				$newPass = $this->createRandomPassword();
 				$sql = "update users set secret=? where user_id=?";
-				$this->notify($user['user_id'], 'Your Password Reseted',"Your password on Workpad is reseted to: ".$newPass);
+				$this->notify($user['user_id'], 'Your Password is Reseted',"<p>Hi,</p><p>Your password on <a href='http://workpad.my'>Workpad</a> is reseted to: ".$newPass."</p><p>Please <a href='http://workpad.my/login'>click here to go to login page</a>.</p><p>Regards.</p>");
 				$this->db->query($sql, array(md5($newPass),$user['user_id']));
 				return "Dear ".$user['username'].", an email is sent to you containing your new password.";
 			}else return "Error: Invalid Code!";
@@ -429,6 +450,16 @@ class Users_model extends CI_Model {
 		$sql = "SELECT * from users where user_status='enable'";
 		$res=$this->db->query($sql);
 		return $res->result_array();
+	}
+	
+	function subscribe($email, $ip, $agent){
+		$data = array(
+			'email' => $email,
+			'ip' => $ip,
+			'agent' => $agent
+		);
+		
+		$this->db->insert('subscription', $data);
 	}
 	
 	function notify($user_id, $subject, $message, $category = NULL, $shor_message="", $target_id = NULL){		

@@ -9,9 +9,9 @@
             <div class="heading"> <strong class="title">Reset</strong> </div>
             <?php echo form_open('login/recovery' , array('class'=>'login-form')); ?>
             <fieldset style="border:0;">
-              <?php if(isset($login_error)&& $login_error!=""): ?>
+              <?php if(isset($login_error)&& $login_error!=""){ ?>
               <div class="row"> <span style="color:#F60"><?php echo $login_error;?></span> </div>
-              <?php endif; ?>
+              <?php }else{ ?>
               <div class="row">
                 <label for="username">Username</label>
                 <div class="text">
@@ -24,6 +24,7 @@
                                                     -->
                 <input type="submit" class="submit" value="Reset Pass" name="submit" />
               </div>
+              <?php }?>
             </fieldset>
             <?php echo form_close(); ?>
           </div>

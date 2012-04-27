@@ -68,8 +68,9 @@
           </div>
         </div>
         <div class="row" style="margin: -5px 0 0 10px;">
-          <div class="share-holder"><a name="fb_share" share_url="www.workpad.my"></a></div>
-          <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script> 
+          <div class="share-holder"><span class='st_facebook_hcount' displayText='Facebook'></span>
+<span class='st_twitter_hcount' displayText='Tweet'></span>
+<span class='st_linkedin_hcount' displayText='LinkedIn'></span></a></div>
           <a href="/leaderboard" class="show">show full leaderboard</a> </div>
       </div>
     </div>

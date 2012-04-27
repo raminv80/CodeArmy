@@ -149,7 +149,7 @@ font-size: 14px;}
     <div id="WP-nav-content" style="width: 575px;; border-left:0;">
       <div style="padding: 20px 0 0 10px;">
         <div class="row">
-          <input name="file_upload" type="file" id="submit-zip" value="browse">
+          <input accept="application/x-zip-compressed" name="file_upload" type="file" id="submit-zip" value="browse">
           <input name="git" type="text" id="submit-file" onclick="this.value='';" onSetFocus="this.select()" value="Github link...">
           <input name="link" type="text" id="submit-file" onclick="this.value='';" value="Add link to file...">
         </div>
@@ -580,7 +580,7 @@ width: 210px;}
         <li><a href="/admin">Admin</a></li>
         <?php }?>
       </ul>
-      <p>&copy;MOTIONWORKS SDN BHD 2011</p>
+      <p>&copy;MOTIONWORKS SDN BHD 2011 <?php if($_SERVER['HTTP_HOST']=='ver2.workpad.my'){?>(page rendered in {elapsed_time} seconds)<?php }?></p>
     </div>
   </div>
   <div id="modalDiv"></div>

@@ -12,6 +12,7 @@
     <link href="/public/css/v4/workpad.css" media="all" rel="stylesheet" type="text/css">
     <link href="/public/css/v4/sidemenu.css" media="all" rel="stylesheet" type="text/css">
     <link href="/public/css/v4/jquery.countdown.css" media="all" rel="stylesheet" type="text/css">
+    <link href="/public/css/v4/tipsy.css" media="all" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="/public/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
     <link type="text/css" href="/public/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
     <!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="css/ie.css" /><![endif]-->
@@ -34,12 +35,14 @@
     <script type="text/javascript" src="/public/js/v4/jquery.scrollTo-1.4.2-min.js"></script>
     <script type="text/javascript" src="/public/js/v4/jquery.localscroll-1.2.7-min.js"></script>
     <script type="text/javascript" src="/public/js/v4/jquery.colorbox.js"></script>
+    <script type="text/javascript" src="/public/js/v4/jquery.tipsy.js"></script>
     <script type="text/javascript" src="/public/js/v4/jquery.easing.1.3.js"></script>
     <script type="text/javascript" src="/public/js/v4/jquery.mousewheel.js"></script>
     <script type="text/javascript" src="/public/js/v4/jquery.mCustomScrollbar.js"></script>
     <script type="text/javascript" src="/public/js/v4/sidemenu.js"></script>
     <script type="text/javascript" src="/public/js/v4/main.js"></script>
     <script type="text/javascript" src="/public/js/v4/jquery.countdown.min.js"></script>
+    <script src="http://js.pusher.com/1.11/pusher.min.js" type="text/javascript"></script>
     <script type="text/javascript">
     	$(document).ready(function(){
 		   $('.WP-profile-header').hover(function(){
@@ -60,6 +63,8 @@
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  })();
 </script>
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "2c50b9f5-76da-423d-bc11-bdb02b395f83"}); </script>
     </head>
     <body>
 <header>
@@ -347,7 +352,8 @@ $header_tasks = $query->result_array();
                   <span style="float:right; color:#999;"><?=$str?></span>
                 </p>
             <div class="desc">
-                  <?=$message['message']?>
+                  <?=$message['message']?><br />
+                  <a style="float:right" href="http://".$_SERVER['HTTP_HOST']."/story/<?php echo substr($message['message'], strpos($message['message'], "http://".$_SERVER['HTTP_HOST']."/story/")+strlen("http://".$_SERVER['HTTP_HOST']."/story/"), 13); ?>#comment-top">Reply in Discussion board</a>
                   <span style="float:right; color:#999;"><?=$str?></span>
                 </div>
           </div>

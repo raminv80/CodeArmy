@@ -39,7 +39,7 @@ margin: -18px 0 0 -100px;display:block; }
 .WP-header-placeholder #WP-navigation { float:left; background:url(/public/images/WP-navigation.png); margin: 0 0 0 0; width: 495px; height:32px; }
 .WP-header-placeholder #WP-navigation ul {margin: 0 0 0 38px;
 padding: 0;}
-.WP-header-placeholder #WP-navigation li {text-transform:uppercase;font-family:'DINMediumAlternate';list-style:none; display:inline-block;border-top:0; border-bottom:0; border-right:0; -moz-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Firefox */-webkit-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Opera */border-image:url(/public/images/nav-border.png) 5 10 stretch; font-size:14px;padding: 6px 10px 5px 10px;color: white; }
+.WP-header-placeholder #WP-navigation li {text-transform:uppercase;font-family:'DINMediumAlternate';list-style:none; display:inline-block;border-top:0; border-bottom:0; border-right:0; -moz-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Firefox */-webkit-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Opera */border-image:url(/public/images/nav-border.png) 5 10 stretch; font-size:14px;padding: 6px 6px 5px 6px;color: white; }
 .WP-header-placeholder #WP-navigation li.last {border-right:1px solid #000;text-transform:uppercase;font-family:'DINMediumAlternate';list-style:none; display:inline-block;border-top:0; border-bottom:0;  -moz-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Firefox */-webkit-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/nav-border.png) 5 10 stretch; /* Opera */border-image:url(/public/images/nav-border.png) 5 10 stretch; font-size:14px;padding: 6px 15px 5px 15px;color: white; }
 .WP-header-placeholder #WP-navigation li a {padding:0;margin:0}
 .WP-header-placeholder #WP-navigation li:hover { padding-bottom:8px;background:url(/public/images/hover.png);}
@@ -204,7 +204,9 @@ height: 34px;display:block}
 .WP-main .WP-comment-placeholder #comments-text { max-height: 100px;
 max-width: 540px;margin-left:5px;width:540px; height:80px;}
 .WP-main .WP-comment-placeholder #comments-submit {float: left;
-margin-top: -4px; margin-left:5px;background:url(/public/images/submit-comment.png); border:0; width:546px; height:22px; text-indent:-999px;}
+margin-top: -4px; margin-left:5px;background:url(/public/images/submit-comment.png); border:0; width:546px; height:22px; text-indent:-999px; cursor:pointer}
+.WP-main .WP-comment-placeholder #comments-submit:hover {float: left;
+margin-top: -4px; margin-left:5px;background:url(/public/images/submit-comment-hover.png); border:0; width:546px; height:22px; text-indent:-999px; cursor:pointer}
 .WP-main .WP-comment-placeholder #comments-section { padding:25px 0 10px 0;font-family:'DINRegular';color:#fff;  }
 .WP-main .WP-comment-placeholder  #comments-section table, .WP-main .WP-allbid-placeholder #allbid-section table  {padding: 10px 0 10px 0;-moz-border-image:url(/public/images/commentborder.png) 30 30 stretch; /* Firefox */-webkit-border-image:url(/public/images/commentborder.png) 5 5 stretch; /* Safari and Chrome */-o-border-image:url(/public/images/commentborder.png) 30 30 stretch; /* Opera */border-image:url(/public/images/commentborder.png) 30 30 stretch; border-left:0; border-right:0; border-top:0;}
 .WP-main .WP-comment-placeholder #comments-section td {vertical-align:bottom}

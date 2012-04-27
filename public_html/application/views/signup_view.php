@@ -94,7 +94,7 @@ color: white;
                 </div>
               </div>
               <div class="row">
-              Please re-eneter following phasrase...
+              Please re-enter following Phrase...
               </div>
               <div class="row">
                 <label for="captcha"><?=$captcha;?></label>

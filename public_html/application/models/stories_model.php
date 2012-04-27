@@ -108,7 +108,7 @@ class Stories_model extends CI_Model {
 		foreach($data as $priority=>$work_id){
 			if(trim($work_id)!=""){
 				$doc = array("priority" => $priority, "sprint" => $sprint_id);
-				$whr = array('work_id' => substr($work_id,5,strlen($work_id)-5), 'project_id'=> $project_id, 'creator'=> $creator_id);
+				$whr = array('work_id' => substr($work_id,5,strlen($work_id)-5), 'project_id'=> $project_id);
 				$this->db->update('works', $doc, $whr);
 				if($this->db->affected_rows()>0)$updates++;
 			}
@@ -116,7 +116,7 @@ class Stories_model extends CI_Model {
 		$doc = array("start" => $date_from, "end" => $date_to);
 		$whr = array('project_id'=> $project_id, 'id'=> $sprint_id);
 		$this->db->update('sprints', $doc, $whr);
-		return $sprint_id;
+		return $updates;
 	}
 	
 	// - create new stories
@@ -452,12 +452,39 @@ class Stories_model extends CI_Model {
 			'comment_body' => $this->input->post('comments')
 		);
 		if($file!="")$doc['comment_file'] = $file;
-		return $this->db->insert('comments', $doc);
+		$this->db->insert('comments', $doc);
+		return $this->db->insert_id();
 	}
 	
 	function delete_comment($id){
+		$res = $this->get_comment($id);
+		if($res && count($res)>0){
+			//delete file?
+			if($res[0]['comment_file'] && $res[0]['comment_file']!=""){
+				unlink($res[0]['comment_file']);
+			}
+		}
 		$sql = "delete from comments where comment_id = ?";
 		$this->db->query($sql, array($id));	
+	}
+	
+	function subscribe_comment($user_id, $story_id){
+		$doc = array(
+			'user_id' => $user_id,
+			'work_id' => $story_id
+		);
+		$this->db->insert('subscription_comment', $doc);
+	}
+	
+	function subscribed($user_id, $work_id){
+		$sql = "SELECT * FROM subscription_comment WHERE user_id=? and work_id = ?";
+		$res = $this->db->query($sql, array($user_id, $work_id));	
+		return $res->num_rows>0;
+	}
+	
+	function unsubscribe_comment($user_id, $story_id){
+		$sql = "DELETE from subscription_comment where user_id = ? and work_id=?";
+		$this->db->query($sql, array($user_id, $story_id));	
 	}
 	
 	function make_bid() {

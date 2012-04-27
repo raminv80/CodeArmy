@@ -81,7 +81,7 @@
 													<dl>
                                                     	<?php if($my_skills){foreach($my_skills as $skill):?>
                                                         <dt><span style="text-shadow: 0 1px 10px white;font-size: 20px;font-weight: lighter; background:none; text-indent:0;"><?php echo $skill['name'];?></span></dt>
-														<?php if($skill['point']>$skill['claim']){ $color = 'green'; $point = $skill['point']; }else{ $color = 'yellow'; $point = $skill['claim']; }?>
+														<?php $color = 'green'; $point = $skill['point'];?>
 														<dd><span style="color:<?=$color?>"><?=$point?></span></dd>
                                                         <?php endforeach;}else{?>
 														<?php /*<dt><span>&nbsp;</span></dt>
@@ -119,6 +119,7 @@
 																if($add_point<0)$add_point=0;
 																if($add_point>100)$add_point=100;
 																
+																$add_point = 0;
 															?>
                                                         	<div class="skill-chart" style="width:<?php echo $point;?>%"></div>
                                                             <div class="skill-chart-add" style="width:<?php echo $add_point;?>%"></div>

@@ -111,6 +111,33 @@ class Project extends CI_Controller {
 		redirect("/story/".$comment[0]['story_id']);
 	}
 	
+	public function remove_comment_v5($id){
+		$comment = $this->stories->get_comment($id);
+		if(count($comment)>0){
+			if(($comment[0]['username']==$this->session->userdata('username'))||($this->session->userdata('role')=='admin')){
+				$this->stories->delete_comment($id);
+				//pusher
+				require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+				$pusher = new Pusher('0aacc348a446e96739e2', 'f63f88767155269e4c98', '18954');
+				$data = array(
+					'comment'=> $id,
+					'story_id' => $comment[0]['story_id']
+				);
+				$pusher->trigger('test_channel', 'remove_comment_'.$comment[0]['story_id'], $data);
+			}
+		}
+	}
+	
+	public function subscribe_comment_v5(){
+		if($this->session->userdata('is_logged_in')){
+			if($this->input->post('subscribe')==1){
+				$this->stories->subscribe_comment($this->session->userdata('user_id'), $this->input->post('story_id'));	
+			}else{
+				$this->stories->unsubscribe_comment($this->session->userdata('user_id'), $this->input->post('story_id'));	
+			}
+		}
+	}
+	
 	public function management($id=0){
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['project_owner'] = $this->projects_model->is_project_owner($user_id, $id);

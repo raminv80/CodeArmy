@@ -9,7 +9,7 @@
 													<dl>
                                                     	<?php if($my_skills){foreach($my_skills as $skill):?>
                                                         <dt><span style="text-shadow: 0 1px 10px white;font-size: 20px;font-weight: lighter; background:none; text-indent:0;"><?php echo $skill['name'];?></span></dt>
-                                                        <?php if($skill['point']>$skill['claim']){ $color = 'green'; $point = $skill['point']; }else{ $color = 'yellow'; $point = $skill['claim']; }?>
+                                                        <?php $color = 'yellow'; $point = $skill['claim'];?>
 														<dd><span style="color:<?=$color?>"><?=$point?></span></dd>
                                                         <?php endforeach;}else{?>
                                                         <?php /*
@@ -34,24 +34,25 @@
                                                         <div id="css" class="skill-chart-container">
                                                         	<?php
 																$point = $skill['point'];
+																$point = ceil($point/max_skill_point*100);
+																if($point<=0)$point = 0;
+																if($point>100)$point = 100;
+																/*
 																$claim = $skill['claim'];
 																if(($claim - $point) > 0){
 																	$add_point = $claim - $point;
 																}else{
 																	$add_point = 0;
 																}
-																
-																$point = ceil($point/max_skill_point*100);
 																$add_point = ceil($add_point/max_skill_point*100);
-																if($point<=0)$point = 0;
-																if($point>100)$point = 100;
 																if($add_point<0)$add_point=0;
 																if($add_point>100)$add_point=100;
-																
+																*/
+																$add_point = 0;
 															?>
                                                         	<div class="skill-chart" style="width:<?php echo $point;?>%"></div>
                                                             <div class="skill-chart-add" style="width:<?php echo $add_point;?>%"></div>
-                                                            <div><?php if($me['claims']>0){?><?= form_open('/myoffice', array('style' => 'margin: 0'))?><input type="hidden" name="claim" value="<?=$skill['id']?>" /><input type="hidden" name="claim_skill" value="+" /><a style="float: right;margin: -9px -22px;font-size: 24px;font-weight: bold;" href="javascript: void(0)" class="submit" >+</a><?=form_close()?><?php }?></div>
+                                                            <?php /*<div><?php if($me['claims']>0){?><?= form_open('/myoffice', array('style' => 'margin: 0'))?><input type="hidden" name="claim" value="<?=$skill['id']?>" /><input type="hidden" name="claim_skill" value="+" /><a style="float: right;margin: -9px -22px;font-size: 24px;font-weight: bold;" href="javascript: void(0)" class="submit" >+</a><?=form_close()?><?php }?></div>*/ ?>
                                                         </div>
                                                         <?php endforeach;}else{?>
                                                         <?php /*
@@ -79,6 +80,7 @@
                                                         <?php }?>
                                                     </div>
 												</div>
+                                                <?php /*
                                                 <div class="frame">
                                                 	<?php if(!$my_skills){?>
                                                 	<p>Skill points can be acheieved by finishing jobs but that's not the only way to show what you are good at. You have been rewarded <?=$me['claims']?> points for claiming your skills. Use them wise and tell the world what you are good at! </p>
@@ -102,6 +104,7 @@
                                                     .</p>
                                                     <?php echo form_close();?>
                                                 </div>
+												*/?>
 											</div>
 										</div>
 										<div class="task-holder">

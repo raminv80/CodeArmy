@@ -64,7 +64,7 @@
       <?php echo form_open('/stories/browse' , array('class'=>'search-form', 'name' => "browse-tools-form")); ?>
       <label>Search Jobs</label>
       <input class="hint_step1" id="input-search" type="text" name="search" value="<?=$inputs['search']?>">
-      <input id="search-button" name="Submit" type="button">
+      <input id="search-button" name="Submit" type="submit" style="text-indent: -9999px;">
       <?php echo form_close(); ?>
     </div>
 	<div id="hot_latest_tabs">

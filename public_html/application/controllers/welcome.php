@@ -17,9 +17,31 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
+	private function isValidEmail($email){
+		return eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email);
+	}
+	
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$this->load->helper(array('form', 'url'));
+		$email = '';
+		if($this->input->post('email')){
+			$this->load->library('form_validation');
+			$this->load->model('users_model');
+			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+			if ($this->form_validation->run() == FALSE)
+			{
+				$email = "";
+			}
+			else
+			{
+				$email = trim($this->input->post('email'));
+				$ip = $this->input->ip_address();
+				$agent = $this->input->user_agent();
+				$this->users_model->subscribe($email, $ip, $agent);
+			}
+		}
+		$this->load->view('welcome_message', array('email' => $email));
 	}
 }
 
