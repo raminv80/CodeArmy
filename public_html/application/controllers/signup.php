@@ -88,7 +88,7 @@ class Signup extends CI_Controller {
 		$this->load->helper('captcha');
 		$vals = array(
 			'img_path'	 => 'public/captcha/',
-			'img_url'	 => 'http://workpad.local/public/captcha/',
+			'img_url'	 => 'http://'.$_SERVER['HTTP_HOST'].'/public/captcha/',
     		'font_path'	 => 'public/fonts/DIN.ttf'
 			);
 		
