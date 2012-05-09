@@ -43,6 +43,8 @@ $route['404_override'] = '';
 $route['user/(:any)'] = "user/show/$1";
 $route['story/(:num)'] = "story/show/$1";
 $route['project/(:num)'] = "project/show/$1";
+$route['my-profile'] = "myoffice";
+$route['my-profile/(:any)'] = "myoffice/$1";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

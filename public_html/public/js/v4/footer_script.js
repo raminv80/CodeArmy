@@ -145,10 +145,6 @@
 		form.submit();
 	});
 	
-	$('a.add_skill_show').click(function(){
-		$(this).html('+ Add').next('div').slideToggle();
-	});
-	
 	$('#btnBid').click(function() {
 	  $('.hint').hide();
 	  show_loading();

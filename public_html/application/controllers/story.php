@@ -350,18 +350,46 @@ class Story extends CI_Controller {
 		$work_id = $this->input->post('story_id');
 		$target = array();
 		$target_ids = array();
-		if(count($wh)>0){if($wh[0]['email']!=$this->session->userdata('user_id')){if($this->stories->subscribed($wh[0]['user_id'],$work_id)){$target[] = $wh[0]['email']; $target_ids[] = $wh[0]['user_id'];}}}
-		if(count($po)>0){if($this->stories->subscribed($po[0]['user_id'],$work_id)){$target[] = $po[0]['email']; $target_ids[] = $po[0]['user_id'];}}
-		if(count($sm)>0){if($this->stories->subscribed($sm[0]['user_id'],$work_id)){$target[] = $sm[0]['email']; $target_ids[] = $sm[0]['user_id'];}}
-		foreach($cn as $usr){ if($this->stories->subscribed($usr['user_id'],$work_id)){$target[] = $usr['email']; $target_ids[] = $usr['user_id'];}}
+		$inbox_ids = array();
+		if(count($wh)>0){
+			//work horse
+			if($wh[0]['email']!=$this->session->userdata('user_id')){
+				if($this->stories->subscribed($wh[0]['user_id'],$work_id)){
+					$target[] = $wh[0]['email'];
+				}
+			}
+			$target_ids[] = $wh[0]['user_id'];
+		}
+		if(count($po)>0){
+			//product owner
+			if($this->stories->subscribed($po[0]['user_id'],$work_id)){
+				$target[] = $po[0]['email'];
+			}
+			$target_ids[] = $po[0]['user_id'];
+		}
+		if(count($sm)>0){
+			//scrum master
+			if($this->stories->subscribed($sm[0]['user_id'],$work_id)){
+				$target[] = $sm[0]['email'];
+			}
+			$target_ids[] = $sm[0]['user_id'];
+		}
+		foreach($cn as $usr){
+			//partcipants
+			if($this->stories->subscribed($usr['user_id'],$work_id)){
+				$target[] = $usr['email'];
+			}
+			$target_ids[] = $usr['user_id'];
+		}
 		$to=array_unique($target);
 		$to_id = array_unique($target_ids);
-		$cc = admin_email;
 		$subject = "Workpad | Comment on ".$work[0]['title'];
-		$message = "<p>User <a href='http://".$_SERVER['HTTP_HOST']."/user/".$this->session->userdata('user_id')."'>".$this->session->userdata('username')."</a> placed a comment on ".us_dev." \'<a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>".$work[0]['title']."</a>\':</p><p>".substr(strip_tags($this->input->post('comments')),0,500)."<br />(to read more <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>click here</a>)</p>";
-		$short_message = "<p><a href='http://".$_SERVER['HTTP_HOST']."/user/".$this->session->userdata('user_id')."'>".ucfirst($this->session->userdata('username'))."</a> commented on <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>".$work[0]['title']."</a>: \"".substr(strip_tags($this->input->post('comments')),0,500)."\"</p>";
+		$message = "User <a href='http://".$_SERVER['HTTP_HOST']."/user/".$this->session->userdata('user_id')."'>".$this->session->userdata('username')."</a> placed a comment on ".us_dev." \'<a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>".$work[0]['title']."</a>\':</p><p>".substr(strip_tags($this->input->post('comments')),0,500)."<br />(to read more <a href='http://".$_SERVER['HTTP_HOST']."/story/".$this->input->post('story_id')."'>click here</a>)</p>";
+		$short_message = substr(strip_tags($this->input->post('comments')),0,500)."</p>";
+		$link = "/story/".$this->input->post('story_id')."#comment-top";
 		if(count($to_id)>0)
-			$this->notify(noreply_email,email_name, $to, $cc, $subject, $message, 'message', $to_id, $short_message,$this->session->userdata('user_id'));
+			$this->email(noreply_email,email_name, $to, $subject, $message);
+			$this->inbox($subject, $message, 'message', $to_id, $short_message,$this->session->userdata('user_id'), $link);
 		$this->view_data['signup_success'] = true;
 		
 		//pusher
@@ -846,34 +874,50 @@ class Story extends CI_Controller {
 				
 		}
 				
-		private function notify($from,$fromName, $to, $cc, $subject, $message, $category=NULL, $to_id = NULL, $shor_message = "", $target_id = NULL){
-			require_once(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
-			$mail = new PHPMailer();
-			$mail->IsSMTP();                                      // set mailer to use SMTP
-			$mail->SMTPAuth   = true;                  // enable SMTP authentication
-			//$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
-			$mail->Host       = "mail.vakilian.net";      // sets GMAIL as the SMTP server
-			//$mail->Port       = 110;                   // set the SMTP port for the GMAIL server
-			$mail->Username = "noreply@vakilian.net";  // SMTP username
-			$mail->Password = "work123"; // SMTP password
-			//$mail->SMTPDebug  = 1;
-			$mail->SetFrom($from, $fromName);
-			if(is_array($to)){
-				foreach($to as $too)$mail->AddAddress($too);
-			}else{
-				$mail->AddAddress($to);
+		private function notify($from,$fromName, $to, $cc, $subject, $message, $category=NULL, $to_id = NULL, $shor_message = "", $target_id = NULL, $link= NULL){
+			$this->inbox($subject, $message, $category, $to_id, $shor_message, $target_id, $link);
+			$this->email($from,$fromName, $to, $subject, $message);
+		}
+		
+		private function email($from,$fromName, $to, $subject, $message){
+			if(count($to)>0){
+				require_once(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
+				$mail = new PHPMailer();
+				$mail->IsSMTP();                                      // set mailer to use SMTP
+				$mail->SMTPAuth   = true;                  // enable SMTP authentication
+				//$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
+				$mail->Host       = "mail.vakilian.net";      // sets GMAIL as the SMTP server
+				//$mail->Port       = 110;                   // set the SMTP port for the GMAIL server
+				$mail->Username = "noreply@vakilian.net";  // SMTP username
+				$mail->Password = "work123"; // SMTP password
+				//$mail->SMTPDebug  = 1;
+				$mail->SetFrom($from, $fromName);
+				if(is_array($to)){
+					foreach($to as $too)$mail->AddAddress($too);
+				}else{
+					$mail->AddAddress($to);
+				}
+				//$mail->AddReplyTo("info@example.com", "Information");
+				
+				$mail->WordWrap = 50;                                 // set word wrap to 50 characters
+				//$mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+				//$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+				$mail->IsHTML(true);                                  // set email format to HTML
+				
+				$mail->Subject = $subject;
+				$mail->Body    = $message;
+				$mail->AltBody = $message;
+				
+				if(!$mail->Send())
+				{
+				   echo "Message could not be sent. <p>";
+				   echo "Mailer Error: " . $mail->ErrorInfo;
+				   exit;
+				}
 			}
-			//$mail->AddReplyTo("info@example.com", "Information");
-			
-			$mail->WordWrap = 50;                                 // set word wrap to 50 characters
-			//$mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
-			//$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
-			$mail->IsHTML(true);                                  // set email format to HTML
-			
-			$mail->Subject = $subject;
-			$mail->Body    = $message;
-			$mail->AltBody = $message;
-			
+		}
+		
+		private function inbox($subject, $message, $category=NULL, $to_id = NULL, $shor_message = "", $target_id = NULL, $link = NULL){
 			if(is_array($to_id)){
 				// send to inbox
 				$data = array();
@@ -882,6 +926,7 @@ class Story extends CI_Controller {
 						"user_id" => $user_id,
 						"title" => $subject,
 						"target_id" => $target_id,
+						"link" => $link,
 						"message" => ($shor_message=="")?$message:$shor_message,
 						"status" => 'unread',
 						"created_at" => date('Y-m-d'),
@@ -896,81 +941,7 @@ class Story extends CI_Controller {
 					"user_id" => $to_id,
 					"target_id" => $target_id,
 					"title" => $subject,
-					"message" => ($shor_message=="")?$message:$shor_message,
-					"status" => 'unread',
-					"created_at" => date('Y-m-d'),
-					"category" => $category
-				);
-				$this->db->insert('inbox',$data);
-			}
-			
-			if(!$mail->Send())
-			{
-			   echo "Message could not be sent. <p>";
-			   echo "Mailer Error: " . $mail->ErrorInfo;
-			   exit;
-			}
-		}
-		
-		private function email($from,$fromName, $to, $cc, $subject, $message, $category=NULL, $to_id = NULL, $shor_message = "", $target_id = NULL){
-			require_once(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
-			$mail = new PHPMailer();
-			$mail->IsSMTP();                                      // set mailer to use SMTP
-			$mail->SMTPAuth   = true;                  // enable SMTP authentication
-			//$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
-			$mail->Host       = "mail.vakilian.net";      // sets GMAIL as the SMTP server
-			//$mail->Port       = 110;                   // set the SMTP port for the GMAIL server
-			$mail->Username = "noreply@vakilian.net";  // SMTP username
-			$mail->Password = "work123"; // SMTP password
-			//$mail->SMTPDebug  = 1;
-			$mail->SetFrom($from, $fromName);
-			if(is_array($to)){
-				foreach($to as $too)$mail->AddAddress($too);
-			}else{
-				$mail->AddAddress($to);
-			}
-			//$mail->AddReplyTo("info@example.com", "Information");
-			
-			$mail->WordWrap = 50;                                 // set word wrap to 50 characters
-			//$mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
-			//$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
-			$mail->IsHTML(true);                                  // set email format to HTML
-			
-			$mail->Subject = $subject;
-			$mail->Body    = $message;
-			$mail->AltBody = $message;
-			
-			if(!$mail->Send())
-			{
-			   echo "Message could not be sent. <p>";
-			   echo "Mailer Error: " . $mail->ErrorInfo;
-			   exit;
-			}
-		}
-		
-		private function inbox($from,$fromName, $to, $cc, $subject, $message, $category=NULL, $to_id = NULL, $shor_message = "", $target_id = NULL){
-			if(is_array($to_id)){
-				// send to inbox
-				$data = array();
-				foreach($to_id as $user_id){
-					$data[] = array(
-						"user_id" => $user_id,
-						"title" => $subject,
-						"target_id" => $target_id,
-						"message" => ($shor_message=="")?$message:$shor_message,
-						"status" => 'unread',
-						"created_at" => date('Y-m-d'),
-						"category" => $category
-					);
-				}
-				if(count($data)>0)
-					$this->db->insert_batch('inbox',$data);
-			}elseif(!is_null($to_id)){
-				// send to inbox
-				$data = array(
-					"user_id" => $to_id,
-					"target_id" => $target_id,
-					"title" => $subject,
+					"link" => $link,
 					"message" => ($shor_message=="")?$message:$shor_message,
 					"status" => 'unread',
 					"created_at" => date('Y-m-d'),

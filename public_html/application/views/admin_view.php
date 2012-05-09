@@ -63,7 +63,12 @@ width: 64px;}
             </ul></td>
         </tr>
         <?php } ?>
-      </table><br><div id="addnewproject"><a style="margin: 0 auto;" href="/admin/new_project">Create Project</a></div>
+      </table>
+      <br>
+      <div id="addnewproject">
+      	<a style="margin: 0 auto;" href="/admin/new_project">Create Project</a>
+      </div>
+      <br /><a style="margin: 0 auto;" href="/admin/voucher">Create voucher</a>
       <?php }
             else {
             ?>
@@ -121,4 +126,4 @@ width: 64px;}
     <?php endforeach;?>
   </table>
 </section>
-<?php $this->load->view('includes/footer4'); ?>
+<?php $this->load->view('includes/footer5'); ?>

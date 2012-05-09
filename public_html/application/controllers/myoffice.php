@@ -11,6 +11,7 @@ class Myoffice extends CI_Controller {
 		$this->load->model('skill_model');
 		$this->load->model('inbox_model');
 		$this->load->model('stories_model', 'stories');
+		$this->load->library('session');
 		$user_id = $this->session->userdata('user_id');
 			if($user_id){
 				$me = $this->users_model->get_user($user_id);
@@ -43,12 +44,6 @@ class Myoffice extends CI_Controller {
 	
 	function index($tab=''){
 		$user_id = $this->session->userdata('user_id');
-		$me = $this->users_model->get_user($user_id);
-		$me = $me->result_array();
-		$me = $me[0];
-		$myProfile = $this->users_model->get_profile($user_id);
-		$myProfile = $myProfile->result_array();
-		$myProfile = $myProfile[0];
 		
 		if($this->input->post('add_skill')){
 			if(!$this->skill_model->claim_skill($user_id, $this->input->post('skill'))) $claim_error = true;
@@ -56,7 +51,27 @@ class Myoffice extends CI_Controller {
 		if($this->input->post('claim_skill')){
 			if($this->skill_model->claim_skill_point($user_id, $this->input->post('claim'), 1)) $claim_error = true;
 		}
+		$this->view_data['show_voucher'] = !$this->users_model->is_po_v5($user_id);
+		$this->view_data['show_claim'] = $this->users_model->can_claim($user_id);
+		$this->view_data['voucher'] = '';
+		if($this->input->post('code')){
+			$code = $this->input->post('code');
+			if($this->projects_model->consume_voucher($code, $user_id)){
+				$this->users_model->promote_to_po($user_id);
+				$this->view_data['voucher'] = 'You have successfully added project management capabilities to your profile.';
+				$this->view_data['show_voucher'] = false;
+			}else{
+				$this->view_data['voucher'] = 'Sorry, We couldn\'t verify your voucher number.';
+			}
+		}
 		
+		$me = $this->users_model->get_user($user_id);
+		$me = $me->result_array();
+		$me = $me[0];
+		$myProfile = $this->users_model->get_profile($user_id);
+		$myProfile = $myProfile->result_array();
+		$myProfile = $myProfile[0];
+
 		$this->view_data['tab'] = $tab;
 		$this->view_data['me'] = $me;
 		$this->view_data['myProfile'] = $myProfile;
@@ -72,9 +87,8 @@ class Myoffice extends CI_Controller {
 		$this->view_data['all_skills'] = $this->skill_model->get_other_skills($user_id);
 		$this->view_data['my_skills'] = $this->skill_model->get_my_skills($user_id);
 		$this->view_data['last_badge'] = $this->skill_model->get_last_badge($user_id);
-		
-		$this->view_data['window_title'] = "MyOffice at Workpad";
-		$this->load->view('my_office_view', $this->view_data);	
+		$this->view_data['window_title'] = "My Profile at Workpad";
+		$this->load->view('my_office_view_v5', $this->view_data);	
 	}
 	
 	function AjaxMessageRead(){
@@ -86,6 +100,11 @@ class Myoffice extends CI_Controller {
 	function AjaxTab_tab_1(){
 		//Summary Tab
 		$user_id = $this->session->userdata('user_id');
+		
+		$this->view_data['show_voucher'] = !$this->users_model->is_po_v5($user_id);
+		$this->view_data['show_claim'] = $this->users_model->can_claim($user_id);
+		$this->view_data['voucher'] = '';
+		
 		$me = $this->users_model->get_user($user_id);
 		$me = $me->result_array();
 		$me = $me[0];

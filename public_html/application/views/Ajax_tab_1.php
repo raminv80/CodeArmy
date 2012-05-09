@@ -5,10 +5,9 @@
 										<div class="skills-box">
 											<div class="holder">
 												<div class="frame">
-	                                                <div>Points to spend: <?=$me['claims']?> pts</div>
 													<dl>
                                                     	<?php if($my_skills){foreach($my_skills as $skill):?>
-                                                        <dt><span style="text-shadow: 0 1px 10px white;font-size: 20px;font-weight: lighter; background:none; text-indent:0;"><?php echo $skill['name'];?></span></dt>
+                                                        <dt><span style="text-shadow: 0 1px 10px white;font-size: 16px;font-weight: lighter; background:none; text-indent:0; padding-top:4px"><?php echo $skill['name'];?></span></dt>
                                                         <?php $color = 'yellow'; $point = $skill['claim'];?>
 														<dd><span style="color:<?=$color?>"><?=$point?></span></dd>
                                                         <?php endforeach;}else{?>
@@ -31,7 +30,7 @@
 													</dl>
 													<div class="skills-points">
                                                     	<?php if($my_skills){foreach($my_skills as $skill):?>
-                                                        <div id="css" class="skill-chart-container">
+                                                        <div id="css" class="skill-chart-container" style="height:37px">
                                                         	<?php
 																$point = $skill['point'];
 																$point = ceil($point/max_skill_point*100);
@@ -80,14 +79,23 @@
                                                         <?php }?>
                                                     </div>
 												</div>
-                                                <?php /*
-                                                <div class="frame">
+                                                <?php if($show_claim){?>
+                                                <div class="frame" style="padding:0">
                                                 	<?php if(!$my_skills){?>
-                                                	<p>Skill points can be acheieved by finishing jobs but that's not the only way to show what you are good at. You have been rewarded <?=$me['claims']?> points for claiming your skills. Use them wise and tell the world what you are good at! </p>
+                                                	<p>Assign yourselfe 3 skills and let the wowrld know what your are good at.</p>
                                                     <?php }?>
-                                                    <?php echo form_open('/myoffice', array('name'=> 'add_skill'))?>
-                                                    <p>Add 
-                                                    	<select name="skill" >
+                                                    <div id="add_skill"> 
+                                                    <?php echo form_open('/myoffice', array('name'=> 'add_skill', 'style'=>'margin:0;'))?>
+                                                    	<a href="javascript: void(0)" class="add_skill_show">+ Add <?=$me['claims']?> more Skills</a>
+                                                        <div style="display:none">
+                                                    	Add <select name="skill" >
+                                                        	<?php if(!$show_voucher){?>
+															<optgroup label="Management Skills">
+	                                                            <?php foreach($all_skills as $skill)if($skill['type']=="management"):?>
+                                                        		<option value="<?=$skill['id']?>"><?=$skill['name']?></option>
+                                                                <?php endif;?>
+                                                            </optgroup>
+                                                            <?php }?>
                                                             <optgroup label="Hard Skills">
                                                             	<?php foreach($all_skills as $skill)if($skill['type']=="hard"):?>
                                                         		<option value="<?=$skill['id']?>"><?=$skill['name']?></option>
@@ -101,10 +109,23 @@
                                                         </select>
                                                     Skill to the skill set
                                                     <input type="submit" value="Go" name="add_skill" />
-                                                    .</p>
+                                                    </div>
                                                     <?php echo form_close();?>
+                                                    </div>
                                                 </div>
-												*/?>
+                                                <?php }?>
+                                                <div class="frame" style="padding:0">
+                                                <?=$voucher?>
+                                                <?php if($show_voucher){?>
+													<div id="be_po">
+                                                    	<?= form_open('/myoffice')?>
+                                                        	Voucher Code: 
+                                                        	<input name="code" value="" maxlength="12" />
+                                                            <input type="submit" value="Submit" name="submit" />
+                                                        <?= form_close();?>
+                                                    </div>
+                                                <?php }?>
+                                                </div>
 											</div>
 										</div>
 										<div class="task-holder">
@@ -252,5 +273,8 @@ $('a.submit').click(function(){
 	test = $(this);
 	var form = $(this).parents('form');
 	form.submit();
+});
+$('a.add_skill_show').click(function(){
+	$(this).next('div').slideToggle();
 });
 </script>

@@ -24,6 +24,56 @@ class Users_model extends CI_Model {
 		return $res;
 	}
 	
+	public function create_new_user_v5() {
+		$user_id = md5(microtime());
+		$doc = array(
+			"user_id" => $user_id,
+			"username" => strtolower($this->input->post('username')),
+			"secret" => md5($this->input->post('password')),
+			"email" => strtolower($this->input->post('email')),
+			"created_at" => date('Y-m-d H:i:s'),
+			"role" => 'user',
+			"user_status" => 'disable'
+		); 
+		$res = $this->db->insert('users', $doc);
+		$this->create_new_profile($user_id);
+		$this->assign_skill('communication', $user_id);
+		$this->assign_skill('Leadership', $user_id);
+		return $res;
+	}
+	
+	public function assign_skill($skill_name, $user_id){
+		$sql = "select id from skill where LOWER(name) = LOWER(?)";
+		$res = $this->db->query($sql, array($skill_name));
+		if($res->num_rows>0){
+			$res = $res->result_array();
+			$skill_id = $res[0]['id'];
+			$doc = array(
+				"user_id" => $user_id,
+				"skill_id" => $skill_id,
+				"point" => 0,
+				"claim" => 0
+			);
+			$this->db->insert('skill_set', $doc);
+		}
+	}
+	
+	public function promote_to_po($user_id){
+		$this->db->update('users',array('user_status'=>'enable'),array('user_id'=>$user_id));	
+	}
+	
+	public function is_po_v5($user_id){
+		$res = $this->db->get_where('users', array('user_id'=>$user_id, 'user_status' => 'enable'));
+		return $res->num_rows()>0;
+		
+	}
+	
+	public function can_claim($user_id){
+		$sql = "SELECT * FROM users WHERE user_id = ? and claims>0";
+		$res = $this->db->query($sql, array($user_id));
+		return $res->num_rows()>0;
+	}
+	
 	public function promote($user_id){
 		$query = $this->db->get_where('users', array('user_id' => $user_id));
 		if($query->num_rows()>0){
@@ -462,7 +512,7 @@ class Users_model extends CI_Model {
 		$this->db->insert('subscription', $data);
 	}
 	
-	function notify($user_id, $subject, $message, $category = NULL, $shor_message="", $target_id = NULL){		
+	function notify($user_id, $subject, $message, $category = NULL, $shor_message="", $target_id = NULL){
 			ini_set('display_error',1);
 			error_reporting('E_ALL');
 			$q = $user_id;

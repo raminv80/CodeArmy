@@ -62,7 +62,7 @@ class Login extends CI_Controller {
 			if($this->session->userdata('referer')){
 				redirect($this->session->userdata('referer'));
 			}else{
-				redirect('home');
+				redirect('my-profile');
 			}
 		}
 		else { // incorrect username or password

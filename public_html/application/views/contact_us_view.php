@@ -338,4 +338,4 @@ margin: 20px 0 0 22px;
 			$(document).ready(function(){alert('Thanks for contacting us.');});
 		</script>
         <?php }?>
-<?php $this->load->view('includes/footer4'); ?>
+<?php $this->load->view('includes/footer5'); ?>

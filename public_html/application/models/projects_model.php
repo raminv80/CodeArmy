@@ -8,6 +8,44 @@ class Projects_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function genVoucher($num){
+		$codes = array();
+		for($i = 0;$i<$num;$i++){
+			$search = true;
+			while($search){
+				$code = $this->genCode(12);
+				$sql = "select * from voucher_po where code = ?";
+				$res = $this->db->query($sql , array($code));
+				if($res->num_rows==0) $search = false;
+			}
+			$doc = array(
+				'code' => $code,
+				'active' => 1
+			);
+			$this->db->insert('voucher_po', $doc);
+			$codes[] = $code;
+		}
+		return $codes;
+	}
+	
+	public function consume_voucher($code, $user_id){
+		$doc = array(
+			'user_id' => $user_id,
+			'active' => 0,
+			'redemption_at' => time()
+		);
+		$this->db->update('voucher_po', $doc, array('code' => $code));
+		return $this->db->affected_rows()>0;
+	}
+	
+	private function genCode($len){
+		$arr = str_split('01234567890123456789'); // get all the characters into an array
+		shuffle($arr); // randomize the array
+		$arr = array_slice($arr, 0, $len); // get the first six (random) characters out
+		$code = implode('', $arr); // smush them back into a string
+		return $code;
+	}
+	
 	function cash_loaded(){
 		$sql = "SELECT SUM(cost) as num FROM works, sprints WHERE works.sprint=sprints.id and lower(status) in ('open','reject') and curdate() between sprints.start and addtime(sprints.end,'23:59:59')";
 		$res = $this->db->query($sql);

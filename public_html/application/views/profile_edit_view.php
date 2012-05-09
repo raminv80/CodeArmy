@@ -234,4 +234,4 @@ body {background: url(/public/images/bg.jpg) !important ;background-attachment: 
 		<?php endif; ?>
 	</div>
 </div>
-<?php $this->load->view('includes/footer4'); ?>
+<?php $this->load->view('includes/footer5'); ?>

@@ -34,6 +34,12 @@ class Home extends CI_Controller {
 	}
 	
 	function index(){
+		if($this->session->userdata('username')) redirect('my-profile');
+		$this->view_data['window_title'] = "Workpad | Home";
+		$this->load->view('home_v5_view', $this->view_data);
+	}
+	
+	function index_old(){
 		$this->view_data['action_is'] = 'index';
 		$this->load->helper('stories_helper');
 		$this->load->helper('user_helper');

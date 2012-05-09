@@ -5,7 +5,7 @@
     <!--stops search engine from crawling to site while in beta -->
     <meta name="robots" content="noindex" />
     <title>
-    <?=(isset($window_title))? $window_title: 'Workpad'?>
+    <?=(isset($window_title))? $window_title: 'CodeArmy'?>
     </title>
     <link rel="icon" type="image/png" href="/favicon.png">
     <link href="/public/css/v4/style.css" media="all" rel="stylesheet" type="text/css">
@@ -75,7 +75,7 @@
         <ul>
               <li <?php if($page_is=='Home'){?>class="active"<?php }?>><a href="<?=($page_is=='Home')? '#pitch' : '/'?>">home</a></li>
               <li <?php if($page_is=='Browse'){?>class="active"<?php } if($page_is=='Home'){?>class="hint_dev_step1"<?php }?>><a href="/stories/browse">browse jobs</a></li>
-              <li <?php if($page_is=='Browse'){?>class="active"<?php } if($page_is=='Home'){?>class="hint_dev_step4"<?php }?>><a href="/myoffice">Dashboard</a></li>
+              <?php /*<li <?php if($page_is=='Browse'){?>class="active"<?php } if($page_is=='Home'){?>class="hint_dev_step4"<?php }?>><a href="/my-profile">Profile</a></li>*/?>
               <li <?php if($page_is=='About'){?>class="active"<?php }?>><a href="/about">about</a></li>
               <!--<li <?php if($page_is=='Leaderboard'){?>class="active"<?php }?>><a href="#leaderboard">Leaderboard</a></li>-->
               <li class="last <?php if($page_is=='contact'){?>active<?php }?>"><a href="/contact">Contact US</a></li>

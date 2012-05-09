@@ -80,7 +80,7 @@
 												<div class="frame">
 													<dl>
                                                     	<?php if($my_skills){foreach($my_skills as $skill):?>
-                                                        <dt><span style="text-shadow: 0 1px 10px white;font-size: 20px;font-weight: lighter; background:none; text-indent:0;"><?php echo $skill['name'];?></span></dt>
+                                                        <dt><span style="text-shadow: 0 1px 10px white;font-size: 16px;font-weight: lighter; background:none; text-indent:0; padding-top:4px;"><?php echo $skill['name'];?></span></dt>
 														<?php $color = 'green'; $point = $skill['point'];?>
 														<dd><span style="color:<?=$color?>"><?=$point?></span></dd>
                                                         <?php endforeach;}else{?>
@@ -366,4 +366,4 @@
 			</div>
 		</div></section>
         <script type="text/javascript" src="/public/js/main.js"></script>
-<?php $this->load->view('includes/footer4'); ?>
+<?php $this->load->view('includes/footer5'); ?>

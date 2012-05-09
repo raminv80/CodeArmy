@@ -74,7 +74,7 @@ class Signup extends CI_Controller {
 					$this->view_data['captcha_error'] = "You must submit the pharase that appears in the image.";
 					$this->view_data['form_error'] = true;
 				}else{
-					if($this->users_model->create_new_user()) {
+					if($this->users_model->create_new_user_v5()) {
 						// signup successful
 						$this->view_data['signup_success'] = true;
 						$this->session->unset_userdata('referer');
@@ -88,7 +88,7 @@ class Signup extends CI_Controller {
 		$this->load->helper('captcha');
 		$vals = array(
 			'img_path'	 => 'public/captcha/',
-			'img_url'	 => 'http://workpad.local/public/captcha/',
+			'img_url'	 => 'http://'.$_SERVER['HTTP_HOST'].'/public/captcha/',
     		'font_path'	 => 'public/fonts/DIN.ttf'
 			);
 		

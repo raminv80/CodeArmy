@@ -195,7 +195,7 @@
 <div id="dialog-modal" title="Almost there!">
 	<p>Wait! You are just one step away from completing this job. Prepare your files and submit them at the bottom of this page.</p>
 </div>
-<?php $this->load->view('includes/footer4'); ?>
+<?php $this->load->view('includes/footer5'); ?>
 <style>
 .WP-main .WP-people-placeholder {
 color: white;
