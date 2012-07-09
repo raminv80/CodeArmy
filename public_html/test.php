@@ -10,5 +10,5 @@ $database_mycon = "alumni";
 $username_mycon = "workpad_user";
 $password_mycon = 'work123';
 $mycon = mysql_pconnect($hostname_mycon, $username_mycon, $password_mycon) or trigger_error(mysql_error(),E_USER_ERROR); 
-if($mycon)echo 'yes';
+if($mycon)echo 'connected';
 ?>
