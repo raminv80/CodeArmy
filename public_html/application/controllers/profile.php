@@ -10,26 +10,26 @@ class Profile extends CI_Controller {
 		$this->load->model('skill_model');
 		$this->load->model('projects_model');
 		$this->load->model('stories_model', 'stories');
-		$user_id = $this->session->userdata('user_id');
-			if($user_id){
-				$me = $this->users_model->get_user($user_id);
-				$me = $me->result_array();
-				$me = $me[0];
-				$myProfile = $this->users_model->get_profile($user_id);
-				$myProfile = $myProfile->result_array();
-				$myProfile = $myProfile[0];
-				$this->view_data['me'] = $me;
-				$this->view_data['myProfile'] = $myProfile;
-			}
-		$this->view_data['page_is'] = 'signup';
+		
+		$this->view_data['page_is'] = 'Profile';
 		$this->view_data['action_is'] = $this->uri->segment(2);
 		$controller = $this->uri->segment(1);
 		$action = $this->uri->segment(2);
 		$param = $this->uri->segment(3);
 		$this->view_data['action_is'] = $action;
 		// - check if user is logged in
-		$check_login = $this->session->userdata('is_logged_in');
+		$check_login = $this->users_model->is_authorised();
 		if($check_login == true) {
+			$user_id = $this->session->userdata('user_id');
+			$me = $this->users_model->get_user($user_id);
+			$me = $me->result_array();
+			$me = $me[0];
+			$myProfile = $this->users_model->get_profile($user_id);
+			$myProfile = $myProfile->result_array();
+			$myProfile = $myProfile[0];
+			$this->view_data['me'] = $me;
+			$this->view_data['myProfile'] = $myProfile;
+		
 			$this->view_data['username'] = $this->session->userdata('username');
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;
@@ -41,9 +41,17 @@ class Profile extends CI_Controller {
 	}
 	
 	
+	function index(){
+		if(!in_array($this->view_data['myProfile']['specialization'],array('designer','developer','copywriter','employer')))redirect("/register");
+		$this->view_data['window_title'] = $this->session->userdata('username');
+		$this->load->view('profile_codearmy_view', $this->view_data);
+	}
+	
+	
 	// - profile index function
-	function index() {
-	    $user_id = $this->session->userdata('user_id');
+	function index_old() {
+	    /* ver1
+		$user_id = $this->session->userdata('user_id');
 	    //$query = $this->users_model->get_user();
 		$query = $this->users_model->get_profile($user_id);
 		//print_r($query);
@@ -55,6 +63,8 @@ class Profile extends CI_Controller {
 		$this->view_data['rank'] = $this->stories->get_rank($user_id,true);
 		$this->view_data['username'] = $this->session->userdata("username");
 		$this->load->view('profile_view', $this->view_data);
+		*/
+		
 	}
 	
 	function show($user_id){

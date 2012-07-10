@@ -36,9 +36,14 @@ class Welcome extends CI_Controller {
 			else
 			{
 				$email = trim($this->input->post('email'));
+				$type = 'none';
+				if($this->input->post('startup_enlist'))$type = 'startup';
+				if($this->input->post('talent_enlist'))$type = 'talent';
+				if($this->input->post('startup_enlist')&&$this->input->post('talent_enlist'))$type = 'general';
 				$ip = $this->input->ip_address();
 				$agent = $this->input->user_agent();
-				$this->users_model->subscribe($email, $ip, $agent);
+				$this->users_model->subscribe($email,$type, $ip, $agent);
+				$email = "You have successfully subscribed to CodeArmy";
 			}
 		}
 		$this->load->view('welcome_message', array('email' => $email));

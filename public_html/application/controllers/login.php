@@ -14,13 +14,15 @@ class Login extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 			if($user_id){
 				$me = $this->users_model->get_user($user_id);
-				$me = $me->result_array();
-				$me = $me[0];
-				$myProfile = $this->users_model->get_profile($user_id);
-				$myProfile = $myProfile->result_array();
-				$myProfile = $myProfile[0];
-				$this->view_data['me'] = $me;
-				$this->view_data['myProfile'] = $myProfile;
+				if($me){
+					$me = $me->result_array();
+					$me = $me[0];
+					$myProfile = $this->users_model->get_profile($user_id);
+					$myProfile = $myProfile->result_array();
+					$myProfile = $myProfile[0];
+					$this->view_data['me'] = $me;
+					$this->view_data['myProfile'] = $myProfile;
+				}
 			}
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
@@ -36,7 +38,7 @@ class Login extends CI_Controller {
 	function index() {
 		$this->view_data['main_content'] = 'login_form';
 		$this->view_data['window_title'] = "Login to Workpad";
-		$this->load->view('login_view', $this->view_data);
+		$this->load->view('login_codearmy_view', $this->view_data);
 	}	
 	
 	function validate_credentials() {
@@ -74,11 +76,19 @@ class Login extends CI_Controller {
 	
 	function logout() {
 		$this->session->sess_destroy();
+		$cookie = array(
+					'name'   => 'remember_me_token',
+					'value'  => null,
+					'expire' => '0',  // Two weeks
+					'domain' => $_SERVER['HTTP_HOST'],
+					'path'   => '/'
+		);
+		delete_cookie($cookie);
 		$this->users_model->reset_attempt($this->session->userdata("user_id"));
 		redirect('home');
 	}
 	
-	function recovery($code=""){
+	function recovery_old($code=""){
 		if($this->input->post('submit')){
 			$this->view_data['login_error'] = $this->users_model->reset_pass_notify($this->input->post('username'));	
 		}else{
@@ -88,5 +98,38 @@ class Login extends CI_Controller {
 		}
 		$this->view_data['window_title'] = "Reset my Password";
 		$this->load->view('recovery_view', $this->view_data);
+	}
+	
+	function recovery($code=""){
+		if($this->input->post('email')){
+			$this->view_data['login_error'] = $this->users_model->reset_pass_notify_codearmy($this->input->post('email'));	
+		}else{
+			if(isset($code) && $code!=""){
+				$this->view_data['login_error'] = $this->users_model->reset_pass($code);	
+			}
+		}
+		$this->view_data['window_title'] = "Reset my Password";
+		$this->load->view('recovery_codearmy_view', $this->view_data);
+	}
+	
+	function brush(){
+		$this->view_data['window_title'] = "Brush my balls!";
+		$this->load->view('brush_view', $this->view_data);
+	}
+	
+	function Ajax_checkUser(){
+		if($this->input->post('user')){
+			$user = $this->input->post('user');
+			$a = $this->users_model->get_user($user, 'email');
+			$b = $this->users_model->get_user($user, 'username');
+			if($a || $b)echo 'success';else echo 'invalid';
+		}
+	}
+	
+	function Ajax_checkPass(){
+		if($this->input->post('password')){	
+			$a = $this->users_model->validate();
+			if($a)echo 'success';else echo 'invalid';
+		}
 	}
 }

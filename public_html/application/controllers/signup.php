@@ -33,7 +33,7 @@ class Signup extends CI_Controller {
 		}
 	}
 	
-	// index page
+	//index page workpad
 	function index() {
 		$user_id = $this->session->userdata('user_id');
 		if($user_id){

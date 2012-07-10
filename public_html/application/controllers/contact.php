@@ -34,6 +34,11 @@ class Contact extends CI_Controller {
 	}
 	
 	function index(){
+		$this->view_data['window_title'] = "Contact us";
+		$this->load->view('contact_codearmy_view', $this->view_data);
+	}
+	
+	function index_old(){
 		if($this->input->post('submit') == 'Submit'){
 			require(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
 

@@ -32,9 +32,13 @@ class Leaderboard extends CI_Controller {
 		}
 	}
 	
+	function index(){
+		$this->view_data['window_title'] = $this->session->userdata('username');
+		$this->load->view('leaderboard_codearmy_view', $this->view_data);
+	}
 	
 	// - profile index function
-	function index() {
+	function index_old() {
 		$this->view_data['leaderboard_project'] = $this->users_model->leaderboard_projects();
 		$this->view_data['leaderboard_points'] = $this->users_model->leaderboard_points();
 		$this->view_data['leaderboard_time'] = $this->users_model->leaderboard_time();

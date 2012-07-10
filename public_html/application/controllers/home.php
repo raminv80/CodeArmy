@@ -35,8 +35,9 @@ class Home extends CI_Controller {
 	
 	function index(){
 		if($this->session->userdata('username')) redirect('my-profile');
-		$this->view_data['window_title'] = "Workpad | Home";
-		$this->load->view('home_v5_view', $this->view_data);
+		$this->view_data['window_title'] = "CodeArmy | Home";
+		$this->view_data['window_title'] = get_cookie('remember_me_token');
+		$this->load->view('home_codearmy_view', $this->view_data);
 	}
 	
 	function index_old(){
@@ -185,6 +186,15 @@ class Home extends CI_Controller {
 				//if($this->sendfeedback())$this->session->set_flashdata('feedback','Your feedback is recieved. Thank you.');
 			}
 		}
+	}
+	
+	function Ajax_contact(){
+		$this->users_model->send_mail(
+			$this->input->post('email'),
+			'contact@codearmy.com',
+			$this->input->post('subject'),
+			"<ul><li>Date and Time: ".date('Y/m/d H:i')."</li><li>From: ".$this->input->post('name')."</li><li>Contact no:".$this->input->post('phone')."</li></ul><hr><p>".$this->input->post('message')."</p>"
+		);
 	}
 	
 	private function contact(){

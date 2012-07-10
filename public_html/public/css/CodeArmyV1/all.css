@@ -1,0 +1,554 @@
+body {
+	margin:0;
+	color:#000;
+	font:12px/14px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	min-width:1000px;
+	background:#454545;
+}
+#homebg-left {
+	display: block;
+	left: 0;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	z-index: -1;
+}
+#homebg-right {
+	display: block;
+	right: -30px;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	z-index: -1;
+}
+img {
+	border-style:none;
+}
+a {
+	text-decoration:underline;
+}
+a:hover {
+	text-decoration:none;
+}
+#wrapper {
+	width:1000px;
+	margin:0 auto;
+	background:#fff url(/public/images/codeArmy/home/bg-main.gif) repeat-x;
+	padding:155px 0 0;
+	position:relative;
+}
+#header {
+	width:100%;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:2;
+}
+#header .inner {
+	width:1000px;
+	height:155px;
+	margin:0 auto;
+}
+#header .top {
+	background:#000 url(/public/images/codeArmy/home/bg-header-t.gif) no-repeat;
+	overflow:hidden;
+	text-align:right;
+	padding:34px 17px 5px;
+}
+#header .contact {
+	font-size:11px;
+	color:#fc0;
+	text-transform:uppercase;
+	text-decoration:none;
+	position:relative;
+	top:-1px;
+	vertical-align:bottom;
+}
+#header .contact:hover {
+	text-decoration:underline;
+}
+.social-networks {
+	margin:0 0 0 11px;
+	padding:0;
+	list-style:none;
+	display:inline-block;
+	vertical-align:bottom;
+}
+.social-networks li {
+	display:inline-block;
+	padding:0 3px 0 4px;
+	text-align:left;
+	vertical-align:top;
+}
+.social-networks a {
+	display:block;
+	text-indent:-9999px;
+	overflow:hidden;
+	background:url(/public/images/codeArmy/home/icon-social.png);
+	height:22px;
+}
+.social-networks .facebook {
+	width:12px;
+	background-position:0 0;
+}
+.social-networks .linkedin {
+	width:16px;
+	background-position:-23px 0;
+}
+.social-networks .twitter {
+	width:25px;
+	background-position:-50px 0;
+}
+#header .holder {
+	width:100%;
+	background:url(/public/images/codeArmy/home/bg-header-b.gif) no-repeat;
+	padding:0 0 10px;
+}
+#header .holder:after, .talent-block:after, .owner-block:after {
+	display:block;
+	content:"";
+	clear:both;
+}
+.logo {
+	margin:-33px 30px 0 37px;
+	text-indent:-9999px;
+	overflow:hidden;
+	background:url(/public/images/codeArmy/home/logo.png) no-repeat;
+	width:166px;
+	height:114px;
+	float:left;
+}
+.logo a {
+	display:block;
+	height:100%;
+}
+.main-nav {
+	margin:0;
+	padding:16px 0 0;
+	list-style:none;
+	float:left;
+}
+.main-nav li {
+	float:left;
+	font-size:18px;
+	line-height:24px;
+	text-transform:uppercase;
+	padding:26px 19px 18px 20px;
+	background:url(/public/images/codeArmy/home/separator-nav.png) no-repeat;
+}
+.main-nav li:first-child {
+	background:none;
+}
+.main-nav a {
+	color:#333;
+	text-decoration:none;
+	text-shadow:-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+.main-nav a:hover {
+	text-decoration:underline;
+}
+#main {
+	padding:0 0 10px;
+	background:url(/public/images/codeArmy/home/bg-main-b.gif) repeat-x 0 100%;
+}
+#main p {
+	margin:0;
+}
+#main h2 {
+	font:bold 36px/40px Arial, Helvetica, sans-serif;
+	color:#f60;
+	margin:0 0 3px;
+	text-shadow:-1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	text-align:center;
+}
+#main h2 span {
+	display:block;
+	font-size:30px;
+	color:#ccc;
+}
+#main h3 {
+	font:bold 34px/28px Arial, Helvetica, sans-serif;
+	color:#333;
+	margin:0 0 8px;
+}
+#main h3 .mark {
+	color:#f60;
+}
+#main h4 {
+	color:#f60;
+	font:bold 18px/24px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	margin:0 0 12px;
+}
+.sponsor {
+	background:url(/public/images/codeArmy/home/bg-content-block-b.png) no-repeat 0 100%;
+	width:100%;
+	float:left;
+	padding: 0 0 50px 0;
+}
+.sponsor p {
+	text-align:center;
+	font-size:18px;
+	color:#FF6600;
+}
+.opening {
+	background:url(/public/images/codeArmy/home/bg-content-block-b.png) no-repeat 0 100%;
+	width:100%;
+	float:left;
+	margin-top: -125px;
+	padding-top:125px;
+}
+.opening .holder {
+	background:url(/public/images/codeArmy/home/bg-opening-block.png) no-repeat 37px 0;
+	padding:32px 40px 38px;
+}
+.video-holder {
+	width:640px;
+	padding:0 25px 65px;
+	margin:0 auto -17px;
+	background:url(/public/images/codeArmy/home/bg-video-holder.png) no-repeat 0 100%;
+}
+.opening .text-holder {
+	width:400px;
+	margin:0 auto;
+	text-align:center;
+	line-height:18px;
+	color:#333;
+}
+#main .opening h2 {
+	margin:0 -20px 3px;
+}
+.talent-block {
+	background:url(/public/images/codeArmy/home/bg-content-block-t.gif) no-repeat;
+}
+.talent-block .holder {
+	background:url(/public/images/codeArmy/home/bg-content-block-b-2.gif) no-repeat 0 100%;
+	padding-top:125px;
+	margin-top:-125px;
+	width:100%;
+	float:left;
+}
+.talent-block .frame {
+	background:url(/public/images/codeArmy/home/bg-logo.png) no-repeat 315px 50%;
+	padding:55px 50px 47px;
+}
+.talent-block .row {
+	width:100%;
+	overflow:hidden;
+	background:url(/public/images/codeArmy/home/separator-content-1.png) no-repeat 592px 100%;
+	padding:0 0 10px;
+}
+#main .talent-block h2 {
+	margin-bottom:18px;
+}
+.sign-block {
+	float:left;
+	width:580px;
+	margin-top: 30px;
+}
+.sign-block .text {
+	float:left;
+	width:290px;
+	line-height:18px;
+	color:#333;
+	text-align:left;
+}
+.btn-holder {
+	float:right;
+	padding:27px 0 0;
+}
+.btn-holder .beta {
+	display:block;
+	font-size:11px;
+	line-height:14px;
+	color:#666;
+	margin-left:8px;
+}
+.btn-holder .btn {
+	display:block;
+	width:84px;
+	height:24px;
+	background:url(/public/images/codeArmy/home/btn.png) no-repeat;
+	padding:10px 15px;
+	text-align:center;
+	font:bold 14px/24px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color:#fc0;
+	text-shadow:-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+	text-decoration:none;
+}
+.talent-block .row .text-block {
+	float:right;
+	width:220px;
+	margin:10px 39px 0 0;
+	text-align:justify;
+}
+.text-row {
+	background:url(/public/images/codeArmy/home/separator-content-2.png) no-repeat 101px 0;
+	width:100%;
+	overflow:hidden;
+	padding:22px 0 0;
+}
+.text-row .block {
+	float:left;
+	width:220px;
+	margin:0 40px;
+	position:relative;
+	text-align:justify;
+}
+.text-row .block.center h4 {
+	text-align:center;
+}
+.talent-block .text-row .block {
+	padding-top:66px;
+	margin-top:-16px;
+}
+.text-row .block .img-holder {
+	position:absolute;
+	top:0;
+	width:206px;
+	text-align:center;
+}
+.owner-block {
+	background:url(/public/images/codeArmy/home/bg-content-block-t-2.gif) no-repeat;
+}
+.owner-block .holder {
+	width:100%;
+	float:left;
+	margin-top:-125px;
+	padding-top:125px;
+}
+.owner-block .frame {
+	background:url(/public/images/codeArmy/home/bg-owner-block.png) no-repeat 70px 19px;
+	padding:107px 50px 39px;
+}
+#main .owner-block h2 {
+	color:#333;
+	margin-bottom:25px;
+}
+.owner-block .sign-block {
+	float:none;
+	margin:0 auto 30px;
+	overflow:hidden;
+	width:700px;
+}
+.owner-block .sign-block .text {
+	text-align:left;
+}
+#main .owner-block .sign-block h3 {
+	font-size:24px;
+	margin:0 -30px 6px 0;
+}
+.owner-block .btn-holder {
+	padding:25px 9px 0 0;
+}
+.owner-block .btn-holder .btn {
+	background-position:0 -56px;
+	color:#fff;
+}
+.img-row {
+	width:100%;
+	overflow:hidden;
+	background:url(/public/images/codeArmy/home/separator-content-3.png) no-repeat 285px 100%;
+	padding:24px 0 10px;
+}
+.img-row .img-holder {
+	float:left;
+	width:220px;
+	margin:0 40px;
+}
+.img-row .img-holder img {
+	display:block;
+	margin:0 auto;
+}
+#footer {
+	background:#000 url(/public/images/codeArmy/home/bg-header-t.gif) no-repeat;
+	font-size:11px;
+	line-height:15px;
+	color:#ccc;
+	padding:57px 15px 37px;
+	overflow:hidden;
+}
+.nav-holder {
+	width:100%;
+	position:relative;
+	overflow:hidden;
+	padding:7px 0;
+}
+.nav-holder .frame {
+	position:relative;
+	float:left;
+	left:50%;
+}
+.nav-holder ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+	float:left;
+	position:relative;
+	left:-50%;
+}
+#footer ul li {
+	float:left;
+	padding:0 20px 0 21px;
+	background:url(/public/images/codeArmy/home/separator-footer.gif) no-repeat 0 2px;
+	text-transform:uppercase;
+	vertical-align:bottom;
+}
+#footer ul li:first-child {
+	background:none;
+}
+#footer a {
+	color:#ccc;
+	text-decoration:none;
+}
+#footer a:hover {
+	text-decoration:underline;
+}
+#footer .social-networks li {
+	background:none;
+	padding:0 3px 0 4px;
+	float:none;
+}
+#footer .social-networks {
+	margin:0 30px 0 -7px;
+	float:none;
+	left:0;
+	top:-7px;
+}
+#login-content {
+	width: 999px;
+	height:967px;
+	background:url(/public/images/codeArmy/login/bg.jpg) no-repeat;
+}
+#login-box {
+	background:url(/public/images/codeArmy/login/login-bg.jpg) no-repeat;
+	width:561px;
+	height:278px;
+	display:none;
+	font-family:'Ruda', sans-serif;
+	font-size:10.08pt;
+	color:white;
+}
+#login-box input[type=text], #login-box input[type=password] {
+	width:292px;
+	border:none;
+	background:none;
+	height:22px;
+	font-family:'Ruda', sans-serif;
+	font-size:10.08pt;
+	color:white;
+	padding:2px 5px 0 5px;
+}
+#enlist-box {
+	background:url(/public/images/codeArmy/login/enlist-bg1.jpg) no-repeat;
+	width:561px;
+	height:273px;
+	display:none;
+	font-family:'Ruda', sans-serif;
+	font-size:10.08pt;
+	color:white;
+}
+#enlist-box input[type=text], #login-box input[type=password] {
+	width:292px;
+	border:none;
+	background:none;
+	height:22px;
+	font-family:'Ruda', sans-serif;
+	font-size:10.08pt;
+	color:white;
+	padding:2px 5px 0 5px;
+}
+#register-box {
+	background:url(/public/images/codeArmy/signup/dialog-bg1.jpg) no-repeat;
+	width:561px;
+	height:273px;
+	display:none;
+	font-family:'Ruda', sans-serif;
+	font-size:10.08pt;
+	color:white;
+	display:none;
+}
+#register-box input[type=text], #register-box input[type=password] {
+	border:none;
+	background:none;
+	height:22px;
+	font-family:'Ruda', sans-serif;
+	font-size:10.08pt;
+	color:#CCC;
+	padding:2px 5px 0 5px;
+}
+#contact-form input {
+	position: absolute;
+	width: 313px;
+	height: 22px;
+	border: none;
+	background: none;
+	color:white;
+	font-size:9pt;
+	font-family:'Ruda', sans-serif;
+}
+#contact {
+	background:url(/public/images/codeArmy/contactus/Contact_Us.jpg) no-repeat;
+	width:776px;
+	height:359px;
+	margin:0 auto;
+	display:none;
+	color: #CCC;
+}
+#contact a {
+	text-decoration:none;
+	color:#ccc;
+}
+.contact_details li {
+	display: block;
+	height: 22px;
+	width: 230px;
+}
+.contact_info {
+	position: absolute;
+	top: 50px;
+	left: 20px;
+	line-height: 18px;
+}
+.contact_details {
+	display: block;
+	position: absolute;
+	top: 90px;
+}
+#contact .social_links {
+	display: block;
+	position: absolute;
+	top: 167px;
+	left: 25px;
+}
+#contact .social_links li {
+	display: block;
+	height: 24px;
+}
+.CAbutton:hover {
+	background:url(/public/images/codeArmy/button_hover.png) no-repeat;
+}
+.CAbutton {
+	background:url(/public/images/codeArmy/button.png) no-repeat;
+	width:130px;
+	border:none;
+	height:50px;
+	display:block;
+	font-family: 'Ruda', sans-serif;
+	font-size:10.8pt;
+	text-align:center;
+	display:block;
+	padding:14px 0 0 0;
+	margin:0 auto;
+	cursor:pointer;
+	text-decoration:none;
+	color:white;
+}
+input.CAbutton {
+	padding:0
+}
+#submit-holder {
+	width:130px;
+	height:60px;
+}
