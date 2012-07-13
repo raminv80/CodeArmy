@@ -67,7 +67,6 @@
 			url: '/register/Ajax_reg_div_developer',
 			data: {'ci_csrf_token': getCookie('ci_csrf_token') },
 			success: function(msg){
-				alert(msg);
 				if(msg=="success"){
 					$.fancybox.close();
 				}else{

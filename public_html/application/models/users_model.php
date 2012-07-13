@@ -81,7 +81,6 @@ class Users_model extends CI_Model {
 	
 	public function reg_division($div){
 		if(in_array($div,array('designer','developer','copywriter'))){
-			echo $div;
 			$sql = "UPDATE user_profiles set specialization=LOWER(?) WHERE user_id = ? and (isNULL(specialization) OR specialization='unknown')";
 			$res = $this->db->query($sql, array($div, $this->session->userdata('user_id')));
 			return $res;
