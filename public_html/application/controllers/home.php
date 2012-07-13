@@ -34,6 +34,13 @@ class Home extends CI_Controller {
 	}
 	
 	function index(){
+		if($this->session->userdata('username')) redirect('my-profile');
+		$this->view_data['window_title'] = "CodeArmy | Home";
+		$this->view_data['window_title'] = get_cookie('remember_me_token');
+		$this->load->view('home_codearmy_view', $this->view_data);
+	}
+	
+	function index_old(){
 		$this->view_data['action_is'] = 'index';
 		$this->load->helper('stories_helper');
 		$this->load->helper('user_helper');
@@ -58,6 +65,23 @@ class Home extends CI_Controller {
 		$this->view_data['total_visitors'] = $this->users_model->getVisitors();
 		$this->view_data['total_projects_cur_month'] = $this->projects_model->num_projects_month();
 		*/
+		
+		//ver5
+		if($this->input->post('action') == "create_project") {
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('title', 'Title', 'required');
+			$this->form_validation->set_rules('description', 'Description', 'required');
+			if ($this->form_validation->run() == FALSE) {
+				$this->view_data['form_error'] = true;
+			} else {
+				$project_id = $this->projects_model->create_project_v5($this->session->userdata('user_id'));
+				if($project_id != false) {
+					redirect('project/'.$project_id);
+				} else { // - if there is a problem writing to db
+					redirect(base_url()."error");
+				}
+			}
+		}
 		
 		//ver4
 		$this->load->helper('captcha');
@@ -128,6 +152,7 @@ class Home extends CI_Controller {
 		$this->load->view('home_v4_view', $this->view_data);
 	}
 	
+	
 	function AjaxProjectSel(){
 		$project_id = $this->input->post('project_sel');
 		$this->session->set_userdata('project_sel', $project_id);
@@ -161,6 +186,15 @@ class Home extends CI_Controller {
 				//if($this->sendfeedback())$this->session->set_flashdata('feedback','Your feedback is recieved. Thank you.');
 			}
 		}
+	}
+	
+	function Ajax_contact(){
+		$this->users_model->send_mail(
+			$this->input->post('email'),
+			'contact@codearmy.com',
+			$this->input->post('subject'),
+			"<ul><li>Date and Time: ".date('Y/m/d H:i')."</li><li>From: ".$this->input->post('name')."</li><li>Contact no:".$this->input->post('phone')."</li></ul><hr><p>".$this->input->post('message')."</p>"
+		);
 	}
 	
 	private function contact(){

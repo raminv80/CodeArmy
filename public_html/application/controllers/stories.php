@@ -225,6 +225,21 @@ class Stories extends CI_Controller {
 		$search = $this->input->post('search');
 		$time = $this->input->post('time');
 		$work_horse = $this->input->post('work_horse');
+		$order = $this->input->post('order');
+		$this->view_data['inputs'] = array(
+			'project_sel' => $this->input->post('project_sel'),
+			'cat_sel' => $this->input->post('category_sel'),
+			'skill_sel' => $this->input->post('skill_sel'),
+			'cash_from' => $this->input->post('cash_from'),
+			'cash_to' => $this->input->post('cash_to'),
+			'point' => $this->input->post('point'),
+			'type' => $this->input->post('type'),
+			'status' => $this->input->post('status'),
+			'search' => $this->input->post('search'),
+			'time' => $this->input->post('time'),
+			'work_horse' => $this->input->post('work_horse'),
+			'order' => $this->input->post('order'),
+		);
 		if(!$project_sel)$project_sel=0;
 		if(!$cat_sel)$cat_sel=0;
 		if(!$skill_sel)$skill_sel=0;
@@ -237,6 +252,7 @@ class Stories extends CI_Controller {
 		if(!$search)$search='';
 		if($search=='Type and press ENTER')$search='';
 		if(!$time)$time=0;
+		if(!$order)$order='';
 		switch($time){
 			case '0': $timeS=-1;$timeE=-1;break;
 			case '1': $timeS=-1;$timeE=1;break;
@@ -274,7 +290,7 @@ class Stories extends CI_Controller {
 		//
 		
 		$this->view_data['stories'] = 
-			$this->stories->browse_stories_v4($subject, $project_sel, $cat_sel, $type, $skill_sel, $cash_from, $cash_to, $point, $search, $timeS, $timeE);
+			$this->stories->browse_stories_v5($subject, $project_sel, $cat_sel, $type, $skill_sel, $cash_from, $cash_to, $point, $search, $timeS, $timeE, $order);
 		$this->view_data['projects'] = $this->projects_model->get_all_projects();
 		$this->view_data['categories'] = $this->projects_model->get_all_categories();
 		$this->view_data['skills'] = $this->skill_model->get_all_skills();

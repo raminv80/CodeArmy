@@ -33,7 +33,7 @@ class Signup extends CI_Controller {
 		}
 	}
 	
-	// index page
+	//index page workpad
 	function index() {
 		$user_id = $this->session->userdata('user_id');
 		if($user_id){
@@ -74,7 +74,7 @@ class Signup extends CI_Controller {
 					$this->view_data['captcha_error'] = "You must submit the pharase that appears in the image.";
 					$this->view_data['form_error'] = true;
 				}else{
-					if($this->users_model->create_new_user()) {
+					if($this->users_model->create_new_user_v5()) {
 						// signup successful
 						$this->view_data['signup_success'] = true;
 						$this->session->unset_userdata('referer');

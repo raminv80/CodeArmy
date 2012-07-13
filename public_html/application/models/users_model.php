@@ -7,9 +7,19 @@ class Users_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	private function gen_userId(){
+		$id = md5(microtime());
+		$query = $this->db->get_where('users', array('user_id' => $id));
+		while($query->num_rows() > 0){
+			$id = md5(microtime().rand());
+			$query = $this->db->get_where('users', array('user_id' => $id));
+		}
+		return $id;	
+	}
+	
 	// create new user 
 	public function create_new_user() {
-	    $user_id = md5(microtime());
+	    $user_id = gen_userId();
 		$doc = array(
 			"user_id" => $user_id,
 			"username" => strtolower($this->input->post('username')),
@@ -22,6 +32,93 @@ class Users_model extends CI_Model {
 		$res = $this->db->insert('users', $doc);
 		$this->create_new_profile($user_id);
 		return $res;
+	}
+	
+	public function create_new_user_v5() {
+		$user_id = gen_userId();
+		$doc = array(
+			"user_id" => $user_id,
+			"username" => strtolower($this->input->post('username')),
+			"secret" => md5($this->input->post('password')),
+			"email" => strtolower($this->input->post('email')),
+			"created_at" => date('Y-m-d H:i:s'),
+			"role" => 'user',
+			"user_status" => 'disable'
+		); 
+		$res = $this->db->insert('users', $doc);
+		$this->create_new_profile($user_id);
+		$this->assign_skill('communication', $user_id);
+		$this->assign_skill('Leadership', $user_id);
+		return $res;
+	}
+	
+	public function create_new_user_codearmy() {
+		$user_id = $this->gen_userId();
+		$doc = array(
+			"user_id" => $user_id,
+			"username" => strtolower($this->input->post('username')),
+			"secret" => md5($this->input->post('password')),
+			"email" => strtolower($this->input->post('email')),
+			"created_at" => date('Y-m-d H:i:s'),
+			"role" => 'user',
+			"user_status" => 'disable'
+		); 
+		$res = $this->db->insert('users', $doc);
+		$this->create_new_profile($user_id, $this->input->post('dob'));
+		$this->assign_skill('communication', $user_id);
+		$this->assign_skill('Leadership', $user_id);
+		$data = array(
+			'username' => $this->input->post('username'),
+			'user_id' => $user_id,
+			'role' => 'user',
+			'level' => 1,
+			'tutorial' => 0,
+			'is_logged_in' => true
+		);
+		$this->session->set_userdata($data);
+		return $user_id;
+	}
+	
+	public function reg_division($div){
+		if(in_array($div,array('designer','developer','copywriter'))){
+			echo $div;
+			$sql = "UPDATE user_profiles set specialization=LOWER(?) WHERE user_id = ? and (isNULL(specialization) OR specialization='unknown')";
+			$res = $this->db->query($sql, array($div, $this->session->userdata('user_id')));
+			return $res;
+		}
+	}
+	
+	public function assign_skill($skill_name, $user_id){
+		$sql = "select id from skill where LOWER(name) = LOWER(?)";
+		$res = $this->db->query($sql, array($skill_name));
+		if($res->num_rows>0){
+			$res = $res->result_array();
+			$skill_id = $res[0]['id'];
+			$doc = array(
+				"user_id" => $user_id,
+				"skill_id" => $skill_id,
+				"point" => 0,
+				"claim" => 0
+			);
+			$this->db->insert('skill_set', $doc);
+		}
+	}
+	
+	public function promote_to_po($user_id){
+		$this->db->update('users',array('user_status'=>'enable'),array('user_id'=>$user_id));
+		$this->db->update('user_profiles',array('specialization'=>'client'),array('user_id'=>$user_id));
+	}
+	
+	public function is_po_v5($user_id){
+		$res = $this->db->get_where('users', array('user_id'=>$user_id, 'user_status' => 'enable'));
+		return $res->num_rows()>0;
+		
+	}
+	
+	public function can_claim($user_id){
+		$sql = "SELECT * FROM users WHERE user_id = ? and claims>0";
+		$res = $this->db->query($sql, array($user_id));
+		return $res->num_rows()>0;
 	}
 	
 	public function promote($user_id){
@@ -68,9 +165,14 @@ class Users_model extends CI_Model {
 	}
 	
 	// create new profiles
-	public function create_new_profile($user_id) {
+	public function create_new_profile($user_id, $dob=NULL) {
 		$doc = array(
-			"user_id" => $user_id
+			"user_id" => $user_id,
+			"birthdate" => $dob,
+			"lan_speak" => 'English',
+			"lan_rw" => 'English',
+			"gender" => 'male',
+			"specialization" => 'unknown'
 		); 
 		return $this->db->insert('user_profiles', $doc);
 	}
@@ -104,16 +206,69 @@ class Users_model extends CI_Model {
 		return $result;
  	}
 	
+	function get_remember_me_token(){
+		$id = md5(microtime());
+		$query = $this->db->get_where('users', array('remember_me_token' => $id));
+		while($query->num_rows() > 0){
+			$id = md5(microtime().rand());
+			$query = $this->db->get_where('users', array('remember_me_token' => $id));
+		}
+		return $id;
+	}
+	
 	//validate login
 	function validate() {
 		$this->db->where('username', $this->input->post('username'));
 		$this->db->where('secret', md5($this->input->post('password')));
 		$query = $this->db->get('users');
 		if($query->num_rows == 1) {
+			if($this->input->post('remember')=="remember"){
+				$token = $this->get_remember_me_token();
+				$user = $query->result_array();
+				$this->db->update('users',array('remember_me_token'=>$token),array('user_id'=>$user[0]['user_id']));
+				//create cookie
+				$cookie = array(
+					'name'   => 'remember_me_token',
+					'value'  => $token,
+					'expire' => '1209600',  // Two weeks
+					'domain' => $_SERVER['HTTP_HOST'],
+					'path'   => '/'
+				);
+				
+				set_cookie($cookie);
+			}
 			return $query;
 		}
 		else {
 			return false;
+		}
+	}
+	
+	//CodeArmy check authorisation function
+	public function is_authorised($role = 'all'){
+		if($this->session->userdata('username') && (($role==$this->session->userdata('role'))||($role=='all')))
+			return true;
+		else{
+			//check remember me cookie
+			$val = get_cookie('remember_me_token');
+			$query = $this->db->get_where('users', array('remember_me_token' => $val));
+			if($query->num_rows == 1) {
+				//resume session
+				$query_data = $query->result_array();
+				$data = array(
+					'username' => $this->input->post('username'),
+					'user_id' => $query_data[0]['user_id'],
+					'role' => $query_data[0]['role'],
+					'level' => $this->gamemech->get_level($query_data[0]['exp']),
+					'tutorial' => $query_data[0]['show_tutorial'],
+					'is_logged_in' => true
+				);
+				$this->session->set_userdata($data);
+				return true;
+			}
+			else {
+				return false;
+			}	
 		}
 	}
 		
@@ -127,6 +282,27 @@ class Users_model extends CI_Model {
 			else {
 				return false;
 			}		
+	}
+	
+	function get_avatar($user_id){
+		$profile = $this->get_profile($user_id);
+		$user = $this->get_user($user_id);
+		$user = $user->result_array();
+		$user = $user[0];
+		$profile = $profile->result_array();
+		$profile = $profile[0];
+		return ($profile['avatar'])? '/public/'.$profile['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $user['email'] ) ) );	
+	}
+	
+	function getWorkTitle($user_id, $story_id){
+		$res = $this->db->get_where('works', array('work_id' => $story_id));
+		$res = $res->result_array();
+		if(strcmp($res[0]['owner'], $user_id)==0) return 'Product owner';
+		$user = $this->get_user($user_id);
+		$user = $user->result_array();
+		$user = $user[0];
+		if($user['role']=='admin') return 'Admin';
+		return 'lvl '.$this->gamemech->get_level($user['exp']);
 	}
 	
 	//update profile
@@ -370,7 +546,7 @@ class Users_model extends CI_Model {
 	
 	function reset_pass_notify($username){
 		$user = $this->get_user($username,'username');
-		if($user->num_rows()>0){
+		if($user && $user->num_rows()>0){
 			$user = $user->result_array();
 			$user = $user[0];
 			$doc = array(
@@ -382,8 +558,26 @@ class Users_model extends CI_Model {
 			);
 			$this->notify($user['user_id'],'Password Reset',"We recieved a request regarding reseting your password. If you wish to proceed with this action click on following link: <a href='".base_url()."login/recovery/".$doc['code']."'>reset password</a>");
 			$this->db->insert('actions', $doc);
-			return "An email is sent to you containing furthur instuctions...";
+			return "An email is sent to you containing further instuctions...";
 		}else return "Uername doesn't exist!";
+	}
+	
+	function reset_pass_notify_codearmy($email){
+		$user = $this->get_user($email,'email');
+		if($user && $user->num_rows()>0){
+			$user = $user->result_array();
+			$user = $user[0];
+			$doc = array(
+				'code' => md5(date('Y-m-d H:i:s').$user['user_id'].'pass'),
+				'action' => 'pass',
+				'user_id' => $user['user_id'],
+				'created_at' => date('Y-m-d H:i:s'),
+				'validity' => date('Y-m-d H:i:s', time()+60*60),
+			);
+			$this->notify($user['user_id'],'Password Reset',"We recieved a request regarding reseting your password. If you wish to proceed with this action click on following link: <a href='".base_url()."login/recovery/".$doc['code']."'>reset password</a>");
+			$this->db->insert('actions', $doc);
+			return "Alright sir! i've sent you an email containing a confidential link to reset your password. Please check your email ASAP.";
+		}else return "Sorry sir! but your email is not registered in our system.";
 	}
 	
 	function reset_pass($code){
@@ -398,7 +592,7 @@ class Users_model extends CI_Model {
 				$user = $user[0];
 				$newPass = $this->createRandomPassword();
 				$sql = "update users set secret=? where user_id=?";
-				$this->notify($user['user_id'], 'Your Password Reseted',"Your password on Workpad is reseted to: ".$newPass);
+				$this->notify($user['user_id'], 'Your Password is Reseted',"<p>Hi,</p><p>Your password on <a href='http://workpad.my'>Workpad</a> is reseted to: ".$newPass."</p><p>Please <a href='http://workpad.my/login'>click here to go to login page</a>.</p><p>Regards.</p>");
 				$this->db->query($sql, array(md5($newPass),$user['user_id']));
 				return "Dear ".$user['username'].", an email is sent to you containing your new password.";
 			}else return "Error: Invalid Code!";
@@ -431,8 +625,19 @@ class Users_model extends CI_Model {
 		return $res->result_array();
 	}
 	
-	function notify($user_id, $subject, $message, $category = NULL, $shor_message="", $target_id = NULL){		
-			ini_set('display_error',0);
+	function subscribe($email, $type, $ip, $agent){
+		$data = array(
+			'email' => $email,
+			'type' => $type,
+			'ip' => $ip,
+			'agent' => $agent
+		);
+		
+		$this->db->insert('subscription', $data);
+	}
+	
+	function notify($user_id, $subject, $message, $category = NULL, $shor_message="", $target_id = NULL){
+			ini_set('display_error',1);
 			error_reporting('E_ALL');
 			$q = $user_id;
 			
@@ -485,9 +690,27 @@ class Users_model extends CI_Model {
 			{
 			   echo "Message could not be sent. <p>";
 			   echo "Mailer Error: " . $mail->ErrorInfo;
-			   exit;
+			   exit; die();
 			}
 			
+	}
+	
+	public function send_mail($from, $to, $subject, $message){
+		require_once(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
+		$mail = new PHPMailer();
+		$mail->IsSMTP();
+		$mail->SMTPAuth   = true;
+		$mail->Host       = "mail.vakilian.net";
+		$mail->Username = "noreply@vakilian.net";
+		$mail->Password = "work123";
+		$mail->SetFrom($from);
+		$mail->AddAddress($to);
+		$mail->WordWrap = 50;
+		$mail->IsHTML(true);
+		$mail->Subject = $subject;
+		$mail->Body    = $message;
+		$mail->AltBody = $message;
+		$mail->Send();
 	}
 		
 }

@@ -108,7 +108,7 @@ class Stories_model extends CI_Model {
 		foreach($data as $priority=>$work_id){
 			if(trim($work_id)!=""){
 				$doc = array("priority" => $priority, "sprint" => $sprint_id);
-				$whr = array('work_id' => substr($work_id,5,strlen($work_id)-5), 'project_id'=> $project_id, 'creator'=> $creator_id);
+				$whr = array('work_id' => substr($work_id,5,strlen($work_id)-5), 'project_id'=> $project_id);
 				$this->db->update('works', $doc, $whr);
 				if($this->db->affected_rows()>0)$updates++;
 			}
@@ -116,7 +116,7 @@ class Stories_model extends CI_Model {
 		$doc = array("start" => $date_from, "end" => $date_to);
 		$whr = array('project_id'=> $project_id, 'id'=> $sprint_id);
 		$this->db->update('sprints', $doc, $whr);
-		return $sprint_id;
+		return $updates;
 	}
 	
 	// - create new stories
@@ -452,12 +452,39 @@ class Stories_model extends CI_Model {
 			'comment_body' => $this->input->post('comments')
 		);
 		if($file!="")$doc['comment_file'] = $file;
-		return $this->db->insert('comments', $doc);
+		$this->db->insert('comments', $doc);
+		return $this->db->insert_id();
 	}
 	
 	function delete_comment($id){
+		$res = $this->get_comment($id);
+		if($res && count($res)>0){
+			//delete file?
+			if($res[0]['comment_file'] && $res[0]['comment_file']!=""){
+				unlink($res[0]['comment_file']);
+			}
+		}
 		$sql = "delete from comments where comment_id = ?";
 		$this->db->query($sql, array($id));	
+	}
+	
+	function subscribe_comment($user_id, $story_id){
+		$doc = array(
+			'user_id' => $user_id,
+			'work_id' => $story_id
+		);
+		$this->db->insert('subscription_comment', $doc);
+	}
+	
+	function subscribed($user_id, $work_id){
+		$sql = "SELECT * FROM subscription_comment WHERE user_id=? and work_id = ?";
+		$res = $this->db->query($sql, array($user_id, $work_id));	
+		return $res->num_rows>0;
+	}
+	
+	function unsubscribe_comment($user_id, $story_id){
+		$sql = "DELETE from subscription_comment where user_id = ? and work_id=?";
+		$this->db->query($sql, array($user_id, $story_id));	
 	}
 	
 	function make_bid() {
@@ -1104,6 +1131,84 @@ class Stories_model extends CI_Model {
 			case 'prize':$sql .= " ORDER BY cworks.cost";break;
 			default: $sql.=" ORDER BY cworks.bid_deadline ASC"; 
 		}
+		$res = $this->db->query($sql, $param);
+		if($res->num_rows()>0){
+			return $res->result_array();
+		}else return false;
+	}
+	
+	function browse_stories_v5($subject, $project_sel, $cat_sel, $type, $skill_sel, $cash_from, $cash_to, $point, $search, $timeS, $timeE, $order){
+		//$sql = "SELECT cworks.*, project.project_name FROM (select works.*, users.username from works left join users on works.work_horse=users.user_id) as cworks,project WHERE project.project_id=cworks.project_id ";
+		
+		$sql = "select cworks.*, IFNULL(categories.name,'General') as category_name from (SELECT project.project_name, works.category, works.work_id,works.title, works.created_at, works.description, works.cost, works.points, works.bid_deadline, (select count(*) as bid_num from bids where bids.work_id = works.work_id) as bids, (select count(*) as coment_num from comments where comments.story_id = works.work_id) as comments FROM works, project, sprints WHERE (project.project_id = works.project_id) AND works.sprint=sprints.id AND sprints.project_id=works.project_id AND curdate()>=sprints.start AND curdate()<=sprints.end AND (lower(works.status) in ('open','reject')) ";
+		
+		$param = array();
+		if($timeS!=-1){
+			$sql.="AND (hour(TIMEDIFF( NOW( ) ,  `bid_deadline` )) >= ?) ";
+			$param[] = $timeS;
+		}
+		
+		if($timeE!=-1){
+			$sql.="AND (hour(TIMEDIFF( NOW( ) ,  `bid_deadline` )) < ?) ";
+			$param[] = $timeE;
+		}
+		
+		if($project_sel!=0){
+			$sql.="AND (works.project_id = ?) ";
+			$param[] = $project_sel;
+		}
+		if($cat_sel!='0' and $cat_sel!='g'){
+			$sql.="AND (works.category = ?) ";
+			$param[] = $cat_sel;
+		}
+		if($cat_sel==='g'){
+			$sql.="AND isnull(works.category) ";	
+		}
+		if($skill_sel!=0){
+			$sql.="AND (works.work_id in (select work_id from work_skill where skill_id = ?)) ";
+			$param[] = $skill_sel;
+		}
+		if(trim($cash_from)!=''){
+			$sql.="AND (works.cost >= ?) ";
+			$param[] = $cash_from;
+		}
+		if(trim($cash_to)!=''){
+			$sql.="AND (works.cost <= ?) ";
+			$param[] = $cash_to;
+		}
+		if($point!=0){
+			$sql.="AND (works.points = ?) ";
+			$param[] = $point;
+		}
+		if($type!='0'){
+			$sql.="AND (works.type = ?) ";
+			$param[] = $type;
+		}
+		if(trim($search)!='' && strlen(trim($search))>2){
+			$sql.="AND (works.title like concat('%',?,'%') OR works.description like concat('%',?,'%')) ";
+			$param[] = $search;
+			$param[] = $search;
+		}
+		$sql.=") as cworks LEFT JOIN categories on cworks.category = categories.id ";
+		
+		$ord = "";
+		switch($order){
+			case 'hottest':$ord .= "cworks.bids DESC, cworks.comments DESC,";break;
+			case 'latest':$ord .= "cworks.created_at DESC,";break;
+		}
+		
+		switch($subject){
+			case 'userstory':$ord .= " cworks.project_name, cworks.title,";break;
+			case 'bids':$ord .= " cworks.bids,";break;
+			case 'prize':$ord .= " cworks.cost,";break;
+			default: $ord.=" cworks.bid_deadline ASC,"; 
+		}
+		
+		if($ord!=""){
+			 $ord = substr($ord, 0, -1);
+			 $sql = $sql." Order By ".$ord;
+		}
+		
 		$res = $this->db->query($sql, $param);
 		if($res->num_rows()>0){
 			return $res->result_array();

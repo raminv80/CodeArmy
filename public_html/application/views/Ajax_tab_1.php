@@ -7,12 +7,14 @@
 												<div class="frame">
 													<dl>
                                                     	<?php if($my_skills){foreach($my_skills as $skill):?>
-                                                        <dt><span style="text-shadow: 0 1px 10px white;font-size: 20px;font-weight: lighter; background:none; text-indent:0;"><?php echo $skill['name'];?></span></dt>
-														<dd><?php echo $skill['point'];?></dd>
+                                                        <dt><span style="text-shadow: 0 1px 10px white;font-size: 16px;font-weight: lighter; background:none; text-indent:0; padding-top:4px"><?php echo $skill['name'];?></span></dt>
+                                                        <?php $color = 'yellow'; $point = $skill['claim'];?>
+														<dd><span style="color:<?=$color?>"><?=$point?></span></dd>
                                                         <?php endforeach;}else{?>
-														<dt><span>HTMl / xhtml</span></dt>
+                                                        <?php /*
+														<dt><span>TECHNICAL SKILL</span></dt>
 														<dd>0</dd>
-														<dt><span class="text-css">css</span></dt>
+														<dt><span class="text-css">SOFT SKILL</span></dt>
 														<dd>0</dd>
 														<dt><span class="text-javascript">javascript</span></dt>
 														<dd>0</dd>
@@ -23,32 +25,36 @@
 														<dt><span class="text-leadership">leadership</span></dt>
 														<dd>0</dd>
 														<dt><span class="text-teamwork">teamwork</span></dt>
-														<dd>0</dd>
+														<dd>0</dd>*/?>
 														<?php }?>
 													</dl>
 													<div class="skills-points">
                                                     	<?php if($my_skills){foreach($my_skills as $skill):?>
-                                                        <div id="css" class="skill-chart-container">
+                                                        <div id="css" class="skill-chart-container" style="height:37px">
                                                         	<?php
-																$last_point = $this->session->flashdata('skill-'.$skill['id']);
 																$point = $skill['point'];
-																if($last_point){
-																	$point = $last_point;
-																	$add_point = $skill['point'] - $last_point;
+																$point = ceil($point/max_skill_point*100);
+																if($point<=0)$point = 0;
+																if($point>100)$point = 100;
+																/*
+																$claim = $skill['claim'];
+																if(($claim - $point) > 0){
+																	$add_point = $claim - $point;
 																}else{
 																	$add_point = 0;
 																}
-																$point = round($point/max_skill_point*100);
-																$add_point = round($add_point/max_skill_point*100);
-																if($point<=0)$point = 1;
-																if($point>100)$point = 100;
+																$add_point = ceil($add_point/max_skill_point*100);
 																if($add_point<0)$add_point=0;
 																if($add_point>100)$add_point=100;
+																*/
+																$add_point = 0;
 															?>
                                                         	<div class="skill-chart" style="width:<?php echo $point;?>%"></div>
                                                             <div class="skill-chart-add" style="width:<?php echo $add_point;?>%"></div>
+                                                            <?php /*<div><?php if($me['claims']>0){?><?= form_open('/myoffice', array('style' => 'margin: 0'))?><input type="hidden" name="claim" value="<?=$skill['id']?>" /><input type="hidden" name="claim_skill" value="+" /><a style="float: right;margin: -9px -22px;font-size: 24px;font-weight: bold;" href="javascript: void(0)" class="submit" >+</a><?=form_close()?><?php }?></div>*/ ?>
                                                         </div>
                                                         <?php endforeach;}else{?>
+                                                        <?php /*
                                                     	<div id="css" class="skill-chart-container">
                                                         	<div class="skill-chart" style="width:1%"></div>
                                                         </div>
@@ -69,10 +75,57 @@
                                                         </div>
                                                         <div id="css" class="skill-chart-container">
                                                         	<div class="skill-chart" style="width:1%"></div>
-                                                        </div>
+                                                        </div>*/?>
                                                         <?php }?>
                                                     </div>
 												</div>
+                                                <?php if($show_claim){?>
+                                                <div class="frame" style="padding:0">
+                                                	<?php if(!$my_skills){?>
+                                                	<p>Assign yourselfe 3 skills and let the wowrld know what your are good at.</p>
+                                                    <?php }?>
+                                                    <div id="add_skill"> 
+                                                    <?php echo form_open('/myoffice', array('name'=> 'add_skill', 'style'=>'margin:0;'))?>
+                                                    	<a href="javascript: void(0)" class="add_skill_show">+ Add <?=$me['claims']?> more Skills</a>
+                                                        <div style="display:none">
+                                                    	Add <select name="skill" >
+                                                        	<?php if(!$show_voucher){?>
+															<optgroup label="Management Skills">
+	                                                            <?php foreach($all_skills as $skill)if($skill['type']=="management"):?>
+                                                        		<option value="<?=$skill['id']?>"><?=$skill['name']?></option>
+                                                                <?php endif;?>
+                                                            </optgroup>
+                                                            <?php }?>
+                                                            <optgroup label="Hard Skills">
+                                                            	<?php foreach($all_skills as $skill)if($skill['type']=="hard"):?>
+                                                        		<option value="<?=$skill['id']?>"><?=$skill['name']?></option>
+                                                                <?php endif;?>
+                                                            </optgroup>
+                                                            <optgroup label="Soft Skills">
+	                                                            <?php foreach($all_skills as $skill)if($skill['type']=="soft"):?>
+                                                        		<option value="<?=$skill['id']?>"><?=$skill['name']?></option>
+                                                                <?php endif;?>
+                                                            </optgroup>
+                                                        </select>
+                                                    Skill to the skill set
+                                                    <input type="submit" value="Go" name="add_skill" />
+                                                    </div>
+                                                    <?php echo form_close();?>
+                                                    </div>
+                                                </div>
+                                                <?php }?>
+                                                <div class="frame" style="padding:0">
+                                                <?=$voucher?>
+                                                <?php if($show_voucher){?>
+													<div id="be_po">
+                                                    	<?= form_open('/myoffice')?>
+                                                        	Voucher Code: 
+                                                        	<input name="code" value="" maxlength="12" />
+                                                            <input type="submit" value="Submit" name="submit" />
+                                                        <?= form_close();?>
+                                                    </div>
+                                                <?php }?>
+                                                </div>
 											</div>
 										</div>
 										<div class="task-holder">
@@ -215,3 +268,13 @@
 								</div>
 							</div>
 						</div>
+<script>
+$('a.submit').click(function(){
+	test = $(this);
+	var form = $(this).parents('form');
+	form.submit();
+});
+$('a.add_skill_show').click(function(){
+	$(this).next('div').slideToggle();
+});
+</script>

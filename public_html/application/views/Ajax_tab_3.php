@@ -15,7 +15,9 @@
 							<span class="date"><?php echo $message['created_at'];?></span>
 							<div class="arrow"></div>
 						</dt>
-						<dd><?php echo $message['message'];?></dd>
+						<dd><?php echo $message['message']; if($message['category'] == "message"){?>
+                        		<a style="border:1px solid white; background: #CCC; color:#222;-moz-border-radius: 5px; border-radius: 5px; font-size:12px; margin: 2px; padding: 2px; float:right" href="http://www.workpad.my/story/<?php echo substr($message['message'], strpos($message['message'], "http://www.workpad.my/story/")+strlen("http://www.workpad.my/story/"), 13); ?>#comment-top">Reply in Discussion board</a><?php }?><hr />
+                        </dd>
 						
 						<?php endforeach;?>
 						

@@ -181,7 +181,21 @@
     <div id="push-down">&nbsp;</div>
   </div>
 </section>
-<?php $this->load->view('includes/footer4'); ?>
+<script>
+	$(function() {
+		// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+		$( "#dialog:ui-dialog" ).dialog( "destroy" );
+	
+		$( "#dialog-modal" ).dialog({
+			height: 140,
+			modal: true
+		});
+	});
+</script>
+<div id="dialog-modal" title="Almost there!">
+	<p>Wait! You are just one step away from completing this job. Prepare your files and submit them at the bottom of this page.</p>
+</div>
+<?php $this->load->view('includes/footer5'); ?>
 <style>
 .WP-main .WP-people-placeholder {
 color: white;

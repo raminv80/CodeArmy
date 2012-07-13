@@ -184,14 +184,30 @@
             ?>
             <div id="attach" style="margin: 0 0 10px 20px;">
                 <label for="file">Attach a file <span style="color:#CCC; font-size:10px" class="hint">(only zip or image less than 10MB)</span>:</label>
-                <input type="file" name="userfile" class="fileUpload" style="color:white" >
+                <input accept="image/*|application/x-zip-compressed" id="file-upload" type="file" name="userfile" class="fileUpload" style="color:white" >
+                <div id="file-upload-status"></div>
                 <input type="hidden" value="has_file" name="has_file" />
             </div>
             <?php }else echo form_open('story/comments');?>
             <textarea name="comments" id="comments-text" class="" style=""></textarea>
             <input type="hidden" value="<?php echo $work_data['work_id']; ?>" name="story_id">
             <input type="hidden" value="<?php echo $this->session->userdata('username'); ?>" name="user_id">
-            <input id="comments-submit" type="submit" />
+            <div style=" height:22px">
+            	<input id="comments-submit" type="button" />
+            	<div style="display:none" id="ajax-loader-bar">
+                	<img style="margin-left:164px" src="/public/images/ajax-bar.gif" />
+                </div>
+            </div>
+            <div style="float:right; margin-right:14px">
+            	<a style="margin:0 10px" href="javascript: void(0)" id="follow-email" class="tip" title="Follow: recieve email notifivations on new comments">
+	                <input type="checkbox" <?php if($subscribed){?>checked="checked"<?php }?> id="follow-discussion" >
+                    <label for="follow-discussion"><img border="0" src="/public/images/follow-email.png" align="absmiddle" /></label>
+                </a>
+            	<a class="tip" href="javascript: void(0)" title="Quick reply mode: press enter to send">
+                	<input type="checkbox" id="enter-shortcut" />
+                    <label for="enter-shortcut"><img border="0" src="/public/images/enter-icon.png" align="absmiddle" /></label>
+                </a>
+            </div>
             <?php echo form_close(); ?>
         <?php }?>
         <div id="comments-section">
@@ -209,18 +225,20 @@
 				$myComment = $comment['username']==$this->session->userdata('username');
 				$admin = $this->session->userdata('role')=='admin';
 		?>
+          <div id="comment_<?=$comment['comment_id']?>">
           <table width="550px" class="<?php if($this->session->userdata('username')==strtolower($comment['username']))echo 'my-comment';?>">
             <tr>
-              <td style="vertical-align:top;" width="50"><div style="float: left; width: 180px;"><img style="float: left;padding-right:5px;" src="<?php echo ($comment['avatar'])? '/public/'.$comment['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $comment['email'] ) ) );?>" /><p id="commentator"><?php echo $comment['username']; ?></p>
-                <p id="level"><?php if(strcasecmp($work_data['username'],$comment['username'])==0){?>product owner<?php }elseif($this->session->userdata('role')=='admin'){?>Admin<?php }else{?>lvl <?php $level = $this->gamemech->get_level($comment['exp']);echo $level;}?></p></div><p id="comment-content"><?php echo $comment['comment_body']; ?></p>
+              <td style="vertical-align:top;" width="50"><div style="float: left; width: 180px;"><img style="float: left;padding-right:5px;" src="<?php echo ($comment['avatar'])? '/public/'.$comment['avatar'] : 'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $comment['email'] ) ) );?>" /><p id="commentator"><a title="View Profile: click to view user details" class="tip" href="/user/<?= $comment['user_id']; ?>"><?php echo $comment['username']; ?></a></p>
+                <p id="level"><?php echo $this->users_model->getWorkTitle($comment['user_id'], $work_data['work_id'])?></p></div><p id="comment-content"><?php echo $comment['comment_body']; ?></p>
                 <?php if($comment['comment_file']):?>
                     <div class="ds-posted" style="margin-right:30px">
                         <a href="/<?php echo $comment['comment_file'];?>">download attached</a>
                     </div>
                 <?php endif;?>
-                <p id="date-comment">Posted <?php echo date('j M Y', strtotime($comment['comment_created'])); ?> <?php if($myComment || $admin){?>(<a title="Remove this comment" href="/project/remove_comment/<?=$comment['comment_id']?>"><img alt="Remove Comment" src="/public/images/icon_delete.png"  /></a>)<?php }?></p></td>
+                <p id="date-comment">Posted <?php echo date('j M Y', strtotime($comment['comment_created'])); ?> <?php if($myComment || $admin){?>(<a title="Delete: press to remove comment" id="remove_<?=$comment['comment_id']?>" class="remove_comment tip" href="javascript: void(0)"><img alt="Remove Comment" src="/public/images/icon_delete.png"  /></a>)<?php }?></p></td>
             </tr>
           </table>
+          </div>
         <?php } ?>
         </div>
       </div>
@@ -297,5 +315,133 @@
     &nbsp; </div>
   </div>
 </section>
+<script type="text/javascript">
+    // Enable pusher logging - don't include this in production
+    /*Pusher.log = function(message) {
+      if (window.console && window.console.log) window.console.log(message);
+    };
 
-<?php $this->load->view('includes/footer4'); ?>
+    // Flash fallback logging - don't include this in production
+    WEB_SOCKET_DEBUG = true;
+	*/
+	formdata = false;
+	deleteConfirmed = false;
+	if (window.FormData) {
+		formdata = new FormData();
+	}
+	$('#file-upload').change(function(){
+				var file = this.files[0];
+				if(file.type!="application/zip" && !file.type.match(/image.*/)){
+					alert("Only Zip, Jpeg, PNG or GIF files are allowed!");
+					this.value = null;
+					return false;
+				}
+				if(file.size>10485760){
+					alert("File size is too biggy! Maximum file size for upload is 10MB!");
+					this.value = null;
+					return false;
+				}
+				if ( window.FileReader ) {
+					reader = new FileReader();
+					reader.onloadend = function (e) { 
+						//you can update a widget to mention we are ready to upload
+					};
+					reader.readAsDataURL(file);
+					if (formdata) {
+						formdata.append("files", file);
+					}
+				}
+	});
+	$('#comments-submit').click(function(){
+		$(this).slideUp();
+		$('#ajax-loader-bar').slideDown();
+		var msg = $('#comments-text').val();
+		if($.trim(msg.length)>2){
+			if (formdata){
+				formdata.append("comments", $("#comments-text").val());
+				formdata.append("has_file", 'has_file');
+				formdata.append("story_id", '<?=$work_data['work_id']?>');
+				formdata.append("user_id", "<?=$this->session->userdata('username')?>");
+				formdata.append("ci_csrf_token", $("input[name='ci_csrf_token']").val());
+				$.ajax({
+					url: "/story/comments_v5",
+					type: "POST",
+					data: formdata,
+					processData: false,
+					contentType: false,
+					success: function (res) {
+						$("#comments-text").val('');
+						$('#file-upload').val('');
+						$('#comments-submit').slideDown();
+						$('#ajax-loader-bar').slideUp();
+						$("#comments-text").focus();
+						console.log(res);
+					}
+				});
+			}
+		}else{
+			alert("Message is too short! your message has less than 3 characters!");	
+		}
+	});
+	$('#comments-text').keypress(function(ev){
+			if(($('#enter-shortcut:checked').length>0) && ev.which==13){
+				$('#comments-submit').click();
+			}
+		});
+	$('#follow-discussion').change(function(){
+			var checked = $('#follow-discussion:checked').length;
+			$(this).attr('disabled','disabled');
+			$.post('/project/subscribe_comment_v5', {
+				'story_id': '<?=$work_data['work_id']?>', 
+				'subscribe': checked,
+				'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>'
+				}, function(res){
+					$('#follow-discussion').removeAttr("disabled");
+					console.log(res);
+				});
+		});
+	function init_comments(){
+		$('.remove_comment').click(function(){
+			if(deleteConfirmed || confirm('Are you sure you want to delete this post?')){
+				deleteConfirmed = true;
+				var res = $(this).attr('id')
+				res = res.split('_');
+				var id = res[1];
+				$.get('/project/remove_comment_v5/'+id, function(res){
+						$('.remove_comment','#comment_'+id).tipsy('hide');
+						$('#comment_'+id).hide(300,function(){$(this).remove();});
+					});
+			}
+		});
+		$('.tip').tipsy({gravity: $.fn.tipsy.autoNS});
+	}
+	init_comments();
+
+    var pusher = new Pusher('0aacc348a446e96739e2');
+    var channel = pusher.subscribe('test_channel');
+	channel.bind('remove_comment_<?=$work_data['work_id']?>', function(data) {
+			if(data.story_id == '<?=$work_data['work_id']?>'){
+				$('#comment_'+data.comment).hide(300, function(){$(this).remove();});
+			}
+		});
+    channel.bind('new_comment_<?=$work_data['work_id']?>', function(data) {
+		var admin = <?= ($this->session->userdata('role')=='admin')? 'true':'false'; ?>;
+		if(data.story_id == '<?=$work_data['work_id']?>'){//new comment on thi story?
+		  myclass = ''; if(data.user_id=="<?=$this->session->userdata('user_id')?>") myclass="my-comment";
+		  if((myclass == "my-comment")||(admin)) myclass="my-comment";
+		  var template = '<div style="display:none" id="comment_'+data.comment_id+'"><table width="550px" class="'+myclass+'">\
+				<tbody><tr>\
+				  <td style="vertical-align:top;" width="50"><div style="float: left; width: 180px;"><img style="float: left;padding-right:5px;" src="'+data.avatar+'"><p id="commentator"><a href="/user/'+data.user_id+'">'+data.username+'</a></p>\
+					<p id="level">'+data.title+'</p></div><p id="comment-content">'+data.comment+'</p>\
+										<div class="ds-posted" style="margin-right:30px">';
+			if(data.file!="") template += ' <a href="/'+data.file+'">download attached</a>';
+			template += '</div><p id="date-comment">Posted '+data.date;
+			if(myclass=="my-comment")template += ' (<a class="remove_comment tip" id="remove_'+data.comment_id+'" title="Delete: press to remove comment" href="javascript: void(0)"><img alt="Remove Comment" src="/public/images/icon_delete.png"></a>)';
+			template += '</p></td></tr></tbody></table></div>';
+		  $('#comments-section').prepend(template);
+		  init_comments();
+		  $("#comment_"+data.comment_id).show(300);
+		}
+    });
+</script>
+<?php $this->load->view('includes/footer5'); ?>

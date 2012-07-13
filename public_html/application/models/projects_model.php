@@ -8,6 +8,44 @@ class Projects_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function genVoucher($num){
+		$codes = array();
+		for($i = 0;$i<$num;$i++){
+			$search = true;
+			while($search){
+				$code = $this->genCode(12);
+				$sql = "select * from voucher_po where code = ?";
+				$res = $this->db->query($sql , array($code));
+				if($res->num_rows==0) $search = false;
+			}
+			$doc = array(
+				'code' => $code,
+				'active' => 1
+			);
+			$this->db->insert('voucher_po', $doc);
+			$codes[] = $code;
+		}
+		return $codes;
+	}
+	
+	public function consume_voucher($code, $user_id){
+		$doc = array(
+			'user_id' => $user_id,
+			'active' => 0,
+			'redemption_at' => time()
+		);
+		$this->db->update('voucher_po', $doc, array('code' => $code));
+		return $this->db->affected_rows()>0;
+	}
+	
+	private function genCode($len){
+		$arr = str_split('01234567890123456789'); // get all the characters into an array
+		shuffle($arr); // randomize the array
+		$arr = array_slice($arr, 0, $len); // get the first six (random) characters out
+		$code = implode('', $arr); // smush them back into a string
+		return $code;
+	}
+	
 	function cash_loaded(){
 		$sql = "SELECT SUM(cost) as num FROM works, sprints WHERE works.sprint=sprints.id and lower(status) in ('open','reject') and curdate() between sprints.start and addtime(sprints.end,'23:59:59')";
 		$res = $this->db->query($sql);
@@ -177,6 +215,26 @@ class Projects_model extends CI_Model {
 		}
 	}
 	
+	function create_project_v5($creator_id){
+		$doc = array(
+			"project_name" => $this->input->post('title'),
+			"project_desc" => $this->input->post('description'),
+			"project_owner_id" => $creator_id,
+			"scrum_master_id" => $creator_id,
+			"deployer_id" => $creator_id,
+			"project_created_at" => date('Y-m-d H:i:s') 
+		);
+		
+		if($this->db->insert('project', $doc)) {
+			$query = "select max(project_id) as num from project";
+			$result = $this->db->query($query, array());
+			$data = $result->result_array();
+			return $data[0]['num'];	
+		} else {
+			return false;
+		}
+	}
+	
 	function edit_project($id) {
 		
 		$doc = array(
@@ -195,9 +253,30 @@ class Projects_model extends CI_Model {
 		
 	}
 	
+	function edit_project_v5($id) {
+		
+		$doc = array(
+			"project_name" => $this->input->post('title'),
+			"project_desc" => $this->input->post('description')
+		); 
+		
+		if($this->db->update('project', $doc, array('project_id' => $id))) {
+			return $id;		
+		} else {
+			return false;
+		}
+		
+	}
+	
 	function get_project_details($id){
 		$query = "select * from project where project_id = ?";
 		$result = $this->db->query($query, array($id));
+		return $result;
+	}
+	
+	function get_project_details_v5($id){
+		$query = "select project.*, (select count(1) from bids, works where works.work_id=bids.work_id and works.project_id = ?) as bids, 0 as comments from project where project_id = ?";
+		$result = $this->db->query($query, array($id, $id));
 		return $result;
 	}
 	

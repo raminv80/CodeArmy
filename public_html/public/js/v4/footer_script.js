@@ -138,12 +138,13 @@
 		});
 	});
 	var test;
-	
+
 	$('a.submit').click(function(){
 		test = $(this);
 		var form = $(this).parents('form');
 		form.submit();
 	});
+	
 	$('#btnBid').click(function() {
 	  $('.hint').hide();
 	  show_loading();

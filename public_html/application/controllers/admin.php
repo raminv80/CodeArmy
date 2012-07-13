@@ -52,9 +52,21 @@ class Admin extends CI_Controller {
 		$this->load->view('admin_view', $this->view_data);
 	}
 	
+	function upgrade(){
+		$user_id = $this->session->userdata('user_id');
+		$code = $this->input->post('code');
+		if($this->projects_model->consume_voucher($code, $user_id)){
+			$this->users_model->promote_to_po($user_id);
+			$this->session->set_userdata('voucher', 'You have successfully added project management capabilities to your profile.');
+		}else{
+			$this->session->set_userdata('voucher', 'Sorry, We couldn\'t verify your voucher number.');
+		}
+		redirect('home');
+	}
+	
 	function promote($user_id){
 		$this->users_model->promote($user_id);
-		redirect('/admin/index/#user_'.$user_id);	
+		redirect('/admin/index/#user_'.$user_id);
 	}
 	
 	function demote($user_id){
@@ -129,4 +141,15 @@ class Admin extends CI_Controller {
 		
 		$this->load->view('project_edit_view', $this->view_data);	
 	}
+	
+	public function voucher(){
+		$vouchers = array();
+		if($this->input->post('submit')){
+			$vouchers = $this->projects_model->genVoucher($this->input->post('number'));	
+		}
+		$this->view_data['vouchers'] = $vouchers;
+		$this->view_data['window_title'] = "Voucher Administration page";
+		$this->load->view('voucher_view', $this->view_data);
+	}
+
 }

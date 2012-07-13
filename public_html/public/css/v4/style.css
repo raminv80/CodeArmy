@@ -189,3 +189,60 @@ margin-right: 6px;
 	font-size:24px;
 	margin-bottom: 20px;
 }
+
+/* ver 5 css */
+
+.edit_project{
+	text-indent: -99999px;
+	display: block;
+	background: url(/public/images/vieweditdelete.png) -62px top;
+	width: 52px;
+	margin:20px 10px;
+	height:18px;
+}
+
+#hot_latest_tabs ul li{
+	list-style: none;
+	float: right;
+	width: 100px;
+	text-align: center;
+	height: 25px;
+	margin: 15px 1px 0;
+}
+#hot_latest_tabs ul li a{
+	width: 100px;
+	text-align: center;
+	height: 25px;
+	padding: 5px;
+	background: #666;
+	border: 1px solid darkgreen;
+}
+
+#hot_latest_tabs ul li a:hover{
+	width: 100px;
+	text-align: center;
+	height: 25px;
+	padding: 5px;
+	background: #999;
+	border: 1px solid darkgreen;
+}
+
+#remaining_points {
+	text-align: right;
+	margin: 7px;
+}
+
+#add_skill{
+	padding:0;
+	text-shadow: 0 1px 10px white;
+	font-size: 20px;
+	font-weight: lighter;
+	background: none;
+	text-indent: 0;
+	margin: 0 14px;
+	position: relative;
+}
+
+#add_skill select {
+	border: none;
+}

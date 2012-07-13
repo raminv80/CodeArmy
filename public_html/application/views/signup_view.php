@@ -38,7 +38,7 @@ color: white;
     -->
   </div>
 </div>
-<?php $this->load->view('includes/footer4'); ?>
+<?php $this->load->view('includes/footer5'); ?>
 <?php else: ?>
 <?php $this->load->view('includes/header4'); ?>
 <link href="/public/css/v4/login.css" media="all" rel="stylesheet" type="text/css">
@@ -94,7 +94,7 @@ color: white;
                 </div>
               </div>
               <div class="row">
-              Please re-eneter following phasrase...
+              Please re-enter following Phrase...
               </div>
               <div class="row">
                 <label for="captcha"><?=$captcha;?></label>
@@ -112,5 +112,5 @@ color: white;
     </div>
   </div>
 </div>
-<?php $this->load->view('includes/footer4'); ?>
+<?php $this->load->view('includes/footer5'); ?>
 <?php endif; ?>

@@ -80,10 +80,11 @@
 												<div class="frame">
 													<dl>
                                                     	<?php if($my_skills){foreach($my_skills as $skill):?>
-                                                        <dt><span style="text-shadow: 0 1px 10px white;font-size: 20px;font-weight: lighter; background:none; text-indent:0;"><?php echo $skill['name'];?></span></dt>
-														<dd><?php echo $skill['point'];?></dd>
+                                                        <dt><span style="text-shadow: 0 1px 10px white;font-size: 16px;font-weight: lighter; background:none; text-indent:0; padding-top:4px;"><?php echo $skill['name'];?></span></dt>
+														<?php $color = 'green'; $point = $skill['point'];?>
+														<dd><span style="color:<?=$color?>"><?=$point?></span></dd>
                                                         <?php endforeach;}else{?>
-														<dt><span>HTMl / xhtml</span></dt>
+														<?php /*<dt><span>&nbsp;</span></dt>
 														<dd>0</dd>
 														<dt><span class="text-css">css</span></dt>
 														<dd>0</dd>
@@ -96,33 +97,35 @@
 														<dt><span class="text-leadership">leadership</span></dt>
 														<dd>0</dd>
 														<dt><span class="text-teamwork">teamwork</span></dt>
-														<dd>0</dd>
+														<dd>0</dd>*/?>
 														<?php }?>
 													</dl>
 													<div class="skills-points">
                                                     	<?php if($my_skills){foreach($my_skills as $skill):?>
                                                         <div id="css" class="skill-chart-container">
-                                                        	<?php
-																$last_point = $this->session->flashdata('skill-'.$skill['id']);
+                                                            <?php
 																$point = $skill['point'];
-																if($last_point){
-																	$point = $last_point;
-																	$add_point = $skill['point'] - $last_point;
+																$claim = $skill['claim'];
+																if(($claim - $point) > 0){
+																	$add_point = $claim - $point;
 																}else{
 																	$add_point = 0;
 																}
-																$point = round($point/max_skill_point*100);
-																$add_point = round($add_point/max_skill_point*100);
-																if($point<=0)$point = 1;
+																
+																$point = ceil($point/max_skill_point*100);
+																$add_point = ceil($add_point/max_skill_point*100);
+																if($point<=0)$point = 0;
 																if($point>100)$point = 100;
 																if($add_point<0)$add_point=0;
 																if($add_point>100)$add_point=100;
+																
+																$add_point = 0;
 															?>
                                                         	<div class="skill-chart" style="width:<?php echo $point;?>%"></div>
                                                             <div class="skill-chart-add" style="width:<?php echo $add_point;?>%"></div>
                                                         </div>
                                                         <?php endforeach;}else{?>
-                                                    	<div id="css" class="skill-chart-container">
+                                                    	<?php /*<div id="css" class="skill-chart-container">
                                                         	<div class="skill-chart" style="width:1%"></div>
                                                         </div>
                                                         <div id="css" class="skill-chart-container">
@@ -142,7 +145,7 @@
                                                         </div>
                                                         <div id="css" class="skill-chart-container">
                                                         	<div class="skill-chart" style="width:1%"></div>
-                                                        </div>
+                                                        </div>*/?>
                                                         <?php }?>
                                                     </div>
 												</div>
@@ -363,4 +366,4 @@
 			</div>
 		</div></section>
         <script type="text/javascript" src="/public/js/main.js"></script>
-<?php $this->load->view('includes/footer4'); ?>
+<?php $this->load->view('includes/footer5'); ?>

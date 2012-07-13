@@ -68,8 +68,9 @@
           </div>
         </div>
         <div class="row" style="margin: -5px 0 0 10px;">
-          <div class="share-holder"><a name="fb_share" share_url="www.workpad.my"></a></div>
-          <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script> 
+          <div class="share-holder"><span class='st_facebook_hcount' displayText='Facebook'></span>
+<span class='st_twitter_hcount' displayText='Tweet'></span>
+<span class='st_linkedin_hcount' displayText='LinkedIn'></span></a></div>
           <a href="/leaderboard" class="show">show full leaderboard</a> </div>
       </div>
     </div>
@@ -235,11 +236,12 @@
       <div id="comment-top" style="width:490px"></div>
       <div id="comment-mid" style=" padding: 20px 20px 55px 20px; width:450px">
         <h1 style="margin: -50px 0 0 -15px;" id="title">Add New Projects</h1>
-        <?php echo form_open_multipart('/', array('onsubmit'=>'return checkTerms();')); ?>
+        <?php if(isset($username)) echo form_open_multipart('/', array('onsubmit'=>'return checkTerms();')); ?>
           <table cellpadding="3" style="font-size:0.9em">
           	<tr>
             	<td colspan="2" style="color:yellow"><?php echo validation_errors().$this->session->flashdata('contact'); ?></td>
             </tr>
+            <?php /*ver4
             <tr>
               <td width="200px"><label>Name</label></td>
               <td><input id="form-home" type="text" name="name"></td>
@@ -251,15 +253,16 @@
             <tr>
               <td><label>Contact</label></td>
               <td><input id="form-home" type="text" name="contact"></td>
-            </tr>
+            </tr> */?>
             <tr>
               <td><label>Project Title</label></td>
-              <td><input id="form-home" type="text" name="title"></td>
+              <td><input <?php if(!isset($username)){?>disabled="disabled"<?php }?> id="form-home" type="text" name="title"></td>
             </tr>
             <tr>
               <td style="vertical-align:top"><label>Project Description</label></td>
-              <td><textarea id="form-home2" name="description"></textarea></td>
+              <td><textarea <?php if(!isset($username)){?>disabled="disabled"<?php }?> id="form-home2" name="description"></textarea></td>
             </tr>
+            <?php /* ver4
             <tr>
               <td><label>Payment Budget</label></td>
               <td><input id="form-home" type="text" name="budget"></td>
@@ -268,12 +271,19 @@
               <td><label>Dateline</label></td>
               <td><input id="form-home" type="text" name="dateline"></td>
             </tr>
+			*/?>
           </table>
-          <input type="hidden" name="action" value="contact" />
-          <input style="margin: 10px 0 0 5px;" type="checkbox" name="terms">
+          <?php if(isset($username)){?>
+          <input type="hidden" name="action" value="create_project" />
+          <?php }?>
+          <input <?php if(!isset($username)){?>disabled="disabled"<?php }?> style="margin: 10px 0 0 5px;" type="checkbox" name="terms">
           <span style="padding-left:5px; font-size:0.9em;">I agree to the <a href="#">terms and condition</a></span><br>
           <br>
+          <?php if(!isset($username)){?>
+          <a href="/login">Login to Create your Project</a>
+          <?php }else{?>
           <input id="submitform"  type="submit" value="Submit">
+          <?php }?>
         <?php echo form_close();?>
       </div>
       <div id="comment-bottom" style="width:490px"></div>
@@ -306,7 +316,7 @@
                 </div>
               </div>
               <div class="row">  
-				<a class="forgot" href="http://ver2.workpad.my/login/recovery">Forgot your password?</a>
+				<a class="forgot" href="http://<?=$_SERVER['HTTP_HOST']?>/login/recovery">Forgot your password?</a>
                 <input class="reg-submit" name="submit" value="Submit" type="submit">
               </div>
               <div class="clear"></div>
@@ -346,11 +356,11 @@
                                 <input id="password3" name="passconf" value="" type="password">
                               </div>
                             </div>
-							<div class="captcha">
+							<div class="row captcha" style="margin:0px 0 0 -10px;">
                               <?=$captcha;?>
-                              <input id="captcha" name="captcha" type="text" value=""  />
+                              <input id="captcha" name="captcha" type="text" maxlength="8" value="" style="font-size: 16px;line-height: 30px;height: 23px;width:80px; position:relative; top:-5px; "  />
 							</div>
-                            <input class="reg-submit" name="submit" value="Submit" type="submit">
+                            <input class="reg-submit" name="submit" value="Submit" type="submit" style="margin:0 55px 0 0">
                 <?php echo form_close(); ?>
     </div>
 </div>
@@ -489,4 +499,4 @@
 		$('section div.push').each(function(){$(this).height(0);});
 	}
 </script>
-<?php $this->load->view('includes/footer4'); ?>
+<?php $this->load->view('includes/footer5'); ?>

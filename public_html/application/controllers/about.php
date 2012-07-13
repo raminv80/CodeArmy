@@ -30,6 +30,11 @@ class About extends CI_Controller {
 	
 	function index(){
 		$this->view_data['window_title'] = 'About us';
+		$this->load->view('aboutus_codearmy_view', $this->view_data);
+	}
+	
+	function index_old(){
+		$this->view_data['window_title'] = 'About us';
 		$this->load->view('about_us_view', $this->view_data);
 	}
 }

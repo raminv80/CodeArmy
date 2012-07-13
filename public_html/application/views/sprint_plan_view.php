@@ -745,4 +745,4 @@ $('#product_backlog').on('keypress','.new_story',function(event){
 	});
 
 	</script>
-<?php $this->load->view('includes/footer4'); ?>
+<?php $this->load->view('includes/footer5'); ?>

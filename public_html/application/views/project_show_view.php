@@ -4,7 +4,14 @@
   <div id="wrapper">
     <div class="WP-main" style="margin: 90px auto 50px auto;">
       <div class="WP-qualification-placeholder" style="padding:0;">
-        <div  id="qualif-heading"><span id="title"><a class="dialog_opt2" target="_blank" href="/project/1"><?php echo $project['project_name'];?></a></span></div>
+        <div  id="qualif-heading">
+        	<span id="title"><a class="dialog_opt2" target="_blank" href="/project/1"><?php echo $project['project_name'];?></a></span>
+            <?php if($project['project_owner_id']==$user_id){?>
+			<ul style="float:right;">
+				<li><a class='edit_project' href="/project/edit_project/<?php echo $project['project_id'];?>">Edit</a></li>
+            </ul>
+            <?php }?>
+        </div>
       </div>
       <div class="contents">
         <div class="project_detail" style="border-bottom:0;">
@@ -37,4 +44,4 @@
     <div id="push-down" style="height:125px;">&nbsp;</div>
   </div>
 </section>
-<?php $this->load->view('includes/footer4'); ?>
+<?php $this->load->view('includes/footer5'); ?>

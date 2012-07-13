@@ -3050,7 +3050,7 @@ body > #container {
 }
 
 .alert{
-	background:url(../images/alertbox1.png);
+	background:url(/public/images/alertbox1.png);
 	display:none;
 	width:600px;
 	height:173px;
