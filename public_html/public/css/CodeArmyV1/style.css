@@ -507,3 +507,22 @@ input.CAbutton{padding:0}
 #footer a{color:white;font-family: 'Ruda', sans-serif; font-size:8.64pt; text-decoration:none;}
 #footer #twitter{display:block;cursor:pointer; width:16px; height:16px; background:url(/public/images/codeArmy/social.png) no-repeat;text-indent:-100000px;float:left}
 #footer #facebook{display:block;cursor:pointer; width:16px; height:16px; background:url(/public/images/codeArmy/social.png) no-repeat -21px 0;text-indent:-100000px; float:left; margin-right:5px;}
+
+
+/* BEGIN - New Codes by Reza */
+
+#profile-content-area {
+	width:765px;
+	position:absolute;
+}
+#block-level, block-avatar {
+	position:absolute;
+	width:290px;
+	float:left;
+}
+#block-level {
+	text-align:right;
+}
+
+
+/* END - New Codes by Reza */

@@ -152,16 +152,30 @@
 #content_area h1{font-size:18pt}
 #content_area h2{font-size:13pt}
 #content_area{font-size:9pt; color:white}
-
--->
 </style>
+
+<div id="profile-content-area">
+
+<div id="block-level">
+Level <?=$myLevel?>
+</div>
+
+<div id="block-avatar">
+</div>
+
+
+</div>
+
+
+<!-- START - Old Code -->
+
+<!--
 <div id="content_area">
-	<!-- Block level indicator -->
 	<div id="block-level-indicator">
 		Level <?=$myLevel?>
-	</div>
+	</div> -->
     <!-- end of level indicator -->
-    <!-- -->
+    <!-- 
     <dic id="block-experience-bar">
         <div id="experience-points">
             <img src="/public/images/codeArmy/profile/experience_points.png" width="402" height="29" alt="">
@@ -211,4 +225,7 @@
 		<img src="/public/images/codeArmy/profile/activities.png" width="476" height="73" alt="">
 	</div>
 </div>
+-->
+
+
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>
