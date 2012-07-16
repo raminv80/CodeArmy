@@ -18,7 +18,7 @@
         <li><a href="#" id="FindMissions">
           <div id="findmission-holder"> Find Missions </div>
           </a></li>
-        <li><a href="#" id="MyMissions">
+        <li><a href="/missions/my_missions" id="MyMissions">
           <div id="mymissions-holder">
             <div class="notification" id="mymissions-notification">2</div>
             My Missions</div>

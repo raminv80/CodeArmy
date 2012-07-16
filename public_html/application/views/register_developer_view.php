@@ -70,7 +70,7 @@
 				if(msg=="success"){
 					$.fancybox.close();
 				}else{
-					alert("Error: registering developer division.");
+					alert("Error: registering designer division.");
 					console.log(msg);
 				}
 			}

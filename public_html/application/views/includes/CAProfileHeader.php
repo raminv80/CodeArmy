@@ -29,11 +29,11 @@
       </ul>
       <div id="dropdown">
         <ul>
-          <li><a href="#">Account settings</a></li>
+         <!-- <li><a href="#">Account settings</a></li> -->
           <li><a href="/faq">FAQ's</a></li>
           <li><a href="/about">About us</a></li>
         </ul>
-        <a href="/login/logout" id="logout">Log out</a> </div>
+        <a style="margin-top:0;" href="/login/logout" id="logout">Log out</a> </div>
       <div id="live-feed"> 25.05.2012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Web design for KLIA website&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;30bids&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Due: 5 hours </div>
     </div>
     <?php if(in_array($page_is,array('Profile','Missions','Achievements','Leaderboard','Invite'))):?>
@@ -49,7 +49,7 @@
                 </ul>
                 <li<?php if($page_is=='Achievements'){?> class="active"<?php }?>><a href="/achievements">Achievements</a></li>
                 <li<?php if($page_is=='Leaderboard'){?> class="active"<?php }?>><a href="leaderboard">Leaderboard</a></li>
-                <li<?php if($page_is=='Invite'){?> class="active"<?php }?>><a href="#">Invite friends</a></li>
+                <li<?php if($page_is=='Invite'){?> class="active"<?php }?>><a href="/invite">Invite friends</a></li>
             </ul>
         </div>
     </div>

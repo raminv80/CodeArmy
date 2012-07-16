@@ -5,7 +5,7 @@
   	<p style="font-size:18px;">Well well well,</p>
     <p>what have we got ourselves here.</p>
     <p>You think you are good enough for the Ar.my?</p>
-    <p style="font-family: 'Black Ops One', cursive;font-size: 24pt;color: #86E144; margin-top:30px;">What is your division recruit?</p> 
+    <p style="font-family: 'Black Ops One', cursive;font-size: 24pt;color: #86E144; margin-top:30px;">What is your division recruite?</p> 
     <div class="buttons">
       <div id="designer_button" class="division_button"></div>
       <div id="developer_button" class="division_button"></div>
