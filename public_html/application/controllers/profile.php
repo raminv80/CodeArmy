@@ -29,7 +29,6 @@ class Profile extends CI_Controller {
 			$myProfile = $myProfile[0];
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
-		
 			$this->view_data['username'] = $this->session->userdata('username');
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;
@@ -42,7 +41,10 @@ class Profile extends CI_Controller {
 	
 	
 	function index(){
+		//if user's designation is not set redirect him to job selection window
 		if(!in_array($this->view_data['myProfile']['specialization'],array('designer','developer','copywriter','employer')))redirect("/register");
+		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
+		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
 		$this->view_data['window_title'] = $this->session->userdata('username');
 		$this->load->view('profile_codearmy_view', $this->view_data);
 	}

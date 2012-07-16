@@ -102,7 +102,7 @@ function proceed(){
 	$.ajax({
 		type: 'POST',
 		url: '/register/Ajax_reg_div_designer',
-		data: {'ci_csrf_token': getCookie('ci_csrf_token') },
+		data: {'csrf_workpad': getCookie('csrf_workpad') },
 		success: function(msg){
 			if(msg=="success"){
 				$.fancybox.close();

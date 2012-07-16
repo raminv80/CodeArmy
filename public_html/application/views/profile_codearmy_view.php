@@ -11,18 +11,35 @@
 	height:794px;
 }
 
-#level-indicator {
-	position:absolute;
-	left:1px;
-	top:0px;
-	width:289px;
-	height:30px;
+#block-level-indicator {
+	width: 279px;
+	height: 7px;
+	text-align: right;
+	padding: 9px 0px;
+	font-size: 9.99pt;
 }
 
-#experience-points {
+#block-experience-bar{
 	position:absolute;
 	left:290px;
 	top:0px;
+}
+#block-experience-bar #experience-meter {
+	width:476px;
+	height:18px;
+	margin-left:12px;
+	padding:3px 2px;
+	background:url(/public/images/codeArmy/profile/experience-bar-background.png) no-repeat;
+}
+#block-experience-bar #meter{
+	background:url(/public/images/codeArmy/profile/meter.png);
+	height:14px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+#experience-points {
 	width:402px;
 	height:29px;
 }
@@ -33,14 +50,6 @@
 	top:0px;
 	width:74px;
 	height:29px;
-}
-
-#experience-meter {
-	position:absolute;
-	left:290px;
-	top:29px;
-	width:476px;
-	height:18px;
 }
 
 #introduction {
@@ -147,17 +156,22 @@
 -->
 </style>
 <div id="content_area">
-	<div id="level-indicator">
-		<img src="/public/images/codeArmy/profile/level_indicator.png" width="289" height="30" alt="">
+	<!-- Block level indicator -->
+	<div id="block-level-indicator">
+		Level <?=$myLevel?>
 	</div>
-	<div id="experience-points">
-		<img src="/public/images/codeArmy/profile/experience_points.png" width="402" height="29" alt="">
-	</div>
+    <!-- end of level indicator -->
+    <!-- -->
+    <dic id="block-experience-bar">
+        <div id="experience-points">
+            <img src="/public/images/codeArmy/profile/experience_points.png" width="402" height="29" alt="">
+        </div>
+        <div id="experience-meter">
+            <div id="meter" style="width:<?= 443*$expProgress ?>px;"></div>
+        </div>
+    </div>
 	<div id="edit-/public/images/codeArmy/profile">
 		<img src="/public/images/codeArmy/profile/edit_profile.png" width="74" height="29" alt="">
-	</div>
-	<div id="experience-meter">
-		<img src="/public/images/codeArmy/profile/experience_meter.png" width="476" height="18" alt="">
 	</div>
 	<div id="introduction">
 		<h1 style="margin:17px 0 5px 15px"><?=$me['username']?></h1>

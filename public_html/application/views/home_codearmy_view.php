@@ -289,7 +289,7 @@
 		var phone = $('#contact-phone').val();
 		$.post(
 			'/home/Ajax_contact',
-			{'name': name, 'email':email, 'phone': phone, 'subject':subject, 'message': message, 'ci_csrf_token': getCookie('ci_csrf_token')},
+			{'name': name, 'email':email, 'phone': phone, 'subject':subject, 'message': message, 'csrf_workpad': getCookie('csrf_workpad')},
 			function(msg){
 				contacting = false;
 				$('#contact-ajax').fadeOut('fast',function(){$.fancybox.close();});
@@ -393,7 +393,7 @@
 				$('#login-ajax').fadeIn();
 				$.post(
 					'/login/Ajax_checkUser',
-					{ 'user': data, 'ci_csrf_token': getCookie('ci_csrf_token') },
+					{ 'user': data, 'csrf_workpad': getCookie('csrf_workpad') },
 					function(msg){
 						if(msg=="success"){
 							//check pass
@@ -401,7 +401,7 @@
 							if($.trim(data1)!="")
 							$.post(
 								'login/Ajax_checkPass',
-								{'username': data,'password':data1,'ci_csrf_token': getCookie('ci_csrf_token') },
+								{'username': data,'password':data1,'csrf_workpad': getCookie('csrf_workpad') },
 								function(msg){
 									if(msg=="success"){
 										//submit the form
@@ -446,14 +446,14 @@
 						$.ajax({
 							type:'POST',
 							url:'register/Ajax_checkEmail',
-							data:{'email': email,'ci_csrf_token': getCookie('ci_csrf_token') },
+							data:{'email': email,'csrf_workpad': getCookie('csrf_workpad') },
 							success:function(msg){
 								if(msg=="success"){
 									$('#reg-ajax').show();
 									$.ajax({
 										type: 'POST',
 										url: 'register/Ajax_checkUsername',
-										data: {'username': name, 'ci_csrf_token': getCookie('ci_csrf_token') },
+										data: {'username': name, 'csrf_workpad': getCookie('csrf_workpad') },
 										success:function(msg){
 											if(msg=="success"){
 												if(password.length>6){
@@ -462,7 +462,7 @@
 													$.ajax({
 														type: 'POST',
 														url: 'register/Ajax_signup',
-														data: {'username': name, 'password': password, 'email':email, 'ci_csrf_token': getCookie('ci_csrf_token')},
+														data: {'username': name, 'password': password, 'email':email, 'csrf_workpad': getCookie('csrf_workpad')},
 														success:function(msg){
 															$('#reg-ajax').fadeOut();
 															if(msg=="success"){

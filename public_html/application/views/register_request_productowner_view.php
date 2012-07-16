@@ -59,7 +59,7 @@
 			if($.trim(data)!="")
 			$.post(
 			'/register/Ajax_req_voucher',
-			{ 'email': data, 'ci_csrf_token': getCookie('ci_csrf_token') },
+			{ 'email': data, 'csrf_workpad': getCookie('csrf_workpad') },
 			function(msg){
 				msg = msg.split('~');
 				if(msg[0]=="success"){

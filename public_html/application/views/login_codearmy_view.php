@@ -61,7 +61,7 @@
 				$('#login-ajax').fadeIn();
 				$.post(
 					'/login/Ajax_checkUser',
-					{ 'user': data, 'ci_csrf_token': getCookie('ci_csrf_token') },
+					{ 'user': data, 'csrf_workpad': getCookie('csrf_workpad') },
 					function(msg){
 						if(msg=="success"){
 							//check pass
@@ -69,7 +69,7 @@
 							if($.trim(data1)!="")
 							$.post(
 								'login/Ajax_checkPass',
-								{'username': data,'password':data1,'ci_csrf_token': getCookie('ci_csrf_token') },
+								{'username': data,'password':data1,'csrf_workpad': getCookie('csrf_workpad') },
 								function(msg){
 									if(msg=="success"){
 										//submit the form
