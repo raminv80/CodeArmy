@@ -3,12 +3,12 @@
 
 <div id="profile-content-area"> 
   
-  <!-- START - Level Block -->
+  <!-- START - Level Block - Dev. by Reza  -->
   <div id="block-level"> Level
     <?=$myLevel?>
   </div>
   
-  <!-- START - Avatar Block -->
+  <!-- START - Avatar Block - Dev. by Reza  -->
   <div id="block-avatar">
     <div id="profile-name"> Harish </div>
     <div id="msg-icon"></div>
@@ -18,37 +18,6 @@
   </div>
   
   <!-- Ramin: leaderboard-block 17-7-2012-->
-  <style>
-#block-leaderboard {
-	position:absolute;
-	top:500px;
-	left:0px;
-	width:286px;
-	height:263px;
-	overflow:hidden;
-}
-.block-header h3 {
-	font-size:12.96pt;
-	color:white;
-	font-family:'Ruda', sans-serif;
-	text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
-	display:block;
-	width:229px;
-	height:33px;
-	float:left;
-	background:url(/public/images/codeArmy/profile/block-header-line.png) no-repeat;
-}
-.block-header a {
-	color:#CCC;
-	font-size:8.99pt;
-	text-decoration:underline;
-	display:block;
-	height:33px;
-	width:57px;
-	float:left;
-	text-align:right;
-}
-</style>
   <div id="block-leaderboard">
     <div class="block-header">
       <h3>Leaderboard</h3>
@@ -72,6 +41,29 @@
       </ul>
     </div>
   </div>
+  <!-- Ramin:leader board bloclk end--> 
+  
+  <!-- START - Experience Block - Dev. by Reza -->
+  <div id="block-experience">
+    <div id="experience-header">
+      <h3>Exp Points:1100</h3>
+    </div>
+    <div id="edit-profile-link"><a href="#">Edit Profile</a></div>
+    <div id="experience-bar">
+      <div id="bar-progress"> </div>
+    </div>
+  </div>
+  
+  <!-- START - Experience Block - Dev. by Reza -->
+  <div class="block-mission-info">
+    <div id="mission-bid">
+      <div id="mission-bid-text">Mission Bid</div>
+      <div id="mission-bid-number">0</div>
+    </div>
+    <div id="mission-complete">
+      <div id="mission-complete-text">Mission Complete</div>
+      <div id="mission-complete-number">0</div>
+    </div>
+  </div>
 </div>
-<!-- Ramin:leader board bloclk end-->
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>

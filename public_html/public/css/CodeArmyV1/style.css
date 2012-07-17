@@ -22,12 +22,12 @@ body{margin:auto; padding:0; text-align:center;}
 	background:none;
 }
 #main-content {
-	width: 740px;
+	width: 765px;
 	height: 877px;
 	position: absolute;
 	top: 170px;
 	left: 190px;
-	padding: 30px;
+	padding: 30px 20px;
 	text-align: justify;
 }
 #left-menu a{display:block; padding:19px 0 16px 30px;}
@@ -556,17 +556,113 @@ input.CAbutton{padding:0}
 #profile-desc {
 	margin:10px 15px;
 }
+#block-leaderboard {
+	position:absolute;
+	top:500px;
+	left:0px;
+	width:286px;
+	height:263px;
+	overflow:hidden;
+}
+.block-header h3 {
+	font-size:12.96pt;
+	color:white;
+	font-family:'Ruda', sans-serif;
+	text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
+	display:block;
+	width:229px;
+	height:33px;
+	float:left;
+	background:url(/public/images/codeArmy/profile/block-header-line.png) no-repeat;
+}
+.block-header a {
+	color:#CCC;
+	font-size:8.99pt;
+	text-decoration:underline;
+	display:block;
+	height:33px;
+	width:57px;
+	float:left;
+	text-align:right;
+}
 #block-experience {
 	position:absolute;
-	width:430px;
+	width:460px;
 	float:right;
 	right:5px;
 }
-#block-experience .block-header {
+#experience-header {
 	float:left;
-	width:35ñ0px;
+	width:350px;
+	height:23px;
+	background:url(/public/images/codeArmy/profile/exp-logo.png) no-repeat;
 }
-#block-experience .edit-profile-link {
+#experience-header h3 {
+	padding: 6px 0 0 35px;
+	font-size:11pt;
+	color:white;
+	font-family:'Ruda', sans-serif;
+	text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
+}
+#edit-profile-link {
+	float:right;
+	width:80px;
+	color:#ccc;
+	text-decoration:underline;
+	font-size: 8.99pt;
+	padding-top: 8px;
+}
+#experience-bar {
+	height:20px;
+	width:450px;
+	float:left;
+	margin:10px 0 0 0;
+	background:url(/public/images/codeArmy/profile/experience-bar-bg.png) no-repeat;
+}
+#bar-progress {
+	background:url(/public/images/codeArmy/profile/experience-progress-bg.gif) repeat-x;
+	width:100px;
+	height:14px;
+	margin:2px 0 0 2px;
+	border-radius: 15px;
+}
+.block-mission-info {
+	width:460px;
+	margin-top: 95px;
+	right:5px;
+	float:right;
+	position:absolute;
+}
+#mission-bid {
+	width:224px;
+	height:70px;
+	float:left;
+	background:url(/public/images/codeArmy/profile/bids-bg.png) no-repeat;
+}
+#mission-complete {
+	width:224px;
+	height:70px;
+	float:right;
+	background:url(/public/images/codeArmy/profile/bids-bg.png) no-repeat;
+}
+#mission-bid-text, #mission-complete-text {
+	font-size:10.8pt;
+	color:white;
+	width:145px;
+	height:30px;
+	margin-top:20px;
+	float:left;
+	text-align:center;
+	font-family:'Ruda', sans-serif;
+	text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
+}
+#mission-bid-number, #mission-complete-number {
+	width:75px;
+	height:30px;
+	margin-top:20px;
+	font-size:22px;
+	text-decoration:underline;
+	text-align:center;
 	float:right;
 }
 
