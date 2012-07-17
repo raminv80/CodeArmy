@@ -39,3 +39,9 @@ function getCookie(c_name)
 	  }
 	  return false;
 }
+
+$(window).keypress(function() {
+  if ( event.which == "`".charCodeAt(0) ) {
+	$('#debugger').slideToggle('fast');  
+  }
+});
