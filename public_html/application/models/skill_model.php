@@ -33,7 +33,8 @@ class Skill_model extends CI_Model {
 	}
 	
 	function get_my_skills($user_id){
-		$sql = "SELECT skill.id, point, claim, name from skill_set, skill where skill_set.user_id = ? and skill_set.skill_id = skill.id order by point DESC";
+		//$sql = "SELECT skill.id, point, claim, name from skill_set, skill where skill_set.user_id = ? and skill_set.skill_id = skill.id order by point DESC";
+		$sql = "SELECT skill.id, point, name from skill_set, skill where skill_set.user_id = ? and skill_set.skill_id = skill.id order by point DESC";
 		$res = $this->db->query($sql, array($user_id));
 		if($res->num_rows()>0){
 			$res = $res->result_array();

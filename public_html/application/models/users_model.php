@@ -483,6 +483,13 @@ class Users_model extends CI_Model {
 		return $data[0]['num'];
 	}
 	
+	function works_bid($user_id){
+		$sql = "SELECT count(*) as num FROM bids WHERE user_id = ? AND bid_status = 'Bid'";
+		$res = $this->db->query($sql, array($user_id));
+		$data = $res->result_array();
+		return $data[0]['num'];
+	}
+	
 	function works_compeleted($user_id){
 		$sql ="SELECT count(*) as num FROM works where work_horse = ? and lower(works.status) in ('verify', 'signoff')";
 		$res = $this->db->query($sql, array($user_id));

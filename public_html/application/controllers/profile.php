@@ -30,6 +30,13 @@ class Profile extends CI_Controller {
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
 			$this->view_data['username'] = $this->session->userdata('username');
+			
+			$mySkills = $this->skill_model->get_my_skills($user_id);
+			$this->view_data['mySkills'] = $mySkills;
+			$myWorkBid = $this->users_model->works_bid($user_id);
+			$this->view_data['myWorkBid'] = $myWorkBid;
+			$myWorkCompleted = $this->users_model->works_compeleted($user_id);
+			$this->view_data['myWorkCompleted'] = $myWorkCompleted;
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;
 			if($action)$referer .= '/'.$action;
