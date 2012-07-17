@@ -1,8 +1,30 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
 <!--<img src="/public/images/codeArmy/profile/temp-final.png" id="preview"/>-->
+
+<div id="profile-content-area"> 
+  
+  <!-- START - Level Block -->
+  <div id="block-level"> Level
+    <?=$myLevel?>
+  </div>
+  
+  <!-- START - Avatar Block -->
+  <div id="block-avatar">
+    <div id="profile-name"> Harish </div>
+    <div id="msg-icon"></div>
+    <div id="profile-type"> Web Designer &nbsp;&nbsp; [Malaysia] </div>
+    <div id="avatar-pic"> <img src="/public/images/codeArmy/profile/default-avatar.png" alt="Avatar Picture" /> </div>
+    <div id="profile-desc"> Hi, I'm Harish! I've been working as Web designer for the past 6 years. </div>
+  </div>
+</div>
+
+
+
+<!-- START - Old Code -->
+
 <style type="text/css">
 <!--
-
+/*
 #content_area {
 	position:absolute;
 	left:17px;
@@ -152,30 +174,16 @@
 #content_area h1{font-size:18pt}
 #content_area h2{font-size:13pt}
 #content_area{font-size:9pt; color:white}
+*/
 </style>
-
-<div id="profile-content-area">
-
-<div id="block-level">
-Level <?=$myLevel?>
-</div>
-
-<div id="block-avatar">
-</div>
-
-
-</div>
-
-
-<!-- START - Old Code -->
 
 <!--
 <div id="content_area">
 	<div id="block-level-indicator">
 		Level <?=$myLevel?>
-	</div> -->
-    <!-- end of level indicator -->
-    <!-- 
+	</div> --> 
+<!-- end of level indicator --> 
+<!-- 
     <dic id="block-experience-bar">
         <div id="experience-points">
             <img src="/public/images/codeArmy/profile/experience_points.png" width="402" height="29" alt="">
@@ -226,6 +234,5 @@ Level <?=$myLevel?>
 	</div>
 </div>
 -->
-
 
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>
