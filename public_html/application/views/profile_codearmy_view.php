@@ -50,7 +50,7 @@
     </div>
     <div id="edit-profile-link"><a href="#">Edit Profile</a></div>
     <div id="experience-bar">
-      <div id="bar-progress"> </div>
+      <div id="experience-bar-progress"> </div>
     </div>
   </div>
   
@@ -65,5 +65,89 @@
       <div id="mission-complete-number">0</div>
     </div>
   </div>
+  
+  <!-- START - Skill Progression Block - Dev. by Reza -->
+  <div id="block-skill-progression">
+    <div class="block-header">
+      <h3>Skill Progression</h3>
+      <a href="#">View all</a> </div>
+    <div class="skill-unit">
+      <div id="skill-title">Photoshop</div>
+      <div id="skill-bar">
+        <div id="skill-bar-progress"></div>
+      </div>
+    </div>
+    <div class="skill-unit">
+      <div id="skill-title">Illustrator</div>
+      <div id="skill-bar">
+        <div id="skill-bar-progress"></div>
+      </div>
+    </div>
+    <div class="skill-unit">
+      <div id="skill-title">Javascript</div>
+      <div id="skill-bar">
+        <div id="skill-bar-progress"></div>
+      </div>
+    </div>
+    <div class="skill-unit">
+      <div id="skill-title">Communication</div>
+      <div id="skill-bar">
+        <div id="skill-bar-progress"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- START - Achievements Block - Dev. by Reza -->
+  <div id="block-achievements">
+    <div class="block-header">
+      <h3>Achievements</h3>
+      <a href="#">View all</a> </div>
+    <div class="badge-row">
+      <div id="achievement-unit">
+        <div id="badge-unit"></div>
+      </div>
+      <div id="achievement-unit">
+        <div id="badge-unit"></div>
+      </div>
+      <div id="achievement-unit">
+        <div id="badge-unit"></div>
+      </div>
+      <div id="achievement-unit">
+        <div id="badge-unit"></div>
+      </div>
+    </div>
+    <div class="badge-row">
+      <div id="achievement-unit">
+        <div id="badge-unit"></div>
+      </div>
+      <div id="achievement-unit">
+        <div id="badge-unit"></div>
+      </div>
+      <div id="achievement-unit">
+        <div id="badge-unit"></div>
+      </div>
+      <div id="achievement-unit">
+        <div id="badge-unit"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- START - Activities Block - Dev. by Reza -->
+  
+  <div id="block-activities">
+    <div class="block-header">
+      <h3>Harish's Activities</h3>
+      <a href="#">View all</a> </div>
+      
+  <div id="activities-list">
+  
+  <ul>
+  <li>Harish completed the profile and earn a newbie badge.</li>
+  <li>Harish joined the CodeArmy.</li>
+  </ul>
+  
+  </div>
+</div>
+
 </div>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>

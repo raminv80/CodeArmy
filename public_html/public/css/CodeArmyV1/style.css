@@ -619,9 +619,9 @@ input.CAbutton{padding:0}
 	margin:10px 0 0 0;
 	background:url(/public/images/codeArmy/profile/experience-bar-bg.png) no-repeat;
 }
-#bar-progress {
+#experience-bar-progress {
 	background:url(/public/images/codeArmy/profile/experience-progress-bg.gif) repeat-x;
-	width:100px;
+	width:30%;
 	height:14px;
 	margin:2px 0 0 2px;
 	border-radius: 15px;
@@ -665,5 +665,85 @@ input.CAbutton{padding:0}
 	text-align:center;
 	float:right;
 }
-
+#block-skill-progression {
+	position:absolute;
+	width:450px;
+	margin-top:200px;
+	right:5px;
+	float:right;
+}
+#block-skill-progression  .block-header a {
+	float:right;
+	margin-right:10px;
+}
+.skill-unit {
+	float: left;
+    margin: 10px 0;
+	width:450px;
+}
+#skill-title {
+	width:140;
+	float:left;
+	
+}
+#skill-bar {
+	height:20px;
+	width:310px;
+	float:right;
+	margin:0;
+	background:url(/public/images/codeArmy/profile/skill-bar-bg.png) no-repeat;
+}
+#skill-bar-progress {
+	background:url(/public/images/codeArmy/profile/skill-progress-bg.gif) repeat-x;
+	width:30%;
+	height:9px;
+	margin:3px 0 0 2px;
+	border-radius: 15px;
+}
+#block-achievements {
+	position:absolute;
+	width:450px;
+	margin-top:450px;
+	right:5px;
+	float:right;
+}
+#block-achievements  .block-header a {
+	float:right;
+	margin-right:10px;
+}
+.badge-row {
+	width:450px;
+	margin:15px 0 5px 0;
+	float:left;
+}
+#achievement-unit {
+	width:25%;
+	float:left;
+	height:100px;
+	background:url(/public/images/codeArmy/profile/achievement-unit-bg.png) no-repeat;
+}
+#badge-unit {
+	background:url(/public/images/codeArmy/profile/default-badge.png) no-repeat;
+	height:90px;
+	margin:8px;
+}
+#block-activities {
+	position:absolute;
+	width:450px;
+	margin-top:770px;
+	right:5px;
+	float:right;
+}
+#block-activities  .block-header a {
+	float:right;
+	margin-right:10px;
+}
+#activities-list {
+	float:left;
+	margin:10px 0;
+}
+#activities-list ul li {
+	padding:5px;
+	list-style: outside;
+}
 /* END - New Codes by Reza */
