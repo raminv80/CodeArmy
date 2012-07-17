@@ -556,5 +556,18 @@ input.CAbutton{padding:0}
 #profile-desc {
 	margin:10px 15px;
 }
+#block-experience {
+	position:absolute;
+	width:430px;
+	float:right;
+	right:5px;
+}
+#block-experience .block-header {
+	float:left;
+	width:35ñ0px;
+}
+#block-experience .edit-profile-link {
+	float:right;
+}
 
 /* END - New Codes by Reza */
