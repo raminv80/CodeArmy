@@ -515,14 +515,46 @@ input.CAbutton{padding:0}
 	width:765px;
 	position:absolute;
 }
-#block-level, block-avatar {
+#block-level, #block-avatar {
 	position:absolute;
-	width:290px;
 	float:left;
 }
 #block-level {
 	text-align:right;
+	width:284px;
 }
+#block-avatar {
+	background:url(/public/images/codeArmy/profile/bg-main-avatar.jpg) no-repeat;
+	height:450px;
+	width:284px;
+	margin-top:20px;
+	box-shadow: 1px 2px 5px #000;
+}
+#profile-name {
+	width:215px;
+	height:30px;
+	margin:15px 5px 3px 15px;
+	font-size:24px;
+	float:left;
+}
+#msg-icon {
+	float:right;
+	background:url(/public/images/codeArmy/profile/msg-icon.png) no-repeat;
+	width:27px;
+	height:17px;
+	margin:22px 10px;
 
+}
+#profile-type {
+	margin:0 10px 5px 18px;
+}
+#avatar-pic {
+	height:280px;
+	width:250px;
+	margin:20px 20px 10px;
+}
+#profile-desc {
+	margin:10px 15px;
+}
 
 /* END - New Codes by Reza */
