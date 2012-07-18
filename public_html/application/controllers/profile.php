@@ -51,11 +51,6 @@ class Profile extends CI_Controller {
 					$this->view_data['myCountry'] = $value;
 				}
 			}
-			
-			$myBadges = $this->skill_model->get_my_top8_badges($user_id);
-			$myBadges = $myBadges->result_array();
-
-			$this->view_data['myBadges'] = $myBadges;
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;
 			if($action)$referer .= '/'.$action;
@@ -68,6 +63,10 @@ class Profile extends CI_Controller {
 	
 	function index(){
 		//if user's designation is not set redirect him to job selection window
+		$user_id = $this->session->userdata('user_id');
+		$myBadges = $this->skill_model->get_my_top8_badges($user_id);
+		if(!$myBadges){$myBadges=NULL;}
+		$this->view_data['myBadges'] = $myBadges;
 		if(!in_array($this->view_data['myProfile']['specialization'],array('designer','developer','copywriter','employer')))redirect("/register");
 		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
 		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
