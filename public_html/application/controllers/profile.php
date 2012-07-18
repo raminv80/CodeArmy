@@ -20,6 +20,8 @@ class Profile extends CI_Controller {
 		// - check if user is logged in
 		$check_login = $this->users_model->is_authorised();
 		if($check_login == true) {
+			$countries = config_item('country_list');
+			
 			$user_id = $this->session->userdata('user_id');
 			$me = $this->users_model->get_user($user_id);
 			$me = $me->result_array();
@@ -31,12 +33,24 @@ class Profile extends CI_Controller {
 			$this->view_data['myProfile'] = $myProfile;
 			$this->view_data['username'] = $this->session->userdata('username');
 			
-			$mySkills = $this->skill_model->get_my_skills($user_id);
+			$mySkills = $this->skill_model->get_my_top5_skills($user_id);
 			$this->view_data['mySkills'] = $mySkills;
 			$myWorkBid = $this->users_model->works_bid($user_id);
 			$this->view_data['myWorkBid'] = $myWorkBid;
 			$myWorkCompleted = $this->users_model->works_compeleted($user_id);
 			$this->view_data['myWorkCompleted'] = $myWorkCompleted;
+			
+			$contact = json_decode($myProfile["contact"]);
+			$myCountry = $contact->country;
+			foreach($countries as $key=>$value) {
+				if ($key == $myCountry){
+					$this->view_data['myCountry'] = $value;
+				}
+			}
+			
+			$myBadges = $this->skill_model->get_my_top8_badges($user_id);
+			$myBadges = $myBadges->result_array();
+			$this->view_data['myBadges'] = $myBadges;
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;
 			if($action)$referer .= '/'.$action;
