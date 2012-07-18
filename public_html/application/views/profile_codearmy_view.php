@@ -31,13 +31,6 @@
           </ul>
           <div>%1000% Points</div>
         </li>
-        <li class="leaderboard-row"> <img src="" alt="user-avatar" />
-          <ul>
-            <li>%Username%</li>
-            <li>%Rank%</li>
-          </ul>
-          <div>%1000% Points</div>
-        </li>
       </ul>
     </div>
   </div>
@@ -71,14 +64,20 @@
     <div class="block-header">
       <h3>Skill Progression</h3>
       <a href="#">View all</a> </div>
-    <?php foreach($mySkills as $skill){ ?>
+    <?php
+	if ($mySkills){
+    	foreach($mySkills as $skill){
+	?>
     <div class="skill-unit">
       <div id="skill-title"><?=ucfirst($skill["name"])?></div>
       <div id="skill-bar">
         <div style="width:<?=$skill["point"]?>%" id="skill-bar-progress"></div>
       </div>
     </div>
-    <?php } ?>
+    <?php
+    	}
+	}
+	?>
   </div>
   
   <!-- START - Achievements Block - Dev. by Reza -->
@@ -88,21 +87,23 @@
       <a href="/achievements">View all</a> </div>
     <div class="badge-row">
     <?php
-    for($i=0; $i<=7; $i++){
-		if (array_key_exists($i, $myBadges)) {
+	if ($myBadges){
+		for($i=0; $i<=7; $i++){
+			if (array_key_exists($i, $myBadges)) {
 	?>
       <div id="achievement-unit">
         <img src="/public/<?=$myBadges[$i]["achievement_pic"]?>" width="97" height="99" alt="<?=ucfirst(strtolower($myBadges[$i]["achievement_name"]))?>" title="<?=ucfirst(strtolower($myBadges[$i]["achievement_name"]))?>" />
       </div>
     <?php
-		} else {
+			} else {
 	?>
       <div id="achievement-unit">
         <div id="badge-unit"></div>
       </div>
     <?php
+			}
 		}
-    }
+	}
 	?>
     </div>
   </div>

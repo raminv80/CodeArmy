@@ -49,7 +49,6 @@ class Profile extends CI_Controller {
 			}
 			
 			$myBadges = $this->skill_model->get_my_top8_badges($user_id);
-			$myBadges = $myBadges->result_array();
 			$this->view_data['myBadges'] = $myBadges;
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;
