@@ -111,6 +111,12 @@ class Profile extends CI_Controller {
 	
 	// - edit profile page
 	function edit() {
+		$this->view_data['window_title'] = "Edit my Profile | CodeArmy";
+		$this->load->view('profile_edit_codearmy_view', $this->view_data);	
+	}
+	
+	// - Workpad edit profile page
+	function edit_old() {
 		$user_id = $this->session->userdata('user_id');
 		if($user_id){
 			$me = $this->users_model->get_user($user_id);
