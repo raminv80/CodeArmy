@@ -32,7 +32,7 @@ class Profile extends CI_Controller {
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
 			$this->view_data['username'] = $this->session->userdata('username');
-			
+			$this->view_data['myActiveMissions'] = $this->stories->get_num_my_works($user_id, 'in progress');
 			$mySkills = $this->skill_model->get_my_top5_skills($user_id);
 			$this->view_data['mySkills'] = $mySkills;
 			$myWorkBid = $this->users_model->works_bid($user_id);
@@ -307,4 +307,5 @@ class Profile extends CI_Controller {
 		$this->load->view('Ajax_tab_7_alt', $this->view_data);	
 	}
 	
+
 }	

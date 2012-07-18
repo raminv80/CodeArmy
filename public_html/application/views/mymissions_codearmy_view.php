@@ -158,12 +158,15 @@
             	<?php
 					//calc remaining time
 					$remaining_time = strtotime($list['deadline'])-time();
+					if($remaining_time<0)$remaining_time=0;
 					//calc elappsed time
 					$elappsed_time = time()-strtotime($list['assigned_at']);
 					//calc total time he had during assignment
 					$given_time = strtotime($list['deadline']) - strtotime($list['assigned_at']);
+					if($given_time<0) $given_time = 1;
 					
 					$progress_percent = $elappsed_time/$given_time;
+					$progress_percent = ($progress_percent>0)?(($progress_percent>1)?1:$progress_percent):0;
 					$remaining_hour = floor($remaining_time / (60*60));
 					$remaining_min = $remaining_time % (60*60);
 					$remaining_minutes = floor($remaining_min / (60));
