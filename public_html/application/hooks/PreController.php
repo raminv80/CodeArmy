@@ -1,23 +1,21 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Signup extends CI_Controller {
+class PreController extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
-		
-		$this->load->model('inbox_model');
-		
-		// a user that is already logged in can't signup a new account
-		// redirect the user to dashboard
-		$check_login = $this->session->userdata('is_logged_in');
-		if($check_login == true) {
-			$this->view_data['username'] = $this->session->userdata('username');
-			redirect("/");
-		}
+		$this->load->model('stories_model', 'stories');
+		$this->load->model('users_model');
 	}
 	
 	public function start(){
-		//to do
-		$this->inbo_model->getNum_notification($this->session->userdata('username'));
+		$check_login = $this->users_model->is_authorised();
+		if($check_login == true) {
+			$user_id = $this->session->userdata('user_id');
+			$user_id = $this->session->set_userdata(array(
+				'myActiveMissions' => $this->stories->get_num_my_works($user_id, 'in progress')
+			));
+			//$this->view_data['myNumWorkList'] = $this->stories->get_num_my_works($user_id, 'in progress');
+		}
 	}
 }

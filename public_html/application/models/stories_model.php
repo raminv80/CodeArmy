@@ -569,6 +569,21 @@ class Stories_model extends CI_Model {
 			}
 			return $result;
 	}
+	
+	function get_num_my_works($user_id, $status){
+			if(strtolower($status) == 'in progress'){
+			$query = "SELECT count(1) as num FROM works,project where project.project_id = works.project_id and works.work_horse = ? and lower(works.status) in ('in progress', 'redo')";
+			$result = $this->db->query($query, array($user_id));
+			}elseif(strtolower($status)=='done'){
+			$query = "SELECT count(1) as num FROM works, project where project.project_id = works.project_id and works.work_horse = ? and lower(works.status) in ('done','verify')";
+			$result = $this->db->query($query, array($user_id));
+			}else{
+			$query = "SELECT count(1) as num FROM works, project where project.project_id = works.project_id and works.work_horse = ?  and lower(works.status) = ?";
+			$result = $this->db->query($query, array($user_id,strtolower($status)));
+			}
+			$result = $result->result_array();
+			return $result[0]['num'];
+	}
 		
 		function done($id,$path=""){
 			$git = $this->input->post('git');
