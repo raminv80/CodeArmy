@@ -29,7 +29,7 @@ class Missions extends CI_Controller {
 			$myProfile = $myProfile[0];
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
-		
+			$this->view_data['myActiveMissions'] = $this->stories->get_num_my_works($user_id, 'in progress');
 			$this->view_data['username'] = $this->session->userdata('username');
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;

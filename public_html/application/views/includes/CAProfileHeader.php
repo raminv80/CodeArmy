@@ -20,7 +20,7 @@
           </a></li>
         <li><a href="/missions/my_missions" id="MyMissions">
           <div id="mymissions-holder">
-            <div class="notification" id="mymissions-notification">2</div>
+            <div class="notification" id="mymissions-notification"><?=isset($myActiveMissions)?$myActiveMissions:'?'?></div>
             My Missions</div>
           </a></li>
         <li> <a href="/profile" id="Profile">
