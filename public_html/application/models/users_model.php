@@ -447,15 +447,19 @@ class Users_model extends CI_Model {
 		return $data;
 	}
 	
-	function leaderboard_points($limit=0){
+	function leaderboard_points($limit){
 		if($limit>0){
-			$query = "select * from (select users.user_id, users.email, username, avatar, exp,hour_spent from users left join user_profiles on users.user_id = user_profiles.user_id) as t where exp>0 order by exp DESC, hour_spent desc limit 0,".$limit;
+			$query = "select * from (select users.user_id, username, avatar, exp from users left join user_profiles on users.user_id = user_profiles.user_id) as t where exp>0 order by exp DESC limit 0,".$limit;
 		}else{
-			$query = "select * from (select users.user_id,users.email, username, avatar, exp,hour_spent from users left join user_profiles on users.user_id = user_profiles.user_id) as t where exp>0 order by exp DESC, hour_spent desc";
+			$query = "select * from (select users.user_id, username, avatar, exp from users left join user_profiles on users.user_id = user_profiles.user_id) as t where exp>0 order by exp DESC";
 		}
 		$result = $this->db->query($query);
-		$data = $result->result_array();
-		return $data;
+		if($result->num_rows>0){
+			$data = $result->result_array();
+			return $data;
+		} else {
+			return false;
+		}
 	}
 	
 	function leaderboard_time($limit=0){

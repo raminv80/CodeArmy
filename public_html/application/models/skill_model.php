@@ -44,7 +44,7 @@ class Skill_model extends CI_Model {
 	}
 
 	function get_my_top5_skills($user_id){
-		$sql = "SELECT skill.id, point, name from skill_set, skill where skill_set.user_id = ? and skill_set.skill_id = skill.id order by point DESC Limit 5";
+		$sql = "SELECT skill.id, point, name from skill_set, skill where skill_set.user_id = ? and skill_set.skill_id = skill.id order by point DESC Limit 0, 5";
 		$res = $this->db->query($sql, array($user_id));
 		if($res->num_rows()>0){
 			$res = $res->result_array();
@@ -72,7 +72,7 @@ class Skill_model extends CI_Model {
 	}
 
 	function get_my_top8_badges($user_id){
-		$sql= "select achievements.* from achievements, achievement_set where achievements.achievement_id = achievement_set.achievement_id and user_id = ? order by achievement_set.id limit 8";
+		$sql= "select achievements.* from achievements, achievement_set where achievements.achievement_id = achievement_set.achievement_id and user_id = ? order by achievement_set.id limit 0, 8";
 		$res = $this->db->query($sql, array($user_id));
 		if($res->num_rows()>0){
 			$res = $res->result_array();
