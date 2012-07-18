@@ -746,4 +746,44 @@ input.CAbutton{padding:0}
 	padding:5px;
 	list-style: outside;
 }
+.block-save-profile {
+	width: 755px;
+	height:75px;
+	float:left;
+	position:absolute;
+}
+#save-profile {
+	width:250px;
+	float:left;
+}
+#profile-completion {
+	width:500px;
+	float:right;
+	font-size:15.3px;
+	color:#66ff33;
+}
+#save-profile a {
+	color: #CCCCCC;
+    font-size: 8.99pt;
+    text-decoration: underline;
+}
+#profile-completion-bar {
+	height:22px;
+	width:447px;
+	float:left;
+	margin:5px 0 0 0;
+	background:url(/public/images/codeArmy/profile/profile-completion-bg.png) no-repeat;
+}
+#profile-completion-progress {
+	background:url(/public/images/codeArmy/profile/profile-completion-bar-bg.png) repeat-x;
+	width:30%;
+	height:18px;
+	margin:2px 0 0 2px;
+	border-radius: 15px;
+}
+#profile-edit-content-area #block-avatar {
+	background:url(/public/images/codeArmy/profile/edit-profile-avatar-bg.jpg) no-repeat;
+	height:453px;
+	width:285px;
+}
 /* END - New Codes by Reza */

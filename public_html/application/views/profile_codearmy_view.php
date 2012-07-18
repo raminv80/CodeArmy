@@ -1,5 +1,5 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
-<!--<img src="/public/images/codeArmy/profile/temp-final.png" id="preview"/>-->
+<!--<img src="/public/images/codeArmy/profile/temp-final.png" id="preview"/>-->			
 
 <div id="profile-content-area"> 
   
