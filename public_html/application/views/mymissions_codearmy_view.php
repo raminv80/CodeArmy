@@ -102,14 +102,14 @@
 }
 #block-mission-list .mission-time .time{
 	font-size:18pt;
-	position:absolute;
-	bottom:20px;
 }
 #block-mission-list .mission-time .hrs{
 	font-size:12pt;
+}
+#block-mission-list .timer{
 	position:absolute;
-	bottom:20px;
-	left:77px;
+	top:55px; 
+	left:7px;
 }
 #block-mission-list .mission-progress-bg{
 	position: absolute;
@@ -127,7 +127,7 @@
 	-webkit-border-radius: 5px;
 }
 #block-mission-list .blue-button{
-	background: url(/public/images/codeArmy/mymission/Blue-button.png) no-repeat;
+	background: url(/public/images/codeArmy/mymission/Blue-button1.png) no-repeat;
 	width: 114px;
 	height: 48px;
 	display: block;
@@ -138,6 +138,14 @@
 	padding: 16px 0;
 	font-size:10pt;
 }
+#block-mission-list .blue-button:hover{
+	background: url(/public/images/codeArmy/mymission/Blue-button1-up.png) no-repeat;
+}
+.mission-status-icon {
+	position: absolute;
+	top: 8px;
+	right: 15px;
+}
 </style>
 <div id="mymission-content-area">
 	<div id="block-mission-list">
@@ -145,114 +153,69 @@
         	<h3>My Missions</h3>
         </div>
         <div class="list">
+        	<?php foreach($myWorkList as $list):?>
             <div class="item green-mission">
-            	<?php $progress_percent = 0.3;?>
+            	<?php
+					//calc remaining time
+					$remaining_time = strtotime($list['deadline'])-time();
+					//calc elappsed time
+					$elappsed_time = time()-strtotime($list['assigned_at']);
+					//calc total time he had during assignment
+					$given_time = strtotime($list['deadline']) - strtotime($list['assigned_at']);
+					
+					$progress_percent = $elappsed_time/$given_time;
+					$remaining_hour = floor($remaining_time / (60*60));
+					$remaining_min = $remaining_time % (60*60);
+					$remaining_minutes = floor($remaining_min / (60));
+					$min_to_percent = (1*60)/($given_time);
+				?>
             	<div class="mission-header">
-                	<div class="mission-title">Title of mission (task)</div>
-                    <div class="mission-status-icon"></div>
+                	<div class="mission-title"><?=$list['title']?></div>
+                    <div class="mission-status-icon"><img src="/public/images/codeArmy/mymission/thumb-up.png" alt="thumb up" /></div>
                     <div class="mission-progress-bg">
-                    	<div class="mission-progress-meter" style="width:<?= 216*$progress_percent ?>px"></div>
+                    	<div class="mission-progress-meter" style="width:<?= round(216*$progress_percent) ?>px"></div>
+                        <input type="hidden" name="percent" value="<?=$progress_percent?>" />
+                        <input type="hidden" name="min_to_percent" value="<?=$min_to_percent?>" />
                     </div>
-                    <div class="mission-inputs">Inputs: IA, Wireframes</div>
-                    <div class="mission-deliverables">Deliverables: HTML files, PSD files</div>
+                    <div class="mission-inputs">Inputs: <?=trim($list['input'])==''?'not defined':$list['input']?></div>
+                    <div class="mission-deliverables">Deliverables: <?=trim($list['output'])==''?'not defined':$list['output']?></div>
                 </div>
                 <div class="mission-content">
                 	<ul class="mission-icons">
-                		<li><span class="icon"></span><span class="title">Captain</span></li>
-                        <li><span class="icon"></span><span class="title">3 Troopers</span></li>
-                        <li><span class="icon"></span><span class="title">Discussion</span></li>
-                        <li><span class="icon"></span><span class="title">Attachements</span></li>
+                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">1 Trooper</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
                     </ul>
                     <div class="mission-time">
                     	<span class="time-left">Time left</span>
-                        <span class="time">15:00</span>
+                        <div class="timer">
+                        <span class="time"><?=$remaining_hour.':'.$remaining_minutes?></span>
                         <span class="hrs">hrs</span>
+                        </div>
                         <a href="#" class="blue-button">Check in</a>
                     </div>
                 </div>
             </div>
+            <?php endforeach;?>
             
-            <div class="item red-mission">
-            	<?php $progress_percent = 0.3;?>
-            	<div class="mission-header">
-                	<div class="mission-title">Title of mission (task)</div>
-                    <div class="mission-status-icon"></div>
-                    <div class="mission-progress-bg">
-                    	<div class="mission-progress-meter" style="width:<?= 216*$progress_percent ?>px"></div>
-                    </div>
-                    <div class="mission-inputs">Inputs: IA, Wireframes</div>
-                    <div class="mission-deliverables">Deliverables: HTML files, PSD files</div>
-                </div>
-                <div class="mission-content">
-                	<ul class="mission-icons">
-                		<li><span class="icon"></span><span class="title">Captain</span></li>
-                        <li><span class="icon"></span><span class="title">3 Troopers</span></li>
-                        <li><span class="icon"></span><span class="title">Discussion</span></li>
-                        <li><span class="icon"></span><span class="title">Attachements</span></li>
-                    </ul>
-                    <div class="mission-time">
-                    	<span class="time-left">Time left</span>
-                        <span class="time">15:00</span>
-                        <span class="hrs">hrs</span>
-                        <a href="#" class="blue-button">Check in</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="item gray-mission">
-            	<?php $progress_percent = 0.3;?>
-            	<div class="mission-header">
-                	<div class="mission-title">Title of mission (task)</div>
-                    <div class="mission-status-icon"></div>
-                    <div class="mission-progress-bg">
-                    	<div class="mission-progress-meter" style="width:<?= 216*$progress_percent ?>px"></div>
-                    </div>
-                    <div class="mission-inputs">Inputs: IA, Wireframes</div>
-                    <div class="mission-deliverables">Deliverables: HTML files, PSD files</div>
-                </div>
-                <div class="mission-content">
-                	<ul class="mission-icons">
-                		<li><span class="icon"></span><span class="title">Captain</span></li>
-                        <li><span class="icon"></span><span class="title">3 Troopers</span></li>
-                        <li><span class="icon"></span><span class="title">Discussion</span></li>
-                        <li><span class="icon"></span><span class="title">Attachements</span></li>
-                    </ul>
-                    <div class="mission-time">
-                    	<span class="time-left">Time left</span>
-                        <span class="time">15:00</span>
-                        <span class="hrs">hrs</span>
-                        <a href="#" class="blue-button">Check in</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="item orange-mission">
-            	<?php $progress_percent = 0.3;?>
-            	<div class="mission-header">
-                	<div class="mission-title">Title of mission (task)</div>
-                    <div class="mission-status-icon"></div>
-                    <div class="mission-progress-bg">
-                    	<div class="mission-progress-meter" style="width:<?= 216*$progress_percent ?>px"></div>
-                    </div>
-                    <div class="mission-inputs">Inputs: IA, Wireframes</div>
-                    <div class="mission-deliverables">Deliverables: HTML files, PSD files</div>
-                </div>
-                <div class="mission-content">
-                	<ul class="mission-icons">
-                		<li><span class="icon"></span><span class="title">Captain</span></li>
-                        <li><span class="icon"></span><span class="title">3 Troopers</span></li>
-                        <li><span class="icon"></span><span class="title">Discussion</span></li>
-                        <li><span class="icon"></span><span class="title">Attachements</span></li>
-                    </ul>
-                    <div class="mission-time">
-                    	<span class="time-left">Time left</span>
-                        <span class="time">15:00</span>
-                        <span class="hrs">hrs</span>
-                        <a href="#" class="blue-button">Check in</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
+<script>
+	$(function(){setInterval("updateTimer()",1000*60);});
+	function updateTimer(){
+		$('#block-mission-list .time').each(function(){
+				var time = $(this).html().split(':');
+				if(time[1]<=00){if(time[0]>0){time[0]--;time[1]='59';}}else{time[1]--;}
+				$(this).html(time[0]+':'+time[1]);
+				var item = $(this).parent().parent().parent().parent();
+				var percentage_elm = $(item).find('input[name="percent"]');
+				var percentage = parseFloat(percentage_elm.val())+parseFloat($(item).find('input[name="min_to_percent"]').val());
+				if(percentage>1)percentage=1;
+				percentage_elm.val(percentage);
+				$(item).find('.mission-progress-meter').css({'width':Math.round(216*percentage)});
+			});
+	}
+</script>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>

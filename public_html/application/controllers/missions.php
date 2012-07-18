@@ -47,6 +47,8 @@ class Missions extends CI_Controller {
 	}
 	
 	function my_missions(){
+		$user_id = $this->view_data['me']['user_id'];
+		$this->view_data['myWorkList'] = $this->stories->get_my_works($user_id, 'in progress')->result_array();
 		$this->view_data['window_title'] = "My Missions";
 		$this->load->view('mymissions_codearmy_view', $this->view_data);
 	}
