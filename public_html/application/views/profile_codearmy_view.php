@@ -24,12 +24,29 @@
       <a href="/leaderboard">View all</a> </div>
     <div class="block-content">
       <ul>
-        <li class="leaderboard-row"> <img src="" alt="user-avatar" />
+        <li class="leaderboard-row">
+        <?php
+		if($leaderBoard){
+			foreach($leaderBoard as $leader):
+				if ($leader["avatar"] != NULL){
+		?>
+        <img src="/public/<?=$leader["avatar"]?>" alt="user-avatar" />
+        <?php
+				} else {
+		?>
+        <img src="/public/images/img7.png" alt="user-avatar" />
+        <?php
+				}
+		?>
           <ul>
-            <li>%Username%</li>
-            <li>%Rank%</li>
+            <li><?=ucfirst($leader["username"])?></li>
+            <li><?=$leader["rank"]?></li>
           </ul>
-          <div>%1000% Points</div>
+          <div><?=$leader["exp"]?> Points</div>
+        <?php
+			endforeach;
+		}
+		?>
         </li>
       </ul>
     </div>
@@ -66,7 +83,7 @@
       <a href="#">View all</a> </div>
     <?php
 	if ($mySkills){
-    	foreach($mySkills as $skill){
+    	foreach($mySkills as $skill):
 	?>
     <div class="skill-unit">
       <div id="skill-title"><?=ucfirst($skill["name"])?></div>
@@ -75,7 +92,7 @@
       </div>
     </div>
     <?php
-    	}
+    	endforeach;
 	}
 	?>
   </div>

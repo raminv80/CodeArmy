@@ -449,9 +449,9 @@ class Users_model extends CI_Model {
 	
 	function leaderboard_points($limit){
 		if($limit>0){
-			$query = "select * from (select users.user_id, username, avatar, exp from users left join user_profiles on users.user_id = user_profiles.user_id) as t where exp>0 order by exp DESC limit 0,".$limit;
+			$query = "select * from (select users.user_id, username, avatar, exp, ranks.rank from users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp) as t where exp>0 order by exp DESC limit 0,".$limit;
 		}else{
-			$query = "select * from (select users.user_id, username, avatar, exp from users left join user_profiles on users.user_id = user_profiles.user_id) as t where exp>0 order by exp DESC";
+			$query = "select * from (select users.user_id, username, avatar, exp, ranks.rank from users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp) as t where exp>0 order by exp DESC";
 		}
 		$result = $this->db->query($query);
 		if($result->num_rows>0){
