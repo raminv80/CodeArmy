@@ -40,6 +40,10 @@ class Missions extends CI_Controller {
 		}
 	}
 	
+	function find(){
+		$this->view_data['window_title'] = "Find Missions";
+		$this->load->view('find_missions_codearmy_view', $this->view_data);
+	}
 	
 	function index(){
 		$this->view_data['window_title'] = "My Missions";
