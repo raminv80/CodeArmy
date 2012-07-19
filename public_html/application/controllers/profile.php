@@ -68,6 +68,7 @@ class Profile extends CI_Controller {
 		if(!$myBadges){$myBadges=NULL;}
 		$this->view_data['myBadges'] = $myBadges;
 		if(!in_array($this->view_data['myProfile']['specialization'],array('designer','developer','copywriter','employer')))redirect("/register");
+		//leaderboard
 		$leaderBoard = $this->users_model->leaderboard_points(5);
 		$this->view_data['leaderBoard'] = $leaderBoard;
 		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
