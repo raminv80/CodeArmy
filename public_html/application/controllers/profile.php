@@ -51,8 +51,6 @@ class Profile extends CI_Controller {
 					$this->view_data['myCountry'] = $value;
 				}
 			}
-			$leaderBoard = $this->users_model->leaderboard_points(5);
-			$this->view_data['leaderBoard'] = $leaderBoard;
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;
 			if($action)$referer .= '/'.$action;
@@ -70,6 +68,8 @@ class Profile extends CI_Controller {
 		if(!$myBadges){$myBadges=NULL;}
 		$this->view_data['myBadges'] = $myBadges;
 		if(!in_array($this->view_data['myProfile']['specialization'],array('designer','developer','copywriter','employer')))redirect("/register");
+		$leaderBoard = $this->users_model->leaderboard_points(5);
+		$this->view_data['leaderBoard'] = $leaderBoard;
 		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
 		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
 		$this->view_data['window_title'] = $this->session->userdata('username');
