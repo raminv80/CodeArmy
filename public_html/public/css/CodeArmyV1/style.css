@@ -625,6 +625,8 @@ input.CAbutton{padding:0}
 	height:14px;
 	margin:2px 0 0 2px;
 	border-radius: 15px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
 }
 .block-mission-info {
 	width:460px;
@@ -699,6 +701,8 @@ input.CAbutton{padding:0}
 	height:9px;
 	margin:3px 0 0 2px;
 	border-radius: 15px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
 }
 #block-achievements {
 	position:absolute;
@@ -766,6 +770,24 @@ input.CAbutton{padding:0}
 	color: #CCCCCC;
     font-size: 8.99pt;
     text-decoration: underline;
+	padding: 40px 0 0;
+	color:#b1b0b0;
+	vertical-align:middle;
+}
+input.lnkimg {
+	background:url(/public/images/codeArmy/profile/savebtn_nstate.png) no-repeat;
+	width:127px;
+	float: left;
+    height: 49px;
+	padding: 0;
+    text-align: center;
+    text-decoration: none;
+	color:#fff;
+	font-size:15px;
+	border:none;
+}
+input.lnkimg:hover {
+	background:url(/public/images/codeArmy/profile/savebtn_hoverstate.png) no-repeat;
 }
 #profile-completion-bar {
 	height:22px;
@@ -780,10 +802,248 @@ input.CAbutton{padding:0}
 	height:18px;
 	margin:2px 0 0 2px;
 	border-radius: 15px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
 }
 #profile-edit-content-area #block-avatar {
 	background:url(/public/images/codeArmy/profile/edit-profile-avatar-bg.jpg) no-repeat;
 	height:453px;
 	width:285px;
+}
+#profile-edit-content-area #avatar-pic {
+	height:325px;
+}
+#profile-edit-content-area #profile-desc {
+	margin: 40px 0;
+    text-align: center;
+	color:#595959;
+}
+#avatar-left-arrow {
+	background:url(/public/images/codeArmy/profile/left-arrow.png) no-repeat;
+	float:left;
+	width:14px;
+	height:22px;
+	margin:150px 0 0 -15px;
+}
+#avatar-right-arrow {
+	background:url(/public/images/codeArmy/profile/right-arrow.png) no-repeat;
+	float:right;
+	width:14px;
+	height:22px;
+	margin:150px -9px 0 0;
+}
+#avatar-left-arrow p, #avatar-right-arrow p {
+	visibility:hidden;
+}
+#edit-contact-info {
+	width:285px;
+	float:left;
+	position:absolute;
+	margin-top:530px;
+}
+#contact-boxes {
+	margin:10px 0;
+	float:left;
+}
+#contact-boxes input {
+	width:225px;
+	height:22px;
+	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
+	border-radius: 3px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 1px 1px 1px #636363;
+	margin-bottom: 10px;
+	border:none;
+	color:#fff;
+	font-family:'Ruda', sans-serif;
+	padding-left: 10px;
+	font-size:14px;
+	float:right;
+}
+#profile-edit-content-area .block-header h3 {
+	height:50px;
+}
+#contact-boxes label{
+	float:left;
+	width:24px;
+	height:24px;
+}
+#contact-boxes #input-row {
+	width:280px;
+	float:left;
+}
+#contact-boxes .email {
+	background:url(/public/images/codeArmy/profile/email-icon.png) no-repeat;
+}
+#contact-boxes .skype {
+	background:url(/public/images/codeArmy/profile/skype-icon.png) no-repeat;
+}
+#contact-boxes .facebook {
+	background:url(/public/images/codeArmy/profile/fb-icon.png) no-repeat;
+}
+#contact-boxes .twitter {
+	background:url(/public/images/codeArmy/profile/tw-icon.png) no-repeat;
+}
+#contact-boxes .linkedin {
+	background:url(/public/images/codeArmy/profile/linkedin-icon.png) no-repeat;
+}
+#block-basic-info {
+	width:460px;
+	float:right;
+	right:5px;
+	position:absolute;
+	margin-top: 20px;
+}
+#block-basic-info input {
+	width:195px;
+	height:22px;
+	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
+	border-radius: 3px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 1px 1px 1px #636363;
+	margin: 5px;
+	border:none;
+	color:#fff;
+	font-family:'Ruda', sans-serif;
+	padding-left: 10px;
+	font-size:14px;
+}
+#block-basic-info #input-row {
+	width:460px;
+	float:left;
+}
+#block-personal-info {
+	width:460px;
+	float:right;
+	right:5px;
+	position:absolute;
+	margin-top: 120px;
+}
+#personal-info-boxes input {
+	width:320px;
+	height:22px;
+	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
+	border-radius: 3px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 1px 1px 1px #636363;
+	margin: 5px 30px 5px 5px;
+	border:none;
+	color:#fff;
+	font-family:'Ruda', sans-serif;
+	padding-left: 10px;
+	font-size:14px;
+	float:right;
+}
+#personal-info-boxes label{
+	float:left;
+	padding-top: 10px;
+	width:65px;
+}
+#personal-info-boxes #input-row {
+	width:460px;
+	float:left;
+}
+#block-skill-progression {
+	width:460px;
+	float:right;
+	right:5px;
+	position:absolute;
+	margin-top: 340px;
+}
+#block-skill-progression select {
+	width:430px;
+	height:22px;
+	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
+	border-radius: 3px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 1px 1px 1px #636363;
+	margin: 5px;
+	border:none;
+	color:#fff;
+	font-family:'Ruda', sans-serif;
+	padding-left: 10px;
+	font-size:14px;
+	float:left;
+}
+#block-links-portfolios {
+	width:460px;
+	float:right;
+	right:5px;
+	position:absolute;
+	margin-top: 528px;
+}
+#block-links-portfolios .block-header h3 {
+	height:57px;
+}
+.links-portfolios-boxes input {
+	width:280px;
+	height:22px;
+	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
+	border-radius: 3px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 1px 1px 1px #636363;
+	margin: 5px 20px 5px 5px;
+	border:none;
+	color:#fff;
+	font-family:'Ruda', sans-serif;
+	padding-left: 10px;
+	font-size:14px;
+	float:right;
+}
+input.links-portfolios-boxes1 {
+	width:100px;
+	float:left;
+}
+.links-portfolios-boxes #input-row {
+	width:460px;
+	float:left;
+}
+#block-send-pay {
+	width:780px;
+	float:left;
+	right:5px;
+	position:absolute;
+	margin-top: 785px;
+}
+#paypal-account h4, #bank-account h4 {
+	float:left;
+	font-size:16px;
+	width:780px;
+	margin:10px 0 5px 0;
+}
+#send-pay-boxes input {
+	width:250px;
+	height:22px;
+	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
+	border-radius: 3px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 1px 1px 1px #636363;
+	margin: 5px;
+	border:none;
+	color:#fff;
+	font-family:'Ruda', sans-serif;
+	padding-left: 10px;
+	font-size:14px;
+	float:left;
+}
+#send-pay-boxes label{
+	float:left;
+	padding-top: 10px;
+	width:100px;
+}
+#send-pay-boxes #input-row {
+	width:600px;
+	margin: 5px 0;
+	float:right;
+}
+#block-send-pay #save-profile {
+	float:right;
+	width:450px;
 }
 /* END - New Codes by Reza */
