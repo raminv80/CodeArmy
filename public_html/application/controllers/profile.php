@@ -5,6 +5,8 @@ class Profile extends CI_Controller {
 	var $view_data = array();
 	
 	function __construct() {
+		error_reporting(E_ALL); 
+ ini_set("display_errors", 1);
 		parent::__construct();
 		$this->load->model('users_model');
 		$this->load->model('skill_model');
@@ -32,8 +34,9 @@ class Profile extends CI_Controller {
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
 			$this->view_data['username'] = $this->session->userdata('username');
-			
+
 			$this->view_data['myActiveMissions'] = $this->stories->get_num_my_works($user_id, 'in progress');
+
 			$mySkills = $this->skill_model->get_my_top5_skills($user_id);
 			$this->view_data['mySkills'] = $mySkills;
 			$myWorkBid = $this->users_model->works_bid($user_id);
@@ -48,9 +51,6 @@ class Profile extends CI_Controller {
 					$this->view_data['myCountry'] = $value;
 				}
 			}
-			
-			$myBadges = $this->skill_model->get_my_top8_badges($user_id);
-			$this->view_data['myBadges'] = $myBadges;
 			$leaderBoard = $this->users_model->leaderboard_points(5);
 			$this->view_data['leaderBoard'] = $leaderBoard;
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
@@ -65,6 +65,10 @@ class Profile extends CI_Controller {
 	
 	function index(){
 		//if user's designation is not set redirect him to job selection window
+		$user_id = $this->session->userdata('user_id');
+		$myBadges = $this->skill_model->get_my_top8_badges($user_id);
+		if(!$myBadges){$myBadges=NULL;}
+		$this->view_data['myBadges'] = $myBadges;
 		if(!in_array($this->view_data['myProfile']['specialization'],array('designer','developer','copywriter','employer')))redirect("/register");
 		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
 		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
@@ -114,6 +118,12 @@ class Profile extends CI_Controller {
 	
 	// - edit profile page
 	function edit() {
+		$this->view_data['window_title'] = "Edit my Profile | CodeArmy";
+		$this->load->view('profile_edit_codearmy_view', $this->view_data);	
+	}
+	
+	// - Workpad edit profile page
+	function edit_old() {
 		$user_id = $this->session->userdata('user_id');
 		if($user_id){
 			$me = $this->users_model->get_user($user_id);
@@ -309,6 +319,5 @@ class Profile extends CI_Controller {
 		$this->view_data['hours_saved'] = $this->users_model->hours_saved($user_id);
 		$this->load->view('Ajax_tab_7_alt', $this->view_data);	
 	}
-	
 
 }	
