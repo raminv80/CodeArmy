@@ -51,7 +51,7 @@
 		position:absolute;
 		top:0;right:0;
 		width:25px;
-		height:25px;
+		height:px;
 		background:#0F0;
 	}
 	#world-map{position:relative;}
@@ -257,7 +257,20 @@
 		$('.marker').click(function(){
 			//TODO: open project list
 			console.log($(this).data());
-			$('#dialog-project-list').show();
+			$('#dialog-project-list').css({
+				'top':$(this).data().y,
+				'left':$(this).data().x,
+				'transform-origin': '0% 0%',
+				'-webkit-transform-origin': '0% 0%',
+				'-o-transform-origin': '0% 0%',
+				'-moz-transform-origin': '0% 0%',
+				}).show();
+				$('#dialog-project-list').transition({scale:0},0);
+				$('#dialog-project-list').transition({
+					x:'16px',
+					y:'100px',
+					scale:1,
+				},1000);
 		});
 			
 	}

@@ -18,6 +18,7 @@
 <script type="text/javascript" src="/public/js/jquery-ui-1.8.16.custom.min.js"></script>
 <script type="text/javascript" src="/public/js/v4/jquery.tipsy.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/modernize.js"></script>
+<script type="text/javascript" src="/public/js/codeArmy/jquery.transit.min.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/jquery.maskedinput-1.3.min.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/jquery.fancybox.pack.js?v=2.0.6"></script>
