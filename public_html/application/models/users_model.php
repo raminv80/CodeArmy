@@ -47,8 +47,8 @@ class Users_model extends CI_Model {
 		); 
 		$res = $this->db->insert('users', $doc);
 		$this->create_new_profile($user_id);
-		$this->assign_skill('communication', $user_id);
-		$this->assign_skill('Leadership', $user_id);
+		//$this->assign_skill('communication', $user_id);
+		//$this->assign_skill('Leadership', $user_id);
 		return $res;
 	}
 	
@@ -65,8 +65,8 @@ class Users_model extends CI_Model {
 		); 
 		$res = $this->db->insert('users', $doc);
 		$this->create_new_profile($user_id, $this->input->post('dob'));
-		$this->assign_skill('communication', $user_id);
-		$this->assign_skill('Leadership', $user_id);
+		//$this->assign_skill('communication', $user_id);
+		//$this->assign_skill('Leadership', $user_id);
 		$data = array(
 			'username' => $this->input->post('username'),
 			'user_id' => $user_id,
@@ -305,48 +305,62 @@ class Users_model extends CI_Model {
 	}
 	
 	//update profile
-	function update_profile($user_id,$avatar) {
+	//function update_profile($user_id,$avatar) {
+	function update_profile($user_id) {
 		//structure the profile data
 		$contact = array(
-			"mobile_no" => $this->input->post('mobile_no'),
-			"city" => $this->input->post('city'),
+			"phone" => $this->input->post('phone'),
+			"address" => $this->input->post('address'),
 			"country" => $this->input->post('country')
-			);
+		);
 		
 		$urls = array(
-			"facebook" => $this->input->post('fb_url'),
-			"twitter" => $this->input->post('twit'),
-			"linkedin" => $this->input->post('linkedin'),
-			"github" => $this->input->post('github'),
-			"portfolio" => $this->input->post('portfolio'),
 			"skype" => $this->input->post('skype'),
+			"facebook" => $this->input->post('facebook'),
+			"twitter" => $this->input->post('twitter'),
+			"linkedin" => $this->input->post('linkedin'),
+			"github" => $this->input->post('github-address'),
+			"portfolio" => $this->input->post('portfolio-address'),
+			"blog" => $this->input->post('blog-address')
 		);
 		
 		$contact = json_encode($contact);
 		$urls = json_encode($urls);
 		
 		$doc = array(
-			"full_name" => $this->input->post('full_name'),
-			"bank_name" => $this->input->post('bank_name'),
-			"bank_acc" => $this->input->post('bank_acc'),
-			"paypal_acc" => $this->input->post('paypal'),
+			"full_name" => $this->input->post('fullname'),
+			"bank_name" => $this->input->post('bank-name'),
+			"bank_acc" => $this->input->post('bank-accountno'),
+			"bank_country" => $this->input->post('bank-country'),
+			"bank_swift" => $this->input->post('bank-swift'),
+			"bank_firstname" => $this->input->post('bank-firstname'),
+			"bank_lastname" => $this->input->post('bank-lastname'),
+			"paypal_acc" => $this->input->post('paypal-email'),
 			"contact" => $contact,
 			"urls" => $urls,
-			"lan_speak" => $this->input->post('lan_speak'),
-			"lan_rw" => $this->input->post('lan_rw'),
-			"gender" => $this->input->post('gender'),
-			"birthdate" => $this->input->post('birth_year').'-'.$this->input->post('birth_month').'-'.$this->input->post('birth_day'),
-			"specialization" => $this->input->post('specialization')
+			//"lan_speak" => $this->input->post('lan_speak'),
+			//"lan_rw" => $this->input->post('lan_rw'),
+			//"gender" => $this->input->post('gender'),
+			"birthdate" => $this->input->post('birthday')
+			//"specialization" => $this->input->post('specialization')
 		);
 		
-		if($avatar!=""){
+		//if($avatar!=""){
 			//assign the new avatar
-	        $relative_url = 'images/profile/'.$avatar;
-    	    $doc['avatar'] = $relative_url;
-    	}
+	        //$relative_url = 'images/profile/'.$avatar;
+    	    //$doc['avatar'] = $relative_url;
+    	//}
 
 		//update profile
 		return $this->db->update('user_profiles', $doc, array('user_id' => $user_id));
+	}
+	
+	function update_email($user_id){
+		$email = array(
+			"email" => $this->input->post('email')
+		);
+		
+		return $this->db->update('users', $email, array('user_id' => $user_id));
 	}
 	
 	function update_last_login($user_id){

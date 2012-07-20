@@ -45,11 +45,15 @@ class Profile extends CI_Controller {
 			$this->view_data['myWorkCompleted'] = $myWorkCompleted;
 			
 			$contact = json_decode($myProfile["contact"]);
-			$myCountry = $contact->country;
-			foreach($countries as $key=>$value) {
-				if ($key == $myCountry){
-					$this->view_data['myCountry'] = $value;
+			if ($contact != ""){
+				$myCountry = $contact->country;
+				foreach($countries as $key=>$value) {
+					if ($key == $myCountry){
+						$this->view_data['myCountry'] = $value;
+					}
 				}
+			} else {
+				$this->view_data['myCountry'] = "";
 			}
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;
@@ -120,8 +124,61 @@ class Profile extends CI_Controller {
 	// - edit profile page
 	function edit() {
 		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
+		$allSkills = $this->skill_model->get_all_skills();
+		$this->view_data['allSkills'] = $allSkills;
 		$this->view_data['window_title'] = "Edit my Profile | CodeArmy";
-		$this->load->view('profile_edit_codearmy_view', $this->view_data);	
+		$this->load->view('profile_edit_codearmy_view', $this->view_data);
+	}
+	
+	function edit_profile(){
+		$user_id = $this->session->userdata('user_id');
+		
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|max_length[255]');
+		
+		if ($this->form_validation->run() == FALSE){
+			$this->view_data['form_error'] = true;
+			$this->edit();
+		} else {
+			$this->users_model->update_email($user_id);
+			
+			$this->form_validation->set_rules('fullname', 'Fullname', 'required|max_length[60]');
+			$this->form_validation->set_rules('address', 'Address', 'required');
+			$this->form_validation->set_rules('phone', 'Phone', 'required');
+			$this->form_validation->set_rules('birthday', 'Birthday', 'required');
+			$this->form_validation->set_rules('paypal-email', 'Paypal Email', 'required|valid_email|max_length[255]');
+			$this->form_validation->set_rules('bank-country', 'Country of Bank', 'required');
+			$this->form_validation->set_rules('bank-name', 'Bank Name', 'required|max_length[40]');
+			$this->form_validation->set_rules('bank-swift', 'SWIFT Code', 'required|max_length[40]');
+			$this->form_validation->set_rules('bank-lastname', 'Last Name', 'required|max_length[255]');
+			$this->form_validation->set_rules('bank-firstname', 'First Name', 'required|max_length[255]');
+			$this->form_validation->set_rules('bank-accountno', 'Account Number', 'required|matches[bank-accountno2]');
+			$this->form_validation->set_rules('bank-accountno2', 'Re-type Account Number', 'required');
+			
+			if ($this->form_validation->run() == FALSE){
+				$this->view_data['form_error'] = true;
+				$this->edit();
+			} else {
+				$this->users_model->update_profile($user_id);
+				$this->skill_model->insert_skill($user_id);
+				redirect("/profile");
+			}
+		}
+
+		
+		
+		//if($this->users_model->update_email($user_id)) {
+			//if($this->users_model->update_profile($user_id)) {
+				//$this->session->set_flashdata('msg',"Your profie is updated.");
+				//redirect (base_url()."profile/edit");
+			//} else { // - if there is a problem writing to db
+				
+				//redirect(base_url()."profile/edit");
+			//} 
+		//} else { // - if there is a problem writing to db
+			//$this->form_validation->set_message('required', '%s custom message here');
+			//redirect(base_url()."profile/edit");
+		//}
 	}
 	
 	// - Workpad edit profile page

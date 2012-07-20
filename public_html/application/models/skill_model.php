@@ -129,4 +129,28 @@ class Skill_model extends CI_Model {
 			return false;	
 		}
 	}
+	
+	function insert_skill($user_id){
+		if ($this->input->post('skill1') != ""){
+			$data = array(
+				"user_id" => $user_id,
+				"skill_id" => $this->input->post('skill1')
+			);
+			$this->db->insert('skill_set', $data);
+		}
+		if ($this->input->post('skill2') != ""){
+			$data = array(
+				"user_id" => $user_id,
+				"skill_id" => $this->input->post('skill2')
+			);
+			$this->db->insert('skill_set', $data);
+		}
+		if ($this->input->post('skill3') != ""){
+			$data = array(
+				"user_id" => $user_id,
+				"skill_id" => $this->input->post('skill3')
+			);
+			$this->db->insert('skill_set', $data);
+		}
+	}
 }

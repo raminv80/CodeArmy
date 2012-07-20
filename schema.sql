@@ -609,3 +609,13 @@ ALTER TABLE `work_files`
 ALTER TABLE `work_skill`
   ADD CONSTRAINT `work_skill_ibfk_3` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `work_skill_ibfk_4` FOREIGN KEY (`skill_id`) REFERENCES `skill` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- More field for `user_profiles`
+--
+ALTER TABLE  `user_profiles` ADD  `bank_country` VARCHAR( 3 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL AFTER  `bank_acc` ,
+ADD  `bank_swift` VARCHAR( 40 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL  AFTER  `bank_country` ,
+ADD  `bank_firstname` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL  AFTER  `bank_swift` ,
+ADD  `bank_lastname` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL  AFTER  `bank_firstname`
+
+ALTER TABLE  `user_profiles` CHANGE  `paypal_acc`  `paypal_acc` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
