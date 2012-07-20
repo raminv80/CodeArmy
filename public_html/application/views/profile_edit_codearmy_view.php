@@ -23,7 +23,7 @@
     <hr style="margin-top:50px" />
     
     <!-- START - Level Block - Dev. by Reza  -->
-    <div id="block-level"> Level 1 </div>
+    <div id="block-level">Level <?=$myLevel?></div>
     
     <!-- START - Avatar Block - Dev. by Reza  -->
     <div id="block-avatar">
@@ -39,6 +39,9 @@
     </div>
     
     <!-- START - Contact Info Block - Dev. by Reza  -->
+    <?php
+	$urls = json_decode($myProfile["urls"]);
+	?>
     <div id="edit-contact-info">
       <div class="block-header">
         <h3>Contact Information</h3>
@@ -46,23 +49,23 @@
       <div id="contact-boxes">
         <div id="input-row">
           <label class="email"></label>
-          <input type="text" id="email" id="email" value="harish@gmail.com" />
+          <input type="text" id="email" id="email" value="<?=$me["email"]?>" />
         </div>
         <div id="input-row">
           <label class="skype"></label>
-          <input type="text" id="skype" name="skype" value="harishskype" />
+          <input type="text" id="skype" name="skype" value="<?=$urls->skype;?>" />
         </div>
         <div id="input-row">
           <label class="facebook"></label>
-          <input type="text" id="facebook" name="facebook" value="harishfb" />
+          <input type="text" id="facebook" name="facebook" value="" />
         </div>
         <div id="input-row">
           <label class="twitter"></label>
-          <input type="text" id="twitter" name="twitter" value="harishtw" />
+          <input type="text" id="twitter" name="twitter" value="" />
         </div>
         <div id="input-row">
           <label class="linkedin"></label>
-          <input type="text" id="linkedin" name="linkedin" value="http://my.linkedin.com/harish" />
+          <input type="text" id="linkedin" name="linkedin" value="" />
         </div>
       </div>
     </div>
