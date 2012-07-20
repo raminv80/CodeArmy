@@ -953,6 +953,9 @@ input.lnkimg:hover {
 	position:absolute;
 	margin-top: 240px;
 }
+#profile-edit-content-area #block-skill-progression {
+	margin-top: 340px;
+}
 #block-skill-progression select {
 	width:430px;
 	height:22px;
