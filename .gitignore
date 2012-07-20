@@ -2,3 +2,5 @@ database.php
 uploads/*
 tmp/*
 public/captcha/*
+
+public_html/test.php
