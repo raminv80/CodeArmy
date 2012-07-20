@@ -707,7 +707,7 @@ input.CAbutton{padding:0}
 #block-achievements {
 	position:absolute;
 	width:450px;
-	margin-top:450px;
+	margin-top:480px;
 	right:5px;
 	float:right;
 }
@@ -895,7 +895,7 @@ input.lnkimg:hover {
 	position:absolute;
 	margin-top: 20px;
 }
-#block-basic-info input {
+#block-basic-info input, #block-basic-info select {
 	width:195px;
 	height:22px;
 	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
@@ -951,7 +951,7 @@ input.lnkimg:hover {
 	float:right;
 	right:5px;
 	position:absolute;
-	margin-top: 240px;
+	margin-top: 230px;
 }
 #profile-edit-content-area #block-skill-progression {
 	margin-top: 340px;
