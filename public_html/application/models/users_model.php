@@ -165,9 +165,17 @@ class Users_model extends CI_Model {
 	
 	// create new profiles
 	public function create_new_profile($user_id, $dob=NULL) {
+		$info =unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
+		$contact = array(
+			"city" => $info['geoplugin_regionName'],
+			"country" => $info['geoplugin_countryName']
+			);
+		
+		$contact = json_encode($contact);
 		$doc = array(
 			"user_id" => $user_id,
 			"birthdate" => $dob,
+			"contact" => $contact,
 			"lan_speak" => 'English',
 			"lan_rw" => 'English',
 			"gender" => 'male',

@@ -26,7 +26,7 @@ class Login extends CI_Controller {
 			}
 		// - check if user is logged in
 		$check_login = $this->session->userdata('is_logged_in');
-		if($check_login == true) {
+		if($check_login == true && $this->uri->segment(2)!= 'Ajax_checkUser' && $this->uri->segment(2)!= 'Ajax_checkPass') {
 			$this->view_data['username'] = $this->session->userdata('username');
 			if(strtolower($this->uri->segment(2))!='logout')redirect("home"); 
 		} else { // - if user not login, redirect to dashboard. 

@@ -469,6 +469,8 @@ CREATE TABLE `works` (
   `attach` varchar(256) DEFAULT NULL,
   `git` varchar(256) DEFAULT NULL,
   `link` varchar(256) DEFAULT NULL,
+  `lat` float DEFAULT NULL,
+  `lng` float DEFAULT NULL,
   PRIMARY KEY (`work_id`),
   KEY `creator` (`creator`),
   KEY `owner` (`owner`),

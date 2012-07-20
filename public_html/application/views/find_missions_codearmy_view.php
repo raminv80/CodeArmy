@@ -3,6 +3,16 @@
     <div id="find-mission-area">
     	<div id="world-map">
  	   		<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />
+            <!-- dialogs -->
+            <!-- project list -->
+            <div id="dialog-project-list" class="dialog">
+            	<div class="container">
+                    <div class="dialog-close-button"></div>
+                    List of projects
+                </div>
+            </div>
+            <!-- end of project list -->
+            <!-- end of dialogs -->
         </div>
     </div>
     <div id="filter-toolbar" class="toolbar">
@@ -20,6 +30,30 @@
     </div>
     <!-- end of marker template -->
 <style>
+	#dialog-project-list{
+		width:800px;
+		height:500px;
+		background:#F00;
+		color:#FFF;
+		display:none;
+		position:absolute;
+		top:16px;
+		left:100px;
+		z-index:10002;
+	}
+	.dialog{padding:0}
+	.dialog .container{
+		position:relative;
+		width:100%;
+		height:100%;
+	}
+	.dialog .dialog-close-button{
+		position:absolute;
+		top:0;right:0;
+		width:25px;
+		height:25px;
+		background:#0F0;
+	}
 	#world-map{position:relative;}
 	.marker-icon{
 		background: black;
@@ -60,6 +94,14 @@
 		top:200px;
 		left:200px;
 		cursor:pointer;
+		-webkit-transform-style: preserve-3d;
+		-webkit-backface-visibility: hidden;
+		transform-style: preserve-3d;
+		backface-visibility: hidden;
+		-moz-transform-style: preserve-3d;
+		-moz-backface-visibility: hidden;
+		-o-transform-style: preserve-3d;
+		-o-backface-visibility: hidden;
 	}
 	#filter-toolbar{
 		position:absolute;
@@ -93,13 +135,26 @@
 <script>
 	function loadEffect(){}
 	$(function(){
+		//create some markers
 		randMarkers();
-		addMarker(100,100,'test','*','12<br/>CSS','#0ff',0.5,0);
-		addMarker(500,200,'test','#','4<br/>PHP MySQL HTML CSS JQuery','#f00',0.7,0);
+		var loc = geoToPixel({'lat':3.152480, 'lng': 101.717270});
+		addMarker(loc.x,loc.y,'t1','*','12<br/>Ramin','#0ff',0.5,0);
+		var loc = geoToPixel({'lat':70, 'lng': 0});
+		addMarker(loc.x,loc.y,'t3','*','12<br/>top','#0ff',0.5,0);
+		var loc = geoToPixel({'lat':-60, 'lng': 0});
+		addMarker(loc.x,loc.y,'t2','#','4<br/>PHP MySQL HTML CSS JQuery','#f00',0.7,0);
 		$('.toolbar').draggable({ containment: '#wrapper' });
+		
+		//initial dialog close button
+		$('.dialog-close-button').click(function(){
+			$(this).parents('.dialog').hide();
+		});
+		
+		//run window resize
 		$(window).resize();
 	});
 	$(window).resize(function() {
+		//vertical cenerlise world map
 		$('#find-mission-area').css('height',$(window).height()-40);
 		var y = Math.round(($(window).height()-40-$('#world-map-img').attr('height'))/2);
 		if(y<0)y=0;
@@ -109,14 +164,31 @@
 	function randMarkers(){
 		var icons = new Array('#','@','!','$','%','&','*');
 		var skills = new Array('php','CSS','MySQL','Rubby','PSD','Doc','PDF','Html','Java','C++');
+		var lat,lng;
 		for(i=0; i< 20; i++){
+			lat = Math.round(Math.random()*120)-60;
+			lng = Math.round(Math.random()*360)-180;
+			loc = geoToPixel({'lat':lat, 'lng': lng});
 			r = Math.round(Math.random()*255);
 			g = Math.round(Math.random()*255);
 			b = Math.round(Math.random()*255);
-			addMarker(Math.round(Math.random()*$('#world-map-img').width()),Math.round(Math.random()*$('#world-map-img').height()),'test'+i,icons[Math.round(Math.random()*icons.length)],'4<br/>'+skills[Math.round(Math.random()*skills.length)],'rgb('+r+','+g+','+b+')',0.7,0);
+			addMarker(loc.x,loc.y,'test'+i,icons[Math.round(Math.random()*(icons.length-1))],'4<br/>'+skills[Math.round(Math.random()*(skills.length-1))],'rgb('+r+','+g+','+b+')',Math.random()*0.45+0.5,0);
 		}
 	}
 	
+	function geoToPixel(geo){
+		//TODO: change the map to google map style so lat and lng will remain in straight lines
+		var x=0,y=0, width, height,lngS=-180,lngE=180,latS=-60,latE=70;
+		height = $('#world-map-img').height();
+		width = $('#world-map-img').width();
+		var wt = lngE - lngS;
+		var ht = latE - latS;
+		var wd = geo.lng-lngS;
+		var hd = geo.lat-latS;
+		x = Math.round(wd/wt*width);
+		y = height-Math.round(hd/ht*height);
+		return {'x':x,'y':y}
+	}
 	function addMarker(x,y,id,icon,desc,color,scale,speed){
 		var template = $('#marker-template').clone();
 		var container = $('#world-map');
@@ -133,11 +205,16 @@
 				'-webkit-transform-origin': '50% 100%',
 				'-o-transform-origin': '50% 100%',
 				'-moz-transform-origin': '50% 100%',
+			});
+		container.append(template);
+		x=x-Math.round(template.width()/2);
+		y=y-template.height();
+		console.log()
+		template.css({
 				'top':y,
 				'left':x
 			}).fadeIn(speed);
 		template.data({'scale':scale,'x':x,'y':y,'color':color});
-		container.append(template);
 		$('.marker').hover(function(){
 				//mouse in
 				$(this).css({
@@ -154,7 +231,8 @@
 				'transition': '0.05s ease-out',
 				'-o-transition': '0.05s ease-out',
 				'-moz-transition': '0.05s ease-out',
-				'-webkit-transition': '0.05s ease-out'
+				'-webkit-transition': '0.05s ease-out',
+				'z-index':1
 				})
 			},function(){
 				//mouse out
@@ -172,9 +250,16 @@
 				'transition': '0.05s ease-out',
 				'-o-transition': '0.05s ease-out',
 				'-moz-transition': '0.05s ease-out',
-				'-webkit-transition': '0.05s ease-out'
+				'-webkit-transition': '0.05s ease-out',
+				'z-index':0
 				})
 			});
+		$('.marker').click(function(){
+			//TODO: open project list
+			console.log($(this).data());
+			$('#dialog-project-list').show();
+		});
+			
 	}
 	/*var canvas,cell_size=<?=$cell_size?>, cell_pad=<?=$cell_pad?>;
 	function loadEffect(){}
