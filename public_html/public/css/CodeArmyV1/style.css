@@ -1049,4 +1049,34 @@ input.links-portfolios-boxes1 {
 	float:right;
 	width:450px;
 }
+#block-mission-bid-header .block-header h3 {
+	width:750px;
+}
+#block-mission-bid-header {
+	position:absolute;
+	width:780px;
+	float:left;
+}
+#block-bid-1 {
+	margin-top:100px;
+	float:left;
+	width:780px;
+}
+#bid-date {
+	background:url(/public/images/codeArmy/mymission/bg_date.png) no-repeat;
+	width:780px;
+	float:left;
+	height:30px;
+	padding: 8px 0 8px 20px;
+}
+#bid-info-block {
+	float:left;
+	background:url(/public/images/codeArmy/mymission/bg_mb.png) no-repeat;
+	height:95px;
+	width:550px;
+}
+#bid-close-date, #proj-title {
+	float:left;
+	width:230px;
+}
 /* END - New Codes by Reza */
