@@ -900,6 +900,7 @@ input.lnkimg:hover {
 	height:22px;
 	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
 	border-radius: 3px;
+	-webkit-appearance: none;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	box-shadow: 1px 1px 1px #636363;
@@ -961,6 +962,7 @@ input.lnkimg:hover {
 }
 #block-skill-progression select {
 	width:430px;
+	-webkit-appearance: none;
 	height:22px;
 	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
 	border-radius: 3px;
@@ -975,7 +977,7 @@ input.lnkimg:hover {
 	font-size:14px;
 	float:left;
 }
-#block-skill-progression optoin {
+#block-skill-progression option {
 	color:#000;
 }
 #block-links-portfolios {
@@ -1040,6 +1042,9 @@ input.links-portfolios-boxes1 {
 	padding-left: 10px;
 	font-size:14px;
 	float:left;
+}
+#send-pay-boxes select {
+-webkit-appearance: none;
 }
 #send-pay-boxes option {
 	color:#000;
