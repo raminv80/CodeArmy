@@ -11,6 +11,7 @@ class Login extends CI_Controller {
 		$this->load->model('stories_model', 'stories');
 		$this->view_data['page_is'] = 'login';
 		$this->view_data['action_is'] = $this->uri->segment(2);
+		
 		$user_id = $this->session->userdata('user_id');
 			if($user_id){
 				$me = $this->users_model->get_user($user_id);
@@ -75,7 +76,8 @@ class Login extends CI_Controller {
 	}	
 	
 	function logout() {
-		$this->session->sess_destroy();
+		$this->users_model->reset_attempt($this->session->userdata("user_id"));
+		$this->session->sess_destroy();		
 		$cookie = array(
 					'name'   => 'remember_me_token',
 					'value'  => null,
@@ -84,7 +86,6 @@ class Login extends CI_Controller {
 					'path'   => '/'
 		);
 		delete_cookie($cookie);
-		$this->users_model->reset_attempt($this->session->userdata("user_id"));
 		redirect('home');
 	}
 	

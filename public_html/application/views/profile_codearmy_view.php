@@ -108,8 +108,10 @@
     </div>
     <?php
     	endforeach;
-	}
+	}else{
 	?>
+    
+    <?php }?>
   </div>
   
   <!-- START - Achievements Block - Dev. by Reza -->
@@ -119,7 +121,7 @@
       <a href="/achievements">View all</a> </div>
     <div class="badge-row">
     <?php
-	if ($myBadges){
+	if (!$myBadges){$myBadges=array();}
 		for($i=0; $i<=7; $i++){
 			if (array_key_exists($i, $myBadges)) {
 	?>
@@ -135,7 +137,6 @@
     <?php
 			}
 		}
-	}
 	?>
     </div>
   </div>

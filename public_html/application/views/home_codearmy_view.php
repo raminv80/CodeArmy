@@ -194,7 +194,7 @@
     </div>
   </div>
 </div>
-<div id="login-box"> <?php echo form_open('login/validate_credentials' , array('id'=>'login-form')); ?> <span id="error" class="error" style="position:absolute;left:167px; top:67px;"></span> <span style="position:absolute; right:414px; top:94px;">Email or username</span>
+<div id="login-box"> <?php echo form_open('/login/validate_credentials' , array('id'=>'login-form')); ?> <span id="error" class="error" style="position:absolute;left:167px; top:67px;"></span> <span style="position:absolute; right:414px; top:94px;">Email or username</span>
   <input type="text" name="username" id="user" style="position:absolute;top:89px;left:167px;" />
   <span style="position:absolute; right:414px; top:129px;">Password</span>
   <input type="password" name="password" id="pass" style="position:absolute;top:124px; left:167px;" />
