@@ -159,7 +159,7 @@
 		
 		$('#world-map').on('click','.marker',function(){
 					//TODO: open project list
-					console.log($(this).data());
+					//console.log($(this).data());
 					$('#dialog-project-list').css({
 						'top':$(this).data().y,
 						'left':$(this).data().x,
