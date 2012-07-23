@@ -55,6 +55,7 @@ class Profile extends CI_Controller {
 		$this->view_data['myWorkCompleted'] = $myWorkCompleted;
 		$this->view_data['log'] = $this->users_model->get_history_log($user_id,3);
 		$contact = json_decode($this->view_data['myProfile']["contact"]);
+		$this->view_data['myCountry'] = "";
 		$countries = config_item('country_list');
 		if ($contact != ""){
 			$myCountry = $contact->country;
@@ -67,8 +68,6 @@ class Profile extends CI_Controller {
 			} else {
 				$this->view_data['myCountry'] = "";
 			}
-		} else {
-			$this->view_data['myCountry'] = "";
 		}
 		
 		$myBadges = $this->skill_model->get_my_top8_badges($user_id);
@@ -127,7 +126,7 @@ class Profile extends CI_Controller {
 		$myWorkCompleted = $this->users_model->works_compeleted($user_id);
 		$this->view_data['myWorkCompleted'] = $myWorkCompleted;
 		$this->view_data['log'] = $this->users_model->get_history_log($user_id,3);
-		
+		$this->view_data['myCountry'] = "";
 		$contact = json_decode($myProfile["contact"]);
 		if ($contact != ""){
 			$myCountry = $contact->country;
@@ -136,8 +135,6 @@ class Profile extends CI_Controller {
 					$this->view_data['myCountry'] = $value;
 				}
 			}
-		} else {
-			$this->view_data['myCountry'] = "";
 		}
 		
 		$myBadges = $this->skill_model->get_my_top8_badges($user_id);

@@ -253,12 +253,16 @@ class Users_model extends CI_Model {
 	
 	//CodeArmy check authorisation function
 	public function is_authorised($role = 'all'){
-		if($this->session->userdata('username') && (($role==$this->session->userdata('role'))||($role=='all')))
+		$user_id = $this->session->userdata('user_id');
+		$user_role = $this->session->userdata('role');
+		if($user_id && (($role==$user_role)||($role=='all'))){
 			return true;
-		else{
+		}else{
 			//check remember me cookie
 			$val = get_cookie('remember_me_token');
-			$query = $this->db->get_where('users', array('remember_me_token' => $val));
+			if($val==0)$val='undefined';
+			$sql = "SELECT * FROM (`users`) WHERE `remember_me_token` =  ?";
+			$query = $this->db->query($sql, array($val));
 			if($query->num_rows == 1) {
 				//resume session
 				$query_data = $query->result_array();

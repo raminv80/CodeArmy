@@ -6,6 +6,7 @@ class Missions extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
+		
 		$this->load->model('users_model');
 		$this->load->model('skill_model');
 		$this->load->model('projects_model');
@@ -18,7 +19,11 @@ class Missions extends CI_Controller {
 		$param = $this->uri->segment(3);
 		$this->view_data['action_is'] = $action;
 		// - check if user is logged in
-		$check_login = $this->users_model->is_authorised();
+		
+		$user_id = $this->session->userdata('user_id');
+		
+		$check_login = $this->users_model->is_authorised($user_id);
+		
 		if($check_login == true) {
 			$user_id = $this->session->userdata('user_id');
 			$me = $this->users_model->get_user($user_id);
