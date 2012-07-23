@@ -58,10 +58,14 @@ class Profile extends CI_Controller {
 		$countries = config_item('country_list');
 		if ($contact != ""){
 			$myCountry = $contact->country;
-			foreach($countries as $key=>$value) {
-				if ($key == $myCountry){
-					$this->view_data['myCountry'] = $value;
+			if($myCountry != ""){
+				foreach($countries as $key=>$value) {
+					if ($key == $myCountry){
+						$this->view_data['myCountry'] = $value;
+					}
 				}
+			} else {
+				$this->view_data['myCountry'] = "";
 			}
 		} else {
 			$this->view_data['myCountry'] = "";
