@@ -10,9 +10,9 @@
   
   <!-- START - Avatar Block - Dev. by Reza  -->
   <div id="block-avatar">
-    <div id="profile-name"><?=substr($me["username"],0,15);?></div>
+    <div id="profile-name"><?=substr($user["username"],0,15);?></div>
     <div id="msg-icon"></div>
-    <div id="profile-type"><?=$myProfile["specialization"]?> &nbsp;&nbsp; [<?=$myCountry?>] </div>
+    <div id="profile-type"><?=$user_profile["specialization"]?> &nbsp;&nbsp; [<?=$myCountry?>] </div>
     <div id="avatar-pic"> <img src="/public/images/codeArmy/profile/default-avatar.png" alt="Avatar Picture" /> </div>
     <div id="profile-desc"></div>
   </div>
@@ -71,7 +71,7 @@
   <!-- START - Experience Block - Dev. by Reza -->
   <div id="block-experience">
     <div id="experience-header">
-      <h3>Level <?=$myLevel?> (Exp Points:<?=$me["exp"];?>)</h3>
+      <h3>Level <?=$myLevel?> (Exp Points:<?=$user["exp"];?>)</h3>
     </div>
     <div id="edit-profile-link"><a href="/profile/edit">Edit Profile</a></div>
     <div id="experience-bar">
@@ -144,7 +144,7 @@
   
   <div id="block-activities">
     <div class="block-header">
-      <h3 style="width:380px;"><?=$me["username"]?>'s Activities</h3>
+      <h3 style="width:380px;"><?=$user["username"]?>'s Activities</h3>
       <a href="#">View all</a> </div>
       
   <div id="activities-list">

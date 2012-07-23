@@ -73,7 +73,8 @@ class Profile extends CI_Controller {
 		$this->view_data['myBadges'] = $myBadges;
 		if(!in_array($this->view_data['myProfile']['specialization'],array('designer','developer','copywriter','employer')))redirect("/register");
 		//leaderboard
-		$leaderBoard = $this->users_model->leaderboard_points(5);
+		//$leaderBoard = $this->users_model->leaderboard_points(5);
+		$leaderBoard = $this->users_model->leaderboard_centered($user_id);
 		$this->view_data['leaderBoard'] = $leaderBoard;
 		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
 		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
@@ -101,7 +102,31 @@ class Profile extends CI_Controller {
 		
 	}
 	
-	function show($user_id){
+	
+	function show($username){
+		$me = $this->users_model->get_user($username,'username');
+		$me = $me->result_array();
+		$me = $me[0];
+		$user_id = $me['user_id'];
+		$myProfile = $this->users_model->get_profile($user_id);
+		$myProfile = $myProfile->result_array();
+		$myProfile = $myProfile[0];
+		$this->view_data['user'] = $me;
+		$this->view_data['user_profile'] = $myProfile;
+		
+		$myBadges = $this->skill_model->get_my_top8_badges($user_id);
+		if(!$myBadges){$myBadges=NULL;}
+		$this->view_data['myBadges'] = $myBadges;
+		//leaderboard
+		$leaderBoard = $this->users_model->leaderboard_centered($user_id);
+		$this->view_data['leaderBoard'] = $leaderBoard;
+		$this->view_data['myLevel'] = $this->gamemech->get_level($me['exp']);
+		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($me['exp']);
+		$this->view_data['window_title'] = $me['username'];
+		$this->load->view('show_profile_codearmy_view', $this->view_data);
+	}
+	
+	function show_old($user_id){
 		$query = $this->users_model->get_profile($user_id);
 		$data = $query->result_array();
 		$this->view_data['window_title'] = "User Profile | Workpad";

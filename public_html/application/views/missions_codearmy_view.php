@@ -30,8 +30,8 @@
     <!-- end of marker template -->
 <style>
 	#dialog-project-list{
-		width:800px;
-		height:500px;
+		width:0;
+		height:0;
 		background:#F00;
 		color:#FFF;
 		display:none;
@@ -144,14 +144,77 @@
 		addMarker(loc.x,loc.y,'t2','#','4<br/>PHP MySQL HTML CSS JQuery','#f00',0.7,0);
 		$('.toolbar').draggable({ containment: '#wrapper' });
 		
-		//initial dialog close button
-		$('.dialog-close-button').click(function(){
-			$(this).parents('.dialog').hide();
-		});
-		
+		initializeEvents();
 		//run window resize
 		$(window).resize();
 	});
+	
+	function initializeEvents(){
+		//initial dialog close button
+		$('.dialog-close-button').click(function(){
+			var dialog = $(this).parents('.dialog');
+			console.log(dialog.data());
+			dialog.animate({top:dialog.data().y, left:dialog.data().x, width:0, height:0, opacity:0},'fast',function(){$(this).hide()});
+		});
+		
+		$('#world-map').on('click','.marker',function(){
+					//TODO: open project list
+					//console.log($(this).data());
+					$('#dialog-project-list').css({
+						'top':$(this).data().y,
+						'left':$(this).data().x,
+						'transform-origin': '0% 0%',
+						'-webkit-transform-origin': '0% 0%',
+						'-o-transform-origin': '0% 0%',
+						'-moz-transform-origin': '0% 0%',
+						}).show().animate({top:16, left:100, width:800, height:500, opacity:1},'fast').data($(this).data());
+			});
+		$('#world-map').on('mouseenter','.marker',
+			function(){
+					//mouse in
+					$(this).css({
+					'transform': 'scale(1,1)',
+					'-webkit-transform': 'scale(1,1)',
+					'-o-transform': 'scale(1,1)',
+					'-moz-transform': 'scale(1,1)',
+					'transform-origin': '50% 100%',
+					'-webkit-transform-origin': '50% 100%',
+					'-o-transform-origin': '50% 100%',
+					'-moz-transform-origin': '50% 100%',
+					'top':$(this).data().y,
+					'left':$(this).data().x,
+					'transition': '0.05s ease-out',
+					'-o-transition': '0.05s ease-out',
+					'-moz-transition': '0.05s ease-out',
+					'-webkit-transition': '0.05s ease-out',
+					'z-index':1
+					});
+			}
+		);
+		$('#world-map').on('mouseleave','.marker',
+			function(){
+					//mouse out
+					$(this).css({
+					'transform': 'scale('+$(this).data().scale+','+$(this).data().scale+')',
+					'-webkit-transform': 'scale('+$(this).data().scale+','+$(this).data().scale+')',
+					'-o-transform': 'scale('+$(this).data().scale+','+$(this).data().scale+')',
+					'-moz-transform': 'scale('+$(this).data().scale+','+$(this).data().scale+')',
+					'transform-origin': '50% 100%',
+					'-webkit-transform-origin': '50% 100%',
+					'-o-transform-origin': '50% 100%',
+					'-moz-transform-origin': '50% 100%',
+					'top':$(this).data().y,
+					'left':$(this).data().x,
+					'transition': '0.05s ease-out',
+					'-o-transition': '0.05s ease-out',
+					'-moz-transition': '0.05s ease-out',
+					'-webkit-transition': '0.05s ease-out',
+					'z-index':0
+					})
+				}
+		);
+	}
+	
 	$(window).resize(function() {
 		//vertical cenerlise world map
 		$('#find-mission-area').css('height',$(window).height()-40);
@@ -188,6 +251,7 @@
 		y = height-Math.round(hd/ht*height);
 		return {'x':x,'y':y}
 	}
+	
 	function addMarker(x,y,id,icon,desc,color,scale,speed){
 		var template = $('#marker-template').clone();
 		var container = $('#world-map');
@@ -213,52 +277,7 @@
 				'top':y,
 				'left':x
 			}).fadeIn(speed);
-		template.data({'scale':scale,'x':x,'y':y,'color':color});
-		$('.marker').hover(function(){
-				//mouse in
-				$(this).css({
-				'transform': 'scale(1,1)',
-				'-webkit-transform': 'scale(1,1)',
-				'-o-transform': 'scale(1,1)',
-				'-moz-transform': 'scale(1,1)',
-				'transform-origin': '50% 100%',
-				'-webkit-transform-origin': '50% 100%',
-				'-o-transform-origin': '50% 100%',
-				'-moz-transform-origin': '50% 100%',
-				'top':$(this).data().y,
-				'left':$(this).data().x,
-				'transition': '0.05s ease-out',
-				'-o-transition': '0.05s ease-out',
-				'-moz-transition': '0.05s ease-out',
-				'-webkit-transition': '0.05s ease-out',
-				'z-index':1
-				})
-			},function(){
-				//mouse out
-				$(this).css({
-				'transform': 'scale('+$(this).data().scale+','+$(this).data().scale+')',
-				'-webkit-transform': 'scale('+$(this).data().scale+','+$(this).data().scale+')',
-				'-o-transform': 'scale('+$(this).data().scale+','+$(this).data().scale+')',
-				'-moz-transform': 'scale('+$(this).data().scale+','+$(this).data().scale+')',
-				'transform-origin': '50% 100%',
-				'-webkit-transform-origin': '50% 100%',
-				'-o-transform-origin': '50% 100%',
-				'-moz-transform-origin': '50% 100%',
-				'top':$(this).data().y,
-				'left':$(this).data().x,
-				'transition': '0.05s ease-out',
-				'-o-transition': '0.05s ease-out',
-				'-moz-transition': '0.05s ease-out',
-				'-webkit-transition': '0.05s ease-out',
-				'z-index':0
-				})
-			});
-		$('.marker').click(function(){
-			//TODO: open project list
-			console.log($(this).data());
-			$('#dialog-project-list').show();
-		});
-			
+		template.data({'scale':scale,'x':x,'y':y,'color':color});	
 	}
 </script>
 <?php $this->load->view('includes/CAFooter.php'); ?>
