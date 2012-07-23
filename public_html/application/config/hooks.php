@@ -11,11 +11,16 @@
 */
 
 $hook['pre_controller'] = array(
-                                'class'    => 'PreController',
-                                'function' => 'start',
-                                'filename' => 'PreController.php',
-                                'filepath' => 'hooks'
-                                );
-
+		'class'    => 'PreController',
+		'function' => 'start',
+		'filename' => 'PreController.php',
+		'filepath' => 'hooks'
+		);
+$hook['post_system'][] = array(
+        'class' => 'QueryLogHook',
+        'function' => 'log_queries',
+        'filename' => 'QueryLogHook.php',
+        'filepath' => 'hooks'
+		);
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */

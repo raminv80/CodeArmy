@@ -4,3 +4,5 @@ tmp/*
 public/captcha/*
 
 public_html/test.php
+
+public_html/application/logs/queries.log.txt
