@@ -12,7 +12,7 @@
   <div id="block-avatar">
     <div id="profile-name"><?=substr($me["username"],0,15);?></div>
     <div id="msg-icon"></div>
-    <div id="profile-type"><?=$myProfile["specialization"]?> &nbsp;&nbsp; [<?=$myCountry?>] </div>
+    <div id="profile-type"><?=$myProfile["specialization"]?> <?php if(trim($myCountry)!=""){?>&nbsp;&nbsp; [<?=$myCountry?>] <?php }?></div>
     <div id="avatar-pic"> <img src="/public/images/codeArmy/profile/default-avatar.png" alt="Avatar Picture" /> </div>
     <div id="profile-desc"></div>
   </div>
@@ -150,8 +150,9 @@
   <div id="activities-list">
   
   <ul>
-  <li>Harish completed the profile and earn a newbie badge.</li>
-  <li>Harish joined the CodeArmy.</li>
+  <?php foreach($log as $event):?>
+  	<li><?=$event?>.</li>
+  <?php endforeach;?>
   </ul>
   
   </div>

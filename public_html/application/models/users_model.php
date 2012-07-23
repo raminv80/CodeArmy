@@ -539,6 +539,26 @@ class Users_model extends CI_Model {
 		return $data[0]['num'];
 	}
 	
+	function get_history_log($user_id, $limit){
+		$user = $this->get_user($user_id)->result_array();
+		$username = ucfirst($user[0]['username']);
+		$sql = "SELECT * from history, works where user_id = ? and history.work_id = works.work_id order by history.created_at DESC limit 0,".$limit;
+		$res = $this->db->query($sql, $user_id);
+		$data = $res->result_array();
+		$res = array();
+		foreach($data as $event):
+			switch ($event['event']):
+				case 'bid':$res[]=$username.' applied for job <a href="#">'.$event['title'].'</a>';break;
+				case 'win':$res[]=$username.' is assigned to job <a href="#">'.$event['title'].'</a>';break;
+				case 'done':$res[]=$username.' submited job <a href="#">'.$event['title'].'</a>';break;
+				case 'redo':$res[]=$username.' is asked to revise job <a href="#">'.$event['title'].'</a>';break;
+				case 'verify':$res[]=$username.' completed job <a href="#">'.$event['title'].'</a>';break;
+				case 'reject':$res[]=$username.' failed to deliver job <a href="#">'.$event['title'].'</a>';break;
+			endswitch;
+		endforeach;
+		return $res;
+	}
+	
 	function works_compeleted($user_id){
 		$sql ="SELECT count(*) as num FROM works where work_horse = ? and lower(works.status) in ('verify', 'signoff')";
 		$res = $this->db->query($sql, array($user_id));

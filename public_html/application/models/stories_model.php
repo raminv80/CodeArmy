@@ -724,15 +724,15 @@ class Stories_model extends CI_Model {
 					$sql = "select * from skill_set where user_id = ? and skill_id = ?";
 					$sres = $this->db->query($sql, array($user_id, $dt['skill_id']));
 					if($sres->num_rows()>0){
-						//update the points of skill if user has the skill
-						$sql = "update skill_set set point = point+? where user_id = ? and skill_id = ?";
+						//update the points of skill if user has the skill and cap it to 100 point
+						$sql = "update skill_set set point = LEAST(point+?,100) where user_id = ? and skill_id = ?";
 						$this->db->query($sql, array($dt['point'], $user_id, $dt['skill_id']));
 					}else{
 						//if not add the skill for user
 						$d = array(
 							'user_id' => $user_id,
 							'skill_id' => $dt['skill_id'],
-							'point' => $dt['point']
+							'point' => ($dt['point']>100)?100:$dt['point']
 						);
 						$this->db->insert('skill_set', $d);
 						$this->session->set_flashdata('alert','<div class="left-column"><img src="'.base_url().'public/images/badge02.png" /></div>

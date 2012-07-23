@@ -22,8 +22,6 @@ class Profile extends CI_Controller {
 		// - check if user is logged in
 		$check_login = $this->users_model->is_authorised();
 		if($check_login == true) {
-			$countries = config_item('country_list');
-			
 			$user_id = $this->session->userdata('user_id');
 			$me = $this->users_model->get_user($user_id);
 			$me = $me->result_array();
@@ -34,27 +32,6 @@ class Profile extends CI_Controller {
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
 			$this->view_data['username'] = $this->session->userdata('username');
-
-			$this->view_data['myActiveMissions'] = $this->stories->get_num_my_works($user_id, 'in progress');
-
-			$mySkills = $this->skill_model->get_my_top5_skills($user_id);
-			$this->view_data['mySkills'] = $mySkills;
-			$myWorkBid = $this->users_model->works_bid($user_id);
-			$this->view_data['myWorkBid'] = $myWorkBid;
-			$myWorkCompleted = $this->users_model->works_compeleted($user_id);
-			$this->view_data['myWorkCompleted'] = $myWorkCompleted;
-			
-			$contact = json_decode($myProfile["contact"]);
-			if ($contact != ""){
-				$myCountry = $contact->country;
-				foreach($countries as $key=>$value) {
-					if ($key == $myCountry){
-						$this->view_data['myCountry'] = $value;
-					}
-				}
-			} else {
-				$this->view_data['myCountry'] = "";
-			}
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;
 			if($action)$referer .= '/'.$action;
@@ -68,6 +45,28 @@ class Profile extends CI_Controller {
 	function index(){
 		//if user's designation is not set redirect him to job selection window
 		$user_id = $this->session->userdata('user_id');
+		
+		$this->view_data['myActiveMissions'] = $this->stories->get_num_my_works($user_id, 'in progress');
+		$mySkills = $this->skill_model->get_my_top5_skills($user_id);
+		$this->view_data['mySkills'] = $mySkills;
+		$myWorkBid = $this->users_model->works_bid($user_id);
+		$this->view_data['myWorkBid'] = $myWorkBid;
+		$myWorkCompleted = $this->users_model->works_compeleted($user_id);
+		$this->view_data['myWorkCompleted'] = $myWorkCompleted;
+		$this->view_data['log'] = $this->users_model->get_history_log($user_id,3);
+		$contact = json_decode($this->view_data['myProfile']["contact"]);
+		$countries = config_item('country_list');
+		if ($contact != ""){
+			$myCountry = $contact->country;
+			foreach($countries as $key=>$value) {
+				if ($key == $myCountry){
+					$this->view_data['myCountry'] = $value;
+				}
+			}
+		} else {
+			$this->view_data['myCountry'] = "";
+		}
+		
 		$myBadges = $this->skill_model->get_my_top8_badges($user_id);
 		if(!$myBadges){$myBadges=NULL;}
 		$this->view_data['myBadges'] = $myBadges;
@@ -76,6 +75,8 @@ class Profile extends CI_Controller {
 		//$leaderBoard = $this->users_model->leaderboard_points(5);
 		$leaderBoard = $this->users_model->leaderboard_centered($user_id);
 		$this->view_data['leaderBoard'] = $leaderBoard;
+		$this->view_data['last_task'] = $this->users_model->last_task($user_id);
+		$this->view_data['working_on'] = $this->users_model->working_on($user_id);
 		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
 		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
 		$this->view_data['window_title'] = $this->session->userdata('username');
@@ -113,6 +114,27 @@ class Profile extends CI_Controller {
 		$myProfile = $myProfile[0];
 		$this->view_data['user'] = $me;
 		$this->view_data['user_profile'] = $myProfile;
+		
+		$this->view_data['myActiveMissions'] = $this->stories->get_num_my_works($user_id, 'in progress');
+		$mySkills = $this->skill_model->get_my_top5_skills($user_id);
+		$this->view_data['mySkills'] = $mySkills;
+		$myWorkBid = $this->users_model->works_bid($user_id);
+		$this->view_data['myWorkBid'] = $myWorkBid;
+		$myWorkCompleted = $this->users_model->works_compeleted($user_id);
+		$this->view_data['myWorkCompleted'] = $myWorkCompleted;
+		$this->view_data['log'] = $this->users_model->get_history_log($user_id,3);
+		
+		$contact = json_decode($myProfile["contact"]);
+		if ($contact != ""){
+			$myCountry = $contact->country;
+			foreach($countries as $key=>$value) {
+				if ($key == $myCountry){
+					$this->view_data['myCountry'] = $value;
+				}
+			}
+		} else {
+			$this->view_data['myCountry'] = "";
+		}
 		
 		$myBadges = $this->skill_model->get_my_top8_badges($user_id);
 		if(!$myBadges){$myBadges=NULL;}
