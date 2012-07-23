@@ -1,4 +1,8 @@
 	</div>
+    
+    <div id="bg-inner">
+    <img src="/public/images/codeArmy/profile/bg.jpg" />
+    </div>
 </div>
 <script>
 	$('#dropdown-button').click(function(){$('#dropdown').slideToggle('fast');})

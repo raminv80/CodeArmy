@@ -60,7 +60,7 @@ body{margin:auto; padding:0; text-align:center;}
 #dropdown a:hover{color:white}
 #dropdown{text-align:left; width:113px;height:142px;background:url(/public/images/codeArmy/profile/dropdown.png) no-repeat; z-index:2; position:absolute; top:65px; left:841px; padding:0px 37px;display:none;}
 #logo{width:138px;height:80px;cursor:pointer;position:absolute;top:45px;left:22px;}
-#profile-wrapper{
+#inner{
 	background: url(/public/images/codeArmy/profile/bg.jpg) no-repeat;
 	width:999px;
 	position:relative;
@@ -585,6 +585,26 @@ input.CAbutton{padding:0}
 	float:left;
 	text-align:right;
 }
+#block-leaderboard .leaderboard-info {
+		display: block;
+		color: white;
+		float: left;
+		width: 128px;
+		margin: 5px;
+		line-height:17px;
+	}
+	#block-leaderboard .leaderboard-info li{ font-size:8.63pt}
+	#block-leaderboard .leaderboard-info li:first-child{ font-size:10.79pt}
+	#block-leaderboard .leaderboard-points {
+		display: block;
+		width: 90px;
+		float: left;
+		text-align: right;
+		margin: 5px;
+		color:#8de204;
+	}
+	#block-leaderboard img{margin:5px; float:left;}
+	#block-leaderboard .leaderboard-row{clear:both}
 #block-experience {
 	position:absolute;
 	width:460px;

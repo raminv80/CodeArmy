@@ -18,28 +18,6 @@
   </div>
   
   <!-- Ramin: leaderboard-block 17-7-2012-->
-  <style>
-  	#block-leaderboard .leaderboard-info {
-		display: block;
-		color: white;
-		float: left;
-		width: 128px;
-		margin: 5px;
-		line-height:17px;
-	}
-	#block-leaderboard .leaderboard-info li{ font-size:8.63pt}
-	#block-leaderboard .leaderboard-info li:first-child{ font-size:10.79pt}
-	#block-leaderboard .leaderboard-points {
-		display: block;
-		width: 90px;
-		float: left;
-		text-align: right;
-		margin: 5px;
-		color:#8de204;
-	}
-	#block-leaderboard img{margin:5px; float:left;}
-	#block-leaderboard .leaderboard-row{clear:both}
-  </style>
   <div id="block-leaderboard">
     <div class="block-header">
       <h3>Leaderboard</h3>
@@ -157,7 +135,10 @@
   </ul>
   
   </div>
+  
 </div>
+
+
 
 </div>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>
