@@ -142,10 +142,25 @@ class Profile extends CI_Controller {
 		} else {
 			$this->users_model->update_email($user_id);
 			
+			$this->form_validation->set_rules('country');
 			$this->form_validation->set_rules('fullname', 'Fullname', 'required|max_length[60]');
 			$this->form_validation->set_rules('address', 'Address', 'required');
 			$this->form_validation->set_rules('phone', 'Phone', 'required');
 			$this->form_validation->set_rules('birthday', 'Birthday', 'required');
+			$this->form_validation->set_rules('skill1');
+			$this->form_validation->set_rules('skill2');
+			$this->form_validation->set_rules('skill3');
+			$this->form_validation->set_rules('skype');
+			$this->form_validation->set_rules('facebook');
+			$this->form_validation->set_rules('twitter');
+			$this->form_validation->set_rules('linkedin');
+			$this->form_validation->set_rules('github-address');
+			$this->form_validation->set_rules('portfolio-address');
+			$this->form_validation->set_rules('blog-address');
+			$this->form_validation->set_rules('extra1');
+			$this->form_validation->set_rules('extraaddress1');
+			$this->form_validation->set_rules('extra2');
+			$this->form_validation->set_rules('extraaddress2');
 			$this->form_validation->set_rules('paypal-email', 'Paypal Email', 'required|valid_email|max_length[255]');
 			$this->form_validation->set_rules('bank-country', 'Country of Bank', 'required');
 			$this->form_validation->set_rules('bank-name', 'Bank Name', 'required|max_length[40]');

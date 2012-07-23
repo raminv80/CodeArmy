@@ -329,7 +329,11 @@ class Users_model extends CI_Model {
 			"linkedin" => $this->input->post('linkedin'),
 			"github" => $this->input->post('github-address'),
 			"portfolio" => $this->input->post('portfolio-address'),
-			"blog" => $this->input->post('blog-address')
+			"blog" => $this->input->post('blog-address'),
+			"extra1" => $this->input->post('extra1'),
+			"extraaddress1" => $this->input->post('extraaddress1'),
+			"extra2" => $this->input->post('extra2'),
+			"extraaddress2" => $this->input->post('extraaddress2')
 		);
 		
 		$contact = json_encode($contact);

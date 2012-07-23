@@ -15,7 +15,7 @@
     <?php
 	}
 	if (validation_errors()){
-	echo validation_errors();
+	echo "<div style=\"font-size:16px;font-weight:bold;margin-bottom:10px\">".validation_errors()."</div>";
 	}
     ?>
     
@@ -79,23 +79,43 @@
       <div id="contact-boxes">
         <div id="input-row">
           <label class="email"></label>
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="email" name="email" value="<?=set_value('email')?>" />
+          <?php } else { ?>
           <input type="text" id="email" name="email" value="<?=$me["email"]?>" />
+          <?php } ?>
         </div>
         <div id="input-row">
           <label class="skype"></label>
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="skype" name="skype" value="<?=set_value('skype')?>" />
+          <?php } else { ?>
           <input type="text" id="skype" name="skype" value="<?php if($urls) echo $urls->skype;?>" />
+          <?php } ?>
         </div>
         <div id="input-row">
           <label class="facebook"></label>
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="facebook" name="facebook" value="<?=set_value('facebook')?>" />
+          <?php } else { ?>
           <input type="text" id="facebook" name="facebook" value="<?php if($urls) echo $urls->facebook;?>" />
+          <?php } ?>
         </div>
         <div id="input-row">
           <label class="twitter"></label>
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="twitter" name="twitter" value="<?=set_value('twitter')?>" />
+          <?php } else { ?>
           <input type="text" id="twitter" name="twitter" value="<?php if($urls) echo $urls->twitter;?>" />
+          <?php } ?>
         </div>
         <div id="input-row">
           <label class="linkedin"></label>
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="linkedin" name="linkedin" value="<?=set_value('linkedin')?>" />
+          <?php } else { ?>
           <input type="text" id="linkedin" name="linkedin" value="<?php if($urls) echo $urls->linkedin;?>" />
+          <?php } ?>
         </div>
       </div>
     </div>
@@ -110,9 +130,13 @@
         <!--<input type="text" id="location" name="location" value="<?php if($myCountry) echo $myCountry?>" />-->
           <select name="country">
             <option value="">--- Select a country ---</option>
-          <?php foreach($countries as $key=>$value): ?>
+			<?php foreach($countries as $key=>$value): ?>
+            <?php if (isset($form_error)){ ?>
+            <option value="<?=$key?>"<?php if($myCountry) if ($key == set_value('country')){ echo " selected"; } ?>><?=ucfirst($value)?></option>
+            <?php } else { ?>
             <option value="<?=$key?>"<?php if($myCountry) if ($key == $contact->country){ echo " selected"; } ?>><?=ucfirst($value)?></option>
-          <?php endforeach; ?>
+            <?php } ?>
+            <?php endforeach; ?>
           </select>
       </div>
     </div>
@@ -125,15 +149,27 @@
       <div id="personal-info-boxes">
         <div id="input-row">
           <label class="name">Full Name</label>
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="fullname" name="fullname" value="<?=set_value('fullname')?>" />
+          <?php } else { ?>
           <input type="text" id="fullname" name="fullname" value="<?=$myProfile["full_name"]?>" />
+          <?php } ?>
         </div>
         <div id="input-row">
           <label class="address">Address</label>
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="address" name="address" value="<?=set_value('address')?>" />
+          <?php } else { ?>
           <input type="text" id="address" name="address" value="<?php if($myCountry) echo $contact->address;?>" />
+          <?php } ?>
         </div>
         <div id="input-row">
           <label class="phone">Phone</label>
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="phone" name="phone" value="<?=set_value('phone')?>" />
+          <?php } else { ?>
           <input type="text" id="phone" name="phone" value="<?php if($myCountry) echo $contact->phone;?>" />
+          <?php } ?>
         </div>
 <script>
 $(function() {
@@ -142,7 +178,11 @@ $(function() {
 </script>
         <div id="input-row">
           <label class="birthday">Birthday</label>
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="birthday" name="birthday" value="<?=set_value('birthday')?>" />
+          <?php } else { ?>
           <input type="text" id="birthday" name="birthday" value="<?=$myProfile["birthdate"]?>" />
+          <?php } ?>
         </div>
       </div>
     </div>
@@ -158,7 +198,11 @@ $(function() {
           <select name="skill1">
             <option value=""></option>
           <?php foreach($allSkills as $value): ?>
+          <?php if (isset($form_error)){ ?>
+            <option value="<?=$value["id"]?>"<?php if ($value["id"] == set_value('skill1')){ echo " selected"; } ?>><?=ucfirst($value["name"])?></option>
+          <?php } else { ?>
             <option value="<?=$value["id"]?>"><?=ucfirst($value["name"])?></option>
+          <?php } ?>
           <?php endforeach; ?>
           </select>
         </div>
@@ -166,7 +210,11 @@ $(function() {
           <select name="skill2">
             <option value=""></option>
           <?php foreach($allSkills as $value): ?>
+          <?php if (isset($form_error)){ ?>
+            <option value="<?=$value["id"]?>"<?php if ($value["id"] == set_value('skill2')){ echo " selected"; } ?>><?=ucfirst($value["name"])?></option>
+          <?php } else { ?>
             <option value="<?=$value["id"]?>"><?=ucfirst($value["name"])?></option>
+          <?php } ?>
           <?php endforeach; ?>
           </select>
         </div>
@@ -174,7 +222,11 @@ $(function() {
           <select name="skill3">
             <option value=""></option>
           <?php foreach($allSkills as $value): ?>
+          <?php if (isset($form_error)){ ?>
+            <option value="<?=$value["id"]?>"<?php if ($value["id"] == set_value('skill3')){ echo " selected"; } ?>><?=ucfirst($value["name"])?></option>
+          <?php } else { ?>
             <option value="<?=$value["id"]?>"><?=ucfirst($value["name"])?></option>
+          <?php } ?>
           <?php endforeach; ?>
           </select>
         </div>
@@ -189,24 +241,52 @@ $(function() {
       </div>
       <div class="links-portfolios-boxes">
         <div id="input-row">
-          <input class="links-portfolios-boxes1" type="text" id="github" name="github" value="Github" />
+          <input class="links-portfolios-boxes1" type="text" id="github" name="github" value="Github" readonly="readonly" />
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="github-address" name="github-address" value="<?=set_value('github-address')?>" />
+          <?php } else { ?>
           <input type="text" id="github-address" name="github-address" value="<?php if ($urls) echo $urls->github;?>" />
+          <?php } ?>
         </div>
         <div id="input-row">
-          <input class="links-portfolios-boxes1" type="text" id="portfolio" name="portfolio" value="Portfolio" />
+          <input class="links-portfolios-boxes1" type="text" id="portfolio" name="portfolio" value="Portfolio" readonly="readonly" />
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="portfolio-address" name="portfolio-address" value="<?=set_value('portfolio-address')?>" />
+          <?php } else { ?>
           <input type="text" id="portfolio-address" name="portfolio-address" value="<?php if ($urls) echo $urls->portfolio;?>" />
+          <?php } ?>
         </div>
         <div id="input-row">
-          <input class="links-portfolios-boxes1" type="text" id="blog" name="blog" value="Blog" />
-          <input type="text" id="blog-address" name="blog-address" value="" />
+          <input class="links-portfolios-boxes1" type="text" id="blog" name="blog" value="Blog" readonly="readonly" />
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="blog-address" name="blog-address" value="<?=set_value('blog-address')?>" />
+          <?php } else { ?>
+          <input type="text" id="blog-address" name="blog-address" value="<?php if ($urls) echo $urls->blog;?>" />
+          <?php } ?>
         </div>
         <div id="input-row">
-          <input class="links-portfolios-boxes1" type="text" id="" name="" readonly="readonly" />
-          <input type="text" id="" name="" readonly="readonly" />
+          <?php if (isset($form_error)){ ?>
+          <input class="links-portfolios-boxes1" type="text" id="extra1" name="extra1" value="<?=set_value('extra1')?>" />
+          <?php } else { ?>
+          <input class="links-portfolios-boxes1" type="text" id="extra1" name="extra1" value="<?php if ($urls) echo $urls->extra1;?>" />
+          <?php } ?>
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="extraaddress1" name="extraaddress1" value="<?=set_value('extraaddress1')?>" />
+          <?php } else { ?>
+          <input type="text" id="extraaddress1" name="extraaddress1" value="<?php if ($urls) echo $urls->extraaddress1;?>" />
+          <?php } ?>
         </div>
         <div id="input-row">
-          <input class="links-portfolios-boxes1" type="text" id="" name="" readonly="readonly" />
-          <input type="text" id="" name="" readonly="readonly" />
+          <?php if (isset($form_error)){ ?>
+          <input class="links-portfolios-boxes1" type="text" id="extra2" name="extra2" value="<?=set_value('extra2')?>" />
+          <?php } else { ?>
+          <input class="links-portfolios-boxes1" type="text" id="extra2" name="extra2" value="<?php if ($urls) echo $urls->extra2;?>" />
+          <?php } ?>
+          <?php if (isset($form_error)){ ?>
+          <input type="text" id="extraaddress2" name="extraaddress2" value="<?=set_value('extraaddress2')?>" />
+          <?php } else { ?>
+          <input type="text" id="extraaddress2" name="extraaddress2" value="<?php if ($urls) echo $urls->extraaddress2;?>" />
+          <?php } ?>
         </div>
       </div>
     </div>
@@ -221,7 +301,11 @@ $(function() {
           <h4>Paypal Account Details</h4>
           <div id="input-row">
             <label class="paypal-email">Paypal Email</label>
+          <?php if (isset($form_error)){ ?>
+            <input type="text" id="paypal-email" name="paypal-email" value="<?=set_value('paypal-email')?>" />
+          <?php } else { ?>
             <input type="text" id="paypal-email" name="paypal-email" value="<?=$myProfile["paypal_acc"]?>" />
+          <?php } ?>
           </div>
         </div>
         <div id="bank-account">
@@ -232,33 +316,61 @@ $(function() {
           <select name="bank-country">
             <option value="">--- Select a country ---</option>
           <?php foreach($countries as $key=>$value): ?>
+          <?php if (isset($form_error)){ ?>
+            <option value="<?=$key?>"<?php if ($key == set_value('bank-country')){ echo " selected"; } ?>><?=ucfirst($value)?></option>
+          <?php } else { ?>
             <option value="<?=$key?>"<?php if($myProfile["bank_country"]!='') if ($key == $myProfile["bank_country"]){ echo " selected"; } ?>><?=ucfirst($value)?></option>
+          <?php } ?>
           <?php endforeach; ?>
           </select>
           </div>
           <div id="input-row">
             <label class="bank-country">Bank Name</label>
+          <?php if (isset($form_error)){ ?>
+            <input type="text" id="bank-name" name="bank-name" value="<?=set_value('bank-name')?>" />
+          <?php } else { ?>
             <input type="text" id="bank-name" name="bank-name" value="<?=$myProfile["bank_name"]?>" />
+          <?php } ?>
           </div>
           <div id="input-row">
             <label class="bank-country">SWIFT Code</label>
+          <?php if (isset($form_error)){ ?>
+            <input type="text" id="bank-swift" name="bank-swift" value="<?=set_value('bank-swift')?>" />
+          <?php } else { ?>
             <input type="text" id="bank-swift" name="bank-swift" value="<?=$myProfile["bank_swift"]?>" />
+          <?php } ?>
           </div>
           <div id="input-row">
             <label class="bank-country">Last Name</label>
+          <?php if (isset($form_error)){ ?>
+            <input type="text" id="bank-lastname" name="bank-lastname" value="<?=set_value('bank-lastname')?>" />
+          <?php } else { ?>
             <input type="text" id="bank-lastname" name="bank-lastname" value="<?=$myProfile["bank_lastname"]?>" />
+          <?php } ?>
           </div>
           <div id="input-row">
             <label class="bank-country">First Name</label>
+          <?php if (isset($form_error)){ ?>
+            <input type="text" id="bank-firstname" name="bank-firstname" value="<?=set_value('bank-firstname')?>" />
+          <?php } else { ?>
             <input type="text" id="bank-firstname" name="bank-firstname" value="<?=$myProfile["bank_firstname"]?>" />
+          <?php } ?>
           </div>
           <div id="input-row">
             <label class="bank-country">Account Number</label>
+          <?php if (isset($form_error)){ ?>
+            <input type="text" id="bank-accountno" name="bank-accountno" value="<?=set_value('bank-accountno')?>" />
+          <?php } else { ?>
             <input type="text" id="bank-accountno" name="bank-accountno" value="<?=$myProfile["bank_acc"]?>" />
+          <?php } ?>
           </div>
           <div id="input-row">
             <label class="bank-country">Re-type Account Number</label>
+          <?php if (isset($form_error)){ ?>
+            <input type="text" id="bank-accountno2" name="bank-accountno2" value="<?=set_value('bank-accountno2')?>" />
+          <?php } else { ?>
             <input type="text" id="bank-accountno2" name="bank-accountno2" value="<?=$myProfile["bank_acc"]?>" />
+          <?php } ?>
           </div>
         </div>
       </div>
