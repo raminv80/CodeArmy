@@ -171,9 +171,13 @@ class Profile extends CI_Controller {
 	
 	// - edit profile page
 	function edit() {
+		$user_id = $this->session->userdata('user_id');
+		
 		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
 		$allSkills = $this->skill_model->get_all_skills();
 		$this->view_data['allSkills'] = $allSkills;
+		$mySkills = $this->skill_model->get_my_skills($user_id);
+		$this->view_data['mySkills'] = $mySkills;
 		$this->view_data['window_title'] = "Edit my Profile | CodeArmy";
 		$this->load->view('profile_edit_codearmy_view', $this->view_data);
 	}
