@@ -1071,10 +1071,12 @@ input.links-portfolios-boxes1 {
 	width:780px;
 	float:left;
 }
-#block-bid-1 {
-	margin-top:100px;
+#block-bid-container {
 	float:left;
 	width:780px;
+}
+.latest-bid-container {
+	margin-top:100px;
 }
 #bid-date {
 	background:url(/public/images/codeArmy/mymission/bg_date.png) no-repeat;
@@ -1089,8 +1091,73 @@ input.links-portfolios-boxes1 {
 	height:95px;
 	width:550px;
 }
-#bid-close-date, #proj-title {
-	float:left;
+.latest-bid-container #bid-info-block {
+	background:url(/public/images/codeArmy/mymission/bg_mb_green.png) no-repeat;
+}
+#proj-title {
+	font-size:13px;
 	width:230px;
+	margin-top: 20px;
+}
+#bid-close-date {
+	color:#a6a6a6;
+	font-style:italic;
+	float:left;
+	width:260px;
+	font-size:12px;
+}
+#bid-info-block-left {
+	width:260px;
+	padding:10px;
+	float:left;
+}
+#bid-info-block-right {
+	width:260px;
+	float:right;
+}
+#highest-bid {
+	width:260px;
+	margin-top:10px;
+	float:left;
+}
+#time-price {
+	float:left;
+	width:260px;
+	font-size: 20px;
+    margin: 20px 0 0 10px;
+}
+#bid-time {
+	float:left;
+	width:130px;
+}
+#bid-price {
+	float:right;
+	margin-left:10px;
+	width:110px;
+}
+#bid-msg {
+	width:220px;
+	float:right;
+	font-size:12px;
+}
+#bid-msg-text {
+	width:220px;
+	float:left;
+	background:url(/public/images/codeArmy/mymission/bg_msg_blue.png) no-repeat;
+	height:50px;
+	padding:15px 0 0 25px;
+}
+.latest-bid-container #bid-msg-text {
+	background:url(/public/images/codeArmy/mymission/bg_msg_green.png) no-repeat;
+}
+#bid-msg-text p {width: 180px;}
+#bid-msg-text p a {text-decoration:underline;}
+#stop-following-bid {
+	width:220px;
+	height:17px;
+	background:url(/public/images/codeArmy/mymission/btn_stop.png) no-repeat;
+	float:left;
+	padding:3px 0 0 25px;
+	margin-left:10px;
 }
 /* END - New Codes by Reza */
