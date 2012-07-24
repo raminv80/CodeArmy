@@ -404,7 +404,7 @@ $(function() {
           </div>
         </div>
       </div>
-      <hr style="margin:550px 0 30px 0" />
+      <hr style="position:relative; width:780px; float:left;" />
       <div class="block-save-profile">
         <div id="save-profile">
           <input class="lnkimg" type="submit" value="Save Profile" />
