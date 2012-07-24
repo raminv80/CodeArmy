@@ -1,10 +1,5 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
-<style>
-#profile-wrapper {
-	height:1750px;
-	background: url("/public/images/codeArmy/profile/profile-edit-bg.jpg") no-repeat;
-}
-</style>
+
 <div id="profile-edit-content-area">
 	<?php
     $msg = $this->session->flashdata('msg');
@@ -32,6 +27,7 @@
     <br />
     <hr style="margin-top:50px" />
     
+    <div id="edit-profile-left-col">
     <!-- START - Level Block - Dev. by Reza  -->
     <div id="block-level">Level <?=$myLevel?></div>
     
@@ -47,11 +43,16 @@
       </div>
       <div id="profile-desc">
       <?php if (isset($form_error)){ ?>
+<<<<<<< HEAD
       <textarea name="status-msg" id="status-msg" rows="5"><?=set_value('status-msg')?></textarea>
       <div style="font-size:14px;font-weight:bold;margin-bottom:10px;float:right"><?=form_error("status-msg")?></div>
+=======
+      <textarea name="status-msg" id="status-msg" rows="3"><?=set_value('status-msg')?></textarea>
+>>>>>>> origin/master
       <?php } else { ?>
-      <textarea name="status-msg" id="status-msg" rows="5"><?=$myProfile["status_msg"]?></textarea>
+      <textarea name="status-msg" id="status-msg" rows="3"><?=$myProfile["status_msg"]?></textarea>
       <?php } ?>
+     <p style="font-size:9px"> Limited to 255 Characters</p>
       </div>
     </div>
     
@@ -124,6 +125,10 @@
         </div>
       </div>
     </div>
+    
+    </div>
+    
+    
     
     <!-- START - Basic Info Block - Dev. by Reza  -->
     <div id="block-basic-info">

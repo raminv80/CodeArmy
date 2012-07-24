@@ -22,7 +22,7 @@ class Missions extends CI_Controller {
 		
 		$user_id = $this->session->userdata('user_id');
 		
-		$check_login = $this->users_model->is_authorised($user_id);
+		$check_login = $this->users_model->is_authorised();
 		
 		if($check_login == true) {
 			$user_id = $this->session->userdata('user_id');

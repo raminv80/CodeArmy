@@ -14,6 +14,7 @@
             <!-- end of dialogs -->
         </div>
     </div>
+    <?php $this->load->view('includes/CAMapFooter.php'); ?>
     <div id="filter-toolbar" class="toolbar">
     </div>
     <div id="profile-toolbar" class="toolbar">
@@ -101,6 +102,7 @@
 		-moz-backface-visibility: hidden;
 		-o-transform-style: preserve-3d;
 		-o-backface-visibility: hidden;
+		text-align:center;
 	}
 	#filter-toolbar{
 		position:absolute;

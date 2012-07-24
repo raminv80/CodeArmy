@@ -127,6 +127,7 @@ class Profile extends CI_Controller {
 		$this->view_data['myWorkCompleted'] = $myWorkCompleted;
 		$this->view_data['log'] = $this->users_model->get_history_log($user_id,3);
 		$this->view_data['myCountry'] = "";
+		$countries = config_item('country_list');
 		$contact = json_decode($myProfile["contact"]);
 		if ($contact != ""){
 			$myCountry = $contact->country;
@@ -171,6 +172,7 @@ class Profile extends CI_Controller {
 	
 	// - edit profile page
 	function edit() {
+		//CodeArmy V1
 		$user_id = $this->session->userdata('user_id');
 		
 		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
@@ -183,6 +185,7 @@ class Profile extends CI_Controller {
 	}
 	
 	function edit_profile(){
+		//CodeArmy v1
 		$user_id = $this->session->userdata('user_id');
 		
 		$this->load->library('form_validation');

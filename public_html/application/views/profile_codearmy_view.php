@@ -3,6 +3,7 @@
 
 <div id="profile-content-area"> 
   
+  <div id="profile-page-left-col">
   <!-- START - Level Block - Dev. by Reza  -->
   <div id="block-level" style="display:none"> Level
     <?=$myLevel?>
@@ -45,7 +46,7 @@
     </div>
   </div>
   <!-- Ramin:leader board bloclk end--> 
-  
+  </div>
   <!-- START - Experience Block - Dev. by Reza -->
   <div id="block-experience">
     <div id="experience-header">

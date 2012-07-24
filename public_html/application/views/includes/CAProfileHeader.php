@@ -1,6 +1,7 @@
 <?php $this->load->view('includes/CAHeader.php'); ?>
 
 <div id="inner">
+<div id="container">
 
     <div class="profile-header"> <a href="/profile">
       <div id="logo"></div>
