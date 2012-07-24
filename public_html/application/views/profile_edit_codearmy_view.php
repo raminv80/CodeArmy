@@ -43,12 +43,8 @@
       </div>
       <div id="profile-desc">
       <?php if (isset($form_error)){ ?>
-<<<<<<< HEAD
-      <textarea name="status-msg" id="status-msg" rows="5"><?=set_value('status-msg')?></textarea>
-      <div style="font-size:14px;font-weight:bold;margin-bottom:10px;float:right"><?=form_error("status-msg")?></div>
-=======
       <textarea name="status-msg" id="status-msg" rows="3"><?=set_value('status-msg')?></textarea>
->>>>>>> origin/master
+      <div style="font-size:14px;font-weight:bold;margin-bottom:10px;float:right"><?=form_error("status-msg")?></div>
       <?php } else { ?>
       <textarea name="status-msg" id="status-msg" rows="3"><?=$myProfile["status_msg"]?></textarea>
       <?php } ?>
