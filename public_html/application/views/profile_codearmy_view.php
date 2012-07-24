@@ -14,7 +14,7 @@
     <div id="msg-icon"></div>
     <div id="profile-type"><?=$myProfile["specialization"]?> <?php if(trim($myCountry)!=""){?>&nbsp;&nbsp; [<?=$myCountry?>] <?php }?></div>
     <div id="avatar-pic"> <img src="/public/images/codeArmy/profile/default-avatar.png" alt="Avatar Picture" /> </div>
-    <div id="profile-desc"></div>
+    <div id="profile-desc"><?=$myProfile["status_msg"]?></div>
   </div>
   
   <!-- Ramin: leaderboard-block 17-7-2012-->

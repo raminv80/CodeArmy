@@ -48,7 +48,13 @@
           <p>Next</p>
           </a> </div>
       </div>
-      <div id="profile-desc"> What's on your mind soldier? </div>
+      <div id="profile-desc">
+      <?php if (isset($form_error)){ ?>
+      <textarea name="status-msg" id="status-msg" rows="5"><?=set_value('status-msg')?></textarea>
+      <?php } else { ?>
+      <textarea name="status-msg" id="status-msg" rows="5"><?=$myProfile["status_msg"]?></textarea>
+      <?php } ?>
+      </div>
     </div>
     
     <!-- START - Contact Info Block - Dev. by Reza  -->

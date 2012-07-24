@@ -344,6 +344,7 @@ class Users_model extends CI_Model {
 		$urls = json_encode($urls);
 		
 		$doc = array(
+			"status_msg" => $this->input->post('status-msg'),
 			"full_name" => $this->input->post('fullname'),
 			"bank_name" => $this->input->post('bank-name'),
 			"bank_acc" => $this->input->post('bank-accountno'),
