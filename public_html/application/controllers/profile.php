@@ -194,7 +194,7 @@ class Profile extends CI_Controller {
 		} else {
 			$this->users_model->update_email($user_id);
 			
-			$this->form_validation->set_rules('country');
+			$this->form_validation->set_rules('country', 'Country', 'required');
 			$this->form_validation->set_rules('status-msg', 'max_length[255]');
 			$this->form_validation->set_rules('fullname', 'Fullname', 'required|max_length[60]');
 			$this->form_validation->set_rules('address', 'Address', 'required');

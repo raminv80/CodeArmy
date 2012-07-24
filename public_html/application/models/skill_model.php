@@ -132,25 +132,40 @@ class Skill_model extends CI_Model {
 	
 	function insert_skill($user_id){
 		if ($this->input->post('skill1') != ""){
-			$data = array(
-				"user_id" => $user_id,
-				"skill_id" => $this->input->post('skill1')
-			);
-			$this->db->insert('skill_set', $data);
+			$skill_id1 = $this->input->post('skill1');
+			$sql1 = "SELECT * FROM skill_set WHERE user_id = ? AND skill_id = ?";
+			$res1 = $this->db->query($sql1, array($user_id, $skill_id1));
+			if($res1->num_rows()==0){
+				$data = array(
+					"user_id" => $user_id,
+					"skill_id" => $skill_id1
+				);
+				$this->db->insert('skill_set', $data);
+			}
 		}
 		if ($this->input->post('skill2') != ""){
-			$data = array(
-				"user_id" => $user_id,
-				"skill_id" => $this->input->post('skill2')
-			);
-			$this->db->insert('skill_set', $data);
+			$skill_id2 = $this->input->post('skill2');
+			$sql2 = "SELECT * FROM skill_set WHERE user_id = ? AND skill_id = ?";
+			$res2 = $this->db->query($sql2, array($user_id, $skill_id2));
+			if($res2->num_rows()==0){
+				$data = array(
+					"user_id" => $user_id,
+					"skill_id" => $skill_id2
+				);
+				$this->db->insert('skill_set', $data);
+			}
 		}
 		if ($this->input->post('skill3') != ""){
-			$data = array(
-				"user_id" => $user_id,
-				"skill_id" => $this->input->post('skill3')
-			);
-			$this->db->insert('skill_set', $data);
+			$skill_id3 = $this->input->post('skill3');
+			$sql3 = "SELECT * FROM skill_set WHERE user_id = ? AND skill_id = ?";
+			$res3 = $this->db->query($sql3, array($user_id, $skill_id3));
+			if($res3->num_rows()==0){
+				$data = array(
+					"user_id" => $user_id,
+					"skill_id" => $skill_id3
+				);
+				$this->db->insert('skill_set', $data);
+			}
 		}
 	}
 }
