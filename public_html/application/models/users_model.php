@@ -165,6 +165,7 @@ class Users_model extends CI_Model {
 	
 	// create new profiles
 	public function create_new_profile($user_id, $dob=NULL) {
+		//CodeArmy v1
 		$info =unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
 		$contact = array(
 			"address" => $info['geoplugin_regionName'],
@@ -174,7 +175,7 @@ class Users_model extends CI_Model {
 		$contact = json_encode($contact);
 		$doc = array(
 			"user_id" => $user_id,
-			"birthdate" => $dob,
+			//"birthdate" => $dob,
 			"contact" => $contact,
 			"lan_speak" => 'English',
 			"lan_rw" => 'English',
