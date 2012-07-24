@@ -88,7 +88,7 @@
     	endforeach;
 	}else{
 	?>
-    
+    <div style="border:2px dashed #0cF; padding:88px 0; position:relative; top:40px; margin:0 auto; width:93%; text-align:center; color:#0cf;">No skill set is added yet.</div>
     <?php }?>
   </div>
   
@@ -129,9 +129,11 @@
   <div id="activities-list">
   
   <ul>
-  <?php foreach($log as $event):?>
+  <?php if($log){foreach($log as $event):?>
   	<li><?=$event?>.</li>
-  <?php endforeach;?>
+  <?php endforeach;}else{?>
+  <div style="border:2px dashed #0cF; padding:18px 0; margin:0 auto; width:430px; text-align:center; color:#0cf;">No activity is recorded yet.</div>
+  <?php }?>
   </ul>
   
   </div>
