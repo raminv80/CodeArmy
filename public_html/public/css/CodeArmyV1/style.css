@@ -126,6 +126,7 @@ margin:0 auto;}
 	border:none;background:none;height:22px; font-family:'Ruda', sans-serif;font-size:10.08pt;color:#CCC; padding:2px 5px 0 5px;
 }
 #login-content{
+	margin:0 auto;
 	width: 999px;
 	height:967px;
 	background:url(/public/images/codeArmy/login/bg.jpg) no-repeat;
