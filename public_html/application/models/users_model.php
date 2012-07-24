@@ -260,9 +260,10 @@ class Users_model extends CI_Model {
 		}else{
 			//check remember me cookie
 			$val = get_cookie('remember_me_token');
-			if($val==0)$val='undefined';
+			if($val===0)$val='undefined';
 			$sql = "SELECT * FROM (`users`) WHERE `remember_me_token` =  ?";
 			$query = $this->db->query($sql, array($val));
+
 			if($query->num_rows == 1) {
 				//resume session
 				$query_data = $query->result_array();

@@ -10,12 +10,6 @@
 |
 */
 
-$hook['pre_controller'] = array(
-		'class'    => 'PreController',
-		'function' => 'start',
-		'filename' => 'PreController.php',
-		'filepath' => 'hooks'
-		);
 $hook['post_system'][] = array(
         'class' => 'QueryLogHook',
         'function' => 'log_queries',

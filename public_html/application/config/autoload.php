@@ -65,7 +65,7 @@ $autoload['libraries'] = array('database', 'session', 'gamemech');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'form', 'cookie');
+$autoload['helper'] = array('url', 'form', 'cookie', 'isAjax');
 
 
 /*
