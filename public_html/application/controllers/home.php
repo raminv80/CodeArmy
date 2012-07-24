@@ -34,6 +34,7 @@ class Home extends CI_Controller {
 	}
 	
 	function index(){
+		//codeArmy v1.0
 		if($this->session->userdata('username')) redirect('my-profile');
 		$this->view_data['window_title'] = "CodeArmy | Home";
 		$this->view_data['window_title'] = get_cookie('remember_me_token');
