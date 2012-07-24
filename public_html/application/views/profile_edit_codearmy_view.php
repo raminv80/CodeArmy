@@ -1,10 +1,5 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
-<style>
-#profile-wrapper {
-	height:1750px;
-	background: url("/public/images/codeArmy/profile/profile-edit-bg.jpg") no-repeat;
-}
-</style>
+
 <div id="profile-edit-content-area">
 	<?php
     $msg = $this->session->flashdata('msg');
@@ -35,6 +30,7 @@
     <br />
     <hr style="margin-top:50px" />
     
+    <div id="edit-profile-left-col">
     <!-- START - Level Block - Dev. by Reza  -->
     <div id="block-level">Level <?=$myLevel?></div>
     
@@ -50,9 +46,9 @@
       </div>
       <div id="profile-desc">
       <?php if (isset($form_error)){ ?>
-      <textarea name="status-msg" id="status-msg" rows="5"><?=set_value('status-msg')?></textarea>
+      <textarea name="status-msg" id="status-msg" rows="3"><?=set_value('status-msg')?></textarea>
       <?php } else { ?>
-      <textarea name="status-msg" id="status-msg" rows="5"><?=$myProfile["status_msg"]?></textarea>
+      <textarea name="status-msg" id="status-msg" rows="3"><?=$myProfile["status_msg"]?></textarea>
       <?php } ?>
       </div>
     </div>
@@ -125,6 +121,10 @@
         </div>
       </div>
     </div>
+    
+    </div>
+    
+    
     
     <!-- START - Basic Info Block - Dev. by Reza  -->
     <div id="block-basic-info">

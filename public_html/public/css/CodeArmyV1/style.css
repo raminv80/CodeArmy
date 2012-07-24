@@ -539,6 +539,7 @@ input.CAbutton{padding:0}
 #block-level {
 	text-align:right;
 	width:284px;
+	float:none;
 }
 #block-avatar {
 	background:url(/public/images/codeArmy/profile/bg-main-avatar.jpg) no-repeat;
@@ -573,12 +574,10 @@ input.CAbutton{padding:0}
 	margin:10px 15px;
 }
 #block-leaderboard {
-	position:absolute;
-	top:500px;
-	left:0px;
+	position:relative;
 	width:286px;
-	height:263px;
-	overflow:hidden;
+	float:left;
+	margin:40px 0 20px 0;
 }
 .block-header h3 {
 	font-size:12.96pt;
@@ -741,7 +740,7 @@ input.CAbutton{padding:0}
 #block-achievements {
 	position:relative;
 	width:450px;
-	margin:20px 0;
+	margin:35px 0 20px 0;
 	float:right;
 }
 #block-achievements  .block-header a {
@@ -784,9 +783,8 @@ input.CAbutton{padding:0}
 }
 .block-save-profile {
 	width: 755px;
-	height:75px;
 	float:left;
-	position:absolute;
+	position:relative;
 }
 #save-profile {
 	width:250px;
@@ -841,6 +839,7 @@ input.lnkimg:hover {
 	background:url(/public/images/codeArmy/profile/edit-profile-avatar-bg.jpg) no-repeat;
 	height:453px;
 	width:285px;
+	margin-bottom:40px;
 }
 #profile-edit-content-area #avatar-pic {
 	height:325px;
@@ -870,8 +869,8 @@ input.lnkimg:hover {
 #edit-contact-info {
 	width:285px;
 	float:left;
-	position:absolute;
-	margin-top:530px;
+	position:relative;
+	margin:20px 0;
 }
 #contact-boxes {
 	margin:10px 0;
@@ -923,9 +922,8 @@ input.lnkimg:hover {
 #block-basic-info {
 	width:460px;
 	float:right;
-	right:5px;
-	position:absolute;
-	margin-top: 20px;
+	position:relative;
+	margin:20px 0;
 }
 #block-basic-info input, #block-basic-info select {
 	width:195px;
@@ -953,9 +951,8 @@ input.lnkimg:hover {
 #block-personal-info {
 	width:460px;
 	float:right;
-	right:5px;
-	position:absolute;
-	margin-top: 120px;
+	position:relative;
+	margin:20px 0;
 }
 #personal-info-boxes input {
 	width:320px;
@@ -990,7 +987,6 @@ input.lnkimg:hover {
 	/* margin-top: 230px; */
 }
 #profile-edit-content-area #block-skill-progression {
-	margin-top: 340px;
 }
 #block-skill-progression select {
 	width:430px;
@@ -1015,9 +1011,8 @@ input.lnkimg:hover {
 #block-links-portfolios {
 	width:460px;
 	float:right;
-	right:5px;
-	position:absolute;
-	margin-top: 528px;
+	position:relative;
+	margin:20px 0;
 }
 #block-links-portfolios .block-header h3 {
 	height:57px;
@@ -1048,10 +1043,9 @@ input.links-portfolios-boxes1 {
 }
 #block-send-pay {
 	width:780px;
+	margin:20px 0;
 	float:left;
-	right:5px;
-	position:absolute;
-	margin-top: 785px;
+	position:relative;
 }
 #paypal-account h4, #bank-account h4 {
 	float:left;
@@ -1191,5 +1185,15 @@ input.links-portfolios-boxes1 {
 	float:left;
 	padding:3px 0 0 25px;
 	margin-left:10px;
+}
+#edit-profile-left-col {
+	float:left;
+	width:285px;
+	position:relative;
+}
+#profile-page-left-col {
+	float:left;
+	width:285px;
+	position:relative;
 }
 /* END - New Codes by Reza */
