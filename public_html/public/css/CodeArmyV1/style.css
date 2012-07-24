@@ -6,27 +6,49 @@
 	font-style: normal;
 }
 
-html, body {
-	background: url(/public/images/codeArmy/bg.jpg);
-	background-attachment: fixed;
-	background-repeat: repeat;
-	height: 100%;
-	font-family:'Ruda', sans-serif;
-	font-size:10.08pt;
-	color:#CCC;
+body {
+	background: url(/public/images/codeArmy/bg.jpg) repeat scroll;
+    color: #CCCCCC;
+    font-family: 'Ruda',sans-serif;
+    font-size: 10.08pt;
+    line-height: 1.5em;
+    text-rendering: optimizelegibility;
+}
+#container {
+	background: url(/public/images/codeArmy/profile/bg.jpg) no-repeat scroll;
+	display: block;
+	margin: 0 auto;
+    max-width: 999px;
+	clear: both;
+	position:relative;
+    padding: 0;
+}
+#inner:after, #container:after {
+	clear: both;
+    content: " ";
+    display: block;
+    height: 0;
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+#inner {
+	background: url(/public/images/codeArmy/bg_repeat_y.jpg) repeat-y;
+	display: block;
+	margin: 0 auto;
+    max-width: 999px;
+    padding: 0;
 }
 a{text-decoration:none;color:#CCC;}
 a:hover{color:white}
-body{margin:auto; padding:0; text-align:center;}
 .fancybox-skin{
 	background:none;
 }
 #main-content {
 	width: 765px;
-	height: 877px;
-	position: absolute;
-	top: 170px;
-	left: 190px;
+	margin-top:170px;
+	position: relative;
+	float:right;
 	padding: 30px 20px;
 	text-align: justify;
 }
@@ -38,7 +60,7 @@ body{margin:auto; padding:0; text-align:center;}
 #mission-submenue li:hover{ background:url(/public/images/codeArmy/profile/missions/button-hover.png) no-repeat}
 #mission-submenue li.active{ background:url(/public/images/codeArmy/profile/missions/button-hover.png) no-repeat}
 #mission-submenue a{padding-left:45px;}
-#left-block{position:absolute;width:180px; height:910px;top:195px;left:0px;}
+#left-block{position: relative;width:180px;top:195px;left:0px; float:left;}
 .profile-header{position:relative}
 #header-links li{list-style:none;display:block;text-transform: uppercase;}
 #header-links #messages-holder{width:100px; margin:0 auto;padding-top:15px;}
@@ -52,7 +74,7 @@ body{margin:auto; padding:0; text-align:center;}
 #header-links #findmission-holder{text-align:center; padding:13px;}
 #header-links #avatar-holder{width:50px; height:45px;position:absolute;left:890px;top:25px;padding-left:15px; text-align:left}
 #header-links #dropdown-button{width:22px; height:45px;position:absolute;left:960px;top:25px;cursor:pointer;}
-#live-feed{position:absolute;top:127px;color:#03c7ff;width:747px;left:225px;}
+#live-feed{position:absolute;top:127px;color:#03c7ff;width:747px;left:225px; text-align:center;}
 #dropdown ul{margin-top:17px;display:block;}
 #dropdown li{list-style:none; text-align:left;display:block;height:25px;}
 #dropdown #logout{margin-top:15px;display:block}
@@ -60,13 +82,7 @@ body{margin:auto; padding:0; text-align:center;}
 #dropdown a:hover{color:white}
 #dropdown{text-align:left; width:113px;height:142px;background:url(/public/images/codeArmy/profile/dropdown.png) no-repeat; z-index:2; position:absolute; top:65px; left:841px; padding:0px 37px;display:none;}
 #logo{width:138px;height:80px;cursor:pointer;position:absolute;top:45px;left:22px;}
-#inner{
-	background: url(/public/images/codeArmy/profile/bg.jpg) no-repeat;
-	width:999px;
-	position:relative;
-	height:1116px;
-	margin:0 auto;
-}
+
 #comming-soon{width: 500px; height:200px; margin:0 auto; padding:30px;background:black;line-height:34px;color:#ccc;display:none}
 #comming-soon a{color:white;}
 #comming-soon a:hover{color:white;}
@@ -500,7 +516,7 @@ input.CAbutton{padding:0}
 .eraser-sel{ background:url(/public/images/codeArmy/designer_test/eraser_hover.png) no-repeat; width:144px; height:52px;}
 
 .division_button:hover{background:url(/public/images/codeArmy/registration_division/division_button_hover.png) no-repeat;}
-#footer{background:#000; width:1000px; margin:0 auto; color:white;font-family: 'Ruda', sans-serif; font-size:8.64pt; height:20px; padding-top:10px;}
+#footer{background:#000; width:1000px; margin:0 auto; color:white;font-family: 'Ruda', sans-serif; font-size:8.64pt; height:20px; padding-top:10px; position:relative; float:left;}
 #footer_links{ width:57%; float:left;}
 #social-links{ width:13%; float:left; text-align:left; padding-left:10px;}
 #footer_links li{ float:left; list-style-image:none; width:70px; list-style-type:none;}
@@ -514,10 +530,10 @@ input.CAbutton{padding:0}
 
 #profile-content-area {
 	width:765px;
-	position:absolute;
+	position: relative;
 }
 #block-level, #block-avatar {
-	position:absolute;
+	position:relative;
 	float:left;
 }
 #block-level {
@@ -528,7 +544,6 @@ input.CAbutton{padding:0}
 	background:url(/public/images/codeArmy/profile/bg-main-avatar.jpg) no-repeat;
 	height:450px;
 	width:284px;
-	margin-top:20px;
 	box-shadow: 1px 2px 5px #000;
 }
 #profile-name {
@@ -607,10 +622,10 @@ input.CAbutton{padding:0}
 	#block-leaderboard img{margin:5px; float:left;}
 	#block-leaderboard .leaderboard-row{clear:both}
 #block-experience {
-	position:absolute;
+	position:relative;
+	margin:20px 0;
 	width:460px;
 	float:right;
-	right:5px;
 }
 #experience-header {
 	float:left;
@@ -651,10 +666,9 @@ input.CAbutton{padding:0}
 }
 .block-mission-info {
 	width:460px;
-	margin-top: 95px;
-	right:5px;
+	margin:20px 0;
 	float:right;
-	position:absolute;
+	position:relative;
 }
 #mission-bid {
 	width:224px;
@@ -691,8 +705,7 @@ input.CAbutton{padding:0}
 #block-skill-progression {
 	position:absolute;
 	width:450px;
-	margin-top:200px;
-	right:5px;
+	/* margin-top:200px; */
 	float:right;
 }
 #block-skill-progression  .block-header a {
@@ -711,7 +724,7 @@ input.CAbutton{padding:0}
 }
 #skill-bar {
 	height:20px;
-	width:310px;
+	width:350px;
 	float:right;
 	margin:0;
 	background:url(/public/images/codeArmy/profile/skill-bar-bg.png) no-repeat;
@@ -726,10 +739,9 @@ input.CAbutton{padding:0}
 	-moz-border-radius: 15px;
 }
 #block-achievements {
-	position:absolute;
+	position:relative;
 	width:450px;
-	margin-top:480px;
-	right:5px;
+	margin:20px 0;
 	float:right;
 }
 #block-achievements  .block-header a {
@@ -753,10 +765,9 @@ input.CAbutton{padding:0}
 	margin:8px;
 }
 #block-activities {
-	position:absolute;
+	position:relative;
 	width:450px;
-	margin-top:770px;
-	right:5px;
+	margin:20px 0;
 	float:right;
 }
 #block-activities  .block-header a {
@@ -974,9 +985,9 @@ input.lnkimg:hover {
 #block-skill-progression {
 	width:460px;
 	float:right;
-	right:5px;
-	position:absolute;
-	margin-top: 230px;
+	margin:20px 0;
+	position:relative;
+	/* margin-top: 230px; */
 }
 #profile-edit-content-area #block-skill-progression {
 	margin-top: 340px;
