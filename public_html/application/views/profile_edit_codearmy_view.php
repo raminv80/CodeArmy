@@ -50,6 +50,7 @@
       <?php } else { ?>
       <textarea name="status-msg" id="status-msg" rows="3"><?=$myProfile["status_msg"]?></textarea>
       <?php } ?>
+     <p style="font-size:9px"> Limited to 255 Characters</p>
       </div>
     </div>
     

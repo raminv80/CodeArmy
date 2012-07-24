@@ -845,7 +845,7 @@ input.lnkimg:hover {
 	height:325px;
 }
 #profile-edit-content-area #profile-desc {
-	margin: 40px 0;
+	margin: 25px 0;
     text-align: center;
 	color:#595959;
 }
@@ -1195,5 +1195,13 @@ input.links-portfolios-boxes1 {
 	float:left;
 	width:285px;
 	position:relative;
+}
+#profile-desc textarea {
+	background:none;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border: 1px solid #999999;
+	color:#fff;
 }
 /* END - New Codes by Reza */
