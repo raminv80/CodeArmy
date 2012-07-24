@@ -323,7 +323,7 @@ $(function() {
             <label class="paypal-email">Paypal Email</label>
           <?php if (isset($form_error)){ ?>
             <input type="text" id="paypal-email" name="paypal-email" value="<?=set_value('paypal-email')?>" />
-             <div id="errmsg2"><?=form_error("paypal-email")?></div>
+             <div id="errmsg3"><?=form_error("paypal-email")?></div>
           <?php } else { ?>
             <input type="text" id="paypal-email" name="paypal-email" value="<?=$myProfile["paypal_acc"]?>" />
           <?php } ?>
@@ -345,14 +345,14 @@ $(function() {
           <?php endforeach; ?>
           </select>
           <?php if (isset($form_error)){ ?>
-          <div id="errmsg2"><?=form_error("bank-country")?></div>
+          <div id="errmsg3"><?=form_error("bank-country")?></div>
           <?php } ?>
           </div>
           <div id="input-row">
             <label class="bank-country">Bank Name</label>
           <?php if (isset($form_error)){ ?>
             <input type="text" id="bank-name" name="bank-name" value="<?=set_value('bank-name')?>" />
-            <div id="errmsg2"><?=form_error("bank-name")?></div>
+            <div id="errmsg3"><?=form_error("bank-name")?></div>
           <?php } else { ?>
             <input type="text" id="bank-name" name="bank-name" value="<?=$myProfile["bank_name"]?>" />
           <?php } ?>
@@ -361,7 +361,7 @@ $(function() {
             <label class="bank-country">SWIFT Code</label>
           <?php if (isset($form_error)){ ?>
             <input type="text" id="bank-swift" name="bank-swift" value="<?=set_value('bank-swift')?>" />
-            <div id="errmsg2"><?=form_error("bank-swift")?></div>
+            <div id="errmsg3"><?=form_error("bank-swift")?></div>
           <?php } else { ?>
             <input type="text" id="bank-swift" name="bank-swift" value="<?=$myProfile["bank_swift"]?>" />
           <?php } ?>
@@ -370,7 +370,7 @@ $(function() {
             <label class="bank-country">Last Name</label>
           <?php if (isset($form_error)){ ?>
             <input type="text" id="bank-lastname" name="bank-lastname" value="<?=set_value('bank-lastname')?>" />
-            <div id="errmsg2"><?=form_error("bank-lastname")?></div>
+            <div id="errmsg3"><?=form_error("bank-lastname")?></div>
           <?php } else { ?>
             <input type="text" id="bank-lastname" name="bank-lastname" value="<?=$myProfile["bank_lastname"]?>" />
           <?php } ?>
@@ -379,7 +379,7 @@ $(function() {
             <label class="bank-country">First Name</label>
           <?php if (isset($form_error)){ ?>
             <input type="text" id="bank-firstname" name="bank-firstname" value="<?=set_value('bank-firstname')?>" />
-            <div id="errmsg2"><?=form_error("bank-firstname")?></div>
+            <div id="errmsg3"><?=form_error("bank-firstname")?></div>
           <?php } else { ?>
             <input type="text" id="bank-firstname" name="bank-firstname" value="<?=$myProfile["bank_firstname"]?>" />
           <?php } ?>
