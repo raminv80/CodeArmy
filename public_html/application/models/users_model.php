@@ -168,7 +168,7 @@ class Users_model extends CI_Model {
 		$info =unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
 		$contact = array(
 			"address" => $info['geoplugin_regionName'],
-			"country" => $info['geoplugin_countryName']
+			"country" => $info['geoplugin_countryCode']
 			);
 		
 		$contact = json_encode($contact);
