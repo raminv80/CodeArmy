@@ -622,4 +622,4 @@ ADD  `bank_lastname` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_
 
 ALTER TABLE  `user_profiles` CHANGE  `paypal_acc`  `paypal_acc` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
 
-ALTER TABLE  `user_profiles` ADD  `status_msg` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL AFTER  `urls`
+ALTER TABLE  `user_profiles` ADD  `status_msg` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL AFTER  `urls`
