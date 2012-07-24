@@ -51,6 +51,7 @@ a:hover{color:white}
 	float:right;
 	padding: 30px 20px;
 	text-align: justify;
+	min-height:600px;
 }
 #left-menu a{display:block; padding:19px 0 16px 30px;}
 #left-menu li{background:url(/public/images/codeArmy/profile/button.png) no-repeat;width:180px;height:52px;text-align:left; display:block;}
