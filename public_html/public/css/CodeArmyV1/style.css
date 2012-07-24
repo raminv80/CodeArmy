@@ -53,6 +53,9 @@ a:hover{color:white}
 	text-align: justify;
 	min-height:600px;
 }
+#errmsg1 {font-size:14px;font-weight:bold;margin:0 30px 10px 0; color:#F00;float:right}
+#errmsg2 {font-size:14px;font-weight:bold;margin:0 0 10px 100px; color:#F00;float:left}
+#errmsg3 {font-size:14px;font-weight:bold;margin:0 0 10px 0; color:#F00;float:left}
 #left-menu a{display:block; padding:19px 0 16px 30px;}
 #left-menu li{background:url(/public/images/codeArmy/profile/button.png) no-repeat;width:180px;height:52px;text-align:left; display:block;}
 #left-menu li:hover{background:url(/public/images/codeArmy/profile/button-hover.png) no-repeat;}
