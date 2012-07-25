@@ -51,7 +51,11 @@ a:hover{color:white}
 	float:right;
 	padding: 30px 20px;
 	text-align: justify;
+	min-height:600px;
 }
+#errmsg1 {font-size:14px;font-weight:bold;margin:0 30px 10px 0; color:#F00;float:right}
+#errmsg2 {font-size:14px;font-weight:bold;margin:0 0 10px 100px; color:#F00;float:left}
+#errmsg3 {font-size:14px;font-weight:bold;margin:0 0 10px 180px; color:#F00;float:left}
 #left-menu a{display:block; padding:19px 0 16px 30px;}
 #left-menu li{background:url(/public/images/codeArmy/profile/button.png) no-repeat;width:180px;height:52px;text-align:left; display:block;}
 #left-menu li:hover{background:url(/public/images/codeArmy/profile/button-hover.png) no-repeat;}
@@ -845,7 +849,7 @@ input.lnkimg:hover {
 	height:325px;
 }
 #profile-edit-content-area #profile-desc {
-	margin: 40px 0;
+	margin: 25px 0;
     text-align: center;
 	color:#595959;
 }
@@ -1078,7 +1082,8 @@ input.links-portfolios-boxes1 {
 #send-pay-boxes label{
 	float:left;
 	padding-top: 10px;
-	width:100px;
+	width:170px;
+	text-align:left;
 }
 #send-pay-boxes #input-row {
 	width:600px;
@@ -1093,23 +1098,24 @@ input.links-portfolios-boxes1 {
 	width:750px;
 }
 #block-mission-bid-header {
-	position:absolute;
+	position:relative;
 	width:780px;
 	float:left;
 }
 #block-bid-container {
 	float:left;
 	width:780px;
+	position:relative;
 }
 .latest-bid-container {
-	margin-top:100px;
+	margin-top:70px;
 }
 #bid-date {
 	background:url(/public/images/codeArmy/mymission/bg_date.png) no-repeat;
 	width:780px;
 	float:left;
 	height:30px;
-	padding: 8px 0 8px 20px;
+	padding: 5px 0 8px 20px;
 }
 #bid-info-block {
 	float:left;
@@ -1150,7 +1156,7 @@ input.links-portfolios-boxes1 {
 	float:left;
 	width:260px;
 	font-size: 20px;
-    margin: 20px 0 0 10px;
+    margin: 15px 0 0 10px;
 }
 #bid-time {
 	float:left;
@@ -1171,7 +1177,7 @@ input.links-portfolios-boxes1 {
 	float:left;
 	background:url(/public/images/codeArmy/mymission/bg_msg_blue.png) no-repeat;
 	height:50px;
-	padding:15px 0 0 25px;
+	padding:5px 0 0 25px;
 }
 .latest-bid-container #bid-msg-text {
 	background:url(/public/images/codeArmy/mymission/bg_msg_green.png) no-repeat;
@@ -1183,7 +1189,7 @@ input.links-portfolios-boxes1 {
 	height:17px;
 	background:url(/public/images/codeArmy/mymission/btn_stop.png) no-repeat;
 	float:left;
-	padding:3px 0 0 25px;
+	padding:0 0 0 25px;
 	margin-left:10px;
 }
 #edit-profile-left-col {
@@ -1195,5 +1201,14 @@ input.links-portfolios-boxes1 {
 	float:left;
 	width:285px;
 	position:relative;
+}
+#profile-desc textarea {
+	background:none;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border: 1px solid #999999;
+	color:#fff;
+	width: 250px;
 }
 /* END - New Codes by Reza */
