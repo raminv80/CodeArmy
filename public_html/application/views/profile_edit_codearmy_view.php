@@ -195,7 +195,7 @@ $intCountProgress = round(($intTotalCount / $intTotalFields) * 100);
         <div id="input-row">
           <label class="address">Address</label>
           <?php if (isset($form_error)){ ?>
-          <input title="Please neter your address" type="text" id="address" name="address" value="<?=set_value('address')?>" />
+          <input title="Please enter your address" type="text" id="address" name="address" value="<?=set_value('address')?>" />
           <div id="errmsg2"><?=form_error("address")?></div>
           <?php } else { ?>
           <input title="May i know your address please?" type="text" id="address" name="address" value="<?php if($myCountry) echo $contact->address;?>" />
@@ -212,7 +212,7 @@ $intCountProgress = round(($intTotalCount / $intTotalFields) * 100);
         </div>
 <script>
 $(function() {
-	$( "#birthday" ).datepicker({ dateFormat: "yy-mm-dd", changeMonth: true, changeYear: true, yearRange: "1950:2010" });
+	$( "#birthday" ).datepicker({ dateFormat: "yy-mm-dd", changeMonth: true, changeYear: true, yearRange: "1950:<?=date('Y')-5?>" });
 });
 </script>
         <div id="input-row">
