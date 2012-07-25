@@ -52,7 +52,6 @@
     <div id="experience-header">
       <h3>Level <?=$myLevel?> (Exp Points:<?=$user["exp"];?>)</h3>
     </div>
-    <div id="edit-profile-link"><a href="/profile/edit">Edit Profile</a></div>
     <div id="experience-bar">
       <div style="width:<?=round(443*$expProgress)?>px" id="experience-bar-progress"> </div>
     </div>
