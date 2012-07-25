@@ -42,6 +42,10 @@ class Achievements extends CI_Controller {
 	
 	
 	function index(){
+		$user_id = $this->session->userdata('user_id');
+		$myBadges = $this->skill_model->get_my_badges($user_id);
+		$this->view_data['myBadges'] = $myBadges;
+		
 		$this->view_data['window_title'] = $this->session->userdata('username');
 		$this->load->view('achievements_codearmy_view', $this->view_data);
 	}

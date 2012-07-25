@@ -67,6 +67,7 @@ class Skill_model extends CI_Model {
 		$sql= "select achievements.* from achievements, achievement_set where achievements.achievement_id = achievement_set.achievement_id and user_id = ? order by achievement_set.id";
 		$res = $this->db->query($sql, array($user_id));
 		if($res->num_rows()>0){
+			$res = $res->result_array();
 			return $res;
 		}else return false;
 	}

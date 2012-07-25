@@ -50,7 +50,7 @@
                     <li<?php if($action_is=='completed'){?> class="active"<?php }?>><a href="/missions/completed">Completed</a></li>
                 </ul>
                 <li<?php if($page_is=='Achievements'){?> class="active"<?php }?>><a href="/achievements">Achievements</a></li>
-                <li<?php if($page_is=='Leaderboard'){?> class="active"<?php }?>><a href="leaderboard">Leaderboard</a></li>
+                <li<?php if($page_is=='Leaderboard'){?> class="active"<?php }?>><a href="/leaderboard">Leaderboard</a></li>
                 <li<?php if($page_is=='Invite'){?> class="active"<?php }?>><a href="/invite">Invite friends</a></li>
             </ul>
         </div>
