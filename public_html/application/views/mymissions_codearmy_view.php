@@ -193,7 +193,7 @@
                     <div class="mission-time">
                     	<span class="time-left">Time left</span>
                         <div class="timer">
-                        <span class="time"><?=$remaining_hour.':'.$remaining_minutes?></span>
+                        <span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>
                         <span class="hrs">hrs</span>
                         </div>
                         <a href="#" class="blue-button">Check in</a>
@@ -206,12 +206,30 @@
     </div>
 </div>
 <script>
-	$(function(){setInterval("updateTimer()",1000*60);});
+	$(function(){mins = 0; setInterval("updateTimer()",1000*60);});
 	function updateTimer(){
+		mins++;
+		if(mins%60==0){
+			//An hour passed
+			$('#block-mission-list .time').each(function(){
+				var time = $(this).html().split(':');
+				if(time.length==1){
+					if(time[0]==24){if(time[0]>0){time[0]--;time[1]='60';$(this).html(time[0]+':'+time[1]);}}else{$(this).html(time[0]);}
+					var item = $(this).parent().parent().parent().parent();
+					var percentage_elm = $(item).find('input[name="percent"]');
+					var percentage = parseFloat(percentage_elm.val())+parseFloat($(item).find('input[name="min_to_percent"]').val());
+					if(percentage>1)percentage=1;
+					percentage_elm.val(percentage);
+					$(item).find('.mission-progress-meter').css({'width':Math.round(216*percentage)});
+				}
+			});
+		}
 		$('#block-mission-list .time').each(function(){
 				var time = $(this).html().split(':');
-				if(time[1]<=00){if(time[0]>0){time[0]--;time[1]='59';}}else{time[1]--;}
-				$(this).html(time[0]+':'+time[1]);
+				if(time.length==2){
+					if(time[1]<=00){if(time[0]>0){time[0]--;time[1]='59';}}else{time[1]--;}
+					$(this).html(time[0]+':'+time[1]);
+				}
 				var item = $(this).parent().parent().parent().parent();
 				var percentage_elm = $(item).find('input[name="percent"]');
 				var percentage = parseFloat(percentage_elm.val())+parseFloat($(item).find('input[name="min_to_percent"]').val());

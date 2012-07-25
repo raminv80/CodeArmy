@@ -74,7 +74,7 @@
   <div id="block-skill-progression">
     <div class="block-header">
       <h3>Skill Progression</h3>
-      <a href="#">View all</a> </div>
+    </div>
     <?php
 	if ($mySkills){
     	foreach($mySkills as $skill):
