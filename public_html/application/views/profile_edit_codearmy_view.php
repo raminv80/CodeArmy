@@ -1,15 +1,42 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
+<?php
+$intTotalFields = 23;
+$intTotalCount = 0;
+
+if($myProfile["full_name"] != "") $intTotalCount++;
+if($myProfile["contact"] != ""){ 
+	$contact = json_decode($myProfile["contact"]);
+	if(isset($contact->country) && $contact->country != "") $intTotalCount++;
+	if(isset($contact->address) && $contact->address != "") $intTotalCount++;
+	if(isset($contact->phone) && $contact->phone != "") $intTotalCount++;
+}
+if($myProfile["birthdate"] != "") $intTotalCount++;
+if($mySkills && isset($mySkills[0])) $intTotalCount++;
+if($mySkills && isset($mySkills[1])) $intTotalCount++;
+if($mySkills && isset($mySkills[2])) $intTotalCount++;
+if($me["email"] != "") $intTotalCount++;
+if($myProfile["urls"] != ""){
+	$urls = json_decode($myProfile["urls"]);
+	if(isset($urls->skype) && $urls->skype != "") $intTotalCount++;
+	if(isset($urls->facebook) && $urls->facebook != "") $intTotalCount++;
+	if(isset($urls->twitter) && $urls->twitter != "") $intTotalCount++;
+	if(isset($urls->linkedin) && $urls->linkedin != "") $intTotalCount++;
+	if(isset($urls->github) && $urls->github != "") $intTotalCount++;
+	if(isset($urls->portfolio) && $urls->portfolio != "") $intTotalCount++;
+	if(isset($urls->blog) && $urls->blog != "") $intTotalCount++;
+}
+if($myProfile["paypal_acc"] != "") $intTotalCount++;
+if($myProfile["bank_country"] != "") $intTotalCount++;
+if($myProfile["bank_name"] != "") $intTotalCount++;
+if($myProfile["bank_swift"] != "") $intTotalCount++;
+if($myProfile["bank_lastname"] != "") $intTotalCount++;
+if($myProfile["bank_firstname"] != "") $intTotalCount++;
+if($myProfile["bank_acc"] != "") $intTotalCount++;
+
+$intCountProgress = round(($intTotalCount / $intTotalFields) * 100);
+?>
 
 <div id="profile-edit-content-area">
-	<?php
-    $msg = $this->session->flashdata('msg');
-    if($msg){?>
-    <div class="row" style="color:#F90;">
-        <label style="width: 250px;"><?=$msg?></label>
-    </div>
-    <?php
-	}
-    ?>
     
   <?php echo form_open('profile/edit_profile'); ?>
     
@@ -18,9 +45,9 @@
       <div id="save-profile">
         <input class="lnkimg" type="submit" value="Save Profile" />
         &nbsp;&nbsp;<a href="/profile"> or Cancel</a> </div>
-      <div id="profile-completion"> Profile Completion: 45%
+      <div id="profile-completion"> Profile Completion: <?=$intCountProgress?>%
         <div id="profile-completion-bar">
-          <div id="profile-completion-progress"> </div>
+          <div style="width:<?=$intCountProgress - 1?>%" id="profile-completion-progress"> </div>
         </div>
       </div>
     </div>
@@ -180,7 +207,7 @@
           <input type="text" id="phone" name="phone" value="<?=set_value('phone')?>" />
           <div id="errmsg2"><?=form_error("phone")?></div>
           <?php } else { ?>
-          <input type="text" id="phone" name="phone" value="<?php if($myCountry) echo $contact->phone;?>" />
+          <input type="text" id="phone" name="phone" value="<?php if($myCountry && isset($contact->phone)) echo $contact->phone;?>" />
           <?php } ?>
         </div>
 <script>
