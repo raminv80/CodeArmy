@@ -1112,7 +1112,7 @@ input.links-portfolios-boxes1 {
 	position:relative;
 }
 .latest-bid-container {
-	margin-top:70px;
+	margin-top:50px;
 }
 #bid-date {
 	background:url(/public/images/codeArmy/mymission/bg_date.png) no-repeat;
@@ -1231,6 +1231,6 @@ input.links-portfolios-boxes1 {
 	padding:10px 20px 0;
 }
 #achieve-unit #badge-unit {
-	padding:20px 25px 0;
+	margin:20px 25px 0;
 }
 /* END - New Codes by Reza */
