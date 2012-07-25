@@ -1230,6 +1230,97 @@ class Stories_model extends CI_Model {
 		}else return false;
 	}
 	
+	function stories_map($percision){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') GROUP BY round(lat,?), round(lng,?)";
+		$res = $this->db->query($sql,array($percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function browse_stories_CA($subject='none', $project_sel=0, $cat_sel=0, $type=0, $skill_sel=0, $cash_from='', $cash_to='', $point=0, $search='', $timeS=-1, $timeE=-1, $order=''){
+		//$sql = "SELECT cworks.*, project.project_name FROM (select works.*, users.username from works left join users on works.work_horse=users.user_id) as cworks,project WHERE project.project_id=cworks.project_id ";
+		
+		//TODO: when project management is implemented, Some methodologies will use sprints and some don't. To use waterfall model for task management it is temporary set to not to use sprints at all.
+		$has_sprint = false;
+		if($has_sprint){
+		$sql = "select cworks.*, IFNULL(categories.name,'General') as category_name from (SELECT project.project_name, works.category, works.work_id,works.title, works.created_at, works.description, works.cost, works.points, works.bid_deadline, (select count(*) as bid_num from bids where bids.work_id = works.work_id) as bids, (select count(*) as coment_num from comments where comments.story_id = works.work_id) as comments FROM works, project, sprints WHERE (project.project_id = works.project_id) AND works.sprint=sprints.id AND sprints.project_id=works.project_id AND curdate()>=sprints.start AND curdate()<=sprints.end AND (lower(works.status) in ('open','reject')) ";
+		}else{
+			$sql = "select cworks.*, IFNULL(categories.name,'General') as category_name from (SELECT project.project_name, works.category, works.work_id,works.title, works.created_at, works.description, works.cost, works.points, works.bid_deadline, works.lat, works.lng, (select count(*) as bid_num from bids where bids.work_id = works.work_id) as bids, (select count(*) as coment_num from comments where comments.story_id = works.work_id) as comments FROM works, project WHERE (project.project_id = works.project_id) AND curdate()<=works.deadline AND (lower(works.status) in ('open','reject')) ";
+		}
+		$param = array();
+		if($timeS!=-1){
+			$sql.="AND (hour(TIMEDIFF( NOW( ) ,  `bid_deadline` )) >= ?) ";
+			$param[] = $timeS;
+		}
+		
+		if($timeE!=-1){
+			$sql.="AND (hour(TIMEDIFF( NOW( ) ,  `bid_deadline` )) < ?) ";
+			$param[] = $timeE;
+		}
+		
+		if($project_sel!=0){
+			$sql.="AND (works.project_id = ?) ";
+			$param[] = $project_sel;
+		}
+		if($cat_sel!='0' and $cat_sel!='g'){
+			$sql.="AND (works.category = ?) ";
+			$param[] = $cat_sel;
+		}
+		if($cat_sel==='g'){
+			$sql.="AND isnull(works.category) ";	
+		}
+		if($skill_sel!=0){
+			$sql.="AND (works.work_id in (select work_id from work_skill where skill_id = ?)) ";
+			$param[] = $skill_sel;
+		}
+		if(trim($cash_from)!=''){
+			$sql.="AND (works.cost >= ?) ";
+			$param[] = $cash_from;
+		}
+		if(trim($cash_to)!=''){
+			$sql.="AND (works.cost <= ?) ";
+			$param[] = $cash_to;
+		}
+		if($point!=0){
+			$sql.="AND (works.points = ?) ";
+			$param[] = $point;
+		}
+		if($type!='0'){
+			$sql.="AND (works.type = ?) ";
+			$param[] = $type;
+		}
+		if(trim($search)!='' && strlen(trim($search))>2){
+			$sql.="AND (works.title like concat('%',?,'%') OR works.description like concat('%',?,'%')) ";
+			$param[] = $search;
+			$param[] = $search;
+		}
+		$sql.=") as cworks LEFT JOIN categories on cworks.category = categories.id ";
+		
+		$ord = "";
+		switch($order){
+			case 'hottest':$ord .= "cworks.bids DESC, cworks.comments DESC,";break;
+			case 'latest':$ord .= "cworks.created_at DESC,";break;
+		}
+		
+		switch($subject){
+			case 'none':$ord= " ";break;
+			case 'userstory':$ord .= " cworks.project_name, cworks.title,";break;
+			case 'bids':$ord .= " cworks.bids,";break;
+			case 'prize':$ord .= " cworks.cost,";break;
+			default: $ord.=" cworks.bid_deadline ASC,"; 
+		}
+		
+		if(trim($ord)!=""){
+			 $ord = substr($ord, 0, -1);
+			 $sql = $sql." Order By ".$ord;
+		}
+		
+		$res = $this->db->query($sql, $param);
+		if($res->num_rows()>0){
+			return $res->result_array();
+		}else return false;
+	}
+	
 	function get_user_bids($user_id) {
 		$sql = "select work_id from bids where user_id=\"".$user_id."\"";
 		$res = $this->db->query($sql);

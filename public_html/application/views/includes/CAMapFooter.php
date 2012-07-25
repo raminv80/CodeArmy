@@ -22,8 +22,21 @@
 
 </div>
 <script>
-        $('#dropdown-button').click(function(){$('#dropdown').slideToggle('fast');})
-        $('#logo').click(function(){window.location="/profile"});
-        $('#missions-toggle').click(function(){$('#mission-submenue').slideToggle();});
-        function loadEffect(){}
-    </script>
+	$('#dropdown-button').click(function(){$('#dropdown').slideToggle('fast');})
+	$('#logo').click(function(){window.location="/profile"});
+	$('#missions-toggle').click(function(){$('#mission-submenue').slideToggle();});
+	function loadEffect(){}
+</script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32075842-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script type="text/javascript" src="/public/js/codeArmy/footer.js"></script>

@@ -21,7 +21,7 @@ class Skill_model extends CI_Model {
 	}
 	
 	function get_work_skills($work_id){
-		$query = "select * from work_skill, skill where skill.id = work_skill.skill_id and work_id = ?";
+		$query = "select * from work_skill, skill where skill.id = work_skill.skill_id and work_id = ? order by work_skill.point desc";
 		$result = $this->db->query($query, array($work_id));
 		return $result->result_array();	
 	}

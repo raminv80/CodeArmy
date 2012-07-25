@@ -51,6 +51,19 @@ class Missions extends CI_Controller {
 	}
 	
 	function index(){
+		$percision = 0;
+		$works = $this->stories->stories_map($percision);
+		$this->view_data['percision'] = $percision;
+		/*for($i=0;$i<count($works);$i++):
+			$works[$i]['skills'] = '';
+			$skills = $this->skill_model->get_work_skills($works[$i]['work_id']);
+			foreach($skills as $j=>$skill):
+				$works[$i]['skills'] .= $skill['name'];
+				if($j<(count($skills)-1))$works[$i]['skills'] .= "<br/>";
+			endforeach;
+			if($works[$i]['skills'] == '') $works[$i]['skills'] = 'NAV';
+		endfor;*/
+		$this->view_data['works'] = $works;
 		$this->view_data['window_title'] = "My Missions";
 		$this->load->view('missions_codearmy_view', $this->view_data);
 	}

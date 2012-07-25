@@ -1,34 +1,33 @@
 <?php $this->load->view('includes/CAHeader.php'); ?>
-    <div id="find-mission-area">
-    	<div id="world-map">
- 	   		<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />
-            <!-- dialogs -->
-            <!-- project list -->
-            <div id="dialog-project-list" class="dialog">
-            	<div class="container">
-                    <div class="dialog-close-button"></div>
-                    List of projects
-                </div>
-            </div>
-            <!-- end of project list -->
-            <!-- end of dialogs -->
-        </div>
+
+<div id="wrapper">
+  <div id="find-mission-area">
+    <div id="world-map"> <img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" /> 
+      <!-- dialogs --> 
+      <!-- project list -->
+      <div id="dialog-project-list" class="dialog">
+        <div class="container">
+          <div class="dialog-close-button"></div>
+          List of projects </div>
+      </div>
+      <!-- end of project list --> 
+      <!-- end of dialogs --> 
     </div>
-    <?php $this->load->view('includes/CAMapFooter.php'); ?>
-    <div id="filter-toolbar" class="toolbar">
-    </div>
-    <div id="profile-toolbar" class="toolbar">
-    </div>
-    <!-- marker template -->
-    <div id="marker-template" class="marker" style="display:none;">
-        	<div class="marker-icon">#</div>
-        	<div class="arrow-desc">12<br/>PHP</div>
-        	<div class="arrow-down-container">
-            	<div class="arrow-down">
-	            </div>
-            </div>
-    </div>
-    <!-- end of marker template -->
+  </div>
+</div>
+<?php $this->load->view('includes/CAMapFooter.php'); ?>
+<div id="filter-toolbar" class="toolbar"> </div>
+<div id="profile-toolbar" class="toolbar"> </div>
+<!-- marker template -->
+<div id="marker-template" class="marker" style="display:none;">
+  <div class="marker-icon">#</div>
+  <div class="arrow-desc">12<br/>
+    PHP</div>
+  <div class="arrow-down-container">
+    <div class="arrow-down"> </div>
+  </div>
+</div>
+<!-- end of marker template -->
 <style>
 	#dialog-project-list{
 		width:0;
@@ -135,21 +134,35 @@
 </style>
 <script>
 	function loadEffect(){}
+	
+	var jobs = <?php echo json_encode($works); ?>;
+	
 	$(function(){
 		//create some markers
-		randMarkers();
+		/*randMarkers();
 		var loc = geoToPixel({'lat':3.152480, 'lng': 101.717270});
 		addMarker(loc.x,loc.y,'t1','*','12<br/>Ramin','#0ff',0.5,0);
 		var loc = geoToPixel({'lat':70, 'lng': 0});
-		addMarker(loc.x,loc.y,'t3','*','12<br/>top','#0ff',0.5,0);
-		var loc = geoToPixel({'lat':-60, 'lng': 0});
-		addMarker(loc.x,loc.y,'t2','#','4<br/>PHP MySQL HTML CSS JQuery','#f00',0.7,0);
+		addMarker(loc.x,loc.y,'t3','*','12<br/>top','#0ff',0.5,0);*/
+		for(i=0; i<jobs.length;i++){
+			var loc = geoToPixel({'lat':jobs[i].lat, 'lng': jobs[i].lng});
+			addMarker(loc.x,loc.y,'marker_'+i,'#',jobs[i].num+'<br/>CSS','grey',0.75,0);
+		}
+		
 		$('.toolbar').draggable({ containment: '#wrapper' });
 		
 		initializeEvents();
 		//run window resize
 		$(window).resize();
 	});
+	
+	function catToIcon(cat){
+		return '#';
+	}
+	
+	function catToColor(cat){
+		return '#f00';
+	}
 	
 	function initializeEvents(){
 		//initial dialog close button
@@ -258,8 +271,8 @@
 		var template = $('#marker-template').clone();
 		var container = $('#world-map');
 		template.attr('id',id);
-		template.find('.marker-icon').html(icon);
-		template.find('.arrow-desc').html(desc);
+		if(icon){template.find('.marker-icon').html(icon);}else{template.find('.marker-icon').hide();}
+		if(desc){template.find('.arrow-desc').html(desc);}else{template.find('.arrow-desc').hide();}
 		template.find('.arrow-down').css({'border-top': '10px solid '+color});
 		template.css({
 				'transform': 'scale('+scale+','+scale+')',
