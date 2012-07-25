@@ -82,7 +82,7 @@
     <div class="skill-unit">
       <div id="skill-title"><?=ucfirst($skill["name"])?></div>
       <div id="skill-bar">
-        <div style="width:<?=$skill["point"]?>%" id="skill-bar-progress"></div>
+        <div title="<?=$skill["point"]?>" style="width:<?=$skill["point"]?>%" id="skill-bar-progress"></div>
       </div>
     </div>
     <?php
@@ -144,4 +144,7 @@
 
 
 </div>
+<script type="text/javascript">
+$('#profile-content-area [title]').tipsy({gravity:'s', opacity:0.95});
+</script>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>
