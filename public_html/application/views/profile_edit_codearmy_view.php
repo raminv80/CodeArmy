@@ -43,10 +43,10 @@
       </div>
       <div id="profile-desc">
       <?php if (isset($form_error)){ ?>
-      <textarea name="status-msg" id="status-msg" rows="3"><?=set_value('status-msg')?></textarea>
+      <textarea title="What's in your mind?" name="status-msg" id="status-msg" rows="3"><?=set_value('status-msg')?></textarea>
       <div style="font-size:14px;font-weight:bold;margin-bottom:10px;float:right"><?=form_error("status-msg")?></div>
       <?php } else { ?>
-      <textarea name="status-msg" id="status-msg" rows="3"><?=$myProfile["status_msg"]?></textarea>
+      <textarea title="What's in your mind?" name="status-msg" id="status-msg" rows="3"><?=$myProfile["status_msg"]?></textarea>
       <?php } ?>
      <p style="font-size:9px"> Limited to 255 Characters</p>
       </div>
@@ -81,42 +81,42 @@
         <div id="input-row">
           <label class="email"></label>
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="email" name="email" value="<?=set_value('email')?>" />
+          <input title="Please enter a valid email" type="text" id="email" name="email" value="<?=set_value('email')?>" />
           <div style="font-size:14px;font-weight:bold;margin-bottom:10px;float:right"><?=form_error("email")?></div>
           <?php } else { ?>
-          <input type="text" id="email" name="email" value="<?=$me["email"]?>" />
+          <input title="Enter your email" type="text" id="email" name="email" value="<?=$me["email"]?>" />
           <?php } ?>
         </div>
         <div id="input-row">
           <label class="skype"></label>
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="skype" name="skype" value="<?=set_value('skype')?>" />
+          <input title="Please eneter a valid skype account" type="text" id="skype" name="skype" value="<?=set_value('skype')?>" />
           <?php } else { ?>
-          <input type="text" id="skype" name="skype" value="<?php if($urls) echo $urls->skype;?>" />
+          <input title="Enter your Skype account" type="text" id="skype" name="skype" value="<?php if($urls) echo $urls->skype;?>" />
           <?php } ?>
         </div>
         <div id="input-row">
           <label class="facebook"></label>
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="facebook" name="facebook" value="<?=set_value('facebook')?>" />
+          <input title="Please neter a valid facebook account" type="text" id="facebook" name="facebook" value="<?=set_value('facebook')?>" />
           <?php } else { ?>
-          <input type="text" id="facebook" name="facebook" value="<?php if($urls) echo $urls->facebook;?>" />
+          <input title="Enter your facebook account" type="text" id="facebook" name="facebook" value="<?php if($urls) echo $urls->facebook;?>" />
           <?php } ?>
         </div>
         <div id="input-row">
           <label class="twitter"></label>
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="twitter" name="twitter" value="<?=set_value('twitter')?>" />
+          <input title="Please enter a valid twitter account" type="text" id="twitter" name="twitter" value="<?=set_value('twitter')?>" />
           <?php } else { ?>
-          <input type="text" id="twitter" name="twitter" value="<?php if($urls) echo $urls->twitter;?>" />
+          <input title="Enter your twitter account" type="text" id="twitter" name="twitter" value="<?php if($urls) echo $urls->twitter;?>" />
           <?php } ?>
         </div>
         <div id="input-row">
           <label class="linkedin"></label>
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="linkedin" name="linkedin" value="<?=set_value('linkedin')?>" />
+          <input title="Please enter a valid linkedin account" type="text" id="linkedin" name="linkedin" value="<?=set_value('linkedin')?>" />
           <?php } else { ?>
-          <input type="text" id="linkedin" name="linkedin" value="<?php if($urls) echo $urls->linkedin;?>" />
+          <input title="Enter your linkedin account" type="text" id="linkedin" name="linkedin" value="<?php if($urls) echo $urls->linkedin;?>" />
           <?php } ?>
         </div>
       </div>
@@ -129,12 +129,12 @@
     <!-- START - Basic Info Block - Dev. by Reza  -->
     <div id="block-basic-info">
       <div id="input-row">
-        <input type="text" id="name" name="name" value="<?=$me["username"]?>" readonly="readonly" />
+        <input title="Your Username in CodeArmy" type="text" style="color:#CCC" id="name" name="name" value="<?=$me["username"]?>" readonly="readonly" />
       </div>
       <div id="input-row">
-        <input type="text" id="title" name="title" value="<?=ucfirst($myProfile["specialization"])?>" readonly="readonly" />
+        <input title="Your Devision in CodeArmy" type="text" style="color:#CCC" id="title" name="title" value="<?=ucfirst($myProfile["specialization"])?>" readonly="readonly" />
         <!--<input type="text" id="location" name="location" value="<?php if($myCountry) echo $myCountry?>" />-->
-          <select name="country">
+          <select title="Enter your country" name="country">
             <option value="">--- Select a country ---</option>
 			<?php foreach($countries as $key=>$value): ?>
             <?php if (isset($form_error)){ ?>
@@ -159,28 +159,28 @@
         <div id="input-row">
           <label class="name">Full Name</label>
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="fullname" name="fullname" value="<?=set_value('fullname')?>" />
+          <input title="What is your real name?" type="text" id="fullname" name="fullname" value="<?=set_value('fullname')?>" />
           <div id="errmsg2"><?=form_error("fullname")?></div>
           <?php } else { ?>
-          <input type="text" id="fullname" name="fullname" value="<?=$myProfile["full_name"]?>" />
+          <input title="What is your name?" type="text" id="fullname" name="fullname" value="<?=$myProfile["full_name"]?>" />
           <?php } ?>
         </div>
         <div id="input-row">
           <label class="address">Address</label>
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="address" name="address" value="<?=set_value('address')?>" />
+          <input title="Please neter your address" type="text" id="address" name="address" value="<?=set_value('address')?>" />
           <div id="errmsg2"><?=form_error("address")?></div>
           <?php } else { ?>
-          <input type="text" id="address" name="address" value="<?php if($myCountry) echo $contact->address;?>" />
+          <input title="May i know your address please?" type="text" id="address" name="address" value="<?php if($myCountry) echo $contact->address;?>" />
           <?php } ?>
         </div>
         <div id="input-row">
           <label class="phone">Phone</label>
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="phone" name="phone" value="<?=set_value('phone')?>" />
+          <input title="What's you phone number?" type="text" id="phone" name="phone" value="<?=set_value('phone')?>" />
           <div id="errmsg2"><?=form_error("phone")?></div>
           <?php } else { ?>
-          <input type="text" id="phone" name="phone" value="<?php if($myCountry) echo $contact->phone;?>" />
+          <input title="Contact number" type="text" id="phone" name="phone" value="<?php if($myCountry) echo $contact->phone;?>" />
           <?php } ?>
         </div>
 <script>
@@ -191,10 +191,10 @@ $(function() {
         <div id="input-row">
           <label class="birthday">Birthday</label>
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="birthday" name="birthday" value="<?=set_value('birthday')?>" />
+          <input title="What is your birthdate?" type="text" id="birthday" name="birthday" value="<?=set_value('birthday')?>" />
           <div id="errmsg2"><?=form_error("birthday")?></div>
           <?php } else { ?>
-          <input type="text" id="birthday" name="birthday" value="<?=$myProfile["birthdate"]?>" />
+          <input title="Are you old enough to be at CodeArmy? DOB please..." type="text" id="birthday" name="birthday" value="<?=$myProfile["birthdate"]?>" />
           <?php } ?>
         </div>
       </div>
@@ -203,11 +203,11 @@ $(function() {
     <!-- START - Skill Progression Block - Dev. by Reza  -->
     <div id="block-skill-progression">
       <div class="block-header">
-        <h3>Skill Progression</h3>
+        <h3 title="You have one time oppurtunity to declare your 3 highest skill set.">Skill Progression</h3>
       </div>
       <div id="personal-info-boxes">
         <div id="input-row">
-          <select name="skill1"<?php if (isset($mySkills[0])) echo " disabled"; ?>>
+          <select title="What is your best skill?" name="skill1"<?php if (isset($mySkills[0])) echo " disabled"; ?>>
             <option value=""></option>
           <?php foreach($allSkills as $value): ?>
           <?php if (isset($form_error)){ ?>
@@ -222,7 +222,7 @@ $(function() {
           <?php } ?>
         </div>
         <div id="input-row">
-          <select name="skill2"<?php if (isset($mySkills[1])) echo " disabled"; ?>>
+          <select title="What is your second skill?" name="skill2"<?php if (isset($mySkills[1])) echo " disabled"; ?>>
             <option value=""></option>
           <?php foreach($allSkills as $value): ?>
           <?php if (isset($form_error)){ ?>
@@ -237,7 +237,7 @@ $(function() {
           <?php } ?>
         </div>
         <div id="input-row">
-          <select name="skill3"<?php if (isset($mySkills[2])) echo " disabled"; ?>>
+          <select title="What is your third skill?" name="skill3"<?php if (isset($mySkills[2])) echo " disabled"; ?>>
             <option value=""></option>
           <?php foreach($allSkills as $value): ?>
           <?php if (isset($form_error)){ ?>
@@ -263,49 +263,49 @@ $(function() {
         <div id="input-row">
           <input class="links-portfolios-boxes1" type="text" id="github" name="github" value="Github" readonly="readonly" />
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="github-address" name="github-address" value="<?=set_value('github-address')?>" />
+          <input title="What is your Github account?" type="text" id="github-address" name="github-address" value="<?=set_value('github-address')?>" />
           <?php } else { ?>
-          <input type="text" id="github-address" name="github-address" value="<?php if ($urls) echo $urls->github;?>" />
+          <input title="Your Github account?" type="text" id="github-address" name="github-address" value="<?php if ($urls) echo $urls->github;?>" />
           <?php } ?>
         </div>
         <div id="input-row">
           <input class="links-portfolios-boxes1" type="text" id="portfolio" name="portfolio" value="Portfolio" readonly="readonly" />
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="portfolio-address" name="portfolio-address" value="<?=set_value('portfolio-address')?>" />
+          <input title="What is your Portfolio address?" type="text" id="portfolio-address" name="portfolio-address" value="<?=set_value('portfolio-address')?>" />
           <?php } else { ?>
-          <input type="text" id="portfolio-address" name="portfolio-address" value="<?php if ($urls) echo $urls->portfolio;?>" />
+          <input title="URL to your portfolio?" type="text" id="portfolio-address" name="portfolio-address" value="<?php if ($urls) echo $urls->portfolio;?>" />
           <?php } ?>
         </div>
         <div id="input-row">
           <input class="links-portfolios-boxes1" type="text" id="blog" name="blog" value="Blog" readonly="readonly" />
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="blog-address" name="blog-address" value="<?=set_value('blog-address')?>" />
+          <input title="Do you have a blog?" type="text" id="blog-address" name="blog-address" value="<?=set_value('blog-address')?>" />
           <?php } else { ?>
-          <input type="text" id="blog-address" name="blog-address" value="<?php if ($urls) echo $urls->blog;?>" />
+          <input title="Your blog address?" type="text" id="blog-address" name="blog-address" value="<?php if ($urls) echo $urls->blog;?>" />
           <?php } ?>
         </div>
         <div id="input-row">
           <?php if (isset($form_error)){ ?>
-          <input class="links-portfolios-boxes1" type="text" id="extra1" name="extra1" value="<?=set_value('extra1')?>" />
+          <input title="Extra link title 1" class="links-portfolios-boxes1" type="text" id="extra1" name="extra1" value="<?=set_value('extra1')?>" />
           <?php } else { ?>
-          <input class="links-portfolios-boxes1" type="text" id="extra1" name="extra1" value="<?php if ($urls) echo $urls->extra1;?>" />
+          <input title="Extra link title 1" class="links-portfolios-boxes1" type="text" id="extra1" name="extra1" value="<?php if ($urls) echo $urls->extra1;?>" />
           <?php } ?>
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="extraaddress1" name="extraaddress1" value="<?=set_value('extraaddress1')?>" />
+          <input title="Extra link 1" type="text" id="extraaddress1" name="extraaddress1" value="<?=set_value('extraaddress1')?>" />
           <?php } else { ?>
-          <input type="text" id="extraaddress1" name="extraaddress1" value="<?php if ($urls) echo $urls->extraaddress1;?>" />
+          <input title="Extra link 1" type="text" id="extraaddress1" name="extraaddress1" value="<?php if ($urls) echo $urls->extraaddress1;?>" />
           <?php } ?>
         </div>
         <div id="input-row">
           <?php if (isset($form_error)){ ?>
-          <input class="links-portfolios-boxes1" type="text" id="extra2" name="extra2" value="<?=set_value('extra2')?>" />
+          <input title="Extra link title 2" class="links-portfolios-boxes1" type="text" id="extra2" name="extra2" value="<?=set_value('extra2')?>" />
           <?php } else { ?>
-          <input class="links-portfolios-boxes1" type="text" id="extra2" name="extra2" value="<?php if ($urls) echo $urls->extra2;?>" />
+          <input title="Extra link title 2" class="links-portfolios-boxes1" type="text" id="extra2" name="extra2" value="<?php if ($urls) echo $urls->extra2;?>" />
           <?php } ?>
           <?php if (isset($form_error)){ ?>
-          <input type="text" id="extraaddress2" name="extraaddress2" value="<?=set_value('extraaddress2')?>" />
+          <input title="Extra link 2" type="text" id="extraaddress2" name="extraaddress2" value="<?=set_value('extraaddress2')?>" />
           <?php } else { ?>
-          <input type="text" id="extraaddress2" name="extraaddress2" value="<?php if ($urls) echo $urls->extraaddress2;?>" />
+          <input title="Extra link 2" type="text" id="extraaddress2" name="extraaddress2" value="<?php if ($urls) echo $urls->extraaddress2;?>" />
           <?php } ?>
         </div>
       </div>
@@ -322,19 +322,19 @@ $(function() {
           <div id="input-row">
             <label class="paypal-email">Paypal Email</label>
           <?php if (isset($form_error)){ ?>
-            <input type="text" id="paypal-email" name="paypal-email" value="<?=set_value('paypal-email')?>" />
+            <input title="What is your paypal email?" type="text" id="paypal-email" name="paypal-email" value="<?=set_value('paypal-email')?>" />
              <div id="errmsg3"><?=form_error("paypal-email")?></div>
           <?php } else { ?>
-            <input type="text" id="paypal-email" name="paypal-email" value="<?=$myProfile["paypal_acc"]?>" />
+            <input title="Your Paypal email" type="text" id="paypal-email" name="paypal-email" value="<?=$myProfile["paypal_acc"]?>" />
           <?php } ?>
           </div>
         </div>
         <div id="bank-account">
           <h4>Bank Account Details</h4>
           <div id="input-row">
-            <label class="bank-country">Country of Bank</label>
+            <label title="What is the country of your bank?" class="bank-country">Country of Bank</label>
             <!--<input type="text" id="bank-country" name="bank-country" value="<?=$myProfile["bank_country"]?>" />-->
-          <select name="bank-country">
+          <select title="Country of your bank" name="bank-country">
             <option value="">--- Select a country ---</option>
           <?php foreach($countries as $key=>$value): ?>
           <?php if (isset($form_error)){ ?>
@@ -351,55 +351,55 @@ $(function() {
           <div id="input-row">
             <label class="bank-country">Bank Name</label>
           <?php if (isset($form_error)){ ?>
-            <input type="text" id="bank-name" name="bank-name" value="<?=set_value('bank-name')?>" />
+            <input title="What is the bank name?" type="text" id="bank-name" name="bank-name" value="<?=set_value('bank-name')?>" />
             <div id="errmsg3"><?=form_error("bank-name")?></div>
           <?php } else { ?>
-            <input type="text" id="bank-name" name="bank-name" value="<?=$myProfile["bank_name"]?>" />
+            <input title="Bank name" type="text" id="bank-name" name="bank-name" value="<?=$myProfile["bank_name"]?>" />
           <?php } ?>
           </div>
           <div id="input-row">
             <label class="bank-country">SWIFT Code</label>
           <?php if (isset($form_error)){ ?>
-            <input type="text" id="bank-swift" name="bank-swift" value="<?=set_value('bank-swift')?>" />
+            <input title="What is your bank's swift number?" type="text" id="bank-swift" name="bank-swift" value="<?=set_value('bank-swift')?>" />
             <div id="errmsg3"><?=form_error("bank-swift")?></div>
           <?php } else { ?>
-            <input type="text" id="bank-swift" name="bank-swift" value="<?=$myProfile["bank_swift"]?>" />
+            <input title="Bank swift number" type="text" id="bank-swift" name="bank-swift" value="<?=$myProfile["bank_swift"]?>" />
           <?php } ?>
           </div>
           <div id="input-row">
             <label class="bank-country">Last Name</label>
           <?php if (isset($form_error)){ ?>
-            <input type="text" id="bank-lastname" name="bank-lastname" value="<?=set_value('bank-lastname')?>" />
+            <input title="What is your last name?" type="text" id="bank-lastname" name="bank-lastname" value="<?=set_value('bank-lastname')?>" />
             <div id="errmsg3"><?=form_error("bank-lastname")?></div>
           <?php } else { ?>
-            <input type="text" id="bank-lastname" name="bank-lastname" value="<?=$myProfile["bank_lastname"]?>" />
+            <input title="Your last name" type="text" id="bank-lastname" name="bank-lastname" value="<?=$myProfile["bank_lastname"]?>" />
           <?php } ?>
           </div>
           <div id="input-row">
             <label class="bank-country">First Name</label>
           <?php if (isset($form_error)){ ?>
-            <input type="text" id="bank-firstname" name="bank-firstname" value="<?=set_value('bank-firstname')?>" />
+            <input title="What is your first name?" type="text" id="bank-firstname" name="bank-firstname" value="<?=set_value('bank-firstname')?>" />
             <div id="errmsg3"><?=form_error("bank-firstname")?></div>
           <?php } else { ?>
-            <input type="text" id="bank-firstname" name="bank-firstname" value="<?=$myProfile["bank_firstname"]?>" />
+            <input title="Your first name" type="text" id="bank-firstname" name="bank-firstname" value="<?=$myProfile["bank_firstname"]?>" />
           <?php } ?>
           </div>
           <div id="input-row">
             <label class="bank-country">Account Number</label>
           <?php if (isset($form_error)){ ?>
-            <input type="text" id="bank-accountno" name="bank-accountno" value="<?=set_value('bank-accountno')?>" />
+            <input title="What is your account number?" type="text" id="bank-accountno" name="bank-accountno" value="<?=set_value('bank-accountno')?>" />
             <div id="errmsg3"><?=form_error("bank-accountno")?></div>
           <?php } else { ?>
-            <input type="text" id="bank-accountno" name="bank-accountno" value="<?=$myProfile["bank_acc"]?>" />
+            <input title="account number" type="text" id="bank-accountno" name="bank-accountno" value="<?=$myProfile["bank_acc"]?>" />
           <?php } ?>
           </div>
           <div id="input-row">
             <label class="bank-country">Re-type Account Number</label>
           <?php if (isset($form_error)){ ?>
-            <input type="text" id="bank-accountno2" name="bank-accountno2" value="<?=set_value('bank-accountno2')?>" />
+            <input title="Retype your account number" type="text" id="bank-accountno2" name="bank-accountno2" value="<?=set_value('bank-accountno2')?>" />
             <div id="errmsg3"><?=form_error("bank-accountno2")?></div>
           <?php } else { ?>
-            <input type="text" id="bank-accountno2" name="bank-accountno2" value="<?=$myProfile["bank_acc"]?>" />
+            <input title="retype your account number" type="text" id="bank-accountno2" name="bank-accountno2" value="<?=$myProfile["bank_acc"]?>" />
           <?php } ?>
           </div>
         </div>
@@ -413,4 +413,7 @@ $(function() {
     </div>
   </form>
 </div>
+<script type="text/javascript">
+	$('#profile-edit-content-area [title]').tipsy({trigger: 'hover', gravity: 'e'});
+</script>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>
