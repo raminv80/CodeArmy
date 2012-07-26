@@ -1237,6 +1237,17 @@ class Stories_model extends CI_Model {
 		return $res;
 	}
 	
+	function search_stories_map($percision, $search){
+		$res = array();
+		$search = '%'.trim($search).'%';
+		if(strlen($search)>2){
+			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') AND (category like ? or title like ? or description like ? or type like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?)";
+			$res = $this->db->query($sql,array($search,$search,$search,$search,$search,$search,$percision,$percision));
+			$res = $res->result_array();
+		}
+		return $res;
+	}
+	
 	function browse_stories_CA($subject='none', $project_sel=0, $cat_sel=0, $type=0, $skill_sel=0, $cash_from='', $cash_to='', $point=0, $search='', $timeS=-1, $timeE=-1, $order=''){
 		//$sql = "SELECT cworks.*, project.project_name FROM (select works.*, users.username from works left join users on works.work_horse=users.user_id) as cworks,project WHERE project.project_id=cworks.project_id ";
 		

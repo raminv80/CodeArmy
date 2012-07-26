@@ -52,11 +52,27 @@ class Missions extends CI_Controller {
 	
 	function index(){
 		$percision = 0;
+		$user_id = $this->view_data['me']['user_id'];
 		$works = $this->stories->stories_map($percision);
+		$mySkills = $this->skill_model->get_my_skills($user_id);
+		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
+		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
+		$this->view_data['mySkills'] = $mySkills;
 		$this->view_data['percision'] = $percision;
 		$this->view_data['works'] = $works;
 		$this->view_data['window_title'] = "My Missions";
 		$this->load->view('missions_codearmy_view', $this->view_data);
+	}
+	
+	function ajax_mission_map_search(){
+		$percision = 0;
+		$search = $this->input->post('search');
+		if($search == 'all'){
+			$works = $this->stories->stories_map($percision);
+		}else{
+			$works = $this->stories->search_stories_map($percision, $search);
+		}
+		echo json_encode($works);
 	}
 	
 	function my_missions(){

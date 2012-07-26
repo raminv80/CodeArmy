@@ -18,7 +18,7 @@
 <div id="filter-toolbar" class="toolbar"> <a href="#" id="filter-toolbar-logo"></a>
   <div id="search-bar">
     <input type="text" name="search" id="search" value="Find missions" />
-    <a href="#" id="search-submit"></a> </div>
+    <a title="Search for missions" href="#" id="search-submit"><img id="search-loader" title="Notifications" src="/public/images/ajax-loader.gif" width="32" height="32" /></a> </div>
   <ul>
     <li><a id="latest" class="menu first selected" href="javascript:void(0)">Latest</a></li>
     <li><a id="classification" class="menu first" href="javascript:void(0)">Classification</a></li>
@@ -28,10 +28,10 @@
   </ul>
 </div>
 <div id="profile-toolbar" class="toolbar">
-  <div id="avatar-block"> <img src="/public/images/codeArmy/mymission/profile_toolbar/avatar.png" id="avatar" alt="avatar" />
+  <div id="avatar-block"> <a href="/profile"><img src="/public/images/codeArmy/mymission/profile_toolbar/avatar.png" id="avatar" alt="avatar" /></a>
     <ul id="status-icons">
       <li><a href="#"><img title="Missions" src="/public/images/codeArmy/mymission/profile_toolbar/mission-status.png" /></a>
-        <div class="status">5</div>
+        <div class="status"><?=$myActiveMissions?></div>
       </li>
       <li><a href="#"><img title="Messages" src="/public/images/codeArmy/mymission/profile_toolbar/message-status.png" /></a>
         <div class="status">3</div>
@@ -43,27 +43,19 @@
   </div>
   <div id="experience-block">
     <ul>
-      <li>Level 21</li>
-      <li>1100</li>
+      <li>Level <?=$myLevel?></li>
+      <li><?=$me["exp"];?></li>
     </ul>
-    <div id="experience-meter" style="width:121px;"></div>
+    <div id="experience-meter" style="width:<?=round(121*$expProgress)?>px;"></div>
   </div>
   <div style="margin:0 7px;">
-    <div class="skill-block">
-      <div class="icon" title="Dream Weaver">dw</div>
-      <div class="level">Level 21</div>
-      <div class="skill-meter" style="width:50px;"></div>
+    <?php if ($mySkills) foreach($mySkills as $skill):?>
+    <div class="skill-block" id="myskill_<?=$skill["id"]?>">
+      <div class="icon" title="<?=$skill["name"]?>"><?=substr($skill["name"],0,3)?></div>
+      <div class="level">Level <?=$skill["point"]?></div>
+      <div class="skill-meter" style="width:<?=round($skill["point"]*92/100)?>px;"></div>
     </div>
-    <div class="skill-block">
-      <div class="icon" title="PHP">php</div>
-      <div class="level">Level 10</div>
-      <div class="skill-meter" style="width:26px;"></div>
-    </div>
-    <div class="skill-block">
-      <div class="icon" title="CSS">css</div>
-      <div class="level">Level 100</div>
-      <div class="skill-meter" style="width:92px;"></div>
-    </div>
+    <?php endforeach;?>
     <div id="finishing-section"> </div>
   </div>
 </div>
@@ -80,6 +72,7 @@
 </div>
 <!-- end of marker template -->
 <style>
+	#search-loader{margin:4px 3px; display:none;}
 	#profile-toolbar .skill-block{
 		background:url(/public/images/codeArmy/mymission/profile_toolbar/skill_block_bg.png) no-repeat -37px 0;
 		height:32px;
@@ -93,7 +86,7 @@
 		font-weight:bold;
 		font-size:6pt;
 	}
-	#profile-toolbar .skill-block .icon:first-letter{font-size:10pt;}
+	#profile-toolbar .skill-block .icon:first-letter{font-size:9pt;}
 	#profile-toolbar .skill-block .level{position:absolute;font-size:6pt;top:5px;left:42px;}
 	#profile-toolbar .skill-block .skill-meter{
 		position:absolute; background:url(/public/images/codeArmy/mymission/profile_toolbar/meter-exp.png);
@@ -149,8 +142,9 @@
 		position:absolute;
 		/*background:url(/public/images/codeArmy/mymission/profile-toolbar-temp.png) no-repeat;*/
 		width:160px;
-		top:10px;right:30px;
+		top:10px;right:20px;
 		z-index:10000;
+		margin-right:10px;
 	}
 	#profile-toolbar #finishing-section{
 		background:url(/public/images/codeArmy/mymission/profile_toolbar/finishing_block_bg.png) no-repeat;
@@ -238,6 +232,7 @@
 		left: -10px;
 	}
 	.marker{
+		display:none;
 		position:absolute;
 		top:200px;
 		left:200px;
@@ -279,17 +274,22 @@
 		addMarker(loc.x,loc.y,'t1','*','12<br/>Ramin','#0ff',0.5,0);
 		var loc = geoToPixel({'lat':70, 'lng': 0});
 		addMarker(loc.x,loc.y,'t3','*','12<br/>top','#0ff',0.5,0);*/
-		for(i=0; i<jobs.length;i++){
-			var loc = geoToPixel({'lat':jobs[i].lat, 'lng': jobs[i].lng});
-			addMarker(loc.x,loc.y,'marker_'+i,'#',jobs[i].num+'<br/>CSS','grey',0.75,0);
-		}
-		
+		renderMarkers();
+		$('#world-map .marker').fadeIn('slow');
 		$('.toolbar').draggable({ containment: '#wrapper' });
 		$('.toolbar [title]').tipsy();
 		initializeEvents();
 		//run window resize
 		$(window).resize();
 	});
+	
+	function renderMarkers(){
+		var loc;
+		for(i=0; i<jobs.length;i++){
+			loc = geoToPixel({'lat':jobs[i].lat, 'lng': jobs[i].lng});
+			addMarker(loc.x,loc.y,'marker_'+i,'#',jobs[i].num,'grey',0.75,500);
+		}
+	}
 	
 	function catToIcon(cat){
 		return '#';
@@ -309,6 +309,31 @@
 		
 		$('#search').focus(function(){oldVal = $(this).val(); $(this).val(' ');});
 		$('#search').blur(function(){if($.trim($(this).val())=='')$(this).val(oldVal);});
+		$("#search").keypress(function() {
+		  if(event.which==13){
+			 $('#search-submit').click(); 
+		  }
+		});
+		$('#search-submit').click(function(){
+			var val = $('#search').val();
+			if(val!='Find missions'){
+				if($.trim(val).length<3)val = 'all';
+				$('#search-loader').show();
+				clearMarkers();
+				$.ajax({
+					type: 'POST',
+					dataType: "json",
+					url:'/missions/ajax_mission_map_search',
+					data:{'csrf_workpad': getCookie('csrf_workpad'),'search':val},
+					success:function(msg){
+						jobs = msg;
+						renderMarkers();
+						//$('#world-map .marker').fadeIn('fast');
+						$('#search-loader').hide();
+					}
+				});
+			}
+		});
 		
 		$('#world-map').on('click','.marker',function(){
 					//TODO: open project list
@@ -405,6 +430,12 @@
 		return {'x':x,'y':y}
 	}
 	
+	function clearMarkers(){
+		$('#world-map .marker').fadeOut('fast',function(){$(this).remove();});
+	}
+	
+	
+	
 	function addMarker(x,y,id,icon,desc,color,scale,speed){
 		var template = $('#marker-template').clone();
 		var container = $('#world-map');
@@ -425,7 +456,6 @@
 		container.append(template);
 		x=x-Math.round(template.width()/2);
 		y=y-template.height();
-		console.log()
 		template.css({
 				'top':y,
 				'left':x
