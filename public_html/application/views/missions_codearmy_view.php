@@ -3,7 +3,6 @@
 <div id="wrapper">
   <div id="find-mission-area">
     <div id="world-map"> <img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" /> 
-      <!-- dialogs --> 
       <!-- project list -->
       <div id="dialog-project-list" class="dialog">
         <div class="container">
@@ -11,13 +10,65 @@
           List of projects </div>
       </div>
       <!-- end of project list --> 
-      <!-- end of dialogs --> 
     </div>
   </div>
 </div>
 <?php $this->load->view('includes/CAMapFooter.php'); ?>
-<div id="filter-toolbar" class="toolbar"> </div>
-<div id="profile-toolbar" class="toolbar"> </div>
+<!-- dialogs -->
+<div id="filter-toolbar" class="toolbar"> <a href="#" id="filter-toolbar-logo"></a>
+  <div id="search-bar">
+    <input type="text" name="search" id="search" value="Find missions" />
+    <a href="#" id="search-submit"></a> </div>
+  <ul>
+    <li><a id="latest" class="menu first selected" href="javascript:void(0)">Latest</a></li>
+    <li><a id="classification" class="menu first" href="javascript:void(0)">Classification</a></li>
+    <li><a id="skills" class="menu first" href="javascript:void(0)">Skills</a></li>
+    <li><a id="estimation" class="menu first" href="javascript:void(0)">Estimation</a></li>
+    <li><a id="payout" class="menu first" href="javascript:void(0)">Payout</a></li>
+  </ul>
+</div>
+<div id="profile-toolbar" class="toolbar">
+  <div id="avatar-block"> <img src="/public/images/codeArmy/mymission/profile_toolbar/avatar.png" id="avatar" alt="avatar" />
+    <ul id="status-icons">
+      <li><a href="#"><img title="Missions" src="/public/images/codeArmy/mymission/profile_toolbar/mission-status.png" /></a>
+        <div class="status">5</div>
+      </li>
+      <li><a href="#"><img title="Messages" src="/public/images/codeArmy/mymission/profile_toolbar/message-status.png" /></a>
+        <div class="status">3</div>
+      </li>
+      <li><a href="#"><img title="Notifications" src="/public/images/codeArmy/mymission/profile_toolbar/notification-status.png" /></a>
+        <div class="status">2</div>
+      </li>
+    </ul>
+  </div>
+  <div id="experience-block">
+    <ul>
+      <li>Level 21</li>
+      <li>1100</li>
+    </ul>
+    <div id="experience-meter" style="width:121px;"></div>
+  </div>
+  <div style="margin:0 7px;">
+    <div class="skill-block">
+      <div class="icon" title="Dream Weaver">dw</div>
+      <div class="level">Level 21</div>
+      <div class="skill-meter" style="width:50px;"></div>
+    </div>
+    <div class="skill-block">
+      <div class="icon" title="PHP">php</div>
+      <div class="level">Level 10</div>
+      <div class="skill-meter" style="width:26px;"></div>
+    </div>
+    <div class="skill-block">
+      <div class="icon" title="CSS">css</div>
+      <div class="level">Level 100</div>
+      <div class="skill-meter" style="width:92px;"></div>
+    </div>
+    <div id="finishing-section"> </div>
+  </div>
+</div>
+<!-- end of dialogs --> 
+
 <!-- marker template -->
 <div id="marker-template" class="marker" style="display:none;">
   <div class="marker-icon">#</div>
@@ -29,6 +80,104 @@
 </div>
 <!-- end of marker template -->
 <style>
+	#profile-toolbar .skill-block{
+		background:url(/public/images/codeArmy/mymission/profile_toolbar/skill_block_bg.png) no-repeat -37px 0;
+		height:32px;
+		position:relative;
+	}
+	#profile-toolbar .skill-block .icon{
+		position:absolute; width:21px;height:21px;top:8px;left:12px;
+		background:url(/public/images/codeArmy/mymission/profile_toolbar/skill-icon.png) no-repeat;
+		text-transform:capitalize;
+		text-align:center;
+		font-weight:bold;
+		font-size:6pt;
+	}
+	#profile-toolbar .skill-block .icon:first-letter{font-size:10pt;}
+	#profile-toolbar .skill-block .level{position:absolute;font-size:6pt;top:5px;left:42px;}
+	#profile-toolbar .skill-block .skill-meter{
+		position:absolute; background:url(/public/images/codeArmy/mymission/profile_toolbar/meter-exp.png);
+		height:5px;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		top:21px;left:41px;
+	}
+	#profile-toolbar #experience-block{
+		background:url(/public/images/codeArmy/mymission/profile_toolbar/exp_block_bg.png) no-repeat;
+		height:43px;
+	}
+	#profile-toolbar #experience-block #experience-meter{
+		background:url(/public/images/codeArmy/mymission/profile_toolbar/meter.png);
+		height:7px;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		position:relative;
+		top:17px;left:18px;
+	}
+	#profile-toolbar #experience-block ul{color:white;width:113px;margin:0 0 0 21px;padding:4px 0;}
+	#profile-toolbar #experience-block li{float:left;}
+	#profile-toolbar #experience-block li:first-child{width:50%; font-size:7pt;}
+	#profile-toolbar #experience-block li:last-child{width:50%;color:#ffcc33; font-size:5pt;text-align:right;margin-top:1px;}
+	#profile-toolbar #avatar-block #status-icons{
+		width:25px;
+		float:left;
+		margin-top:37px;
+	}
+	#profile-toolbar #avatar-block #status-icons li{
+		position:relative;
+		margin-top:11px;
+	}
+	#profile-toolbar #avatar-block .status{
+		position:absolute;
+		top:-15px;
+		left:+8px;
+		font-size:6pt;
+		background:url(/public/images/codeArmy/mymission/profile_toolbar/notification-icon.png) no-repeat 0 3px;
+		width:13px;
+		height:17px;
+		text-align:center;
+		color:black;
+	}
+	#profile-toolbar #avatar-block #avatar{
+		float:left;
+		width:129px;height:140px;
+		margin:0 0 0 1px;
+	}
+	#profile-toolbar{
+		position:absolute;
+		/*background:url(/public/images/codeArmy/mymission/profile-toolbar-temp.png) no-repeat;*/
+		width:160px;
+		top:10px;right:30px;
+		z-index:10000;
+	}
+	#profile-toolbar #finishing-section{
+		background:url(/public/images/codeArmy/mymission/profile_toolbar/finishing_block_bg.png) no-repeat;
+		height:23px;
+	}
+	#profile-toolbar #avatar-block{
+		background:url(/public/images/codeArmy/mymission/profile_toolbar/avatar_block_bg.png) no-repeat 0px 16px;
+		height:140px;
+	}
+	#filter-toolbar{
+		background:url(/public/images/codeArmy/mymission/fillter-toolbar.png) no-repeat;
+		width:176px; height:359px;
+		position:absolute;
+		top:10px;left:20px;
+		z-index:10001;
+	}
+	#filter-toolbar ul{font-size:8pt; color:e5e5e5;}
+	#filter-toolbar ul li a{display:block;width:120px; height:22px;padding:7px 0 0 18px;margin:1px 0 0 18px;}
+	#filter-toolbar ul li a:hover, #filter-toolbar ul li a.selected{ background:url(/public/images/codeArmy/mymission/fillter-toolbar-highlight.png) no-repeat 16px 4px; text-shadow:0 0 3px #FFF;}
+	#search-bar #search-submit{width: 32px; height:34px; float:left;}
+	#search-bar input{width:100px; height:32px; background:none; font-style:italic; float:left; color:#999; font-size:9pt; text-align:center; border:none;}
+	#search-bar{display:block;height:36px; margin:0 0 4px 18px;width:140px;}
+	a#filter-toolbar-logo{
+		width:142px;height:133px;
+		margin:0 15px 10px 15px;
+		display:block;
+	}
 	#dialog-project-list{
 		width:0;
 		height:0;
@@ -103,20 +252,6 @@
 		-o-backface-visibility: hidden;
 		text-align:center;
 	}
-	#filter-toolbar{
-		position:absolute;
-		background:url(/public/images/codeArmy/mymission/fillter-toolbar-temp.jpg);
-		width:141px;height:322px;
-		top:10px;left:30px;
-		z-index:10001;
-	}
-	#profile-toolbar{
-		position:absolute;
-		background:url(/public/images/codeArmy/mymission/profile-toolbar-temp.png) no-repeat;
-		width:160px;height:329px;
-		top:10px;right:30px;
-		z-index:10000;
-	}
 	#find-mission-area{
 		position:relative; 
 		margin:5px auto;
@@ -135,7 +270,7 @@
 <script>
 	function loadEffect(){}
 	
-	var jobs = <?php echo json_encode($works); ?>;
+	var oldValue, jobs = <?php echo json_encode($works); ?>;
 	
 	$(function(){
 		//create some markers
@@ -150,7 +285,7 @@
 		}
 		
 		$('.toolbar').draggable({ containment: '#wrapper' });
-		
+		$('.toolbar [title]').tipsy();
 		initializeEvents();
 		//run window resize
 		$(window).resize();
@@ -171,6 +306,9 @@
 			console.log(dialog.data());
 			dialog.animate({top:dialog.data().y, left:dialog.data().x, width:0, height:0, opacity:0},'fast',function(){$(this).hide()});
 		});
+		
+		$('#search').focus(function(){oldVal = $(this).val(); $(this).val(' ');});
+		$('#search').blur(function(){if($.trim($(this).val())=='')$(this).val(oldVal);});
 		
 		$('#world-map').on('click','.marker',function(){
 					//TODO: open project list
