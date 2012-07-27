@@ -74,6 +74,14 @@
 </div>
 <!-- end of marker template -->
 <style>
+	* {
+		transform-style: preserve-3d;
+		backface-visibility: hidden;
+		-moz-transform-style: preserve-3d;
+		-moz-backface-visibility: hidden;
+		-o-transform-style: preserve-3d;
+		-o-backface-visibility: hidden;
+	}
 	#search-loader{margin:4px 3px; display:none;}
 	#profile-toolbar .skill-block{
 		background:url(/public/images/codeArmy/mymission/profile_toolbar/skill_block_bg.png) no-repeat -37px 0;
@@ -241,12 +249,6 @@
 		cursor:pointer;
 		-webkit-transform-style: preserve-3d;
 		-webkit-backface-visibility: hidden;
-		transform-style: preserve-3d;
-		backface-visibility: hidden;
-		-moz-transform-style: preserve-3d;
-		-moz-backface-visibility: hidden;
-		-o-transform-style: preserve-3d;
-		-o-backface-visibility: hidden;
 		text-align:center;
 	}
 	#find-mission-area{
@@ -304,14 +306,10 @@
 		if(cat!== undefined){
 			switch(cat){
 				case 'a':icon = '#';break;
-				default: icon = '#';
+				default: icon = cat;
 			}
 		}
 		return icon;
-	}
-	
-	function catToColor(cat){
-		return '#f00';
 	}
 	
 	function initializeEvents(){
@@ -430,6 +428,7 @@
 		}
 	}
 	
+	//*******************Start of marker filtering options******************/
 	function latest(){
 		$('#latest-loader').show();
 		var type = 'latest';
@@ -529,7 +528,9 @@
 			}
 		});
 	}
+	//*******************End of marker filtering options******************/
 	
+	//*******************Start of rendering functions******************/
 	function geoToPixel(geo){
 		//TODO: change the map to google map style so lat and lng will remain in straight lines
 		var x=0,y=0, width, height,lngS=-180,lngE=180,latS=-60,latE=70;
@@ -547,8 +548,6 @@
 	function clearMarkers(){
 		$('#world-map .marker').fadeOut('fast',function(){$(this).remove();});
 	}
-	
-	
 	
 	function addMarker(x,y,id,icon,desc,color,scale,speed,data){
 		var template = $('#marker-template').clone();
@@ -576,5 +575,6 @@
 			}).fadeIn(speed);
 		template.data({'scale':scale,'x':x,'y':y,'color':color, 'ref':data});	
 	}
+	//*******************End of rendering functions******************/
 </script>
 <?php $this->load->view('includes/CAFooter.php'); ?>

@@ -50,6 +50,36 @@ class Messages extends CI_Controller {
 		$this->load->view('inbox_codearmy_view', $this->view_data);
 	}
 	
+	function compose(){
+		$this->view_data['window_title'] = "Inbox";
+		$this->load->view('message_compose_codearmy_view', $this->view_data);
+	}
+	
+	function important(){
+		$this->view_data['window_title'] = "Inbox";
+		$this->load->view('message_important_codearmy_view', $this->view_data);
+	}
+	
+	function archive(){
+		$this->view_data['window_title'] = "Inbox";
+		$this->load->view('message_archive_codearmy_view', $this->view_data);
+	}
+	
+	function sent(){
+		$this->view_data['window_title'] = "Inbox";
+		$this->load->view('message_sent_codearmy_view', $this->view_data);
+	}
+	
+	function trash(){
+		$this->view_data['window_title'] = "Inbox";
+		$this->load->view('message_trash_codearmy_view', $this->view_data);
+	}
+	
+	function search(){
+		$this->view_data['window_title'] = "Inbox";
+		$this->load->view('message_search_codearmy_view', $this->view_data);
+	}
+	
 	function read(){
 		$this->view_data['window_title'] = "Message Title";
 		$this->load->view('message_codearmy_view', $this->view_data);

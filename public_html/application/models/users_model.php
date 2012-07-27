@@ -515,7 +515,7 @@ class Users_model extends CI_Model {
 	}
 	
 	function leaderboard_centered_details($user_id){
-		$limit = 5;
+		$limit = 4;
 		$query = "select users.user_id, username, email, avatar, exp, ranks.rank from (select * from users where user_id = ?) as users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp";
 		
 		$result = $this->db->query($query,$user_id);
