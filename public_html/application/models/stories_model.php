@@ -1248,6 +1248,79 @@ class Stories_model extends CI_Model {
 		return $res;
 	}
 	
+	function stories_map_class($percision){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, class.sign as class, count(*) AS num FROM works, class, subclass WHERE works.subclass = subclass.subclass_id and subclass.class_id = class.class_id and lower(works.status) IN ('open','reject') GROUP BY round(lat,?), round(lng,?), class.sign";
+		$res = $this->db->query($sql,array($percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function search_stories_map_class($percision, $search){
+		$res = array();
+		$search = '%'.trim($search).'%';
+		if(strlen($search)>2){
+			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, class.sign as class, count(*) AS num FROM works, class, subclass WHERE works.subclass = subclass.subclass_id and subclass.class_id = class.class_id and lower(works.status) IN ('open','reject') AND (title like ? or description like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), class.sign";
+			$res = $this->db->query($sql,array($search,$search,$search,$search,$percision,$percision));
+			$res = $res->result_array();
+		}
+		return $res;
+	}
+	
+	function stories_map_skills($percision){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, skill.name as skill, count(*) AS num FROM works, work_skill, skill WHERE works.work_id = work_skill.work_id and work_skill.skill_id = skill.id and lower(works.status) IN ('open','reject') GROUP BY round(lat,?), round(lng,?), skill.name";
+		$res = $this->db->query($sql,array($percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function search_stories_map_skills($percision, $search){
+		$res = array();
+		$search = '%'.trim($search).'%';
+		if(strlen($search)>2){
+			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, skill.name as skill, count(*) AS num FROM works, skill, work_skill WHERE works.work_id = work_skill.work_id and work_skill.skill_id = skill.id and lower(works.status) IN ('open','reject') AND (title like ? or description like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), skill.name";
+			$res = $this->db->query($sql,array($search,$search,$search,$search,$percision,$percision));
+			$res = $res->result_array();
+		}
+		return $res;
+	}
+	
+	function stories_map_estimation($percision){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, DATEDIFF(deadline, ?) as days, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') GROUP BY round(lat,?), round(lng,?), DATEDIFF(deadline, ?)";
+		$now = date('Y-m-d');
+		$res = $this->db->query($sql,array($now,$percision,$percision,$now));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function search_stories_map_estimation($percision, $search){
+		$res = array();
+		$search = '%'.trim($search).'%';
+		if(strlen($search)>2){
+			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, DATEDIFF(deadline, ?) as days, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') AND (category like ? or title like ? or description like ? or type like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), DATEDIFF(deadline, ?)";
+			$res = $this->db->query($sql,array($search,$search,$search,$search,$search,$search,$percision,$percision));
+			$res = $res->result_array();
+		}
+		return $res;
+	}
+	
+	function stories_map_payout($percision){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, round(cost,-2) as payout, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') GROUP BY round(lat,?), round(lng,?), round(cost,-2)";
+		$res = $this->db->query($sql,array($percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function search_stories_map_payout($percision, $search){
+		$res = array();
+		$search = '%'.trim($search).'%';
+		if(strlen($search)>2){
+			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, round(cost,-2) as payout, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') AND (category like ? or title like ? or description like ? or type like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), round(cost,-2)";
+			$res = $this->db->query($sql,array($search,$search,$search,$search,$search,$search,$percision,$percision));
+			$res = $res->result_array();
+		}
+		return $res;
+	}
+	
 	function browse_stories_CA($subject='none', $project_sel=0, $cat_sel=0, $type=0, $skill_sel=0, $cash_from='', $cash_to='', $point=0, $search='', $timeS=-1, $timeE=-1, $order=''){
 		//$sql = "SELECT cworks.*, project.project_name FROM (select works.*, users.username from works left join users on works.work_horse=users.user_id) as cworks,project WHERE project.project_id=cworks.project_id ";
 		
