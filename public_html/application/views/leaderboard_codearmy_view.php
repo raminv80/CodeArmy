@@ -14,30 +14,44 @@
       <div id="col-title"> Points Gained </div>
       <div id="col-content">
         <ol>
+      	<?php if($leaderboard_points){
+			foreach($leaderboard_points as $leader):
+		?>
           <li>
             <div id="col-li">
-              <div id="col-li-left"><img src="public/images/codeArmy/profile/leaderboard/avatar-temp.jpg" /></div>
-              <div id="col-li-right"><span id="name">Ramin</span> <br />
-                <span id="level">Serrgent 5 Star</span> <br />
-                <span id="points">3276 Points</span></div>
+              <div id="col-li-left"><img src="<?=($leader["avatar"] != NULL)?'/public/'.$leader["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $leader['email'] ) ) )?>" width="34" height="35" /></div>
+              <div id="col-li-right"><span id="name"><?=ucfirst($leader["username"])?></span> <br />
+                <span id="level"><?=$leader["rank"]?></span> <br />
+                <span id="points"><?=$leader["exp"]?> Points</span></div>
             </div>
           </li>
+        <?php
+			endforeach;
+		}
+		?>
         </ol>
       </div>
       <div id="col-footer"> </div>
     </div>
     <div id="leaderboard-right-col">
-      <div id="col-title"> PHP Level </div>
+      <div id="col-title"> Level </div>
       <div id="col-content">
         <ol>
+      	<?php if($leaderboard_centered){
+			foreach($leaderboard_centered as $leaderc):
+		?>
           <li>
             <div id="col-li">
-              <div id="col-li-left"><img src="public/images/codeArmy/profile/leaderboard/avatar-temp.jpg" /></div>
-              <div id="col-li-right"><span id="name">Ramin</span> <br />
-                <span id="level">Serrgent 5 Star</span> <br />
-                <span id="points">3276 Points</span></div>
+              <div id="col-li-left"><img src="<?=($leaderc["avatar"] != NULL)?'/public/'.$leaderc["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $leaderc['email'] ) ) )?>" width="34" height="35" /></div>
+              <div id="col-li-right"><span id="name"><?=ucfirst($leaderc["username"])?></span> <br />
+                <span id="level"><?=$leaderc["rank"]?></span> <br />
+                <span id="points"><?=$leaderc["exp"]?> Points</span></div>
             </div>
           </li>
+        <?php
+			endforeach;
+		}
+		?>
         </ol>
       </div>
       <div id="col-footer"> </div>

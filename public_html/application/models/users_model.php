@@ -503,10 +503,29 @@ class Users_model extends CI_Model {
 		$data = $result->result_array();
 		$list[]=$data[0];
 		
-		$query = "select * from (select users.user_id, username, email, avatar, exp, ranks.rank from (select * from users where exp>(select exp from users where user_id=?)) as users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp) as t where exp>0 order by exp ASC limit 0,".$limit;
+		$query = "select * from (select users.user_id, username, email, avatar, exp, ranks.rank from (select * from users where exp>(select exp from users where user_id=?)) as users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp) as t where exp>0 order by exp DESC limit 0,".$limit;
 		$result1 = $this->db->query($query,$user_id);
 		$data1 = $result1->result_array();
 		$limit = 2+2-$result1->num_rows;
+		$query = "select * from (select users.user_id, username, email, avatar, exp, ranks.rank from (select * from users where exp<(select exp from users where user_id=?)) as users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp) as t where exp>0 order by exp DESC limit 0,".$limit;
+		$result2 = $this->db->query($query,$user_id);
+		$data2 = $result2->result_array();
+		$data = array_merge($data1,$data,$data2);
+		return $data;
+	}
+	
+	function leaderboard_centered_details($user_id){
+		$limit = 5;
+		$query = "select users.user_id, username, email, avatar, exp, ranks.rank from (select * from users where user_id = ?) as users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp";
+		
+		$result = $this->db->query($query,$user_id);
+		$data = $result->result_array();
+		$list[]=$data[0];
+		
+		$query = "select * from (select users.user_id, username, email, avatar, exp, ranks.rank from (select * from users where exp>(select exp from users where user_id=?)) as users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp) as t where exp>0 order by exp DESC limit 0,".$limit;
+		$result1 = $this->db->query($query,$user_id);
+		$data1 = $result1->result_array();
+		$limit = 5+5-$result1->num_rows;
 		$query = "select * from (select users.user_id, username, email, avatar, exp, ranks.rank from (select * from users where exp<(select exp from users where user_id=?)) as users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp) as t where exp>0 order by exp DESC limit 0,".$limit;
 		$result2 = $this->db->query($query,$user_id);
 		$data2 = $result2->result_array();

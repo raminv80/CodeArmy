@@ -33,6 +33,10 @@ class Leaderboard extends CI_Controller {
 	}
 	
 	function index(){
+		$user_id = $this->session->userdata('user_id');
+		$this->view_data['leaderboard_points'] = $this->users_model->leaderboard_points(10);
+		$this->view_data['leaderboard_centered'] = $this->users_model->leaderboard_centered_details($user_id);
+		
 		$this->view_data['window_title'] = $this->session->userdata('username');
 		$this->load->view('leaderboard_codearmy_view', $this->view_data);
 	}
