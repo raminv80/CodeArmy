@@ -7,6 +7,7 @@ class Messages extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('users_model');
+		$this->load->model('message_model');
 		$this->load->model('skill_model');
 		$this->load->model('projects_model');
 		$this->load->model('stories_model', 'stories');
@@ -46,46 +47,61 @@ class Messages extends CI_Controller {
 	}
 	
 	function inbox(){
+		$user_id = $this->session->userdata('user_id');
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'inbox');
 		$this->view_data['window_title'] = "Inbox";
 		$this->load->view('inbox_codearmy_view', $this->view_data);
 	}
 	
 	function compose(){
+		$user_id = $this->session->userdata('user_id');
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'inbox');
 		$this->view_data['window_title'] = "Inbox";
 		$this->load->view('message_compose_codearmy_view', $this->view_data);
 	}
 	
 	function important(){
+		$user_id = $this->session->userdata('user_id');
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'important');
 		$this->view_data['window_title'] = "Inbox";
 		$this->load->view('message_important_codearmy_view', $this->view_data);
 	}
 	
 	function archive(){
+		$user_id = $this->session->userdata('user_id');
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'archive');
 		$this->view_data['window_title'] = "Inbox";
 		$this->load->view('message_archive_codearmy_view', $this->view_data);
 	}
 	
 	function sent(){
+		$user_id = $this->session->userdata('user_id');
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'sent');
 		$this->view_data['window_title'] = "Inbox";
 		$this->load->view('message_sent_codearmy_view', $this->view_data);
 	}
 	
 	function trash(){
+		$user_id = $this->session->userdata('user_id');
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'trash');
 		$this->view_data['window_title'] = "Inbox";
 		$this->load->view('message_trash_codearmy_view', $this->view_data);
 	}
 	
 	function search(){
+		$user_id = $this->session->userdata('user_id');
 		$this->view_data['window_title'] = "Inbox";
 		$this->load->view('message_search_codearmy_view', $this->view_data);
 	}
 	
 	function read(){
+		$user_id = $this->session->userdata('user_id');
 		$this->view_data['window_title'] = "Message Title";
 		$this->load->view('message_codearmy_view', $this->view_data);
 	}
 	
 	function notifications(){
+		$user_id = $this->session->userdata('user_id');
 		$this->view_data['window_title'] = "Message Title";
 		$this->load->view('notifications_codearmy_view', $this->view_data);
 	}
