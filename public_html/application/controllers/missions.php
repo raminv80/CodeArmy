@@ -67,11 +67,48 @@ class Missions extends CI_Controller {
 	function ajax_mission_map_search(){
 		$percision = 0;
 		$search = $this->input->post('search');
-		if($search == 'all'){
-			$works = $this->stories->stories_map($percision);
+		$type = $this->input->post('type');
+		if($search == 'all'|| (!$search)){
+			switch($type){
+				case 'latest': $works = $this->stories->stories_map($percision);break;
+				case 'classification': $works = $this->stories->stories_map_class($percision);break;
+				case 'estimation': $works = $this->stories->stories_map_estimation($percision);break;
+				case 'payout': $works = $this->stories->stories_map_payout($percision);break;
+				default: $works = $this->stories->stories_map($percision);break;
+			}
 		}else{
-			$works = $this->stories->search_stories_map($percision, $search);
+			switch($type){
+				case 'latest': $works = $this->stories->search_stories_map($percision, $search);break;
+				case 'classification': $works = $this->stories->search_stories_map_class($percision, $search);break;
+				case 'estimation': $works = $this->stories->search_stories_map_estimation($percision, $search);break;
+				case 'payout': $works = $this->stories->search_stories_map_payout($percision, $search);break;
+				default: $works = $this->stories->search_stories_map($percision, $search);break;
+			}
 		}
+		echo json_encode($works);
+	}
+	
+	function ajax_mission_map_classification(){
+		$percision = 0;
+		$works = $this->stories->stories_map_class($percision);
+		echo json_encode($works);
+	}
+	
+	function ajax_mission_map_skills(){
+		$percision = 0;
+		$works = $this->stories->stories_map_skills($percision);
+		echo json_encode($works);
+	}
+	
+	function ajax_mission_map_estimation(){
+		$percision = 0;
+		$works = $this->stories->stories_map_estimation($percision);
+		echo json_encode($works);
+	}
+	
+	function ajax_mission_map_payout(){
+		$percision = 0;
+		$works = $this->stories->stories_map_payout($percision);
 		echo json_encode($works);
 	}
 	

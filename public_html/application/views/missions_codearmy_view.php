@@ -20,11 +20,11 @@
     <input type="text" name="search" id="search" value="Find missions" />
     <a title="Search for missions" href="#" id="search-submit"><img id="search-loader" title="Notifications" src="/public/images/ajax-loader.gif" width="32" height="32" /></a> </div>
   <ul>
-    <li><a id="latest" class="menu first selected" href="javascript:void(0)">Latest</a></li>
-    <li><a id="classification" class="menu first" href="javascript:void(0)">Classification</a></li>
-    <li><a id="skills" class="menu first" href="javascript:void(0)">Skills</a></li>
-    <li><a id="estimation" class="menu first" href="javascript:void(0)">Estimation</a></li>
-    <li><a id="payout" class="menu first" href="javascript:void(0)">Payout</a></li>
+    <li><a id="latest" class="menu first selected" href="javascript:latest()">Latest</a></li>
+    <li><a id="classification" class="menu first" href="javascript:classification();">Classification</a></li>
+    <li><a id="skills" class="menu first" href="javascript:skills();">Skills</a></li>
+    <li><a id="estimation" class="menu first" href="javascript:estimation();">Time Estimation</a></li>
+    <li><a id="payout" class="menu first" href="javascript:payout();">Payout</a></li>
   </ul>
 </div>
 <div id="profile-toolbar" class="toolbar">
@@ -287,12 +287,25 @@
 		var loc;
 		for(i=0; i<jobs.length;i++){
 			loc = geoToPixel({'lat':jobs[i].lat, 'lng': jobs[i].lng});
-			addMarker(loc.x,loc.y,'marker_'+i,'#',jobs[i].num,'grey',0.75,500);
+			var desc = jobs[i].num+(jobs[i].skill?"<br/>"+ucfirst(jobs[i].skill.substring(0,3)):'')+(jobs[i].days?"<br/>"+(jobs[i].days<1?"<1d":jobs[i].days+"d"):'')+(jobs[i].payout?"<br />"+(jobs[i].payout<1?"<10$":(jobs[i].payout<100?jobs[i].payout+'$':((jobs[i].payout/1000).toFixed(1)+'k$'))):'');
+			addMarker(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500);
 		}
 	}
 	
+	function ucfirst(string)
+	{
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+	
 	function catToIcon(cat){
-		return '#';
+		var icon = null;
+		if(cat!== undefined){
+			switch(cat){
+				case 'a':icon = '#';break;
+				default: icon = '#';
+			}
+		}
+		return icon;
 	}
 	
 	function catToColor(cat){
@@ -303,7 +316,6 @@
 		//initial dialog close button
 		$('.dialog-close-button').click(function(){
 			var dialog = $(this).parents('.dialog');
-			console.log(dialog.data());
 			dialog.animate({top:dialog.data().y, left:dialog.data().x, width:0, height:0, opacity:0},'fast',function(){$(this).hide()});
 		});
 		
@@ -315,6 +327,7 @@
 		  }
 		});
 		$('#search-submit').click(function(){
+			var type = $('#filter-toolbar .selected').attr('id');
 			var val = $('#search').val();
 			if(val!='Find missions'){
 				if($.trim(val).length<3)val = 'all';
@@ -324,11 +337,10 @@
 					type: 'POST',
 					dataType: "json",
 					url:'/missions/ajax_mission_map_search',
-					data:{'csrf_workpad': getCookie('csrf_workpad'),'search':val},
+					data:{'csrf_workpad': getCookie('csrf_workpad'),'search':val, 'type' : type},
 					success:function(msg){
 						jobs = msg;
 						renderMarkers();
-						//$('#world-map .marker').fadeIn('fast');
 						$('#search-loader').hide();
 					}
 				});
@@ -337,7 +349,6 @@
 		
 		$('#world-map').on('click','.marker',function(){
 					//TODO: open project list
-					//console.log($(this).data());
 					$('#dialog-project-list').css({
 						'top':$(this).data().y,
 						'left':$(this).data().x,
@@ -414,6 +425,106 @@
 			b = Math.round(Math.random()*255);
 			addMarker(loc.x,loc.y,'test'+i,icons[Math.round(Math.random()*(icons.length-1))],'4<br/>'+skills[Math.round(Math.random()*(skills.length-1))],'rgb('+r+','+g+','+b+')',Math.random()*0.45+0.5,0);
 		}
+	}
+	
+	function latest(){
+		$('#latest-loader').show();
+		var type = 'latest';
+		$('#filter-toolbar .selected').removeClass('selected');
+		$('#filter-toolbar #latest').addClass('selected');
+		$('#search').val('Find missions');
+		clearMarkers();
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url:'/missions/ajax_mission_map_search',
+			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type': type},
+			success:function(msg){
+				jobs = msg;
+				renderMarkers();
+				$('#latest-loader').hide();
+			}
+		});
+	}
+	
+	function classification(){
+		$('#classification-loader').show();
+		var type = 'classification';
+		$('#filter-toolbar .selected').removeClass('selected');
+		$('#filter-toolbar #classification').addClass('selected');
+		$('#search').val('Find missions');
+		clearMarkers();
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url:'/missions/ajax_mission_map_classification',
+			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type':type},
+			success:function(msg){
+				jobs = msg;
+				renderMarkers();
+				$('#classification-loader').hide();
+			}
+		});
+	}
+	
+	function skills(){
+		$('#skills-loader').show();
+		var type = 'skills';
+		$('#filter-toolbar .selected').removeClass('selected');
+		$('#filter-toolbar #skills').addClass('selected');
+		$('#search').val('Find missions');
+		clearMarkers();
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url:'/missions/ajax_mission_map_skills',
+			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type':type},
+			success:function(msg){
+				jobs = msg;
+				renderMarkers();
+				$('#skills-loader').hide();
+			}
+		});
+	}
+	
+	function estimation(){
+		$('#estimation-loader').show();
+		var type = 'estimation';
+		$('#filter-toolbar .selected').removeClass('selected');
+		$('#filter-toolbar #estimation').addClass('selected');
+		$('#search').val('Find missions');
+		clearMarkers();
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url:'/missions/ajax_mission_map_estimation',
+			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type':type},
+			success:function(msg){
+				jobs = msg;
+				renderMarkers();
+				$('#estimation-loader').hide();
+			}
+		});
+	}
+	
+	function payout(){
+		$('#payout-loader').show();
+		var type = 'payout';
+		$('#filter-toolbar .selected').removeClass('selected');
+		$('#filter-toolbar #payout').addClass('selected');
+		$('#search').val('Find missions');
+		clearMarkers();
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url:'/missions/ajax_mission_map_payout',
+			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type':type},
+			success:function(msg){
+				jobs = msg;
+				renderMarkers();
+				$('#payout-loader').hide();
+			}
+		});
 	}
 	
 	function geoToPixel(geo){

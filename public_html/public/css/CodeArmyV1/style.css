@@ -1098,8 +1098,9 @@ input.links-portfolios-boxes1 {
 	float:right;
 	width:450px;
 }
-#block-mission-bid-header .block-header h3, #block-achievements-header .block-header h3, #block-leaderboard-header .block-header h3 {
+#block-mission-bid-header .block-header h3, #block-achievements-header .block-header h3, #block-leaderboard-header .block-header h3, #block-inbox-header .block-header h3 {
 	width:780px;
+	position:relative;
 }
 #block-mission-bid-header {
 	position:relative;
@@ -1241,10 +1242,12 @@ input.links-portfolios-boxes1 {
 #leaderboard-left-col {
 	float:left;
 	width:50%;
+	position:relative;
 }
 #leaderboard-right-col {
 	float:right;
 	width:50%;
+	position:relative;
 }
 #leaderboard-cols #col-title {
 	font-size:24px;
@@ -1252,6 +1255,8 @@ input.links-portfolios-boxes1 {
 }
 #leaderboard-cols #col-content {
 	margin:15px;
+	float:left;
+	width:100%;
 }
 #leaderboard-cols #col-content ol {
 	list-style:decimal outside;
@@ -1274,6 +1279,103 @@ input.links-portfolios-boxes1 {
 	float:right;
 }
 #leaderboard-cols #col-li {
+	float:left;
+}
+#inbox-top-bar {
+	background:url(/public/images/codeArmy/messages/msg-top-bar.png) no-repeat;
+	width: 774px;
+	height:67px;
+	float:left;
+	margin:0 0 0 -10px;
+	position:relative;
+}
+#inbox-area {
+	padding:100px 0;
+}
+#inbox-top-bar #back a {
+	float:left;
+	width:55px;
+	padding:25px 0 0 35px;
+	background:url(/public/images/codeArmy/messages/arrow-left.png) no-repeat 20px 30px;
+}
+#inbox-top-bar #mark-unread {
+	float:left;
+	width:100px;
+	padding:25px 0 0 15px;
+}
+#inbox-top-bar #star {
+	float:left;
+	margin:25px 0 0 28px;
+	height:20px;
+	width:20px;
+}
+#inbox-top-bar #bin {
+	height:20px;
+	width:20px;
+	float:left;
+	margin:25px 0 0 28px;
+}
+#inbox-top-bar #msg-no {
+	float:left;
+	text-align:right;
+	width:350px;
+	margin:25px 25px 0 0;
+}
+#inbox-top-bar #arrow-left {
+	height:20px;
+	width:20px;
+	float:left;
+	margin:25px 0 0 20px;
+}
+#inbox-top-bar #arrow-right {
+	height:20px;
+	width:20px;
+	float:left;
+	margin:25px 0 0 25px;
+}
+#inbox-rows {
+	width:775px;
+	margin:0 0 0 -10px;
+	height:260px;
+	float:left;
+	position:relative;
+	background:url(/public/images/codeArmy/messages/msg-rows-bg.png) no-repeat;
+}
+#inbox-rows #title-row, #inbox-rows #msg-row {
+	width:775px;
+	height:50px;
+	float:left;
+}
+#inbox-rows #select-all, #inbox-rows #all-messages {
+	width:40%;
+	margin:20px 0 0 20px;
+	float:left;
+}
+#inbox-rows #all-messages {
+	background:url(/public/images/codeArmy/messages/arrow-down.png) no-repeat 85px 6px;
+}
+#inbox-rows #checkbox {
+	width: 40px;
+	float:left;
+	height:30px;
+	background:url(/public/images/codeArmy/messages/check-box.png) no-repeat;
+}
+#inbox-rows #inbox-user-avatar {
+	float:left;
+}
+#inbox-rows #sender-name {
+	float:left;
+}
+#inbox-rows #mail-subject {
+	float:left;
+}
+#inbox-rows #mail-time {
+	float:left;
+}
+#inbox-rows #star {
+	float:left;
+}
+#inbox-rows #bin {
 	float:left;
 }
 /* END - New Codes by Reza */
