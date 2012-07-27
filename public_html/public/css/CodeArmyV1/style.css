@@ -1238,6 +1238,7 @@ input.links-portfolios-boxes1 {
 	width:600px;
 	margin: 50px 100px 0;
     float:left;
+	background:url(/public/images/codeArmy/profile/leaderboard/bg_leaderboard.jpg) no-repeat;
 }
 #leaderboard-left-col {
 	float:left;
@@ -1251,7 +1252,8 @@ input.links-portfolios-boxes1 {
 }
 #leaderboard-cols #col-title {
 	font-size:24px;
-	margin: 40px;
+	margin: 20px;
+    text-align: center;
 }
 #leaderboard-cols #col-content {
 	margin:15px;
