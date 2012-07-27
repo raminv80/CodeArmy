@@ -1276,10 +1276,12 @@ input.links-portfolios-boxes1 {
 }
 #leaderboard-cols #col-li-right {
 	padding-left: 10px;
-	float:right;
+	float:left;
 }
 #leaderboard-cols #col-li {
 	float:left;
+	margin:0 5px 20px 0;
+	width:100%;
 }
 #inbox-top-bar {
 	background:url(/public/images/codeArmy/messages/msg-top-bar.png) no-repeat;
