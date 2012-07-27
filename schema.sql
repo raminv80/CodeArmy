@@ -1,23 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 3.3.9.2
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Jul 18, 2012 at 01:00 PM
--- Server version: 5.5.9
--- PHP Version: 5.3.6
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
---
--- Database: `workpad_db`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `achievements`
---
 
 CREATE TABLE `achievements` (
   `achievement_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -26,12 +7,6 @@ CREATE TABLE `achievements` (
   `achievement_pic` varchar(255) NOT NULL,
   PRIMARY KEY (`achievement_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `achievement_set`
---
 
 CREATE TABLE `achievement_set` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -43,12 +18,6 @@ CREATE TABLE `achievement_set` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `actions`
---
-
 CREATE TABLE `actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(255) NOT NULL,
@@ -58,13 +27,7 @@ CREATE TABLE `actions` (
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `code` (`code`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bids`
---
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 CREATE TABLE `bids` (
   `bid_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -79,12 +42,6 @@ CREATE TABLE `bids` (
   KEY `work_id` (`work_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=164 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `captcha`
---
-
 CREATE TABLE `captcha` (
   `captcha_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
   `captcha_time` int(10) unsigned NOT NULL,
@@ -94,12 +51,6 @@ CREATE TABLE `captcha` (
   KEY `word` (`word`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `categories`
---
-
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `project_id` int(11) NOT NULL,
@@ -108,12 +59,6 @@ CREATE TABLE `categories` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `chat`
---
 
 CREATE TABLE `chat` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -127,12 +72,6 @@ CREATE TABLE `chat` (
   KEY `from` (`from`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `ci_sessions`
---
-
 CREATE TABLE `ci_sessions` (
   `session_id` varchar(40) NOT NULL DEFAULT '0',
   `ip_address` varchar(45) NOT NULL DEFAULT '0',
@@ -143,11 +82,12 @@ CREATE TABLE `ci_sessions` (
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `comments`
---
+CREATE TABLE `class` (
+  `class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_name` varchar(100) NOT NULL,
+  `sign` char(1) NOT NULL DEFAULT '#',
+  PRIMARY KEY (`class_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 CREATE TABLE `comments` (
   `comment_id` int(255) NOT NULL AUTO_INCREMENT,
@@ -159,12 +99,6 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`comment_id`),
   KEY `story_id` (`story_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `friends`
---
 
 CREATE TABLE `friends` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -178,12 +112,6 @@ CREATE TABLE `friends` (
   KEY `group` (`group`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='holds friends relationships' AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `friend_groups`
---
-
 CREATE TABLE `friend_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(48) NOT NULL,
@@ -191,12 +119,6 @@ CREATE TABLE `friend_groups` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='user can group his friends.' AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `game_v3`
---
 
 CREATE TABLE `game_v3` (
   `player_level` int(11) NOT NULL AUTO_INCREMENT,
@@ -214,12 +136,6 @@ CREATE TABLE `game_v3` (
   PRIMARY KEY (`player_level`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=101 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `history`
---
-
 CREATE TABLE `history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(48) DEFAULT NULL,
@@ -232,12 +148,6 @@ CREATE TABLE `history` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=291 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `inbox`
---
 
 CREATE TABLE `inbox` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -252,13 +162,7 @@ CREATE TABLE `inbox` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `category` (`category`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=270 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `project`
---
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=277 ;
 
 CREATE TABLE `project` (
   `project_id` int(255) NOT NULL AUTO_INCREMENT,
@@ -273,12 +177,6 @@ CREATE TABLE `project` (
   KEY `scrum_master_id` (`scrum_master_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `ranks`
---
-
 CREATE TABLE `ranks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `start_exp` int(11) NOT NULL,
@@ -289,12 +187,6 @@ CREATE TABLE `ranks` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=19 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `skill`
---
-
 CREATE TABLE `skill` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -302,12 +194,6 @@ CREATE TABLE `skill` (
   `desc` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `skill_set`
---
 
 CREATE TABLE `skill_set` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -318,13 +204,7 @@ CREATE TABLE `skill_set` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `skill_id` (`skill_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sprints`
---
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 CREATE TABLE `sprints` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -337,11 +217,13 @@ CREATE TABLE `sprints` (
   KEY `project_id` (`project_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `subscription`
---
+CREATE TABLE `subclass` (
+  `subclass_id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_id` int(11) NOT NULL DEFAULT '1',
+  `subclass_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`subclass_id`),
+  KEY `class_id` (`class_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 CREATE TABLE `subscription` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -353,12 +235,6 @@ CREATE TABLE `subscription` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `subscription_comment`
---
-
 CREATE TABLE `subscription_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(48) NOT NULL,
@@ -366,12 +242,6 @@ CREATE TABLE `subscription_comment` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=5 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
 
 CREATE TABLE `users` (
   `user_id` varchar(48) NOT NULL DEFAULT '',
@@ -389,16 +259,10 @@ CREATE TABLE `users` (
   `show_tutorial` smallint(6) NOT NULL DEFAULT '1' COMMENT '1:bidding, 2:submit, 3:dev-tut-done, 4:dev-waiting-accept-bid',
   `attempt` tinyint(4) NOT NULL DEFAULT '0',
   `claims` int(11) NOT NULL DEFAULT '3' COMMENT 'skill point claims',
-  `remember_me_token` varchar(25) DEFAULT NULL,
+  `remember_me_token` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_profiles`
---
 
 CREATE TABLE `user_profiles` (
   `id` int(11) DEFAULT NULL,
@@ -406,24 +270,22 @@ CREATE TABLE `user_profiles` (
   `full_name` varchar(60) NOT NULL,
   `contact` text NOT NULL,
   `urls` text NOT NULL,
+  `status_msg` varchar(255) NOT NULL,
   `bank_name` varchar(40) NOT NULL,
   `bank_acc` varchar(40) NOT NULL,
-  `paypal_acc` varchar(60) NOT NULL,
+  `bank_country` varchar(3) NOT NULL,
+  `bank_swift` varchar(40) NOT NULL,
+  `bank_firstname` varchar(255) NOT NULL,
+  `bank_lastname` varchar(255) NOT NULL,
+  `paypal_acc` varchar(255) NOT NULL,
   `lan_speak` varchar(100) DEFAULT NULL,
   `lan_rw` varchar(100) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   `gender` enum('male','female') DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
   `specialization` enum('employer','designer','developer','copywriter','unknown') DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  KEY `user_id` (`user_id`)
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `voucher_po`
---
 
 CREATE TABLE `voucher_po` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -436,18 +298,13 @@ CREATE TABLE `voucher_po` (
   UNIQUE KEY `code` (`code`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `works`
---
-
 CREATE TABLE `works` (
   `work_id` varchar(32) NOT NULL DEFAULT '',
   `priority` double NOT NULL DEFAULT '1',
   `sprint` int(11) NOT NULL DEFAULT '0',
   `title` varchar(255) DEFAULT NULL,
   `type` enum('R&D','Frontend','Backend','Copywrite','Test') DEFAULT NULL,
+  `subclass` int(11) NOT NULL DEFAULT '1',
   `category` int(11) DEFAULT NULL,
   `description` text,
   `note` text,
@@ -476,14 +333,9 @@ CREATE TABLE `works` (
   KEY `owner` (`owner`),
   KEY `project_id` (`project_id`),
   KEY `work_horse` (`work_horse`),
-  KEY `category` (`category`)
+  KEY `category` (`category`),
+  KEY `subclass` (`subclass`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `work_files`
---
 
 CREATE TABLE `work_files` (
   `file_id` varchar(48) NOT NULL DEFAULT '',
@@ -497,12 +349,6 @@ CREATE TABLE `work_files` (
   KEY `work_id` (`work_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `work_skill`
---
-
 CREATE TABLE `work_skill` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `work_id` varchar(32) NOT NULL,
@@ -513,113 +359,60 @@ CREATE TABLE `work_skill` (
   KEY `skill_id` (`skill_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=53 ;
 
---
--- Constraints for dumped tables
---
 
---
--- Constraints for table `achievement_set`
---
 ALTER TABLE `achievement_set`
   ADD CONSTRAINT `achievement_set_ibfk_1` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`achievement_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `achievement_set_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `bids`
---
 ALTER TABLE `bids`
   ADD CONSTRAINT `bids_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `bids_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
---
--- Constraints for table `categories`
---
 ALTER TABLE `categories`
   ADD CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `comments`
---
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`story_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `friends`
---
 ALTER TABLE `friends`
   ADD CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`friend_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `friends_ibfk_3` FOREIGN KEY (`group`) REFERENCES `friend_groups` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
---
--- Constraints for table `friend_groups`
---
 ALTER TABLE `friend_groups`
   ADD CONSTRAINT `friend_groups_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `inbox`
---
 ALTER TABLE `inbox`
   ADD CONSTRAINT `inbox_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `project`
---
 ALTER TABLE `project`
   ADD CONSTRAINT `project_ibfk_1` FOREIGN KEY (`project_owner_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `project_ibfk_2` FOREIGN KEY (`scrum_master_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
---
--- Constraints for table `skill_set`
---
 ALTER TABLE `skill_set`
   ADD CONSTRAINT `skill_set_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `skill_set_ibfk_2` FOREIGN KEY (`skill_id`) REFERENCES `skill` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `sprints`
---
 ALTER TABLE `sprints`
   ADD CONSTRAINT `sprints_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `user_profiles`
---
+ALTER TABLE `subclass`
+  ADD CONSTRAINT `subclass_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`class_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 ALTER TABLE `user_profiles`
   ADD CONSTRAINT `user_profiles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `works`
---
 ALTER TABLE `works`
+  ADD CONSTRAINT `works_ibfk_6` FOREIGN KEY (`subclass`) REFERENCES `subclass` (`subclass_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `works_ibfk_1` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `works_ibfk_2` FOREIGN KEY (`owner`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `works_ibfk_3` FOREIGN KEY (`work_horse`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `works_ibfk_4` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `works_ibfk_5` FOREIGN KEY (`category`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
---
--- Constraints for table `work_files`
---
 ALTER TABLE `work_files`
   ADD CONSTRAINT `work_files_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `work_skill`
---
 ALTER TABLE `work_skill`
   ADD CONSTRAINT `work_skill_ibfk_3` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `work_skill_ibfk_4` FOREIGN KEY (`skill_id`) REFERENCES `skill` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- More field for `user_profiles`
---
-ALTER TABLE  `user_profiles` ADD  `bank_country` VARCHAR( 3 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL AFTER  `bank_acc` ,
-ADD  `bank_swift` VARCHAR( 40 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL  AFTER  `bank_country` ,
-ADD  `bank_firstname` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL  AFTER  `bank_swift` ,
-ADD  `bank_lastname` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL  AFTER  `bank_firstname`
-
-ALTER TABLE  `user_profiles` CHANGE  `paypal_acc`  `paypal_acc` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
-
-ALTER TABLE  `user_profiles` ADD  `status_msg` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL AFTER  `urls`
