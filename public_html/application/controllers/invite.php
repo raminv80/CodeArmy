@@ -46,4 +46,22 @@ class Invite extends CI_Controller {
 		$this->load->view('invite_codearmy_view', $this->view_data);
 	}
 	
+	function sent(){
+		$this->view_data['window_title'] = $this->session->userdata('username');
+		$user_id = $this->session->userdata('username');
+		
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('message', 'Message', 'required|max_length[255]');
+		
+		if ($this->form_validation->run() == FALSE){
+			$this->view_data['form_error'] = true;
+			$this->index();
+		} else {
+			$this->load->library('session');
+			$this->session->set_flashdata('msg',"<h3>Your invitation sent.</h3><br>");
+			$this->users_model->send_invites($user_id);
+			redirect("invite");
+		}
+	}
 }

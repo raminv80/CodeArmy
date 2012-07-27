@@ -777,6 +777,55 @@ class Users_model extends CI_Model {
 			
 	}
 	
+	function send_invites($user_id){
+		$strEmail = strtolower($this->input->post('email'));
+		$strMessage = $this->input->post('message');
+		$subject = "Invite you to be a part of CodeAr.my";
+		
+		$strFormatEmailList = str_replace(";", ",", $strEmail); // replace ; with , if any
+		$strFormatEmailList = str_replace(" ", "", $strFormatEmailList); // remove space
+		$strMessage = str_replace("\r", "<br>", $strMessage);
+		$strAddMessage = "<br>Visit <a href=\"http://www.codearmy.com\" target=\"_blank\">http://www.codearmy.com</a>";
+		$strMessage = $strMessage."".$strAddMessage;
+		
+		$strSplit = explode(",", $strFormatEmailList);
+		
+		require_once(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
+		
+		foreach($strSplit as $mailtosend):
+			$mail = new PHPMailer();
+			
+			$mail->IsSMTP();                                      // set mailer to use SMTP
+			$mail->SMTPAuth   = true;                  // enable SMTP authentication
+			//$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
+			$mail->Host       = "mail.vakilian.net";      // sets GMAIL as the SMTP server
+			//$mail->Port       = 110;                   // set the SMTP port for the GMAIL server
+			$mail->Username = "noreply@vakilian.net";  // SMTP username
+			$mail->Password = "work123"; // SMTP password
+			//$mail->SMTPDebug  = 1;
+			
+			$mail->SetFrom('noreply@codearmy.com', 'CodeArmy');
+			$mail->AddAddress($mailtosend);
+			//$mail->AddAddress("ellen@example.com");                  // name is optional
+			//$mail->AddReplyTo("info@example.com", "Information");
+			
+			$mail->WordWrap = 50;                                 // set word wrap to 50 characters
+			//$mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+			//$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+			$mail->IsHTML(true);                                  // set email format to HTML
+			
+			$mail->Subject = $subject;
+			$mail->Body    = $strMessage;
+			$mail->AltBody = $strMessage;
+			if(!$mail->Send())
+			{
+			   echo "Message could not be sent. <p>";
+			   echo "Mailer Error: " . $mail->ErrorInfo;
+			   exit; die();
+			}
+		endforeach;
+	}
+	
 	public function send_mail($from, $to, $subject, $message){
 		require_once(getcwd()."/application/helpers/phpmailer/class.phpmailer.php");
 		$mail = new PHPMailer();
