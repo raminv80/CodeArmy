@@ -1356,12 +1356,10 @@ input.links-portfolios-boxes1 {
 #inbox-rows #all-messages {
 	background:url(/public/images/codeArmy/messages/arrow-down.png) no-repeat 85px 6px;
 }
-#inbox-rows #checkbox {
-	width: 40px;
+#inbox-rows input {
 	float:left;
-	height:30px;
-	margin:20px 0 0 35px;
-	background:url(/public/images/codeArmy/messages/check-box.png) no-repeat;
+	margin:20px 25px 0 35px;
+	/* background:url(/public/images/codeArmy/messages/check-box.png) no-repeat; */
 }
 #inbox-rows #inbox-user-avatar {
 	float:left;
