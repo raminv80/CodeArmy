@@ -67,7 +67,7 @@
                 <li<?php if($action_is=='archive'){?> class="active"<?php }?>><a href="/messages/archive">Archive</a></li>
                 <li<?php if($action_is=='trash'){?> class="active"<?php }?>><a href="/messages/trash">Trash</a></li>
             </ul>
-            <img style="margin-top:30px" src="/public/images/codeArmy/messages/temp_srch.png"/>
+            <img style="margin:30px" src="/public/images/codeArmy/messages/temp_srch.png"/>
         </div>
     </div>
     <?php endif;?>
