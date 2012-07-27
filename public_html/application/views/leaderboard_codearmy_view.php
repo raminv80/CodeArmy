@@ -18,6 +18,7 @@
 			foreach($leaderboard_points as $leader):
 		?>
           <li>
+          <div class="li-number">1.</div>
             <div id="col-li">
               <div id="col-li-left"><img src="<?=($leader["avatar"] != NULL)?'/public/'.$leader["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $leader['email'] ) ) )?>" width="34" height="35" /></div>
               <div id="col-li-right"><span id="name"><?=ucfirst($leader["username"])?></span> <br />

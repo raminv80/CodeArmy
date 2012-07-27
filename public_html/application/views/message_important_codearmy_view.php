@@ -19,12 +19,12 @@
       <div id="arrow-right"><a href="#"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
     </div>
     <div id="inbox-rows">
-      <div id="title-row">
+      <div class="title-row">
         <div id="select-all"><a href="#">Select all</a></div>
         <div id="all-messages">All messages</div>
       </div>
-      <?php foreach($messages as $message):?>
-      <div id="msg-row">
+      
+      <div class="msg-row">
         <input type="checkbox" />
         <div id="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
         <div id="sender-name"><a href="#">Asghar</a></div>
@@ -33,8 +33,7 @@
         <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
         <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
       </div>
-      <?php endforeach;?>
-      <div id="msg-row">
+      <div class="msg-row">
         <input type="checkbox" />
         <div id="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
         <div id="sender-name"><a href="#">Asghar</a></div>
@@ -43,7 +42,7 @@
         <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
         <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
       </div>
-      <div id="msg-row">
+      <div class="msg-row">
         <input type="checkbox" />
         <div id="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
         <div id="sender-name"><a href="#">Asghar</a></div>
@@ -52,7 +51,7 @@
         <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
         <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
       </div>
-      <div id="msg-row">
+      <div class="msg-row">
         <input type="checkbox" />
         <div id="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
         <div id="sender-name"><a href="#">Asghar</a></div>
