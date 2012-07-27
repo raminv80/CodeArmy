@@ -7,7 +7,9 @@
       <div id="dialog-project-list" class="dialog">
         <div class="container">
           <div class="dialog-close-button"></div>
-          List of projects </div>
+          List of projects
+          <div class="log"></div>
+      	</div>
       </div>
       <!-- end of project list --> 
     </div>
@@ -288,7 +290,7 @@
 		for(i=0; i<jobs.length;i++){
 			loc = geoToPixel({'lat':jobs[i].lat, 'lng': jobs[i].lng});
 			var desc = jobs[i].num+(jobs[i].skill?"<br/>"+ucfirst(jobs[i].skill.substring(0,3)):'')+(jobs[i].days?"<br/>"+(jobs[i].days<1?"<1d":jobs[i].days+"d"):'')+(jobs[i].payout?"<br />"+(jobs[i].payout<1?"<10$":(jobs[i].payout<100?jobs[i].payout+'$':((jobs[i].payout/1000).toFixed(1)+'k$'))):'');
-			addMarker(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500);
+			addMarker(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
 		}
 	}
 	
@@ -357,6 +359,7 @@
 						'-o-transform-origin': '0% 0%',
 						'-moz-transform-origin': '0% 0%',
 						}).show().animate({top:16, left:100, width:800, height:500, opacity:1},'fast').data($(this).data());
+					$('#dialog-project-list .log').html(JSON.stringify($('#dialog-project-list').data(), null, 4));
 			});
 		$('#world-map').on('mouseenter','.marker',
 			function(){
@@ -547,7 +550,7 @@
 	
 	
 	
-	function addMarker(x,y,id,icon,desc,color,scale,speed){
+	function addMarker(x,y,id,icon,desc,color,scale,speed,data){
 		var template = $('#marker-template').clone();
 		var container = $('#world-map');
 		template.attr('id',id);
@@ -571,7 +574,7 @@
 				'top':y,
 				'left':x
 			}).fadeIn(speed);
-		template.data({'scale':scale,'x':x,'y':y,'color':color});	
+		template.data({'scale':scale,'x':x,'y':y,'color':color, 'ref':data});	
 	}
 </script>
 <?php $this->load->view('includes/CAFooter.php'); ?>
