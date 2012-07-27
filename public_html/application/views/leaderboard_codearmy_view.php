@@ -11,7 +11,7 @@
   </div>
   <div id="leaderboard-cols">
     <div id="leaderboard-left-col">
-      <div id="col-title"> Points Gained </div>
+      <div id="col-title"> Top 10 </div>
       <div id="col-content">
         <ul>
       	<?php if($leaderboard_points){
@@ -34,7 +34,7 @@
       <div id="col-footer"> </div>
     </div>
     <div id="leaderboard-right-col">
-      <div id="col-title"> Level </div>
+      <div id="col-title"> Your position </div>
       <div id="col-content">
         <ul>
       	<?php if($leaderboard_centered){
