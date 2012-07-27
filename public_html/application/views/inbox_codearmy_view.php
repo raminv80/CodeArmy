@@ -28,10 +28,10 @@
     
     <div id="msg-row">
        <div id="checkbox"></div>
-       <div id="inbox-user-avatar"></div>
-       <div id="sender-name"></div>
-       <div id="mail-subject"></div>
-       <div id="mail-time"></div>
+       <div id="inbox-user-avatar"><img src="/public/images/codeArmy/messages/default-avatar.png" /></div>
+       <div id="sender-name">Asghar</div>
+       <div id="mail-subject">Nice to meet you!</div>
+       <div id="mail-time">3 hours ago</div>
        <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
        <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
     </div>

@@ -1358,24 +1358,36 @@ input.links-portfolios-boxes1 {
 	width: 40px;
 	float:left;
 	height:30px;
+	margin:20px 0 0 35px;
 	background:url(/public/images/codeArmy/messages/check-box.png) no-repeat;
 }
 #inbox-rows #inbox-user-avatar {
 	float:left;
+	margin: 5px;
 }
 #inbox-rows #sender-name {
 	float:left;
+	width:140px;
+	margin:20px 0 0 35px;
 }
 #inbox-rows #mail-subject {
 	float:left;
+	width:290px;
+	margin:20px 0 0 10px;
 }
 #inbox-rows #mail-time {
 	float:left;
+	width:90px;
+	margin:20px 0 0 10px;
 }
 #inbox-rows #star {
 	float:left;
+	width: 20px;
+	margin:20px 0 0 5px;
 }
 #inbox-rows #bin {
 	float:left;
+	width: 20px;
+	margin:20px 0 0 5px;
 }
 /* END - New Codes by Reza */
