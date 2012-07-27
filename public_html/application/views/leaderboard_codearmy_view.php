@@ -13,7 +13,7 @@
     <div id="leaderboard-left-col">
       <div id="col-title"> Points Gained </div>
       <div id="col-content">
-        <ol>
+        <ul>
       	<?php if($leaderboard_points){
 			foreach($leaderboard_points as $leader):
 		?>
@@ -29,14 +29,14 @@
 			endforeach;
 		}
 		?>
-        </ol>
+        </ul>
       </div>
       <div id="col-footer"> </div>
     </div>
     <div id="leaderboard-right-col">
       <div id="col-title"> Level </div>
       <div id="col-content">
-        <ol>
+        <ul>
       	<?php if($leaderboard_centered){
 			foreach($leaderboard_centered as $leaderc):
 		?>
@@ -52,7 +52,7 @@
 			endforeach;
 		}
 		?>
-        </ol>
+        </ul>
       </div>
       <div id="col-footer"> </div>
     </div>
