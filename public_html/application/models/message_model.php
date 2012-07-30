@@ -25,6 +25,18 @@ class Message_model extends CI_Model {
 	}
 	
 	function send_message($user_id){
+		$to = $this->input->post('msg-to');
+		$sql = "SELECT user_id FROM users WHERE username = ?";
+		$data = $this->db->query($sql, $to);
+		$data = $data->result_array();
+		$doc = array(
+			"from" => $user_id,
+			"to" => $data[0]['user_id'],
+			"title" => $this->input->post('msg-subj'),
+			"content" => $this->input->post('msg-text')
+		);
+		$res = $this->db->insert('messages', $doc);
+		return $res;
 	}
 		
 	function get_total_messages($user_id, $cat){

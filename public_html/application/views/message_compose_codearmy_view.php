@@ -18,25 +18,41 @@
       <div id="arrow-left"><a href="#"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
       <div id="arrow-right"><a href="#"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
     </div>
+    <?php echo form_open('messages/send'); ?>
     <div id="compose-main-area">
       <div id="compose-avatar"> </div>
       <div id="receiver-name">
         <label>To:</label>
         &nbsp;
-        <input id="msg-to" name="subj" />
+        <?php if (isset($form_error)){ ?>
+        <input id="msg-to" name="msg-to" value="<?=set_value('msg-to')?>" />
+		<div id="errmsg3"><?=form_error("msg-to")?></div>
+        <?php } else { ?>
+        <input id="msg-to" name="msg-to" />
+        <?php } ?>
       </div>
       <div id="msg-subject">
         <label>Subject:</label>
         &nbsp;
-        <input id="msg-subj" name="subj" />
+        <?php if (isset($form_error)){ ?>
+        <input id="msg-subj" name="msg-subj" value="<?=set_value('msg-subj')?>" />
+		<div id="errmsg3"><?=form_error("msg-subj")?></div>
+        <?php } else { ?>
+        <input id="msg-subj" name="msg-subj" />
+        <?php } ?>
       </div>
       <div id="msg-text">
         <label>Message:</label>
-        <textarea rows="7" id="msg-text" name="msg-text">
-    </textarea>
+        <?php if (isset($form_error)){ ?>
+        <textarea rows="7" id="msg-text" name="msg-text"><?=set_value('msg-text')?></textarea>
+		<div id="errmsg3"><?=form_error("msg-text")?></div>
+        <?php } else { ?>
+        <textarea rows="7" id="msg-text" name="msg-text"></textarea>
+        <?php } ?>
       </div>
     </div>
     <input type="submit" value="Send" class="lnkimg">
+    </form>
   </div>
 </div>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>

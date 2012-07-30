@@ -65,15 +65,31 @@ class Messages extends CI_Controller {
 	function send(){
 		$user_id = $this->session->userdata('user_id');
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('to', 'To', 'required');
-		$this->form_validation->set_rules('message', 'Message', 'required');
+		$this->form_validation->set_rules('msg-to', 'To', 'required|max_length[40]|callback_check_user');
+		$this->form_validation->set_rules('msg-subj', 'Subject', 'required|max_length[100]');
+		$this->form_validation->set_rules('msg-text', 'Message', 'required');
 		
 		if ($this->form_validation->run() == FALSE){
 			$this->view_data['form_error'] = true;
 			$this->compose();
 		} else {
-			$this->message_model->send_message($user_id);
-			redirect("/messages/inbox");
+			$res = $this->message_model->send_message($user_id);
+			if (!$res){
+				$this->compose();
+			} else {
+				redirect("/messages/inbox");
+			}
+		}
+	}
+	
+	public function check_user($str){
+		$sql = "SELECT user_id FROM users WHERE username = ?";
+		$data = $this->db->query($sql, $str);
+		if ($data->num_rows() > 0){
+			return true;
+		} else {
+			$this->form_validation->set_message('check_user', 'User not found.');
+			return false;
 		}
 	}
 	
