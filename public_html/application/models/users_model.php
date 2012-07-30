@@ -515,20 +515,25 @@ class Users_model extends CI_Model {
 	}
 	
 	function leaderboard_centered_details($user_id){
+		$myPos = $this->leader_board_my_pos($user_id);
 		$limit = 4;
 		$query = "select users.user_id, username, email, avatar, exp, ranks.rank from (select * from users where user_id = ?) as users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp";
 		
 		$result = $this->db->query($query,$user_id);
 		$data = $result->result_array();
-		$list[]=$data[0];
+		$data[0]['position'] = $myPos;
 		
 		$query = "select * from (select users.user_id, username, email, avatar, exp, ranks.rank from (select * from users where exp>(select exp from users where user_id=?)) as users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp) as t where exp>0 order by exp DESC limit 0,".$limit;
 		$result1 = $this->db->query($query,$user_id);
 		$data1 = $result1->result_array();
+		for($i=0; $i<count($data1);$i++){$data1[$i]['position'] = $myPos - $result1->num_rows + $i;}
+		
 		$limit = 5+5-$result1->num_rows;
 		$query = "select * from (select users.user_id, username, email, avatar, exp, ranks.rank from (select * from users where exp<(select exp from users where user_id=?)) as users left join user_profiles on users.user_id = user_profiles.user_id inner join ranks on exp >= start_exp and exp <= end_exp) as t where exp>0 order by exp DESC limit 0,".$limit;
 		$result2 = $this->db->query($query,$user_id);
 		$data2 = $result2->result_array();
+		for($i=0; $i<count($data2);$i++){$data2[$i]['position'] = $myPos + $i +1;}
+		
 		$data = array_merge($data1,$data,$data2);
 		return $data;
 	}
@@ -542,6 +547,15 @@ class Users_model extends CI_Model {
 		$result = $this->db->query($query);
 		$data = $result->result_array();
 		return $data;
+	}
+	
+	function leader_board_my_pos($user_id){
+		$sql = "SELECT (SELECT COUNT(*) FROM users as x WHERE x.exp <= t.exp and x.exp>0) AS position, t.username FROM users AS t WHERE t.user_id = ?";
+		$res = $this->db->query($sql, array($user_id));
+		if($res->num_rows>0){
+			$data = $res->result_array();
+			return $data[0]['position'];
+		}else{return 0;}
 	}
 	
 	function inbox_messages($user_id){

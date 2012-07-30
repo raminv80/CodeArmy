@@ -15,10 +15,10 @@
       <div id="col-content">
         <ul>
       	<?php if($leaderboard_points){
-			foreach($leaderboard_points as $leader):
+			foreach($leaderboard_points as $i=>$leader):
 		?>
           <li>
-          <div class="li-number">1.</div>
+          <div class="li-number"><?=$i+1?>.</div>
             <div id="col-li">
               <div id="col-li-left"><img src="<?=($leader["avatar"] != NULL)?'/public/'.$leader["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $leader['email'] ) ) )?>" width="34" height="35" /></div>
               <div id="col-li-right"><span id="name"><?=ucfirst($leader["username"])?></span> <br />
@@ -42,6 +42,7 @@
 			foreach($leaderboard_centered as $leaderc):
 		?>
           <li>
+          	<div class="li-number"><?=$leaderc['position']+1?>.</div>
             <div id="col-li">
               <div id="col-li-left"><img src="<?=($leaderc["avatar"] != NULL)?'/public/'.$leaderc["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $leaderc['email'] ) ) )?>" width="34" height="35" /></div>
               <div id="col-li-right"><span id="name"><?=ucfirst($leaderc["username"])?></span> <br />
