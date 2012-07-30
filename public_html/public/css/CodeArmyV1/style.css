@@ -1301,7 +1301,7 @@ input.links-portfolios-boxes1 {
 	position:relative;
 }
 #inbox-area, #compose-area {
-	padding:100px 0;
+	padding:30px 0;
 	position:relative;
 	height:100%;
 }
@@ -1352,7 +1352,7 @@ input.links-portfolios-boxes1 {
 	float:left;
 	margin:25px 0 0 25px;
 }
-#inbox-rows {
+.inbox-rows {
 	width:775px;
 	margin:0 0 0 -2px;
 	min-height:580px;
@@ -1365,44 +1365,44 @@ input.links-portfolios-boxes1 {
 	height:49px;
 	float:left;
 }
-#inbox-rows #select-all, #inbox-rows #all-messages {
+.inbox-rows #select-all, .inbox-rows #all-messages {
 	width:40%;
 	margin:20px 0 0 20px;
 	float:left;
 }
-#inbox-rows #all-messages {
+.inbox-rows #all-messages {
 	background:url(/public/images/codeArmy/messages/arrow-down.png) no-repeat 85px 6px;
 }
-#inbox-rows input {
+.inbox-rows input {
 	float:left;
 	margin:20px 25px 0 35px;
 	/* background:url(/public/images/codeArmy/messages/check-box.png) no-repeat; */
 }
-#inbox-rows #inbox-user-avatar {
+.inbox-rows .inbox-user-avatar {
 	float:left;
 	margin: 5px;
 }
-#inbox-rows #sender-name {
+.inbox-rows .sender-name {
 	float:left;
 	width:140px;
 	margin:20px 0 0 35px;
 }
-#inbox-rows #mail-subject {
+.inbox-rows .mail-subject {
 	float:left;
 	width:290px;
 	margin:20px 0 0 10px;
 }
-#inbox-rows #mail-time {
+.inbox-rows .mail-time {
 	float:left;
 	width:90px;
 	margin:20px 0 0 10px;
 }
-#inbox-rows #star {
+.inbox-rows .star {
 	float:left;
 	width: 20px;
 	margin:20px 0 0 5px;
 }
-#inbox-rows #bin {
+.inbox-rows .bin {
 	float:left;
 	width: 20px;
 	margin:20px 0 0 5px;
