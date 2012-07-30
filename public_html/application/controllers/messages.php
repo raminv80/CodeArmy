@@ -132,8 +132,9 @@ class Messages extends CI_Controller {
 		$this->load->view('message_search_codearmy_view', $this->view_data);
 	}
 	
-	function read(){
+	function read($message_id){
 		$user_id = $this->session->userdata('user_id');
+		$this->view_data['message'] = $this->message_model->get_message($message_id,$user_id);
 		$this->view_data['window_title'] = "Message Title";
 		$this->load->view('message_codearmy_view', $this->view_data);
 	}

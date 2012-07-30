@@ -6,6 +6,14 @@ class Message_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function get_message($message_id, $user_id){
+		$sql = "SELECT *, users.username, user_profiles.avatar from messages, users, user_profiles where message_id = ? and (`to` = ? or `from` = ?) and users.user_id = messages.from and users.user_id = user_profiles.user_id";
+		$input = array($message_id, $user_id, $user_id);
+		$res = $this->db->query($sql, $input);
+		if($res->num_rows!=1)die('Error! message not found.');
+		return $res->result_array();
+	}
+	
 	function get_messages($user_id, $cat, $offset=-1, $limit=-1){
 		switch($cat){
 			case 'sent': $sql = "SELECT messages.*,f.username as from_username, t.username, user_profiles.avatar as to_username, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and messages.from = ? and user_profiles.user_id=f.user_id";

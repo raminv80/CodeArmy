@@ -2,6 +2,8 @@
 <style>
 .star a{width:18px;height:17px; background:url(/public/images/codeArmy/messages/star.png) no-repeat;display:block;}
 .star a.important{background:url(/public/images/codeArmy/messages/star_hover.png) no-repeat;}
+.unread{color:#FFC; font-weight:bold; text-decoration:underline; text-transform:uppercase;}
+.summary{cursor:pointer}
 </style>
 <div id="inbox-content-area"> 
   
@@ -30,9 +32,11 @@
       <?php foreach($messages as $i=>$message):?>
       <div class="msg-row <?=(($i%2)==0)?'even':'odd'?> <?=$message['status']?>" id="message_<?=$message['message_id']?>">
         <input type="checkbox" />
-        <div class="inbox-user-avatar"><a href="#"><img src="<?=($message["avatar"] != NULL)?'/public/'.$message["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) )?>" width="44" height="45" /></a></div>
-        <div class="sender-name"><a href="#"><?=$message['from_username']?></a></div>
-        <div class="mail-subject"><a href="#"><?=$message['title']?></a></div>
+        <div class="summary">
+        	<a href="/messages/read/<?=$message['message_id']?>"></a>
+            <div class="inbox-user-avatar"><img src="<?=($message["avatar"] != NULL)?'/public/'.$message["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) )?>" width="44" height="45" /></div>
+            <div class="sender-name"><?=$message['from_username']?></div>
+            <div class="mail-subject"><?=$message['title']?></div>
         <?php
 			$diff = abs(strtotime($message['created_at'])-time());
 			if($diff>(24*60*60)){
@@ -45,7 +49,8 @@
 				$time = 'now';
 			}
 		?>
-        <div class="mail-time"><?=$time?></div>
+        	<div class="mail-time"><?=$time?></div>
+        </div>
         <div class="star"><a href="javascript: void(0)" <?php if($message['category']=='important'){?>class="important"<?php }?>></a></div>
         <div class="bin"><a href="javascript: void(0)"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
       </div>
@@ -70,6 +75,7 @@
 	function initEvents(){
 		$('.star a').click(switch_importance);
 		$('.bin a').click(to_trash);
+		$('.summary').click(function(){window.location=$(this).find("a").attr("href"); return false;});
 	}
 	
 	function to_trash(){
