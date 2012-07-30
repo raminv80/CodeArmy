@@ -8,15 +8,15 @@ class Message_model extends CI_Model {
 	
 	function get_messages($user_id, $cat, $offset=-1, $limit=-1){
 		switch($cat){
-			case 'sent': $sql = "SELECT messages.*,f.username as from_username, t.username as to_username FROM messages, users as f, users as t WHERE f.user_id=messages.from and t.user_id=messages.to and messages.from = ?";
+			case 'sent': $sql = "SELECT messages.*,f.username as from_username, t.username, user_profiles.avatar as to_username, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and messages.from = ? and user_profiles.user_id=f.user_id";
 						 if($offset>-1 && $limit>-1) $sql.=" limit ?,?";
 						 $data = $this->db->query($sql, array($user_id, $offset, $limit));
 			break;
-			case 'inbox': $sql = "SELECT messages.*, f.username as from_username, t.username as to_username FROM messages, users as f, users as t WHERE f.user_id=messages.from and t.user_id=messages.to and messages.category IN ('inbox','important') AND messages.to = ?";
+			case 'inbox': $sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and messages.category IN ('inbox','important') AND messages.to = ? and user_profiles.user_id=f.user_id";
 						  if($offset>-1 && $limit>-1) $sql.=" limit ?,?";
 						  $data = $this->db->query($sql, array($user_id, $offset, $limit));
 			break;
-			default: $sql = "SELECT messages.*, f.username as from_username, t.username as to_username FROM messages, users as f, users as t WHERE f.user_id=messages.from and t.user_id=messages.to and category = ? AND messages.to = ?";
+			default: $sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and category = ? AND messages.to = ? and user_profiles.user_id=f.user_id";
 					if($offset>-1 && $limit>-1) $sql.=" limit ?,?"; 
 					$data = $this->db->query($sql, array($cat, $user_id, $offset, $limit));
 		}

@@ -30,7 +30,7 @@
       <?php foreach($messages as $i=>$message):?>
       <div class="msg-row <?=(($i%2)==0)?'even':'odd'?> <?=$message['status']?>" id="message_<?=$message['message_id']?>">
         <input type="checkbox" />
-        <div class="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
+        <div class="inbox-user-avatar"><a href="#"><img src="<?=($message["avatar"] != NULL)?'/public/'.$message["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) )?>" width="44" height="45" /></a></div>
         <div class="sender-name"><a href="#"><?=$message['from_username']?></a></div>
         <div class="mail-subject"><a href="#"><?=$message['title']?></a></div>
         <?php
