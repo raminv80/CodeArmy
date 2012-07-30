@@ -6,17 +6,25 @@ class Message_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function get_message($message_id, $user_id){
+		$sql = "SELECT *, users.username, user_profiles.avatar from messages, users, user_profiles where message_id = ? and (`to` = ? or `from` = ?) and users.user_id = messages.from and users.user_id = user_profiles.user_id";
+		$input = array($message_id, $user_id, $user_id);
+		$res = $this->db->query($sql, $input);
+		if($res->num_rows!=1)die('Error! message not found.');
+		return $res->result_array();
+	}
+	
 	function get_messages($user_id, $cat, $offset=-1, $limit=-1){
 		switch($cat){
-			case 'sent': $sql = "SELECT messages.*,f.username as from_username, t.username as to_username FROM messages, users as f, users as t WHERE f.user_id=messages.from and t.user_id=messages.to and messages.from = ?";
+			case 'sent': $sql = "SELECT messages.*,f.username as from_username, t.username, user_profiles.avatar as to_username, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and messages.from = ? and user_profiles.user_id=f.user_id";
 						 if($offset>-1 && $limit>-1) $sql.=" limit ?,?";
 						 $data = $this->db->query($sql, array($user_id, $offset, $limit));
 			break;
-			case 'inbox': $sql = "SELECT messages.*, f.username as from_username, t.username as to_username FROM messages, users as f, users as t WHERE f.user_id=messages.from and t.user_id=messages.to and messages.category IN ('inbox','important') AND messages.to = ?";
+			case 'inbox': $sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and messages.category IN ('inbox','important') AND messages.to = ? and user_profiles.user_id=f.user_id";
 						  if($offset>-1 && $limit>-1) $sql.=" limit ?,?";
 						  $data = $this->db->query($sql, array($user_id, $offset, $limit));
 			break;
-			default: $sql = "SELECT messages.*, f.username as from_username, t.username as to_username FROM messages, users as f, users as t WHERE f.user_id=messages.from and t.user_id=messages.to and category = ? AND messages.to = ?";
+			default: $sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and category = ? AND messages.to = ? and user_profiles.user_id=f.user_id";
 					if($offset>-1 && $limit>-1) $sql.=" limit ?,?"; 
 					$data = $this->db->query($sql, array($cat, $user_id, $offset, $limit));
 		}
@@ -56,37 +64,46 @@ class Message_model extends CI_Model {
 	
 	function make_important($list,$user_id){
 		$res=array();
-		$sql = "update messages set category='important' where message_id=? and to=?";
+		$sql = "update messages set category='important' where message_id=? and messages.to=?";
 		foreach($list as $l):
 			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
 		endforeach;
-		return implode(',',$res);
+		return $res;
 	}
 	
 	function make_unimportant($list,$user_id){
 		$res=array();
-		$sql = "update messages set category='inbox' where message_id=? and to=?";
+		$sql = "update messages set category='inbox' where message_id=? and messages.to=?";
 		foreach($list as $l):
 			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
 		endforeach;
-		return implode(',',$res);
+		return $res;
 	}
 	
 	function make_read($list,$user_id){
 		$res=array();
-		$sql = "update messages set status='read' where message_id=? and to=?";
+		$sql = "update messages set status='read' where message_id=? and messages.to=?";
 		foreach($list as $l):
 			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
 		endforeach;
-		return implode(',',$res);
+		return $res;
 	}
 	
 	function make_unread($list,$user_id){
 		$res=array();
-		$sql = "update messages set status='unread' where message_id=? and to=?";
+		$sql = "update messages set status='unread' where message_id=? and messages.to=?";
 		foreach($list as $l):
 			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
 		endforeach;
-		return implode(',',$res);
+		return $res;
+	}
+	
+	function to_trash($list,$user_id){
+		$res=array();
+		$sql = "update messages set category='trash' where message_id=? and messages.to=?";
+		foreach($list as $l):
+			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
+		endforeach;
+		return $res;
 	}
 }

@@ -1,5 +1,5 @@
 <?php $this->load->view('includes/CAHeader.php'); ?>
-
+<!--TODO: add ajax loader icons -->
 <div id="wrapper">
   <div id="find-mission-area">
     <div id="world-map"> <img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" /> 
