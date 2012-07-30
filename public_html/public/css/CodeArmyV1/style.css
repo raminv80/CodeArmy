@@ -1297,7 +1297,7 @@ input.links-portfolios-boxes1 {
 	margin:0 0 0 -10px;
 	position:relative;
 }
-#inbox-area {
+#inbox-area, #compose-area {
 	padding:100px 0;
 }
 #inbox-top-bar #back a {
@@ -1308,6 +1308,12 @@ input.links-portfolios-boxes1 {
 }
 #inbox-top-bar #mark-unread {
 	float:left;
+	width:100px;
+	padding:25px 0 0 15px;
+}
+#inbox-top-bar #archive {
+	float:left;
+	text-align:center;
 	width:100px;
 	padding:25px 0 0 15px;
 }
@@ -1396,4 +1402,59 @@ input.links-portfolios-boxes1 {
 	width: 20px;
 	margin:20px 0 0 5px;
 }
+#compose-main-area {
+	position:relative;
+	float:left;
+	width:774px;
+	height:359px;
+	margin:0 0 0 -5px;
+	background:url(/public/images/codeArmy/messages/compose-main-area.png) no-repeat;
+}
+#compose-avatar {
+	background:url(/public/images/codeArmy/messages/compose-avatar.png) no-repeat;
+	float:left;
+	width:125px;
+	height:140px;
+	margin: 20px;
+}
+#receiver-name {
+	float: left;
+    margin: 50px 0 20px 0;
+	position:relative;
+	width:585px;
+}
+#msg-subject {
+	float: left;
+	width:585px;
+    margin: 20px 0;
+	position:relative;
+}
+#msg-subject input, #receiver-name input {
+	background: url("/public/images/codeArmy/profile/text-input-bg.gif") repeat-x scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 1px 1px 1px #636363;
+    color: #FFFFFF;
+    font-family: 'Ruda',sans-serif;
+    font-size: 11px;
+    height: 22px;
+    width: 195px;
+}
+#receiver-name label, #msg-subject label {
+	width:70px;
+	float:left;
+}
+#msg-text label {
+	width:585px;
+	float:left;
+}
+#msg-text textarea {
+	width:578px;
+	margin:7px 0;
+	float:left;
+	border:none;
+	color:#fff;
+	background:none;
+}
+
 /* END - New Codes by Reza */
