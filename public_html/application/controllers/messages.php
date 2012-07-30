@@ -79,8 +79,9 @@ class Messages extends CI_Controller {
 	
 	function important($offset=0){
 		$user_id = $this->session->userdata('user_id');
-		if(!isset($offset) || !is_int($offset))$offset=0;
-		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'important',$offset,$this->paginaionlimit);
+		if(!isset($offset))$offset=0;
+		$offset = intval($offset);
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'important',$offset*$this->paginaionlimit,$this->paginaionlimit);
 		$this->view_data['limit'] = $this->paginaionlimit;
 		$this->view_data['current'] = $offset;
 		$this->view_data['total'] = $this->message_model->get_total_messages($user_id,'important');
