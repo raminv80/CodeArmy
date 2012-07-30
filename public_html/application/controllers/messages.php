@@ -51,7 +51,12 @@ class Messages extends CI_Controller {
 	
 	function inbox(){
 		$user_id = $this->session->userdata('user_id');
-		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'inbox');
+		if(!isset($offset))$offset=0;
+		$offset = intval($offset);
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'inbox',$offset*$this->paginaionlimit,$this->paginaionlimit);
+		$this->view_data['limit'] = $this->paginaionlimit;
+		$this->view_data['current'] = $offset;
+		$this->view_data['total'] = $this->message_model->get_total_messages($user_id,'inbox');
 		$this->view_data['window_title'] = "Inbox";
 		$this->load->view('inbox_codearmy_view', $this->view_data);
 	}
@@ -114,7 +119,12 @@ class Messages extends CI_Controller {
 	
 	function sent(){
 		$user_id = $this->session->userdata('user_id');
-		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'sent');
+		if(!isset($offset))$offset=0;
+		$offset = intval($offset);
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'sent',$offset*$this->paginaionlimit,$this->paginaionlimit);
+		$this->view_data['limit'] = $this->paginaionlimit;
+		$this->view_data['current'] = $offset;
+		$this->view_data['total'] = $this->message_model->get_total_messages($user_id,'sent');
 		$this->view_data['window_title'] = "Sent messages";
 		$this->load->view('message_sent_codearmy_view', $this->view_data);
 	}
