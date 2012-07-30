@@ -60,6 +60,21 @@ class Messages extends CI_Controller {
 		$this->load->view('message_compose_codearmy_view', $this->view_data);
 	}
 	
+	function send(){
+		$user_id = $this->session->userdata('user_id');
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('to', 'To', 'required');
+		$this->form_validation->set_rules('message', 'Message', 'required');
+		
+		if ($this->form_validation->run() == FALSE){
+			$this->view_data['form_error'] = true;
+			$this->compose();
+		} else {
+			$this->message_model->send_message($user_id);
+			redirect("/messages/inbox");
+		}
+	}
+	
 	function important(){
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'important');

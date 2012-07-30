@@ -15,4 +15,8 @@ class Message_model extends CI_Model {
 		$res = $data->result_array();
 		return $res;
 	}
+	
+	function send_message($user_id){
+		
+	}
 }
