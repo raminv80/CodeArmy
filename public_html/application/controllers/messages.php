@@ -49,7 +49,7 @@ class Messages extends CI_Controller {
 		redirect("/messages/inbox");
 	}
 	
-	function inbox(){
+	function inbox($offset=0){
 		$user_id = $this->session->userdata('user_id');
 		if(!isset($offset))$offset=0;
 		$offset = intval($offset);
@@ -67,7 +67,7 @@ class Messages extends CI_Controller {
 		$this->load->view('message_compose_codearmy_view', $this->view_data);
 	}
 	
-	function send(){
+	function send($offset=0){
 		$user_id = $this->session->userdata('user_id');
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('msg-to', 'To', 'required|max_length[40]|callback_check_user');
