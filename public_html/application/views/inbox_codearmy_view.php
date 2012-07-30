@@ -60,6 +60,60 @@
         <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
         <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
       </div>
+      <div class="msg-row">
+        <input type="checkbox" />
+        <div id="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
+        <div id="sender-name"><a href="#">Asghar</a></div>
+        <div id="mail-subject"><a href="#">Nice to meet you!</a></div>
+        <div id="mail-time">3 hours ago</div>
+        <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
+        <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
+      </div>
+      <div class="msg-row">
+        <input type="checkbox" />
+        <div id="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
+        <div id="sender-name"><a href="#">Asghar</a></div>
+        <div id="mail-subject"><a href="#">Nice to meet you!</a></div>
+        <div id="mail-time">3 hours ago</div>
+        <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
+        <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
+      </div>
+      <div class="msg-row">
+        <input type="checkbox" />
+        <div id="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
+        <div id="sender-name"><a href="#">Asghar</a></div>
+        <div id="mail-subject"><a href="#">Nice to meet you!</a></div>
+        <div id="mail-time">3 hours ago</div>
+        <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
+        <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
+      </div>
+      <div class="msg-row">
+        <input type="checkbox" />
+        <div id="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
+        <div id="sender-name"><a href="#">Asghar</a></div>
+        <div id="mail-subject"><a href="#">Nice to meet you!</a></div>
+        <div id="mail-time">3 hours ago</div>
+        <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
+        <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
+      </div>
+      <div class="msg-row">
+        <input type="checkbox" />
+        <div id="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
+        <div id="sender-name"><a href="#">Asghar</a></div>
+        <div id="mail-subject"><a href="#">Nice to meet you!</a></div>
+        <div id="mail-time">3 hours ago</div>
+        <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
+        <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
+      </div>
+      <div class="msg-row">
+        <input type="checkbox" />
+        <div id="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
+        <div id="sender-name"><a href="#">Asghar</a></div>
+        <div id="mail-subject"><a href="#">Nice to meet you!</a></div>
+        <div id="mail-time">3 hours ago</div>
+        <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
+        <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
+      </div>
     </div>
     <div id="inbox-top-bar">
       <div id="back"><a href="#">Back</a></div>
