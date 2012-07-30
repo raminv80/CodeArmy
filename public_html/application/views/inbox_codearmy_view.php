@@ -20,8 +20,8 @@
       <div id="star"><a href="javascript: set_importance()"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
       <div id="bin"><a href="javascript: all_to_trash()"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
       <div id="msg-no"><?=$current*10+1?> to <?=min($limit*($current+1), $total)?> of <?=$total?></div>
-      <div id="arrow-left"><a href="/messages/inbox/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
-      <div id="arrow-right"><a href="/messages/inbox/<?=($current < round($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
+      <div id="arrow-left"><a title="Goto previous page" href="/messages/inbox/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
+      <div id="arrow-right"><a title="Goto next page" href="/messages/inbox/<?=(($current+1) < ceil($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
     </div>
     <div class="inbox-rows">
       <div class="title-row">
@@ -56,13 +56,13 @@
       <?php endforeach;?>
     </div>
     <div id="inbox-top-bar">
-      <div id="back"><a href="/messages/inbox/<?=($current>0)?$current-1:$current?>">BBack</a></div>
+      <div id="back"><a href="/messages/inbox/<?=($current>0)?$current-1:$current?>">Back</a></div>
       <div id="mark-unread"><a href="javascript: unread_all()">Mark as unread</a></div>
       <div id="star"><a href="javascript: set_importance()"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
       <div id="bin"><a href="javascript: all_to_trash()"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
       <div id="msg-no"><?=$current*10+1?> to <?=min($limit*($current+1), $total)?> of <?=$total?></div>
-      <div id="arrow-left"><a href="/messages/inbox/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
-      <div id="arrow-right"><a href="/messages/inbox/<?=($current < round($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
+      <div id="arrow-left"><a title="Goto previous page" href="/messages/inbox/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
+      <div id="arrow-right"><a title="Goto next page" href="/messages/inbox/<?=(($current+1) < ceil($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
     </div>
   </div>
 </div>

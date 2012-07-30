@@ -20,8 +20,8 @@
       <div id="star"></div>
       <div id="bin"></div>
       <div id="msg-no"><?=$current*10+1?> to <?=min($limit*($current+1), $total)?> of <?=$total?></div>
-      <div id="arrow-left"><a href="/messages/sent/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
-      <div id="arrow-right"><a href="/messages/sent/<?=($current < round($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
+      <div id="arrow-left"><a title="Goto previous page" href="/messages/sent/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
+      <div id="arrow-right"><a title="Goto next page" href="/messages/sent/<?=(($current+1) < ceil($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
     </div>
     <div class="inbox-rows">
       <div class="title-row">
@@ -62,8 +62,8 @@
       <div id="star"></div>
       <div id="bin"></div>
       <div id="msg-no"><?=$current*10+1?> to <?=min($limit*($current+1), $total)?> of <?=$total?></div>
-      <div id="arrow-left"><a href="/messages/sent/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
-      <div id="arrow-right"><a href="/messages/sent/<?=($current < round($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
+      <div id="arrow-left"><a title="Goto previous page" href="/messages/sent/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
+      <div id="arrow-right"><a title="Goto next page" href="/messages/sent/<?=(($current+1) < ceil($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
     </div>
   </div>
 </div>
