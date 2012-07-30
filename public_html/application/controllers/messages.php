@@ -6,6 +6,8 @@ class Messages extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
+		$this->paginaionlimit =10;
+		
 		$this->load->model('users_model');
 		$this->load->model('message_model');
 		$this->load->model('skill_model');
@@ -30,7 +32,8 @@ class Messages extends CI_Controller {
 			$myProfile = $myProfile[0];
 			$this->view_data['me'] = $me;
 			$this->view_data['myProfile'] = $myProfile;
-		
+			$this->view_data['myActiveMissions'] = $this->stories->get_num_my_works($user_id, 'in progress');
+			
 			$this->view_data['username'] = $this->session->userdata('username');
 		} else if(strpos($action, "AjaxTab")===false){ // - if user not login, redirect to dashboard.
 			$referer = $controller;
@@ -55,8 +58,7 @@ class Messages extends CI_Controller {
 	
 	function compose(){
 		$user_id = $this->session->userdata('user_id');
-		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'inbox');
-		$this->view_data['window_title'] = "Inbox";
+		$this->view_data['window_title'] = "Compose message";
 		$this->load->view('message_compose_codearmy_view', $this->view_data);
 	}
 	
@@ -75,37 +77,41 @@ class Messages extends CI_Controller {
 		}
 	}
 	
-	function important(){
+	function important($offset=0){
 		$user_id = $this->session->userdata('user_id');
-		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'important');
-		$this->view_data['window_title'] = "Inbox";
+		if(!isset($offset) || !is_int($offset))$offset=0;
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'important',$offset,$this->paginaionlimit);
+		$this->view_data['limit'] = $this->paginaionlimit;
+		$this->view_data['current'] = $offset;
+		$this->view_data['total'] = $this->message_model->get_total_messages($user_id,'important');
+		$this->view_data['window_title'] = "Important messages";
 		$this->load->view('message_important_codearmy_view', $this->view_data);
 	}
 	
 	function archive(){
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'archive');
-		$this->view_data['window_title'] = "Inbox";
+		$this->view_data['window_title'] = "Archive messages";
 		$this->load->view('message_archive_codearmy_view', $this->view_data);
 	}
 	
 	function sent(){
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'sent');
-		$this->view_data['window_title'] = "Inbox";
+		$this->view_data['window_title'] = "Sent messages";
 		$this->load->view('message_sent_codearmy_view', $this->view_data);
 	}
 	
 	function trash(){
 		$user_id = $this->session->userdata('user_id');
 		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'trash');
-		$this->view_data['window_title'] = "Inbox";
+		$this->view_data['window_title'] = "Trash";
 		$this->load->view('message_trash_codearmy_view', $this->view_data);
 	}
 	
 	function search(){
 		$user_id = $this->session->userdata('user_id');
-		$this->view_data['window_title'] = "Inbox";
+		$this->view_data['window_title'] = "Search messages";
 		$this->load->view('message_search_codearmy_view', $this->view_data);
 	}
 	
