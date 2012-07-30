@@ -100,7 +100,7 @@ class Message_model extends CI_Model {
 	
 	function to_trash($list,$user_id){
 		$res=array();
-		$sql = "update messages set category='trash' where message_id=? and messages.to=?";
+		$sql = "update messages set category='trash', status='read' where message_id=? and messages.to=?";
 		foreach($list as $l):
 			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
 		endforeach;
