@@ -1,5 +1,7 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
-
+<style>
+#inbox-rows{ height:auto}
+</style>
 <div id="inbox-content-area"> 
   
   <!-- START - Inbox Block - Dev. by Reza  -->
