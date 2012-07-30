@@ -6,6 +6,8 @@ class Messages extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
+		$this->paginaionlimit =10;
+		
 		$this->load->model('users_model');
 		$this->load->model('message_model');
 		$this->load->model('skill_model');
@@ -60,9 +62,13 @@ class Messages extends CI_Controller {
 		$this->load->view('message_compose_codearmy_view', $this->view_data);
 	}
 	
-	function important(){
+	function important($offset=0){
 		$user_id = $this->session->userdata('user_id');
-		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'important');
+		if(!isset($offset) || !is_int($offset))$offset=0;
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'important',$offset,$this->paginaionlimit);
+		$this->view_data['limit'] = $this->paginaionlimit;
+		$this->view_data['current'] = $offset;
+		$this->view_data['total'] = $this->message_model->get_total_messages($user_id,'important');
 		$this->view_data['window_title'] = "Important messages";
 		$this->load->view('message_important_codearmy_view', $this->view_data);
 	}
