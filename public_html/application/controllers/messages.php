@@ -149,27 +149,34 @@ class Messages extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$list = $this->input->post('message_id');
 		$list = explode(',',$list);
-		echo $this->message_model->make_important($list,$user_id);
+		echo json_encode($this->message_model->make_important($list,$user_id));
 	}
 	
 	function Ajax_flag_unimportant(){
 		$user_id = $this->session->userdata('user_id');
 		$list = $this->input->post('message_id');
 		$list = explode(',',$list);
-		echo $this->message_model->make_unimportant($list,$user_id);
+		echo json_encode($this->message_model->make_unimportant($list,$user_id));
 	}
 	
 	function Ajax_flag_read(){
 		$user_id = $this->session->userdata('user_id');
 		$list = $this->input->post('message_id');
 		$list = explode(',',$list);
-		echo $this->message_model->make_read($list,$user_id);
+		echo json_encode($this->message_model->make_read($list,$user_id));
 	}
 	
 	function Ajax_flag_unread(){
 		$user_id = $this->session->userdata('user_id');
 		$list = $this->input->post('message_id');
 		$list = explode(',',$list);
-		echo $this->message_model->make_unread($list,$user_id);
+		echo json_encode($this->message_model->make_unread($list,$user_id));
+	}
+	
+	function Ajax_trash(){
+		$user_id = $this->session->userdata('user_id');
+		$list = $this->input->post('message_id');
+		$list = explode(',',$list);
+		echo json_encode($this->message_model->to_trash($list,$user_id));
 	}
 }

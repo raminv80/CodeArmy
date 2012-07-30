@@ -56,37 +56,46 @@ class Message_model extends CI_Model {
 	
 	function make_important($list,$user_id){
 		$res=array();
-		$sql = "update messages set category='important' where message_id=? and to=?";
+		$sql = "update messages set category='important' where message_id=? and messages.to=?";
 		foreach($list as $l):
 			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
 		endforeach;
-		return implode(',',$res);
+		return $res;
 	}
 	
 	function make_unimportant($list,$user_id){
 		$res=array();
-		$sql = "update messages set category='inbox' where message_id=? and to=?";
+		$sql = "update messages set category='inbox' where message_id=? and messages.to=?";
 		foreach($list as $l):
 			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
 		endforeach;
-		return implode(',',$res);
+		return $res;
 	}
 	
 	function make_read($list,$user_id){
 		$res=array();
-		$sql = "update messages set status='read' where message_id=? and to=?";
+		$sql = "update messages set status='read' where message_id=? and messages.to=?";
 		foreach($list as $l):
 			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
 		endforeach;
-		return implode(',',$res);
+		return $res;
 	}
 	
 	function make_unread($list,$user_id){
 		$res=array();
-		$sql = "update messages set status='unread' where message_id=? and to=?";
+		$sql = "update messages set status='unread' where message_id=? and messages.to=?";
 		foreach($list as $l):
 			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
 		endforeach;
-		return implode(',',$res);
+		return $res;
+	}
+	
+	function to_trash($list,$user_id){
+		$res=array();
+		$sql = "update messages set category='trash' where message_id=? and messages.to=?";
+		foreach($list as $l):
+			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
+		endforeach;
+		return $res;
 	}
 }
