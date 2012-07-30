@@ -33,7 +33,19 @@
         <div class="inbox-user-avatar"><a href="#"><img src="/public/images/codeArmy/messages/default-avatar.png" /></a></div>
         <div class="sender-name"><a href="#"><?=$message['from_username']?></a></div>
         <div class="mail-subject"><a href="#"><?=$message['title']?></a></div>
-        <div class="mail-time">3 hours ago</div>
+        <?php
+			$diff = abs(strtotime($message['created_at'])-time());
+			if($diff>(24*60*60)){
+				$time = date('Y-M-d',strtotime($message['created_at']));
+			}elseif($diff>=60*60){
+				$time = round($diff/(60*60)).' hours ago';
+			}elseif($dif>=60){
+				$time = round($diff/60).' mins ago';
+			}else{
+				$time = 'now';
+			}
+		?>
+        <div class="mail-time"><?=$time?></div>
         <div class="star"><a href="javascript: void(0)" <?php if($message['category']=='important'){?>class="important"<?php }?>></a></div>
         <div class="bin"><a href="javascript: void(0)"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
       </div>
