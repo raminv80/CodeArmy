@@ -18,24 +18,25 @@
       <div id="arrow-left"><a href="#"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
       <div id="arrow-right"><a href="#"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
     </div>
-    
     <div id="compose-main-area">
-    
-    <div id="compose-avatar">
-    </div>
-    
-    <div id="receiver-name"><label>To:</label>&nbsp;<input id="msg-to" name="subj" /></div>
-    <div id="msg-subject"><label>Subject:</label>&nbsp;<input id="msg-subj" name="subj" /></div>
-    
-    <div id="msg-text"><label>Message:</label>
-    <textarea rows="7" id="msg-text" name="msg-text">
+      <div id="compose-avatar"> </div>
+      <div id="receiver-name">
+        <label>To:</label>
+        &nbsp;
+        <input id="msg-to" name="subj" />
+      </div>
+      <div id="msg-subject">
+        <label>Subject:</label>
+        &nbsp;
+        <input id="msg-subj" name="subj" />
+      </div>
+      <div id="msg-text">
+        <label>Message:</label>
+        <textarea rows="7" id="msg-text" name="msg-text">
     </textarea>
+      </div>
     </div>
-    
-    </div>
-    
-    </div>
-    
+    <input type="submit" value="Send" class="lnkimg">
+  </div>
 </div>
-
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>

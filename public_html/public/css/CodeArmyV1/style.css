@@ -1456,5 +1456,8 @@ input.links-portfolios-boxes1 {
 	color:#fff;
 	background:none;
 }
+div#compose-area .lnkimg {
+	float:right;
+}
 
 /* END - New Codes by Reza */
