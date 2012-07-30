@@ -121,7 +121,12 @@ class Messages extends CI_Controller {
 	
 	function trash(){
 		$user_id = $this->session->userdata('user_id');
-		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'trash');
+		if(!isset($offset))$offset=0;
+		$offset = intval($offset);
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'trash',$offset*$this->paginaionlimit,$this->paginaionlimit);
+		$this->view_data['limit'] = $this->paginaionlimit;
+		$this->view_data['current'] = $offset;
+		$this->view_data['total'] = $this->message_model->get_total_messages($user_id,'trash');
 		$this->view_data['window_title'] = "Trash";
 		$this->load->view('message_trash_codearmy_view', $this->view_data);
 	}
@@ -179,5 +184,19 @@ class Messages extends CI_Controller {
 		$list = $this->input->post('message_id');
 		$list = explode(',',$list);
 		echo json_encode($this->message_model->to_trash($list,$user_id));
+	}
+	
+	function Ajax_delete(){
+		$user_id = $this->session->userdata('user_id');
+		$list = $this->input->post('message_id');
+		$list = explode(',',$list);
+		echo json_encode($this->message_model->delete($list,$user_id));
+	}
+	
+	function Ajax_recover(){
+		$user_id = $this->session->userdata('user_id');
+		$list = $this->input->post('message_id');
+		$list = explode(',',$list);
+		echo json_encode($this->message_model->recover($list,$user_id));
 	}
 }

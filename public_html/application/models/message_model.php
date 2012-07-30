@@ -106,4 +106,22 @@ class Message_model extends CI_Model {
 		endforeach;
 		return $res;
 	}
+	
+	function delete($list,$user_id){
+		$res=array();
+		$sql = "update messages set category='deleted' where message_id=? and messages.to=?";
+		foreach($list as $l):
+			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
+		endforeach;
+		return $res;
+	}
+	
+	function recover($list,$user_id){
+		$res=array();
+		$sql = "update messages set category='inbox' where message_id=? and messages.to=?";
+		foreach($list as $l):
+			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
+		endforeach;
+		return $res;
+	}
 }
