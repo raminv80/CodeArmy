@@ -124,4 +124,11 @@ class Message_model extends CI_Model {
 		endforeach;
 		return $res;
 	}
+	
+	function num_unread($user_id){
+		$sql = "SELECT count(1) as num from messages where status='unread' and category in ('inbox', 'important') and `to`=?";
+		$res = $this->db->query($sql,$user_id);
+		$res = $res->result_array();
+		return $res[0]['num'];
+	}
 }
