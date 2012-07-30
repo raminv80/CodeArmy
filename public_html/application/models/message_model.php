@@ -100,10 +100,35 @@ class Message_model extends CI_Model {
 	
 	function to_trash($list,$user_id){
 		$res=array();
-		$sql = "update messages set category='trash' where message_id=? and messages.to=?";
+		$sql = "update messages set category='trash', status='read' where message_id=? and messages.to=?";
 		foreach($list as $l):
 			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
 		endforeach;
 		return $res;
+	}
+	
+	function delete($list,$user_id){
+		$res=array();
+		$sql = "update messages set category='deleted' where message_id=? and messages.to=?";
+		foreach($list as $l):
+			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
+		endforeach;
+		return $res;
+	}
+	
+	function recover($list,$user_id){
+		$res=array();
+		$sql = "update messages set category='inbox' where message_id=? and messages.to=?";
+		foreach($list as $l):
+			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
+		endforeach;
+		return $res;
+	}
+	
+	function num_unread($user_id){
+		$sql = "SELECT count(1) as num from messages where status='unread' and category in ('inbox', 'important') and `to`=?";
+		$res = $this->db->query($sql,$user_id);
+		$res = $res->result_array();
+		return $res[0]['num'];
 	}
 }

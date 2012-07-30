@@ -9,6 +9,7 @@ class Missions extends CI_Controller {
 		
 		$this->load->model('users_model');
 		$this->load->model('skill_model');
+		$this->load->model('message_model');
 		$this->load->model('projects_model');
 		$this->load->model('stories_model', 'stories');
 		

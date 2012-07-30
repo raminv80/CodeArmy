@@ -9,7 +9,7 @@
       <ul id="header-links">
         <li><a href="/messages" id="Messages">
           <div id="messages-holder">
-            <div class="notification" id="messages-notification">4</div>
+            <div class="notification" id="messages-notification"><?=isset($myActiveMessages)?$myActiveMessages:'?' ?></div>
             Messages </div>
           </a> </li>
         <li><a href="/messages/notifications" id="Notifications">
