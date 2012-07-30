@@ -17,8 +17,8 @@
       <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
       <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
       <div id="msg-no"><?=$current+1?> to <?=min($limit*($current+1), $total)?> of <?=$total?></div>
-      <div id="arrow-left"><a href="#"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
-      <div id="arrow-right"><a href="#"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
+      <div id="arrow-left"><a href="/messages/important/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
+      <div id="arrow-right"><a href="/messages/important/<?=($current < round($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
     </div>
     <div id="inbox-rows">
       <div class="title-row">
@@ -44,8 +44,8 @@
       <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
       <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
       <div id="msg-no"><?=$current+1?> to <?=min($limit*($current+1), $total)?> of <?=$total?></div>
-      <div id="arrow-left"><a href="#"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
-      <div id="arrow-right"><a href="#"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
+      <div id="arrow-left"><a href="/messages/important/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
+      <div id="arrow-right"><a href="/messages/important/<?=($current < round($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
     </div>
   </div>
 </div>

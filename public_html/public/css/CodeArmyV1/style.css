@@ -1289,6 +1289,9 @@ input.links-portfolios-boxes1 {
 	width:15px;
 	float:left;
 }
+#inbox-content-area {
+	position:relative;
+}
 #inbox-top-bar {
 	background:url(/public/images/codeArmy/messages/msg-top-bar.png) no-repeat;
 	width: 774px;
@@ -1299,6 +1302,8 @@ input.links-portfolios-boxes1 {
 }
 #inbox-area, #compose-area {
 	padding:100px 0;
+	position:relative;
+	height:100%;
 }
 #inbox-top-bar #back a {
 	float:left;
@@ -1349,15 +1354,15 @@ input.links-portfolios-boxes1 {
 }
 #inbox-rows {
 	width:775px;
-	margin:0 0 0 -10px;
-	height:260px;
+	margin:0 0 0 -2px;
+	min-height:580px;
 	float:left;
 	position:relative;
-	background:url(/public/images/codeArmy/messages/msg-rows-bg.png) no-repeat;
+	background:url(/public/images/codeArmy/messages/msg-rows-bg.jpg) no-repeat 0 5px;;
 }
 .title-row,.msg-row {
 	width:775px;
-	height:50px;
+	height:49px;
 	float:left;
 }
 #inbox-rows #select-all, #inbox-rows #all-messages {
