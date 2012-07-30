@@ -12,7 +12,7 @@
   </div>
   <div id="inbox-area">
     <div id="inbox-top-bar">
-      <div id="back"><a href="#">Back</a></div>
+      <div id="back"><a href="/messages/important/<?=($current>0)?$current-1:$current?>">Back</a></div>
       <div id="mark-unread"><a href="#">Mark as unread</a></div>
       <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
       <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
@@ -39,7 +39,7 @@
       <?php endforeach;?>
     </div>
     <div id="inbox-top-bar">
-      <div id="back"><a href="#">Back</a></div>
+      <div id="back"><a href="/messages/important/<?=($current>0)?$current-1:$current?>">Back</a></div>
       <div id="mark-unread"><a href="#">Mark as unread</a></div>
       <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
       <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
