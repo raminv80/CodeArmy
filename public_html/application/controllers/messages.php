@@ -144,4 +144,32 @@ class Messages extends CI_Controller {
 		$this->load->view('notifications_codearmy_view', $this->view_data);
 	}
 	
+	function Ajax_flag_important(){
+		//only on inbox, important and archive page
+		$user_id = $this->session->userdata('user_id');
+		$list = $this->input->post('message_id');
+		$list = explode(',',$list);
+		echo $this->message_model->make_important($list,$user_id);
+	}
+	
+	function Ajax_flag_unimportant(){
+		$user_id = $this->session->userdata('user_id');
+		$list = $this->input->post('message_id');
+		$list = explode(',',$list);
+		echo $this->message_model->make_unimportant($list,$user_id);
+	}
+	
+	function Ajax_flag_read(){
+		$user_id = $this->session->userdata('user_id');
+		$list = $this->input->post('message_id');
+		$list = explode(',',$list);
+		echo $this->message_model->make_read($list,$user_id);
+	}
+	
+	function Ajax_flag_unread(){
+		$user_id = $this->session->userdata('user_id');
+		$list = $this->input->post('message_id');
+		$list = explode(',',$list);
+		echo $this->message_model->make_unread($list,$user_id);
+	}
 }

@@ -49,4 +49,7 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+
+</script>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>

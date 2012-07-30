@@ -53,4 +53,40 @@ class Message_model extends CI_Model {
 		$res = $data->result_array();
 		return $res[0]['num'];
 	}
+	
+	function make_important($list,$user_id){
+		$res=array();
+		$sql = "update messages set category='important' where message_id=? and to=?";
+		foreach($list as $l):
+			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
+		endforeach;
+		return implode(',',$res);
+	}
+	
+	function make_unimportant($list,$user_id){
+		$res=array();
+		$sql = "update messages set category='inbox' where message_id=? and to=?";
+		foreach($list as $l):
+			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
+		endforeach;
+		return implode(',',$res);
+	}
+	
+	function make_read($list,$user_id){
+		$res=array();
+		$sql = "update messages set status='read' where message_id=? and to=?";
+		foreach($list as $l):
+			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
+		endforeach;
+		return implode(',',$res);
+	}
+	
+	function make_unread($list,$user_id){
+		$res=array();
+		$sql = "update messages set status='unread' where message_id=? and to=?";
+		foreach($list as $l):
+			if($this->db->query($sql, array($l,$user_id)))$res[]=$l;
+		endforeach;
+		return implode(',',$res);
+	}
 }
