@@ -9,7 +9,7 @@
   </div>
   <div id="inbox-area">
     <div id="inbox-top-bar">
-      <div id="back"><a href="/messages/sent/<?=($current>0)?$current-1:$current?>">Back</a></div>
+      <div id="back"><a title="Goto previous page" href="/messages/sent/<?=($current>0)?$current-1:$current?>">Back</a></div>
       <div id="mark-unread"></div>
       <div id="star"></div>
       <div id="bin"></div>
@@ -19,7 +19,7 @@
     </div>
     <div class="inbox-rows">
       <div class="title-row">
-        <div id="select-all">Select <a href="javascript: selectAll()">all</a>/<a href="javascript: selectNone()">none</a></div>
+        <div id="select-all">Select <a title="Select all messages" href="javascript: selectAll()">all</a>/<a title="Deselect all messages" href="javascript: selectNone()">none</a></div>
         <div id="all-messages">All messages</div>
       </div>
       
@@ -51,7 +51,7 @@
       <?php endforeach;?>
     </div>
     <div id="inbox-top-bar">
-      <div id="back"><a href="/messages/sent/<?=($current>0)?$current-1:$current?>">Back</a></div>
+      <div id="back"><a title="Goto previous page" href="/messages/sent/<?=($current>0)?$current-1:$current?>">Back</a></div>
       <div id="mark-unread"></div>
       <div id="star"></div>
       <div id="bin"></div>
@@ -64,6 +64,7 @@
 <script type="text/javascript">
 	$(function(){
 		initEvents();
+		$('#inbox-content-area [title]').tipsy({gravity:'s', opacity:0.95});
 	});
 	
 	function initEvents(){

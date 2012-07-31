@@ -1,5 +1,4 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
-
 <div id="compose-content-area"> 
   
   <!-- START - Compose Block - Dev. by Reza  -->
@@ -10,13 +9,13 @@
   </div>
   <div id="compose-area">
     <div id="inbox-top-bar">
-      <div id="back"><a href="#">Back</a></div>
-      <div id="archive"><a href="#">Archive</a></div>
-      <div id="star"><a href="#"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
-      <div id="bin"><a href="#"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
-      <div id="msg-no">1 of 5</div>
-      <div id="arrow-left"><a href="#"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
-      <div id="arrow-right"><a href="#"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
+      <div id="back"><a title="Goto previous page" href="/messages/inbox">Back</a></div>
+      <div id="archive"></div>
+      <div id="star"></div>
+      <div id="bin"></div>
+      <div id="msg-no"></div>
+      <div id="arrow-left"></div>
+      <div id="arrow-right"></div>
     </div>
     <?php echo form_open('messages/send'); ?>
     <div id="compose-main-area">
@@ -55,4 +54,9 @@
     </form>
   </div>
 </div>
+<script type="text/javascript">
+	$(function(){
+		$('#compose-content-area [title]').tipsy({gravity:'s', opacity:0.95});
+	});
+</script>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>
