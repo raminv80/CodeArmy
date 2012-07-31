@@ -112,7 +112,12 @@ class Messages extends CI_Controller {
 	
 	function archive(){
 		$user_id = $this->session->userdata('user_id');
-		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'archive');
+		if(!isset($offset))$offset=0;
+		$offset = intval($offset);
+		$this->view_data['messages'] = $this->message_model->get_messages($user_id,'archive',$offset*$this->paginaionlimit,$this->paginaionlimit);
+		$this->view_data['limit'] = $this->paginaionlimit;
+		$this->view_data['current'] = $offset;
+		$this->view_data['total'] = $this->message_model->get_total_messages($user_id,'archive');
 		$this->view_data['window_title'] = "Archive messages";
 		$this->load->view('message_archive_codearmy_view', $this->view_data);
 	}
@@ -149,7 +154,9 @@ class Messages extends CI_Controller {
 	
 	function read($message_id){
 		$user_id = $this->session->userdata('user_id');
-		$this->view_data['message'] = $this->message_model->get_message($message_id,$user_id);
+		$this->view_data['message_selected'] = $message_id;
+		$this->view_data['messages'] = $this->message_model->get_message($message_id,$user_id);
+		$this->message_model->make_read(array($message_id),$user_id);
 		$this->view_data['window_title'] = "Message Title";
 		$this->load->view('message_codearmy_view', $this->view_data);
 	}

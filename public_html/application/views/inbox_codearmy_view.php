@@ -1,10 +1,4 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
-<style>
-.star a{width:18px;height:17px; background:url(/public/images/codeArmy/messages/star.png) no-repeat;display:block;}
-.star a.important{background:url(/public/images/codeArmy/messages/star_hover.png) no-repeat;}
-.unread{color:#FFC; font-weight:bold; text-decoration:underline; text-transform:uppercase;}
-.summary{cursor:pointer}
-</style>
 <div id="inbox-content-area"> 
   
   <!-- START - Inbox Block - Dev. by Reza  -->
@@ -33,7 +27,7 @@
         <input type="checkbox" />
         <div class="summary">
         	<a href="/messages/read/<?=$message['message_id']?>"></a>
-            <div class="inbox-user-avatar"><img src="<?=($message["avatar"] != NULL)?'/public/'.$message["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) )?>" width="44" height="45" /></div>
+            <div class="inbox-user-avatar"><img src="<?=($message["avatar"] != NULL)?'/public/'.$message["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) )?>" width="40" height="40" /></div>
             <div class="sender-name"><a href="#"><?=$message['from_username']?></a></div>
             <div class="mail-subject"><a href="#"><?=$message['title']?></a></div>
         <?php
@@ -42,7 +36,7 @@
 				$time = date('Y-M-d',strtotime($message['created_at']));
 			}elseif($diff>=60*60){
 				$time = round($diff/(60*60)).' hours ago';
-			}elseif($dif>=60){
+			}elseif($diff>=60){
 				$time = round($diff/60).' mins ago';
 			}else{
 				$time = 'now';
