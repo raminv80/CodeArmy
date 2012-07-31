@@ -14,6 +14,7 @@ class Messages extends CI_Controller {
 		$this->load->model('projects_model');
 		$this->load->model('stories_model', 'stories');
 		
+		
 		$this->view_data['page_is'] = 'Messages';
 		$this->view_data['action_is'] = $this->uri->segment(2);
 		$controller = $this->uri->segment(1);
