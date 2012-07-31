@@ -148,25 +148,17 @@ class Messages extends CI_Controller {
 		$this->load->view('message_trash_codearmy_view', $this->view_data);
 	}
 	
-	function search($offset=0){
+	function search($offset=0, $search=''){
 		$user_id = $this->session->userdata('user_id');
 		if(!isset($offset))$offset=0;
 		$offset = intval($offset);
-		
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('msg-search', 'Search Message', 'required');
-		
-		if ($this->form_validation->run() == FALSE){
-			$this->view_data['form_error'] = true;
-			$this->inbox();
-		} else {
-			$this->view_data['messages'] = $this->message_model->search_messages($user_id,$offset*$this->paginaionlimit,$this->paginaionlimit);
-			$this->view_data['limit'] = $this->paginaionlimit;
-			$this->view_data['current'] = $offset;
-			$this->view_data['total'] = $this->message_model->get_total_messages($user_id,'search');
-			$this->view_data['window_title'] = "Search messages";
-			$this->load->view('message_search_codearmy_view', $this->view_data);
-		}
+		$search = $this->input->post('msg-search');
+		$this->view_data['messages'] = $this->message_model->search_messages($search, $user_id,$offset*$this->paginaionlimit,$this->paginaionlimit);
+		$this->view_data['limit'] = $this->paginaionlimit;
+		$this->view_data['current'] = $offset;
+		$this->view_data['total'] = $this->message_model->get_total_messages($user_id,'search');
+		$this->view_data['window_title'] = "Search messages";
+		$this->load->view('message_search_codearmy_view', $this->view_data);
 	}
 	
 	function read($message_id){

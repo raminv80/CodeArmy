@@ -13,7 +13,7 @@
       <div id="mark-unread"><a title="Mark all selected messages as unread" href="javascript: unread_all()">Mark as unread</a></div>
       <div id="star"><a title="Mark all selected messages as important" href="javascript: set_importance()"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
       <div id="bin"><a title="Move all selected messages into trash" href="javascript: all_to_trash()"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
-      <div id="msg-no"><?=$current+1?> to <?=min($limit*($current+1), $total)?> of <?=$total?></div>
+      <div id="msg-no"><?=($current*$limit)+1?> to <?=min($limit*($current+1), $total)?> of <?=$total?></div>
       <div id="arrow-left"><a title="Goto previous page" href="/messages/important/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
       <div id="arrow-right"><a title="Goto next page" href="/messages/important/<?=(($current+1) < ceil($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
     </div>
@@ -55,7 +55,7 @@
       <div id="mark-unread"><a title="Mark all selected messages as unread" href="javascript: unread_all()">Mark as unread</a></div>
       <div id="star"><a title="Mark all selected messages as important" href="javascript: set_importance()"><img src="/public/images/codeArmy/messages/star.png" /></a></div>
       <div id="bin"><a title="Move all selected messages into trash" href="javascript: all_to_trash()"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
-      <div id="msg-no"><?=$current+1?> to <?=min($limit*($current+1), $total)?> of <?=$total?></div>
+      <div id="msg-no"><?=$current*$limit+1?> to <?=min($limit*($current+1), $total)?> of <?=$total?></div>
       <div id="arrow-left"><a title="Goto previous page" href="/messages/important/<?=($current>0)?$current-1:$current?>"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
       <div id="arrow-right"><a title="Goto next page" href="/messages/important/<?=(($current+1) < round($total/$limit))?$current+1:$current?>"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
     </div>

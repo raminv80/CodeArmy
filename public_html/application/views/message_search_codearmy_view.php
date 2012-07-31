@@ -1,10 +1,4 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
-<style>
-.star a{width:18px;height:17px; background:url(/public/images/codeArmy/messages/star.png) no-repeat;display:block;}
-.star a.important{background:url(/public/images/codeArmy/messages/star_hover.png) no-repeat;}
-.unread{color:#FFC; font-weight:bold; text-decoration:underline; text-transform:uppercase;}
-.summary{cursor:pointer}
-</style>
 <div id="inbox-content-area"> 
   
   <!-- START - Inbox Block - Dev. by Reza  -->
@@ -42,7 +36,7 @@
 				$time = date('Y-M-d',strtotime($message['created_at']));
 			}elseif($diff>=60*60){
 				$time = round($diff/(60*60)).' hours ago';
-			}elseif($dif>=60){
+			}elseif($diff>=60){
 				$time = round($diff/60).' mins ago';
 			}else{
 				$time = 'now';
@@ -74,7 +68,10 @@
 	function initEvents(){
 		$('.star a').click(switch_importance);
 		$('.bin a').click(to_trash);
-		$('.summary').click(function(){window.location=$(this).find("a").attr("href"); return false;});
+		$('.summary').click(function(){
+			console.log($(this).find("a").attr("href"))
+			window.location=$(this).find("a").attr("href"); return false;
+		});
 	}
 	
 	function to_trash(){

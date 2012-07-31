@@ -24,6 +24,10 @@ class Message_model extends CI_Model {
 						  if($offset>-1 && $limit>-1) $sql.=" limit ?,?";
 						  $data = $this->db->query($sql, array($user_id, $offset, $limit));
 			break;
+			case 'all': $sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to AND messages.to = ? and user_profiles.user_id=f.user_id AND messages.category NOT IN ('trash') ORDER BY messages.message_id DESC";
+						  if($offset>-1 && $limit>-1) $sql.=" limit ?,?";
+						  $data = $this->db->query($sql, array($user_id, $offset, $limit));
+			break;
 			default: $sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and category = ? AND messages.to = ? and user_profiles.user_id=f.user_id ORDER BY messages.message_id DESC";
 					if($offset>-1 && $limit>-1) $sql.=" limit ?,?"; 
 					$data = $this->db->query($sql, array($cat, $user_id, $offset, $limit));
@@ -32,13 +36,17 @@ class Message_model extends CI_Model {
 		return $res;
 	}
 	
-	function search_messages($user_id, $offset=-1, $limit=-1){
-		$search = '%'.$this->input->post('msg-search').'%';
-		$sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE messages.content LIKE ? AND f.user_id = messages.from AND t.user_id = messages.to AND messages.to = ? AND user_profiles.user_id = f.user_id AND messages.category IN ('inbox', 'important')";
-		if($offset>-1 && $limit>-1) $sql.= " LIMIT ?,?";
-		$data = $this->db->query($sql, array($search, $user_id, $offset, $limit));
-		$res = $data->result_array();
-		return $res;
+	function search_messages($search, $user_id, $offset=-1, $limit=-1){
+		if(count(trim($search)) < 3){
+			return $this->get_messages($user_id, 'all', $offset,$limit); 
+		}else{
+			$search = '%'.$search.'%';
+			$sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE messages.content LIKE ? AND f.user_id = messages.from AND t.user_id = messages.to AND messages.to = ? AND user_profiles.user_id = f.user_id AND messages.category NOT IN ('trash')";
+			if($offset>-1 && $limit>-1) $sql.= " LIMIT ?,?";
+			$data = $this->db->query($sql, array($search, $user_id, $offset, $limit));
+			$res = $data->result_array();
+			return $res;
+		}
 	}
 	
 	function send_message($user_id){

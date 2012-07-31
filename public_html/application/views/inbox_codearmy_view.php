@@ -27,6 +27,7 @@
       <div class="msg-row <?=(($i%2)==0)?'even':'odd'?> <?=$message['status']?>" id="message_<?=$message['message_id']?>">
         <input type="checkbox" />
         <div class="summary">
+        	<a href="/messages/read/<?=$message['message_id']?>"></a>
             <div class="inbox-user-avatar"><img src="<?=($message["avatar"] != NULL)?'/public/'.$message["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) )?>" width="40" height="40" /></div>
             <div class="sender-name"><?=$message['from_username']?></div>
             <div class="mail-subject"><?=$message['title']?></div>
