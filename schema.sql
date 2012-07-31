@@ -166,6 +166,7 @@ CREATE TABLE `inbox` (
 
 CREATE TABLE `messages` (
   `message_id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) DEFAULT NULL,
   `from` varchar(48) NOT NULL,
   `to` varchar(48) NOT NULL,
   `title` varchar(100) NOT NULL,
@@ -175,8 +176,9 @@ CREATE TABLE `messages` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`message_id`),
   KEY `from` (`from`),
-  KEY `to` (`to`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+  KEY `to` (`to`),
+  KEY `parent_id` (`parent_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
 
 CREATE TABLE `project` (
   `project_id` int(255) NOT NULL AUTO_INCREMENT,
@@ -400,6 +402,7 @@ ALTER TABLE `inbox`
   ADD CONSTRAINT `inbox_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `messages` (`message_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`from`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
