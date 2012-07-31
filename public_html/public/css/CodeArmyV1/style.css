@@ -69,7 +69,7 @@ a:hover{color:white}
 #header-links li{list-style:none;display:block;text-transform: uppercase;}
 #header-links #messages-holder{width:100px; margin:0 auto;padding-top:15px;}
 #header-links #Messages{width:137px; height:43px;position:absolute;top:26px;left:215px;float:left; text-align:left;}
-#header-links .notification{width:33px;height:20px;background:url(/public/images/codeArmy/profile/notification-bg.png) no-repeat;float:left; text-align:center; padding:4px 0;position:relative;top:-5px;}
+#header-links .notification{width:33px;height:20px;background:url(/public/images/codeArmy/profile/notification-bg.png) no-repeat;float:left; text-align:center; padding:1px 0;position:relative;top:-5px; color:#222;}
 #header-links #notifications-holder{width:135px; margin:0 auto;padding-top:15px;}
 #header-links #Notifications{width:145px; height:43px;position:absolute;top:26px;left:378px;float:left;}
 #header-links #mymissions-holder{width:120px; margin:0 auto;padding-top:15px;}
@@ -1380,7 +1380,7 @@ input.links-portfolios-boxes1 {
 }
 .inbox-rows .inbox-user-avatar {
 	float:left;
-	margin: 5px;
+	margin: 10px 5px;
 }
 .inbox-rows .sender-name {
 	float:left;
@@ -1466,3 +1466,10 @@ div#compose-area .lnkimg {
 }
 
 /* END - New Codes by Reza */
+
+/*New Codes added by Ramin for message pages*/
+.star a{width:18px;height:17px; background:url(/public/images/codeArmy/messages/star.png) no-repeat;display:block;}
+.star a.important{background:url(/public/images/codeArmy/messages/star_hover.png) no-repeat;}
+.unread{color:#FFC; font-weight:bold; text-decoration:underline; text-transform:uppercase;}
+.summary{cursor:pointer}
+/*end of new codes added by ramin*/

@@ -7,24 +7,24 @@ class Message_model extends CI_Model {
 	}
 	
 	function get_message($message_id, $user_id){
-		$sql = "SELECT *, users.username, user_profiles.avatar from messages, users, user_profiles where message_id = ? and (`to` = ? or `from` = ?) and users.user_id = messages.from and users.user_id = user_profiles.user_id";
-		$input = array($message_id, $user_id, $user_id);
+		$sql = "SELECT messages.*, users.username, user_profiles.avatar, users.email from messages, users, user_profiles where (message_id = ? or parent_id=?) and (`to` = ? or `from` = ?) and users.user_id = messages.from and users.user_id = user_profiles.user_id ORDER BY message_id DESC";
+		$input = array($message_id, $message_id, $user_id, $user_id);
 		$res = $this->db->query($sql, $input);
-		if($res->num_rows!=1)die('Error! message not found.');
+		if($res->num_rows<1)die('Error! message not found.');
 		return $res->result_array();
 	}
 	
 	function get_messages($user_id, $cat, $offset=-1, $limit=-1){
 		switch($cat){
-			case 'sent': $sql = "SELECT messages.*,f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and messages.from = ? and user_profiles.user_id=f.user_id";
+			case 'sent': $sql = "SELECT messages.*,f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and messages.from = ? and user_profiles.user_id=f.user_id ORDER BY messages.message_id DESC";
 						 if($offset>-1 && $limit>-1) $sql.=" limit ?,?";
 						 $data = $this->db->query($sql, array($user_id, $offset, $limit));
 			break;
-			case 'inbox': $sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and messages.category IN ('inbox','important') AND messages.to = ? and user_profiles.user_id=f.user_id";
+			case 'inbox': $sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and messages.category IN ('inbox','important') AND messages.to = ? and user_profiles.user_id=f.user_id ORDER BY messages.message_id DESC";
 						  if($offset>-1 && $limit>-1) $sql.=" limit ?,?";
 						  $data = $this->db->query($sql, array($user_id, $offset, $limit));
 			break;
-			default: $sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and category = ? AND messages.to = ? and user_profiles.user_id=f.user_id";
+			default: $sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE f.user_id=messages.from and t.user_id=messages.to and category = ? AND messages.to = ? and user_profiles.user_id=f.user_id ORDER BY messages.message_id DESC";
 					if($offset>-1 && $limit>-1) $sql.=" limit ?,?"; 
 					$data = $this->db->query($sql, array($cat, $user_id, $offset, $limit));
 		}
@@ -43,14 +43,15 @@ class Message_model extends CI_Model {
 	
 	function send_message($user_id){
 		$to = $this->input->post('msg-to');
+		$this->load->helper('htmlpurifier');
 		$sql = "SELECT user_id FROM users WHERE username = ?";
 		$data = $this->db->query($sql, $to);
 		$data = $data->result_array();
 		$doc = array(
 			"from" => $user_id,
 			"to" => $data[0]['user_id'],
-			"title" => $this->input->post('msg-subj'),
-			"content" => $this->input->post('msg-text')
+			"title" => htmlentities($this->input->post('msg-subj')),
+			"content" => html_purify($this->input->post('msg-text'))
 		);
 		$res = $this->db->insert('messages', $doc);
 		return $res;
