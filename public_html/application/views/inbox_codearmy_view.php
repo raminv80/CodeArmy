@@ -13,6 +13,7 @@
       <h3>Messages</h3>
     </div>
   </div>
+  <?=$this->session->flashdata('message')?>
   <div id="inbox-area">
     <div id="inbox-top-bar">
       <div id="back"><a href="/messages/inbox/<?=($current>0)?$current-1:$current?>">Back</a></div>
@@ -34,8 +35,8 @@
         <div class="summary">
         	<a href="/messages/read/<?=$message['message_id']?>"></a>
             <div class="inbox-user-avatar"><img src="<?=($message["avatar"] != NULL)?'/public/'.$message["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) )?>" width="44" height="45" /></div>
-            <div class="sender-name"><a href="#"><?=$message['from_username']?></a></div>
-            <div class="mail-subject"><a href="#"><?=$message['title']?></a></div>
+            <div class="sender-name"><?=$message['from_username']?></div>
+            <div class="mail-subject"><?=$message['title']?></div>
         <?php
 			$diff = abs(strtotime($message['created_at'])-time());
 			if($diff>(24*60*60)){

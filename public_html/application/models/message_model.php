@@ -32,6 +32,15 @@ class Message_model extends CI_Model {
 		return $res;
 	}
 	
+	function search_messages($user_id, $offset=-1, $limit=-1){
+		$search = '%'.$this->input->post('msg-search').'%';
+		$sql = "SELECT messages.*, f.username as from_username, t.username as to_username, user_profiles.avatar, t.email FROM messages, users as f, users as t, user_profiles WHERE messages.content LIKE ? AND f.user_id = messages.from AND t.user_id = messages.to AND messages.to = ? AND user_profiles.user_id = f.user_id AND messages.category IN ('inbox', 'important')";
+		if($offset>-1 && $limit>-1) $sql.= " LIMIT ?,?";
+		$data = $this->db->query($sql, array($search, $user_id, $offset, $limit));
+		$res = $data->result_array();
+		return $res;
+	}
+	
 	function send_message($user_id){
 		$to = $this->input->post('msg-to');
 		$sql = "SELECT user_id FROM users WHERE username = ?";
@@ -54,6 +63,11 @@ class Message_model extends CI_Model {
 			break;
 			case 'inbox': $sql = "SELECT count(1) as num FROM messages WHERE messages.to = ? and messages.category IN ('inbox', 'important')";
 				$data = $this->db->query($sql, array($user_id));
+			break;
+			case 'search':
+				$search = '%'.$this->input->post('msg-search').'%';
+				$sql = "SELECT count(1) as num FROM messages WHERE messages.to = ? AND messages.content LIKE ? AND messages.category IN ('inbox', 'important')";
+				$data = $this->db->query($sql, array($user_id, $search));
 			break;
 			default: $sql = "SELECT count(1) as num FROM messages WHERE messages.to = ? and category = ?";
 				$data = $this->db->query($sql, array($user_id, $cat));

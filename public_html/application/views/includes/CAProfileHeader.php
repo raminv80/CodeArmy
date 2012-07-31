@@ -68,6 +68,15 @@
                 <li<?php if($action_is=='trash'){?> class="active"<?php }?>><a href="/messages/trash">Trash</a></li>
             </ul>
             <img style="margin:30px" src="/public/images/codeArmy/messages/temp_srch.png"/>
+            <?php echo form_open('messages/search'); ?>
+            <?php if (isset($form_error)){ ?>
+            <div id="msg-search-err"><?=form_error("msg-search")?></div>
+            <input type="text" name="msg-search" id="msg-search" value="<?=set_value('msg-search')?>" />
+            <?php } else { ?>
+            <input type="text" name="msg-search" id="msg-search" />
+            <?php } ?>
+            <input type="submit" name="submit" value="Search" />
+            </form>
         </div>
     </div>
     <?php endif;?>
