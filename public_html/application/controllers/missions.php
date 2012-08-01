@@ -46,9 +46,18 @@ class Missions extends CI_Controller {
 		}
 	}
 	
-	function find(){
-		$this->view_data['window_title'] = "Find Missions";
-		$this->load->view('find_missions_codearmy_view', $this->view_data);
+	function hq(){
+		$percision = 0;
+		$user_id = $this->view_data['me']['user_id'];
+		$works = $this->stories->stories_map($percision);
+		$mySkills = $this->skill_model->get_my_skills($user_id);
+		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
+		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
+		$this->view_data['mySkills'] = $mySkills;
+		$this->view_data['percision'] = $percision;
+		$this->view_data['works'] = $works;
+		$this->view_data['window_title'] = "CodeArmy World";
+		$this->load->view('po_missions_codearmy_view', $this->view_data);
 	}
 	
 	function index(){
@@ -61,7 +70,7 @@ class Missions extends CI_Controller {
 		$this->view_data['mySkills'] = $mySkills;
 		$this->view_data['percision'] = $percision;
 		$this->view_data['works'] = $works;
-		$this->view_data['window_title'] = "My Missions";
+		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('missions_codearmy_view', $this->view_data);
 	}
 	
