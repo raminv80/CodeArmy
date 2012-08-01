@@ -30,6 +30,7 @@
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.2"></script>
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.0"></script>
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=2.0.6"></script>
+<script src="http://js.pusher.com/1.12/pusher.min.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/header.js"></script>
 <title><?=$window_title?></title>
 </head>

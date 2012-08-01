@@ -27,7 +27,7 @@
         <input id="msg-to" name="msg-to" value="<?=set_value('msg-to')?>" />
 		<div id="errmsg3"><?=form_error("msg-to")?></div>
         <?php } else { ?>
-        <input id="msg-to" name="msg-to" />
+        <input id="msg-to" name="msg-to" value="<?=$compose_to?>" <?=($compose_to>'')?'':'autofocus="autofocus"'?> />
         <?php } ?>
       </div>
       <div id="msg-subject">
@@ -37,7 +37,7 @@
         <input id="msg-subj" name="msg-subj" value="<?=set_value('msg-subj')?>" />
 		<div id="errmsg3"><?=form_error("msg-subj")?></div>
         <?php } else { ?>
-        <input id="msg-subj" name="msg-subj" />
+        <input id="msg-subj" name="msg-subj" <?=($compose_to=='')?'':'autofocus="autofocus"'?> />
         <?php } ?>
       </div>
       <div id="msg-text">

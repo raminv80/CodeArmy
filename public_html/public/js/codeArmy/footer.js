@@ -16,6 +16,11 @@ $(function() {
 	 $(".datepicker").focus(function(){$(this).css({color:'#999'}).val('').mask("9999-99-99",{placeholder:" "});});
 });
 
+//chat
+chat_channel.bind('message', function(data) {
+  $('.chat').show().find('ul').append('<li>'+data+'</li>');
+});
+
 //cookie management
 function setCookie(c_name,value,exdays)
 {
