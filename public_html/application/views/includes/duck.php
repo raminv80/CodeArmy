@@ -84,7 +84,8 @@ function mission_creator_open(){
 			nextSpeed : 250,
 			prevMethod : 'slideOut',
 			prevSpeed : 250,
-			scrolling: 'no'
+			height: 600,
+			scrolling: 'auto'
 		});
 	}
 </script>

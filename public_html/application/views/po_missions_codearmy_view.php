@@ -79,7 +79,7 @@
         </div>
     </div>
 </div>
-<div id="MissionCreateDetail">
+<div id="MissionCreateDetail" class="dialog">
 	<!--TODO for Reza-->
 </div>
 <!-- end of dialogs --> 
@@ -267,7 +267,7 @@
 		padding: 2px 0;
 		font-size: 20pt;
 	}
-	.arrow-desc{
+	.arrow-desc {
 		background: black;
 		width: 40px;
 		margin-bottom: 2px;

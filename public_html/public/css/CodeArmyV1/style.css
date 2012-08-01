@@ -1465,7 +1465,77 @@ div#compose-area .lnkimg {
 	float:right;
 }
 
+/* Create Mission Page */
+.create-mission-container {
+	background: url("/public/images/codeArmy/mission/create-mission-bg.jpg") no-repeat;
+	position:relative;
+	height:768px;
+	width:751px;
+}
+.create-mission-title {
+	color: white;
+    font-family: 'Ruda',sans-serif;
+    font-size: 12.96pt;
+	padding: 20px 0;
+    height: 33px;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+    width: 100%;
+	text-align:center;
+}
+.create-mission-info, .mission-desc-video {
+	width:100%;
+	float:left;
+	margin: 0 10px;
+	position:relative;
+}
+.mission-title, .mission-video-url {
+	position:relative;
+	float:left;
+	width:43%;
+	padding:10px 15px;
+}
+.create-mission-container label {
+	float: left;
+	padding: 0 5px;
+	color: #FFFFFF;
+    width: 100%;
+}
+.create-mission-info input {
+	background: url("/public/images/codeArmy/profile/text-input-bg.gif") repeat-x scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 1px 1px 1px #636363;
+    color: #999;
+    float: left;
+    font-family: 'Ruda',sans-serif;
+    font-size: 14px;
+    height: 22px;
+    margin: 5px;
+	padding-left: 5px;
+    width: 100%;
+}
+.mission-description, .mission-video-preview {
+	position:relative;
+	float:left;
+	width:45%;
+	padding:10px 0 10px 23px;
+}
+.mission-video-preview {
+	padding:10px 12px;
+}
+.examples-link {
+	float:right;
+	padding-right: 15px;
+	color:#ffcc00;
+	font-size:11.11px;
+	text-decoration:underline;
+}
+.desc-title-text {
+	color:#fff;
+}
 /* END - New Codes by Reza */
+
+
 
 /*New Codes added by Ramin for message pages*/
 .star a{width:18px;height:17px; background:url(/public/images/codeArmy/messages/star.png) no-repeat;display:block;}
