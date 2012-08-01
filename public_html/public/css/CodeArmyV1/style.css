@@ -1469,8 +1469,8 @@ div#compose-area .lnkimg {
 .create-mission-container {
 	background: url("/public/images/codeArmy/mission/create-mission-bg.jpg") no-repeat;
 	position:relative;
-	height:768px;
-	width:751px;
+	height:766px;
+	width:748px;
 }
 .create-mission-title {
 	color: white;
@@ -1482,7 +1482,7 @@ div#compose-area .lnkimg {
     width: 100%;
 	text-align:center;
 }
-.create-mission-info, .mission-desc-video {
+.create-mission-info, .mission-desc-video, .mission-type-n-skills {
 	width:100%;
 	float:left;
 	margin: 0 10px;
@@ -1523,7 +1523,7 @@ div#compose-area .lnkimg {
 .mission-video-preview {
 	padding:10px 12px;
 }
-.examples-link {
+.examples-link a {
 	float:right;
 	padding-right: 15px;
 	color:#ffcc00;
@@ -1531,6 +1531,68 @@ div#compose-area .lnkimg {
 	text-decoration:underline;
 }
 .desc-title-text {
+	color:#fff;
+}
+.mission-description textarea {
+	background: url("/public/images/codeArmy/mission/textarea-box-bg.jpg") no-repeat;
+    border: medium none;
+    color: #FFFFFF;
+    float: left;
+    margin: 7px 0;
+	height:106px;
+	padding: 5px;
+    width: 95%;
+}
+.attach-file-tools {
+	float:left;
+	width:95%;
+	font-size:10.42px;
+}
+.attach-file-tools .filename a {
+	color: #FFCC00;
+	padding:0 5px;
+}
+.attach-file-tools .filesize, .attach-file-tools .filedesc {
+	color:#666;
+	padding:0 5px;
+}
+.attach-file-tools .filesize {
+	font-style:italic;
+}
+.attach-file-tools .binicon {
+	float:right;
+	padding-right:10px;
+}
+.mission-type, .skills-required {
+	float:left;
+	width:45%;
+	position:relative;
+}
+.create-mission-container select {
+	background: url("/public/images/codeArmy/profile/text-input-bg.gif") repeat-x scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 1px 1px 1px #636363;
+    color: #FFFFFF;
+    float: right;
+    font-family: 'Ruda',sans-serif;
+    font-size: 14px;
+    height: 22px;
+    margin: 5px;
+    padding-left: 10px;
+}
+.mission-type-main {
+    width:90%;
+}
+.mission-type-sub {
+    width:85%;
+	float:right;
+}
+.mission-type-n-skills {
+	margin:10px;
+}
+.mission-type-title, .skills-required-title {
+	padding-left:30px;
 	color:#fff;
 }
 /* END - New Codes by Reza */

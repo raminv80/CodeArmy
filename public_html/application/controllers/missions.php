@@ -76,7 +76,7 @@ class Missions extends CI_Controller {
 	
 	function create(){
 		$this->view_data['window_title'] = "Mission Create";
-		$this->load->view('aboutus_codearmy_view', $this->view_data);
+		$this->load->view('create_mission_codearmy_view', $this->view_data);
 	}
 	
 	function ajax_mission_map_search(){
