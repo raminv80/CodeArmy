@@ -125,7 +125,7 @@ class Missions extends CI_Controller {
 			return false;
 		}
 		$this->view_data['window_title'] = "Mission Create";
-		$this->load->view('aboutus_codearmy_view', $this->view_data);
+		$this->load->view('create_mission_codearmy_view', $this->view_data);
 	}
 	
 	function upload_mission_file(){

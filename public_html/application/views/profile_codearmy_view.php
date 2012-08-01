@@ -12,7 +12,7 @@
   <!-- START - Avatar Block - Dev. by Reza  -->
   <div id="block-avatar">
     <div id="profile-name"><?=substr($me["username"],0,15);?></div>
-    <div id="msg-icon"></div>
+    <a id="msg-icon" href="/messages/compose/<?=$me["username"]?>"></a>
     <div id="profile-type"><?=$myProfile["specialization"]?> <?php if(trim($myCountry)!=""){?>&nbsp;&nbsp; [<?=$myCountry?>] <?php }?></div>
     <div id="avatar-pic"> <img src="/public/images/codeArmy/profile/default-avatar.png" alt="Avatar Picture" /> </div>
     <div id="profile-desc"><?=$myProfile["status_msg"]?></div>

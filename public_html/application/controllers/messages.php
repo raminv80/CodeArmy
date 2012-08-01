@@ -62,8 +62,10 @@ class Messages extends CI_Controller {
 		$this->load->view('inbox_codearmy_view', $this->view_data);
 	}
 	
-	function compose(){
+	function compose($to=''){
 		$user_id = $this->session->userdata('user_id');
+		if(strlen(trim($to))<2)$to="";
+		$this->view_data['compose_to'] = $to;
 		$this->view_data['window_title'] = "Compose message";
 		$this->load->view('message_compose_codearmy_view', $this->view_data);
 	}
