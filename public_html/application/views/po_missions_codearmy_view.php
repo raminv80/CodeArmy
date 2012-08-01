@@ -15,6 +15,7 @@
     </div>
   </div>
 </div>
+<?php $this->load->view('includes/duck.php'); ?>
 <?php $this->load->view('includes/CAMapFooter.php'); ?>
 <!-- dialogs -->
 <div id="filter-toolbar" class="toolbar"> <a href="#" id="filter-toolbar-logo"></a>
@@ -61,6 +62,26 @@
     <div id="finishing-section"> </div>
   </div>
 </div>
+<div id="mission_creator" class="dialog">
+	<div class="header">Create Mission</div>
+    <div class="content">
+    	<div class="class1">What do you want done?</div>
+        <div class="selection">
+        <select id="category" name="category">
+        	<option value="">Please select one</option>
+            <option value="web">Website</option>
+            <option value="spa">Web Application</option>
+            <option value="mob">Mobile App</option>
+            <option value="win">Windows App</option>
+            <option value="mac">MAC OS App</option>
+            <option value="game">Game</option>
+        </select>
+        </div>
+    </div>
+</div>
+<div id="MissionCreateDetail">
+	<!--TODO for Reza-->
+</div>
 <!-- end of dialogs --> 
 
 <!-- marker template -->
@@ -81,6 +102,38 @@
 		-moz-backface-visibility: hidden;
 		-o-transform-style: preserve-3d;
 		-o-backface-visibility: hidden;
+	}
+	#MissionCreateDetail{
+		background:url(/public/images/codeArmy/mission/create_mission_detail_bg.png) no-repeat;
+		width:750px;
+		height:773px;
+	}
+	#mission_creator{
+	width: 460px;
+	height: 260px;
+	padding:4px;
+	background:url(/public/images/codeArmy/mission/create_mission__dialog_bg.png) no-repeat;
+	}
+	#mission_creator .header{
+		font-size:12pt;
+		text-align:center;
+		height:32px;
+		margin-top:17px;
+		width:456px;
+		color:white;
+		text-shadow:0 0 2px #FFF;
+	}
+	#mission_creator .class1{font-size:11pt; color:white; text-align:center; margin-top:40px;}
+	#mission_creator .selection{
+		margin: 44px 124px;
+		height: 27px;
+		padding:0 5px;
+		display: block;
+		width: 203px;	
+	}
+	#mission_creator select{	
+		display: block;
+		width: 203px;
 	}
 	#search-loader{margin:4px 3px; display:none;}
 	#profile-toolbar .skill-block{
@@ -283,6 +336,7 @@
 		$('.toolbar').draggable({ containment: '#wrapper' });
 		$('.toolbar [title]').tipsy();
 		initializeEvents();
+		$('select').selectmenu({'width':'202', 'style':'popup'});
 		//run window resize
 		$(window).resize();
 	});
@@ -313,6 +367,9 @@
 	}
 	
 	function initializeEvents(){
+		$('select').bind("change", function(){      
+    		MissionCreate($('select').val());
+		});
 		//initial dialog close button
 		$('.dialog-close-button').click(function(){
 			var dialog = $(this).parents('.dialog');
@@ -413,6 +470,8 @@
 		$('#world-map').css('top',y);
 	});
 	
+	
+	//******************************Helpers************************************/
 	function randMarkers(){
 		var icons = new Array('#','@','!','$','%','&','*');
 		var skills = new Array('php','CSS','MySQL','Rubby','PSD','Doc','PDF','Html','Java','C++');
