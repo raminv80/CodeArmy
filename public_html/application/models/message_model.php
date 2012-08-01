@@ -37,7 +37,7 @@ class Message_model extends CI_Model {
 	}
 	
 	function search_messages($search, $user_id, $offset=-1, $limit=-1){
-		if(count(trim($search)) < 3){
+		if(strlen(trim($search)) < 3){
 			return $this->get_messages($user_id, 'all', $offset,$limit); 
 		}else{
 			$search = '%'.$search.'%';
