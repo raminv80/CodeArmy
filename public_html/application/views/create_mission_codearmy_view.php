@@ -15,7 +15,7 @@
   <div class="mission-desc-video">
     <div class="mission-description">
       <div><span class="desc-title-text">Description</span><span class="examples-link"><a href="#">Examples</a></span></div>
-      <textarea rows="7" id="mission-desc-text" name="mission-desc-text"></textarea>
+      <textarea rows="7" name="mission-desc-text"></textarea>
       <div class="attach-file-tools"> <a href="#"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /></a> <span class="filename"><a href="#">Project-brief.ppt</a></span> <span class="filesize">(250kb)</span> <span class="filedesc">Acme online store brief...</span> <a href="#"><img src="/public/images/codeArmy/mission/binicon.png" class="binicon" /></a> </div>
       <div class="attach-file-tools"> <a href="#"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /></a> <span class="filename"><a href="#">Project-brief.ppt</a></span> <span class="filesize">(250kb)</span> <span class="filedesc">Acme online store brief...</span> <a href="#"><img src="/public/images/codeArmy/mission/binicon.png" class="binicon" /></a> </div>
       <input type="submit" class="lnkimg" value="Attach">
@@ -40,6 +40,8 @@
   
   <div class="skills-required">
   <span class="skills-required-title">Skills Required</span>
+        <textarea rows="7" name="skills-required-text"></textarea>
+
   
   </div>
   

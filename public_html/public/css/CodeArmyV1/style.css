@@ -1595,6 +1595,16 @@ div#compose-area .lnkimg {
 	padding-left:30px;
 	color:#fff;
 }
+.skills-required textarea {
+	background: url("/public/images/codeArmy/mission/textarea-box-bg.jpg") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #FFFFFF;
+    float: left;
+    height: 106px;
+    margin: 7px 0 7px 35px;
+    padding: 5px;
+    width: 95%;
+}
 /* END - New Codes by Reza */
 
 
