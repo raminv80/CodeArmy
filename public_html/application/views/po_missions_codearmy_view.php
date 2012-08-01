@@ -367,7 +367,7 @@
 	}
 	
 	function initializeEvents(){
-		$('select').bind("change", function(){      
+		$('select').bind("change", function(){
     		MissionCreate($('select').val());
 		});
 		//initial dialog close button
@@ -470,6 +470,22 @@
 		$('#world-map').css('top',y);
 	});
 	
+	/*function MissionCreate(value){
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url:'/missions/category',
+			data:{'mission_category': value},
+			success:function(msg){
+				if(msg == 'success'){
+					
+				}
+				jobs = msg;
+				//renderMarkers();
+				//$('#latest-loader').hide();
+			}
+		});
+	}*/
 	
 	//******************************Helpers************************************/
 	function randMarkers(){

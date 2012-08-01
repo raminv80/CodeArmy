@@ -72,7 +72,7 @@ function mission_creator_open(){
 		$.fancybox.open({
 			//type: 'inline',
 			data:{},
-			href : 'http://codearmy.git/missions/create',
+			href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/create',
 			type : 'ajax',
 			padding : 0,
 			margin: 0,

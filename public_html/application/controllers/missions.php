@@ -74,9 +74,102 @@ class Missions extends CI_Controller {
 		$this->load->view('missions_codearmy_view', $this->view_data);
 	}
 	
+	//function category(){
+		//$category = $this->input->post('mission_category');
+		//$this->session->mission_category($category);
+		//echo "success";
+		//$this->load->view('missions_codearmy_view', $this->view_data);
+	//}
+	
 	function create(){
+		$work_id = $this->_gen_id();
+		$check_work_id = $this->get_work($work_id);
+		while($check_work_id->num_rows() > 1) {
+			$work_id = $this->_gen_id();
+			$check_work_id = $this->get_work($work_id);			
+		}
+		$res = array(
+			"work_id" => $work_id,
+			"title" => $title,
+			"subclass" => $subclass,
+			"category" => $category,
+			"description" => $description,
+			"points" => $points,
+			"cost" => $cost,
+			"status" => 'open',
+			"creator" => $user_id,
+			"owner" => $pm_id,
+			"project_id" => $project_id,
+			"created_at" => date('Y-m-d H:i:s'),
+			"work_horse" => $horse_id,
+			"bid_deadline" => $bid_deadline,
+			"deadline" => $deadline,
+			"assigned_at" => $assigned_at,
+			"done_at" => $done_at,
+			"tutorial" => $tutorial,
+			"attach" => $file_id,
+			"lat" => $lat,
+			"lng" => $lng
+		);
+		if($this->db->insert('works', $res)) {
+			foreach($skill_id as $value):
+				$res = array(
+					"work_id" => $work_id,
+					"skill_id" => $value
+				);
+				$this->db->insert('work_skill', $res);
+			endforeach;
+			
+			return $work_id;
+		} else {
+			return false;
+		}
 		$this->view_data['window_title'] = "Mission Create";
 		$this->load->view('aboutus_codearmy_view', $this->view_data);
+	}
+	
+	function upload_mission_file(){
+		$file_id = $this->_gen_id();
+		$check_file_id = $this->get_file($file_id);
+		while($check_file_id->num_rows() > 1) {
+			$file_id = $this->_gen_id();
+			$check_file_id = $this->get_file($file_id);			
+		}
+		
+		// file storing
+		
+		// end of file storing
+		
+		$res = array(
+			"file_id" => $file_id,
+			"file_type" => $file_type,
+			"file_name" => $file_name,
+			"file_title" => $file_title,
+			"file_description" => $file_description,
+			"created_at" => date('Y-m-d H:i:s')
+		);
+		if($this->db->insert('work_files', $res)) {
+			return $file_id;
+		} else {
+			return false;
+		}
+	}
+	
+	function _gen_id() {
+		$work_id = '';
+		list($usec, $sec) = explode(' ', microtime());
+		$rand_seed = (float)$sec + ((float)$usec * 100000);
+		mt_srand($rand_seed);
+		for ($r = 0; $r<13; $r++) { $work_id .= mt_rand(0,9); }
+		return $work_id;
+	}
+	
+	function get_work($work_id) {
+		return $this->db->get_where('works', array('work_id' => $work_id));
+	}
+	
+	function get_file($file_id) {
+		return $this->db->get_where('work_files', array('file_id' => $file_id));
 	}
 	
 	function ajax_mission_map_search(){

@@ -6,7 +6,7 @@ class Work_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	function test($exp){
+	function create_mission($exp){
 		
 	}
 }
