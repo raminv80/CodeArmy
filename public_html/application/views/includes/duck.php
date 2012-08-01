@@ -72,6 +72,7 @@ function mission_creator_open(){
 			type : 'inline',
 			padding : 0,
 			margin: 0,
+			height: 600,
 			autoSize: true,
 			'overlayShow': true,
 			'overlayOpacity': 0.5, 
@@ -84,7 +85,7 @@ function mission_creator_open(){
 			nextSpeed : 250,
 			prevMethod : 'slideOut',
 			prevSpeed : 250,
-			scrolling: 'no'
+			scrolling: 'auto'
 		});
 	}
 </script>
