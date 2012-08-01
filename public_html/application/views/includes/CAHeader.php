@@ -11,9 +11,10 @@
 <link type="text/css" href="/public/css/CodeArmyV1/ui-darkness/jquery-ui-1.8.22.custom.css" rel="stylesheet" />
 <link type="text/css" href="/public/css/CodeArmyV1/base/jquery.ui.selectmenu.css" rel="stylesheet" />
 <link type="text/css" href="/public/css/CodeArmyV1/jquery.ui.selectmenu.css" rel="stylesheet" />
-<link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=2.0.6" type="text/css" media="screen" />
-<link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.2" type="text/css" media="screen" />
 <link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/jquery.fancybox.css?v=2.0.6" type="text/css" media="screen" />
+<link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.2" type="text/css" media="screen" />
+<link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=2.0.6" type="text/css" media="screen" />
+
 <link href="/public/css/CodeArmyV1/style.css" media="all" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/public/js/jquery-1.7.min.js"></script>
 <script type="text/javascript" src="/public/js/jquery.easing.1.3.js"></script>
@@ -23,6 +24,7 @@
 <script type="text/javascript" src="/public/js/codeArmy/modernize.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/jquery.transit.min.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/jquery.maskedinput-1.3.min.js"></script>
+
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/jquery.fancybox.pack.js?v=2.0.6"></script>
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.2"></script>

@@ -181,7 +181,8 @@ class Users_model extends CI_Model {
 			"lan_rw" => 'English',
 			"gender" => 'male',
 			"specialization" => 'unknown'
-		); 
+		);
+		$this->assign_skill('communication', $user_id);
 		return $this->db->insert('user_profiles', $doc);
 	}
 	

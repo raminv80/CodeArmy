@@ -43,6 +43,7 @@ img {
 
 <script>
 function mission_creator_open(){
+	$.fancybox.showLoading()
 	$.fancybox.open({
 		href : '#mission_creator',
 		type : 'inline',
@@ -66,12 +67,16 @@ function mission_creator_open(){
 
 //******************************Mission Creator****************************/
 	function MissionCreate(category){
+		$.fancybox.showLoading()
 		$.fancybox.close();
 		$.fancybox.open({
-			href : '#MissionCreateDetail',
-			type : 'inline',
+			//type: 'inline',
+			data:{},
+			href : 'http://codearmy.git/missions/create',
+			type : 'ajax',
 			padding : 0,
 			margin: 0,
+			height: 600,
 			autoSize: true,
 			'overlayShow': true,
 			'overlayOpacity': 0.5, 

@@ -68,7 +68,7 @@
     	<div class="class1">What do you want done?</div>
         <div class="selection">
         <select id="category" name="category">
-        	<option value="">Please select one</option>
+        	<option value="" selected="selected">Please select one</option>
             <option value="web">Website</option>
             <option value="spa">Web Application</option>
             <option value="mob">Mobile App</option>
