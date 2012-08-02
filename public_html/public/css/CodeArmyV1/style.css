@@ -1466,7 +1466,7 @@ div#compose-area .lnkimg {
 }
 
 /* Create Mission Page */
-.create-mission-container {
+.create-mission-container, .confirm-mission-container {
 	background: url("/public/images/codeArmy/mission/create-mission-bg.jpg") no-repeat;
 	position:relative;
 	height:766px;
@@ -1651,6 +1651,83 @@ input.assinpo {
 .mission-submit-row input.lnkimg {
 	float:right;
 	margin:0 10px;
+}
+/* Confirm Mission Page */
+.confirm-mission-project-name, .confirm-mission-assign-po {
+	width:100%;
+	padding:0px 25px 20px;
+	color:#fff;
+	float: left;
+}
+.mission-brief, .mission-type-arrange-budget, .confirm-mission-skills-files {
+	width:100%;
+	float:left;
+	margin: 0 10px;
+	position:relative;
+}
+.brief-video, .brief-text, .confirm-mission-type, .confirm-mission-arrange-budget, .confirm-mission-skills, .confirm-mission-files {
+	position:relative;
+	float:left;
+	width:43%;
+	padding:10px 15px;
+}
+.brief-text {
+	background:url(/public/images/codeArmy/mission/mission-preview-brief.jpg) no-repeat 0 10px;
+	margin-left:-8px;
+	height:220px;
+}
+.mission-brief-title {
+	width:100%;
+	font-size:22.22px;
+	color:#999;
+	padding:10px 15px;
+}
+.brief-text-title, .brief-text-content {
+	width:100%;
+	font-size:12.5px;
+	margin:10px 0;
+}
+.brief-text-title {
+	color:#fff;
+}
+.brief-text-content {
+	color:#999;
+}
+.confirm-mission-type, .confirm-mission-arrange-budget, .confirm-mission-budget, .confirm-mission-arrange, .confirm-mission-files, .confirm-mission-skills {
+	float:left;
+	width:45%;
+}
+.mission-type-arrange-budget, .confirm-mission-skills-files {
+	margin-top:20px;
+}
+.confirm-mission-type-title, .confirm-mission-skills-title, .confirm-mission-files-title {
+	width:100%;
+	color:#fff;
+	font-size:13.89px;
+}
+.confirm-mission-arrange-budget, .confirm-mission-files  {
+	padding:10px 15px 10px 10px;
+}
+.confirm-mission-type, .confirm-mission-skills {
+	padding:10px 0 10px 15px;
+}
+.confirm-mission-type-text, .confirm-mission-skills-text, .confirm-mission-files-text {
+	color:#666;
+	font-size:12.5px;
+	width:100%;
+}
+.confirm-mission-assign-po {
+	color:#ffcc00;
+	margin:70px 25px 20px 0;
+}
+.confirm-mission-container .submit-cancel-row {
+	float:right;
+}
+.confirm-mission-container .submit-cancel-row input {
+	font-size:12px;
+}
+.confirm-mission-container .attach-file-tools .filename a {
+	color:#999;
 }
 /* END - New Codes by Reza */
 
