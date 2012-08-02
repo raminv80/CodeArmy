@@ -82,7 +82,7 @@ class Missions extends CI_Controller {
 	//}
 	
 	function create(){
-		$work_id = $this->_gen_id();
+		/*$work_id = $this->_gen_id();
 		$check_work_id = $this->get_work($work_id);
 		while($check_work_id->num_rows() > 1) {
 			$work_id = $this->_gen_id();
@@ -123,7 +123,8 @@ class Missions extends CI_Controller {
 			return $work_id;
 		} else {
 			return false;
-		}
+		}*/
+		//$this->view_data['mission_category'] = $this->input->post('mission_category');
 		$this->view_data['window_title'] = "Mission Create";
 		$this->load->view('create_mission_codearmy_view', $this->view_data);
 	}
