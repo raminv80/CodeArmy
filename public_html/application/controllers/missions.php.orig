@@ -91,6 +91,7 @@ class Missions extends CI_Controller {
 		$this->load->view('confirm_mission_codearmy_view', $this->view_data);
 	}
 	
+<<<<<<< HEAD
 	function mission_list($lat,$lng){
 		$this->view_data['works'] = $this->stories->list_stories_map($this->percision,$lat,$lng);
 		$this->view_data['window_title'] = "CodeArmy World";
@@ -103,6 +104,7 @@ class Missions extends CI_Controller {
 		//echo "success";
 		//$this->load->view('missions_codearmy_view', $this->view_data);
 	//}
+=======
 	function create_complete(){
 		$work_id = $this->input->post('work_id');
 		$res = array(
@@ -114,6 +116,7 @@ class Missions extends CI_Controller {
 		$this->db->update('works', $res, $res2);
 		redirect("missions/hq");
 	}
+>>>>>>> origin/master
 	
 	function create(){
 		$this->view_data['main_category'] = $this->work_model->get_main_category();
