@@ -74,6 +74,16 @@ class Missions extends CI_Controller {
 		$this->load->view('missions_codearmy_view', $this->view_data);
 	}
 	
+	function recommended_tallents(){
+		$this->view_data['window_title'] = "CodeArmy World";
+		$this->load->view('recom_tal_codearmy_view', $this->view_data);
+	}
+	
+	function mission_confirmation(){
+		$this->view_data['window_title'] = "CodeArmy World";
+		$this->load->view('confirm_mission_codearmy_view', $this->view_data);
+	}
+	
 	//function category(){
 		//$category = $this->input->post('mission_category');
 		//$this->session->mission_category($category);
