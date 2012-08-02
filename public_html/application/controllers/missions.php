@@ -80,75 +80,90 @@ class Missions extends CI_Controller {
 		$this->load->view('recom_tal_codearmy_view', $this->view_data);
 	}
 	
-	function mission_confirmation(){
+	function mission_confirmation($work_id){
+		$user_id = $this->session->userdata('user_id');
+		$preview = $this->work_model->previewMission($work_id, $user_id);
+		if(count($preview)!=1)die('die hcker!');
+		$this->view_data['preview'] = $preview[0];
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('confirm_mission_codearmy_view', $this->view_data);
 	}
 	
+	function create_complete(){
+		$work_id = $this->input->post('work_id');
+		$res = array(
+			"status" => 'open'
+		);
+		$res2 = array(
+			'work_id'=>$work_id
+		);
+		$this->db->update('works', $res, $res2);
+		redirect("missions/hq");
+	}
+	
 	function create(){
 		$this->view_data['main_category'] = $this->work_model->get_main_category();
-		$this->view_data['sub_category'] = $this->work_model->get_sub_category();
+		$this->view_data['class'] = $this->work_model->get_main_class();
+		$this->view_data['sub_class'] = $this->work_model->get_sub_class();
 		$this->view_data['window_title'] = "Mission Create";
 		$this->load->view('create_mission_codearmy_view', $this->view_data);
 	}
 	
 	function check_create_mission(){
-		if($this->input->post('mission_title') != ""){
-			echo "success";
-		} else {
-			echo "error";
-		}
-	}
-	
-	function create_mission(){
-		$mission_title = $this->input->post('mission_title');
-		die($mission_title);
+		$user_id = $this->view_data['me']['user_id'];
 		
-		/*$work_id = $this->_gen_id();
-		$check_work_id = $this->get_work($work_id);
+		$work_id = $this->work_model->_gen_id();
+		$check_work_id = $this->work_model->get_work($work_id);
 		while($check_work_id->num_rows() > 1) {
-			$work_id = $this->_gen_id();
-			$check_work_id = $this->get_work($work_id);			
+			$work_id = $this->work_model->_gen_id();
+			$check_work_id = $this->work_model->get_work($work_id);			
 		}
+		$info = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
+		$lat = $info['geoplugin_latitude'];
+		$lng = $info['geoplugin_longitude'];
 		$res = array(
 			"work_id" => $work_id,
-			"title" => $title,
-			"subclass" => $subclass,
-			"category" => $category,
-			"description" => $description,
-			"points" => $points,
-			"cost" => $cost,
-			"status" => 'open',
+			"title" => $this->input->post('mission_title'),
+			"sprint" => $this->input->post('mission_type_class'),
+			"subclass" => $this->input->post('mission_type_subclass'),
+			"category" => $this->input->post('mission_type_main'),
+			"description" => $this->input->post('mission_desc'),
+			"input" => $this->input->post('mission_arrange_hour'),
+			"output" => $this->input->post('mission_arrange_month'),
+			"points" => NULL,
+			"cost" => $this->input->post('mission_budget'),
+			"status" => 'draft',
 			"creator" => $user_id,
-			"owner" => $pm_id,
-			"project_id" => $project_id,
+			"owner" => $user_id,
+			"project_id" => NULL,
 			"created_at" => date('Y-m-d H:i:s'),
-			"work_horse" => $horse_id,
-			"bid_deadline" => $bid_deadline,
-			"deadline" => $deadline,
-			"assigned_at" => $assigned_at,
-			"done_at" => $done_at,
-			"tutorial" => $tutorial,
-			"attach" => $file_id,
+			"work_horse" => NULL,
+			"bid_deadline" => NULL,
+			"deadline" => NULL,
+			"assigned_at" => NULL,
+			"done_at" => NULL,
+			"tutorial" => NULL,
+			"attach" => NULL,
 			"lat" => $lat,
 			"lng" => $lng
 		);
 		if($this->db->insert('works', $res)) {
-			foreach($skill_id as $value):
-				$res = array(
-					"work_id" => $work_id,
-					"skill_id" => $value
-				);
-				$this->db->insert('work_skill', $res);
-			endforeach;
+			//foreach($skill_id as $value):
+				//$res = array(
+					//"work_id" => $work_id,
+					//"skill_id" => $value
+				//);
+				//$this->db->insert('work_skill', $res);
+			//endforeach;
 			
-			return $work_id;
+			echo $work_id;
+			//echo "success";
 		} else {
-			return false;
-		}*/
-		//$this->view_data['mission_category'] = $this->input->post('mission_category');
+			//return false;
+			echo "error";
+		}
 	}
-		
+			
 	function ajax_mission_map_search(){
 		$percision = 0;
 		$search = $this->input->post('search');

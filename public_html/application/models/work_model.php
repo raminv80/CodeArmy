@@ -60,9 +60,21 @@ class Work_model extends CI_Model {
 		return $res->result_array();
 	}
 	
-	function get_sub_category(){
+	function get_main_class(){
 		$sql = "SELECT * FROM class ORDER BY class_id";
 		$res = $this->db->query($sql);
+		return $res->result_array();
+	}
+
+	function get_sub_class(){
+		$sql = "SELECT * FROM subclass ORDER BY class_id";
+		$res = $this->db->query($sql);
+		return $res->result_array();
+	}
+	
+	function previewMission($work_id, $user_id){
+		$sql = "SELECT works.*, mission_category.category as catname, class.class_name as classname, subclass.subclass_name as subclassname FROM works, mission_category, class, subclass WHERE works.work_id = ? AND works.creator = ? AND works.subclass = subclass.subclass_id AND subclass.class_id = class.class_id AND class.category_id = mission_category.category_id";
+		$res = $this->db->query($sql, array($work_id, $user_id));
 		return $res->result_array();
 	}
 }
