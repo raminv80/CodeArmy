@@ -1729,6 +1729,180 @@ input.assinpo {
 .confirm-mission-container .attach-file-tools .filename a {
 	color:#999;
 }
+/* Talent Recommendation Page */
+.recom-tal-container {
+	position:relative;
+	width:960px;
+}
+.recom-tal-inner {
+	width:825px;
+	position:relative;
+	padding:0 100px;
+}
+.title-top-bar {
+	position:relative;
+	float:left;
+	width:100%;
+}
+.recom-title {
+	float:left;
+	width:75%;
+}
+.recom-matches {
+	float:right;
+	text-align:center;
+	width:25%;
+}
+.recom-title-main, .recom-matches-number {
+	color: white;
+    font-family: 'Ruda',sans-serif;
+    font-size: 13pt;
+    height: 25px;
+    padding: 10px 0;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+}
+.recom-matches-number {
+	font-size:25px;
+}
+.recom-title-text {
+	font-size:12.5px;
+}
+.recom-box-unit {
+	position:relative;
+	float:left;
+	margin:20px 15px;
+	width:217px;
+	height:271px;
+	background:url(/public/images/codeArmy/mission/recom-box.png) no-repeat;
+}
+.recom-box-top-left {
+	width:112px;
+	float:left;
+	position:relative;
+}
+.recom-box-avatar {
+	background:url(/public/images/codeArmy/mission/recom-avatar.png) no-repeat;
+	float:right;
+	width:82px;
+	height:102px;
+	position:relative;
+}
+.recom-box-top-circle {
+	float:left;
+	width:46px;
+	height:47px;
+	background:url(/public/images/codeArmy/mission/recom-top-circle.png) no-repeat;
+	margin:-15px 0 0 -15px;
+	padding:0;
+}
+.recom-box-top-circle p {
+	padding:0 10px;
+}
+.recom-box-name, .recom-box-position, .recom-box-badges {
+	float:left;
+	width:100%;
+	padding-left:20px;
+}
+.recom-box-name {
+	font-size:16.67px;
+}
+.recom-box-position {
+	font-size:9.72px;
+}
+.recom-box-avatar {
+	margin:5px 5px 0 0;
+}
+.recom-box-badges {
+	margin:10px 0;
+}
+.recom-box-avatar p {
+	padding:65px 0 0 25px;
+	color:ffc601;
+	font-size:10px;
+}
+.recom-box-desc {
+	width:100%;
+	float:left;
+	padding-left:20px;
+	color:#ccc;
+	font-size:9.72px;
+	margin-bottom:10px;
+}
+.recom-box-prog-row {
+	width:200px;
+	position:relative;
+	float:left;
+	font-size:11.39px;
+	margin:2px 10px 0 10px;
+}
+.recom-box-prog-unit {
+	width:45%;
+	float:left;
+	margin: 4px;
+}
+.recom-box-prog-bar {
+	background:url(/public/images/codeArmy/mission/recom-prog-bar-bg.png) no-repeat;
+	float:left;
+	height:8px;
+	width:88px;
+}
+.recom-box-prog-inner {
+	background:url(/public/images/codeArmy/mission/recom-box-prog-bar-inner.png) repeat-x;
+	border-radius: 15px;
+	height:6px;
+	width:30%;
+	margin:1px 0 0 1px;
+}
+.recom-box-invite-row {
+	width:100%;
+	float:left;
+	position:relative;
+}
+.recom-box-complete-missions, .recom-box-invite-button {
+	width:45%;
+	float:left;
+	margin:0 5px;
+}
+.recom-box-mis-com-txt, .recom-box-mis-no {
+	width:100%;
+	text-align:center;
+}
+.recom-box-mis-com-txt {
+	font-size:10.42px;
+}
+.recom-box-mis-no {
+	font-size:18px;
+	text-decoration:underline;
+}
+.recom-box-invite-button {
+	margin:5px 5px 0;
+}
+.recom-box-invite-button input.lnkimg {
+	background:url(/public/images/codeArmy/mission/savebtn_nstate.png) no-repeat;
+	width:85px;
+    height: 34px;
+	font-size:12px;
+}
+.recom-box-invite-button input.lnkimg:hover {
+	background:url(/public/images/codeArmy/mission/savebtn_hoverstate.png) no-repeat;
+}
+.recom-page-nav-left {
+	float:left;
+	margin-top:400px;
+}
+.recom-page-nav-right {
+	float:right;
+	margin-top:400px;
+}
+.recom-page-nav, .recom-page-confirm-invite {
+	float:right;
+	width:100%;
+	text-align: right;
+	margin:10px 100px 10px 0;
+}
+.recom-page-confirm-invite input.lnkimg {
+	float:right;
+}
 /* END - New Codes by Reza */
 
 
