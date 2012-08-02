@@ -1482,7 +1482,7 @@ div#compose-area .lnkimg {
     width: 100%;
 	text-align:center;
 }
-.create-mission-info, .mission-desc-video, .mission-type-n-skills {
+.create-mission-info, .mission-desc-video, .mission-type-n-skills, .mission-arrange-budget, .mission-submit-row {
 	width:100%;
 	float:left;
 	margin: 0 10px;
@@ -1574,12 +1574,15 @@ div#compose-area .lnkimg {
     border-radius: 3px 3px 3px 3px;
     box-shadow: 1px 1px 1px #636363;
     color: #FFFFFF;
-    float: right;
+    float: left;
     font-family: 'Ruda',sans-serif;
     font-size: 14px;
     height: 22px;
     margin: 5px;
     padding-left: 10px;
+}
+.mission-type select {
+	float:right;
 }
 .mission-type-main {
     width:90%;
@@ -1591,7 +1594,7 @@ div#compose-area .lnkimg {
 .mission-type-n-skills {
 	margin:10px;
 }
-.mission-type-title, .skills-required-title {
+.mission-type-title, .skills-required-title, .mission-arrange-title, .mission-budget-title {
 	padding-left:30px;
 	color:#fff;
 }
@@ -1604,6 +1607,50 @@ div#compose-area .lnkimg {
     margin: 7px 0 7px 35px;
     padding: 5px;
     width: 95%;
+}
+.mission-arrangements, .mission-budget {
+	float:left;
+	width:45%;
+	position:relative;
+}
+.mission-arrange-hour, .mission-arrange-month {
+	width:40%;
+}
+select.mission-arrange-month {
+	float:right;
+}
+.arrange-row {
+	margin-left:25px;
+}
+.center-dash {
+	text-align:center;
+	font-size:24px;
+	margin-left:20px;
+}
+.mission-budget {
+	width:50%;
+}
+.assign-po, .submit-cancel-row {
+	float:left;
+	width:45%;
+	position:relative;
+}
+.mission-submit-row label {
+	color: #666;
+    float: left;
+    padding: 0 5px;
+    width: 80%;
+}
+input.assinpo {
+	float: left;
+	width:10%;
+}
+.mission-submit-row {
+	margin-top:50px;
+}
+.mission-submit-row input.lnkimg {
+	float:right;
+	margin:0 10px;
 }
 /* END - New Codes by Reza */
 

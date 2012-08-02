@@ -25,25 +25,50 @@
     </div>
   </div>
   <div class="mission-type-n-skills">
-  
-  <div class="mission-type">
-  <span class="mission-type-title">Mission Type</span>
-  <select class="mission-type-main">
-  <option>Main Category</option>
-  </select>
-  
-  <select class="mission-type-sub">
-  <option>Sub Category</option>
-  </select>
-  
+    <div class="mission-type"> <span class="mission-type-title">Mission Type</span>
+      <select class="mission-type-main">
+        <option>Main Category</option>
+      </select>
+      <select class="mission-type-sub">
+        <option>Sub Category</option>
+      </select>
+    </div>
+    <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
+      <textarea rows="7" name="skills-required-text"></textarea>
+    </div>
+  </div>
+  <div class="mission-arrange-budget">
+    <div class="mission-arrangements"> <span class="mission-arrange-title">Mission's Arrangements</span>
+      <div class="arrange-row">
+        <select class="mission-arrange-hour">
+          <option>Hourly</option>
+        </select>
+        <span class="center-dash">-</span>
+        <select class="mission-arrange-month">
+          <option>1-3 months</option>
+        </select>
+      </div>
+    </div>
+    <div class="mission-budget"> <span class="mission-budget-title">Budget</span>
+      <div class="arrange-row">
+        <select class="mission-budget">
+          <option>30$ - 40$ / hour</option>
+        </select>
+      </div>
+    </div>
   </div>
   
-  <div class="skills-required">
-  <span class="skills-required-title">Skills Required</span>
-        <textarea rows="7" name="skills-required-text"></textarea>
+  <div class="mission-submit-row">
+    <div class="assign-po"> 
+    <input class="assinpo" type="checkbox" /> <label>Assign this mission to a Project Manager? </label>
+   </div>
 
+<div class="submit-cancel-row">
+
+<input type="submit" class="lnkimg" value="Post Mission">
+<input type="reset" class="lnkimg" value="Cancel">
+</div>
+   
+   </div>
   
-  </div>
-  
-  </div>
 </div>
