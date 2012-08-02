@@ -1230,6 +1230,15 @@ class Stories_model extends CI_Model {
 		}else return false;
 	}
 	
+	function list_stories_map($percision,$lat,$lng){
+		$sql = "SELECT works.work_id, mission_category.category_name, works.title, works.description, (SELECT count(1) FROM bids WHERE bids.work_id = works.work_id) AS num_bids, (SELECT count(1) FROM comments WHERE story_id = works.work_id) AS num_comments, works.deadline AS end 
+				FROM works, subclass, class, mission_category 
+				WHERE works.subclass = subclass.subclass_id AND subclass.class_id = class.class_id AND class.category_id = mission_category.category_id AND lower(works.status) IN ('open','reject') AND round(lat,?) = round(?,?) AND round(lng,?) = round(?,?)";
+		$res = $this->db->query($sql,array($percision,$lat,$percision,$percision,$lng,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
 	function stories_map($percision){
 		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') GROUP BY round(lat,?), round(lng,?)";
 		$res = $this->db->query($sql,array($percision,$percision));

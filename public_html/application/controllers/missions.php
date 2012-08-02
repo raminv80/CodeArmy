@@ -19,6 +19,8 @@ class Missions extends CI_Controller {
 		$action = $this->uri->segment(2);
 		$param = $this->uri->segment(3);
 		$this->view_data['action_is'] = $action;
+		
+		$this->percision = 0;
 		// - check if user is logged in
 		
 		$user_id = $this->session->userdata('user_id');
@@ -47,7 +49,7 @@ class Missions extends CI_Controller {
 	}
 	
 	function hq(){
-		$percision = 0;
+		$percision = $this->percision;
 		$user_id = $this->view_data['me']['user_id'];
 		$works = $this->stories->stories_map($percision);
 		$mySkills = $this->skill_model->get_my_skills($user_id);
@@ -61,7 +63,7 @@ class Missions extends CI_Controller {
 	}
 	
 	function index(){
-		$percision = 0;
+		$percision = $this->percision;
 		$user_id = $this->view_data['me']['user_id'];
 		$works = $this->stories->stories_map($percision);
 		$mySkills = $this->skill_model->get_my_skills($user_id);
@@ -82,6 +84,12 @@ class Missions extends CI_Controller {
 	function mission_confirmation(){
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('confirm_mission_codearmy_view', $this->view_data);
+	}
+	
+	function mission_list($lat,$lng){
+		$this->view_data['works'] = $this->stories->list_stories_map($this->percision,$lat,$lng);
+		$this->view_data['window_title'] = "CodeArmy World";
+		$this->load->view('mission_list_codearmy_view', $this->view_data);
 	}
 	
 	//function category(){

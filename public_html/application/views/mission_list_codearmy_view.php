@@ -1,0 +1,100 @@
+<style>
+	#mission_list{
+		width:752px;
+	}
+	.mission_list_header{
+		border-bottom:2px solid #da921f;
+		border-top:2px solid #da921f;
+		background:black;
+		color:#fff200;
+		font-size:12pt;
+		height:30px;
+		padding:13px 0 0 12px;
+	}
+	.down-arrow{
+		background:url(/public/images/codeArmy/mission/down-arrow.png) no-repeat;
+		width:12px;height:6px;
+	}
+	.header-row{color:white; font-size:12px; clear:both; width:100%;height:25px; text-align:center;}
+	.header-row div{ margin-right:2px; line-height:25px;}
+	.header-row .col1{width:30px; height:25px; float:left}
+	.header-row .col2{width:103px; height:25px; float:left}
+	.header-row .col3{width:360px; height:25px; float:left; text-align:left; padding-left:5px;}
+	.header-row .col4{width:70px; height:25px; float:left}
+	.header-row .col5{width:30px; height:25px; float:left}
+	.header-row .col6{width:50px; height:25px; float:left}
+	.header-row .col7{width:80px; height:25px; float:left}
+	.summary-row{color:white; font-size:11px; clear:both; width:100%;height:25px; text-align:center; border:1px solid #da921f; cursor:pointer}
+	.summary-row:hover{background:#662600;}
+	.summary-row.selected{background:#662600;}
+	.summary-row div{ margin-right:2px; line-height:25px;}
+	.summary-row .col1{width:29px; height:25px; float:left; border-right:1px solid #da921f;}
+	.summary-row .col2{width:101px; height:25px; float:left; border-right:1px solid #da921f;}
+	.summary-row .col3{width:360px; height:25px; float:left; text-align:left; padding-left:5px;}
+	.summary-row .col4{width:70px; height:25px; float:left}
+	.summary-row .col5{width:30px; height:25px; float:left}
+	.summary-row .col6{width:50px; height:25px; float:left}
+	.summary-row .col7{width:80px; height:25px; float:left}
+	.detail-row{width:100%; height:247px; background:#da921f; border:1px solid #da921f; display:none;}
+	.mission-video-preview{background:#da921f; width:260px;height:227px;border-right:1px solid white;}
+	.mission-video-preview h2{color:white; font-size:14pt; text-align:justify;}
+	.mission-description-container h2{background:#da921f; font-size:14pt; color:white; text-align:left;}
+	.mission-description{background:white; width:441px; border:1px solid #da921f; height:97px;}
+	.info{background:white; width:465px; height:107px; float:left}
+	.info .header-row{height:34px; width:465px; background:#da921f;}
+	.info .header-row .col1{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:30px;padding-left:10px;}
+	.info .header-row .col2{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:30px;padding-left:10px;}
+	.info .header-row .col3{float:left;width:224px;color:white; font-size:11pt;text-align:left;line-height:30px;padding-left:10px;}
+	.info .data-row{height:34px; width:465px; background:red;height:73px;}
+	.info .data-row .col1{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:73px;padding-left:10px;}
+	.info .data-row .col2{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:px;padding-left:10px;}
+	.info .data-row .col3{float:left;width:224px;color:white; font-size:11pt;text-align:left;line-height:30px;padding-left:10px;}
+</style>
+<div id="mission_list">
+	<div class="mission_list_header">Latest Missions (All)</div>
+    <div class="down-arrow"></div>
+    <div class="header-row">
+    	<div class="col1">#</div>
+        <div class="col2">Type</div>
+        <div class="col3">Task Description</div>
+        <div class="col4">Payout</div>
+        <div class="col5">Bids</div>
+        <div class="col6">comments</div>
+        <div class="col7">End</div>
+    </div>
+    <?php foreach($works as $i=>$work):?>
+    <div class="summary-row">
+    	<div class="col1"><?=$i+1?></div>
+        <div class="col2"><?=$work['category_name']?></div>
+        <div class="col3"><?=$work['title']?></div>
+        <div class="col4">?</div>
+        <div class="col5"><?=$work['num_bids']?></div>
+        <div class="col6"><?=$work['num_comments']?></div>
+        <div class="col7"><?=date('Y-m-d',strtotime($work['end']))?></div>
+    </div>
+    <div class="detail-row">
+    	<div class="mission-video-preview">
+      		<iframe class="youtube-player" type="text/html" width="250" height="150" src="http://www.youtube.com/embed/zFNb8j3YAd4?wmode=opaque" frameborder="0"></iframe>
+        	<h2><?=$work['title']?></h2>
+        </div>
+        <div class="mission-description-container">
+        	<h2 class="mission-description-header">Description</h2>
+            <div class="mission-description">
+            	<?=$work['description']?>
+            </div>
+        </div>
+        <div class="info">
+        	<div class="header-row">
+            	<div class="col1">Time</div>
+                <div class="col2">Payout <span style="color:#ffd339">(USD)</span></div>
+                <div class="col3">Pre-Requisite</div>
+            </div>
+            <div class="data-row">
+            	<div class="col1">Time</div>
+                <div class="col2">Payout <span style="color:#ffd339">(USD)</span></div>
+                <div class="col3">Pre-Requisite</div>
+            </div>
+        </div>
+    </div>
+    <?php endforeach;?>
+</div>
