@@ -511,7 +511,6 @@ input.CAbutton{padding:0}
 	-moz-border-radius: 109px;
 	border-radius: 109px;*/
 }
-.error{color:#C30; font-style:italic; display:none}
 #brush ul{ width:150px; float:left;}
 #brush ul li{cursor:pointer; float:left; color:white; text-indent:-9000px; margin:5px 0;}
 .brush{ background:url(/public/images/codeArmy/designer_test/brush.png) no-repeat; width:144px; height:52px;}
@@ -534,7 +533,7 @@ input.CAbutton{padding:0}
 #footer #facebook{display:block;cursor:pointer; width:16px; height:16px; background:url(/public/images/codeArmy/social.png) no-repeat -21px 0;text-indent:-100000px; float:left; margin-right:5px;}
 
 
-/* BEGIN - New Codes by Reza */
+/* BEGIN - New Codes by Reza@RezaKabiri.com */
 
 #profile-content-area {
 	width:765px;
@@ -1652,7 +1651,9 @@ input.assinpo {
 	float:right;
 	margin:0 10px;
 }
-/* Confirm Mission Page */
+
+/* Confirm Mission Page By Reza@RezaKabiri.com */
+
 .confirm-mission-project-name, .confirm-mission-assign-po {
 	width:100%;
 	padding:0px 25px 20px;
@@ -1729,7 +1730,9 @@ input.assinpo {
 .confirm-mission-container .attach-file-tools .filename a {
 	color:#999;
 }
-/* Talent Recommendation Page */
+
+/* Talent Recommendation Page By Reza@RezaKabiri.com */
+
 .recom-tal-container {
 	position:relative;
 	width:960px;
@@ -1903,7 +1906,83 @@ input.assinpo {
 .recom-page-confirm-invite input.lnkimg {
 	float:right;
 }
-/* END - New Codes by Reza */
+
+/* Find Mission_Full page by Reza@RezaKabiri.com */
+
+.find-mission-full-container {
+	position:relative;
+	width:760px;
+}
+.find-mission-main-col {
+	float:left;
+	width:525px;
+	position:relative;
+}
+.find-mission-right-col {
+	float:right;
+	position:relative;
+	width:225px;
+}
+.find_mission_main_desc, .find-mission-main-title, .find-mission-comment-box {
+	width:100%;
+	position:relative;
+	float:left;
+}
+.find_mission_main_desc {
+	border:1px solid #f19200;
+	background:#666666;
+}
+.find-mission-main-title {
+	background:#f19200;
+	padding:10px 0px;
+}
+.find-mission-title-logo {
+	background:url(/public/images/codeArmy/mission/find-mission-title-logo.jpg) no-repeat;
+	float:left;
+	width:50px;
+	height:35px;
+	margin:0 15px;
+}
+.find-mission-title-text {
+	width:70%;
+	float:left;
+	margin:5px 10px;
+	font-size:24px;
+	font-weight:bold;
+	text-shadow: 0px 1px #000;
+	color:white;
+}
+.find-mission-video-block iframe, .find-mission-main-desc {
+	margin:25px;
+}
+.find-mission-comment-box {
+		background:url(/public/images/codeArmy/mission/comment-box-bg.gif) repeat-x #333;
+		margin:20px 0;
+}
+.find-mission-comment-box-left {
+	float:left;
+	width:12%;
+	margin:20px;
+}
+find-mission-comment-box-right {
+	float:right;
+	width:70%;
+}
+.find-mission-comment-avatar {
+	background:url(/public/images/codeArmy/mission/fin-mission-comment-avatar-bg.gif) repeat-x;
+	height:70px;
+	width:100%;
+}
+.find-mission-comment-avatar p {
+	color:#ffd200;
+	font-size:10px;
+	margin:-22px 0 0 44px;
+}
+.find-mission-comment-name {
+	width:100%;
+	background:url(/public/images/codeArmy/mission/arrow-down.png) no-repeat right;
+}
+/* END - New Codes by Reza@RezaKabiri.com */
 
 
 
