@@ -7,7 +7,6 @@
       <div id="dialog-project-list" class="dialog">
         <div class="container">
           <div class="dialog-close-button"></div>
-          List of projects
           <div class="log"></div>
       	</div>
       </div>
@@ -238,13 +237,13 @@
 	#dialog-project-list{
 		width:0;
 		height:0;
-		background:#F00;
-		color:#FFF;
+		background:rgba(0,0,0,0.8);
 		display:none;
 		position:absolute;
 		top:16px;
 		left:100px;
-		z-index:10002;
+		z-index:1;
+		overflow:auto;
 	}
 	.dialog{padding:0}
 	.dialog .container{
@@ -254,10 +253,11 @@
 	}
 	.dialog .dialog-close-button{
 		position:absolute;
-		top:0;right:0;
-		width:25px;
-		height:25px;
-		background:#0F0;
+		top:8px;right:5px;
+		width:36px;
+		cursor:pointer;
+		height:36px;
+		background-image: url('/public/js/codeArmy/fancybox/source/fancybox_sprite.png');
 	}
 	#world-map{position:relative;}
 	.marker-icon{
@@ -355,6 +355,17 @@
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 	
+	function controlMissionList(){
+		if($(this).hasClass('selected')){
+			$(this).removeClass('selected');
+			$(this).siblings('.detail-row').slideUp();
+		}else{
+			$(this).addClass('selected').siblings('.summary-row').removeClass('selected');
+			$(this).siblings('.detail-row').slideUp(); 
+			$(this).next('.detail-row').slideToggle();
+		}
+	}
+	
 	function catToIcon(cat){
 		var icon = null;
 		if(cat!== undefined){
@@ -406,16 +417,27 @@
 		
 		$('#world-map').on('click','.marker',function(){
 					//TODO: open project list
-					$('#dialog-project-list').css({
-						'top':$(this).data().y,
-						'left':$(this).data().x,
-						'transform-origin': '0% 0%',
-						'-webkit-transform-origin': '0% 0%',
-						'-o-transform-origin': '0% 0%',
-						'-moz-transform-origin': '0% 0%',
-						}).show().animate({top:16, left:100, width:800, height:500, opacity:1},'fast').data($(this).data());
-					$('#dialog-project-list .log').html(JSON.stringify($('#dialog-project-list').data(), null, 4));
+					var me = this;
+					$.fancybox.showLoading();
+					$.get(
+						'/missions/mission_list/'+$(this).data().ref.lat+'/'+$(this).data().ref.lng,
+						function(msg){
+							$('#dialog-project-list').css({
+								'top':$(me).data().y,
+								'left':$(me).data().x,
+								'transform-origin': '0% 0%',
+								'-webkit-transform-origin': '0% 0%',
+								'-o-transform-origin': '0% 0%',
+								'-moz-transform-origin': '0% 0%',
+								}).show().animate({top:16, left:100, width:752, height:500, opacity:1},'fast').data($(me).data());
+							$('#dialog-project-list .log').html(msg);
+						}
+					);
+					$.fancybox.hideLoading();
 			});
+			
+		$('#dialog-project-list').on('click','.summary-row',controlMissionList);
+		
 		$('#world-map').on('mouseenter','.marker',
 			function(){
 					//mouse in
