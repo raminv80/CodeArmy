@@ -103,6 +103,7 @@
   
 </div>
 </form>
+<script type="text/javascript" src="/public/js/codeArmy/footer.js"></script>
 <script type="text/javascript">
 // plupload
 // Custom example logic
@@ -116,6 +117,7 @@ var uploader = new plupload.Uploader({
 	container: 'plupload-container',
 	max_file_size : '10mb',
 	url : '/missions/uploadfiles',
+	multipart_params : {'csrf_workpad': getCookie('csrf_workpad')},
 	resize : {width : 320, height : 240, quality : 90},
 	flash_swf_url : '/public/js/plupload/plupload.flash.swf',
 	silverlight_xap_url : '/public/js/plupload/plupload.silverlight.xap',
