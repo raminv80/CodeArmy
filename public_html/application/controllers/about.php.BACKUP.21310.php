@@ -1,5 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<<<<<<< HEAD
+//testingtesting
+=======
+//testing asdasdasdasd
+>>>>>>> origin/master
 class About extends CI_Controller {
 	var $view_data = array();
 	var $check_login =false;
