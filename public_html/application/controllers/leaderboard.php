@@ -25,6 +25,8 @@ class Leaderboard extends CI_Controller {
 				$me = $me[0];
 				$this->view_data['myProfile'] = $myProfile;
 				$this->view_data['me'] = $me;
+				$this->view_data['myActiveMissions'] = $this->stories->get_num_my_works($user_id, 'in progress');
+				$this->view_data['myActiveMessages'] = $this->message_model->num_unread($user_id);
 			}
 			$this->view_data['username'] = $this->session->userdata('username');
 		} else { // - if user not login, redirect to dashboard. 
