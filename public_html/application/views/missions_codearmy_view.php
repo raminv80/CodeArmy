@@ -189,7 +189,8 @@
 		position:absolute;
 		top:16px;
 		left:100px;
-		z-index:10002;
+		z-index:1;
+		overflow:auto;
 	}
 	.dialog{padding:0}
 	.dialog .container{
@@ -316,7 +317,7 @@
 			$(this).removeClass('selected');
 			$(this).siblings('.detail-row').slideUp();
 		}else{
-			$(this).addClass('selected');
+			$(this).addClass('selected').siblings('.summary-row').removeClass('selected');
 			$(this).siblings('.detail-row').slideUp(); 
 			$(this).next('.detail-row').slideToggle();
 		}

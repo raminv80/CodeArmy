@@ -20,8 +20,9 @@ class Skill_model extends CI_Model {
 		return $result->result_array();
 	}
 	
-	function get_work_skills($work_id){
+	function get_work_skills($work_id,$limit=0){
 		$query = "select * from work_skill, skill where skill.id = work_skill.skill_id and work_id = ? order by work_skill.point desc";
+		if($limit>0)$query.=" limit 0,$limit";
 		$result = $this->db->query($query, array($work_id));
 		return $result->result_array();	
 	}

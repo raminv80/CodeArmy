@@ -39,16 +39,16 @@
 	.mission-video-preview{background:#da921f; width:260px;height:227px;border-right:1px solid white;}
 	.mission-video-preview h2{color:white; font-size:14pt; text-align:justify;}
 	.mission-description-container h2{background:#da921f; font-size:14pt; color:white; text-align:left;}
-	.mission-description{background:white; width:441px; border:1px solid #da921f; height:97px;}
+	.mission-description{background:white; width:441px; border:1px solid #da921f; height:97px; color:black;}
 	.info{background:white; width:465px; height:107px; float:left}
 	.info .header-row{height:34px; width:465px; background:#da921f;}
 	.info .header-row .col1{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:30px;padding-left:10px;}
 	.info .header-row .col2{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:30px;padding-left:10px;}
 	.info .header-row .col3{float:left;width:224px;color:white; font-size:11pt;text-align:left;line-height:30px;padding-left:10px;}
 	.info .data-row{height:34px; width:465px; background:red;height:73px;}
-	.info .data-row .col1{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:73px;padding-left:10px;}
-	.info .data-row .col2{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:px;padding-left:10px;}
-	.info .data-row .col3{float:left;width:224px;color:white; font-size:11pt;text-align:left;line-height:30px;padding-left:10px;}
+	.info .data-row .col1{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:73px;padding-left:10px; background:white;border:1px solid #da921f;color:#cc6600;}
+	.info .data-row .col2{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:73px;padding-left:10px; text-align:center;border:1px solid #da921f;background:white;color:#cc6600;}
+	.info .data-row .col3{float:left;width:229px;color:white; font-size:11pt;text-align:left;height:73px;line-height:35px;padding-left:10px;background:white;border:1px solid #da921f;color:#cc6600;}
 </style>
 <div id="mission_list">
 	<div class="mission_list_header">Latest Missions (All)</div>
@@ -67,7 +67,7 @@
     	<div class="col1"><?=$i+1?></div>
         <div class="col2"><?=$work['category_name']?></div>
         <div class="col3"><?=$work['title']?></div>
-        <div class="col4">?</div>
+        <div class="col4"><?=$work['cost']?></div>
         <div class="col5"><?=$work['num_bids']?></div>
         <div class="col6"><?=$work['num_comments']?></div>
         <div class="col7"><?=date('Y-m-d',strtotime($work['end']))?></div>
@@ -90,9 +90,33 @@
                 <div class="col3">Pre-Requisite</div>
             </div>
             <div class="data-row">
-            	<div class="col1">Time</div>
-                <div class="col2">Payout <span style="color:#ffd339">(USD)</span></div>
-                <div class="col3">Pre-Requisite</div>
+            	<?php
+					//calc remaining time
+					$remaining_time = strtotime($work['end'])-time();
+					if($remaining_time<0)$remaining_time=0;
+					$remaining_hour = floor($remaining_time / (60*60));
+					$remaining_min = $remaining_time % (60*60);
+					$remaining_minutes = floor($remaining_min / (60));
+				?>
+            	<div class="col1"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?> <span class="hrs">hrs</span></div>
+                <div class="col2"><?=$work['cost']?> $</div>
+                <div class="col3">
+                	<?php $skills = $this->skill_model->get_work_skills($work['work_id'],3);?>
+                	<table border="1" cellspacing="3px" cellpadding="3px" width="100%">
+                    	<tr style="margin:3px;">
+                        	<td>Skills:</td>
+                            <?php foreach($skills as $skill):?>
+                            <td style="text-align:center;border:1px solid #fc0;background:#333;"><?=$skill['name']?></td>
+                            <?php endforeach;?>
+                        </tr>
+                        <tr>
+                        	<td>Levels:</td>
+                            <?php foreach($skills as $skill):?>
+                            <td style="text-align:center;border:1px solid #fc0;background:#333;"><?=$skill['point']?></td>
+                            <?php endforeach;?>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
