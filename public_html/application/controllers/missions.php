@@ -80,6 +80,8 @@ class Missions extends CI_Controller {
 	}
 	
 	function recommended_tallents(){
+		$work_id = "044295";
+		$this->view_data['recoms'] = $this->work_model->get_tallents($work_id);
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('recom_tal_codearmy_view', $this->view_data);
 	}
@@ -87,7 +89,7 @@ class Missions extends CI_Controller {
 	function mission_confirmation($work_id){
 		$user_id = $this->session->userdata('user_id');
 		$preview = $this->work_model->previewMission($work_id, $user_id);
-		if(count($preview)!=1)die('die hcker!');
+		//if(count($preview)!=1)die('die hcker!');
 		$this->view_data['preview'] = $preview[0];
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('confirm_mission_codearmy_view', $this->view_data);
@@ -142,15 +144,14 @@ class Missions extends CI_Controller {
 			"work_id" => $work_id,
 			"title" => $this->input->post('mission_title'),
 			"sprint" => 0,
-			"subclass" => $this->input->post('mission_type_subclass'),
+			"class" => ($this->input->post('mission_type_class')==0)?NULL:$this->input->post('mission_type_class'),
+			"subclass" => ($this->input->post('mission_type_subclass')==0)?NULL:$this->input->post('mission_type_subclass'),
 			"category" => $this->input->post('mission_type_main'),
-			"class" => $this->input->post('mission_type_class'),
 			"description" => $this->input->post('mission_desc'),
-			//"input" => $this->input->post('mission_arrange_hour'),
-			//"output" => $this->input->post('mission_arrange_month'),
-			"points" => calc_points(),
-			//"cost" => $this->input->post('mission_budget'),
-			"cost" => calc_cost($this->input->post('mission_arrange_hour'),$this->input->post('mission_arrange_month'),$this->input->post('mission_budget')),
+			//"points" => calc_points(),
+			//"cost" => calc_cost($this->input->post('mission_arrange_hour'),$this->input->post('mission_arrange_month'),$this->input->post('mission_budget')),
+			"points" => 0,
+			"cost" => '0',
 			"status" => 'draft',
 			"creator" => $user_id,
 			"owner" => $user_id,
@@ -174,8 +175,17 @@ class Missions extends CI_Controller {
 				//);
 				//$this->db->insert('work_skill', $res);
 			//endforeach;
-			
 			echo $work_id;
+			
+			$res = array(
+				"work_id" => $work_id,
+				"session_id" => ''
+			);
+			$res2 = array(
+				"session_id" => $this->session->userdata('session_id')
+			);
+			$this->db->update('work_files', $res, $res2);
+			
 			//echo "success";
 		} else {
 			//return false;
@@ -216,17 +226,16 @@ class Missions extends CI_Controller {
 		$fileName = preg_replace('/[^\w\._]+/', '', $fileName);
 		
 		// Make sure the fileName is unique but only if chunking is disabled
-		if ($chunks < 2 && file_exists($targetDir . DIRECTORY_SEPARATOR . $fileName)) 
-		{
-		$ext = strrpos($fileName, '.');
-		$fileName_a = substr($fileName, 0, $ext);
-		$fileName_b = substr($fileName, $ext);
-		
-		$count = 1;
-		while (file_exists($targetDir . DIRECTORY_SEPARATOR . $fileName_a . '_' . $count . $fileName_b))
-		$count++;
-		
-		$fileName = $fileName_a . '_' . $count . $fileName_b;
+		if ($chunks < 2 && file_exists($targetDir . DIRECTORY_SEPARATOR . $fileName)){
+			$ext = strrpos($fileName, '.');
+			$fileName_a = substr($fileName, 0, $ext);
+			$fileName_b = substr($fileName, $ext);
+			
+			$count = 1;
+			while (file_exists($targetDir . DIRECTORY_SEPARATOR . $fileName_a . '_' . $count . $fileName_b))
+			$count++;
+			
+			$fileName = $fileName_a . '_' . $count . $fileName_b;
 		}
 		
 		// Create target dir
@@ -253,6 +262,15 @@ class Missions extends CI_Controller {
 					if ($in) {
 						while ($buff = fread($in, 4096))
 						fwrite($out, $buff);
+						$file_id = $this->work_model->_gen_id();
+						$res = array(
+							"file_id" => $file_id,
+							"file_type" => $_FILES['file']['type'],
+							"file_name" => $fileName,
+							"created_at" => date('Y-m-d H:i:s'),
+							"session_id" => $this->session->userdata('session_id')
+						);
+						$this->db->insert('work_files', $res);
 					} else
 						die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
 						fclose($in);
@@ -272,6 +290,15 @@ class Missions extends CI_Controller {
 				if ($in) {
 					while ($buff = fread($in, 4096))
 					fwrite($out, $buff);
+					$file_id = $this->work_model->_gen_id();
+					$res = array(
+						"file_id" => $file_id,
+						"file_type" => $_FILES['file']['type'],
+						"file_name" => $fileName,
+						"created_at" => date('Y-m-d H:i:s'),
+						"session_id" => $this->session->userdata('session_id')
+					);
+					$this->db->insert('work_files', $res);
 				} else
 					die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
 					

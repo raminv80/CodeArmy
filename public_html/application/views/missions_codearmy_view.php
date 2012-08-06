@@ -260,7 +260,7 @@
 	}
 	.cell{
 		background:#09dbe0;
-		width:<?=$cell_size?>px;height:<?=$cell_size?>px;
+		width:10px;height:10px;
 		position:absolute;
 		top:0;
 		left:0;
