@@ -8,7 +8,7 @@
     </div>
     <div class="mission-video-url">
       <label>Mission Video</label>
-      <input type="text" id="mission-video" name="mission-video" value="" placeholder="Video url"/>
+      <input type="text" id="mission-video" name="mission-video" value="" placeholder="Youtube video tag or url"/>
     </div>
   </div>
   <div class="mission-desc-video">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="mission-video-preview">
-    <iframe class="youtube-player" type="text/html" width="330" height="216" frameborder="0"></iframe>
+    <iframe class="youtube-player" id="mission-video-youtube" type="text/html" width="330" height="216" src="http://www.youtube.com/embed/" frameborder="0"></iframe>
     </div>
   </div>
   <div class="mission-type-n-skills">

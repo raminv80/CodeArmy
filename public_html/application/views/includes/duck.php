@@ -141,6 +141,22 @@ function initCreateMission(){
 	
 	uploader.init();
 	// end of plupload
+	
+	//video link update
+	$('#mission-video').change(function(){
+		var tag = $(this).val();
+		if(tag.indexOf('youtube')>-1){
+			var video_id = tag.split('v=')[1];
+			var ampersandPosition = video_id.indexOf('&');
+			if(ampersandPosition != -1) {
+			  video_id = video_id.substring(0, ampersandPosition);
+			}
+			tag = video_id;
+			$(this).val(tag);
+		}
+		$('#mission-video-youtube').attr('src','http://www.youtube.com/embed/'+tag).show();
+	})
+	
 	$('#post-mission').click(function(){
 		$("#form-create-mission").validate({
 			submitHandler: function() {
