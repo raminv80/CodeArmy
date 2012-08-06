@@ -1,4 +1,6 @@
 <link href="/public/css/CodeArmyV1/style.css" media="all" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/public/js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="/public/js/jPages.min.js"></script>
 
 <div class="recom-tal-container"> <a href="#"><img class="recom-page-nav-left" src="/public/images/codeArmy/mission/recom-page-left-nav.png" /></a> <a href="#"><img class="recom-page-nav-right" src="/public/images/codeArmy/mission/recom-page-right-nav.png" /></a>
   <div class="recom-tal-inner">
@@ -12,7 +14,9 @@
         <div class="recom-matches-text">matches</div>
       </div>
     </div>
+
     <div class="recom-boxes-container">
+	<div id="recom-boxes-wrapper">
       <?php for($i=$page*$num_per_page;$i<min(($page+1)*$num_per_page,count($recoms));$i++){?>
       <?php
 	  	$user_id = $recoms[$i]['user_id'];
@@ -87,10 +91,80 @@
         </div>
       </div>
 	  <?php }?>
-    </div>
-    <div class="recom-page-nav">jquery navigation</div>
+	  </div> <!-- Wrapper end-->
+    </div> <!-- Container end -->
+
+	<div class="recom-page-nav"><div class="holder"></div></div>
     <div class="recom-page-confirm-invite">
       <input type="submit" value="Confirm Invite" class="lnkimg">
     </div>
   </div>
 </div>
+
+<style type="text/css">
+	.recom-boxes-wrapper {width:750px; overflow:hidden}
+	.holder {
+		margin: 15px 0;
+	}
+
+	.holder a {
+		display: inline-block;
+		cursor: pointer;
+		margin: 0 5px;
+		padding: 4px;
+		border-radius: 50%;
+		background-color: #999;
+	}
+
+	.holder a:hover {
+		background-color: #222;
+		color: #fff;
+	}
+
+	.holder a.jp-previous { margin-right: 15px; }
+	.holder a.jp-next { margin-left: 15px; }
+
+	.holder a.jp-current, a.jp-current:hover { 
+		color: #FF4242;
+		font-weight: bold;
+	}
+
+	.holder a.jp-disabled, a.jp-disabled:hover {
+		color: #bbb;
+	}
+
+	.holder a.jp-current, a.jp-current:hover,
+	.holder a.jp-disabled, a.jp-disabled:hover {
+		cursor: default;
+		background-color: #FF4242;
+	}
+
+	.holder span { margin: 0 5px; }
+	.recom-box-invite-button input.lnkimg {cursor:pointer}
+	.recom-box-invite-button input.lnkimg.selected {background: url(/public/images/codeArmy/mission/savebtn_hoverstate.png) no-repeat}
+</style>
+<script type="text/javascript">
+		$(function() {
+		    /* initiate pugin assigning the desired button labels  */
+		    $(".holder").jPages({
+		        containerID : "recom-boxes-wrapper",
+		        perPage     : 6,
+		        first       : false,
+		        previous    : "img.recom-page-nav-left",
+		        next        : "img.recom-page-nav-right",
+		        last        : false,
+				links		: 'blank'
+		    });
+			
+			$('.recom-box-invite-button input.lnkimg').toggle(function(){
+				$(this).val('Invited').addClass('selected');
+			}, function(){
+				$(this).val('Invite').removeClass('selected');
+			});
+			
+			$('.recom-page-confirm-invite').click(function(){
+				console.log($('#recom-boxes-wrapper').find('input.selected').size());
+			})
+
+		});
+</script>
