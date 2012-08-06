@@ -80,6 +80,8 @@ class Missions extends CI_Controller {
 	}
 	
 	function recommended_tallents(){
+		$work_id = "044295";
+		$this->view_data['recoms'] = $this->work_model->get_tallents($work_id);
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('recom_tal_codearmy_view', $this->view_data);
 	}
