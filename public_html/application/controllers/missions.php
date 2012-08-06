@@ -91,6 +91,13 @@ class Missions extends CI_Controller {
 		$preview = $this->work_model->previewMission($work_id, $user_id);
 		//if(count($preview)!=1)die('die hcker!');
 		$this->view_data['preview'] = $preview[0];
+		
+		$preview_skills = $this->work_model->previewSkills($work_id);
+		$this->view_data['preview_skills'] = $preview_skills;
+		
+		$preview_files = $this->work_model->previewFiles($work_id);
+		$this->view_data['preview_files'] = $preview_files;
+		
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('confirm_mission_codearmy_view', $this->view_data);
 	}
@@ -186,6 +193,35 @@ class Missions extends CI_Controller {
 			);
 			$this->db->update('work_files', $res, $res2);
 			
+			if($this->input->post('mission_skills') != ""){
+				$skills = $this->input->post('mission_skills');
+				$skills_array = explode(",", $skills);
+				foreach($skills_array as $value){
+					$skills_res = $this->work_model->store_skill_model($value);
+					
+					$level_res = $this->work_model->store_level_model($value);
+					
+					if (count($skills_res)>0){
+						if(count($level_res)==0){
+							$res = array(
+								"work_id" => $work_id,
+								"skill_id" => $skills_res[0]['id'],
+								"skill_level" => 1,
+								"point" => 1
+							);
+						} else {
+							$res = array(
+								"work_id" => $work_id,
+								"skill_id" => $skills_res[0]['id'],
+								"skill_level" => $level_res[0]['id'],
+								"point" => $level_res[0]['skill_point']
+							);
+						}
+						$this->db->insert('work_skill', $res);
+					}
+					
+				}
+			}
 			//echo "success";
 		} else {
 			//return false;
@@ -374,5 +410,17 @@ class Missions extends CI_Controller {
 	function completed(){
 		$this->view_data['window_title'] = "Missions Completed";
 		$this->load->view('completed_codearmy_view', $this->view_data);
+	}
+	
+	function getSkills(){
+		$q = $this->input->post('searchword');
+		//$q = $_REQUEST["searchword"];
+		$q = str_replace("@","",$q);
+		$q = str_replace(" ","%",$q);
+		$skills = $this->skill_model->get_filter_skill($q);
+		foreach($skills as $value):
+			echo "<a href=\"#\" title=\"".$value["skills"]."\">".$value["skills"]."</a>";
+		endforeach;
+		//echo "<a href=\"#\">hello world</a>";
 	}
 }

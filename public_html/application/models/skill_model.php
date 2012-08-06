@@ -14,6 +14,13 @@ class Skill_model extends CI_Model {
 		return $result->result_array();
 	}
 	
+	function get_filter_skill($keyword){
+		//$query = "SELECT * FROM skill WHERE name LIKE ? ORDER BY name";
+		$query = "SELECT concat(skill_level.skill_level,' ',skill.name) as skills FROM skill, skill_level WHERE skill.name LIKE ?";
+		$result = $this->db->query($query, '%'.$keyword.'%');
+		return $result->result_array();
+	}
+	
 	function get_other_skills($user_id) {
 		$query = "select * from skill where id not in (SELECT skill.id FROM skill, skill_set where skill_set.user_id = ? and skill_set.skill_id = skill.id) order by type, name";
 		$result = $this->db->query($query, $user_id);

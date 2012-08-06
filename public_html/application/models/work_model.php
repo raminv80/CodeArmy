@@ -93,4 +93,28 @@ class Work_model extends CI_Model {
 		$res = $this->db->query($sql, array($work_id, $user_id));
 		return $res->result_array();
 	}
+	
+	function store_skill_model($key){
+		$sql = "SELECT * FROM skill WHERE ? LIKE concat('%', name, '%')";
+		$res = $this->db->query($sql, $key);
+		return $res->result_array();
+	}
+	
+	function store_level_model($key){
+		$sql = "SELECT * FROM skill_level WHERE ? LIKE concat('%', skill_level, '%')";
+		$res = $this->db->query($sql, $key);
+		return $res->result_array();
+	}
+	
+	function previewSkills($work_id){
+		$sql = "SELECT * FROM work_skill, skill, skill_level WHERE work_skill.work_id = ? AND work_skill.skill_id = skill.id AND work_skill.skill_level = skill_level.id";
+		$res = $this->db->query($sql, $work_id);
+		return $res->result_array();
+	}
+	
+	function previewFiles($work_id){
+		$sql = "SELECT * FROM work_files WHERE work_id = ?";
+		$res = $this->db->query($sql, $work_id);
+		return $res->result_array();
+	}
 }

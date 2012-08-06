@@ -33,13 +33,19 @@
   <div class="confirm-mission-skills-files ">
     <div class="confirm-mission-skills">
       <div class="confirm-mission-skills-title">Skills Needed</div>
-      <div class="confirm-mission-skills-text"></div>
+      <div class="confirm-mission-skills-text"><?php
+	  foreach ($preview_skills as $i=>$skills):
+	  	echo $skills['skill_level']." ".$skills['name']."<br>";
+	  endforeach;
+      ?></div>
     </div>
     <div class="confirm-mission-files">
       <div class="confirm-mission-files-title">Files Included</div>
+      <?php foreach($preview_files as $i=>$files): ?>
       <div class="confirm-mission-files-text">
-        <!--<div class="attach-file-tools"> <a href="#"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /></a> <span class="filename"><a href="#">Project-brief.ppt</a></span> <span class="filesize">(250kb)</span> <span class="filedesc">Acme online store brief...</span> <a href="#"><img src="/public/images/codeArmy/mission/binicon.png" class="binicon" /></a> </div>-->
+        <div class="attach-file-tools"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /> <span class="filename"><?=$files["file_name"]?></span></div>
       </div>
+      <?php endforeach; ?>
     </div>
   </div>
   <div class="confirm-mission-assign-po">

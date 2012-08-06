@@ -146,6 +146,7 @@ function initCreateMission(){
 			submitHandler: function() {
 				var mission_title = $('#mission-title').val();
 				var mission_desc = $('#mission-desc-text').val();
+				var mission_skills = $('#skills-required-text').html();
 				var mission_type_main = $('#mission-type-main').val();
 				var mission_type_class = $('#mission-type-class').val();
 				var mission_type_subclass = $('#mission-type-sub').val();
@@ -159,6 +160,7 @@ function initCreateMission(){
 					'/missions/check_create_mission',
 					{ 'mission_title': mission_title, 
 					  'mission_desc': mission_desc, 
+					  'mission_skills': mission_skills,
 					  'mission_type_main': mission_type_main, 
 					  'mission_type_class': mission_type_class, 
 					  'mission_type_subclass': mission_type_subclass, 

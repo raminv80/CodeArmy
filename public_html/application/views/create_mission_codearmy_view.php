@@ -48,13 +48,13 @@
       </select>
     </div>
     <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
-      	<!-- <textarea rows="3" id="skills-required-text" name="skills-required-text" contenteditable="true"></textarea> -->
+      	<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>
 		<div id="skills-required-text" contenteditable="true"></div>
 		<div class="clearfix"></div>
 		<div class="skill-tag">
-			<a href="#" title="Web Design">Web Design</a>
+			<!--<a href="#" title="Web Design">Web Design</a>
 			<a href="#" title="CSS3">CSS3</a>
-			<a href="#" title="HTML5">HTML5</a>
+			<a href="#" title="HTML5">HTML5</a>-->
 		</div>
 		<div class="skill-msg">Type the name of someone or something...</div>
     </div>
@@ -123,14 +123,14 @@
 			var content = $(this).text();
 			var go = content.match(start);
 			var name= content.match(word);
-			var dataString = 'searchword='+ name;
+			var dataString = 'searchword='+ name +'&csrf_workpad='+ getCookie('csrf_workpad');
 			
 			if (go){
 				$('.skill-msg, .skill-tag').slideDown('show');
 				if(name) {
 					$.ajax({
 						type: "POST",
-						url: "tagsearch.php",
+						url: "/missions/getSkills",
 						data: dataString,
 						cache: false,
 						success: function(html) {
@@ -148,9 +148,11 @@
 			var username = $(this).attr('title');
 			var old = $("#skills-required-text").html();
 			var content = old.replace(word,"");
+			$("#skills-required-text-post").html(content);
 			$("#skills-required-text").html(content);
-			var E="<a contenteditable='false' href='#' >"+username+"</a>";
+			var E=username+",";
 			$("#skills-required-text").append(E+' ');
+			$("#skills-required-text-post").append(E+' ');
 			$(".skill-tag").hide();
 			$(".skill-msg").hide();
 			$("#skills-required-text").focus();
