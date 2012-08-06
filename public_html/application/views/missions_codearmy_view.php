@@ -312,6 +312,11 @@
 		return icon;
 	}
 	
+	function gotoMission(){
+		var mission_id=$(this).attr('id').split('-')[1];
+		window.location="/mission/view/"+mission_id;
+	}
+	
 	function controlMissionList(){
 		if($(this).hasClass('selected')){
 			$(this).removeClass('selected');
@@ -380,6 +385,7 @@
 			});
 			
 		$('#dialog-project-list').on('click','.summary-row',controlMissionList);
+		$('#dialog-project-list').on('click','.detail-row',gotoMission);
 		
 		$('#world-map').on('mouseenter','.marker',
 			function(){

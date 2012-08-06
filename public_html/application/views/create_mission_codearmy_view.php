@@ -156,37 +156,6 @@
 			$(".skill-tag").hide();
 			$(".skill-msg").hide();
 			$("#skills-required-text").focus();
-		});
-		
-		$('#mission-video').live('keyup', function(){
-			var vidid = $(this).val();
-			var vidurl = vididParser(vidid);
-			console.log(vidurl);
-			
-			if (vidurl) {
-				var link = 'http://www.youtube.com/embed/'+vidurl+'?wmode=opaque';
-				$('.mission-video-preview').find('iframe').show().attr('src', link);
-			} else {
-				$('.mission-video-preview').find('iframe').hide();
-			}
-			/* if (vidid!=0){
-				var link = 'http://www.youtube.com/embed/'+vidid+'?wmode=opaque';
-				$('.mission-video-preview').find('iframe').attr('src', link);
-			} else {
-				$('.mission-video-preview').find('iframe').hide();
-			} */
-		})
+		});	
 	});
-	function vididParser(url) {
-		if ('#mission-video:contains(vimeo)') {
-			var p = /http:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
-		  	//return (url.match(p)) ? RegExp.$1 : false;
-			return (url.match(p));
-		} else if('#mission-video:contains(youtube)'){
-			var p = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
-			return (url.match(p));
-		} else {
-			
-		}
-	}
 </script>

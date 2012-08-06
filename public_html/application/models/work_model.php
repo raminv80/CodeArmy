@@ -50,6 +50,12 @@ class Work_model extends CI_Model {
 		return $this->db->get_where('works', array('work_id' => $work_id));
 	}
 	
+	function get_work_skills($work_id){
+		$sql = "SELECT * from work_skill, skill where work_skill.work_id = ? AND work_skill.skill_id = skill.id";
+		$res = $this->db->query($sql, $work_id);
+		return $res->result_array();
+	}
+	
 	function get_file($file_id) {
 		return $this->db->get_where('work_files', array('file_id' => $file_id));
 	}
