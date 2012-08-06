@@ -1214,6 +1214,7 @@ input.links-portfolios-boxes1 {
 	border: 1px solid #999999;
 	color:#fff;
 	width: 250px;
+	resize: none; 
 }
 #achievements-row {
 	width:780px;
@@ -1458,6 +1459,7 @@ input.links-portfolios-boxes1 {
 	float:left;
 	border:none;
 	color:#fff;
+	resize: none;
 	background:none;
 }
 div#compose-area .lnkimg {
@@ -1537,6 +1539,7 @@ div#compose-area .lnkimg {
     border: medium none;
     color: #FFFFFF;
     float: left;
+	resize: none;
     margin: 7px 0;
 	height:106px;
 	padding: 5px;
@@ -1605,6 +1608,7 @@ div#compose-area .lnkimg {
     height: 106px;
     margin: 7px 0 7px 35px;
     padding: 5px;
+	resize: none;
     width: 95%;
 }
 .mission-arrangements, .mission-budget {
@@ -1969,9 +1973,9 @@ input.assinpo {
 	width:12%;
 	margin:20px;
 }
-find-mission-comment-box-right {
+.find-mission-comment-box-right {
 	float:right;
-	width:70%;
+	width:75%;
 }
 .find-mission-comment-avatar {
 	background:url(/public/images/codeArmy/mission/fin-mission-comment-avatar-bg.gif) repeat-x;
@@ -1986,6 +1990,94 @@ find-mission-comment-box-right {
 .find-mission-comment-name {
 	width:100%;
 	background:url(/public/images/codeArmy/mission/arrow-down.png) no-repeat right;
+}
+.fmcb-right-row1, .fmcb-right-row2 {
+	width:100%;
+	float:left;
+}
+.fmcb-right-row1 {
+	margin: 20px 20px 0 20px;
+}
+.fmcb-right-row2 {
+	margin: 5px 20px 5px 100px;
+}
+.urbid {
+	float:left;
+	width:auto;
+	color:#ccc;
+	font-size:16.67px;
+	margin:0 5px;
+}
+.clock-icon {
+	background:url(/public/images/codeArmy/mission/clock-icon.png) no-repeat;
+	height:26px;
+	width:21px;
+	float:left;
+	margin:0 5px;
+}
+.dollar-sign-icon {
+	background:url(/public/images/codeArmy/mission/dollar-sign.png) no-repeat;
+	height:22px;
+	width:15px;
+	float:left;
+	margin:0 5px;
+}
+.small-box-hr input {
+	background:url(/public/images/codeArmy/mission/small-box-bg.png) no-repeat;
+	width:75px;
+	padding:0 30px 0px 20;
+	color:#ccc;
+	font-size:16.67px;
+	height:35px;
+	float:left;
+	border:none;
+}
+.arr-up-img {
+	margin-bottom:10px;
+	margin-right:-8px;
+}
+.arr-down-img {
+	margin-top:10px
+}
+.botharrows {
+	margin-left:-22px;
+	float:left;
+	margin-top:11px;
+}
+.bidhrstext {
+	float:left;
+	width:45px;
+	padding: 10px 0;
+}
+.fmcb-right-textarea {
+	width:100%;
+	float:left;
+	position:relative;
+}
+.fmcb-right-textarea textarea {
+	background:url(/public/images/codeArmy/mission/com-box-bg.png) no-repeat;
+	border:none;
+	width:373px;
+	height:59px;
+	font-style:italic;
+	color:#9f9e9e;
+	font-size:13.89px;
+	padding:8px 10px 8px 13px;
+	resize: none;
+}
+.find-mission-comment-box-right input.lnkimg {
+	float:right;
+	margin: 10px 25px;
+}
+.find-mission-comment-box-down {
+	width:100%;
+	float:left;
+}
+.find-mission-down-box-row {
+	background:url(/public/images/codeArmy/mission/comment-box-bg.png) no-repeat;
+	width:525px;
+	height:125px;
+	float:left;
 }
 /* END - New Codes by Reza@RezaKabiri.com */
 
