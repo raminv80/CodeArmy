@@ -81,8 +81,19 @@ class Missions extends CI_Controller {
 	
 	function recommended_tallents(){
 		$work_id = "044295";
-		$this->view_data['recoms'] = $this->work_model->get_tallents($work_id);
-		$this->view_data['window_title'] = "CodeArmy World";
+		$this->view_data['page'] = 0;
+		$this->view_data['num_per_page'] = 6;
+		//Check if is po
+		$user_id = $this->session->userdata('user_id');
+		$work = $this->work_model->get_work($work_id);
+		$work=$work->result_array();
+		$work = $work[0];
+		if($work['creator'] == $user_id || $work['owner'] == $user_id){
+			$this->load->model('recom_model');
+			$this->view_data['recoms'] = $this->recom_model->get_tallents($work_id);
+		}else{
+			die('Error: Either you might be logged out or you are not creator of this job');
+		}
 		$this->load->view('recom_tal_codearmy_view', $this->view_data);
 	}
 	

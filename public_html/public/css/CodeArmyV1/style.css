@@ -1736,6 +1736,7 @@ input.assinpo {
 .recom-tal-container {
 	position:relative;
 	width:960px;
+	margin:0 auto;
 }
 .recom-tal-inner {
 	width:825px;
@@ -1817,6 +1818,7 @@ input.assinpo {
 }
 .recom-box-badges {
 	margin:10px 0;
+	height:25px;
 }
 .recom-box-avatar p {
 	padding:65px 0 0 25px;
@@ -1825,6 +1827,7 @@ input.assinpo {
 }
 .recom-box-desc {
 	width:100%;
+	height:20px;
 	float:left;
 	padding-left:20px;
 	color:#ccc;
@@ -1833,6 +1836,7 @@ input.assinpo {
 }
 .recom-box-prog-row {
 	width:200px;
+	height:36px;
 	position:relative;
 	float:left;
 	font-size:11.39px;
@@ -1859,6 +1863,7 @@ input.assinpo {
 .recom-box-invite-row {
 	width:100%;
 	float:left;
+	height:40px;
 	position:relative;
 }
 .recom-box-complete-missions, .recom-box-invite-button {
