@@ -12,12 +12,17 @@
   <div id="copywrite">Copywrite &copy; 2012 CodeArmy All rights reserved</div>
 </div>
 <div id="debugger" style="background: rgba(20,40,0,0.9); position:absolute;top:0;left:0;text-align:left;display:none;">
-  <h2>Console:</h2>
-  <?php echo "<pre style=\"border: 1px solid #000; overflow: auto; margin: 2em;\">"; ?> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  ++++++++++++++++++++Session Values++++++++++++++++++++++++++
-  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ <?php echo nl2br(var_export($this->session->userdata,true)); ?> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  ++++++++++++++++++++PASSED Variables++++++++++++++++++++++++++
-  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ <?php echo nl2br(var_export($this->_ci_cached_vars,true)); ?> <?php echo "</pre>\n";?> </div>
+	<h2>Console:</h2>
+	<?php echo "<pre style=\"border: 1px solid #000; overflow: auto; margin: 2em;\">"; ?>
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    ++++++++++++++++++++Session Values++++++++++++++++++++++++++
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    <?php echo nl2br(var_export($this->session->userdata,true)); ?>
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    ++++++++++++++++++++PASSED Variables++++++++++++++++++++++++++
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	<?php echo nl2br(var_export($this->_ci_cached_vars,true)); ?>
+    <?php echo "</pre>\n";?>
 </div>
 
 </div>

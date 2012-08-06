@@ -49,6 +49,7 @@
 	.info .data-row .col1{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:73px;padding-left:10px; background:white;border:1px solid #da921f;color:#cc6600;}
 	.info .data-row .col2{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:73px;padding-left:10px; text-align:center;border:1px solid #da921f;background:white;color:#cc6600;}
 	.info .data-row .col3{float:left;width:229px;color:white; font-size:11pt;text-align:left;height:73px;line-height:35px;padding-left:10px;background:white;border:1px solid #da921f;color:#cc6600;}
+	.detail-row{cursor:pointer;}
 </style>
 <div id="mission_list">
 	<div class="mission_list_header">Latest Missions (All)</div>
@@ -63,16 +64,16 @@
         <div class="col7">End</div>
     </div>
     <?php foreach($works as $i=>$work):?>
-    <div class="summary-row">
+    <div class="summary-row" id="summary-<?=$work['work_id']?>">
     	<div class="col1"><?=$i+1?></div>
-        <div class="col2"><?=$work['category_name']?></div>
+        <div class="col2"><?=$work['category']?></div>
         <div class="col3"><?=$work['title']?></div>
         <div class="col4"><?=$work['cost']?></div>
         <div class="col5"><?=$work['num_bids']?></div>
         <div class="col6"><?=$work['num_comments']?></div>
         <div class="col7"><?=date('Y-m-d',strtotime($work['end']))?></div>
     </div>
-    <div class="detail-row">
+    <div class="detail-row" id="detail-<?=$work['work_id']?>">
     	<div class="mission-video-preview">
       		<iframe class="youtube-player" type="text/html" width="250" height="150" src="http://www.youtube.com/embed/zFNb8j3YAd4?wmode=opaque" frameborder="0"></iframe>
         	<h2><?=$work['title']?></h2>
