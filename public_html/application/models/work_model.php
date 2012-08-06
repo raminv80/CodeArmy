@@ -60,15 +60,30 @@ class Work_model extends CI_Model {
 		return $res->result_array();
 	}
 	
-	function get_main_class(){
-		$sql = "SELECT * FROM class ORDER BY class_id";
-		$res = $this->db->query($sql);
+	function get_main_class($cat=''){
+		if($cat==''){
+			$sql = "SELECT class.* FROM class ORDER BY class_id";
+			$res = $this->db->query($sql);
+		}else{
+			$sql = "SELECT class.* FROM class  WHERE class.category_id=? ORDER BY class_id";
+			$res = $this->db->query($sql,$cat);
+		}
 		return $res->result_array();
 	}
 
-	function get_sub_class(){
-		$sql = "SELECT * FROM subclass ORDER BY class_id";
-		$res = $this->db->query($sql);
+	function get_sub_class($cat='',$class_id=''){
+		if($cat=='' && $class_id==''){
+			$sql = "SELECT * FROM subclass ORDER BY class_id";
+			$res = $this->db->query($sql);
+		}else{
+			if($cat==''){
+				$sql = "SELECT * FROM subclass WHERE class_id=? ORDER BY class_id";
+				$res = $this->db->query($sql,$class_id);
+			}else{
+				$sql = "SELECT subclass.* FROM subclass,class WHERE class.class_id=subclass.class_id AND class.category_id=? ORDER BY class_id";
+				$res = $this->db->query($sql,$cat);
+			}
+		}
 		return $res->result_array();
 	}
 	

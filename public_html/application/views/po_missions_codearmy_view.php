@@ -1,4 +1,13 @@
 <?php $this->load->view('includes/CAHeader.php'); ?>
+<script src="/public/js/jquery.validate.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+<script type="text/javascript" src="/public/js/plupload/plupload.js"></script>
+<script type="text/javascript" src="/public/js/plupload/plupload.gears.js"></script>
+<script type="text/javascript" src="/public/js/plupload/plupload.silverlight.js"></script>
+<script type="text/javascript" src="/public/js/plupload/plupload.flash.js"></script>
+<script type="text/javascript" src="/public/js/plupload/plupload.browserplus.js"></script>
+<script type="text/javascript" src="/public/js/plupload/plupload.html4.js"></script>
+<script type="text/javascript" src="/public/js/plupload/plupload.html5.js"></script>
 <!--TODO: add ajax loader icons -->
 <div id="wrapper">
   <div id="find-mission-area">
@@ -67,21 +76,14 @@
     	<div class="class1">What do you want done?</div>
         <div class="selection">
         <select id="category" name="category">
-        	<option value="" selected="selected">Please select one</option>
-            <option value="web">Website</option>
-            <option value="spa">Web Application</option>
-            <option value="mob">Mobile App</option>
-            <option value="win">Windows App</option>
-            <option value="mac">MAC OS App</option>
-            <option value="game">Game</option>
+        	<option value="" selected="selected">--- Please select ---</option>
+      <?php foreach($main_category as $value): ?>
+        <option value="<?=$value['category_id']?>"><?=$value['category']?></option>
+      <?php endforeach; ?>
         </select>
         </div>
     </div>
 </div>
-<div id="MissionCreateDetail" class="dialog">
-	<!--TODO for Reza-->
-</div>
-<!-- end of dialogs --> 
 
 <!-- marker template -->
 <div id="marker-template" class="marker" style="display:none;">

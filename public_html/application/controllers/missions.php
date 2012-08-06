@@ -55,6 +55,7 @@ class Missions extends CI_Controller {
 		$user_id = $this->view_data['me']['user_id'];
 		$works = $this->stories->stories_map($percision);
 		$mySkills = $this->skill_model->get_my_skills($user_id);
+		$this->view_data['main_category'] = $this->work_model->get_main_category();
 		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
 		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
 		$this->view_data['mySkills'] = $mySkills;
@@ -116,10 +117,11 @@ class Missions extends CI_Controller {
 		redirect("missions/hq");
 	}
 	
-	function create(){
+	function create($cat=''){
+		$this->view_data['cat_selected'] = $cat;
 		$this->view_data['main_category'] = $this->work_model->get_main_category();
-		$this->view_data['class'] = $this->work_model->get_main_class();
-		$this->view_data['sub_class'] = $this->work_model->get_sub_class();
+		$this->view_data['class'] = $this->work_model->get_main_class($cat);
+		$this->view_data['sub_class'] = $this->work_model->get_sub_class($cat,'');
 		$this->view_data['window_title'] = "Mission Create";
 		$this->load->view('create_mission_codearmy_view', $this->view_data);
 	}
@@ -139,14 +141,16 @@ class Missions extends CI_Controller {
 		$res = array(
 			"work_id" => $work_id,
 			"title" => $this->input->post('mission_title'),
-			"sprint" => $this->input->post('mission_type_class'),
+			"sprint" => 0,
 			"subclass" => $this->input->post('mission_type_subclass'),
 			"category" => $this->input->post('mission_type_main'),
+			"class" => $this->input->post('mission_type_class'),
 			"description" => $this->input->post('mission_desc'),
-			"input" => $this->input->post('mission_arrange_hour'),
-			"output" => $this->input->post('mission_arrange_month'),
-			"points" => NULL,
-			"cost" => $this->input->post('mission_budget'),
+			//"input" => $this->input->post('mission_arrange_hour'),
+			//"output" => $this->input->post('mission_arrange_month'),
+			"points" => calc_points(),
+			//"cost" => $this->input->post('mission_budget'),
+			"cost" => calc_cost($this->input->post('mission_arrange_hour'),$this->input->post('mission_arrange_month'),$this->input->post('mission_budget')),
 			"status" => 'draft',
 			"creator" => $user_id,
 			"owner" => $user_id,
@@ -177,6 +181,16 @@ class Missions extends CI_Controller {
 			//return false;
 			echo "error";
 		}
+	}
+	
+	private function calc_cost($type,$timeline,$budget){
+		//TODO
+		return 0;
+	}
+	
+	private function clac_points(){
+		//TODO
+		return 0;
 	}
 	
 	public function uploadfiles(){
