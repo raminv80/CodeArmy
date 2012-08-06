@@ -125,17 +125,18 @@ function initCreateMission(){
 	
 	uploader.bind('FilesAdded', function(up, files) {
 		for (var i in files) {
-			$('#filelist').append('<div id="' + files[i].id + '">' + files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <b></b></div>');
+			$('#filelist').append('<div id="' + files[i].id + '">' + files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <b></b> <a href="javascript:;">Delete</a></div>');
 		}
 	});
 	
 	uploader.bind('UploadProgress', function(up, file) {
-		$('#'+file.id+' b').html('<span>' + file.percent + "%</span>");
+		$('#'+file.id+' b').html("<span>" + file.percent + "%</span>");
 	});
 	
 	$('#uploadfiles').click(function() {
 		uploader.start();
 		return false;
+		//e.preventDefault();
 	});
 	
 	uploader.init();
@@ -203,6 +204,6 @@ function initCreateMission(){
 				);
 			}
 		});
-	});	
+	});
 }
 </script>
