@@ -3,6 +3,7 @@
 <link href="/public/css/v4/tipsy.css" media="all" rel="stylesheet" type="text/css" />
 <link type="text/css" href="/public/css/CodeArmyV1/ui-darkness/jquery-ui-1.8.22.custom.css" rel="stylesheet" />
 <link href="/public/css/CodeArmyV1/style.css" media="all" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/jquery.fancybox.css?v=2.0.6" type="text/css" media="screen" />
 <script type="text/javascript" src="/public/js/jquery-1.7.min.js"></script>
 <script type="text/javascript" src="/public/js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="/public/js/jquery-ui-1.8.16.custom.min.js"></script>
@@ -21,3 +22,4 @@
 <script type="text/javascript" src="/public/js/plupload/plupload.browserplus.js"></script>
 <script type="text/javascript" src="/public/js/plupload/plupload.html4.js"></script>
 <script type="text/javascript" src="/public/js/plupload/plupload.html5.js"></script>
+<script type="text/javascript" src="/public/js/codeArmy/fancybox/source/jquery.fancybox.pack.js?v=2.0.6"></script>

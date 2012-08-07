@@ -274,10 +274,12 @@ function initCreateMission(){
 		var mission_arrange_month = $('#mission-arrange-month').val();
 		var mission_budget = $('#mission-budget').val();
 		var assign_po = $('#assignpo').val();
-		parent.$.fancybox.showLoading();
-		$.post(
-			'/missions/check_create_mission',
-			{ 'mission_title': mission_title, 
+		$.fancybox.showLoading();
+		$.ajax({
+			type: 'post',
+			async: false,
+			url: '/missions/check_create_mission',
+			data: { 'mission_title': mission_title, 
 			  'mission_desc': mission_desc, 
 			  'mission_video': mission_tutorial, 
 			  'mission_skills': mission_skills,
@@ -290,14 +292,14 @@ function initCreateMission(){
 			  'assign_po': assign_po, 
 			  'csrf_workpad': getCookie('csrf_workpad') 
 			},
-			function(msg){
+			success: function(msg){
 				if(msg!="" && msg!='error'){
 					parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
 				} else {
 					alert("Error");
 				}
 			}
-		);
+		});
 	}
 }
 </script>
