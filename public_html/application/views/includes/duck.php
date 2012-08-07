@@ -43,6 +43,9 @@ img {
 
 <script>
 function mission_creator_open(){
+	$('#category>option').attr('selected', false);
+	$('#category>option:first').attr('selected', true);
+	$('#category').selectmenu({'width':'202', 'style':'popup'});
 	$.fancybox.showLoading()
 	$.fancybox.open({
 		href : '#mission_creator',

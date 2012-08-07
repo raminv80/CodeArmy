@@ -291,6 +291,10 @@ function initCreateMission(){
 		$('#mission-video-youtube').attr('src','http://www.youtube.com/embed/'+tag).show();
 	})
 	
+	$('#cancel-mission').click(function(){
+		parent.$.fancybox.close();
+	});
+	
 	$('#post-mission').click(function(){
 		$("#form-create-mission").validate({
 			submitHandler: function() {
@@ -304,8 +308,7 @@ function initCreateMission(){
 				var mission_arrange_month = $('#mission-arrange-month').val();
 				var mission_budget = $('#mission-budget').val();
 				var assign_po = $('#assignpo').val();
-				$.fancybox.showLoading();
-				
+				parent.$.fancybox.showLoading();
 				$.post(
 					'/missions/check_create_mission',
 					{ 'mission_title': mission_title, 
@@ -321,35 +324,10 @@ function initCreateMission(){
 					  'csrf_workpad': getCookie('csrf_workpad') 
 					},
 					function(msg){
-						console.log(msg)
+						console.log(msg);
 						if(msg!=""){
-							//$('#form-create-mission').submit();
-							$.fancybox.close();
-							$.fancybox.open({
-								//type: 'inline',
-								data:{},
-								href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg,
-								type : 'ajax',
-								padding : 0,
-								margin: 0,
-								height: 600,
-								autoSize: true,
-								'overlayShow': true,
-								'overlayOpacity': 0.5, 
-								afterClose: function(){},
-								openMethod : 'dropIn',
-								openSpeed : 250,
-								closeMethod : 'dropOut',
-								closeSpeed : 150,
-								nextMethod : 'slideIn',
-								nextSpeed : 250,
-								prevMethod : 'slideOut',
-								prevSpeed : 250,
-								height: 600,
-								scrolling: 'auto'
-							});
+							parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
 						} else {
-							//$('#error').html('Please enter mission title').show();
 							alert("Error");
 						}
 					}

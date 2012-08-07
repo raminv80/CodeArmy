@@ -138,6 +138,7 @@ class Missions extends CI_Controller {
 	}
 	
 	function create($cat=''){
+		$this->session->sess_update();
 		$this->view_data['cat_selected'] = $cat;
 		$this->view_data['main_category'] = $this->work_model->get_main_category();
 		$this->view_data['class'] = $this->work_model->get_main_class($cat);
