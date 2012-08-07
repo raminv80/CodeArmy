@@ -80,7 +80,7 @@ class Missions extends CI_Controller {
 	}
 	
 	function recommended_tallents($work_id){
-		$work_id = "044295";
+		//$work_id = "044295";
 		$this->view_data['page'] = 0;
 		$this->view_data['num_per_page'] = 6;
 		//Check if is po
@@ -136,6 +136,7 @@ class Missions extends CI_Controller {
 			'owner'=> $user_id,
 			'creator' => $user_id
 		);
+		$this->db->update('works', $res, $res2);
 		if($this->db->affected_rows()==1){ echo 'success';}else{echo 'Error: can not complete creation of the mission.';}
 	}
 	
@@ -147,13 +148,6 @@ class Missions extends CI_Controller {
 		$this->view_data['sub_class'] = $this->work_model->get_sub_class($cat,'');
 		$this->view_data['window_title'] = "Mission Create";
 		$this->load->view('create_mission_codearmy_view', $this->view_data);
-	}
-	
-	function check_edit_mission(){
-		//TODO by Loh
-		$user_id = $this->view_data['me']['user_id'];
-		$work_id = $this->input->post('work_id');
-		echo $work_id;
 	}
 	
 	function check_create_mission(){
@@ -348,6 +342,18 @@ class Missions extends CI_Controller {
 		
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('edit_mission_codearmy_view', $this->view_data);
+	}
+	
+	function delete_file(){
+		$user_id = $this->view_data['me']['user_id'];
+		$work_id = $this->input->post('work_id');
+		$file_id = $this->input->post('file_id');
+		
+		$get_file = $this->work_model->check_file($file_id, $work_id);
+		if($get_file != ""){
+			unlink('public/uploads/'.$get_file["file_name"]);
+			$this->db->delete('work_files', array("file_id" => $file_id));
+		}
 	}
 	
 	private function calc_cost($type,$timeline,$budget){

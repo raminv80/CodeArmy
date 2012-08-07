@@ -123,4 +123,10 @@ class Work_model extends CI_Model {
 		$res = $this->db->query($sql, $work_id);
 		return $res->result_array();
 	}
+	
+	function check_file($file_id, $work_id){
+		$sql = "SELECT * FROM work_files WHERE file_id = ? AND work_id = ?";
+		$res = $this->db->query($sql, $file_id, $work_id);
+		return $res->result_array();
+	}
 }

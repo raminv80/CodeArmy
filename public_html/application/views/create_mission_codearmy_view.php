@@ -217,13 +217,26 @@ function initCreateMission(){
 	});
 	
 	uploader.bind('FilesAdded', function(up, files) {
-		for (var i in files) {
-			$('#filelist').append('<div id="' + files[i].id + '">' + files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <b></b> <a href="javascript:;">Delete</a></div>');
-		}
+		//for (var i in files) {
+		$.each(files, function(i, file) {
+			$('#filelist').append('<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b> <a href="#" class="removeQueue">Remove</a></div>');
+			
+			$('#' + file.id + ' a.removeQueue').first().click(function(e) {
+				e.preventDefault();
+				up.removeFile(file);
+				$('#' + file.id).remove();
+			});
+		});
 	});
 	
 	uploader.bind('UploadProgress', function(up, file) {
-		$('#'+file.id+' b').html("<span>" + file.percent + "%</span>");
+		$('.removeQueue').hide();
+		$('#'+file.id+' b').html("<span>" + file.percent + "%</span> <a href=\"#\" id=\"delUploadFile\">Delete</a>");
+	});
+	
+	$('#delUploadFile').click(function() {
+		alert("hello world");
+		return false;
 	});
 	
 	$('#uploadfiles').click(function() {
