@@ -73,7 +73,7 @@ function mission_creator_open(){
 			//type: 'inline',
 			data:{},
 			href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/create/'+category,
-			type : 'ajax',
+			type : 'iframe',
 			padding : 0,
 			margin: 0,
 			height: 600,
@@ -91,7 +91,6 @@ function mission_creator_open(){
 			prevSpeed : 250,
 			height: 600,
 			scrolling: 'auto',
-			afterShow: initCreateMission
 		});
 	}
 </script>

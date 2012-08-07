@@ -1,13 +1,7 @@
 <?php $this->load->view('includes/CAHeader.php'); ?>
 <script src="/public/js/jquery.validate.js" type="text/javascript"></script>
 <script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.gears.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.silverlight.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.flash.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.browserplus.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.html4.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.html5.js"></script>
+
 <!--TODO: add ajax loader icons -->
 <div id="wrapper">
   <div id="find-mission-area">
