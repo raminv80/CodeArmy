@@ -114,20 +114,20 @@
 </style>
 <script type="text/javascript">
 	$(function(){
-		//$('.fancybox-inner').css( {'overflow-x' : 'hidden','overflow-y' : 'auto'});
 		
 		var start=/@/ig;
-		var word=/@(\w+)/ig;
+		//var word=/@(\w+)/ig;
+		var word=/(\w+)/ig;
 		
 		$("#skills-required-text").live("keyup",function() {
 			var content = $(this).text();
-			var go = content.match(start);
+			//var go = content.match(start);
 			var name= content.match(word);
 			var dataString = 'searchword='+ name +'&csrf_workpad='+ getCookie('csrf_workpad');
 			
-			if (go){
+			if (name){
 				$('.skill-msg, .skill-tag').slideDown('show');
-				if(name) {
+				//if(name) {
 					$.ajax({
 						type: "POST",
 						url: "/missions/getSkills",
@@ -138,10 +138,14 @@
 							$(".skill-tag").html(html).show();
 						}
 					});
-				};
+				//};
 			};
 			return false();	
 		});
+		
+		$('.skills-required').mouseleave(function(){
+			$('.skill-msg, .skill-tag').slideUp('hide');
+		})
 		
 		$(".skill-tag a").live("click",function() 
 		{
