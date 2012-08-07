@@ -1,4 +1,4 @@
-<link href="/public/css/CodeArmyV1/style.css" media="all" rel="stylesheet" type="text/css" />
+<?php $this->load->view('includes/frame_header.php'); ?>
 
 <?php echo form_open('missions/create_complete' , array('id'=>'form-create-mission')); ?>
 <div class="confirm-mission-container">
@@ -56,7 +56,34 @@
   </div>
   <div class="submit-cancel-row"><input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
     <input type="button" class="lnkimg" id="edit-mission" value="Edit">
-    <input type="submit" class="lnkimg" value="Confirm &amp; Upload">
+    <input type="button" class="lnkimg" id="confirm-mission" value="Confirm &amp; Upload">
   </div>
 </div>
 </form>
+
+
+<script type="text/javascript">
+//by Ramin to open edit page
+$('#edit-mission').click(function(){
+	parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/edit_mission/'+<?=$preview['work_id']?>);
+});
+
+$('#confirm-mission').click(function(){
+	$.post(
+		'/missions/create_complete',
+		{ 
+		  'work_id': <?=$preview['work_id']?>,
+		  'csrf_workpad': getCookie('csrf_workpad') 
+		},
+		function(msg){
+			console.log(msg);
+			if(msg=="success"){
+				window.top.location.href = 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/'+<?=$preview['work_id']?>;
+			} else {
+				alert("msg");
+			}
+		}
+	);
+});
+</script>
+<?php $this->load->view('includes/frame_footer.php'); ?>
