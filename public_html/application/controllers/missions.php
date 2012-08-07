@@ -180,7 +180,7 @@ class Missions extends CI_Controller {
 			"deadline" => NULL,
 			"assigned_at" => NULL,
 			"done_at" => NULL,
-			"tutorial" => NULL,
+			"tutorial" => $this->input->post('mission_video'),
 			"attach" => NULL,
 			"lat" => $lat,
 			"lng" => $lng
@@ -238,6 +238,25 @@ class Missions extends CI_Controller {
 			//return false;
 			echo "error";
 		}
+	}
+	
+	function edit_mission($work_id){
+		$user_id = $this->session->userdata('user_id');
+		$preview = $this->work_model->previewMission($work_id, $user_id);
+		$this->view_data['preview'] = $preview[0];
+		
+		$preview_skills = $this->work_model->previewSkills($work_id);
+		$this->view_data['preview_skills'] = $preview_skills;
+		
+		$preview_files = $this->work_model->previewFiles($work_id);
+		$this->view_data['preview_files'] = $preview_files;
+		
+		$this->view_data['main_category'] = $this->work_model->get_main_category();
+		$this->view_data['class'] = $this->work_model->get_main_class();
+		$this->view_data['sub_class'] = $this->work_model->get_sub_class();
+		
+		$this->view_data['window_title'] = "CodeArmy World";
+		$this->load->view('edit_mission_codearmy_view', $this->view_data);
 	}
 	
 	private function calc_cost($type,$timeline,$budget){

@@ -154,6 +154,7 @@ function initCreateMission(){
 			tag = video_id;
 			$(this).val(tag);
 		}
+		$('#mission-video').attr('value',tag);
 		$('#mission-video-youtube').attr('src','http://www.youtube.com/embed/'+tag).show();
 	})
 	
@@ -162,6 +163,7 @@ function initCreateMission(){
 			submitHandler: function() {
 				var mission_title = $('#mission-title').val();
 				var mission_desc = $('#mission-desc-text').val();
+				var mission_video = $('#mission-video').val();
 				var mission_skills = $('#skills-required-text').html();
 				var mission_type_main = $('#mission-type-main').val();
 				var mission_type_class = $('#mission-type-class').val();
@@ -174,20 +176,21 @@ function initCreateMission(){
 				
 				$.post(
 					'/missions/check_create_mission',
-					{ 'mission_title': mission_title, 
-					  'mission_desc': mission_desc, 
+					{ 'mission_title': mission_title,
+					  'mission_desc': mission_desc,
+					  'mission_video': mission_video,
 					  'mission_skills': mission_skills,
-					  'mission_type_main': mission_type_main, 
-					  'mission_type_class': mission_type_class, 
-					  'mission_type_subclass': mission_type_subclass, 
-					  'mission_arrange_hour': mission_arrange_hour, 
-					  'mission_arrange_month': mission_arrange_month, 
-					  'mission_budget': mission_budget, 
-					  'assign_po': assign_po, 
-					  'csrf_workpad': getCookie('csrf_workpad') 
+					  'mission_type_main': mission_type_main,
+					  'mission_type_class': mission_type_class,
+					  'mission_type_subclass': mission_type_subclass,
+					  'mission_arrange_hour': mission_arrange_hour,
+					  'mission_arrange_month': mission_arrange_month,
+					  'mission_budget': mission_budget,
+					  'assign_po': assign_po,
+					  'csrf_workpad': getCookie('csrf_workpad')
 					},
 					function(msg){
-						console.log(msg)
+						//console.log(msg)
 						if(msg!=""){
 							//$('#form-create-mission').submit();
 							$.fancybox.close();
@@ -212,7 +215,8 @@ function initCreateMission(){
 								prevMethod : 'slideOut',
 								prevSpeed : 250,
 								height: 600,
-								scrolling: 'auto'
+								scrolling: 'auto',
+								afterShow: initEditMission
 							});
 						} else {
 							//$('#error').html('Please enter mission title').show();
@@ -221,6 +225,38 @@ function initCreateMission(){
 					}
 				);
 			}
+		});
+	});
+}
+
+function initEditMission(){
+	$('#edit-mission').click(function(){
+		var mission_id = $('#work_id').val();
+		
+		$.fancybox.showLoading();
+		$.fancybox.close();
+		$.fancybox.open({
+			//type: 'inline',
+			data:{},
+			href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/edit_mission/'+mission_id,
+			type : 'ajax',
+			padding : 0,
+			margin: 0,
+			height: 600,
+			autoSize: true,
+			'overlayShow': true,
+			'overlayOpacity': 0.5, 
+			afterClose: function(){},
+			openMethod : 'dropIn',
+			openSpeed : 250,
+			closeMethod : 'dropOut',
+			closeSpeed : 150,
+			nextMethod : 'slideIn',
+			nextSpeed : 250,
+			prevMethod : 'slideOut',
+			prevSpeed : 250,
+			height: 600,
+			scrolling: 'auto'
 		});
 	});
 }

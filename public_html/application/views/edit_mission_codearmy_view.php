@@ -1,20 +1,20 @@
-<?php echo form_open('#' , array('id'=>'form-create-mission')); ?>
+<?php echo form_open('#' , array('id'=>'form-edit-mission')); ?>
 <div class="create-mission-container">
-  <div class="create-mission-title">Create Mission</div>
+  <div class="create-mission-title">Edit Mission</div>
   <div class="create-mission-info">
     <div class="mission-title">
       <label>Mission Title</label>
-      <input type="text" id="mission-title" name="mission-title" class="required" value="" />
+      <input type="text" id="mission-title" name="mission-title" class="required" value="<?=$preview['title']?>" />
     </div>
     <div class="mission-video-url">
       <label>Mission Video</label>
-      <input type="text" id="mission-video" name="mission-video" value="" placeholder="Youtube video tag or url"/>
+      <input type="text" id="mission-video" name="mission-video" value="<?=$preview['tutorial']?>" placeholder="Youtube video tag or url"/>
     </div>
   </div>
   <div class="mission-desc-video">
     <div class="mission-description">
       <div><span class="desc-title-text">Description</span><span class="examples-link"><a href="#">Examples</a></span></div>
-      <textarea rows="7" id="mission-desc-text" name="mission-desc-text" class="required"></textarea>
+      <textarea rows="7" id="mission-desc-text" name="mission-desc-text" class="required"><?=$preview['description']?></textarea>
       <!--<div class="attach-file-tools"> <a href="#"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /></a> <span class="filename"><a href="#">Project-brief.ppt</a></span> <span class="filesize">(250kb)</span> <span class="filedesc">Acme online store brief...</span> <a href="#"><img src="/public/images/codeArmy/mission/binicon.png" class="binicon" /></a> </div>-->
       <div id="plupload-container" style="clear:both">
       <div id="filelist">No runtime found.</div>
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="mission-video-preview">
-    <iframe class="youtube-player" id="mission-video-youtube" type="text/html" width="330" height="216" src="http://www.youtube.com/embed/" frameborder="0"></iframe>
+    <iframe class="youtube-player" id="mission-video-youtube" type="text/html" width="330" height="216" src="http://www.youtube.com/embed/<?=$preview['tutorial']?>" frameborder="0"></iframe>
     </div>
   </div>
   <div class="mission-type-n-skills">
@@ -31,25 +31,33 @@
       <select id="mission-type-main" name="mission-type-main" class="mission-type-main required" validate="required:true">
         <option value="">--- Please select ---</option>
       <?php foreach($main_category as $value): ?>
-        <option value="<?=$value['category_id']?>" <?php if($value['category_id']==$cat_selected){?>selected="selected"<?php }?>><?=$value['category']?></option>
+        <option value="<?=$value['category_id']?>" <?php if($preview['category']==$value['category_id']){?>selected="selected"<?php }?>><?=$value['category']?></option>
       <?php endforeach; ?>
       </select>
       <select id="mission-type-class" name="mission-type-class" class="mission-type-sub">
         <option value="0">--- Please select ---</option>
       <?php foreach($class as $value): ?>
-        <option value="<?=$value['class_id']?>"><?=$value['class_name']?></option>
+        <option value="<?=$value['class_id']?>" <?php if($preview['class']==$value['class_id']){?>selected="selected"<?php }?>><?=$value['class_name']?></option>
       <?php endforeach; ?>
       </select>
       <select id="mission-type-sub" name="mission-type-sub" class="mission-type-sub">
         <option value="0">--- Please select ---</option>
       <?php foreach($sub_class as $value): ?>
-        <option value="<?=$value['subclass_id']?>"><?=$value['subclass_name']?></option>
+        <option value="<?=$value['subclass_id']?>" <?php if($preview['subclass']==$value['subclass_id']){?>selected="selected"<?php }?>><?=$value['subclass_name']?></option>
       <?php endforeach; ?>
       </select>
     </div>
     <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
       	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>-->
-		<div id="skills-required-text" contenteditable="true"></div>
+		<div id="skills-required-text" contenteditable="true">
+        <?php
+		if($preview_skills != ""){
+			foreach($preview_skills as $skill):
+				echo $skill["skill_level"]." ".$skill["name"].", ";
+			endforeach;
+		}
+		?>
+        </div>
 		<div class="clearfix"></div>
 		<div class="skill-tag">
 			<!--<a href="#" title="Web Design">Web Design</a>
