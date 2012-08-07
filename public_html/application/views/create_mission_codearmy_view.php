@@ -287,6 +287,7 @@ function initCreateMission(){
 			tag = video_id;
 			$(this).val(tag);
 		}
+		$('#mission-video').attr('value',tag);
 		$('#mission-video-youtube').attr('src','http://www.youtube.com/embed/'+tag).show();
 	})
 	
@@ -354,6 +355,38 @@ function initCreateMission(){
 					}
 				);
 			}
+		});
+	});
+}
+
+function initEditMission(){
+	$('#edit-mission').click(function(){
+		var mission_id = $('#work_id').val();
+		
+		$.fancybox.showLoading();
+		$.fancybox.close();
+		$.fancybox.open({
+			//type: 'inline',
+			data:{},
+			href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/edit_mission/'+mission_id,
+			type : 'ajax',
+			padding : 0,
+			margin: 0,
+			height: 600,
+			autoSize: true,
+			'overlayShow': true,
+			'overlayOpacity': 0.5, 
+			afterClose: function(){},
+			openMethod : 'dropIn',
+			openSpeed : 250,
+			closeMethod : 'dropOut',
+			closeSpeed : 150,
+			nextMethod : 'slideIn',
+			nextSpeed : 250,
+			prevMethod : 'slideOut',
+			prevSpeed : 250,
+			height: 600,
+			scrolling: 'auto'
 		});
 	});
 }
