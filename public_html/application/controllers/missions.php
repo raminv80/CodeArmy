@@ -434,4 +434,10 @@ class Missions extends CI_Controller {
 		endforeach;
 		//echo "<a href=\"#\">hello world</a>";
 	}
+	
+	function Ajax_get_class(){
+		$q = $this->input->post('category');
+		$class = $this->work_model->get_main_class($q);
+		echo json_encode($class);
+	}
 }
