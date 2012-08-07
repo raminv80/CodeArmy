@@ -241,6 +241,94 @@ class Missions extends CI_Controller {
 		}
 	}
 	
+	function check_edit_mission(){
+		$user_id = $this->view_data['me']['user_id'];
+		$work_id = $this->input->post('work_id');
+		$info = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
+		$lat = $info['geoplugin_latitude'];
+		$lng = $info['geoplugin_longitude'];
+		$res = array(
+			"title" => $this->input->post('mission_title'),
+			"sprint" => 0,
+			"class" => ($this->input->post('mission_type_class')==0)?NULL:$this->input->post('mission_type_class'),
+			"subclass" => ($this->input->post('mission_type_subclass')==0)?NULL:$this->input->post('mission_type_subclass'),
+			"category" => $this->input->post('mission_type_main'),
+			"description" => $this->input->post('mission_desc'),
+			//"points" => calc_points(),
+			//"cost" => calc_cost($this->input->post('mission_arrange_hour'),$this->input->post('mission_arrange_month'),$this->input->post('mission_budget')),
+			"points" => 0,
+			"cost" => '0',
+			"status" => 'draft',
+			"creator" => $user_id,
+			"owner" => $user_id,
+			"project_id" => NULL,
+			"created_at" => date('Y-m-d H:i:s'),
+			"work_horse" => NULL,
+			"bid_deadline" => NULL,
+			"deadline" => NULL,
+			"assigned_at" => NULL,
+			"done_at" => NULL,
+			"tutorial" => $this->input->post('mission_video'),
+			"attach" => NULL,
+			"lat" => $lat,
+			"lng" => $lng
+		);
+		if($this->db->update('works', $res, array("work_id" => $work_id))) {
+			//foreach($skill_id as $value):
+				//$res = array(
+					//"work_id" => $work_id,
+					//"skill_id" => $value
+				//);
+				//$this->db->insert('work_skill', $res);
+			//endforeach;
+			echo $work_id;
+			
+			$res = array(
+				"work_id" => $work_id,
+				"session_id" => ''
+			);
+			$res2 = array(
+				"session_id" => $this->session->userdata('session_id')
+			);
+			$this->db->update('work_files', $res, $res2);
+			
+			if($this->input->post('mission_skills') != ""){
+				$this->db->delete('work_skill', array("work_id" => $work_id));
+				$skills = $this->input->post('mission_skills');
+				$skills_array = explode(",", $skills);
+				foreach($skills_array as $value){
+					$skills_res = $this->work_model->store_skill_model($value);
+					
+					$level_res = $this->work_model->store_level_model($value);
+					
+					if (count($skills_res)>0){
+						if(count($level_res)==0){
+							$res = array(
+								"work_id" => $work_id,
+								"skill_id" => $skills_res[0]['id'],
+								"skill_level" => 1,
+								"point" => 1
+							);
+						} else {
+							$res = array(
+								"work_id" => $work_id,
+								"skill_id" => $skills_res[0]['id'],
+								"skill_level" => $level_res[0]['id'],
+								"point" => $level_res[0]['skill_point']
+							);
+						}
+						$this->db->insert('work_skill', $res);
+					}
+					
+				}
+			}
+			//echo "success";
+		} else {
+			//return false;
+			echo "error";
+		}
+	}
+	
 	function edit_mission($work_id){
 		$user_id = $this->session->userdata('user_id');
 		$preview = $this->work_model->previewMission($work_id, $user_id);

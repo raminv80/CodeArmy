@@ -75,11 +75,7 @@
       	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>-->
 		<div id="skills-required-text" contenteditable="true"></div>
 		<div class="clearfix"></div>
-		<div class="skill-tag">
-			<!--<a href="#" title="Web Design">Web Design</a>
-			<a href="#" title="CSS3">CSS3</a>
-			<a href="#" title="HTML5">HTML5</a>-->
-		</div>
+		<div class="skill-tag"></div>
 		<div class="skill-msg">Type the name of someone or something...</div>
     </div>
   </div>
@@ -300,6 +296,7 @@ function initCreateMission(){
 			submitHandler: function() {
 				var mission_title = $('#mission-title').val();
 				var mission_desc = $('#mission-desc-text').val();
+				var mission_tutorial = $('#mission-video').val();
 				var mission_skills = $('#skills-required-text').html();
 				var mission_type_main = $('#mission-type-main').val();
 				var mission_type_class = $('#mission-type-class').val();
@@ -313,7 +310,8 @@ function initCreateMission(){
 					'/missions/check_create_mission',
 					{ 'mission_title': mission_title, 
 					  'mission_desc': mission_desc, 
-					  'mission_skills': mission_skills,
+					  'mission_video': mission_tutorial, 
+					  'mission_skills': mission_skills, 
 					  'mission_type_main': mission_type_main, 
 					  'mission_type_class': mission_type_class, 
 					  'mission_type_subclass': mission_type_subclass, 
@@ -324,7 +322,7 @@ function initCreateMission(){
 					  'csrf_workpad': getCookie('csrf_workpad') 
 					},
 					function(msg){
-						console.log(msg);
+						//console.log(msg);
 						if(msg!=""){
 							parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
 						} else {
@@ -333,38 +331,6 @@ function initCreateMission(){
 					}
 				);
 			}
-		});
-	});
-}
-
-function initEditMission(){
-	$('#edit-mission').click(function(){
-		var mission_id = $('#work_id').val();
-		
-		$.fancybox.showLoading();
-		$.fancybox.close();
-		$.fancybox.open({
-			//type: 'inline',
-			data:{},
-			href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/edit_mission/'+mission_id,
-			type : 'ajax',
-			padding : 0,
-			margin: 0,
-			height: 600,
-			autoSize: true,
-			'overlayShow': true,
-			'overlayOpacity': 0.5, 
-			afterClose: function(){},
-			openMethod : 'dropIn',
-			openSpeed : 250,
-			closeMethod : 'dropOut',
-			closeSpeed : 150,
-			nextMethod : 'slideIn',
-			nextSpeed : 250,
-			prevMethod : 'slideOut',
-			prevSpeed : 250,
-			height: 600,
-			scrolling: 'auto'
 		});
 	});
 }
