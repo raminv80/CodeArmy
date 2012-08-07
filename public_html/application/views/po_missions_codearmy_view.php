@@ -371,7 +371,8 @@
 		var icon = null;
 		if(cat!== undefined){
 			switch(cat){
-				case 'a':icon = '#';break;
+				case '1':icon = '#';break;
+				case '4':icon = '@';break;
 				default: icon = cat;
 			}
 		}
