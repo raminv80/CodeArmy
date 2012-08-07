@@ -1,18 +1,4 @@
-<link href='http://fonts.googleapis.com/css?family=Ruda' rel='stylesheet' type='text/css' />
-<link href="/public/css/reset.css" media="all" rel="stylesheet" type="text/css" />
-<link href="/public/css/v4/tipsy.css" media="all" rel="stylesheet" type="text/css" />
-<link type="text/css" href="/public/css/CodeArmyV1/ui-darkness/jquery-ui-1.8.22.custom.css" rel="stylesheet" />
-<link href="/public/css/CodeArmyV1/style.css" media="all" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/public/js/jquery-1.7.min.js"></script>
-<script type="text/javascript" src="/public/js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="/public/js/jquery-ui-1.8.16.custom.min.js"></script>
-<script type="text/javascript" src="/public/js/jquery.ui.selectmenu.js"></script>
-<script type="text/javascript" src="/public/js/v4/jquery.tipsy.js"></script>
-<script type="text/javascript" src="/public/js/codeArmy/modernize.js"></script>
-<script type="text/javascript" src="/public/js/codeArmy/jquery.transit.min.js"></script>
-<script type="text/javascript" src="/public/js/codeArmy/jquery.maskedinput-1.3.min.js"></script>
-<script type="text/javascript" src="/public/js/codeArmy/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
-<script type="text/javascript" src="/public/js/jquery.validate.js"></script>
+<?php $this->load->view('includes/frame_header.php'); ?>
 
 <?php echo form_open('missions/create_complete' , array('id'=>'form-create-mission')); ?>
 <div class="confirm-mission-container">
@@ -70,17 +56,35 @@
   </div>
   <div class="submit-cancel-row"><input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
     <input type="button" class="lnkimg" id="edit-mission" value="Edit">
-    <input type="submit" class="lnkimg" value="Confirm &amp; Upload">
+    <input type="button" class="lnkimg" id="confirm-mission" value="Confirm &amp; Upload">
   </div>
 </div>
 </form>
 <script type="text/javascript">
-$(function(){
-	$('#edit-mission').click(function(){
-		var mission_id = $('#work_id').val();
-		
-		parent.$.fancybox.showLoading();
-		parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/edit_mission/'+mission_id);
-	});
+//by Ramin to open edit page
+$('#edit-mission').click(function(){
+	var mission_id = $('#work_id').val();
+	
+	parent.$.fancybox.showLoading();
+	parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/edit_mission/'+<?=$preview['work_id']?>);
+});
+
+$('#confirm-mission').click(function(){
+	$.post(
+		'/missions/create_complete',
+		{ 
+		  'work_id': <?=$preview['work_id']?>,
+		  'csrf_workpad': getCookie('csrf_workpad') 
+		},
+		function(msg){
+			console.log(msg);
+			if(msg=="success"){
+				window.top.location.href = 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/'+<?=$preview['work_id']?>;
+			} else {
+				alert("msg");
+			}
+		}
+	);
 });
 </script>
+<?php $this->load->view('includes/frame_footer.php'); ?>

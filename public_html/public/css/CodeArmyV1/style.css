@@ -1740,6 +1740,7 @@ input.assinpo {
 .recom-tal-container {
 	position:relative;
 	width:960px;
+	margin:0 auto;
 }
 .recom-tal-inner {
 	width:825px;

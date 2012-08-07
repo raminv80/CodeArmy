@@ -79,7 +79,7 @@ class Missions extends CI_Controller {
 		$this->load->view('missions_codearmy_view', $this->view_data);
 	}
 	
-	function recommended_tallents(){
+	function recommended_tallents($work_id){
 		$work_id = "044295";
 		$this->view_data['page'] = 0;
 		$this->view_data['num_per_page'] = 6;
@@ -126,15 +126,17 @@ class Missions extends CI_Controller {
 		//$this->load->view('missions_codearmy_view', $this->view_data);
 	//}
 	function create_complete(){
+		$user_id = $this->view_data['me']['user_id'];
 		$work_id = $this->input->post('work_id');
 		$res = array(
 			"status" => 'open'
 		);
 		$res2 = array(
-			'work_id'=>$work_id
+			'work_id'=>$work_id,
+			'owner'=> $user_id,
+			'creator' => $user_id
 		);
-		$this->db->update('works', $res, $res2);
-		redirect("missions/hq");
+		if($this->db->affected_rows()==1){ echo 'success';}else{echo 'Error: can not complete creation of the mission.';}
 	}
 	
 	function create($cat=''){
@@ -145,6 +147,13 @@ class Missions extends CI_Controller {
 		$this->view_data['sub_class'] = $this->work_model->get_sub_class($cat,'');
 		$this->view_data['window_title'] = "Mission Create";
 		$this->load->view('create_mission_codearmy_view', $this->view_data);
+	}
+	
+	function check_edit_mission(){
+		//TODO by Loh
+		$user_id = $this->view_data['me']['user_id'];
+		$work_id = $this->input->post('work_id');
+		echo $work_id;
 	}
 	
 	function check_create_mission(){
@@ -187,13 +196,6 @@ class Missions extends CI_Controller {
 			"lng" => $lng
 		);
 		if($this->db->insert('works', $res)) {
-			//foreach($skill_id as $value):
-				//$res = array(
-					//"work_id" => $work_id,
-					//"skill_id" => $value
-				//);
-				//$this->db->insert('work_skill', $res);
-			//endforeach;
 			echo $work_id;
 			
 			$res = array(
@@ -234,7 +236,6 @@ class Missions extends CI_Controller {
 					
 				}
 			}
-			//echo "success";
 		} else {
 			//return false;
 			echo "error";
@@ -333,6 +334,7 @@ class Missions extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$preview = $this->work_model->previewMission($work_id, $user_id);
 		$this->view_data['preview'] = $preview[0];
+		$this->view_data['work_id'] = $work_id;
 		
 		$preview_skills = $this->work_model->previewSkills($work_id);
 		$this->view_data['preview_skills'] = $preview_skills;
@@ -547,5 +549,12 @@ class Missions extends CI_Controller {
 		$q = $this->input->post('category');
 		$class = $this->work_model->get_main_class($q);
 		echo json_encode($class);
+	}
+	
+	function Ajax_get_subclass(){
+		$q = $this->input->post('category');
+		$q1 = $this->input->post('class');
+		$subclass = $this->work_model->get_sub_class($q,$q1);
+		echo json_encode($subclass);
 	}
 }

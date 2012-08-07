@@ -1,26 +1,4 @@
-<link href='http://fonts.googleapis.com/css?family=Ruda' rel='stylesheet' type='text/css' />
-<link href="/public/css/reset.css" media="all" rel="stylesheet" type="text/css" />
-<link href="/public/css/v4/tipsy.css" media="all" rel="stylesheet" type="text/css" />
-<link type="text/css" href="/public/css/CodeArmyV1/ui-darkness/jquery-ui-1.8.22.custom.css" rel="stylesheet" />
-<link href="/public/css/CodeArmyV1/style.css" media="all" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/public/js/jquery-1.7.min.js"></script>
-<script type="text/javascript" src="/public/js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="/public/js/jquery-ui-1.8.16.custom.min.js"></script>
-<script type="text/javascript" src="/public/js/jquery.ui.selectmenu.js"></script>
-<script type="text/javascript" src="/public/js/v4/jquery.tipsy.js"></script>
-<script type="text/javascript" src="/public/js/codeArmy/modernize.js"></script>
-<script type="text/javascript" src="/public/js/codeArmy/jquery.transit.min.js"></script>
-<script type="text/javascript" src="/public/js/codeArmy/jquery.maskedinput-1.3.min.js"></script>
-<script type="text/javascript" src="/public/js/codeArmy/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
-<script type="text/javascript" src="/public/js/jquery.validate.js"></script>
-<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.gears.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.silverlight.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.flash.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.browserplus.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.html4.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.html5.js"></script>
+<?php $this->load->view('includes/frame_header.php'); ?>
 
 <?php echo form_open('#' , array('id'=>'form-edit-mission')); ?>
 <div class="create-mission-container">
@@ -143,6 +121,35 @@
 <script type="text/javascript">
 	$(function(){
 		//$('.fancybox-inner').css( {'overflow-x' : 'hidden','overflow-y' : 'auto'});
+		initEditMission();
+		
+		$('#mission-type-main').live("change",function(){
+			$.ajax({
+				type: "POST",
+				url: "/missions/Ajax_get_class",
+				data:{'category':$(this).val(), 'csrf_workpad':getCookie('csrf_workpad')},
+				dataType: "json",
+				success: function(msg){
+					$('#mission-type-class').html('');
+					$('#mission-type-class').append("<option value='0'>--- Please select ---</option>")
+					$(msg).each(function(){$('#mission-type-class').append("<option value='"+this.class_id+"'>"+this.class_name+"</option>")});
+				}
+			});
+		});
+		
+		$('#mission-type-class').live("change",function(){
+			$.ajax({
+				type: "POST",
+				url: "/missions/Ajax_get_subclass",
+				data:{'class':$(this).val(), 'category':$('#mission-type-main').val(), 'csrf_workpad':getCookie('csrf_workpad')},
+				dataType: "json",
+				success: function(msg){
+					$('#mission-type-sub').html('');
+					$('#mission-type-sub').append("<option value='0'>--- Please select ---</option>")
+					$(msg).each(function(){$('#mission-type-sub').append("<option value='"+this.subclass_id+"'>"+this.subclass_name+"</option>")});
+				}
+			});
+		});
 		
 		var start=/@/ig;
 		var word=/@(\w+)/ig;
@@ -188,33 +195,121 @@
 			$("#skills-required-text").focus();
 		});	
 	});
-</script>
 
-<script>
-//cookie management
-function setCookie(c_name,value,exdays)
-{
-	var exdate=new Date();
-	exdate.setDate(exdate.getDate() + exdays);
-	var c_value=escape(value) + "; path=/" + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-	document.cookie=c_name + "=" + c_value;
-}
-function getCookie(c_name)
-{
-	var i,x,y,ARRcookies=document.cookie.split(";");
-	for (i=0;i<ARRcookies.length;i++)
-	{
-	  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-	  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-	  x=x.replace(/^\s+|\s+$/g,"");
-	  if (x==c_name)
-		{
-		return unescape(y);
+function initEditMission(){
+	// plupload
+	// Custom example logic
+	//function $(id) {
+		//return document.getElementById(id);	
+	//}
+
+	var uploader = new plupload.Uploader({
+		runtimes : 'gears,html5,flash,silverlight,browserplus',
+		browse_button : 'pickfiles',
+		container: 'plupload-container',
+		max_file_size : '10mb',
+		url : '/missions/uploadfiles',
+		multipart_params : {'csrf_workpad': getCookie('csrf_workpad')},
+		resize : {width : 320, height : 240, quality : 90},
+		flash_swf_url : '/public/js/plupload/plupload.flash.swf',
+		silverlight_xap_url : '/public/js/plupload/plupload.silverlight.xap',
+		filters : [
+			{title : "Image files", extensions : "jpg,gif,png"},
+			{title : "Zip files", extensions : "zip"}
+		]
+	});
+
+	uploader.bind('Init', function(up, params) {
+		$('#filelist').html("<div style='display:none'>Current runtime: " + params.runtime + "</div>");
+	});
+	
+	uploader.bind('FilesAdded', function(up, files) {
+		for (var i in files) {
+			$('#filelist').append('<div id="' + files[i].id + '">' + files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <b></b> <a href="javascript:;">Delete</a></div>');
 		}
-	  }
-	  return false;
+	});
+	
+	uploader.bind('UploadProgress', function(up, file) {
+		$('#'+file.id+' b').html("<span>" + file.percent + "%</span>");
+	});
+	
+	$('#uploadfiles').click(function() {
+		uploader.start();
+		return false;
+		//e.preventDefault();
+	});
+	
+	uploader.init();
+	// end of plupload
+	
+	//video link update
+	$('#mission-video').change(function(){
+		var tag = $(this).val();
+		if(tag.indexOf('youtube')>-1){
+			var video_id = tag.split('v=')[1];
+			var ampersandPosition = video_id.indexOf('&');
+			if(ampersandPosition != -1) {
+			  video_id = video_id.substring(0, ampersandPosition);
+			}
+			tag = video_id;
+			$(this).val(tag);
+		}
+		$('#mission-video').attr('value',tag);
+		$('#mission-video-youtube').attr('src','http://www.youtube.com/embed/'+tag).show();
+	})
+	
+	$('#cancel-mission').click(function(){
+		parent.$.fancybox.close();
+	});
+	
+	$('#post-mission').click(function(){
+		console.log($("#form-edit-mission").valid());
+		if($("#form-edit-mission").valid()){
+			submitHandler();
+		}
+	});
+	
+	function submitHandler() {
+		var mission_title = $('#mission-title').val();
+		var mission_desc = $('#mission-desc-text').val();
+		var mission_skills = $('#skills-required-text').html();
+		var mission_type_main = $('#mission-type-main').val();
+		var mission_type_class = $('#mission-type-class').val();
+		var mission_type_subclass = $('#mission-type-sub').val();
+		var mission_arrange_hour = $('#mission-arrange-hour').val();
+		var mission_arrange_month = $('#mission-arrange-month').val();
+		var mission_budget = $('#mission-budget').val();
+		var assign_po = $('#assignpo').val();
+		parent.$.fancybox.showLoading();
+		$.post(
+			'/missions/check_edit_mission',
+			{ 
+			  'work_id': <?=$work_id?>,
+			  'mission_title': mission_title, 
+			  'mission_desc': mission_desc, 
+			  'mission_skills': mission_skills,
+			  'mission_type_main': mission_type_main, 
+			  'mission_type_class': mission_type_class, 
+			  'mission_type_subclass': mission_type_subclass, 
+			  'mission_arrange_hour': mission_arrange_hour, 
+			  'mission_arrange_month': mission_arrange_month, 
+			  'mission_budget': mission_budget, 
+			  'assign_po': assign_po, 
+			  'csrf_workpad': getCookie('csrf_workpad') 
+			},
+			function(msg){
+				if(msg!=""){
+					parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
+				} else {
+					alert("Error");
+				}
+			}
+		);
+	}
 }
-
+</script>
+<?php $this->load->view('includes/frame_footer.php'); ?>
+<script>
 $(window).keypress(function() {
   if ( event.which == "`".charCodeAt(0) ) {
 	 $('#debugger:hidden').slideToggle();
