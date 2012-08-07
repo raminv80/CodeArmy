@@ -2211,6 +2211,57 @@ input.assinpo {
 .closebut a {
 	font-size:9.72px;
 }
+
+/* PO management wall page by Reza@RezaKabiri.com */
+
+.top-panel {
+	background:url(/public/images/codeArmy/po/top-panel-bg.jpg) no-repeat;
+	position:relative;
+	float:left;
+	width:100%;
+	min-height:215px;
+}
+.po-wall-container {
+	width:765px;
+	float:left;
+	position:relative;
+}
+.top-panel-left {
+	float:left;
+	position:relative;
+	width:65%;
+	margin:10px;
+}
+top-panel-right {
+	float:right;
+	position:relative;
+	width:25%;
+	margin:10px;
+}
+.top-panel-title {
+	color: white;
+    float: left;
+    font-size: 25px;
+	width:100%;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+	padding:10px;
+}
+.tabs-row {
+	float:left;
+	width:100%;
+	margin:20px 10px;
+}
+.proj-category, .desc-row {
+	float:left;
+	width:100%;
+	padding:0 10px;
+}
+.tabs-row a {
+	width:25%;
+	float:left;
+	position:relative;
+	
+}
 /* END - New Codes by Reza@RezaKabiri.com */
 
 

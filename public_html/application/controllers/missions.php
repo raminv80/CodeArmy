@@ -434,4 +434,8 @@ class Missions extends CI_Controller {
 		endforeach;
 		//echo "<a href=\"#\">hello world</a>";
 	}
+	function wall(){
+		$this->view_data['window_title'] = "CodeArmy Wall";
+		$this->load->view('wall_codearmy_view', $this->view_data);
+	}
 }
