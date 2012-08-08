@@ -2373,3 +2373,37 @@ height: 16px;
 color: #999;
 }
 /*end of new codes added by ramin*/
+
+/* hazwan's */
+.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
+.clearfix:after { clear: both; }  
+.clearfix { zoom: 1; }
+
+#skills-required-text {height:100px; background: url("/public/images/codeArmy/mission/textarea-box-bg.jpg") no-repeat; margin-left:40px; padding:5px; color:white}
+#skills-required-text:focus {outline:none}
+#skills-required-text a {padding:3px; background: black; color:#FC0}
+#create-mission-container {overflow-x:hidden; overflow-y:auto}
+
+.skill-tag {width:290px; padding:5px; background:black; margin-left:40px; display:none; }
+.skill-tag a {color:white; width:100%; font-size:.85em; padding:3px; background: #333}
+.skill-tag a:hover {background:#FC0; color:black}
+.skill-msg {margin-left:40px; color: #FC0; display:none; font-size:.85em}
+.wrapselect {
+	background: -moz-linear-gradient(top, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0.2))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33000000', endColorstr='#33000000',GradientType=0 ); /* IE6-9 */
+	/border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; box-shadow:inset 0px -1px 1px #333;
+	border:1px solid #222; overflow:hidden; position:relative; padding:5px; margin-bottom:15px}
+.wrapselect select {
+	-webkit-appearance:none; color:white; background:url(http://cdn1.iconfinder.com/data/icons/miniicons2/arrow_fat_down.gif) no-repeat right; cursor:pointer;
+	box-shadow:none; border:0; outline:0; width:98%; padding-left:2%; height:auto; font-size:14px; font-weight:700}
+.wrapselect select option {color:black}
+.wrapselect.right{float:right;} .wrapselect.left{float:left}.wrapselect.big {width:300px;} .wrapselect.small {width:125px}
+.dashforselect {padding:6px 10px; float:left}
+.create-mission-container select {margin:0 !important}
+
+/* end hazwan's
