@@ -124,6 +124,7 @@ class Work_model extends CI_Model {
 		return $res->result_array();
 	}
 	
+<<<<<<< HEAD
 	function setBid($work_id,$user_id,$budget,$time,$desc){
 		$data=array(
 			'work_id' => $work_id,
@@ -142,16 +143,11 @@ class Work_model extends CI_Model {
 		$res = $this->db->query($sql, $work_id);
 		$res = $res->result_array();
 		return $res;
-	}
-	
-	function check_file($file_id, $work_id, $session_id){
-		if(!$work_id){
-			$sql = "SELECT * FROM work_files WHERE file_id = ? AND session_id = ?";
-			$res = $this->db->query($sql, array($file_id, $session_id));
-		}else{
-			$sql = "SELECT * FROM work_files WHERE file_id = ? AND work_id = ?";
-			$res = $this->db->query($sql, array($file_id, $work_id));
-		}
+=======
+	function check_file($file_id, $work_id){
+		$sql = "SELECT * FROM work_files WHERE file_id = ? AND work_id = ?";
+		$res = $this->db->query($sql, array($file_id, $work_id));
 		return $res->result_array();
+>>>>>>> origin/master
 	}
 }

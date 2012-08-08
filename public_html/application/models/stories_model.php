@@ -1231,8 +1231,8 @@ class Stories_model extends CI_Model {
 	}
 	
 	function list_stories_map($percision,$lat,$lng){
-		$sql = "SELECT works.work_id, works.category, works.title, works.description, (SELECT count(1) FROM bids WHERE bids.work_id = works.work_id) AS num_bids, (SELECT count(1) FROM comments WHERE story_id = works.work_id) AS num_comments, works.deadline AS end, works.cost
-				FROM works 
+		$sql = "SELECT works.work_id, mission_category.category, works.title, works.description, (SELECT count(1) FROM bids WHERE bids.work_id = works.work_id) AS num_bids, (SELECT count(1) FROM comments WHERE story_id = works.work_id) AS num_comments, works.deadline AS end, works.cost
+				FROM works left join mission_category on works.category = mission_category.category_id
 				WHERE lower(works.status) IN ('open','reject') AND round(lat,?) = round(?,?) AND round(lng,?) = round(?,?)";
 		$res = $this->db->query($sql,array($percision,$lat,$percision,$percision,$lng,$percision));
 		$res = $res->result_array();

@@ -66,6 +66,7 @@
   <div class="mission-arrange-budget">
     <div class="mission-arrangements"> <span class="mission-arrange-title">Mission's Arrangements</span>
       <div class="arrange-row">
+
         <div class="wrapselect small left">
         	<select id="mission-arrange-hour" name="mission-arrange-hour" class="mission-arrange-hour">
 	          <option value="">&nbsp;</option>
@@ -75,20 +76,32 @@
         <span class="dashforselect">—</span>
         <div class="wrapselect small left">
         	<select id="mission-arrange-month" name="mission-arrange-month" class="mission-arrange-month">
-	          <option value=""></option>
-	          <option value="1-3">1-3 months</option>
+	          <option value="0"></option>
+	          <option value="1 - 2 hours">1 - 2 hours</option>
+	          <option value="2 - 4 hours">2 - 4 hours</option>
+	          <option value="4 - 10 hours">4 - 10 hours</option>
+	          <option value="10 - 24 hours">10 - 24 hours</option>
 	        </select>
         </div>
+
       </div>
     </div>
     <div class="mission-budget"> <span class="mission-budget-title">Budget</span>
       <div class="arrange-row">
+
         <div class="wrapselect small">
         	<select id="mission-budget" name="mission-budget" class="mission-budget">
-	          <option value=""></option>
-	          <option value="30-40/hour">30$ - 40$ / hour</option>
+	          <option value="0"></option>
+			  <option value="1$ - 10$ / hour">1$ - 10$ / hour</option>
+	          <option value="10$ - 20$ / hour">10$ - 20$ / hour</option>
+	          <option value="20$ - 30$ / hour">20$ - 30$ / hour</option>
+	          <option value="30$ - 40$ / hour">30$ - 40$ / hour</option>
+	          <option value="40$ - 50$ / hour">40$ - 50$ / hour</option>
+	          <option value="50$ - 70$ / hour">50$ - 70$ / hour</option>
+	          <option value="70$ - 100$ / hour">70$ - 100$ / hour</option>
 	        </select>
         </div>
+
       </div>
     </div>
   </div>
@@ -249,7 +262,7 @@ function initCreateMission(){
 	uploader.bind('FilesAdded', function(up, files) {
 		//for (var i in files) {
 		$.each(files, function(i, file) {
-			$('#filelist').append('<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b> <a href="#" class="removeQueue">Remove</a></div>');
+			$('#filelist').append('<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b> <a href="javascript:void(0);" class="removeQueue">Remove</a></div>');
 			
 			$('#' + file.id + ' a.removeQueue').first().click(function(e) {
 				e.preventDefault();
@@ -259,13 +272,31 @@ function initCreateMission(){
 		});
 	});
 	
-	uploader.bind('UploadProgress', function(up, file) {
-		$('.removeQueue').hide();
-		$('#'+file.id+' b').html("<span>" + file.percent + "%</span> <a href=\"#\" id=\"delUploadFile\">Delete</a>");
+	uploader.bind('FileUploaded', function(uploder, file, response) {
+		res = $.parseJSON(response.response);
+		//update id to actual id
+		$('#'+file.id).attr('id',res.id);
 	});
 	
-	$('#delUploadFile').click(function() {
-		alert("hello world");
+	uploader.bind('UploadProgress', function(up, file) {
+		$('.removeQueue').hide();
+		$('#'+file.id+' b').html("<span>" + file.percent + "%</span> <a href='javascript:void(0)' id='delUploadFile'>Delete</a>");
+	});
+	
+	$('#delUploadFile').live("click",function() {
+		var file_id = $(this).parent().parent().attr('id');
+		$.ajax({
+			type: 'post',
+			url: '/missions/ajax_delete_file',
+			data: {'csrf_workpad': getCookie('csrf_workpad'), 'file_id':file_id},
+			success: function(msg){
+					if(msg="success"){
+						$('#'+file_id).remove();
+					}else{
+						console.log(msg)
+					}
+				}
+		});
 		return false;
 	});
 	

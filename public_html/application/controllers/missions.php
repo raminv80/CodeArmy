@@ -50,6 +50,35 @@ class Missions extends CI_Controller {
 		}
 	}
 	
+	function apply($work_id){
+		$work = $this->work_model->get_work($work_id)->result_array();
+		$work = $work[0];
+		$this->view_data['work'] = $work;
+		$po = $this->users_model->get_user($work['owner'])->result_array();
+		$po = $po[0];
+		$this->view_data['po'] = $po;
+		$poBadges = $this->skill_model->get_my_top8_badges($work['owner']);
+		if(!$poBadges){$poBadges=NULL;}
+		$this->view_data['po_badge'] = $poBadges;
+		$this->view_data['work_skills'] = $this->work_model->get_work_skills($work_id);
+		$this->view_data['work_files'] = $this->work_model->previewFiles($work_id);
+		$this->view_data['bids'] = $this->work_model->get_work_bids($work_id);
+		$this->view_data['window_title'] = "CodeArmy Apply for mission";
+		$this->load->view('mission_apply_codearmy', $this->view_data);
+	}
+	
+	function set_bid(){
+		$user_id = $this->session->userdata('user_id');
+		if($this->input->post('submit')){
+			$time = $this->input->post('time');
+			$work_id = $this->input->post('work_id');
+			$budget = $this->input->post('budget');
+			$desc = $this->input->post('desc');
+			$this->work_model->setBid($work_id,$user_id,$budget,$time,$desc);
+		}
+		redirect("/mission/apply");
+	}
+	
 	function hq(){
 		$percision = $this->percision;
 		$user_id = $this->view_data['me']['user_id'];
@@ -119,12 +148,6 @@ class Missions extends CI_Controller {
 		$this->load->view('mission_list_codearmy_view', $this->view_data);
 	}
 	
-	//function category(){
-		//$category = $this->input->post('mission_category');
-		//$this->session->mission_category($category);
-		//echo "success";
-		//$this->load->view('missions_codearmy_view', $this->view_data);
-	//}
 	function create_complete(){
 		$user_id = $this->view_data['me']['user_id'];
 		$work_id = $this->input->post('work_id');
@@ -187,7 +210,10 @@ class Missions extends CI_Controller {
 			"tutorial" => $this->input->post('mission_video'),
 			"attach" => NULL,
 			"lat" => $lat,
-			"lng" => $lng
+			"lng" => $lng,
+			"est_arrangement" => $this->input->post('mission_arrange_hour'),
+			"est_time_frame" => $this->input->post('mission_arrange_month'),
+			"est_budget" => $this->input->post('mission_budget')
 		);
 		if($this->db->insert('works', $res)) {
 			echo $work_id;
@@ -344,21 +370,29 @@ class Missions extends CI_Controller {
 		$this->load->view('edit_mission_codearmy_view', $this->view_data);
 	}
 	
-	function delete_file(){
+	function ajax_delete_file(){
 		$user_id = $this->view_data['me']['user_id'];
 		$work_id = $this->input->post('work_id');
 		$file_id = $this->input->post('file_id');
+		$session_id = $this->session->userdata('session_id');
 		
-		$get_file = $this->work_model->check_file($file_id, $work_id);
-		if($get_file != ""){
-			unlink('public/uploads/'.$get_file["file_name"]);
+		$get_file = $this->work_model->check_file($file_id, $work_id, $session_id);
+		$getfile = $get_file[0];
+		if($getfile != ""){
+			unlink('public/uploads/'.$getfile["file_name"]);
 			$this->db->delete('work_files', array("file_id" => $file_id));
+			echo "success";
+		} else {
+			echo "error";
 		}
 	}
 	
 	private function calc_cost($type,$timeline,$budget){
 		//TODO
-		return 0;
+		if($type=='hourly'){
+			$cost = $timeline*$budget;
+		}
+		return $cost;
 	}
 	
 	private function clac_points(){
@@ -471,7 +505,7 @@ class Missions extends CI_Controller {
 				die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
 		}
 		// Return JSON-RPC response
-		die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
+		die('{"jsonrpc" : "2.0", "result" : "success", "id" : "'.$file_id.'"}');
 	}
 	
 	function ajax_mission_map_search(){
