@@ -350,9 +350,13 @@ class Missions extends CI_Controller {
 		$file_id = $this->input->post('file_id');
 		
 		$get_file = $this->work_model->check_file($file_id, $work_id);
-		if($get_file != ""){
-			unlink('public/uploads/'.$get_file["file_name"]);
+		$getfile = $get_file[0];
+		if($getfile != ""){
+			unlink('public/uploads/'.$getfile["file_name"]);
 			$this->db->delete('work_files', array("file_id" => $file_id));
+			return true;
+		} else {
+			return false;
 		}
 	}
 	
