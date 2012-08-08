@@ -179,7 +179,7 @@ class Missions extends CI_Controller {
 	
 	function check_create_mission(){
 		$user_id = $this->view_data['me']['user_id'];
-		
+		$this->load->helper('htmlpurifier');
 		$work_id = $this->work_model->_gen_id();
 		$check_work_id = $this->work_model->get_work($work_id);
 		while($check_work_id->num_rows() > 1) {
@@ -191,12 +191,12 @@ class Missions extends CI_Controller {
 		$lng = $info['geoplugin_longitude'];
 		$res = array(
 			"work_id" => $work_id,
-			"title" => $this->input->post('mission_title'),
+			"title" => html_purify($this->input->post('mission_title')),
 			"sprint" => 0,
 			"class" => ($this->input->post('mission_type_class')==0)?NULL:$this->input->post('mission_type_class'),
 			"subclass" => ($this->input->post('mission_type_subclass')==0)?NULL:$this->input->post('mission_type_subclass'),
 			"category" => $this->input->post('mission_type_main'),
-			"description" => $this->input->post('mission_desc'),
+			"description" => html_purify($this->input->post('mission_desc')),
 			//"points" => calc_points(),
 			//"cost" => calc_cost($this->input->post('mission_arrange_hour'),$this->input->post('mission_arrange_month'),$this->input->post('mission_budget')),
 			"points" => 0,
@@ -211,7 +211,7 @@ class Missions extends CI_Controller {
 			"deadline" => NULL,
 			"assigned_at" => NULL,
 			"done_at" => NULL,
-			"tutorial" => $this->input->post('mission_video'),
+			"tutorial" => html_purify($this->input->post('mission_video')),
 			"attach" => NULL,
 			"lat" => $lat,
 			"lng" => $lng,
@@ -268,17 +268,18 @@ class Missions extends CI_Controller {
 	
 	function check_edit_mission(){
 		$user_id = $this->view_data['me']['user_id'];
+		$this->load->helper('htmlpurifier');
 		$work_id = $this->input->post('work_id');
 		$info = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
 		$lat = $info['geoplugin_latitude'];
 		$lng = $info['geoplugin_longitude'];
 		$res = array(
-			"title" => $this->input->post('mission_title'),
+			"title" => html_purify($this->input->post('mission_title')),
 			"sprint" => 0,
 			"class" => ($this->input->post('mission_type_class')==0)?NULL:$this->input->post('mission_type_class'),
 			"subclass" => ($this->input->post('mission_type_subclass')==0)?NULL:$this->input->post('mission_type_subclass'),
 			"category" => $this->input->post('mission_type_main'),
-			"description" => $this->input->post('mission_desc'),
+			"description" => html_purify($this->input->post('mission_desc')),
 			//"points" => calc_points(),
 			//"cost" => calc_cost($this->input->post('mission_arrange_hour'),$this->input->post('mission_arrange_month'),$this->input->post('mission_budget')),
 			"points" => 0,

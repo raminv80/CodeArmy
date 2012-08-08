@@ -138,7 +138,7 @@ class Work_model extends CI_Model {
 	}
 	
 	function get_work_bids($work_id){
-		$sql = "select * from bids where work_id=?";
+		$sql = "select * from bids where work_id=? order by bid_id DESC";
 		$res = $this->db->query($sql, $work_id);
 		$res = $res->result_array();
 		return $res;
