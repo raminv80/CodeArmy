@@ -245,7 +245,7 @@ function initCreateMission(){
 		container: 'plupload-container',
 		max_file_size : '10mb',
 		url : '/missions/uploadfiles',
-		multipart_params : {'csrf_workpad': getCookie('csrf_workpad')},
+		//multipart_params : {'csrf_workpad': getCookie('csrf_workpad')},
 		resize : {width : 320, height : 240, quality : 90},
 		flash_swf_url : '/public/js/plupload/plupload.flash.swf',
 		silverlight_xap_url : '/public/js/plupload/plupload.silverlight.xap',
@@ -270,6 +270,11 @@ function initCreateMission(){
 				$('#' + file.id).remove();
 			});
 		});
+	});
+	
+	uploader.bind('BeforeUpload', function (up, file) {
+		console.log(file.size);
+		up.settings.multipart_params = {'filesize': file.size,'csrf_workpad': getCookie('csrf_workpad')}
 	});
 	
 	uploader.bind('FileUploaded', function(uploder, file, response) {

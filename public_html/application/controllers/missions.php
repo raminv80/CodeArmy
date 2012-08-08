@@ -464,6 +464,7 @@ class Missions extends CI_Controller {
 							"file_id" => $file_id,
 							"file_type" => $_FILES['file']['type'],
 							"file_name" => $fileName,
+							"file_size" => $this->input->post('filesize'),
 							"created_at" => date('Y-m-d H:i:s'),
 							"session_id" => $this->session->userdata('session_id')
 						);
