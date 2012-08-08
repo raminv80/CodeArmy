@@ -50,6 +50,35 @@ class Missions extends CI_Controller {
 		}
 	}
 	
+	function apply($work_id){
+		$work = $this->work_model->get_work($work_id)->result_array();
+		$work = $work[0];
+		$this->view_data['work'] = $work;
+		$po = $this->users_model->get_user($work['owner'])->result_array();
+		$po = $po[0];
+		$this->view_data['po'] = $po;
+		$poBadges = $this->skill_model->get_my_top8_badges($work['owner']);
+		if(!$poBadges){$poBadges=NULL;}
+		$this->view_data['po_badge'] = $poBadges;
+		$this->view_data['work_skills'] = $this->work_model->get_work_skills($work_id);
+		$this->view_data['work_files'] = $this->work_model->previewFiles($work_id);
+		$this->view_data['bids'] = $this->work_model->get_work_bids($work_id);
+		$this->view_data['window_title'] = "CodeArmy Apply for mission";
+		$this->load->view('mission_apply_codearmy', $this->view_data);
+	}
+	
+	function set_bid(){
+		$user_id = $this->session->userdata('user_id');
+		if($this->input->post('submit')){
+			$time = $this->input->post('time');
+			$work_id = $this->input->post('work_id');
+			$budget = $this->input->post('budget');
+			$desc = $this->input->post('desc');
+			$this->work_model->setBid($work_id,$user_id,$budget,$time,$desc);
+		}
+		redirect("/mission/apply");
+	}
+	
 	function hq(){
 		$percision = $this->percision;
 		$user_id = $this->view_data['me']['user_id'];
@@ -119,12 +148,6 @@ class Missions extends CI_Controller {
 		$this->load->view('mission_list_codearmy_view', $this->view_data);
 	}
 	
-	//function category(){
-		//$category = $this->input->post('mission_category');
-		//$this->session->mission_category($category);
-		//echo "success";
-		//$this->load->view('missions_codearmy_view', $this->view_data);
-	//}
 	function create_complete(){
 		$user_id = $this->view_data['me']['user_id'];
 		$work_id = $this->input->post('work_id');
@@ -147,13 +170,6 @@ class Missions extends CI_Controller {
 		$this->view_data['sub_class'] = $this->work_model->get_sub_class($cat,'');
 		$this->view_data['window_title'] = "Mission Create";
 		$this->load->view('create_mission_codearmy_view', $this->view_data);
-	}
-	
-	function check_edit_mission(){
-		//TODO by Loh
-		$user_id = $this->view_data['me']['user_id'];
-		$work_id = $this->input->post('work_id');
-		echo $work_id;
 	}
 	
 	function check_create_mission(){
@@ -193,7 +209,10 @@ class Missions extends CI_Controller {
 			"tutorial" => $this->input->post('mission_video'),
 			"attach" => NULL,
 			"lat" => $lat,
-			"lng" => $lng
+			"lng" => $lng,
+			"est_arrangement" => $this->input->post('mission_arrange_hour'),
+			"est_time_frame" => $this->input->post('mission_arrange_month'),
+			"est_budget" => $this->input->post('mission_budget')
 		);
 		if($this->db->insert('works', $res)) {
 			echo $work_id;
@@ -352,7 +371,10 @@ class Missions extends CI_Controller {
 	
 	private function calc_cost($type,$timeline,$budget){
 		//TODO
-		return 0;
+		if($type=='hourly'){
+			$cost = $timeline*$budget;
+		}
+		return $cost;
 	}
 	
 	private function clac_points(){

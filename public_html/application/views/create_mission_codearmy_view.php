@@ -66,16 +66,25 @@
         </select>
         <span class="center-dash">-</span>
         <select id="mission-arrange-month" name="mission-arrange-month" class="mission-arrange-month">
-          <option value=""></option>
-          <option value="1-3">1-3 months</option>
+          <option value="0"></option>
+          <option value="1 - 2 hours">1 - 2 hours</option>
+          <option value="2 - 4 hours">2 - 4 hours</option>
+          <option value="4 - 10 hours">4 - 10 hours</option>
+          <option value="10 - 24 hours">10 - 24 hours</option>
         </select>
       </div>
     </div>
     <div class="mission-budget"> <span class="mission-budget-title">Budget</span>
       <div class="arrange-row">
         <select id="mission-budget" name="mission-budget" class="mission-budget">
-          <option value=""></option>
-          <option value="30-40/hour">30$ - 40$ / hour</option>
+          <option value="0"></option>
+          <option value="1$ - 10$ / hour">1$ - 10$ / hour</option>
+          <option value="10$ - 20$ / hour">10$ - 20$ / hour</option>
+          <option value="20$ - 30$ / hour">20$ - 30$ / hour</option>
+          <option value="30$ - 40$ / hour">30$ - 40$ / hour</option>
+          <option value="40$ - 50$ / hour">40$ - 50$ / hour</option>
+          <option value="50$ - 70$ / hour">50$ - 70$ / hour</option>
+          <option value="70$ - 100$ / hour">70$ - 100$ / hour</option>
         </select>
       </div>
     </div>

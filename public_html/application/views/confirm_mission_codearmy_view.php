@@ -77,7 +77,6 @@ $('#confirm-mission').click(function(){
 		  'csrf_workpad': getCookie('csrf_workpad') 
 		},
 		function(msg){
-			console.log(msg);
 			if(msg=="success"){
 				window.top.location.href = 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/'+<?=$preview['work_id']?>;
 			} else {

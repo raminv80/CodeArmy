@@ -123,4 +123,24 @@ class Work_model extends CI_Model {
 		$res = $this->db->query($sql, $work_id);
 		return $res->result_array();
 	}
+	
+	function setBid($work_id,$user_id,$budget,$time,$desc){
+		$data=array(
+			'work_id' => $work_id,
+			'user_id' => $user_id,
+			'bid_cost' => $budget,
+			'bid_time' => $time,
+			'bid_desc' => $desc,
+			'bid_status' => 'Bid',
+			'created_at' => date('Y-m-d H:i:s')
+		);
+		$this->db->insert('bids',$data);
+	}
+	
+	function get_work_bids($work_id){
+		$sql = "select * from bids where work_id=?";
+		$res = $this->db->query($sql, $work_id);
+		$res = $res->result_array();
+		return $res;
+	}
 }
