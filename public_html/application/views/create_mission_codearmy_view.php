@@ -1,7 +1,11 @@
 <?php $this->load->view('includes/frame_header.php'); ?>
+<link rel="stylesheet" href="/public/pictograms/css/font-awesome.css">
+<!--[if lte IE 7]><link rel="stylesheet" href="/public/pictograms/css/font-awesome-ie7.css"><![endif]-->
+
 
 <?php echo form_open('#' , array('id'=>'form-create-mission')); ?>
 <div class="create-mission-container">
+	
   <div class="create-mission-title">Create Mission</div>
   <div class="create-mission-info">
     <div class="mission-title">
@@ -73,7 +77,7 @@
 	          <option value="hourly">Hourly</option>
 	        </select>
         </div>
-        <span class="dashforselect">—</span>
+        <span class="dashforselect"><i class="icon-chevron-right"></i></span>
         <div class="wrapselect small left">
         	<select id="mission-arrange-month" name="mission-arrange-month" class="mission-arrange-month">
 	          <option value="0"></option>
@@ -150,7 +154,7 @@
 		box-shadow:none; border:0; outline:0; width:98%; padding-left:2%; height:auto; font-size:14px; font-weight:700}
 	.wrapselect select option {color:black}
 	.wrapselect.right{float:right;} .wrapselect.left{float:left}.wrapselect.big {width:300px;} .wrapselect.small {width:125px}
-	.dashforselect {padding:0 10px; float:left}
+	.dashforselect {padding:6px 10px; float:left}
 	.create-mission-container select {margin:0 !important}
 </style>
 <script type="text/javascript">
