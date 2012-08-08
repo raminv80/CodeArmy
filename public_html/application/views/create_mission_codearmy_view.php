@@ -30,24 +30,30 @@
   </div>
   <div class="mission-type-n-skills">
     <div class="mission-type"> <span class="mission-type-title">Mission Type</span>
-      <select id="mission-type-main" name="mission-type-main" class="mission-type-main required" validate="required:true">
-        <option value="">--- Please select ---</option>
-      <?php foreach($main_category as $value): ?>
-        <option value="<?=$value['category_id']?>" <?php if($value['category_id']==$cat_selected){?>selected="selected"<?php }?>><?=$value['category']?></option>
-      <?php endforeach; ?>
-      </select>
-      <select id="mission-type-class" name="mission-type-class" class="mission-type-sub">
-        <option value="0">--- Please select ---</option>
-      <?php foreach($class as $value): ?>
-        <option value="<?=$value['class_id']?>"><?=$value['class_name']?></option>
-      <?php endforeach; ?>
-      </select>
-      <select id="mission-type-sub" name="mission-type-sub" class="mission-type-sub">
-        <option value="0">--- Please select ---</option>
-      <?php foreach($sub_class as $value): ?>
-        <option value="<?=$value['subclass_id']?>"><?=$value['subclass_name']?></option>
-      <?php endforeach; ?>
-      </select>
+      <div class="wrapselect big right">
+      	<select id="mission-type-main" name="mission-type-main" class="required" validate="required:true">
+	        <option value="">--- Please select ---</option>
+	      <?php foreach($main_category as $value): ?>
+	        <option value="<?=$value['category_id']?>" <?php if($value['category_id']==$cat_selected){?>selected="selected"<?php }?>><?=$value['category']?></option>
+	      <?php endforeach; ?>
+	      </select>
+      </div>
+      <div class="wrapselect big right">
+      	<select id="mission-type-class" name="mission-type-class" class="mission-type-sub">
+	        <option value="0">--- Please select ---</option>
+	      <?php foreach($class as $value): ?>
+	        <option value="<?=$value['class_id']?>"><?=$value['class_name']?></option>
+	      <?php endforeach; ?>
+	    </select>
+      </div>
+      <div class="wrapselect big right">
+      	<select id="mission-type-sub" name="mission-type-sub" class="mission-type-sub">
+	        <option value="0">--- Please select ---</option>
+	      <?php foreach($sub_class as $value): ?>
+	        <option value="<?=$value['subclass_id']?>"><?=$value['subclass_name']?></option>
+	      <?php endforeach; ?>
+	    </select>
+      </div>
     </div>
     <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
       	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>-->
@@ -60,23 +66,29 @@
   <div class="mission-arrange-budget">
     <div class="mission-arrangements"> <span class="mission-arrange-title">Mission's Arrangements</span>
       <div class="arrange-row">
-        <select id="mission-arrange-hour" name="mission-arrange-hour" class="mission-arrange-hour">
-          <option value=""></option>
-          <option value="hourly">Hourly</option>
-        </select>
-        <span class="center-dash">-</span>
-        <select id="mission-arrange-month" name="mission-arrange-month" class="mission-arrange-month">
-          <option value=""></option>
-          <option value="1-3">1-3 months</option>
-        </select>
+        <div class="wrapselect small left">
+        	<select id="mission-arrange-hour" name="mission-arrange-hour" class="mission-arrange-hour">
+	          <option value="">&nbsp;</option>
+	          <option value="hourly">Hourly</option>
+	        </select>
+        </div>
+        <span class="dashforselect">—</span>
+        <div class="wrapselect small left">
+        	<select id="mission-arrange-month" name="mission-arrange-month" class="mission-arrange-month">
+	          <option value=""></option>
+	          <option value="1-3">1-3 months</option>
+	        </select>
+        </div>
       </div>
     </div>
     <div class="mission-budget"> <span class="mission-budget-title">Budget</span>
       <div class="arrange-row">
-        <select id="mission-budget" name="mission-budget" class="mission-budget">
-          <option value=""></option>
-          <option value="30-40/hour">30$ - 40$ / hour</option>
-        </select>
+        <div class="wrapselect small">
+        	<select id="mission-budget" name="mission-budget" class="mission-budget">
+	          <option value=""></option>
+	          <option value="30-40/hour">30$ - 40$ / hour</option>
+	        </select>
+        </div>
       </div>
     </div>
   </div>
@@ -109,6 +121,24 @@
 	.skill-tag a {color:white; width:100%; font-size:.85em; padding:3px; background: #333}
 	.skill-tag a:hover {background:#FC0; color:black}
 	.skill-msg {margin-left:40px; color: #FC0; display:none; font-size:.85em}
+	.wrapselect {
+		background: rgb(76,76,76); /* Old browsers */
+		background: -moz-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(53,53,53,1) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(76,76,76,1)), color-stop(50%,rgba(44,44,44,1)), color-stop(51%,rgba(0,0,0,1)), color-stop(100%,rgba(53,53,53,1))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(76,76,76,1) 0%,rgba(44,44,44,1) 50%,rgba(0,0,0,1) 51%,rgba(53,53,53,1) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(76,76,76,1) 0%,rgba(44,44,44,1) 50%,rgba(0,0,0,1) 51%,rgba(53,53,53,1) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(76,76,76,1) 0%,rgba(44,44,44,1) 50%,rgba(0,0,0,1) 51%,rgba(53,53,53,1) 100%); /* IE10+ */
+		background: linear-gradient(to bottom, rgba(76,76,76,1) 0%,rgba(44,44,44,1) 50%,rgba(0,0,0,1) 51%,rgba(53,53,53,1) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#353535',GradientType=0 ); /* IE6-9 */
+		border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+		border:1px solid #222; overflow:hidden; position:relative; padding:5px; margin-bottom:15px}
+	.wrapselect select {
+		-webkit-appearance:none; color:white; background:url(http://cdn1.iconfinder.com/data/icons/miniicons2/arrow_fat_down.gif) no-repeat right; cursor:pointer;
+		box-shadow:none; border:0; outline:0; width:98%; padding-left:2%; height:auto; font-size:14px; font-weight:700}
+	.wrapselect select option {color:black}
+	.wrapselect.right{float:right;} .wrapselect.left{float:left}.wrapselect.big {width:300px;} .wrapselect.small {width:125px}
+	.dashforselect {padding:0 10px; float:left}
+	.create-mission-container select {margin:0 !important}
 </style>
 <script type="text/javascript">
 	$(function(){
