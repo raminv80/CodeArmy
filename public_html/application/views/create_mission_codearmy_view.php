@@ -226,13 +226,44 @@ function initCreateMission(){
 	});
 	
 	uploader.bind('FilesAdded', function(up, files) {
-		for (var i in files) {
-			$('#filelist').append('<div id="' + files[i].id + '">' + files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <b></b> <a href="javascript:;">Delete</a></div>');
-		}
+		//for (var i in files) {
+		$.each(files, function(i, file) {
+			$('#filelist').append('<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b> <a href="javascript:void(0);" class="removeQueue">Remove</a></div>');
+			
+			$('#' + file.id + ' a.removeQueue').first().click(function(e) {
+				e.preventDefault();
+				up.removeFile(file);
+				$('#' + file.id).remove();
+			});
+		});
+	});
+	
+	uploader.bind('FileUploaded', function(uploder, file, response) {
+		res = $.parseJSON(response.response);
+		//update id to actual id
+		$('#'+file.id).attr('id',res.id);
 	});
 	
 	uploader.bind('UploadProgress', function(up, file) {
-		$('#'+file.id+' b').html("<span>" + file.percent + "%</span>");
+		$('.removeQueue').hide();
+		$('#'+file.id+' b').html("<span>" + file.percent + "%</span> <a href='javascript:void(0)' id='delUploadFile'>Delete</a>");
+	});
+	
+	$('#delUploadFile').live("click",function() {
+		var file_id = $(this).parent().parent().attr('id');
+		$.ajax({
+			type: 'post',
+			url: '/missions/ajax_delete_file',
+			data: {'csrf_workpad': getCookie('csrf_workpad'), 'file_id':file_id},
+			success: function(msg){
+					if(msg="success"){
+						$('#'+file_id).remove();
+					}else{
+						console.log(msg)
+					}
+				}
+		});
+		return false;
 	});
 	
 	$('#uploadfiles').click(function() {

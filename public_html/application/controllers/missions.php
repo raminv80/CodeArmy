@@ -109,7 +109,7 @@ class Missions extends CI_Controller {
 	}
 	
 	function recommended_tallents($work_id){
-		$work_id = "044295";
+		//$work_id = "044295";
 		$this->view_data['page'] = 0;
 		$this->view_data['num_per_page'] = 6;
 		//Check if is po
@@ -159,6 +159,7 @@ class Missions extends CI_Controller {
 			'owner'=> $user_id,
 			'creator' => $user_id
 		);
+		$this->db->update('works', $res, $res2);
 		if($this->db->affected_rows()==1){ echo 'success';}else{echo 'Error: can not complete creation of the mission.';}
 	}
 	
@@ -369,6 +370,23 @@ class Missions extends CI_Controller {
 		$this->load->view('edit_mission_codearmy_view', $this->view_data);
 	}
 	
+	function ajax_delete_file(){
+		$user_id = $this->view_data['me']['user_id'];
+		$work_id = $this->input->post('work_id');
+		$file_id = $this->input->post('file_id');
+		$session_id = $this->session->userdata('session_id');
+		
+		$get_file = $this->work_model->check_file($file_id, $work_id, $session_id);
+		$getfile = $get_file[0];
+		if($getfile != ""){
+			unlink('public/uploads/'.$getfile["file_name"]);
+			$this->db->delete('work_files', array("file_id" => $file_id));
+			echo "success";
+		} else {
+			echo "error";
+		}
+	}
+	
 	private function calc_cost($type,$timeline,$budget){
 		//TODO
 		if($type=='hourly'){
@@ -487,7 +505,7 @@ class Missions extends CI_Controller {
 				die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
 		}
 		// Return JSON-RPC response
-		die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
+		die('{"jsonrpc" : "2.0", "result" : "success", "id" : "'.$file_id.'"}');
 	}
 	
 	function ajax_mission_map_search(){

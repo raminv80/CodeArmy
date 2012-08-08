@@ -66,7 +66,7 @@ $('#edit-mission').click(function(){
 	var mission_id = $('#work_id').val();
 	
 	parent.$.fancybox.showLoading();
-	parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/edit_mission/'+<?=$preview['work_id']?>);
+	parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/edit_mission/<?=$preview['work_id']?>');
 });
 
 $('#confirm-mission').click(function(){
@@ -78,7 +78,7 @@ $('#confirm-mission').click(function(){
 		},
 		function(msg){
 			if(msg=="success"){
-				window.top.location.href = 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/'+<?=$preview['work_id']?>;
+				window.top.location.href = 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/<?=$preview['work_id']?>';
 			} else {
 				alert("msg");
 			}
