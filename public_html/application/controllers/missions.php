@@ -63,6 +63,8 @@ class Missions extends CI_Controller {
 		$this->view_data['work_skills'] = $this->work_model->get_work_skills($work_id);
 		$this->view_data['work_files'] = $this->work_model->previewFiles($work_id);
 		$this->view_data['bids'] = $this->work_model->get_work_bids($work_id);
+		$this->view_data['bidders'] = $this->work_model->get_bidders($work_id);
+		$this->view_data['bid_avg'] = $this->work_model->get_bid_avg($work_id);
 		$this->view_data['window_title'] = "CodeArmy Apply for mission";
 		$this->load->view('mission_apply_codearmy', $this->view_data);
 	}
@@ -74,9 +76,10 @@ class Missions extends CI_Controller {
 			$work_id = $this->input->post('work_id');
 			$budget = $this->input->post('budget');
 			$desc = $this->input->post('desc');
+			if(trim($desc)=="Ask a question")$desc="";
 			$this->work_model->setBid($work_id,$user_id,$budget,$time,$desc);
 		}
-		redirect("/mission/apply");
+		redirect("/missions/apply/$work_id");
 	}
 	
 	function hq(){

@@ -144,6 +144,20 @@ class Work_model extends CI_Model {
 		return $res;
 	}
 	
+	function get_bidders($work_id){
+		$sql = "SELECT DISTINCT users.* from bids, users where bids.work_id=? and users.user_id=bids.user_id";
+		$res = $this->db->query($sql, $work_id);
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function get_bid_avg($work_id){
+		$sql = "select AVG(bid_cost) AS avg_cost, AVG(bid_time) AS avg_time  from bids where work_id=?";
+		$res = $this->db->query($sql, $work_id);
+		$res = $res->result_array();
+		return $res[0];
+	}
+	
 	function check_file($file_id, $work_id, $session_id){
 		if(!$work_id){
 			$sql = "SELECT * FROM work_files WHERE file_id = ? AND session_id = ?";

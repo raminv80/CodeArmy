@@ -329,6 +329,11 @@
 	}
 	
 	function initializeEvents(){
+		$("a[rel=missions]").fancybox({
+				'transitionIn'      : 'fade',
+                'transitionOut'     : 'fade',
+                'type'              : 'iframe',
+            });
 		//initial dialog close button
 		$('.dialog-close-button').click(function(){
 			var dialog = $(this).parents('.dialog');
@@ -385,7 +390,7 @@
 			});
 			
 		$('#dialog-project-list').on('click','.summary-row',controlMissionList);
-		$('#dialog-project-list').on('click','.detail-row',gotoMission);
+		//$('#dialog-project-list').on('click','.detail-row',gotoMission);
 		
 		$('#world-map').on('mouseenter','.marker',
 			function(){

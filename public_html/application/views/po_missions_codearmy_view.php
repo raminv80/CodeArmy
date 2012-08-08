@@ -353,7 +353,7 @@
 	
 	function gotoMission(){
 		var mission_id=$(this).attr('id').split('-')[1];
-		window.location="/mission/view/"+mission_id;
+		window.location="/missions/apply/"+mission_id;
 	}
 	
 	function controlMissionList(){
@@ -380,6 +380,11 @@
 	}
 	
 	function initializeEvents(){
+		$("a[rel=missions]").fancybox({
+				'transitionIn'      : 'fade',
+                'transitionOut'     : 'fade',
+                'type'              : 'iframe',
+            });
 		$('select').bind("change", function(){
     		MissionCreate($('select').val());
 		});
@@ -439,7 +444,7 @@
 			});
 			
 		$('#dialog-project-list').on('click','.summary-row',controlMissionList);
-		$('#dialog-project-list').on('click','.detail-row',gotoMission);
+		//$('#dialog-project-list').on('click','.detail-row',gotoMission);
 		
 		$('#world-map').on('mouseenter','.marker',
 			function(){

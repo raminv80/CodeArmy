@@ -74,6 +74,7 @@
         <div class="col7"><?=date('Y-m-d',strtotime($work['end']))?></div>
     </div>
     <div class="detail-row" id="detail-<?=$work['work_id']?>">
+    	<a rel="missions" href="/missions/apply/<?=$work['work_id']?>">
     	<div class="mission-video-preview">
       		<iframe class="youtube-player" type="text/html" width="250" height="150" src="http://www.youtube.com/embed/zFNb8j3YAd4?wmode=opaque" frameborder="0"></iframe>
         	<h2><?=$work['title']?></h2>
@@ -120,6 +121,7 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
     <?php endforeach;?>
 </div>

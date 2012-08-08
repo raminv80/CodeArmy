@@ -25,7 +25,7 @@
 <script type="text/javascript" src="/public/js/codeArmy/jquery.transit.min.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/jquery.maskedinput-1.3.min.js"></script>
 
-<script type="text/javascript" src="/public/js/codeArmy/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+<!--<script type="text/javascript" src="/public/js/codeArmy/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>-->
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/jquery.fancybox.pack.js?v=2.0.6"></script>
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.2"></script>
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.0"></script>
