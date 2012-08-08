@@ -72,10 +72,11 @@ class Missions extends CI_Controller {
 	function set_bid(){
 		$user_id = $this->session->userdata('user_id');
 		if($this->input->post('submit')){
+			$this->load->helper('htmlpurifier');
 			$time = $this->input->post('time');
 			$work_id = $this->input->post('work_id');
 			$budget = $this->input->post('budget');
-			$desc = $this->input->post('desc');
+			$desc = html_purify($this->input->post('desc'));
 			if(trim($desc)=="Ask a question")$desc="";
 			$this->work_model->setBid($work_id,$user_id,$budget,$time,$desc);
 		}
