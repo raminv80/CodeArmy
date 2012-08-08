@@ -292,7 +292,10 @@ class Missions extends CI_Controller {
 			"tutorial" => $this->input->post('mission_video'),
 			"attach" => NULL,
 			"lat" => $lat,
-			"lng" => $lng
+			"lng" => $lng,
+			"est_arrangement" => $this->input->post('mission_arrange_hour'),
+			"est_time_frame" => $this->input->post('mission_arrange_month'),
+			"est_budget" => $this->input->post('mission_budget')
 		);
 		if($this->db->update('works', $res, array("work_id" => $work_id))) {
 			//foreach($skill_id as $value):
@@ -493,6 +496,7 @@ class Missions extends CI_Controller {
 						"file_id" => $file_id,
 						"file_type" => $_FILES['file']['type'],
 						"file_name" => $fileName,
+						"file_size" => $this->input->post('filesize'),
 						"created_at" => date('Y-m-d H:i:s'),
 						"session_id" => $this->session->userdata('session_id')
 					);

@@ -70,12 +70,16 @@
       <div class="arrange-row">
         <select id="mission-arrange-hour" name="mission-arrange-hour" class="mission-arrange-hour">
           <option value=""></option>
-          <option value="hourly">Hourly</option>
+          <option value="hourly"<?php if($preview['est_arrangement']=="hourly") echo " selected"; ?>>Hourly</option>
         </select>
         <span class="center-dash">-</span>
         <select id="mission-arrange-month" name="mission-arrange-month" class="mission-arrange-month">
           <option value=""></option>
-          <option value="1-3">1-3 months</option>
+          <option value="0"></option>
+          <option value="1 - 2 hours"<?php if($preview['est_time_frame']=="1 - 2 hours") echo " selected"; ?>>1 - 2 hours</option>
+          <option value="2 - 4 hours"<?php if($preview['est_time_frame']=="2 - 4 hours") echo " selected"; ?>>2 - 4 hours</option>
+          <option value="4 - 10 hours"<?php if($preview['est_time_frame']=="4 - 10 hours") echo " selected"; ?>>4 - 10 hours</option>
+          <option value="10 - 24 hours"<?php if($preview['est_time_frame']=="10 - 24 hours") echo " selected"; ?>>10 - 24 hours</option>
         </select>
       </div>
     </div>
@@ -83,7 +87,13 @@
       <div class="arrange-row">
         <select id="mission-budget" name="mission-budget" class="mission-budget">
           <option value=""></option>
-          <option value="30-40/hour">30$ - 40$ / hour</option>
+          <option value="1$ - 10$ / hour"<?php if($preview['est_budget']=="1$ - 10$ / hour") echo " selected"; ?>>1$ - 10$ / hour</option>
+          <option value="10$ - 20$ / hour"<?php if($preview['est_budget']=="10$ - 20$ / hour") echo " selected"; ?>>10$ - 20$ / hour</option>
+          <option value="20$ - 30$ / hour"<?php if($preview['est_budget']=="20$ - 30$ / hour") echo " selected"; ?>>20$ - 30$ / hour</option>
+          <option value="30$ - 40$ / hour"<?php if($preview['est_budget']=="30$ - 40$ / hour") echo " selected"; ?>>30$ - 40$ / hour</option>
+          <option value="40$ - 50$ / hour"<?php if($preview['est_budget']=="40$ - 50$ / hour") echo " selected"; ?>>40$ - 50$ / hour</option>
+          <option value="50$ - 70$ / hour"<?php if($preview['est_budget']=="50$ - 70$ / hour") echo " selected"; ?>>50$ - 70$ / hour</option>
+          <option value="70$ - 100$ / hour"<?php if($preview['est_budget']=="70$ - 100$ / hour") echo " selected"; ?>>70$ - 100$ / hour</option>
         </select>
       </div>
     </div>
@@ -211,7 +221,7 @@ function initEditMission(){
 		container: 'plupload-container',
 		max_file_size : '10mb',
 		url : '/missions/uploadfiles',
-		multipart_params : {'csrf_workpad': getCookie('csrf_workpad')},
+		//multipart_params : {'csrf_workpad': getCookie('csrf_workpad')},
 		resize : {width : 320, height : 240, quality : 90},
 		flash_swf_url : '/public/js/plupload/plupload.flash.swf',
 		silverlight_xap_url : '/public/js/plupload/plupload.silverlight.xap',
@@ -226,13 +236,49 @@ function initEditMission(){
 	});
 	
 	uploader.bind('FilesAdded', function(up, files) {
-		for (var i in files) {
-			$('#filelist').append('<div id="' + files[i].id + '">' + files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <b></b> <a href="javascript:;">Delete</a></div>');
-		}
+		//for (var i in files) {
+		$.each(files, function(i, file) {
+			$('#filelist').append('<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b> <a href="javascript:void(0);" class="removeQueue">Remove</a></div>');
+			
+			$('#' + file.id + ' a.removeQueue').first().click(function(e) {
+				e.preventDefault();
+				up.removeFile(file);
+				$('#' + file.id).remove();
+			});
+		});
+	});
+	
+	uploader.bind('BeforeUpload', function (up, file) {
+		console.log(file.size);
+		up.settings.multipart_params = {'filesize': file.size,'csrf_workpad': getCookie('csrf_workpad')}
+	});
+	
+	uploader.bind('FileUploaded', function(uploder, file, response) {
+		res = $.parseJSON(response.response);
+		//update id to actual id
+		$('#'+file.id).attr('id',res.id);
 	});
 	
 	uploader.bind('UploadProgress', function(up, file) {
-		$('#'+file.id+' b').html("<span>" + file.percent + "%</span>");
+		$('.removeQueue').hide();
+		$('#'+file.id+' b').html("<span>" + file.percent + "%</span> <a href='javascript:void(0)' id='delUploadFile'>Delete</a>");
+	});
+	
+	$('#delUploadFile').live("click",function() {
+		var file_id = $(this).parent().parent().attr('id');
+		$.ajax({
+			type: 'post',
+			url: '/missions/ajax_delete_file',
+			data: {'csrf_workpad': getCookie('csrf_workpad'), 'file_id':file_id},
+			success: function(msg){
+					if(msg="success"){
+						$('#'+file_id).remove();
+					}else{
+						console.log(msg)
+					}
+				}
+		});
+		return false;
 	});
 	
 	$('#uploadfiles').click(function() {
