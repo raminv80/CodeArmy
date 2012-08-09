@@ -106,6 +106,7 @@
 <script type="text/javascript">
 	$(function(){
 		initEvents();
+		$(".fancybox").fancybox({type : 'iframe'});
 		$('#inbox-content-area [title]').tipsy({gravity:'s', opacity:0.95});
 	});
 	function initEvents(){

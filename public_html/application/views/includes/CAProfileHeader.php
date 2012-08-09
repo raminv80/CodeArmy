@@ -17,8 +17,8 @@
             <div class="notification" id="notifications-notification">10</div>
             Notifications</div>
           </a></li>
-        <li><a href="/missions" id="FindMissions">
-          <div id="findmission-holder"> Find Missions </div>
+        <li><a href="/missions<?=($this->session->userdata('role')=='po'||$this->session->userdata('role')=='admin')?'/hq':''?>" id="FindMissions">
+          <div id="findmission-holder"> <?=($this->session->userdata('role')=='po'||$this->session->userdata('role')=='admin')?'Missions Map':'Find Missions'?></div>
           </a></li>
         <li><a href="/missions/my_missions" id="MyMissions">
           <div id="mymissions-holder">

@@ -69,19 +69,17 @@
       <div class="arrange-row">
 
         <div class="wrapselect small left">
-        	<select id="mission-arrange-hour" name="mission-arrange-hour" class="mission-arrange-hour">
-	          <option value="">&nbsp;</option>
-	          <option value="hourly">Hourly</option>
+        	<select id="mission-arrange-type" name="mission-arrange-type" class="mission-arrange-hour">
+	          <option value=""></option>
+              <?php foreach($arrangement_type as $type): ?>
+	          <option value="<?=$type['id']?>"><?=$type['type']?></option>
+              <?php endforeach; ?>
 	        </select>
         </div>
         <span class="dashforselect"><i class="icon-chevron-right"></i></span>
         <div class="wrapselect small left">
-        	<select id="mission-arrange-month" name="mission-arrange-month" class="mission-arrange-month">
+        	<select id="mission-arrange-duration" name="mission-arrange-duration" class="mission-arrange-month">
 	          <option value="0"></option>
-	          <option value="1 - 2 hours">1 - 2 hours</option>
-	          <option value="2 - 4 hours">2 - 4 hours</option>
-	          <option value="4 - 10 hours">4 - 10 hours</option>
-	          <option value="10 - 24 hours">10 - 24 hours</option>
 	        </select>
         </div>
 
@@ -93,13 +91,6 @@
         <div class="wrapselect small">
         	<select id="mission-budget" name="mission-budget" class="mission-budget">
 	          <option value="0"></option>
-			  <option value="1$ - 10$ / hour">1$ - 10$ / hour</option>
-	          <option value="10$ - 20$ / hour">10$ - 20$ / hour</option>
-	          <option value="20$ - 30$ / hour">20$ - 30$ / hour</option>
-	          <option value="30$ - 40$ / hour">30$ - 40$ / hour</option>
-	          <option value="40$ - 50$ / hour">40$ - 50$ / hour</option>
-	          <option value="50$ - 70$ / hour">50$ - 70$ / hour</option>
-	          <option value="70$ - 100$ / hour">70$ - 100$ / hour</option>
 	        </select>
         </div>
 
@@ -140,7 +131,7 @@
 				dataType: "json",
 				success: function(msg){
 					$('#mission-type-class').html('');
-					$('#mission-type-class').append("<option value='0'>--- Please select ---</option>")
+					$('#mission-type-class').append("<option value='0'>--- Please select ---</option>");
 					$(msg).each(function(){$('#mission-type-class').append("<option value='"+this.class_id+"'>"+this.class_name+"</option>")});
 				}
 			});
@@ -154,12 +145,37 @@
 				dataType: "json",
 				success: function(msg){
 					$('#mission-type-sub').html('');
-					$('#mission-type-sub').append("<option value='0'>--- Please select ---</option>")
+					$('#mission-type-sub').append("<option value='0'>--- Please select ---</option>");
 					$(msg).each(function(){$('#mission-type-sub').append("<option value='"+this.subclass_id+"'>"+this.subclass_name+"</option>")});
 				}
 			});
 		});
 		
+		$('#mission-arrange-type').live("change",function(){
+			$.ajax({
+				type: "POST",
+				url: "/missions/Ajax_get_duration",
+				data:{'type':$(this).val(), 'csrf_workpad':getCookie('csrf_workpad')},
+				dataType: "json",
+				success: function(msg){
+					$('#mission-arrange-duration').html('');
+					$('#mission-arrange-duration').append("<option value='0'>Please select</option>");
+					$(msg).each(function(){$('#mission-arrange-duration').append("<option value='"+this.time_id+"'>"+this.duration+"</option>")});
+				}
+			});
+			$.ajax({
+				type: "POST",
+				url: "/missions/Ajax_get_budget",
+				data:{'type':$(this).val(), 'csrf_workpad':getCookie('csrf_workpad')},
+				dataType: "json",
+				success: function(msg){
+					$('#mission-budget').html('');
+					$('#mission-budget').append("<option value='0'>Please select</option>")
+					$(msg).each(function(){$('#mission-budget').append("<option value='"+this.budget_id+"'>"+this.amount+" $</option>")});
+				}
+			});
+		});
+
 		$("#skills-required-text").live("keyup",function() {
 			var content = $(this).text();
 			var go = content.match(start);
@@ -321,8 +337,8 @@ function initCreateMission(){
 		var mission_type_main = $('#mission-type-main').val();
 		var mission_type_class = $('#mission-type-class').val();
 		var mission_type_subclass = $('#mission-type-sub').val();
-		var mission_arrange_hour = $('#mission-arrange-hour').val();
-		var mission_arrange_month = $('#mission-arrange-month').val();
+		var mission_arrange_type = $('#mission-arrange-type').val();
+		var mission_arrange_duration = $('#mission-arrange-duration').val();
 		var mission_budget = $('#mission-budget').val();
 		var assign_po = $('#assignpo').val();
 		$.fancybox.showLoading();
@@ -337,8 +353,8 @@ function initCreateMission(){
 			  'mission_type_main': mission_type_main, 
 			  'mission_type_class': mission_type_class, 
 			  'mission_type_subclass': mission_type_subclass, 
-			  'mission_arrange_hour': mission_arrange_hour, 
-			  'mission_arrange_month': mission_arrange_month, 
+			  'mission_arrange_type': mission_arrange_type, 
+			  'mission_arrange_duration': mission_arrange_duration, 
 			  'mission_budget': mission_budget, 
 			  'assign_po': assign_po, 
 			  'csrf_workpad': getCookie('csrf_workpad') 
@@ -346,6 +362,7 @@ function initCreateMission(){
 			success: function(msg){
 				console.log(msg)
 				if(msg!="" && msg!='error'){
+					console.log(msg);
 					parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
 				} else {
 					alert("Error");

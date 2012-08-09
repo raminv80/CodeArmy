@@ -41,7 +41,7 @@ CREATE TABLE `bids` (
   PRIMARY KEY (`bid_id`),
   KEY `user_id` (`user_id`),
   KEY `work_id` (`work_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=164 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=181 ;
 
 CREATE TABLE `captcha` (
   `captcha_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
@@ -167,6 +167,15 @@ CREATE TABLE `inbox` (
   KEY `category` (`category`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=277 ;
 
+CREATE TABLE `invitation` (
+  `invite_id` int(11) NOT NULL AUTO_INCREMENT,
+  `work_id` varchar(32) NOT NULL,
+  `user_id` varchar(48) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` enum('sent','viewed','accepted','rejected') NOT NULL,
+  PRIMARY KEY (`invite_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 CREATE TABLE `messages` (
   `message_id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) DEFAULT NULL,
@@ -181,7 +190,7 @@ CREATE TABLE `messages` (
   KEY `from` (`from`),
   KEY `to` (`to`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
 
 CREATE TABLE `mission_category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -278,7 +287,7 @@ CREATE TABLE `subscription_comment` (
 CREATE TABLE `users` (
   `user_id` varchar(48) NOT NULL DEFAULT '',
   `username` varchar(40) NOT NULL,
-  `role` enum('user','admin') DEFAULT NULL,
+  `role` enum('user','po','admin') DEFAULT NULL,
   `secret` varchar(40) NOT NULL DEFAULT '',
   `email` varchar(255) DEFAULT NULL,
   `exp` int(11) NOT NULL DEFAULT '0',
@@ -287,7 +296,7 @@ CREATE TABLE `users` (
   `early_done` int(11) NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
-  `user_status` enum('enable','disable') DEFAULT NULL,
+  `user_status` enum('enable','disable') DEFAULT NULL COMMENT 'Is user a PO?',
   `show_tutorial` smallint(6) NOT NULL DEFAULT '1' COMMENT '1:bidding, 2:submit, 3:dev-tut-done, 4:dev-waiting-accept-bid',
   `attempt` tinyint(4) NOT NULL DEFAULT '0',
   `claims` int(11) NOT NULL DEFAULT '3' COMMENT 'skill point claims',
@@ -315,7 +324,7 @@ CREATE TABLE `user_profiles` (
   `avatar` varchar(255) DEFAULT NULL,
   `gender` enum('male','female') DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
-  `specialization` enum('employer','designer','developer','copywriter','unknown') DEFAULT NULL,
+  `specialization` enum('employer','designer','developer','copywriter','unknown','product owner') DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -378,6 +387,7 @@ CREATE TABLE `work_files` (
   `file_type` varchar(5) DEFAULT NULL,
   `file_name` varchar(255) DEFAULT NULL,
   `file_title` varchar(255) DEFAULT NULL,
+  `file_size` int(11) DEFAULT NULL,
   `file_description` text,
   `created_at` datetime DEFAULT NULL,
   `work_id` varchar(48) DEFAULT NULL,
@@ -395,7 +405,7 @@ CREATE TABLE `work_skill` (
   PRIMARY KEY (`id`),
   KEY `work_id` (`work_id`),
   KEY `skill_id` (`skill_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=81 ;
 
 
 ALTER TABLE `achievement_set`

@@ -7,7 +7,7 @@
   <div class="mission-brief">
     <div class="mission-brief-title"><?=$preview['title']?></div>
     <div class="brief-video">
-        <iframe width="330" height="216" frameborder="0" src="http://www.youtube.com/embed/<?=$work['tutorial']?$work['tutorial']:'zFNb8j3YAd4'?>?wmode=opaque" type="text/html" class="youtube-player"></iframe>
+        <iframe width="330" height="216" frameborder="0" src="http://www.youtube.com/embed/<?=$preview['tutorial']?$preview['tutorial']:'zFNb8j3YAd4'?>?wmode=opaque" type="text/html" class="youtube-player"></iframe>
     </div>
     <div class="brief-text">
       <div class="brief-text-title">Mission Briefing</div>
@@ -22,11 +22,11 @@
     <div class="confirm-mission-arrange-budget">
       <div class="confirm-mission-arrange">
         <div class="confirm-mission-type-title">Mission Arrangement</div>
-        <div class="confirm-mission-type-text"><?=$preview['est_arrangement']?> > <?=$preview['est_time_frame']?></div>
+        <div class="confirm-mission-type-text"><?=$arrangement['type']?> > <?=$duration['duration']?></div>
       </div>
       <div class="confirm-mission-budget">
         <div class="confirm-mission-type-title">Budget</div>
-        <div class="confirm-mission-type-text"><?=$preview['est_budget']?></div>
+        <div class="confirm-mission-type-text"><?=$budget['amount']?></div>
       </div>
     </div>
   </div>
@@ -58,6 +58,10 @@
   </div>
 </div>
 </form>
+<div id="dialog-mission-creatd" class="dialog" title="Mission Created">
+	<p><span class="ui-icon ui-icon-check" style="float:left; margin:0 7px 20px 0;"></span>Your mission is successfully created.</p>
+</div>
+
 <script type="text/javascript">
 //by Ramin to open edit page
 $('#edit-mission').click(function(){
@@ -71,14 +75,57 @@ $('#confirm-mission').click(function(){
 	$.post(
 		'/missions/create_complete',
 		{ 
-		  'work_id': <?=$preview['work_id']?>,
+		  'work_id': '<?=$preview['work_id']?>',
 		  'csrf_workpad': getCookie('csrf_workpad') 
 		},
 		function(msg){
 			if(msg=="success"){
-				window.top.location.href = 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/<?=$preview['work_id']?>';
+				<?php if(count($preview_skills)>0){?>
+				//parent.$.fancybox.resize();
+				parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/<?=$preview['work_id']?>');
+				<?php }else{?>
+				$( "#dialog-mission-creatd" ).dialog({
+					resizable: false,
+					height:180,
+					width:400,
+					modal: true,
+					buttons: {
+							Ok: function() {
+									$( this ).dialog( "close" );
+									parent.$.fancybox.close();
+								}
+					}
+				});
+				<?php }?>
+				parent.$.fancybox.close();
+				parent.$.fancybox.open({
+					//type: 'inline',
+					data:{},
+					href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/<?=$preview['work_id']?>',
+					type : 'iframe',
+					padding : 0,
+					margin: 0,
+					height: 600,
+					width: 960,
+					autoSize: true,
+					'overlayShow': true,
+					'overlayOpacity': 0.5, 
+					afterClose: function(){},
+					openMethod : 'dropIn',
+					openSpeed : 250,
+					closeMethod : 'dropOut',
+					closeSpeed : 150,
+					nextMethod : 'slideIn',
+					nextSpeed : 250,
+					prevMethod : 'slideOut',
+					prevSpeed : 250,
+					height: 600,
+					scrolling: 'auto'
+				});
+				//window.top.location.href = 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/<?=$preview['work_id']?>';
 			} else {
 				alert("msg");
+				console.log(msg);
 			}
 		}
 	);

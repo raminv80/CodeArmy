@@ -81,6 +81,7 @@ function mission_creator_open(){
 			margin: 0,
 			height: 600,
 			autoSize: false,
+			width: 780,
 			'overlayShow': true,
 			'overlayOpacity': 0.5, 
 			afterClose: function(){},
