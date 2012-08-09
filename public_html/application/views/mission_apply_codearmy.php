@@ -117,8 +117,8 @@
     <div class="find-mission-right-block">
       <div class="right-col-title-bg">Estimation</div>
       <div class="est-main-rows">
-        <div class="est-row1"> <span class="est-blue-txt"><?=($work['est_time_frame'])?$work['est_time_frame']:'Not set'?></span></div>
-        <div class="est-row2"> <span class="est-blue-txt"><?=($work['est_budget'])?$work['est_budget']:'Not set'?></span></div>
+        <div class="est-row1"> <span class="est-blue-txt"><?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'Not set'?></span></div>
+        <div class="est-row2"> <span class="est-blue-txt"><?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'Not set'?></span></div>
       </div>
       <div class="est-average-rows">
         <div class="est-avg-title">Average Bids</div>
