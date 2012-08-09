@@ -80,7 +80,7 @@ function mission_creator_open(){
 			padding : 0,
 			margin: 0,
 			height: 600,
-			autoSize: true,
+			autoSize: false,
 			'overlayShow': true,
 			'overlayOpacity': 0.5, 
 			afterClose: function(){},
@@ -93,7 +93,7 @@ function mission_creator_open(){
 			prevMethod : 'slideOut',
 			prevSpeed : 250,
 			height: 600,
-			scrolling: 'auto'
+			scrolling: 'no'
 		});
 	}
 </script>
