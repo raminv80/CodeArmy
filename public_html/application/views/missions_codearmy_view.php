@@ -612,25 +612,6 @@
 		template.data({'scale':scale,'x':x,'y':y,'color':color, 'ref':data});	
 	}
 	
-	function updateMarker(x,y){
-		var template = $('#marker-template').clone();
-		var container = $('#world-map');
-		
-		newloc = geoToPixel({'lat': x, 'lng': y});
-		//console.log(newloc.x + ' ' + newloc.y)
-		
-		x=newloc.x-21;
-		y=newloc.y-46;
-		
-		console.log('left : '+ x + ' top : ' + y);
-		container.append(template);
-		
-		$('.marker').each(function(){
-			if($(this).attr('style').indexOf('top') != y) {
-			        $(this).hide()
-			}
-		})
-	}
 	//*******************End of rendering functions******************/
 </script>
 <script type="text/javascript" src="/public/js/codeArmy/duck.js"></script>
