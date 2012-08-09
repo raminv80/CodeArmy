@@ -116,6 +116,7 @@ class Missions extends CI_Controller {
 		//$work_id = "044295";
 		$this->view_data['page'] = 0;
 		$this->view_data['num_per_page'] = 6;
+		$this->view_data['work_id'] = $work_id;
 		//Check if is po
 		$user_id = $this->session->userdata('user_id');
 		$work = $this->work_model->get_work($work_id);
@@ -608,5 +609,22 @@ class Missions extends CI_Controller {
 		$q1 = $this->input->post('class');
 		$subclass = $this->work_model->get_sub_class($q,$q1);
 		echo json_encode($subclass);
+	}
+	
+	function Ajax_send_invites(){
+		$user_id = $this->session->userdata('user_id');
+		$ids = $this->input->post('ids');
+		$work_id = $this->input->post('work_id');
+		$work = $this->work_model->get_work($work_id)->result_array();
+		if(count($work)==1){
+			$subject = "Invitation to mission";
+			$msg = "You are invited to work on Mission '<a class='fancybox' href='/missions/apply/$work_id'>".$work[0]['title']."</a>'. You may <a class='fancybox' href='/missions/apply/$work_id'>click here to view mission details</a> and to apply/bid on the mission.";
+			foreach($ids as $invited_user_id){
+				$this->message_model->send_message($user_id,$invited_user_id,$subject,$msg);
+			}
+			echo json_encode("success");
+		}else{
+			echo json_encode("error");
+		}
 	}
 }

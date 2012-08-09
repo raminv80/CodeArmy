@@ -1,7 +1,8 @@
 <style>
-	.fancybox-nav{top:30px;height:90%; width:9%}
-	.fancybox-next{right:-35px;}
-	.fancybox-prev{left:-48px;}
+	.fancybox-nav span {visibility: visible;}
+	.fancybox-nav{top:30px;height:90%; width:60px;}
+	.fancybox-next{right:-60px;}
+	.fancybox-prev{left:-60px;}
 	#mission_list{
 		width:752px;
 	}

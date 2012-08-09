@@ -103,9 +103,14 @@ class Users_model extends CI_Model {
 		}
 	}
 	
-	public function promote_to_po($user_id){
+	public function promote_to_po_codearmy($user_id){
+		$this->db->update('users',array('user_status'=>'enable','role'=>'po'),array('user_id'=>$user_id));
+		$this->db->update('user_profiles',array('specialization'=>'product owner'),array('user_id'=>$user_id));
+	}
+	
+	public function promote_to_po_old($user_id){
 		$this->db->update('users',array('user_status'=>'enable'),array('user_id'=>$user_id));
-		$this->db->update('user_profiles',array('specialization'=>'client'),array('user_id'=>$user_id));
+		$this->db->update('user_profiles',array('specialization'=>'product owner'),array('user_id'=>$user_id));
 	}
 	
 	public function is_po_v5($user_id){
