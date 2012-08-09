@@ -1470,6 +1470,7 @@ div#compose-area .lnkimg {
 .create-mission-container, .confirm-mission-container {
 	background: url("/public/images/codeArmy/mission/create-mission-bg.jpg") no-repeat;
 	position:relative;
+	overflow:hidden;
 	/* height:766px;
 	width:748px; */
 }
@@ -1481,7 +1482,7 @@ div#compose-area .lnkimg {
 	padding: 20px 0;
     height: 33px;
     text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
-    width: 100%;
+    width: 770px;
 	text-align:center;
 }
 .create-mission-info, .mission-desc-video, .mission-type-n-skills, .mission-arrange-budget, .mission-submit-row {
@@ -1660,13 +1661,13 @@ input.assinpo {
 /* Confirm Mission Page By Reza@RezaKabiri.com */
 
 .confirm-mission-project-name, .confirm-mission-assign-po {
-	width:100%;
+	width:750px;
 	padding:0px 25px 20px;
 	color:#fff;
 	float: left;
 }
 .mission-brief, .mission-type-arrange-budget, .confirm-mission-skills-files {
-	width:100%;
+	width:750px;
 	float:left;
 	margin: 0 10px;
 	position:relative;
@@ -2445,7 +2446,7 @@ color: #999;
 	left: 0;
 	width: 100%;
 	height: 16px;
-	background: red;
+	/*background: red;*/
 }
 
 .jspVerticalBar *,
