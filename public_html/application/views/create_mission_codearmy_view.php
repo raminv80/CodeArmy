@@ -1,7 +1,4 @@
 <?php $this->load->view('includes/frame_header.php'); ?>
-<link rel="stylesheet" href="/public/pictogram/css/font-awesome.css">
-<!--[if lte IE 7]><link rel="stylesheet" href="/public/pictograms/css/font-awesome-ie7.css"><![endif]-->
-
 
 <?php echo form_open('#' , array('id'=>'form-create-mission')); ?>
 <div class="create-mission-container">
@@ -116,7 +113,7 @@
    </div>
 
 <div class="submit-cancel-row">
-<div style="height:12px; width:80px; margin:-40px auto 20px; padding-left:180px"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
+<div class="loader" style="margin:-40px auto 20px; padding-left:180px"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
 <input type="button" class="lnkimg" id="post-mission" value="Post Mission">
 <input type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
 </div>
@@ -345,6 +342,7 @@ function initCreateMission(){
 			  'csrf_workpad': getCookie('csrf_workpad') 
 			},
 			success: function(msg){
+				console.log(msg)
 				if(msg!="" && msg!='error'){
 					parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
 				} else {
