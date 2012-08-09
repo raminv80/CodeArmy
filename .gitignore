@@ -2,7 +2,7 @@ database.php
 uploads/*
 tmp/*
 public/captcha/*
-
+/public/uploads/*
 public_html/test.php
 
 public_html/application/logs/queries.log.txt
