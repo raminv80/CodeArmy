@@ -4,6 +4,8 @@
 <link type="text/css" href="/public/css/CodeArmyV1/ui-darkness/jquery-ui-1.8.22.custom.css" rel="stylesheet" />
 <link href="/public/css/CodeArmyV1/style.css" media="all" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/jquery.fancybox.css?v=2.0.6" type="text/css" media="screen" />
+<link rel="stylesheet" href="/public/pictogram/css/font-awesome.css">
+<!--[if lte IE 7]><link rel="stylesheet" href="/public/pictograms/css/font-awesome-ie7.css"><![endif]-->
 <script type="text/javascript" src="/public/js/jquery-1.7.min.js"></script>
 <script type="text/javascript" src="/public/js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="/public/js/jquery-ui-1.8.16.custom.min.js"></script>

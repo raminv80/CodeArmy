@@ -30,24 +30,30 @@
   </div>
   <div class="mission-type-n-skills">
     <div class="mission-type"> <span class="mission-type-title">Mission Type</span>
-      <select id="mission-type-main" name="mission-type-main" class="mission-type-main required" validate="required:true">
+    <div class="wrapselect big right">
+      <select id="mission-type-main" name="mission-type-main" class="required" validate="required:true">
         <option value="">--- Please select ---</option>
       <?php foreach($main_category as $value): ?>
         <option value="<?=$value['category_id']?>" <?php if($preview['category']==$value['category_id']){?>selected="selected"<?php }?>><?=$value['category']?></option>
       <?php endforeach; ?>
       </select>
+    </div>
+    <div class="wrapselect big right">
       <select id="mission-type-class" name="mission-type-class" class="mission-type-sub">
         <option value="0">--- Please select ---</option>
       <?php foreach($class as $value): ?>
         <option value="<?=$value['class_id']?>" <?php if($preview['class']==$value['class_id']){?>selected="selected"<?php }?>><?=$value['class_name']?></option>
       <?php endforeach; ?>
       </select>
+    </div>
+    <div class="wrapselect big right">
       <select id="mission-type-sub" name="mission-type-sub" class="mission-type-sub">
         <option value="0">--- Please select ---</option>
       <?php foreach($sub_class as $value): ?>
         <option value="<?=$value['subclass_id']?>" <?php if($preview['subclass']==$value['subclass_id']){?>selected="selected"<?php }?>><?=$value['subclass_name']?></option>
       <?php endforeach; ?>
       </select>
+    </div>
     </div>
     <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
       	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>-->
@@ -68,33 +74,35 @@
   <div class="mission-arrange-budget">
     <div class="mission-arrangements"> <span class="mission-arrange-title">Mission's Arrangements</span>
       <div class="arrange-row">
-        <select id="mission-arrange-hour" name="mission-arrange-hour" class="mission-arrange-hour">
+        <div class="wrapselect small left">
+        <select id="mission-arrange-type" name="mission-arrange-type" class="mission-arrange-hour">
           <option value=""></option>
-          <option value="hourly"<?php if($preview['est_arrangement']=="hourly") echo " selected"; ?>>Hourly</option>
+		  <?php foreach($arrangement_type as $type): ?>
+          <option value="<?=$type['id']?>"<?php if($preview['est_arrangement']==$type['id']) echo " selected"; ?>><?=$type['type']?></option>
+          <?php endforeach; ?>
         </select>
-        <span class="center-dash">-</span>
-        <select id="mission-arrange-month" name="mission-arrange-month" class="mission-arrange-month">
-          <option value=""></option>
+        </div>
+        <span class="dashforselect"><i class="icon-chevron-right"></i></span>
+        <div class="wrapselect small left">
+        <select id="mission-arrange-duration" name="mission-arrange-duration" class="mission-arrange-month">
           <option value="0"></option>
-          <option value="1 - 2 hours"<?php if($preview['est_time_frame']=="1 - 2 hours") echo " selected"; ?>>1 - 2 hours</option>
-          <option value="2 - 4 hours"<?php if($preview['est_time_frame']=="2 - 4 hours") echo " selected"; ?>>2 - 4 hours</option>
-          <option value="4 - 10 hours"<?php if($preview['est_time_frame']=="4 - 10 hours") echo " selected"; ?>>4 - 10 hours</option>
-          <option value="10 - 24 hours"<?php if($preview['est_time_frame']=="10 - 24 hours") echo " selected"; ?>>10 - 24 hours</option>
+		  <?php foreach($arrangement_duration as $duration): ?>
+          <option value="<?=$duration['time_id']?>"<?php if($preview['est_time_frame']==$duration['time_id']) echo " selected"; ?>><?=$duration['duration']?></option>
+          <?php endforeach; ?>
         </select>
+        </div>
       </div>
     </div>
     <div class="mission-budget"> <span class="mission-budget-title">Budget</span>
       <div class="arrange-row">
+        <div class="wrapselect small">
         <select id="mission-budget" name="mission-budget" class="mission-budget">
           <option value=""></option>
-          <option value="1$ - 10$ / hour"<?php if($preview['est_budget']=="1$ - 10$ / hour") echo " selected"; ?>>1$ - 10$ / hour</option>
-          <option value="10$ - 20$ / hour"<?php if($preview['est_budget']=="10$ - 20$ / hour") echo " selected"; ?>>10$ - 20$ / hour</option>
-          <option value="20$ - 30$ / hour"<?php if($preview['est_budget']=="20$ - 30$ / hour") echo " selected"; ?>>20$ - 30$ / hour</option>
-          <option value="30$ - 40$ / hour"<?php if($preview['est_budget']=="30$ - 40$ / hour") echo " selected"; ?>>30$ - 40$ / hour</option>
-          <option value="40$ - 50$ / hour"<?php if($preview['est_budget']=="40$ - 50$ / hour") echo " selected"; ?>>40$ - 50$ / hour</option>
-          <option value="50$ - 70$ / hour"<?php if($preview['est_budget']=="50$ - 70$ / hour") echo " selected"; ?>>50$ - 70$ / hour</option>
-          <option value="70$ - 100$ / hour"<?php if($preview['est_budget']=="70$ - 100$ / hour") echo " selected"; ?>>70$ - 100$ / hour</option>
+		  <?php foreach($arrangement_budget as $budget): ?>
+          <option value="<?=$budget['budget_id']?>"<?php if($preview['est_budget']==$budget['budget_id']) echo " selected"; ?>><?=$budget['amount']?></option>
+          <?php endforeach; ?>
         </select>
+        </div>
       </div>
     </div>
   </div>
@@ -106,6 +114,7 @@
 
 <div class="submit-cancel-row">
 <input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
+<div class="loader"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
 <input type="button" class="lnkimg" id="post-mission" value="Update Mission">
 <input type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
 </div>
@@ -157,6 +166,31 @@
 					$('#mission-type-sub').html('');
 					$('#mission-type-sub').append("<option value='0'>--- Please select ---</option>")
 					$(msg).each(function(){$('#mission-type-sub').append("<option value='"+this.subclass_id+"'>"+this.subclass_name+"</option>")});
+				}
+			});
+		});
+		
+		$('#mission-arrange-type').live("change",function(){
+			$.ajax({
+				type: "POST",
+				url: "/missions/Ajax_get_duration",
+				data:{'type':$(this).val(), 'csrf_workpad':getCookie('csrf_workpad')},
+				dataType: "json",
+				success: function(msg){
+					$('#mission-arrange-duration').html('');
+					$('#mission-arrange-duration').append("<option value='0'>Please select</option>");
+					$(msg).each(function(){$('#mission-arrange-duration').append("<option value='"+this.time_id+"'>"+this.duration+"</option>")});
+				}
+			});
+			$.ajax({
+				type: "POST",
+				url: "/missions/Ajax_get_budget",
+				data:{'type':$(this).val(), 'csrf_workpad':getCookie('csrf_workpad')},
+				dataType: "json",
+				success: function(msg){
+					$('#mission-budget').html('');
+					$('#mission-budget').append("<option value='0'>Please select</option>")
+					$(msg).each(function(){$('#mission-budget').append("<option value='"+this.budget_id+"'>"+this.amount+" $</option>")});
 				}
 			});
 		});
@@ -313,6 +347,7 @@ function initEditMission(){
 	$('#post-mission').click(function(){
 		console.log($("#form-edit-mission").valid());
 		if($("#form-edit-mission").valid()){
+			$('#reg-ajax').show();
 			submitHandler();
 		}
 	});
@@ -325,8 +360,8 @@ function initEditMission(){
 		var mission_type_main = $('#mission-type-main').val();
 		var mission_type_class = $('#mission-type-class').val();
 		var mission_type_subclass = $('#mission-type-sub').val();
-		var mission_arrange_hour = $('#mission-arrange-hour').val();
-		var mission_arrange_month = $('#mission-arrange-month').val();
+		var mission_arrange_type = $('#mission-arrange-type').val();
+		var mission_arrange_duration = $('#mission-arrange-duration').val();
 		var mission_budget = $('#mission-budget').val();
 		var assign_po = $('#assignpo').val();
 		var work_id = $('#work_id').val();
@@ -340,8 +375,8 @@ function initEditMission(){
 			  'mission_type_main': mission_type_main, 
 			  'mission_type_class': mission_type_class, 
 			  'mission_type_subclass': mission_type_subclass, 
-			  'mission_arrange_hour': mission_arrange_hour, 
-			  'mission_arrange_month': mission_arrange_month, 
+			  'mission_arrange_type': mission_arrange_type, 
+			  'mission_arrange_duration': mission_arrange_duration, 
 			  'mission_budget': mission_budget, 
 			  'assign_po': assign_po, 
 			  'work_id': work_id, 
@@ -349,6 +384,7 @@ function initEditMission(){
 			},
 			function(msg){
 				if(msg!="" && msg!='error'){
+					console.log(msg);
 					parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
 				} else {
 					alert("Error");

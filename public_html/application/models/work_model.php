@@ -168,4 +168,40 @@ class Work_model extends CI_Model {
 		}
 		return $res->result_array();
 	}
+	
+	function get_arrangement_type(){
+		$sql = "SELECT * FROM arrangement_type ORDER BY ID";
+		$res = $this->db->query($sql);
+		return $res->result_array();
+	}
+	
+	function get_duration($type=''){
+		$sql = "SELECT * FROM arrangement_time WHERE type_id = ?";
+		$res = $this->db->query($sql, $type);
+		return $res->result_array();
+	}
+	
+	function get_budget($type=''){
+		$sql = "SELECT * FROM arrangement_budget WHERE type_id = ?";
+		$res = $this->db->query($sql, $type);
+		return $res->result_array();
+	}
+	
+	function get_selected_arrangement_type($type){
+		$sql = "SELECT * FROM arrangement_type WHERE id = ?";
+		$res = $this->db->query($sql, $type);
+		return $res->result_array();
+	}
+	
+	function get_selected_arrangement_time($time){
+		$sql = "SELECT * FROM arrangement_time WHERE time_id = ?";
+		$res = $this->db->query($sql, $time);
+		return $res->result_array();
+	}
+	
+	function get_selected_arrangement_budget($budget){
+		$sql = "SELECT * FROM arrangement_budget WHERE budget_id = ?";
+		$res = $this->db->query($sql, $budget);
+		return $res->result_array();
+	}
 }

@@ -631,18 +631,7 @@ class Missions extends CI_Controller {
 		echo json_encode($subclass);
 	}
 	
-	function Ajax_get_duration(){
-		$q = $this->input->post('type');
-		$duration = $this->work_model->get_duration($q);
-		echo json_encode($duration);
-	}
-
-	function Ajax_get_budget(){
-		$q = $this->input->post('type');
-		$budget = $this->work_model->get_budget($q);
-		echo json_encode($budget);
-	}
-	
+<<<<<<< HEAD
 	function Ajax_send_invites(){
 		$user_id = $this->session->userdata('user_id');
 		$ids = $this->input->post('ids');
@@ -658,5 +647,17 @@ class Missions extends CI_Controller {
 		}else{
 			echo json_encode("error");
 		}
+=======
+	function Ajax_get_duration(){
+		$q = $this->input->post('type');
+		$duration = $this->work_model->get_duration($q);
+		echo json_encode($duration);
+	}
+
+	function Ajax_get_budget(){
+		$q = $this->input->post('type');
+		$budget = $this->work_model->get_budget($q);
+		echo json_encode($budget);
+>>>>>>> origin/master
 	}
 }
