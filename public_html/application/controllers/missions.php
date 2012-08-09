@@ -55,10 +55,10 @@ class Missions extends CI_Controller {
 		$work = $work[0];
 		$this->view_data['work'] = $work;
 		$estimate_time = $this->work_model->get_selected_arrangement_time($work['est_time_frame']);
-		$estimate_time = $estimate_time[0];
+		if(!$estimate_time){$estimate_time=0;} else {$estimate_time = $estimate_time[0];}
 		$this->view_data['estimate_time'] = $estimate_time;
 		$estimate_budget = $this->work_model->get_selected_arrangement_budget($work['est_budget']);
-		$estimate_budget = $estimate_budget[0];
+		if(!$estimate_budget){$estimate_budget=0;} else {$estimate_budget = $estimate_budget[0];}
 		$this->view_data['estimate_budget'] = $estimate_budget;
 		$po = $this->users_model->get_user($work['owner'])->result_array();
 		$po = $po[0];
