@@ -116,7 +116,7 @@
    </div>
 
 <div class="submit-cancel-row">
-<div style="height:12px; width:80px; margin:-40px auto 20px; padding-left:50px"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
+<div style="height:12px; width:80px; margin:-40px auto 20px; padding-left:180px"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
 <input type="button" class="lnkimg" id="post-mission" value="Post Mission">
 <input type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
 </div>
