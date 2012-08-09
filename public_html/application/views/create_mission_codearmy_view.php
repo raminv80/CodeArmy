@@ -307,7 +307,6 @@ function initCreateMission(){
 	});
 	
 	$('#post-mission').click(function(){
-		console.log($("#form-create-mission").valid());
 		if($("#form-create-mission").valid()){
 			$('#reg-ajax').show();
 			submitHandler();
