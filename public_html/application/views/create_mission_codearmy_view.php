@@ -1,5 +1,5 @@
 <?php $this->load->view('includes/frame_header.php'); ?>
-<link rel="stylesheet" href="/public/pictograms/css/font-awesome.css">
+<link rel="stylesheet" href="/public/pictogram/css/font-awesome.css">
 <!--[if lte IE 7]><link rel="stylesheet" href="/public/pictograms/css/font-awesome-ie7.css"><![endif]-->
 
 
