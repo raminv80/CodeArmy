@@ -22,11 +22,11 @@
     <div class="confirm-mission-arrange-budget">
       <div class="confirm-mission-arrange">
         <div class="confirm-mission-type-title">Mission Arrangement</div>
-        <div class="confirm-mission-type-text"><?=$arrangement['type']?> > <?=$duration['duration']?></div>
+        <div class="confirm-mission-type-text"><?php if($arrangement != "") echo $arrangement['type']; else echo "Not Set";?> > <?php if($duration != "") echo $duration['duration']; else echo "Not Set";?></div>
       </div>
       <div class="confirm-mission-budget">
         <div class="confirm-mission-type-title">Budget</div>
-        <div class="confirm-mission-type-text"><?=$budget['amount']?></div>
+        <div class="confirm-mission-type-text"><?php if($budget != "") echo $budget['amount']; else echo "Not Set";?></div>
       </div>
     </div>
   </div>
