@@ -142,6 +142,18 @@ class Missions extends CI_Controller {
 		$preview_files = $this->work_model->previewFiles($work_id);
 		$this->view_data['preview_files'] = $preview_files;
 		
+		$type = $preview[0]['est_arrangement'];
+		$arrangement = $this->work_model->get_selected_arrangement_type($type);
+		$this->view_data['arrangement'] = $arrangement[0];
+		
+		$time = $preview[0]['est_time_frame'];
+		$duration = $this->work_model->get_selected_arrangement_time($time);
+		$this->view_data['duration'] = $duration[0];
+		
+		$budget = $preview[0]['est_budget'];
+		$budget = $this->work_model->get_selected_arrangement_budget($budget);
+		$this->view_data['budget'] = $budget[0];
+		
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('confirm_mission_codearmy_view', $this->view_data);
 	}
@@ -173,6 +185,7 @@ class Missions extends CI_Controller {
 		$this->view_data['main_category'] = $this->work_model->get_main_category();
 		$this->view_data['class'] = $this->work_model->get_main_class($cat);
 		$this->view_data['sub_class'] = $this->work_model->get_sub_class($cat,'');
+		$this->view_data['arrangement_type'] = $this->work_model->get_arrangement_type();
 		$this->view_data['window_title'] = "Mission Create";
 		$this->load->view('create_mission_codearmy_view', $this->view_data);
 	}
@@ -197,10 +210,8 @@ class Missions extends CI_Controller {
 			"subclass" => ($this->input->post('mission_type_subclass')==0)?NULL:$this->input->post('mission_type_subclass'),
 			"category" => $this->input->post('mission_type_main'),
 			"description" => html_purify($this->input->post('mission_desc')),
-			//"points" => calc_points(),
-			//"cost" => calc_cost($this->input->post('mission_arrange_hour'),$this->input->post('mission_arrange_month'),$this->input->post('mission_budget')),
 			"points" => 0,
-			"cost" => '0',
+			"cost" => $this->calc_cost($this->input->post('mission_arrange_type'),$this->input->post('mission_arrange_duration'),$this->input->post('mission_budget')),
 			"status" => 'draft',
 			"creator" => $user_id,
 			"owner" => $user_id,
@@ -215,8 +226,8 @@ class Missions extends CI_Controller {
 			"attach" => NULL,
 			"lat" => $lat,
 			"lng" => $lng,
-			"est_arrangement" => $this->input->post('mission_arrange_hour'),
-			"est_time_frame" => $this->input->post('mission_arrange_month'),
+			"est_arrangement" => $this->input->post('mission_arrange_type'),
+			"est_time_frame" => $this->input->post('mission_arrange_duration'),
 			"est_budget" => $this->input->post('mission_budget')
 		);
 		if($this->db->insert('works', $res)) {
@@ -280,10 +291,8 @@ class Missions extends CI_Controller {
 			"subclass" => ($this->input->post('mission_type_subclass')==0)?NULL:$this->input->post('mission_type_subclass'),
 			"category" => $this->input->post('mission_type_main'),
 			"description" => html_purify($this->input->post('mission_desc')),
-			//"points" => calc_points(),
-			//"cost" => calc_cost($this->input->post('mission_arrange_hour'),$this->input->post('mission_arrange_month'),$this->input->post('mission_budget')),
 			"points" => 0,
-			"cost" => '0',
+			"cost" => $this->calc_cost($this->input->post('mission_arrange_type'),$this->input->post('mission_arrange_duration'),$this->input->post('mission_budget')),
 			"status" => 'draft',
 			"creator" => $user_id,
 			"owner" => $user_id,
@@ -298,8 +307,8 @@ class Missions extends CI_Controller {
 			"attach" => NULL,
 			"lat" => $lat,
 			"lng" => $lng,
-			"est_arrangement" => $this->input->post('mission_arrange_hour'),
-			"est_time_frame" => $this->input->post('mission_arrange_month'),
+			"est_arrangement" => $this->input->post('mission_arrange_type'),
+			"est_time_frame" => $this->input->post('mission_arrange_duration'),
 			"est_budget" => $this->input->post('mission_budget')
 		);
 		if($this->db->update('works', $res, array("work_id" => $work_id))) {
@@ -374,6 +383,11 @@ class Missions extends CI_Controller {
 		$this->view_data['class'] = $this->work_model->get_main_class();
 		$this->view_data['sub_class'] = $this->work_model->get_sub_class();
 		
+		$this->view_data['arrangement_type'] = $this->work_model->get_arrangement_type();
+		$type = $preview[0]['est_arrangement'];
+		$this->view_data['arrangement_duration'] = $this->work_model->get_duration($type);
+		$this->view_data['arrangement_budget'] = $this->work_model->get_budget($type);
+		
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('edit_mission_codearmy_view', $this->view_data);
 	}
@@ -395,11 +409,17 @@ class Missions extends CI_Controller {
 		}
 	}
 	
-	private function calc_cost($type,$timeline,$budget){
+	public function calc_cost($type,$timeline,$budget){
 		//TODO
-		if($type=='hourly'){
-			$cost = $timeline*$budget;
-		}
+		$type = $this->work_model->get_selected_arrangement_type($type);
+		$duration = $this->work_model->get_selected_arrangement_time($timeline);
+		$budget = $this->work_model->get_selected_arrangement_budget($budget);
+		
+		$type = $type[0]['type'];
+		$timeline = $duration[0]['time_cal'];
+		$budget = $budget[0]['amount_cal'];
+				
+		$cost = $timeline*$budget;
 		return $cost;
 	}
 	
@@ -606,5 +626,17 @@ class Missions extends CI_Controller {
 		$q1 = $this->input->post('class');
 		$subclass = $this->work_model->get_sub_class($q,$q1);
 		echo json_encode($subclass);
+	}
+	
+	function Ajax_get_duration(){
+		$q = $this->input->post('type');
+		$duration = $this->work_model->get_duration($q);
+		echo json_encode($duration);
+	}
+
+	function Ajax_get_budget(){
+		$q = $this->input->post('type');
+		$budget = $this->work_model->get_budget($q);
+		echo json_encode($budget);
 	}
 }
