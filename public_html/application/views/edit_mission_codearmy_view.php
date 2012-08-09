@@ -1,128 +1,130 @@
 <?php $this->load->view('includes/frame_header.php'); ?>
 
+<div class="create-mission-wrapper">
 <?php echo form_open('#' , array('id'=>'form-edit-mission')); ?>
-<div class="create-mission-container">
-  <div class="create-mission-title">Edit Mission</div>
-  <div class="create-mission-info">
-    <div class="mission-title">
-      <label>Mission Title</label>
-      <input type="text" id="mission-title" name="mission-title" class="required" value="<?=$preview['title']?>" />
-    </div>
-    <div class="mission-video-url">
-      <label>Mission Video</label>
-      <input type="text" id="mission-video" name="mission-video" value="<?=$preview['tutorial']?>" placeholder="Youtube video tag or url"/>
-    </div>
-  </div>
-  <div class="mission-desc-video">
-    <div class="mission-description">
-      <div><span class="desc-title-text">Description</span><span class="examples-link"><a href="#">Examples</a></span></div>
-      <textarea rows="7" id="mission-desc-text" name="mission-desc-text" class="required"><?=$preview['description']?></textarea>
-      <!--<div class="attach-file-tools"> <a href="#"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /></a> <span class="filename"><a href="#">Project-brief.ppt</a></span> <span class="filesize">(250kb)</span> <span class="filedesc">Acme online store brief...</span> <a href="#"><img src="/public/images/codeArmy/mission/binicon.png" class="binicon" /></a> </div>-->
-      <div id="plupload-container" style="clear:both">
-      <div id="filelist">No runtime found.</div>
-      <input type="button" id="pickfiles" class="lnkimg" value="Select files">
-      <input type="button" id="uploadfiles" class="lnkimg" value="Upload files">
-      </div>
-    </div>
-    <div class="mission-video-preview">
-    <iframe class="youtube-player" id="mission-video-youtube" type="text/html" width="330" height="216" src="http://www.youtube.com/embed/<?=$preview['tutorial']?>" frameborder="0"></iframe>
-    </div>
-  </div>
-  <div class="mission-type-n-skills">
-    <div class="mission-type"> <span class="mission-type-title">Mission Type</span>
-    <div class="wrapselect big right">
-      <select id="mission-type-main" name="mission-type-main" class="required" validate="required:true">
-        <option value="">--- Please select ---</option>
-      <?php foreach($main_category as $value): ?>
-        <option value="<?=$value['category_id']?>" <?php if($preview['category']==$value['category_id']){?>selected="selected"<?php }?>><?=$value['category']?></option>
-      <?php endforeach; ?>
-      </select>
-    </div>
-    <div class="wrapselect big right">
-      <select id="mission-type-class" name="mission-type-class" class="mission-type-sub">
-        <option value="0">--- Please select ---</option>
-      <?php foreach($class as $value): ?>
-        <option value="<?=$value['class_id']?>" <?php if($preview['class']==$value['class_id']){?>selected="selected"<?php }?>><?=$value['class_name']?></option>
-      <?php endforeach; ?>
-      </select>
-    </div>
-    <div class="wrapselect big right">
-      <select id="mission-type-sub" name="mission-type-sub" class="mission-type-sub">
-        <option value="0">--- Please select ---</option>
-      <?php foreach($sub_class as $value): ?>
-        <option value="<?=$value['subclass_id']?>" <?php if($preview['subclass']==$value['subclass_id']){?>selected="selected"<?php }?>><?=$value['subclass_name']?></option>
-      <?php endforeach; ?>
-      </select>
-    </div>
-    </div>
-    <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
-      	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>-->
-		<div id="skills-required-text" contenteditable="true">
-        <?php
-		if($preview_skills != ""){
-			foreach($preview_skills as $skill):
-				echo $skill["skill_level"]." ".$skill["name"].", ";
-			endforeach;
-		}
-		?>
-        </div>
-		<div class="clearfix"></div>
-		<div class="skill-tag"></div>
-		<div class="skill-msg">Type the name of someone or something...</div>
-    </div>
-  </div>
-  <div class="mission-arrange-budget">
-    <div class="mission-arrangements"> <span class="mission-arrange-title">Mission's Arrangements</span>
-      <div class="arrange-row">
-        <div class="wrapselect small left">
-        <select id="mission-arrange-type" name="mission-arrange-type" class="mission-arrange-hour">
-          <option value=""></option>
-		  <?php foreach($arrangement_type as $type): ?>
-          <option value="<?=$type['id']?>"<?php if($preview['est_arrangement']==$type['id']) echo " selected"; ?>><?=$type['type']?></option>
-          <?php endforeach; ?>
-        </select>
-        </div>
-        <span class="dashforselect"><i class="icon-chevron-right"></i></span>
-        <div class="wrapselect small left">
-        <select id="mission-arrange-duration" name="mission-arrange-duration" class="mission-arrange-month">
-          <option value="0"></option>
-		  <?php foreach($arrangement_duration as $duration): ?>
-          <option value="<?=$duration['time_id']?>"<?php if($preview['est_time_frame']==$duration['time_id']) echo " selected"; ?>><?=$duration['duration']?></option>
-          <?php endforeach; ?>
-        </select>
-        </div>
-      </div>
-    </div>
-    <div class="mission-budget"> <span class="mission-budget-title">Budget</span>
-      <div class="arrange-row">
-        <div class="wrapselect small">
-        <select id="mission-budget" name="mission-budget" class="mission-budget">
-          <option value=""></option>
-		  <?php foreach($arrangement_budget as $budget): ?>
-          <option value="<?=$budget['budget_id']?>"<?php if($preview['est_budget']==$budget['budget_id']) echo " selected"; ?>><?=$budget['amount']?></option>
-          <?php endforeach; ?>
-        </select>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="mission-submit-row">
-    <div class="assign-po"> 
-    <input class="assinpo" id="assignpo" type="checkbox" value="yes" /> <label>Assign this mission to a Project Manager? </label>
-   </div>
+	<div class="create-mission-container">
+	  <div class="create-mission-title">Edit Mission</div>
+	  <div class="create-mission-info">
+	    <div class="mission-title">
+	      <label>Mission Title</label>
+	      <input type="text" id="mission-title" name="mission-title" class="required" value="<?=$preview['title']?>" />
+	    </div>
+	    <div class="mission-video-url">
+	      <label>Mission Video</label>
+	      <input type="text" id="mission-video" name="mission-video" value="<?=$preview['tutorial']?>" placeholder="Youtube video tag or url"/>
+	    </div>
+	  </div>
+	  <div class="mission-desc-video">
+	    <div class="mission-description">
+	      <div><span class="desc-title-text">Description</span><span class="examples-link"><a href="#">Examples</a></span></div>
+	      <textarea rows="7" id="mission-desc-text" name="mission-desc-text" class="required"><?=$preview['description']?></textarea>
+	      <!--<div class="attach-file-tools"> <a href="#"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /></a> <span class="filename"><a href="#">Project-brief.ppt</a></span> <span class="filesize">(250kb)</span> <span class="filedesc">Acme online store brief...</span> <a href="#"><img src="/public/images/codeArmy/mission/binicon.png" class="binicon" /></a> </div>-->
+	      <div id="plupload-container" style="clear:both">
+	      <div id="filelist">No runtime found.</div>
+	      <input type="button" id="pickfiles" class="lnkimg" value="Select files">
+	      <input type="button" id="uploadfiles" class="lnkimg" value="Upload files">
+	      </div>
+	    </div>
+	    <div class="mission-video-preview">
+	    <iframe class="youtube-player" id="mission-video-youtube" type="text/html" width="330" height="216" src="http://www.youtube.com/embed/<?=$preview['tutorial']?>" frameborder="0"></iframe>
+	    </div>
+	  </div>
+	  <div class="mission-type-n-skills">
+	    <div class="mission-type"> <span class="mission-type-title">Mission Type</span>
+	    <div class="wrapselect big right">
+	      <select id="mission-type-main" name="mission-type-main" class="required" validate="required:true">
+	        <option value="">--- Please select ---</option>
+	      <?php foreach($main_category as $value): ?>
+	        <option value="<?=$value['category_id']?>" <?php if($preview['category']==$value['category_id']){?>selected="selected"<?php }?>><?=$value['category']?></option>
+	      <?php endforeach; ?>
+	      </select>
+	    </div>
+	    <div class="wrapselect big right">
+	      <select id="mission-type-class" name="mission-type-class" class="mission-type-sub">
+	        <option value="0">--- Please select ---</option>
+	      <?php foreach($class as $value): ?>
+	        <option value="<?=$value['class_id']?>" <?php if($preview['class']==$value['class_id']){?>selected="selected"<?php }?>><?=$value['class_name']?></option>
+	      <?php endforeach; ?>
+	      </select>
+	    </div>
+	    <div class="wrapselect big right">
+	      <select id="mission-type-sub" name="mission-type-sub" class="mission-type-sub">
+	        <option value="0">--- Please select ---</option>
+	      <?php foreach($sub_class as $value): ?>
+	        <option value="<?=$value['subclass_id']?>" <?php if($preview['subclass']==$value['subclass_id']){?>selected="selected"<?php }?>><?=$value['subclass_name']?></option>
+	      <?php endforeach; ?>
+	      </select>
+	    </div>
+	    </div>
+	    <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
+	      	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>-->
+			<div id="skills-required-text" contenteditable="true">
+	        <?php
+			if($preview_skills != ""){
+				foreach($preview_skills as $skill):
+					echo $skill["skill_level"]." ".$skill["name"].", ";
+				endforeach;
+			}
+			?>
+	        </div>
+			<div class="clearfix"></div>
+			<div class="skill-tag"></div>
+			<div class="skill-msg">Type the name of someone or something...</div>
+	    </div>
+	  </div>
+	  <div class="mission-arrange-budget">
+	    <div class="mission-arrangements"> <span class="mission-arrange-title">Mission's Arrangements</span>
+	      <div class="arrange-row">
+	        <div class="wrapselect small left">
+	        <select id="mission-arrange-type" name="mission-arrange-type" class="mission-arrange-hour">
+	          <option value=""></option>
+			  <?php foreach($arrangement_type as $type): ?>
+	          <option value="<?=$type['id']?>"<?php if($preview['est_arrangement']==$type['id']) echo " selected"; ?>><?=$type['type']?></option>
+	          <?php endforeach; ?>
+	        </select>
+	        </div>
+	        <span class="dashforselect"><i class="icon-chevron-right"></i></span>
+	        <div class="wrapselect small left">
+	        <select id="mission-arrange-duration" name="mission-arrange-duration" class="mission-arrange-month">
+	          <option value="0"></option>
+			  <?php foreach($arrangement_duration as $duration): ?>
+	          <option value="<?=$duration['time_id']?>"<?php if($preview['est_time_frame']==$duration['time_id']) echo " selected"; ?>><?=$duration['duration']?></option>
+	          <?php endforeach; ?>
+	        </select>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="mission-budget"> <span class="mission-budget-title">Budget</span>
+	      <div class="arrange-row">
+	        <div class="wrapselect small">
+	        <select id="mission-budget" name="mission-budget" class="mission-budget">
+	          <option value=""></option>
+			  <?php foreach($arrangement_budget as $budget): ?>
+	          <option value="<?=$budget['budget_id']?>"<?php if($preview['est_budget']==$budget['budget_id']) echo " selected"; ?>><?=$budget['amount']?></option>
+	          <?php endforeach; ?>
+	        </select>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
 
-<div class="submit-cancel-row">
-<input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
-<div class="loader"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
-<input type="button" class="lnkimg" id="post-mission" value="Update Mission">
-<input type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
+	  <div class="mission-submit-row">
+	    <div class="assign-po"> 
+	    <input class="assinpo" id="assignpo" type="checkbox" value="yes" /> <label>Assign this mission to a Project Manager? </label>
+	   </div>
+
+	<div class="submit-cancel-row">
+	<input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
+	<div class="loader"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
+	<input type="button" class="lnkimg" id="post-mission" value="Update Mission">
+	<input type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
+	</div>
+
+	   </div>
+
+	</div>
+	</form>
 </div>
-   
-   </div>
-  
-</div>
-</form>
 <!-- Temporary -->
 <style type="text/css">
 	.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
@@ -392,6 +394,43 @@ function initEditMission(){
 			}
 		);
 	}
+}
+// Full body scroll
+var isResizing = false;
+win.bind(
+	'resize',
+	function()
+	{
+		if (!isResizing) {
+			isResizing = true;
+			var container = $('.create-mission-wrapper');
+			// Temporarily make the container tiny so it doesn't influence the
+			// calculation of the size of the document
+			container.css(
+				{
+					'width': 1,
+					'height': 1
+				}
+			);
+			// Now make it the size of the window...
+			container.css(
+				{
+					'width': win.width(),
+					'height': win.height()
+				}
+			);
+			isResizing = false;
+			container.jScrollPane(
+				{
+					'showArrows': true
+				}
+			);
+		}
+	}
+).trigger('resize');
+/* IE calculates the width incorrectly first time round (it doesn't count the space used by the native scrollbar) so we re-trigger if necessary. */
+if ($('#full-page-container').width() != win.width()) {
+	win.trigger('resize');
 }
 </script>
 <?php $this->load->view('includes/frame_footer.php'); ?>

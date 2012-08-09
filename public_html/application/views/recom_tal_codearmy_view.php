@@ -226,7 +226,18 @@
 						buttons: {
 							"Proceed": function() {
 								$( this ).dialog( "close" );
-								parent.$.fancybox.close();
+								$("#dialog-mission-creatd").dialog({
+									resizable: false,
+									height:180,
+									width:400,
+									modal: true,
+									buttons: {
+											Ok: function() {
+													$( this ).dialog( "close" );
+													parent.$.fancybox.close();
+												}
+									}
+								});
 							},
 							Cancel: function() {
 								$( this ).dialog( "close" );
