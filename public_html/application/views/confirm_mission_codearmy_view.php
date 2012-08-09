@@ -22,11 +22,11 @@
     <div class="confirm-mission-arrange-budget">
       <div class="confirm-mission-arrange">
         <div class="confirm-mission-type-title">Mission Arrangement</div>
-        <div class="confirm-mission-type-text"><?=$arrangement['type']?> > <?=$duration['duration']?></div>
+        <div class="confirm-mission-type-text"><?=$arrangement?$arrangement['type']:''?> > <?=$duration?$duration['duration']:''?></div>
       </div>
       <div class="confirm-mission-budget">
         <div class="confirm-mission-type-title">Budget</div>
-        <div class="confirm-mission-type-text"><?=$budget['amount']?></div>
+        <div class="confirm-mission-type-text"><?=$budget?$budget['amount']:''?></div>
       </div>
     </div>
   </div>

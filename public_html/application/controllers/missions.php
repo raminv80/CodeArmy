@@ -153,15 +153,15 @@ class Missions extends CI_Controller {
 		
 		$type = $preview[0]['est_arrangement'];
 		$arrangement = $this->work_model->get_selected_arrangement_type($type);
-		$this->view_data['arrangement'] = $arrangement[0];
+		$this->view_data['arrangement'] = $arrangement?$arrangement[0]:false;
 		
 		$time = $preview[0]['est_time_frame'];
 		$duration = $this->work_model->get_selected_arrangement_time($time);
-		$this->view_data['duration'] = $duration[0];
+		$this->view_data['duration'] = $duration?$duration[0]:false;
 		
 		$budget = $preview[0]['est_budget'];
 		$budget = $this->work_model->get_selected_arrangement_budget($budget);
-		$this->view_data['budget'] = $budget[0];
+		$this->view_data['budget'] = $budget?$budget[0]:false;
 		
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('confirm_mission_codearmy_view', $this->view_data);
@@ -424,11 +424,15 @@ class Missions extends CI_Controller {
 		$duration = $this->work_model->get_selected_arrangement_time($timeline);
 		$budget = $this->work_model->get_selected_arrangement_budget($budget);
 		
-		$type = $type[0]['type'];
-		$timeline = $duration[0]['time_cal'];
-		$budget = $budget[0]['amount_cal'];
-				
-		$cost = $timeline*$budget;
+		if($type && $duration && $budget){
+			$type = $type[0]['type'];
+			$timeline = $duration[0]['time_cal'];
+			$budget = $budget[0]['amount_cal'];
+					
+			$cost = $timeline*$budget;
+		}else{
+			$cost=0;
+		}
 		return $cost;
 	}
 	
@@ -598,6 +602,7 @@ class Missions extends CI_Controller {
 	function my_missions(){
 		$user_id = $this->view_data['me']['user_id'];
 		$this->view_data['myWorkList'] = $this->stories->get_my_works($user_id, 'in progress')->result_array();
+		$this->view_data['myMissions'] = $this->work_model->get_owner_works($user_id);
 		$this->view_data['window_title'] = "My Missions";
 		$this->load->view('mymissions_codearmy_view', $this->view_data);
 	}

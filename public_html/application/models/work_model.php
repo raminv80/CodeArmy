@@ -204,4 +204,10 @@ class Work_model extends CI_Model {
 		$res = $this->db->query($sql, $budget);
 		return $res->result_array();
 	}
+	
+	function get_owner_works($user_id){
+		$sql = "SELECT * from works WHERE owner=? OR creator=? and status!='Signoff'";
+		$res = $this->db->query($sql, array($user_id,$user_id));
+		return $res->result_array();
+	}
 }

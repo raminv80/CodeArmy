@@ -75,7 +75,7 @@
         <div class="col4"><?=$work['cost']?></div>
         <div class="col5"><?=$work['num_bids']?></div>
         <div class="col6"><?=$work['num_comments']?></div>
-        <div class="col7"><?=substr($work['end'],0,-2)?></div>
+        <div class="col7"><?=$work['end']?></div>
     </div>
     <div class="detail-row" id="detail-<?=$work['work_id']?>">
     	<a rel="missions" href="/missions/apply/<?=$work['work_id']?>">
@@ -96,15 +96,7 @@
                 <div class="col3">Pre-Requisite</div>
             </div>
             <div class="data-row">
-            	<?php
-					//calc remaining time
-					$remaining_time = strtotime($work['end'])-time();
-					if($remaining_time<0)$remaining_time=0;
-					$remaining_hour = floor($remaining_time / (60*60));
-					$remaining_min = $remaining_time % (60*60);
-					$remaining_minutes = floor($remaining_min / (60));
-				?>
-            	<div class="col1"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?> <span class="hrs">hrs</span></div>
+            	<div class="col1"><?=$work['end']?></div>
                 <div class="col2"><?=$work['cost']?> $</div>
                 <div class="col3">
                 	<?php $skills = $this->skill_model->get_work_skills($work['work_id'],3);?>
