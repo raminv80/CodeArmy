@@ -1,4 +1,7 @@
 <style>
+	.fancybox-nav{top:30px;height:90%; width:9%}
+	.fancybox-next{right:-35px;}
+	.fancybox-prev{left:-48px;}
 	#mission_list{
 		width:752px;
 	}
@@ -76,7 +79,7 @@
     <div class="detail-row" id="detail-<?=$work['work_id']?>">
     	<a rel="missions" href="/missions/apply/<?=$work['work_id']?>">
     	<div class="mission-video-preview">
-      		<iframe class="youtube-player" type="text/html" width="250" height="150" src="http://www.youtube.com/embed/zFNb8j3YAd4?wmode=opaque" frameborder="0"></iframe>
+      		<iframe class="youtube-player" type="text/html" width="250" height="150" src="http://www.youtube.com/embed/<?=$work['tutorial']?>?wmode=opaque" frameborder="0"></iframe>
         	<h2><?=$work['title']?></h2>
         </div>
         <div class="mission-description-container">

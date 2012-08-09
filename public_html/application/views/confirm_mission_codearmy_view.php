@@ -7,9 +7,7 @@
   <div class="mission-brief">
     <div class="mission-brief-title"><?=$preview['title']?></div>
     <div class="brief-video">
-    <?php if($preview['tutorial'] != ""){ ?>
-    	<iframe class="youtube-player" id="mission-video-youtube" type="text/html" width="330" height="216" src="http://www.youtube.com/embed/<?=$preview['tutorial']?>" frameborder="0"></iframe>
-    <?php } ?>
+        <iframe width="330" height="216" frameborder="0" src="http://www.youtube.com/embed/<?=$work['tutorial']?$work['tutorial']:'zFNb8j3YAd4'?>?wmode=opaque" type="text/html" class="youtube-player"></iframe>
     </div>
     <div class="brief-text">
       <div class="brief-text-title">Mission Briefing</div>
@@ -51,8 +49,8 @@
     </div>
   </div>
   <div class="confirm-mission-assign-po">
-    <input type="checkbox" />
-    <label>Assigning this mission tp a Project Manager.</label>
+    <!--<input type="checkbox" />
+    <label>Assigning this mission tp a Project Manager.</label>-->
   </div>
   <div class="submit-cancel-row"><input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
     <input type="button" class="lnkimg" id="edit-mission" value="Edit">

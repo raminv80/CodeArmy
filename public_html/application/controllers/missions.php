@@ -124,10 +124,12 @@ class Missions extends CI_Controller {
 		if($work['creator'] == $user_id || $work['owner'] == $user_id){
 			$this->load->model('recom_model');
 			$this->view_data['recoms'] = $this->recom_model->get_tallents($work_id);
+			if($this->view_data['recoms'])
+				$this->load->view('recom_tal_codearmy_view', $this->view_data);
+			else redirect('/missions/hq');
 		}else{
 			die('Error: Either you might be logged out or you are not creator of this job');
 		}
-		$this->load->view('recom_tal_codearmy_view', $this->view_data);
 	}
 	
 	function mission_confirmation($work_id){

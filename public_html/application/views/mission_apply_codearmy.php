@@ -8,7 +8,7 @@
         <div class="find-mission-title-text"><?=$work['title']?></div>
       </div>
       <div class="find-mission-video-block">
-        <iframe width="475" height="280" frameborder="0" src="http://www.youtube.com/embed/<?=isset($this->view_data['work'])?$this->view_data['work']:'zFNb8j3YAd4'?>?wmode=opaque" type="text/html" class="youtube-player"></iframe>
+        <iframe width="475" height="280" frameborder="0" src="http://www.youtube.com/embed/<?=$work['tutorial']?$work['tutorial']:'zFNb8j3YAd4'?>?wmode=opaque" type="text/html" class="youtube-player"></iframe>
       </div>
       <div class="find-mission-main-desc"><?=$work['description']?></div>
     </div>
@@ -117,8 +117,8 @@
     <div class="find-mission-right-block">
       <div class="right-col-title-bg">Estimation</div>
       <div class="est-main-rows">
-        <div class="est-row1"> <span class="est-blue-txt"><?=$work['est_time_frame']?></span></div>
-        <div class="est-row2"> <span class="est-blue-txt"><?=$work['est_budget']?></span></div>
+        <div class="est-row1"> <span class="est-blue-txt"><?=($work['est_time_frame'])?$work['est_time_frame']:'Not set'?></span></div>
+        <div class="est-row2"> <span class="est-blue-txt"><?=($work['est_budget'])?$work['est_budget']:'Not set'?></span></div>
       </div>
       <div class="est-average-rows">
         <div class="est-avg-title">Average Bids</div>

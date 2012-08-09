@@ -114,6 +114,7 @@
 
 <div class="submit-cancel-row">
 <input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
+<div class="loader"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
 <input type="button" class="lnkimg" id="post-mission" value="Update Mission">
 <input type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
 </div>
@@ -346,6 +347,7 @@ function initEditMission(){
 	$('#post-mission').click(function(){
 		console.log($("#form-edit-mission").valid());
 		if($("#form-edit-mission").valid()){
+			$('#reg-ajax').show();
 			submitHandler();
 		}
 	});
