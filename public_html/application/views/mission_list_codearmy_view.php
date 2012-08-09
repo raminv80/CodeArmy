@@ -75,7 +75,7 @@
         <div class="col4"><?=$work['cost']?></div>
         <div class="col5"><?=$work['num_bids']?></div>
         <div class="col6"><?=$work['num_comments']?></div>
-        <div class="col7"><?=date('Y-m-d',strtotime($work['end']))?></div>
+        <div class="col7"><?=substr($work['end'],0,-2)?></div>
     </div>
     <div class="detail-row" id="detail-<?=$work['work_id']?>">
     	<a rel="missions" href="/missions/apply/<?=$work['work_id']?>">
