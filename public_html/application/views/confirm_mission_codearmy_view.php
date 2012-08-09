@@ -7,7 +7,7 @@
   <div class="mission-brief">
     <div class="mission-brief-title"><?=$preview['title']?></div>
     <div class="brief-video">
-        <iframe width="330" height="216" frameborder="0" src="http://www.youtube.com/embed/<?=$work['tutorial']?$work['tutorial']:'zFNb8j3YAd4'?>?wmode=opaque" type="text/html" class="youtube-player"></iframe>
+        <iframe width="330" height="216" frameborder="0" src="http://www.youtube.com/embed/<?=$preview['tutorial']?$preview['tutorial']:'zFNb8j3YAd4'?>?wmode=opaque" type="text/html" class="youtube-player"></iframe>
     </div>
     <div class="brief-text">
       <div class="brief-text-title">Mission Briefing</div>
