@@ -1,6 +1,7 @@
 <?php $this->load->view('includes/frame_header.php'); ?>
 
 <?php echo form_open('#' , array('id'=>'form-create-mission')); ?>
+<div class="create-mission-wrapper">
 <div class="create-mission-container">
 	
   <div class="create-mission-title">Create Mission</div>
@@ -112,6 +113,8 @@
    </div>
   
 </div>
+</div>
+<!-- end container -->
 </form>
 <style type="text/css">
 	.create-mission-container {overflow-x:hidden}
@@ -381,7 +384,7 @@ win.bind(
 	{
 		if (!isResizing) {
 			isResizing = true;
-			var container = $('.create-mission-container');
+			var container = $('.create-mission-wrapper');
 			// Temporarily make the container tiny so it doesn't influence the
 			// calculation of the size of the document
 			container.css(
