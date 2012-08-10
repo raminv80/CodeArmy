@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+//A model to do match making based on work and user skill set
 class Recom_model extends CI_Model { 
 	
 	var $data = '';
@@ -10,25 +10,30 @@ class Recom_model extends CI_Model {
 	
 	function get_tallents($work_id){
 		$work_skills = $this->get_work_skills($work_id);
-		$users = $this->getTallentedUsers($work_skills);
-		$res = array();
-		foreach($users as $user){
-			$i = count($res);
-			$res[$i]=$user;
-			$user_skills = $this->get_user_skills($user['user_id']);
-			$sum=0;
-			foreach($work_skills as $ws):
-				foreach($user_skills as $us):
-					if($us['skill_id']==$ws['skill_id']){
-						$sum +=	30-abs($ws['point']-$us['point']);
-					}
+		//if work has no skill attached then no point to do any calculation for this match making model
+		if(count($work_skills)>0){
+			$users = $this->getTallentedUsers($work_skills);
+			$res = array();
+			foreach($users as $user){
+				$i = count($res);
+				$res[$i]=$user;
+				$user_skills = $this->get_user_skills($user['user_id']);
+				$sum=0;
+				foreach($work_skills as $ws):
+					foreach($user_skills as $us):
+						if($us['skill_id']==$ws['skill_id']){
+							$sum +=	30-abs($ws['point']-$us['point']);
+						}
+					endforeach;
 				endforeach;
-			endforeach;
-			$match = $sum / (count($work_skills)*30) * 100;
-			$res[$i]['match'] = $match;
+				$match = $sum / (count($work_skills)*30) * 100;
+				$res[$i]['match'] = $match;
+			}
+			$this->array_sort_by_column($res, 'match', SORT_DESC);
+			return $res;
+		}else{
+			return false;
 		}
-		$this->array_sort_by_column($res, 'match', SORT_DESC);
-		return $res;
 	}
 	
 	private function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {

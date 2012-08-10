@@ -290,6 +290,7 @@
 	function renderMarkers(){
 		var loc;
 		for(i=0; i<jobs.length;i++){
+			//console.log(loc);
 			loc = geoToPixel({'lat':jobs[i].lat, 'lng': jobs[i].lng});
 			var desc = jobs[i].num+(jobs[i].skill?"<br/>"+ucfirst(jobs[i].skill.substring(0,3)):'')+(jobs[i].days?"<br/>"+(jobs[i].days<1?"<1d":jobs[i].days+"d"):'')+(jobs[i].payout?"<br />"+(jobs[i].payout<1?"<10$":(jobs[i].payout<100?jobs[i].payout+'$':((jobs[i].payout/1000).toFixed(1)+'k$'))):'');
 			addMarker(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
@@ -329,6 +330,11 @@
 	}
 	
 	function initializeEvents(){
+		$("a[rel=missions]").fancybox({
+				'transitionIn'      : 'fade',
+                'transitionOut'     : 'fade',
+                'type'              : 'iframe',
+            });
 		//initial dialog close button
 		$('.dialog-close-button').click(function(){
 			var dialog = $(this).parents('.dialog');
@@ -385,7 +391,7 @@
 			});
 			
 		$('#dialog-project-list').on('click','.summary-row',controlMissionList);
-		$('#dialog-project-list').on('click','.detail-row',gotoMission);
+		//$('#dialog-project-list').on('click','.detail-row',gotoMission);
 		
 		$('#world-map').on('mouseenter','.marker',
 			function(){
@@ -578,6 +584,7 @@
 	}
 	
 	function addMarker(x,y,id,icon,desc,color,scale,speed,data){
+		console.log(x,y,id,icon,desc,color,scale,speed, data);
 		var template = $('#marker-template').clone();
 		var container = $('#world-map');
 		template.attr('id',id);
@@ -597,12 +604,14 @@
 		container.append(template);
 		x=x-Math.round(template.width()/2);
 		y=y-template.height();
+		console.log(x + ' ' + y);
 		template.css({
 				'top':y,
 				'left':x
 			}).fadeIn(speed);
 		template.data({'scale':scale,'x':x,'y':y,'color':color, 'ref':data});	
 	}
+	
 	//*******************End of rendering functions******************/
 </script>
 <script type="text/javascript" src="/public/js/codeArmy/duck.js"></script>

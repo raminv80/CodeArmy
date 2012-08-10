@@ -133,8 +133,7 @@ class Missions extends CI_Controller {
 			$this->view_data['recoms'] = $this->recom_model->get_tallents($work_id);
 			if($this->view_data['recoms'])
 				$this->load->view('recom_tal_codearmy_view', $this->view_data);
-			//else redirect('/missions/hq');
-			else echo "<script type=\"text/javascript\">parent.$.fancybox.close();</script>";
+			else redirect('/missions/hq');
 		}else{
 			die('Error: Either you might be logged out or you are not creator of this job');
 		}
@@ -153,6 +152,18 @@ class Missions extends CI_Controller {
 		$this->view_data['preview_files'] = $preview_files;
 		
 		$type = $preview[0]['est_arrangement'];
+<<<<<<< HEAD
+		$arrangement = $this->work_model->get_selected_arrangement_type($type);
+		$this->view_data['arrangement'] = $arrangement?$arrangement[0]:false;
+		
+		$time = $preview[0]['est_time_frame'];
+		$duration = $this->work_model->get_selected_arrangement_time($time);
+		$this->view_data['duration'] = $duration?$duration[0]:false;
+		
+		$budget = $preview[0]['est_budget'];
+		$budget = $this->work_model->get_selected_arrangement_budget($budget);
+		$this->view_data['budget'] = $budget?$budget[0]:false;
+=======
 		if($type != ""){
 			$arrangement = $this->work_model->get_selected_arrangement_type($type);
 			$this->view_data['arrangement'] = $arrangement[0];
@@ -169,6 +180,7 @@ class Missions extends CI_Controller {
 			$this->view_data['duration'] = "";
 			$this->view_data['budget'] = "";
 		}
+>>>>>>> origin/master
 		
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('confirm_mission_codearmy_view', $this->view_data);
@@ -426,17 +438,30 @@ class Missions extends CI_Controller {
 	}
 	
 	public function calc_cost($type,$timeline,$budget){
+<<<<<<< HEAD
+		//TODO
+		$type = $this->work_model->get_selected_arrangement_type($type);
+		$duration = $this->work_model->get_selected_arrangement_time($timeline);
+		$budget = $this->work_model->get_selected_arrangement_budget($budget);
+		
+		if($type && $duration && $budget){
+=======
 		if($type!="" || $type !=0){
 			$type = $this->work_model->get_selected_arrangement_type($type);
 			$duration = $this->work_model->get_selected_arrangement_time($timeline);
 			$budget = $this->work_model->get_selected_arrangement_budget($budget);
 			
+>>>>>>> origin/master
 			$type = $type[0]['type'];
 			$timeline = $duration[0]['time_cal'];
 			$budget = $budget[0]['amount_cal'];
 					
 			$cost = $timeline*$budget;
+<<<<<<< HEAD
+		}else{
+=======
 		} else {
+>>>>>>> origin/master
 			$cost=0;
 		}
 		return $cost;

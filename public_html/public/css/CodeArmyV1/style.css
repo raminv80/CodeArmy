@@ -1470,8 +1470,13 @@ div#compose-area .lnkimg {
 .create-mission-container, .confirm-mission-container {
 	background: url("/public/images/codeArmy/mission/create-mission-bg.jpg") no-repeat;
 	position:relative;
-	height:766px;
+	overflow:hidden;
+	/* height:766px; */
 	width:748px;
+	padding-bottom:30px
+}
+.create-mission-container input[type="reset"], .create-mission-container input[type="button"], .confirm-mission-container input[type="reset"], .confirm-mission-container input[type="button"] {
+	cursor: pointer;
 }
 .create-mission-title {
 	color: white;
@@ -1659,13 +1664,13 @@ input.assinpo {
 /* Confirm Mission Page By Reza@RezaKabiri.com */
 
 .confirm-mission-project-name, .confirm-mission-assign-po {
-	width:100%;
+	width:750px;
 	padding:0px 25px 20px;
 	color:#fff;
 	float: left;
 }
 .mission-brief, .mission-type-arrange-budget, .confirm-mission-skills-files {
-	width:100%;
+	width:750px;
 	float:left;
 	margin: 0 10px;
 	position:relative;
@@ -1678,7 +1683,7 @@ input.assinpo {
 }
 .brief-text {
 	background:url(/public/images/codeArmy/mission/mission-preview-brief.jpg) no-repeat 0 10px;
-	margin-left:-8px;
+	margin-left:10px;
 	height:220px;
 }
 .mission-brief-title {
@@ -1740,6 +1745,7 @@ input.assinpo {
 .recom-tal-container {
 	position:relative;
 	width:960px;
+	margin:0 auto;
 }
 .recom-tal-inner {
 	width:825px;
@@ -1797,10 +1803,11 @@ input.assinpo {
 .recom-box-top-circle {
 	float:left;
 	width:46px;
-	height:47px;
+	height:19px;
 	background:url(/public/images/codeArmy/mission/recom-top-circle.png) no-repeat;
 	margin:-15px 0 0 -15px;
-	padding:0;
+	padding:11px 0;
+	text-align:center;
 }
 .recom-box-top-circle p {
 	padding:0 10px;
@@ -1810,6 +1817,7 @@ input.assinpo {
 	width:100%;
 	padding-left:20px;
 }
+.recom-box-badges {height:32px}
 .recom-box-name {
 	font-size:16.67px;
 }
@@ -1823,7 +1831,7 @@ input.assinpo {
 	margin:10px 0;
 }
 .recom-box-avatar p {
-	padding:65px 0 0 25px;
+	padding:76px 0 0 25px;
 	color:ffc601;
 	font-size:10px;
 }
@@ -1841,6 +1849,7 @@ input.assinpo {
 	float:left;
 	font-size:11.39px;
 	margin:2px 10px 0 10px;
+	height:36px;
 }
 .recom-box-prog-unit {
 	width:45%;
@@ -2682,3 +2691,161 @@ height: 16px;
 color: #999;
 }
 /*end of new codes added by ramin*/
+
+/* hazwan's */
+.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
+.clearfix:after { clear: both; }  
+.clearfix { zoom: 1; }
+
+#skills-required-text {height:100px; background: url("/public/images/codeArmy/mission/textarea-box-bg.jpg") no-repeat; margin-left:40px; padding:5px; color:white}
+#skills-required-text:focus {outline:none}
+#skills-required-text a {padding:3px; background: black; color:#FC0}
+#create-mission-container {overflow-x:hidden; overflow-y:auto}
+
+.skill-tag {width:290px; padding:5px; background:black; margin-left:40px; display:none; }
+.skill-tag a {color:white; width:100%; font-size:.85em; padding:3px; background: #333}
+.skill-tag a:hover {background:#FC0; color:black}
+.skill-msg {margin-left:40px; color: #FC0; display:none; font-size:.85em}
+.wrapselect {
+	background: -moz-linear-gradient(top, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0.2))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33000000', endColorstr='#33000000',GradientType=0 ); /* IE6-9 */
+	/border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; box-shadow:inset 0px -1px 1px #333;
+	border:1px solid #222; overflow:hidden; position:relative; padding:5px; margin-bottom:15px}
+.wrapselect select {
+	-webkit-appearance:none; color:white; background:url(http://cdn1.iconfinder.com/data/icons/miniicons2/arrow_fat_down.gif) no-repeat right; cursor:pointer;
+	box-shadow:none; border:0; outline:0; width:98%; padding-left:2%; height:auto; font-size:14px; font-weight:700}
+.wrapselect select option {color:black}
+.wrapselect.right{float:right;} .wrapselect.left{float:left}.wrapselect.big {width:300px;} .wrapselect.small {width:125px}
+.dashforselect {padding:6px 10px; float:left}
+.create-mission-container select {margin:0 !important}
+
+.loader {height:12px; width:80px;}
+/*
+ * CSS Styles that are needed by jScrollPane for it to operate correctly.
+ *
+ * Include this stylesheet in your site or copy and paste the styles below into your stylesheet - jScrollPane
+ * may not operate correctly without them.
+ */
+
+.jspContainer
+{
+	overflow: hidden;
+	position: relative;
+}
+
+.jspPane
+{
+	position: absolute;
+}
+
+.jspVerticalBar
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 16px;
+	height: 100%;
+}
+
+.jspHorizontalBar
+{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 16px;
+	/*background: red;*/
+}
+
+.jspVerticalBar *,
+.jspHorizontalBar *
+{
+	margin: 0;
+	padding: 0;
+}
+
+.jspCap
+{
+	display: none;
+}
+
+.jspHorizontalBar .jspCap
+{
+	float: left;
+}
+
+.jspTrack
+{
+	/* background: #222; */
+	position: relative;
+}
+
+.jspDrag
+{
+	background: #666666;
+	box-shadow:0 0px 2px #000;
+	margin:0 auto;
+	width:8px;
+	border-radius:8px;
+	position: relative;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+}
+
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag
+{
+	float: left;
+	height: 100%;
+}
+
+.jspArrow
+{
+	/* background: #022c2d; */
+	text-indent: -20000px;
+	display: block;
+	cursor: pointer;
+}
+
+.jspArrow.jspDisabled
+{
+	cursor: default;
+	/* background: #444; */
+}
+
+.jspVerticalBar .jspArrow
+{
+	height: 16px;
+}
+
+.jspHorizontalBar .jspArrow
+{
+	width: 16px;
+	float: left;
+	height: 100%;
+}
+
+.jspVerticalBar .jspArrow:focus
+{
+	outline: none;
+}
+
+.jspCorner
+{
+	background: #eeeef4;
+	float: left;
+	height: 100%;
+}
+
+/* Yuk! CSS Hack for IE6 3 pixel bug :( */
+* html .jspCorner
+{
+	margin: 0 -3px 0 0;
+}
+/* end hazwan's

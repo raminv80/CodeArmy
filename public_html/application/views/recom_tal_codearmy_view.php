@@ -1,13 +1,11 @@
-<link href="/public/css/CodeArmyV1/style.css" media="all" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/public/js/jquery-1.7.min.js"></script>
+<?php $this->load->view('includes/frame_header.php'); ?>
 <script type="text/javascript" src="/public/js/jPages.min.js"></script>
-
 <div class="recom-tal-container"> <a href="#"><img class="recom-page-nav-left" src="/public/images/codeArmy/mission/recom-page-left-nav.png" /></a> <a href="#"><img class="recom-page-nav-right" src="/public/images/codeArmy/mission/recom-page-right-nav.png" /></a>
   <div class="recom-tal-inner">
     <div class="title-top-bar">
       <div class="recom-title">
         <div class="recom-title-main">Recommended Contractors</div>
-        <div class="recom-title-text">Brief explanation about Recommended Contractors here.</div>
+        <div class="recom-title-text">We found following contractors by matching their skill set to required skill set of your mission:</div>
       </div>
       <div class="recom-matches">
         <div class="recom-matches-number"><?=count($recoms)?></div>
@@ -96,12 +94,24 @@
 
 	<div class="recom-page-nav"><div class="holder"></div></div>
     <div class="recom-page-confirm-invite">
-      <input type="submit" value="Confirm Invite" class="lnkimg">
+      <input type="submit" value="Confirm Invite" class="lnkimg" id="submit">
     </div>
   </div>
 </div>
-
+<div id="dialog-confirm" class="dialog" title="Confirm Inivite">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Sending invites to all <span id="num-invites"></span> contractors?</p>
+<div id="dialog-proceed" class="dialog" title="Confirm Inivite">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You have selected no recommnded ctractors to be invited. Are you sure you want to proceed?</p>
+</div>
+<div id="dialog-mission-creatd" class="dialog" title="Mission Created">
+	<p><span class="ui-icon ui-icon-check" style="float:left; margin:0 7px 20px 0;"></span>Your mission is successfully created.</p>
+</div>
 <style type="text/css">
+	.ui-widget-overlay {
+	   background: #000;
+	   opacity: 0.75;
+	   filter: Alpha(Opacity=75);
+	}
 	.recom-boxes-wrapper {width:750px; overflow:hidden}
 	.holder {
 		margin: 15px 0;
@@ -163,8 +173,80 @@
 			});
 			
 			$('.recom-page-confirm-invite').click(function(){
-				console.log($('#recom-boxes-wrapper').find('input.selected').size());
-			})
-
+				var num_contractors = $('#recom-boxes-wrapper').find('input.selected').size();
+				if(num_contractors>0){
+					$('#num-invites').html(num_contractors);
+					$( "#dialog-confirm" ).dialog({
+						resizable: false,
+						height:180,
+						width:400,
+						modal: true,
+						buttons: {
+							"Send": function() {
+								var ids = new Array();
+								$('input.selected').parents('.recom-box-unit').each(function(){ids.push($(this).attr('id').split('-')[1])});
+								$.ajax({
+									type:'post',
+									url:'/missions/Ajax_send_invites',
+									dataType: "json",
+									data: {'ids':ids, 'work_id': '<?=$work_id?>', 'csrf_workpad': getCookie('csrf_workpad')},
+									success: function(msg){
+										if(msg=='success'){
+											$("#dialog-mission-creatd").dialog({
+												resizable: false,
+												height:180,
+												width:400,
+												modal: true,
+												buttons: {
+														Ok: function() {
+																$( this ).dialog( "close" );
+																parent.$.fancybox.close();
+															}
+												}
+											});
+										}else{
+											alert('Error: check the console for message');
+											console.log(msg);
+										}
+									}
+								});
+								$( this ).dialog( "close" );
+								
+							},
+							Cancel: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				}else{
+					$( "#dialog-proceed" ).dialog({
+						resizable: false,
+						height:180,
+						width:500,
+						buttons: {
+							"Proceed": function() {
+								$( this ).dialog( "close" );
+								$("#dialog-mission-creatd").dialog({
+									resizable: false,
+									height:180,
+									width:400,
+									modal: true,
+									buttons: {
+											Ok: function() {
+													$( this ).dialog( "close" );
+													parent.$.fancybox.close();
+												}
+									}
+								});
+							},
+							Cancel: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				}
+			});
+			
 		});
 </script>
+<?php $this->load->view('includes/frame_footer.php'); ?>

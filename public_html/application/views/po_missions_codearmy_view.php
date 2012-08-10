@@ -1,13 +1,7 @@
 <?php $this->load->view('includes/CAHeader.php'); ?>
 <script src="/public/js/jquery.validate.js" type="text/javascript"></script>
 <script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.gears.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.silverlight.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.flash.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.browserplus.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.html4.js"></script>
-<script type="text/javascript" src="/public/js/plupload/plupload.html5.js"></script>
+
 <!--TODO: add ajax loader icons -->
 <div id="wrapper">
   <div id="find-mission-area">
@@ -359,7 +353,7 @@
 	
 	function gotoMission(){
 		var mission_id=$(this).attr('id').split('-')[1];
-		window.location="/mission/view/"+mission_id;
+		window.location="/missions/apply/"+mission_id;
 	}
 	
 	function controlMissionList(){
@@ -377,7 +371,8 @@
 		var icon = null;
 		if(cat!== undefined){
 			switch(cat){
-				case 'a':icon = '#';break;
+				case '1':icon = '#';break;
+				case '4':icon = '@';break;
 				default: icon = cat;
 			}
 		}
@@ -385,6 +380,11 @@
 	}
 	
 	function initializeEvents(){
+		$("a[rel=missions]").fancybox({
+				'transitionIn'      : 'fade',
+                'transitionOut'     : 'fade',
+                'type'              : 'iframe',
+            });
 		$('select').bind("change", function(){
     		MissionCreate($('select').val());
 		});
@@ -444,7 +444,7 @@
 			});
 			
 		$('#dialog-project-list').on('click','.summary-row',controlMissionList);
-		$('#dialog-project-list').on('click','.detail-row',gotoMission);
+		//$('#dialog-project-list').on('click','.detail-row',gotoMission);
 		
 		$('#world-map').on('mouseenter','.marker',
 			function(){

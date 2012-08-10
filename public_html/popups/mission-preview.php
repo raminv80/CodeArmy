@@ -8,11 +8,9 @@
         <div class="find-mission-title-text">C# Framework for SME Site</div>
       </div>
       <div class="find-mission-video-block">
-        <iframe width="475" height="280" frameborder="0" src="http://www.youtube.com/embed/zFNb8j3YAd4?wmode=opaque" type="text/html" class="youtube-player"></iframe>
+        <iframe width="475" height="280" frameborder="0" src="http://www.youtube.com/embed/<?=$this->view_data['work']?$this->view_data['work']:'zFNb8j3YAd4'?>?wmode=opaque" type="text/html" class="youtube-player"></iframe>
       </div>
-      <div class="find-mission-main-desc"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gravida feugiat feugiat. Duis adipiscing lorem a risus ullamcorper sed rhoncus risus fermentum. Suspendisse potenti. Proin eu arcu eu lectus imperdiet aliquet. Etiam egestas, lorem eu suscipit scelerisque, lacus justo bibendum odio, in lobortis ipsum diam gravida ante. <br />
-        <br />
-        Integer pellentesque rhoncus erat sit amet imperdiet. Aenean blandit rutrum leo, eget tincidunt justo adipiscing a. </div>
+      <div class="find-mission-main-desc"><?=$work['description']?></div>
     </div>
     <div class="find-mission-comment-box">
       <div class="find-mission-comment-box-left">

@@ -154,7 +154,7 @@
         </div>
         <div class="list">
         	<?php foreach($myWorkList as $list):?>
-            <div class="item green-mission">
+            <div class="item gray-mission">
             	<?php
 					//calc remaining time
 					$remaining_time = strtotime($list['deadline'])-time();
@@ -165,12 +165,12 @@
 					$given_time = strtotime($list['deadline']) - strtotime($list['assigned_at']);
 					if($given_time<0) $given_time = 1;
 					
-					$progress_percent = $elappsed_time/$given_time;
+					$progress_percent = ($given_time==0)?0:$elappsed_time/$given_time;
 					$progress_percent = ($progress_percent>0)?(($progress_percent>1)?1:$progress_percent):0;
 					$remaining_hour = floor($remaining_time / (60*60));
 					$remaining_min = $remaining_time % (60*60);
 					$remaining_minutes = floor($remaining_min / (60));
-					$min_to_percent = (1*60)/($given_time);
+					$min_to_percent = ($given_time==0)?0:(1*60)/($given_time);
 				?>
             	<div class="mission-header">
                 	<div class="mission-title"><?=$list['title']?></div>
@@ -202,6 +202,54 @@
             </div>
             <?php endforeach;?>
             
+            <?php foreach($myMissions as $list):?>
+            <div class="item green-mission">
+            	<?php
+					//calc remaining time
+					$remaining_time = strtotime($list['deadline'])-time();
+					if($remaining_time<0)$remaining_time=0;
+					//calc elappsed time
+					$elappsed_time = time()-strtotime($list['assigned_at']);
+					//calc total time he had during assignment
+					$given_time = strtotime($list['deadline']) - strtotime($list['assigned_at']);
+					if($given_time<0) $given_time = 1;
+					
+					$progress_percent = ($given_time==0)?0:$elappsed_time/$given_time;
+					$progress_percent = ($progress_percent>0)?(($progress_percent>1)?1:$progress_percent):0;
+					$remaining_hour = floor($remaining_time / (60*60));
+					$remaining_min = $remaining_time % (60*60);
+					$remaining_minutes = floor($remaining_min / (60));
+					$min_to_percent = ($given_time==0)?0:(1*60)/($given_time);
+				?>
+            	<div class="mission-header">
+                	<div class="mission-title"><?=$list['title']?></div>
+                    <div class="mission-status-icon"><?=$list['status']?></div>
+                    <div class="mission-progress-bg">
+                    	<div class="mission-progress-meter" style="width:<?= round(216*$progress_percent) ?>px"></div>
+                        <input type="hidden" name="percent" value="<?=$progress_percent?>" />
+                        <input type="hidden" name="min_to_percent" value="<?=$min_to_percent?>" />
+                    </div>
+                    <div class="mission-inputs">Inputs: <?=trim($list['input'])==''?'not defined':$list['input']?></div>
+                    <div class="mission-deliverables">Deliverables: <?=trim($list['output'])==''?'not defined':$list['output']?></div>
+                </div>
+                <div class="mission-content">
+                	<ul class="mission-icons">
+                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">1 Trooper</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                    </ul>
+                    <div class="mission-time">
+                    	<span class="time-left">Time left</span>
+                        <div class="timer">
+                        <span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>
+                        <span class="hrs">hrs</span>
+                        </div>
+                        <a href="#" class="blue-button">Check in</a>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach;?>
         </div>
     </div>
 </div>

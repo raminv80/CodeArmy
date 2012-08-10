@@ -1,4 +1,8 @@
 <style>
+	.fancybox-nav span {visibility: visible;}
+	.fancybox-nav{top:30px;height:90%; width:60px;}
+	.fancybox-next{right:-60px;}
+	.fancybox-prev{left:-60px;}
 	#mission_list{
 		width:752px;
 	}
@@ -71,11 +75,12 @@
         <div class="col4"><?=$work['cost']?></div>
         <div class="col5"><?=$work['num_bids']?></div>
         <div class="col6"><?=$work['num_comments']?></div>
-        <div class="col7"><?=date('Y-m-d',strtotime($work['end']))?></div>
+        <div class="col7"><?=$work['end']?></div>
     </div>
     <div class="detail-row" id="detail-<?=$work['work_id']?>">
+    	<a rel="missions" href="/missions/apply/<?=$work['work_id']?>">
     	<div class="mission-video-preview">
-      		<iframe class="youtube-player" type="text/html" width="250" height="150" src="http://www.youtube.com/embed/zFNb8j3YAd4?wmode=opaque" frameborder="0"></iframe>
+      		<iframe class="youtube-player" type="text/html" width="250" height="150" src="http://www.youtube.com/embed/<?=$work['tutorial']?$work['tutorial']:'zFNb8j3YAd4'?>?wmode=opaque" frameborder="0"></iframe>
         	<h2><?=$work['title']?></h2>
         </div>
         <div class="mission-description-container">
@@ -91,15 +96,7 @@
                 <div class="col3">Pre-Requisite</div>
             </div>
             <div class="data-row">
-            	<?php
-					//calc remaining time
-					$remaining_time = strtotime($work['end'])-time();
-					if($remaining_time<0)$remaining_time=0;
-					$remaining_hour = floor($remaining_time / (60*60));
-					$remaining_min = $remaining_time % (60*60);
-					$remaining_minutes = floor($remaining_min / (60));
-				?>
-            	<div class="col1"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?> <span class="hrs">hrs</span></div>
+            	<div class="col1"><?=$work['end']?></div>
                 <div class="col2"><?=$work['cost']?> $</div>
                 <div class="col3">
                 	<?php $skills = $this->skill_model->get_work_skills($work['work_id'],3);?>
@@ -120,6 +117,7 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
     <?php endforeach;?>
 </div>

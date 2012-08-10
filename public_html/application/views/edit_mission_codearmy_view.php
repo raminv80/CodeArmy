@@ -1,131 +1,150 @@
 <?php $this->load->view('includes/frame_header.php'); ?>
 
-<?php echo form_open('#' , array('id'=>'form-create-mission')); ?>
 <div class="create-mission-wrapper">
-<div class="create-mission-container">
-	
-  <div class="create-mission-title">Create Mission</div>
-  <div class="create-mission-info">
-    <div class="mission-title">
-      <label>Mission Title</label>
-      <input type="text" id="mission-title" name="mission-title" class="required" value="" />
-    </div>
-    <div class="mission-video-url">
-      <label>Mission Video</label>
-      <input type="text" id="mission-video" name="mission-video" value="" placeholder="Youtube video tag or url"/>
-    </div>
-  </div>
-  <div class="mission-desc-video">
-    <div class="mission-description">
-      <div><span class="desc-title-text">Description</span><span class="examples-link"><a href="#">Examples</a></span></div>
-      <textarea rows="7" id="mission-desc-text" name="mission-desc-text" class="required"></textarea>
-      <!--<div class="attach-file-tools"> <a href="#"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /></a> <span class="filename"><a href="#">Project-brief.ppt</a></span> <span class="filesize">(250kb)</span> <span class="filedesc">Acme online store brief...</span> <a href="#"><img src="/public/images/codeArmy/mission/binicon.png" class="binicon" /></a> </div>-->
-      <div id="plupload-container" style="clear:both">
-      <div id="filelist">No runtime found.</div>
-      <input type="button" id="pickfiles" class="lnkimg" value="Select files">
-      <input type="button" id="uploadfiles" class="lnkimg" value="Upload files">
-      </div>
-    </div>
-    <div class="mission-video-preview">
-    <iframe class="youtube-player" id="mission-video-youtube" type="text/html" width="330" height="216" src="http://www.youtube.com/embed/" frameborder="0"></iframe>
-    </div>
-  </div>
-  <div class="mission-type-n-skills">
-    <div class="mission-type"> <span class="mission-type-title">Mission Type</span>
-      <div class="wrapselect big right">
-      	<select id="mission-type-main" name="mission-type-main" class="required" validate="required:true">
+<?php echo form_open('#' , array('id'=>'form-edit-mission')); ?>
+	<div class="create-mission-container">
+	  <div class="create-mission-title">Edit Mission</div>
+	  <div class="create-mission-info">
+	    <div class="mission-title">
+	      <label>Mission Title</label>
+	      <input type="text" id="mission-title" name="mission-title" class="required" value="<?=$preview['title']?>" />
+	    </div>
+	    <div class="mission-video-url">
+	      <label>Mission Video</label>
+	      <input type="text" id="mission-video" name="mission-video" value="<?=$preview['tutorial']?>" placeholder="Youtube video tag or url"/>
+	    </div>
+	  </div>
+	  <div class="mission-desc-video">
+	    <div class="mission-description">
+	      <div><span class="desc-title-text">Description</span><span class="examples-link"><a href="#">Examples</a></span></div>
+	      <textarea rows="7" id="mission-desc-text" name="mission-desc-text" class="required"><?=$preview['description']?></textarea>
+	      <!--<div class="attach-file-tools"> <a href="#"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /></a> <span class="filename"><a href="#">Project-brief.ppt</a></span> <span class="filesize">(250kb)</span> <span class="filedesc">Acme online store brief...</span> <a href="#"><img src="/public/images/codeArmy/mission/binicon.png" class="binicon" /></a> </div>-->
+	      <div id="plupload-container" style="clear:both">
+	      <div id="filelist">No runtime found.</div>
+	      <input type="button" id="pickfiles" class="lnkimg" value="Select files">
+	      <input type="button" id="uploadfiles" class="lnkimg" value="Upload files">
+	      </div>
+	    </div>
+	    <div class="mission-video-preview">
+	    <iframe class="youtube-player" id="mission-video-youtube" type="text/html" width="330" height="216" src="http://www.youtube.com/embed/<?=$preview['tutorial']?>" frameborder="0"></iframe>
+	    </div>
+	  </div>
+	  <div class="mission-type-n-skills">
+	    <div class="mission-type"> <span class="mission-type-title">Mission Type</span>
+	    <div class="wrapselect big right">
+	      <select id="mission-type-main" name="mission-type-main" class="required" validate="required:true">
 	        <option value="">--- Please select ---</option>
 	      <?php foreach($main_category as $value): ?>
-	        <option value="<?=$value['category_id']?>" <?php if($value['category_id']==$cat_selected){?>selected="selected"<?php }?>><?=$value['category']?></option>
+	        <option value="<?=$value['category_id']?>" <?php if($preview['category']==$value['category_id']){?>selected="selected"<?php }?>><?=$value['category']?></option>
 	      <?php endforeach; ?>
 	      </select>
-      </div>
-      <div class="wrapselect big right">
-      	<select id="mission-type-class" name="mission-type-class" class="mission-type-sub">
+	    </div>
+	    <div class="wrapselect big right">
+	      <select id="mission-type-class" name="mission-type-class" class="mission-type-sub">
 	        <option value="0">--- Please select ---</option>
 	      <?php foreach($class as $value): ?>
-	        <option value="<?=$value['class_id']?>"><?=$value['class_name']?></option>
+	        <option value="<?=$value['class_id']?>" <?php if($preview['class']==$value['class_id']){?>selected="selected"<?php }?>><?=$value['class_name']?></option>
 	      <?php endforeach; ?>
-	    </select>
-      </div>
-      <div class="wrapselect big right">
-      	<select id="mission-type-sub" name="mission-type-sub" class="mission-type-sub">
+	      </select>
+	    </div>
+	    <div class="wrapselect big right">
+	      <select id="mission-type-sub" name="mission-type-sub" class="mission-type-sub">
 	        <option value="0">--- Please select ---</option>
 	      <?php foreach($sub_class as $value): ?>
-	        <option value="<?=$value['subclass_id']?>"><?=$value['subclass_name']?></option>
+	        <option value="<?=$value['subclass_id']?>" <?php if($preview['subclass']==$value['subclass_id']){?>selected="selected"<?php }?>><?=$value['subclass_name']?></option>
 	      <?php endforeach; ?>
-	    </select>
-      </div>
-    </div>
-    <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
-      	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>-->
-		<div id="skills-required-text" contenteditable="true"></div>
-		<div class="clearfix"></div>
-		<div class="skill-tag"></div>
-		<div class="skill-msg">Type the name of someone or something...</div>
-    </div>
-  </div>
-  <div class="mission-arrange-budget">
-    <div class="mission-arrangements"> <span class="mission-arrange-title">Mission's Arrangements</span>
-      <div class="arrange-row">
-
-        <div class="wrapselect small left">
-        	<select id="mission-arrange-type" name="mission-arrange-type" class="mission-arrange-hour required" validate="required:true">
+	      </select>
+	    </div>
+	    </div>
+	    <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
+	      	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>-->
+			<div id="skills-required-text" contenteditable="true">
+	        <?php
+			if($preview_skills != ""){
+				foreach($preview_skills as $skill):
+					echo $skill["skill_level"]." ".$skill["name"].", ";
+				endforeach;
+			}
+			?>
+	        </div>
+			<div class="clearfix"></div>
+			<div class="skill-tag"></div>
+			<div class="skill-msg">Type the name of someone or something...</div>
+	    </div>
+	  </div>
+	  <div class="mission-arrange-budget">
+	    <div class="mission-arrangements"> <span class="mission-arrange-title">Mission's Arrangements</span>
+	      <div class="arrange-row">
+	        <div class="wrapselect small left">
+	        <select id="mission-arrange-type" name="mission-arrange-type" class="mission-arrange-hour required" validate="required:true">
 	          <option value=""></option>
-              <?php foreach($arrangement_type as $type): ?>
-	          <option value="<?=$type['id']?>"><?=$type['type']?></option>
-              <?php endforeach; ?>
+			  <?php foreach($arrangement_type as $type): ?>
+	          <option value="<?=$type['id']?>"<?php if($preview['est_arrangement']==$type['id']) echo " selected"; ?>><?=$type['type']?></option>
+	          <?php endforeach; ?>
 	        </select>
-        </div>
-        <span class="dashforselect"><i class="icon-chevron-right"></i></span>
-        <div class="wrapselect small left">
-        	<select id="mission-arrange-duration" name="mission-arrange-duration" class="mission-arrange-month required" validate="required:true">
+	        </div>
+	        <span class="dashforselect"><i class="icon-chevron-right"></i></span>
+	        <div class="wrapselect small left">
+	        <select id="mission-arrange-duration" name="mission-arrange-duration" class="mission-arrange-month required" validate="required:true">
 	          <option value=""></option>
+			  <?php foreach($arrangement_duration as $duration): ?>
+	          <option value="<?=$duration['time_id']?>"<?php if($preview['est_time_frame']==$duration['time_id']) echo " selected"; ?>><?=$duration['duration']?></option>
+	          <?php endforeach; ?>
 	        </select>
-        </div>
-
-      </div>
-    </div>
-    <div class="mission-budget"> <span class="mission-budget-title">Budget</span>
-      <div class="arrange-row">
-
-        <div class="wrapselect small">
-        	<select id="mission-budget" name="mission-budget" class="mission-budget required" validate="required:true">
+	        </div>
+	      </div>
+	    </div>
+	    <div class="mission-budget"> <span class="mission-budget-title">Budget</span>
+	      <div class="arrange-row">
+	        <div class="wrapselect small">
+	        <select id="mission-budget" name="mission-budget" class="mission-budget required" validate="required:true">
 	          <option value=""></option>
+			  <?php foreach($arrangement_budget as $budget): ?>
+	          <option value="<?=$budget['budget_id']?>"<?php if($preview['est_budget']==$budget['budget_id']) echo " selected"; ?>><?=$budget['amount']?> $</option>
+	          <?php endforeach; ?>
 	        </select>
-        </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
 
-      </div>
-    </div>
-  </div>
-  
-  <div class="mission-submit-row">
-    <div class="assign-po"> 
-    <input class="assinpo" id="assignpo" type="checkbox" value="yes" /> <label>Assign this mission to a Project Manager? </label>
-   </div>
+	  <div class="mission-submit-row">
+	    <div class="assign-po"> 
+	    <input class="assinpo" id="assignpo" type="checkbox" value="yes" /> <label>Assign this mission to a Project Manager? </label>
+	   </div>
 
-<div class="submit-cancel-row">
-<div class="loader" style="margin:-40px auto 20px; padding-left:180px"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
-<input type="button" class="lnkimg" id="post-mission" value="Post Mission">
-<input type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
-</div>
-   
-   </div>
-  
-</div>
-</div>
-<!-- end container -->
+	<div class="submit-cancel-row">
+	<input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
+	<div class="loader" style="margin:-40px auto 20px; padding-left:180px"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
+	<input type="button" class="lnkimg" id="post-mission" value="Update Mission">
+	<input type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
+	</div>
+
+	   </div>
+
+	</div>
 </form>
+</div>
+
+<!-- Temporary -->
 <style type="text/css">
-	.create-mission-container {overflow-x:hidden}
+	.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
+	.clearfix:after { clear: both; }  
+	.clearfix { zoom: 1; }
+	#skills-required-text {height:100px; background: url("/public/images/codeArmy/mission/textarea-box-bg.jpg") no-repeat; margin-left:40px; padding:5px; color:white}
+	#skills-required-text:focus {outline:none}
+	#skills-required-text a {padding:3px; background: black; color:#FC0}
+	#create-mission-container {overflow-x:hidden; overflow-y:auto}
+	.skill-tag {width:290px; padding:5px; background:black; margin-left:40px; display:none; }
+	.skill-tag a {color:white; width:100%; font-size:.85em; padding:3px; background: #333}
+	.skill-tag a:hover {background:#FC0; color:black}
+	.skill-msg {margin-left:40px; color: #FC0; display:none; font-size:.85em}
 </style>
 <script type="text/javascript">
 	$(function(){
-		initCreateMission();
+		//$('.fancybox-inner').css( {'overflow-x' : 'hidden','overflow-y' : 'auto'});
+		initEditMission();
 		
-		var start=/@/ig;
-		var word=/@(\w+)/ig;
-		//var word=/(\w+)/ig;
 		$('#mission-type-main').live("change",function(){
 			$.ajax({
 				type: "POST",
@@ -134,7 +153,7 @@
 				dataType: "json",
 				success: function(msg){
 					$('#mission-type-class').html('');
-					$('#mission-type-class').append("<option value='0'>--- Please select ---</option>");
+					$('#mission-type-class').append("<option value='0'>--- Please select ---</option>")
 					$(msg).each(function(){$('#mission-type-class').append("<option value='"+this.class_id+"'>"+this.class_name+"</option>")});
 				}
 			});
@@ -148,7 +167,7 @@
 				dataType: "json",
 				success: function(msg){
 					$('#mission-type-sub').html('');
-					$('#mission-type-sub').append("<option value='0'>--- Please select ---</option>");
+					$('#mission-type-sub').append("<option value='0'>--- Please select ---</option>")
 					$(msg).each(function(){$('#mission-type-sub').append("<option value='"+this.subclass_id+"'>"+this.subclass_name+"</option>")});
 				}
 			});
@@ -178,7 +197,10 @@
 				}
 			});
 		});
-
+		
+		var start=/@/ig;
+		var word=/@(\w+)/ig;
+		
 		$("#skills-required-text").live("keyup",function() {
 			var content = $(this).text();
 			var go = content.match(start);
@@ -206,7 +228,7 @@
 		$('.skills-required').mouseleave(function(){
 			$('.skill-msg, .skill-tag').slideUp('hide');
 		})
-		
+
 		$(".skill-tag a").live("click",function() 
 		{
 			var username = $(this).attr('title');
@@ -223,7 +245,7 @@
 </script>
 
 <script>
-function initCreateMission(){
+function initEditMission(){
 	// plupload
 	// Custom example logic
 	//function $(id) {
@@ -326,8 +348,9 @@ function initCreateMission(){
 	});
 	
 	$('#post-mission').click(function(){
-		$('#reg-ajax').show();
-		if($("#form-create-mission").valid()){
+		console.log($("#form-edit-mission").valid());
+		if($("#form-edit-mission").valid()){
+			$('#reg-ajax').show();
 			submitHandler();
 		}
 	});
@@ -344,15 +367,14 @@ function initCreateMission(){
 		var mission_arrange_duration = $('#mission-arrange-duration').val();
 		var mission_budget = $('#mission-budget').val();
 		var assign_po = $('#assignpo').val();
-		$.fancybox.showLoading();
-		$.ajax({
-			type: 'post',
-			async: false,
-			url: '/missions/check_create_mission',
-			data: { 'mission_title': mission_title, 
+		var work_id = $('#work_id').val();
+		parent.$.fancybox.showLoading();
+		$.post(
+			'/missions/check_edit_mission',
+			{ 'mission_title': mission_title, 
 			  'mission_desc': mission_desc, 
 			  'mission_video': mission_tutorial, 
-			  'mission_skills': mission_skills,
+			  'mission_skills': mission_skills, 
 			  'mission_type_main': mission_type_main, 
 			  'mission_type_class': mission_type_class, 
 			  'mission_type_subclass': mission_type_subclass, 
@@ -360,10 +382,10 @@ function initCreateMission(){
 			  'mission_arrange_duration': mission_arrange_duration, 
 			  'mission_budget': mission_budget, 
 			  'assign_po': assign_po, 
+			  'work_id': work_id, 
 			  'csrf_workpad': getCookie('csrf_workpad') 
 			},
-			success: function(msg){
-				console.log(msg)
+			function(msg){
 				if(msg!="" && msg!='error'){
 					console.log(msg);
 					parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
@@ -371,10 +393,9 @@ function initCreateMission(){
 					alert("Error");
 				}
 			}
-		});
+		);
 	}
 }
-
 var win = $(window);
 // Full body scroll
 var isResizing = false;

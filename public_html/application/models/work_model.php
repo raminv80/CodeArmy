@@ -123,4 +123,91 @@ class Work_model extends CI_Model {
 		$res = $this->db->query($sql, $work_id);
 		return $res->result_array();
 	}
+	
+	function setBid($work_id,$user_id,$budget,$time,$desc){
+		$data=array(
+			'work_id' => $work_id,
+			'user_id' => $user_id,
+			'bid_cost' => $budget,
+			'bid_time' => $time,
+			'bid_desc' => $desc,
+			'bid_status' => 'Bid',
+			'created_at' => date('Y-m-d H:i:s')
+		);
+		$this->db->insert('bids',$data);
+	}
+	
+	function get_work_bids($work_id){
+		$sql = "select * from bids where work_id=? order by bid_id DESC";
+		$res = $this->db->query($sql, $work_id);
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function get_bidders($work_id){
+		$sql = "SELECT DISTINCT users.* from bids, users where bids.work_id=? and users.user_id=bids.user_id";
+		$res = $this->db->query($sql, $work_id);
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function get_bid_avg($work_id){
+		$sql = "select AVG(bid_cost) AS avg_cost, AVG(bid_time) AS avg_time  from bids where work_id=?";
+		$res = $this->db->query($sql, $work_id);
+		$res = $res->result_array();
+		return $res[0];
+	}
+	
+	function check_file($file_id, $work_id, $session_id){
+		if(!$work_id){
+			$sql = "SELECT * FROM work_files WHERE file_id = ? AND session_id = ?";
+			$res = $this->db->query($sql, array($file_id, $session_id));
+		}else{
+			$sql = "SELECT * FROM work_files WHERE file_id = ? AND work_id = ?";
+			$res = $this->db->query($sql, array($file_id, $work_id));
+		}
+		return $res->result_array();
+	}
+	
+	function get_arrangement_type(){
+		$sql = "SELECT * FROM arrangement_type ORDER BY ID";
+		$res = $this->db->query($sql);
+		return $res->result_array();
+	}
+	
+	function get_duration($type=''){
+		$sql = "SELECT * FROM arrangement_time WHERE type_id = ?";
+		$res = $this->db->query($sql, $type);
+		return $res->result_array();
+	}
+	
+	function get_budget($type=''){
+		$sql = "SELECT * FROM arrangement_budget WHERE type_id = ?";
+		$res = $this->db->query($sql, $type);
+		return $res->result_array();
+	}
+	
+	function get_selected_arrangement_type($type){
+		$sql = "SELECT * FROM arrangement_type WHERE id = ?";
+		$res = $this->db->query($sql, $type);
+		return $res->result_array();
+	}
+	
+	function get_selected_arrangement_time($time){
+		$sql = "SELECT * FROM arrangement_time WHERE time_id = ?";
+		$res = $this->db->query($sql, $time);
+		return $res->result_array();
+	}
+	
+	function get_selected_arrangement_budget($budget){
+		$sql = "SELECT * FROM arrangement_budget WHERE budget_id = ?";
+		$res = $this->db->query($sql, $budget);
+		return $res->result_array();
+	}
+	
+	function get_owner_works($user_id){
+		$sql = "SELECT * from works WHERE owner=? OR creator=? and status!='Signoff'";
+		$res = $this->db->query($sql, array($user_id,$user_id));
+		return $res->result_array();
+	}
 }
