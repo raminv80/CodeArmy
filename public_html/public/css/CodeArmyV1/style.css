@@ -1471,10 +1471,10 @@ div#compose-area .lnkimg {
 	background: url("/public/images/codeArmy/mission/create-mission-bg.jpg") no-repeat;
 	position:relative;
 	overflow:hidden;
-	/* height:766px;
-	width:748px; */
+	/* height:766px; */
+	width:748px;
+	padding-bottom:30px
 }
-.create-mission-container { padding-bottom:30px}
 .create-mission-title {
 	color: white;
     font-family: 'Ruda',sans-serif;
@@ -1482,11 +1482,11 @@ div#compose-area .lnkimg {
 	padding: 20px 0;
     height: 33px;
     text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
-    width: 770px;
+    width: 100%;
 	text-align:center;
 }
 .create-mission-info, .mission-desc-video, .mission-type-n-skills, .mission-arrange-budget, .mission-submit-row {
-	width:750px;
+	width:100%;
 	float:left;
 	margin: 0 10px;
 	position:relative;
@@ -1680,7 +1680,7 @@ input.assinpo {
 }
 .brief-text {
 	background:url(/public/images/codeArmy/mission/mission-preview-brief.jpg) no-repeat 0 10px;
-	margin-left:-8px;
+	margin-left:10px;
 	height:220px;
 }
 .mission-brief-title {

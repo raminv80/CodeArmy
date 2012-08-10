@@ -3,7 +3,7 @@
 <div class="create-mission-wrapper">
 <?php echo form_open('#' , array('id'=>'form-edit-mission')); ?>
 	<div class="create-mission-container">
-	  <div class="create-mission-title">Edit Mission</div>
+	  <div class="create-mission-title">Edit Missidsadason</div>
 	  <div class="create-mission-info">
 	    <div class="mission-title">
 	      <label>Mission Title</label>

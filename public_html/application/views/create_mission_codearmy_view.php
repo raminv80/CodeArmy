@@ -326,8 +326,8 @@ function initCreateMission(){
 	});
 	
 	$('#post-mission').click(function(){
+		$('#reg-ajax').show();
 		if($("#form-create-mission").valid()){
-			$('#reg-ajax').show();
 			submitHandler();
 		}
 	});
