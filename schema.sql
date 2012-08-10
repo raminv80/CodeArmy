@@ -29,6 +29,30 @@ CREATE TABLE `actions` (
   KEY `code` (`code`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
+CREATE TABLE `arrangement_budget` (
+  `budget_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type_id` int(11) NOT NULL,
+  `amount` varchar(20) NOT NULL,
+  `amount_cal` int(11) NOT NULL,
+  PRIMARY KEY (`budget_id`),
+  KEY `type_id` (`type_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+
+CREATE TABLE `arrangement_time` (
+  `time_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type_id` int(11) NOT NULL,
+  `duration` varchar(15) NOT NULL,
+  `time_cal` float NOT NULL,
+  PRIMARY KEY (`time_id`),
+  KEY `type_id` (`type_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+CREATE TABLE `arrangement_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` enum('hourly','daily','weekly','monthly') NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
 CREATE TABLE `bids` (
   `bid_id` int(11) NOT NULL AUTO_INCREMENT,
   `work_id` varchar(40) DEFAULT NULL,
@@ -41,7 +65,7 @@ CREATE TABLE `bids` (
   PRIMARY KEY (`bid_id`),
   KEY `user_id` (`user_id`),
   KEY `work_id` (`work_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=181 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=187 ;
 
 CREATE TABLE `captcha` (
   `captcha_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
@@ -190,7 +214,7 @@ CREATE TABLE `messages` (
   KEY `from` (`from`),
   KEY `to` (`to`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
 
 CREATE TABLE `mission_category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -282,7 +306,7 @@ CREATE TABLE `subscription_comment` (
   `work_id` varchar(32) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
 
 CREATE TABLE `users` (
   `user_id` varchar(48) NOT NULL DEFAULT '',
@@ -353,7 +377,7 @@ CREATE TABLE `works` (
   `output` varchar(30) DEFAULT NULL,
   `points` int(4) DEFAULT NULL,
   `cost` float DEFAULT NULL,
-  `status` enum('draft','open','In Progress','Done','Redo','Verify','Signoff','Reject') DEFAULT NULL,
+  `status` enum('draft','open','assigned','In Progress','Done','Redo','Verify','Signoff','Reject') DEFAULT NULL,
   `creator` varchar(48) DEFAULT NULL COMMENT 'user_id of the person the created this worktask. The user is the admin for this worktask',
   `owner` varchar(48) DEFAULT NULL COMMENT 'user_id for the onwer of this worktask',
   `project_id` int(11) DEFAULT NULL,
@@ -405,12 +429,18 @@ CREATE TABLE `work_skill` (
   PRIMARY KEY (`id`),
   KEY `work_id` (`work_id`),
   KEY `skill_id` (`skill_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=81 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=87 ;
 
 
 ALTER TABLE `achievement_set`
   ADD CONSTRAINT `achievement_set_ibfk_1` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`achievement_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `achievement_set_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `arrangement_budget`
+  ADD CONSTRAINT `arrangement_budget_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `arrangement_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `arrangement_time`
+  ADD CONSTRAINT `arrangement_time_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `arrangement_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `bids`
   ADD CONSTRAINT `bids_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
