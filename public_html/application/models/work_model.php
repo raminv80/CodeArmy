@@ -125,6 +125,8 @@ class Work_model extends CI_Model {
 	}
 	
 	function setBid($work_id,$user_id,$budget,$time,$desc){
+		$sql = "DELETE FROM bids WHERE work_id=? AND user_id=?";
+		$this->db->query($sql, array($work_id,$user_id));
 		$data=array(
 			'work_id' => $work_id,
 			'user_id' => $user_id,
@@ -209,5 +211,33 @@ class Work_model extends CI_Model {
 		$sql = "SELECT * from works WHERE owner=? OR creator=? and status!='Signoff'";
 		$res = $this->db->query($sql, array($user_id,$user_id));
 		return $res->result_array();
+	}
+	
+	function get_my_bids($user_id){
+		$sql = "SELECT avg(bids.bid_cost) as avg_cost, avg(bids.bid_time) as avg_time, bids.*, works.*, arrangement_type.type as arrangement FROM bids,works,arrangement_type WHERE arrangement_type.id = works.est_arrangement AND works.work_id=bids.work_id AND user_id=? group by bids.bid_id ORDER BY bid_id DESC ";
+		$res = $this->db->query($sql, $user_id);
+		return $res->result_array();
+	}
+	
+	function cancel_my_bid($bid_id,$user_id){
+		$sql = "SELECT * from bids where bid_id = ?";
+		$res = $this->db->query($sql, $bid_id)->result_array();
+		if(count($res)!=1)return false;
+		$bid = $res[0];
+		$res = $this->get_work($bid['work_id'])->result_array();
+		if(count($res)!=1)return false;
+		$work = $res[0];
+		if(($bid['bid_status']=='Bid'||($bid['bid_status']=='Accepted' && in_array(strtolower($work['status']),array('open','reject')))) && $bid['user_id']==$user_id){
+			$sql = "Delete from bids where bid_id=? AND user_id=?";
+			$this->db->query($sql, array($bid_id,$user_id));
+			return true;
+		}
+		return false;
+	}
+	
+	function get_work_arrangement($work_id){
+		$sql = "SELECT arrangement_type.type as type from arrangement_type,works where work_id=? and est_arrangement=arrangement_type.id";
+		$res = $this->db->query($sql,$work_id)->result_array();
+		return $res[0]['type'];
 	}
 }

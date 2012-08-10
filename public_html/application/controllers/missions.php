@@ -54,6 +54,8 @@ class Missions extends CI_Controller {
 		$work = $this->work_model->get_work($work_id)->result_array();
 		$work = $work[0];
 		$this->view_data['work'] = $work;
+		$arr = $this->work_model->get_work_arrangement($work_id);
+		$this->view_data['arranegement'] = $arr;
 		$estimate_time = $this->work_model->get_selected_arrangement_time($work['est_time_frame']);
 		if(!$estimate_time){$estimate_time=0;} else {$estimate_time = $estimate_time[0];}
 		$this->view_data['estimate_time'] = $estimate_time;
@@ -614,11 +616,14 @@ class Missions extends CI_Controller {
 	}
 	
 	function bid(){
+		$user_id = $this->view_data['me']['user_id'];
+		$this->view_data['bids'] = $this->work_model->get_my_bids($user_id);
 		$this->view_data['window_title'] = "Mission Bid";
 		$this->load->view('mybids_codearmy_view', $this->view_data);
 	}
 	
 	function completed(){
+		$user_id = $this->view_data['me']['user_id'];
 		$this->view_data['window_title'] = "Missions Completed";
 		$this->load->view('completed_codearmy_view', $this->view_data);
 	}
@@ -681,5 +686,12 @@ class Missions extends CI_Controller {
 		}else{
 			echo json_encode("error");
 		}
+	}
+	
+	function Ajax_cancel_bid(){
+		$user_id = $this->session->userdata('user_id');
+		$bid_id = $this->input->post('bid_id');
+		if($this->work_model->cancel_my_bid($bid_id, $user_id)) echo "success";
+		else echo "error removing bid ".$bid_id;
 	}
 }

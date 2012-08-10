@@ -24,11 +24,11 @@
         <div class="fmcb-right-row1">
           <div class="urbid">Your Bid</div>
           <div class="clock-icon"></div>
-          <div class="small-box-hr">
-            <input name="time" type="text" value="18" />
+          <div class="small-box-hr"> 
+            <input name="time" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
           </div>
           <div class="botharrows"><a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a></div>
-          <div class="bidhrstext">Hours</div>
+          <div class="bidhrstext"><?=ucfirst(substr($arranegement,0,-2))?>s</div>
           <!--
           <div class="small-box-hr">
             <input type="text" value="4" />
@@ -40,10 +40,10 @@
         <div class="fmcb-right-row2">
           <div class="dollar-sign-icon"></div>
           <div class="small-box-hr">
-            <input name="budget" type="text" value="35" />
+            <input name="budget" type="text" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
           </div>
           <div class="botharrows"><a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a></div>
-          <div class="bidhrstext">/hour</div>
+          <div class="bidhrstext">/<?=substr($arranegement,0,-2)?></div>
         </div>
         <div class="fmcb-right-textarea">
           <textarea id="ask" name="desc" rows="3">Ask a question</textarea>
