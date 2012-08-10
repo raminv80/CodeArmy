@@ -83,45 +83,54 @@ $('#confirm-mission').click(function(){
 		function(msg){
 			if(msg=="success"){
 				<?php if(count($preview_skills)==0){?>
-				
 					$( "#dialog-mission-creatd" ).dialog({
 						resizable: false,
 						height:180,
 						width:400,
 						modal: true,
 						buttons: {
-								Ok: function() {
-										$( this ).dialog( "close" );
-										parent.$.fancybox.close();
-									}
+							Ok: function() {
+								$( this ).dialog( "close" );
+								parent.$.fancybox.close();
+							}
 						}
 					});
-				
 				<?php }else{?>
-					parent.$.fancybox.close();
-					parent.$.fancybox.open({
-						//type: 'inline',
-						data:{},
-						href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/<?=$preview['work_id']?>',
-						type : 'iframe',
-						padding : 0,
-						margin: 0,
-						height: 600,
-						width: 960,
-						autoSize: true,
-						'overlayShow': true,
-						'overlayOpacity': 0.5, 
-						afterClose: function(){},
-						openMethod : 'dropIn',
-						openSpeed : 250,
-						closeMethod : 'dropOut',
-						closeSpeed : 150,
-						nextMethod : 'slideIn',
-						nextSpeed : 250,
-						prevMethod : 'slideOut',
-						prevSpeed : 250,
-						height: 600,
-						scrolling: 'auto'
+					$( "#dialog-mission-creatd" ).dialog({
+						resizable: false,
+						height:180,
+						width:400,
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+								parent.$.fancybox.close();
+								parent.$.fancybox.open({
+									//type: 'inline',
+									data:{},
+									href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/<?=$preview['work_id']?>',
+									type : 'iframe',
+									padding : 0,
+									margin: 0,
+									height: 600,
+									width: 960,
+									autoSize: true,
+									'overlayShow': true,
+									'overlayOpacity': 0.5, 
+									afterClose: function(){},
+									openMethod : 'dropIn',
+									openSpeed : 250,
+									closeMethod : 'dropOut',
+									closeSpeed : 150,
+									nextMethod : 'slideIn',
+									nextSpeed : 250,
+									prevMethod : 'slideOut',
+									prevSpeed : 250,
+									height: 600,
+									scrolling: 'auto'
+								});
+							}
+						}
 					});
 					//window.top.location.href = 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/<?=$preview['work_id']?>';
 				<?php }?>
