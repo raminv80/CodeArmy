@@ -623,6 +623,12 @@ class Missions extends CI_Controller {
 		$this->load->view('completed_codearmy_view', $this->view_data);
 	}
 	
+	function wall(){
+		$this->view_data['window_title'] = "Wall";
+		$this->load->view('wall_codearmy_view', $this->view_data);
+		
+	}
+	
 	function getSkills(){
 		$q = $this->input->post('searchword');
 		//$q = $_REQUEST["searchword"];
