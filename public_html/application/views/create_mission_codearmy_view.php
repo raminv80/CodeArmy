@@ -70,7 +70,7 @@
       <div class="arrange-row">
 
         <div class="wrapselect small left">
-        	<select id="mission-arrange-type" name="mission-arrange-type" class="mission-arrange-hour">
+        	<select id="mission-arrange-type" name="mission-arrange-type" class="mission-arrange-hour required" validate="required:true">
 	          <option value=""></option>
               <?php foreach($arrangement_type as $type): ?>
 	          <option value="<?=$type['id']?>"><?=$type['type']?></option>
@@ -79,8 +79,8 @@
         </div>
         <span class="dashforselect"><i class="icon-chevron-right"></i></span>
         <div class="wrapselect small left">
-        	<select id="mission-arrange-duration" name="mission-arrange-duration" class="mission-arrange-month">
-	          <option value="0"></option>
+        	<select id="mission-arrange-duration" name="mission-arrange-duration" class="mission-arrange-month required" validate="required:true">
+	          <option value=""></option>
 	        </select>
         </div>
 
@@ -90,8 +90,8 @@
       <div class="arrange-row">
 
         <div class="wrapselect small">
-        	<select id="mission-budget" name="mission-budget" class="mission-budget">
-	          <option value="0"></option>
+        	<select id="mission-budget" name="mission-budget" class="mission-budget required" validate="required:true">
+	          <option value=""></option>
 	        </select>
         </div>
 
@@ -162,7 +162,7 @@
 				dataType: "json",
 				success: function(msg){
 					$('#mission-arrange-duration').html('');
-					$('#mission-arrange-duration').append("<option value='0'>Please select</option>");
+					$('#mission-arrange-duration').append("<option value=''>Please select</option>");
 					$(msg).each(function(){$('#mission-arrange-duration').append("<option value='"+this.time_id+"'>"+this.duration+"</option>")});
 				}
 			});
@@ -173,7 +173,7 @@
 				dataType: "json",
 				success: function(msg){
 					$('#mission-budget').html('');
-					$('#mission-budget').append("<option value='0'>Please select</option>")
+					$('#mission-budget').append("<option value=''>Please select</option>")
 					$(msg).each(function(){$('#mission-budget').append("<option value='"+this.budget_id+"'>"+this.amount+" $</option>")});
 				}
 			});
