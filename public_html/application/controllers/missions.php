@@ -628,9 +628,31 @@ class Missions extends CI_Controller {
 		$this->load->view('completed_codearmy_view', $this->view_data);
 	}
 	
+	//Wall Page for PO
 	function wall(){
 		$this->view_data['window_title'] = "Wall";
 		$this->load->view('wall_codearmy_view', $this->view_data);
+		
+	}
+	
+	//Tasks Page for PO
+	function task(){
+		$this->view_data['window_title'] = "Task";
+		$this->load->view('task_codearmy_view', $this->view_data);
+		
+	}
+	
+	//Documents Page for PO
+	function documents(){
+		$this->view_data['window_title'] = "Documents";
+		$this->load->view('documents_codearmy_view', $this->view_data);
+		
+	}
+	
+	//Date Page for PO
+	function date(){
+		$this->view_data['window_title'] = "Date";
+		$this->load->view('date_codearmy_view', $this->view_data);
 		
 	}
 	
