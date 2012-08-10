@@ -100,7 +100,8 @@ class Register extends CI_Controller {
 			$code = $this->input->post('code');
 			$user_id = $this->session->userdata('user_id');
 			if($this->projects_model->consume_voucher($code, $user_id)){
-				$this->users_model->promote_to_po($user_id);
+				$this->users_model->promote_to_po_codearmy($user_id);
+				$this->session->set_userdata(array("role"=>"po"));
 				$this->users_model->reg_division('employer');
 				$res = 'You have successfully added project management capabilities to your profile.';
 				echo 'success'.'~'.$res;
@@ -116,8 +117,8 @@ class Register extends CI_Controller {
 			$from = $this->input->post('email');
 			$to = admin_email;
 			$subject = "Request for PO";
-			$message = "<p>User '".$this->session->userdata('username')."' is requesting for product owner voucher code to upgrade his/her account to general.</p> <p>This allows him to create missions on system.</p>";
-			$this->users_model->send_mail();
+			$message = "<p>User '".$this->session->userdata('username')."' is requesting for product owner voucher code to upgrade his/her account to general.</p> <p>This allows him to create missions on system.</p><p>You can <a href='/admin/voucher'>use this link</a> to generate vouchers.</p>";
+			$this->users_model->send_mail($from,$to,$subject,$message);
 			$res="";
 			echo 'success'.'~'.$res;
 		}else{

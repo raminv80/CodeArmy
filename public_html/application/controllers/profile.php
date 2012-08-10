@@ -70,11 +70,10 @@ class Profile extends CI_Controller {
 				$this->view_data['myCountry'] = "";
 			}
 		}
-		
 		$myBadges = $this->skill_model->get_my_top8_badges($user_id);
 		if(!$myBadges){$myBadges=NULL;}
 		$this->view_data['myBadges'] = $myBadges;
-		if(!in_array($this->view_data['myProfile']['specialization'],array('designer','developer','copywriter','employer')))redirect("/register");
+		if(!in_array($this->view_data['myProfile']['specialization'],array('designer','developer','copywriter','employer','product owner')))redirect("/register");
 		//leaderboard
 		//$leaderBoard = $this->users_model->leaderboard_points(5);
 		$leaderBoard = $this->users_model->leaderboard_centered($user_id);

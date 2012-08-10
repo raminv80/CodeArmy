@@ -239,7 +239,7 @@ $header_tasks = $query->result_array();
 
 <!-- start bids menu -->
 <div id="bid_side_menu" class="sidemenu_inactive">
-	<?php $bid_inbox=$this->inbox_model->get_bids($this->session->userdata('user_id')); ?>
+	<?php $bid_inbox=array(0) ?>
       <div id="bid_side_menu_button" class="sideopen"><?=$bid_inbox[0]!=0?$bid_inbox[0]:''?></div>
       <div id="scroll_container3">
     <div class="customScrollBox">
@@ -300,7 +300,7 @@ $header_tasks = $query->result_array();
 
 <!-- start message menu -->
 <div id="message_side_menu" class="sidemenu_inactive">
-	<?php $message_inbox=$this->inbox_model->get_messages($this->session->userdata('user_id')); ?>
+	<?php $message_inbox=array(0); ?>
       <div id="message_side_menu_button" class="sideopen"><?=$message_inbox[0]!=0? $message_inbox[0]:''?></div>
       <div id="scroll_container1">
     <div class="customScrollBox">
@@ -362,7 +362,7 @@ $header_tasks = $query->result_array();
 
 <!-- start jobs menu -->
 <div id="job_side_menu" class="sidemenu_inactive">
-	<?php $job_inbox=$this->inbox_model->get_jobs($this->session->userdata('user_id')); ?>
+	<?php $job_inbox=array(0); ?>
       <div id="job_side_menu_button" class="sideopen"><?=$job_inbox[0]!=0? $job_inbox[0]:''?></div>
       <div id="scroll_container2">
     <div class="customScrollBox">

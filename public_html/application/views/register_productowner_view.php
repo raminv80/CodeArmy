@@ -10,7 +10,7 @@
       </div>
       <div id="terminal">
         <p>Enter verification code here </p>
-        <input name="voucher" id="voucher" value="" /><br><em class="error">Error!</em>
+        <input name="voucher" id="voucher" value="" /><br><em class="error"></em>
       </div>
       <div id="submit-holder"> <a href="javascript: void(0)" id="submit" class="CAbutton">Report for duty</a> </div>
     </div>
@@ -66,6 +66,7 @@
 			'/register/Ajax_voucher',
 			{ 'code': data, 'csrf_workpad': getCookie('csrf_workpad') },
 			function(msg){
+				console.log(msg);
 				msg = msg.split('~');
 				if(msg[0]=="success"){
 					$.fancybox.open({
