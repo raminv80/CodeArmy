@@ -80,7 +80,7 @@
     <div class="detail-row" id="detail-<?=$work['work_id']?>">
     	<a rel="missions" href="/missions/apply/<?=$work['work_id']?>">
     	<div class="mission-video-preview">
-      		<iframe class="youtube-player" type="text/html" width="250" height="150" src="http://www.youtube.com/embed/<?=$work['tutorial']?>?wmode=opaque" frameborder="0"></iframe>
+      		<iframe class="youtube-player" type="text/html" width="250" height="150" src="http://www.youtube.com/embed/<?=$work['tutorial']?$work['tutorial']:'zFNb8j3YAd4'?>?wmode=opaque" frameborder="0"></iframe>
         	<h2><?=$work['title']?></h2>
         </div>
         <div class="mission-description-container">
