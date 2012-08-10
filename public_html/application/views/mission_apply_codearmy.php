@@ -92,7 +92,7 @@
       <div class="captainame"><?=$po['username']?></div>
       <div class="captainrank">Level <?=$this->gamemech->get_level($po['exp'])?></div>
       <div class="rankicons">
-      	<?php foreach($po_badge as $badge):?>
+      	<?php if($po_badge != "") foreach($po_badge as $badge):?>
         <img src="/public/<?=$badge["achievement_pic"]?>" width="34" height="26" alt="<?=ucfirst(strtolower($badge["achievement_name"]))?>">
         <?php endforeach;?></div>
     </div>
