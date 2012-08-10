@@ -57,7 +57,7 @@
     <?php if ($mySkills) foreach($mySkills as $skill):?>
     <div class="skill-block" id="myskill_<?=$skill["id"]?>">
       <div class="icon" title="<?=$skill["name"]?>"><?=substr($skill["name"],0,3)?></div>
-      <div class="level">Level <?=$skill["point"]?></div>
+      <div class="level"><?=$skill["point"]?></div>
       <div class="skill-meter" style="width:<?=round($skill["point"]*92/100)?>px;"></div>
     </div>
     <?php endforeach;?>

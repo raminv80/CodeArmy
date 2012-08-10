@@ -2220,6 +2220,316 @@ input.assinpo {
 .closebut a {
 	font-size:9.72px;
 }
+
+/* PO management wall page by Reza@RezaKabiri.com */
+
+.top-panel {
+	background:url(/public/images/codeArmy/po/top-panel-bg.jpg) no-repeat;
+	position:relative;
+	float:left;
+	width:100%;
+	min-height:215px;
+}
+.po-wall-container {
+	width:765px;
+	float:left;
+	position:relative;
+}
+.top-panel-left {
+	float:left;
+	position:relative;
+	width:65%;
+	margin:5px 10px;
+}
+top-panel-right {
+	float:right;
+	position:relative;
+	width:25%;
+	margin:10px;
+}
+.top-panel-title {
+	color: white;
+    float: left;
+    font-size: 25px;
+	width:100%;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+	padding:10px;
+}
+.tabs-row {
+	float:left;
+	width:100%;
+	margin:20px 10px;
+}
+.proj-category, .desc-row {
+	float:left;
+	width:100%;
+	padding:0 10px;
+}
+.desc-row { font-size:11.80px;}
+.tabs-row a {
+	width:117px;
+	height:20px;
+	padding:10px 0 10px 7px;
+	float:left;
+	position:relative;
+	text-align:center;
+	
+}
+tabs-row a.wall {
+	background:url(/public/images/codeArmy/po/btn_wall.png) no-repeat;
+}
+.tabs-row a.wall-active {
+	background:url(/public/images/codeArmy/po/btn_wall_select.png) no-repeat;
+}
+.tabs-row a.task {
+	background:url(/public/images/codeArmy/po/btn_task.png) no-repeat;
+}
+.tabs-row a.task-active {
+	background:url(/public/images/codeArmy/po/btn_task_select.png) no-repeat;
+}
+.tabs-row a.document {
+	background:url(/public/images/codeArmy/po/btn_document.png) no-repeat;
+}
+.tabs-row a.document-active {
+	background:url(/public/images/codeArmy/po/btn_document_select.png) no-repeat;
+}
+.tabs-row a.date {
+	background:url(/public/images/codeArmy/po/btn_date.png) no-repeat;
+}
+.tabs-row a.date-active {
+	background:url(/public/images/codeArmy/po/btn_date_select.png) no-repeat;
+}
+.top-panel-right, .wall-bottom-right-side {
+	position:relative;
+	float:right;
+	width:30%;
+	margin:5px;
+}
+.progress-text {
+	color: white;
+	font-size:13.89px;
+	font-family: 'Ruda', sans-serif;
+	padding: 5px 0 5px;
+	text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
+}
+.wall-progress {
+	float:left;
+	height:15px;
+	width:226px;
+	background:url(/public/images/codeArmy/po/progress-bg.png) no-repeat;
+}
+.wall-progress-bar {
+	float:left;
+	height:11px;
+	width:30%;
+	background:url(/public/images/codeArmy/po/progress-bar-bg.png) repeat-x;
+	margin: 2px 0 0 2px;
+	border-radius: 15px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+}
+.bg_progress_summary {
+	background:url(/public/images/codeArmy/po/bg_progress_summary.png) no-repeat;
+	width:232px;
+	height:154px;
+	float:left;
+	position: relative;
+	margin:5px 0;
+}
+.start-hours, .end-budget {
+	width:80px;
+	margin:5px 8px;
+	padding: 0 8px;
+	float:left;
+}
+.top-panel-right p.wall-box-title {
+	font-size:10.5px;
+	text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
+	color:#fff;
+	margin-bottom: -5px;
+}
+.top-panel-right p {
+	font-size:12px;
+}
+.top-panel-right .po-info {
+	width:120px;
+	float:left;
+}
+.po-wall-container .top-panel-right .po-avatar {
+	width:55px;
+	float:left;
+	height:60px;
+}
+.top-panel-right p.po-name {
+	color:#ee8c00;
+	font-size:10.5px;
+	margin:10px 0 -5px;
+}
+.top-panel-right p.level {
+	font-size:14px;
+}
+.top-panel-right .po-info, .top-panel-right .po-avatar {
+margin: 5px 8px;
+padding: 0 8px;
+}
+.top-panel-right .po-avatar {
+margin: 5px 2px;
+}
+.wall-bottom-panel {
+	float:left;
+	width:100%;
+	position:relative;
+}
+.wall-bottom-left-side {
+	float:left;
+	width: 65%;
+margin: 5px 10px;
+	position:relative;
+}
+.wall-bottom-left-side .fmcb-right-textarea textarea {
+	font-size:12px;
+	margin: 20px 0px 0 0;
+	color:#6a6969;
+	height:39px;
+}
+.wall-bottom-left-side .find-mission-comment-box-right {
+	width:78%;
+}
+.wall-bottom-left-side .find-mission-comment-avatar p {
+	margin:-28px 0 0 44px;
+}
+.wall-bottom-left-side .find-mission-down-box-row {
+	width:497px;
+}
+.wall-bottom-left-side .find-mission-comment-avatar {
+	background:none;
+}
+.wall-bottom-left-side .fmcb-right-row1 {
+	width:350px;
+}
+.wall-bottom-left-side .fmcb-right-row2 {
+	width:385px;
+}
+.attach-tools-line {
+	width:100%;
+	float:left;
+	position:relative;
+}
+input.attach-url {
+	background:url(/public/images/codeArmy/po/url-box-bg.png) no-repeat;
+	width:270px;
+	height:34px;
+	border:none;
+	color: #6A6969;
+	font-size:12px;
+	font-style: italic;
+	padding-left:5px;
+	margin-left: 7px;
+}
+.attach-vid-ico {
+	margin-bottom:3px;
+}
+.comment-like-icon {
+	float: right;
+	margin: 10px 30px 0 0;
+	color:#268305;
+}
+.comment-like-icon a {
+	color:#268305;
+}
+.wall-bottom-left-side .fmcb-right-row1 a {
+	color:#008be4;
+}
+.nested-comment {
+	position:relative;
+	width:200px;
+	float:left;
+}
+.nested-comment .find-mission-down-box-row {
+	width:355px;
+	background: #363636;
+	border: solid 1px black;
+	min-height:0;
+}
+.nested-comment .find-mission-comment-box-right {
+	width:70%;
+}
+.nested-comment .fmcb-right-row1 {
+	width:200px;
+	line-height: 1;
+	margin:10px 10px 0 0px;
+}
+.nested-comment .fmcb-right-row1 a {
+	color:#ee8c00;
+}
+.nested-comment .find-mission-comment-box-left {
+	margin:5px;
+}
+.nested-comment .fmcb-right-row2 {
+	width:255px;
+	margin:5px 10px 0 0px;
+}
+.nested-comment .comment-like-icon {
+	margin:10px 10px 0 0;
+	color:#999;
+}
+.nested-comment .comment-like-icon a {
+	color:#999;
+}
+.nested-comment .fmcb-right-textarea {
+	width: 225px;
+	background: url(/public/images/codeArmy/po/nested-textarea-bg.png) no-repeat;
+	margin:0;
+}
+.nested-comment .fmcb-right-textarea textarea {
+	background:none;
+	margin:0;
+	height:20px;
+	width: 220px;
+	padding: 10px 15px 0 5px;
+}
+.nested-comment .postcomment {
+	float:right;
+	margin: 0 35px 0 0;
+	font-size: 12px;
+}
+.nested-comment .postcomment a {
+	color:#999;
+}
+.wall-right-block-title {
+	width:239px;
+	background: url(/public/images/codeArmy/po/bg_activities_title.png) no-repeat;
+	height: 31px;
+	padding:10px 10px 0;
+	position:relative;
+	font-size:15px;
+	text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
+}
+.wall-right-block-row {
+	background: url(/public/images/codeArmy/po/right-box-bg.png) repeat-y;
+	border-bottom:#666 solid 1px;;
+	width:199px;
+	position:relative;
+	padding:10px 20px 0;
+}
+.wall-right-block-row ul {
+	list-style:inside;
+}
+.wall-right-block-row2 {
+	text-align:right;
+	color:#a7a6a6;
+	font-size:9px;
+}
+.wall-right-block-row a {
+	text-decoration:underline;
+}
+a.wall-right-username {
+	color:#ee8c00;
+	text-decoration:none;
+}
+.wall-bottom-right-side {
+	margin: 22px 5px;
+}
 /* END - New Codes by Reza@RezaKabiri.com */
 
 
@@ -2538,4 +2848,8 @@ color: #999;
 {
 	margin: 0 -3px 0 0;
 }
+<<<<<<< HEAD
 /* end hazwan's
+=======
+/* end hazwan's
+>>>>>>> origin/master
