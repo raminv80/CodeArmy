@@ -3,7 +3,7 @@
 <div class="create-mission-wrapper">
 <?php echo form_open('#' , array('id'=>'form-edit-mission')); ?>
 	<div class="create-mission-container">
-	  <div class="create-mission-title">Edit Missidsadason</div>
+	  <div class="create-mission-title">Edit Mission</div>
 	  <div class="create-mission-info">
 	    <div class="mission-title">
 	      <label>Mission Title</label>
@@ -115,7 +115,7 @@
 
 	<div class="submit-cancel-row">
 	<input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
-	<div class="loader"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
+	<div class="loader" style="margin:-40px auto 20px; padding-left:180px"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
 	<input type="button" class="lnkimg" id="post-mission" value="Update Mission">
 	<input type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
 	</div>
@@ -123,8 +123,9 @@
 	   </div>
 
 	</div>
-	</form>
+</form>
 </div>
+
 <!-- Temporary -->
 <style type="text/css">
 	.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
@@ -395,6 +396,7 @@ function initEditMission(){
 		);
 	}
 }
+var win = $(window);
 // Full body scroll
 var isResizing = false;
 win.bind(
