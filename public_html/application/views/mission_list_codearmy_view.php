@@ -4,7 +4,8 @@
 	.fancybox-next{right:-60px;}
 	.fancybox-prev{left:-60px;}
 	#mission_list{
-		width:752px;
+		/* width:752px; */
+		overflow-x : hidden;
 	}
 	.mission_list_header{
 		border-bottom:2px solid #da921f;
@@ -121,3 +122,4 @@
     </div>
     <?php endforeach;?>
 </div>
+<script type="text/javascript" src="/public/js/jscrollpane.js"></script>
