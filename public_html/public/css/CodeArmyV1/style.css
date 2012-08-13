@@ -2275,7 +2275,7 @@ top-panel-right {
 	text-align:center;
 	
 }
-tabs-row a.wall {
+.tabs-row a.wall {
 	background:url(/public/images/codeArmy/po/btn_wall.png) no-repeat;
 }
 .tabs-row a.wall-active {
@@ -2536,7 +2536,7 @@ a.wall-right-username {
 	float: left;
 	width: 767px;
 	padding: 14px;
-	height:50px;
+	height:25px;
 }
 a.task-name {
 	float:left;
@@ -2549,8 +2549,120 @@ a.task-name {
 	float:right;
 	margin:-7px 30px 0 0;
 }
+.add-subtask-field {
+	float:left;
+	width:460px;
+}
+.sub-task-bar, .tasks-table {
+	float:left;
+	position:relative;
+	margin: 5px 0;
+	width:767px;
+}
 input.add-subtask {
 	background: url(/public/images/codeArmy/po/task/add-box-bg.png) no-repeat;
+	width:312px;
+	height:32px;
+	color:#6b6a6a;
+	font-style:italic;
+	margin:8px 5px 8px 0;
+	font-size:12.5px;
+	padding: 0 5px;
+	float:left;
+	border:none;
+}
+.ta-hours {
+	float:right;
+	font-size:11.5px;
+	margin: 5px 0;
+	text-align:right;
+}
+.task-table-title {
+	float:left;
+	position:relative;
+	width:767px;
+	height:38px;
+	background: url(/public/images/codeArmy/po/task/task-table-title-bg.png) no-repeat;
+}
+.task-title-priority, .task-title-taskname, .task-title-deadline, .task-title-hours, .task-title-percent, .task-title-status {
+	float:left;
+	position:relative;
+	text-align:center;
+	padding:10px 13px;
+}
+.task-title-priority {
+	width: 55px;
+}
+.task-title-taskname {
+	width: 385px;
+	text-align:left;
+}
+.task-title-deadline {
+	width:50px;
+}
+.task-title-hours {
+	width:30px;
+}
+.task-title-percent {
+	width:20px;
+}
+.task-title-status {
+	width:70px;
+}
+.task-table-row {
+	float:left;
+	position:relative;
+	width:767px;
+	height:31px;
+	background: url(/public/images/codeArmy/po/task/task-table-row-bg.png) no-repeat;
+}
+.task-row-priority, .task-row-taskname, .task-row-deadline, .task-row-hours, .task-row-percent, .task-row-status {
+	float:left;
+	position:relative;
+	text-align:center;
+	padding:5px 13px;
+}
+.task-row-priority {
+	width: 55px;
+}
+.task-row-priority select {
+	width: 45px;
+}
+.priority-low {color:#06F;}
+.priority-normal {color:#0F3;}
+.priority-high {color:#F00;}
+.task-row-taskname {
+	width: 385px;
+	text-align:left;
+}
+.task-row-deadline {
+	width:50px;
+}
+.task-row-hours, .task-row-hours input {
+	width:30px;
+}
+.task-row-percent, .task-row-percent input {
+	width:20px;
+}
+.task-row-status {
+	width:70px;
+}
+.task-row-status select {
+	width:45px;
+}
+.task-remove-icon {
+	float:right;
+	margin:0 0 0 2px;
+}
+.task-row-priority select, .task-row-status select, .task-row-hours input, .task-row-percent input {
+background: #3e3e3e;
+border: none;
+color: white;
+text-align:center;
+-webkit-appearance: none;
+border-radius: 0;
+-webkit-border-radius: 0;
+-moz-border-radius: 0;
 }
 /* END - New Codes by Reza@RezaKabiri.com */
 
