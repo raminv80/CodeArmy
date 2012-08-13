@@ -28,7 +28,7 @@
       <div id="bid-info-block-right">
         <div id="highest-bid">Your final bid</div>
         <div id="time-price">
-          <div id="bid-time"><?=$bid['bid_time']?> <?=substr($bid['arrangement'],0,-2)?>s</div>
+          <div id="bid-time"><?=$bid['bid_time']?> <?=str_replace('dai','day',substr($bid['arrangement'],0,-2))?>s</div>
           <div id="bid-price">$ <?=$bid['bid_cost']?></div>
         </div>
       </div>
@@ -42,7 +42,7 @@
         <?php }elseif($bid['bid_status']=='Bid' && !in_array(strtolower($bid['status']),array('open','reject'))){//if i lost the biod?>
         <p>Sorry! you lost this bid. <a href="#">How to win a bid?</a></p>
         <?php }elseif($bid['bid_status']=='Bid' && in_array(strtolower($bid['status']),array('open','reject'))){//if still bid is ongoing?>
-        <p>Average bids: </br><b style="color:#0FF"><?=round($bid['avg_time'])?></b> <?=substr($bid['arrangement'],0,-2)?>s for USD <b style="color:#0FF"><?=round($bid['avg_cost'])?></b>/<?=substr($bid['arrangement'],0,-2)?></p>
+        <p>Average bids: </br><b style="color:#0FF"><?=round($bid['avg_time'])?></b> <?=str_replace('dai','day',substr($bid['arrangement'],0,-2))?>s for USD <b style="color:#0FF"><?=round($bid['avg_cost'])?></b>/<?=str_replace('dai','day',substr($bid['arrangement'],0,-2))?></p>
         <?php }?>
       </div>
       <?php if(($bid['bid_status']=='Bid')||($bid['bid_status']=='Accepted' && in_array(strtolower($bid['status']),array('open','reject')))){?>

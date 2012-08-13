@@ -50,6 +50,11 @@ class Work_model extends CI_Model {
 		return $this->db->get_where('works', array('work_id' => $work_id));
 	}
 	
+	function get_detail_work($work_id) {
+		$sql = "SELECT *, arrangement_type.type as arrangement_type FROM works, mission_category, class, subclass, arrangement_type,bids WHERE arrangement_type.id=works.est_arrangement AND works.category=mission_category.category_id AND class.class_id=works.class AND subclass.subclass_id=works.subclass AND bids.work_id=works.work_id AND bids.bid_status='Accepted' AND bids.user_id=works.work_horse";
+		return $this->db->query($sql,$work_id);
+	}
+	
 	function get_work_skills($work_id){
 		$sql = "SELECT * from work_skill, skill where work_skill.work_id = ? AND work_skill.skill_id = skill.id";
 		$res = $this->db->query($sql, $work_id);
@@ -239,5 +244,21 @@ class Work_model extends CI_Model {
 		$sql = "SELECT arrangement_type.type as type from arrangement_type,works where work_id=? and est_arrangement=arrangement_type.id";
 		$res = $this->db->query($sql,$work_id)->result_array();
 		return $res[0]['type'];
+	}
+	
+	function create_comment($work_id, $user_name, $message, $attach){
+		$data = array(
+			'story_id' => $work_id,
+			'username' => $user_name,
+			'comment_body' => $message,
+			'comment_file' => $attach
+		);
+		$this->db->insert('comments',$data);
+		return $this->db->insert_id();
+	}
+	
+	function get_comments($work_id){
+		$sql = "SELECT * FROM comments, users WHERE story_id = ? and users.username=comments.username ORDER BY comment_id DESC";
+		return $this->db->query($sql, $work_id)->result_array();
 	}
 }
