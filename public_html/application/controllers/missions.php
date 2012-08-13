@@ -640,21 +640,33 @@ class Missions extends CI_Controller {
 	}
 	
 	//Tasks Page for PO
-	function task(){
+	function task($work_id){
+		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
+		$this->view_data['work'] = $this->view_data['work'][0];
+		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
+		$this->view_data['po'] = $this->view_data['po'][0];
 		$this->view_data['window_title'] = "Task";
 		$this->load->view('task_codearmy_view', $this->view_data);
 		
 	}
 	
 	//Documents Page for PO
-	function documents(){
+	function documents($work_id){
+		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
+		$this->view_data['work'] = $this->view_data['work'][0];
+		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
+		$this->view_data['po'] = $this->view_data['po'][0];
 		$this->view_data['window_title'] = "Documents";
 		$this->load->view('documents_codearmy_view', $this->view_data);
 		
 	}
 	
 	//Date Page for PO
-	function dates(){
+	function dates($work_id){
+		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
+		$this->view_data['work'] = $this->view_data['work'][0];
+		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
+		$this->view_data['po'] = $this->view_data['po'][0];
 		$this->view_data['window_title'] = "Date";
 		$this->load->view('date_codearmy_view', $this->view_data);
 		

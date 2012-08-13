@@ -5,7 +5,7 @@
     <div class="top-panel-left">
       <div class="top-panel-title"><?=ucwords($work['title'])?> <a href="#"><img src="/public/images/codeArmy/po/record-icon.png" /></a></div>
       <div class="proj-category"><?=ucfirst($work['category'].(($work['class'])?' > '.$work['class_name']:'').(($work['subclass'])?' > '.$work['subclass_name']:''))?></div>
-      <div class="tabs-row"> <a href="#" class="wall-active">Wall</a> <a class="task" href="/missions/task">Task</a> <a class="document" href="/missions/documents">Document</a> <a class="date" href="/missions/dates">Date</a> </div>
+      <div class="tabs-row"> <a href="#" class="wall-active">Wall</a> <a class="task" href="/missions/task/<?=$work['work_id']?>">Task</a> <a class="document" href="/missions/documents/<?=$work['work_id']?>">Document</a> <a class="date" href="/missions/dates/<?=$work['work_id']?>">Date</a> </div>
       <div class="desc-row"><?=$work['description']?></div>
     </div>
     <div class="top-panel-right">
