@@ -654,7 +654,7 @@ class Missions extends CI_Controller {
 	}
 	
 	//Date Page for PO
-	function date(){
+	function dates(){
 		$this->view_data['window_title'] = "Date";
 		$this->load->view('date_codearmy_view', $this->view_data);
 		
