@@ -628,8 +628,12 @@ class Missions extends CI_Controller {
 		$this->load->view('completed_codearmy_view', $this->view_data);
 	}
 	
-	//Wall Page for PO
-	function wall(){
+	function wall($work_id){
+		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
+		$this->view_data['work'] = $this->view_data['work'][0];
+		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
+		$this->view_data['po'] = $this->view_data['po'][0];
+		$this->view_data['comments'] = $this->work_model->get_comments($work_id);
 		$this->view_data['window_title'] = "Wall";
 		$this->load->view('wall_codearmy_view', $this->view_data);
 		
@@ -650,7 +654,7 @@ class Missions extends CI_Controller {
 	}
 	
 	//Date Page for PO
-	function date(){
+	function dates(){
 		$this->view_data['window_title'] = "Date";
 		$this->load->view('date_codearmy_view', $this->view_data);
 		
@@ -708,6 +712,34 @@ class Missions extends CI_Controller {
 		}else{
 			echo json_encode("error");
 		}
+	}
+	
+	function Ajax_comment(){
+		$user_id = $this->session->userdata('user_id');
+		$user = $this->view_data['me'];
+		$message = htmlentities($this->input->post('message'));
+		$attach = $this->input->post('attach');
+		$work_id = $this->input->post('work_id');
+		$work = $this->work_model->get_work($work_id)->result_array();
+		$work = $work[0];
+		//only workhorse and po can comment
+		if($work['work_horse']==$user_id || $work['owner']==$user_id || $work['creator']==$user_id){
+			$comment_id = $this->work_model->create_comment($work_id, $this->view_data['me']['username'], $message, $attach);
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$pusher = new Pusher('228ac2292c03f22869d1', 'bd0b31eb033ee85004f0', '25715');
+			$data = array(
+				'message' => $message,
+				'user_id' => $user_id,
+				'user_level' => $this->gamemech->get_level($user['exp']),
+				'username' => $user['username'],
+				'work_id' => $work_id,
+				'time' => date('j M Y H:i'),
+				'comment_id' => $comment_id
+			);
+			$pusher->trigger('CA_Comments', 'new-comment-'.$work_id, $data );
+			die('success');
+		}
+		die('error');
 	}
 	
 	function Ajax_cancel_bid(){

@@ -245,7 +245,7 @@
                         <span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>
                         <span class="hrs">hrs</span>
                         </div>
-                        <a href="#" class="blue-button">Check in</a>
+                        <a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>
                     </div>
                 </div>
             </div>
