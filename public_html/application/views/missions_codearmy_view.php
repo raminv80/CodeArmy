@@ -289,6 +289,18 @@
 		$(window).resize();
 	});
 	
+	function renderMarker(){
+		var loc;
+		newid = $('.marker').size() - 1;
+		
+		//for(i=0; i<jobs.length;i++){
+			loc = geoToPixel({'lat':jobs.lat, 'lng': jobs.lng});
+			var desc = jobs.num+(jobs.skill?"<br/>"+ucfirst(jobs.skill.substring(0,3)):'')+(jobs.days?"<br/>"+(jobs.days<1?"<1d":jobs.days+"d"):'')+(jobs.payout?"<br />"+(jobs.payout<1?"<10$":(jobs.payout<100?jobs.payout+'$':((jobs.payout/1000).toFixed(1)+'k$'))):'');
+			addMarker(loc.x,loc.y,'marker_'+newid,catToIcon(jobs.class),desc,'grey',0.75,500,jobs);
+			//console.log(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
+		//}
+	}
+	
 	function renderMarkers(){
 		var loc;
 		for(i=0; i<jobs.length;i++){
@@ -614,14 +626,14 @@
 		template.data({'scale':scale,'x':x,'y':y,'color':color, 'ref':data});	
 	}
 	
-	function checkMarker(x,y,id,icon,desc,color,scale,speed,data)
+	function checkMarker(lat,lng,id,icon,desc,color,scale,speed,data)
 	{
 		var status = false;
-		
-		$('.marker').each(function(){
+		var marker = $('.marker');
+		marker.each(function(){
 			data = $(this).data().ref;
 			if(data)
-				if (data.lat == x && data.lng == y){
+				if (data.lat == lat && data.lng == lng){
 					status = true;
 					var old = $(this).find('.arrow-desc');
 					old.html(parseFloat(desc) + parseFloat(old.text()));
@@ -629,9 +641,18 @@
 				}
 		})
 		if (!status) {
-			console.log('false');
-			total = $('.marker').size() - 1;
-			addMarker(x,y,id+'_'+total,icon,desc,color,scale,speed,data);	
+			renderMarker(lat,lng,id,icon,desc,color,scale,speed,data);
+			/* var loc;
+			newid = marker.size() - 1;
+		
+			loc = geoToPixel({'lat':y, 'lng': x});
+			console.log(loc.x, loc.y);
+			
+			height = $('#world-map-img').height();
+			width = $('#world-map-img').width();			
+
+			addMarker(x,y,'marker_'+newid,icon,desc,color,scale,speed,data); */
+
 		}
 	}
 	
