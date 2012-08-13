@@ -2530,6 +2530,28 @@ a.wall-right-username {
 .wall-bottom-right-side {
 	margin: 22px 5px;
 }
+.task-taskbar {
+	background: url(/public/images/codeArmy/po/task/taskbar-bg.png) no-repeat;
+	position: relative;
+	float: left;
+	width: 767px;
+	padding: 14px;
+	height:50px;
+}
+a.task-name {
+	float:left;
+}
+.task-due-date {
+	float:left;
+	margin:0 180px;
+}
+.profile-n-edit-icon {
+	float:right;
+	margin:-7px 30px 0 0;
+}
+input.add-subtask {
+	background: url(/public/images/codeArmy/po/task/add-box-bg.png) no-repeat;
+}
 /* END - New Codes by Reza@RezaKabiri.com */
 
 

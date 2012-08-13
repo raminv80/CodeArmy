@@ -628,12 +628,17 @@ class Missions extends CI_Controller {
 		$this->load->view('completed_codearmy_view', $this->view_data);
 	}
 	
+<<<<<<< HEAD
 	function wall($work_id){
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		$this->view_data['work'] = $this->view_data['work'][0];
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
 		$this->view_data['comments'] = $this->work_model->get_comments($work_id);
+=======
+	//Wall Page for PO
+	function wall(){
+>>>>>>> origin/master
 		$this->view_data['window_title'] = "Wall";
 		$this->load->view('wall_codearmy_view', $this->view_data);
 		
