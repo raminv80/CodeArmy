@@ -17,9 +17,13 @@
             <div class="notification" id="notifications-notification">10</div>
             Notifications</div>
           </a></li>
-        <li><a href="/missions<?=($this->session->userdata('role')=='po'||$this->session->userdata('role')=='admin')?'/hq':''?>" id="FindMissions">
-          <div id="findmission-holder"> <?=($this->session->userdata('role')=='po'||$this->session->userdata('role')=='admin')?'Missions Map':'Find Missions'?></div>
-          </a></li>
+        <li>
+          <?php if(($this->session->userdata('role')=='po'||$this->session->userdata('role')=='admin')){?>
+          <a href="/missions/create" class="fancybox" id="FindMissions"><div id="findmission-holder">Create Mission</div></a>
+          <?php }else{?>
+          <a href="/missions" id="FindMissions"><div id="findmission-holder">Find Missions</div></a>
+          <?php }?>
+          </li>
         <li><a href="/missions/my_missions" id="MyMissions">
           <div id="mymissions-holder">
             <div class="notification" id="mymissions-notification"><?=isset($myActiveMissions)?$myActiveMissions:'?'?></div>

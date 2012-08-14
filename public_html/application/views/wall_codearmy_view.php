@@ -180,7 +180,7 @@
       <?php foreach($activities as $activity):?>
       <div class="wall-right-block-row" id="activity-<?=$activity['id']?>">
         <ul>
-          <li><a href="#" class="wall-right-username"><?=$activity['username']?></a> <?=$activity['Desc']?> on <a href="/missions/wall/<?=$activity['work_id']?>"><?=$activity['title']?></a>.</li>
+          <li><a href="/profile/show/<?=$activity['user_id']?>" class="wall-right-username"><?=$activity['username']==$me['username']?'You':$activity['username']?></a> <?=$activity['Desc']?> on <a href="/missions/wall/<?=$activity['work_id']?>"><?=$activity['title']?></a>.</li>
         </ul>
         <div class="wall-right-block-row2"><?=date('h:ia, d/m/Y',strtotime($activity['created_at']))?></div>
       </div>
@@ -194,7 +194,6 @@
   </div>
 </div>
 <script type="text/javascript">
-var data1;
 $(function(){
 	var pusher = new Pusher('228ac2292c03f22869d1'); // Replace with your app key
 	var comment_channel = pusher.subscribe('CA_Comments');
@@ -214,7 +213,6 @@ $(function(){
 					data: {'csrf_workpad': getCookie('csrf_workpad'),'message':message,'attach':attach, 'work_id':'<?=$work['work_id']?>'},
 					type: 'post',
 					success: function(msg){
-						console.log(msg);
 						if(msg!="error"){
 							//message created on server. waiting for push to send the object
 							$('#comment-ajax').fadeOut();
@@ -240,13 +238,9 @@ $(function(){
 	});
 	
 	activity_channel.bind('new-activity-<?=$work['work_id']?>',function(data){
-		data1 = data;
-		console.log(data);
 		if(data.work_id=='<?=$work['work_id']?>'){
 			var theme = $('#activity-template').clone();
-			console.log(theme.find('.wall-right-username').html());
-			console.log(data.username);
-			theme.find('.wall-right-username').html(data.username);
+			theme.find('.wall-right-username').html(data.username=='<?=$me['username']?>'?'You':data.username);
 			theme.find('.wall-right-username').attr('href','/profile/show/'+data.username);
 			theme.find('.wall-right-desc').html(data.Desc);
 			theme.find('.wall-right-work-link').html(data.work_title);

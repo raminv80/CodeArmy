@@ -690,6 +690,16 @@ class Missions extends CI_Controller {
 		
 	}
 	
+	function applicants_temp($work_id){
+		$userid = $this->session->userdata('user_id');
+		$work = $this->work_model->get_work($work_id)->result_array();
+		$this->view_data['arrangement'] = $this->work_model->get_work_arrangement($work_id);
+		$this->view_data['work'] = $work[0];
+		$this->view_data['bids'] = $this->work_model->get_bids($work_id);
+		$this->view_data['window_title'] = "Applicants for job ".$work[0]['title'];
+		$this->load->view('applicants_temp_codearmy_view',$this->view_data);
+	}
+	
 	function getSkills(){
 		$q = $this->input->post('searchword');
 		//$q = $_REQUEST["searchword"];
@@ -781,10 +791,33 @@ class Missions extends CI_Controller {
 		die('error');
 	}
 	
+	function Ajax_accept_bid(){
+		$bid_id = $this->input->post('bid_id');
+		$user_id = $this->session->userdata('user_id');
+		if($this->work_model->accept_bid($bid_id)){
+			die('success');
+		}else die('error');
+	}
+	
+	
 	function Ajax_cancel_bid(){
 		$user_id = $this->session->userdata('user_id');
 		$bid_id = $this->input->post('bid_id');
 		if($this->work_model->cancel_my_bid($bid_id, $user_id)) echo "success";
+		else echo "error removing bid ".$bid_id;
+	}
+	
+	function Ajax_remove_bid(){
+		$user_id = $this->session->userdata('user_id');
+		$bid_id = $this->input->post('bid_id');
+		if($this->work_model->remove_bid($bid_id, $user_id)) echo "success";
+		else echo "error removing bid ".$bid_id;
+	}
+	
+	function Ajax_reject_bid(){
+		$user_id = $this->session->userdata('user_id');
+		$bid_id = $this->input->post('bid_id');
+		if($this->work_model->remove_bid($bid_id, $user_id)) echo "success";
 		else echo "error removing bid ".$bid_id;
 	}
 }
