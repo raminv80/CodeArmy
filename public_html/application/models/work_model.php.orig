@@ -262,6 +262,7 @@ class Work_model extends CI_Model {
 		return $this->db->query($sql, $work_id)->result_array();
 	}
 	
+<<<<<<< HEAD
 	function get_work_history($work_id,$limit=0){
 		$sql = "SELECT * FROM history WHERE work_id=? ORDER BY id DESC";
 		if($limit>0)$sql.=" limit 0,?";
@@ -308,10 +309,10 @@ class Work_model extends CI_Model {
 		if($limit>0)$sql.=" limit 0,?";
 		$res = $this->db->query($sql, array($work_id,$limit))->result_array();
 		return $res;
-	}
-	
+=======
 	function get_mission_task($work_id){
 		$sql = "SELECT mission_task.*, users.username FROM mission_task INNER JOIN users ON mission_task.work_horse = users.user_id WHERE mission_task.work_id = ?";
 		return $this->db->query($sql,$work_id);
+>>>>>>> origin/master
 	}
 }
