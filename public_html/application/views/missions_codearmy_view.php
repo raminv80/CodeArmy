@@ -267,11 +267,13 @@
 	}
 </style>
 <script>
+	
 	function loadEffect(){}
 	
 	var oldValue, jobs = <?php echo json_encode($works); ?>;
 	
 	$(function(){
+		//$('.dialog').jScrollPane();
 		//create some markers
 		/*randMarkers();
 		var loc = geoToPixel({'lat':3.152480, 'lng': 101.717270});
@@ -287,13 +289,26 @@
 		$(window).resize();
 	});
 	
+	function renderMarker(){
+		var loc;
+		newid = $('.marker').size() - 1;
+		
+		//for(i=0; i<jobs.length;i++){
+			loc = geoToPixel({'lat':jobs.lat, 'lng': jobs.lng});
+			var desc = jobs.num+(jobs.skill?"<br/>"+ucfirst(jobs.skill.substring(0,3)):'')+(jobs.days?"<br/>"+(jobs.days<1?"<1d":jobs.days+"d"):'')+(jobs.payout?"<br />"+(jobs.payout<1?"<10$":(jobs.payout<100?jobs.payout+'$':((jobs.payout/1000).toFixed(1)+'k$'))):'');
+			addMarker(loc.x,loc.y,'marker_'+newid,catToIcon(jobs.class),desc,'grey',0.75,500,jobs);
+			//console.log(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
+		//}
+	}
+	
 	function renderMarkers(){
 		var loc;
 		for(i=0; i<jobs.length;i++){
-			//console.log(loc);
+			
 			loc = geoToPixel({'lat':jobs[i].lat, 'lng': jobs[i].lng});
 			var desc = jobs[i].num+(jobs[i].skill?"<br/>"+ucfirst(jobs[i].skill.substring(0,3)):'')+(jobs[i].days?"<br/>"+(jobs[i].days<1?"<1d":jobs[i].days+"d"):'')+(jobs[i].payout?"<br />"+(jobs[i].payout<1?"<10$":(jobs[i].payout<100?jobs[i].payout+'$':((jobs[i].payout/1000).toFixed(1)+'k$'))):'');
 			addMarker(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
+			//console.log(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
 		}
 	}
 	
@@ -373,6 +388,7 @@
 					//TODO: open project list
 					var me = this;
 					$.fancybox.showLoading();
+					$.fancybox.close();
 					$.get(
 						'/missions/mission_list/'+$(this).data().ref.lat+'/'+$(this).data().ref.lng,
 						function(msg){
@@ -584,7 +600,6 @@
 	}
 	
 	function addMarker(x,y,id,icon,desc,color,scale,speed,data){
-		console.log(x,y,id,icon,desc,color,scale,speed, data);
 		var template = $('#marker-template').clone();
 		var container = $('#world-map');
 		template.attr('id',id);
@@ -604,7 +619,6 @@
 		container.append(template);
 		x=x-Math.round(template.width()/2);
 		y=y-template.height();
-		console.log(x + ' ' + y);
 		template.css({
 				'top':y,
 				'left':x
@@ -612,7 +626,38 @@
 		template.data({'scale':scale,'x':x,'y':y,'color':color, 'ref':data});	
 	}
 	
+	function checkMarker(lat,lng,id,icon,desc,color,scale,speed,data)
+	{
+		var status = false;
+		var marker = $('.marker');
+		marker.each(function(){
+			data = $(this).data().ref;
+			if(data)
+				if (data.lat == lat && data.lng == lng){
+					status = true;
+					var old = $(this).find('.arrow-desc');
+					old.html(parseFloat(desc) + parseFloat(old.text()));
+	      			$(this).find('.arrow-down').css('border-top-color', color);
+				}
+		})
+		if (!status) {
+			renderMarker(lat,lng,id,icon,desc,color,scale,speed,data);
+			/* var loc;
+			newid = marker.size() - 1;
+		
+			loc = geoToPixel({'lat':y, 'lng': x});
+			console.log(loc.x, loc.y);
+			
+			height = $('#world-map-img').height();
+			width = $('#world-map-img').width();			
+
+			addMarker(x,y,'marker_'+newid,icon,desc,color,scale,speed,data); */
+
+		}
+	}
+	
 	//*******************End of rendering functions******************/
 </script>
+<script type="text/javascript" src="/public/js/jscrollpane.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/duck.js"></script>
 <?php $this->load->view('includes/CAFooter.php'); ?>
