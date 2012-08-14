@@ -645,6 +645,7 @@ class Missions extends CI_Controller {
 		$this->view_data['work'] = $this->view_data['work'][0];
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
+		$this->view_data['mission_task'] = $this->work_model->get_mission_task($work_id)->result_array();
 		$this->view_data['window_title'] = "Task";
 		$this->load->view('task_codearmy_view', $this->view_data);
 		
