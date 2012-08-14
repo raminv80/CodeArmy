@@ -3,14 +3,9 @@
 <div class="po-wall-container">
   <div class="top-panel">
     <div class="top-panel-left">
-      <div class="top-panel-title">C# Framework for SME Site <a href="#"><img src="/public/images/codeArmy/po/record-icon.png" /></a></div>
-      <div class="proj-category">Websites IT &amp; Software > Online Store</div>
-      <div class="tabs-row"> <a href="#" class="wall">Wall</a> <a class="task-active" href="#">Task</a> <a class="document" href="#">Document</a> <a class="date" href="#">Date</a> </div>
-      <div class="desc-row">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gravida feugiat feugiat. Duis adipiscing lorem a risus ullamcorper sed rhoncus risus fermentum. Suspendisse potenti. Proin eu arcu eu lectus imperdiet aliquet.</div>
-=======
       <div class="top-panel-title"><?=ucwords($work['title'])?> <a href="#"><img src="/public/images/codeArmy/po/record-icon.png" /></a></div>
       <div class="proj-category"><?=ucfirst($work['category'].(($work['class'])?' > '.$work['class_name']:'').(($work['subclass'])?' > '.$work['subclass_name']:''))?></div>
-      <div class="tabs-row"> <a href="/missions/wall/<?=$work['work_id']?>" class="wall-active">Wall</a> <a class="task" href="/missions/task/<?=$work['work_id']?>">Task</a> <a class="document" href="/missions/documents/<?=$work['work_id']?>">Document</a> <a class="date" href="/missions/dates/<?=$work['work_id']?>">Date</a> </div>
+      <div class="tabs-row"> <a href="/missions/wall/<?=$work['work_id']?>" class="wall">Wall</a> <a class="task-active" href="/missions/task/<?=$work['work_id']?>">Task</a> <a class="document" href="/missions/documents/<?=$work['work_id']?>">Document</a> <a class="date" href="/missions/dates/<?=$work['work_id']?>">Date</a> </div>
       <div class="desc-row"><?=$work['description']?></div>
     </div>
     <div class="top-panel-right">
