@@ -177,43 +177,30 @@
     </div>
     <div class="wall-bottom-right-side">
       <div class="wall-right-block-title">Recent Activity</div>
-      <div class="wall-right-block-row">
+      <?php foreach($activities as $activity):?>
+      <div class="wall-right-block-row" id="activity-<?=$activity['id']?>">
         <ul>
-          <li><a href="#" class="wall-right-username">Rolando</a> has added a file to <a href="#">Documents</a>.</li>
+          <li><a href="#" class="wall-right-username"><?=$activity['username']?></a> <?=$activity['Desc']?> on <a href="/missions/wall/<?=$activity['work_id']?>"><?=$activity['title']?></a>.</li>
+        </ul>
+        <div class="wall-right-block-row2"><?=date('h:ia, d/m/Y',strtotime($activity['created_at']))?></div>
+      </div>
+      <?php endforeach;?>
+      <div class="wall-right-block-row" id="activity-template" style="display:none">
+        <ul>
+          <li><a href="#" class="wall-right-username">Rolando</a> <span class="wall-right-desc">has added a file</span> on <a class="wall-right-work-link" href="#">Documents</a>.</li>
         </ul>
         <div class="wall-right-block-row2">7:30am, 12/06/2012</div>
       </div>
-      <div class="wall-right-block-row">
-        <ul>
-          <li><a href="#" class="wall-right-username">Rolando</a> has added a file to <a href="#">Documents</a>.</li>
-        </ul>
-        <div class="wall-right-block-row2">7:30am, 12/06/2012</div>
-      </div>
-      <div class="wall-right-block-row">
-        <ul>
-          <li><a href="#" class="wall-right-username">Rolando</a> has added a file to <a href="#">Documents</a>.</li>
-        </ul>
-        <div class="wall-right-block-row2">7:30am, 12/06/2012</div>
-      </div>
-      <div class="wall-right-block-row">
-        <ul>
-          <li><a href="#" class="wall-right-username">Rolando</a> has added a file to <a href="#">Documents</a>.</li>
-        </ul>
-        <div class="wall-right-block-row2">7:30am, 12/06/2012</div>
-      </div>
-      <div class="wall-right-block-row">
-        <ul>
-          <li><a href="#" class="wall-right-username">Rolando</a> has added a file to <a href="#">Documents</a>.</li>
-        </ul>
-        <div class="wall-right-block-row2">7:30am, 12/06/2012</div>
-      </div>
-    </div>
   </div>
 </div>
 <script type="text/javascript">
+var data1;
 $(function(){
 	var pusher = new Pusher('228ac2292c03f22869d1'); // Replace with your app key
-	var channel = pusher.subscribe('CA_Comments');
+	var comment_channel = pusher.subscribe('CA_Comments');
+	var pusher1 = new Pusher('deb0d323940b00c093ee'); // Replace with your app key
+	var activity_channel = pusher1.subscribe('CA_activities');
+	
 	set_def_value($('#discussion-message'),"Share something with your team");
 	set_def_value($('.attach-url'),"Enter a URL of your image");
 	$('#discussion-submit').click(function(){
@@ -239,8 +226,7 @@ $(function(){
 			}
 		});
 		
-	channel.bind('new-comment-'+<?=$work['work_id']?>, function(data) {
-		console.log(data);
+	comment_channel.bind('new-comment-'+<?=$work['work_id']?>, function(data) {
 		if(data.work_id=='<?=$work['work_id']?>'){
 			var theme = $('#comment-template').clone();
 			theme.find('.fmcb-right-row1').html(data.message);
@@ -249,6 +235,23 @@ $(function(){
 			theme.find('.commentime').html(data.time);
 			theme.attr('id','comment-'+data.comment_id);
 			$('.find-mission-comment-box-down:first').before(theme);
+			theme.slideDown();
+		}
+	});
+	
+	activity_channel.bind('new-activity-<?=$work['work_id']?>',function(data){
+		data1 = data;
+		console.log(data);
+		if(data.work_id=='<?=$work['work_id']?>'){
+			var theme = $('#activity-template').clone();
+			console.log(theme.find('.wall-right-username').html());
+			console.log(data.username);
+			theme.find('.wall-right-username').html(data.username);
+			theme.find('.wall-right-username').attr('href','/profile/show/'+data.username);
+			theme.find('.wall-right-desc').html(data.Desc);
+			theme.find('.wall-right-work-link').html(data.work_title);
+			theme.attr('id','activity-'+data.event_id);
+			$('.wall-right-block-title').after(theme);
 			theme.slideDown();
 		}
 	});

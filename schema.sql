@@ -65,7 +65,7 @@ CREATE TABLE `bids` (
   PRIMARY KEY (`bid_id`),
   KEY `user_id` (`user_id`),
   KEY `work_id` (`work_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=187 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=189 ;
 
 CREATE TABLE `captcha` (
   `captcha_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
@@ -125,7 +125,7 @@ CREATE TABLE `comments` (
   `story_id` varchar(40) NOT NULL,
   PRIMARY KEY (`comment_id`),
   KEY `story_id` (`story_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 CREATE TABLE `friends` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -171,10 +171,10 @@ CREATE TABLE `history` (
   `work_id` varchar(32) DEFAULT NULL,
   `project_id` int(11) DEFAULT NULL,
   `Desc` text,
-  `created_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=291 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=292 ;
 
 CREATE TABLE `inbox` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -361,7 +361,7 @@ CREATE TABLE `voucher_po` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 CREATE TABLE `works` (
   `work_id` varchar(32) NOT NULL DEFAULT '',
@@ -386,6 +386,7 @@ CREATE TABLE `works` (
   `bid_deadline` datetime DEFAULT NULL,
   `deadline` datetime DEFAULT NULL,
   `assigned_at` datetime DEFAULT NULL,
+  `started_at` timestamp NULL DEFAULT NULL,
   `done_at` datetime DEFAULT NULL,
   `tutorial` text,
   `attach` varchar(256) DEFAULT NULL,
@@ -429,7 +430,7 @@ CREATE TABLE `work_skill` (
   PRIMARY KEY (`id`),
   KEY `work_id` (`work_id`),
   KEY `skill_id` (`skill_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=87 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=88 ;
 
 
 ALTER TABLE `achievement_set`

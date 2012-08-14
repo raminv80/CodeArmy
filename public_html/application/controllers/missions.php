@@ -87,6 +87,13 @@ class Missions extends CI_Controller {
 			$desc = html_purify($this->input->post('desc'));
 			if(trim($desc)=="Ask a question")$desc="";
 			$this->work_model->setBid($work_id,$user_id,$budget,$time,$desc);
+			$event='bid';
+			$status = json_encode(array('bid_cost' => $budget,
+				'bid_time' => $time,
+				'bid_desc' => $desc,
+				'work_id' => $work_id));
+			$desc = "placed a bid";
+			$this->work_model->log_history($user_id,$work_id,$event,$status,$desc);
 		}
 		redirect("/missions/apply/$work_id");
 	}
@@ -194,6 +201,11 @@ class Missions extends CI_Controller {
 			'creator' => $user_id
 		);
 		$this->db->update('works', $res, $res2);
+		$event = 'create';
+		$status = json_encode(array(
+				'work_id' => $work_id));
+		$desc = "created";
+		$this->work_model->log_history($user_id,$work_id,$event,$status,$desc);
 		if($this->db->affected_rows()==1){ echo 'success';}else{echo 'Error: can not complete creation of the mission.';}
 	}
 	
@@ -311,7 +323,6 @@ class Missions extends CI_Controller {
 			"description" => html_purify($this->input->post('mission_desc')),
 			"points" => 0,
 			"cost" => $this->calc_cost($this->input->post('mission_arrange_type'),$this->input->post('mission_arrange_duration'),$this->input->post('mission_budget')),
-			"status" => 'draft',
 			"creator" => $user_id,
 			"owner" => $user_id,
 			"project_id" => NULL,
@@ -379,6 +390,10 @@ class Missions extends CI_Controller {
 				}
 			}
 			//echo "success";
+			$status = json_encode(array(
+				'work_id' => $work_id));
+			$desc = "Updated";
+			$this->work_model->log_history($user_id,$work_id,'update',$status,$desc);
 		} else {
 			//return false;
 			echo "error";
@@ -630,13 +645,14 @@ class Missions extends CI_Controller {
 	
 	function wall($work_id){
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
+		if(count($this->view_data['work'])!=1)die('This job is not assigned through bidding process.');
 		$this->view_data['work'] = $this->view_data['work'][0];
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
+		$this->view_data['activities'] = $this->work_model->get_recent_activities($work_id);
 		$this->view_data['comments'] = $this->work_model->get_comments($work_id);
 		$this->view_data['window_title'] = "Wall";
 		$this->load->view('wall_codearmy_view', $this->view_data);
-		
 	}
 	
 	//Tasks Page for PO
@@ -721,6 +737,10 @@ class Missions extends CI_Controller {
 			foreach($ids as $invited_user_id){
 				$this->message_model->send_message($user_id,$invited_user_id,$subject,$msg);
 			}
+			$status = json_encode(array(
+				'work_id' => $work_id));
+			$desc = "sent invitation to talents";
+			$this->work_model->log_history($user_id,$work_id,'invite',$status,$desc);
 			echo json_encode("success");
 		}else{
 			echo json_encode("error");
@@ -738,6 +758,11 @@ class Missions extends CI_Controller {
 		//only workhorse and po can comment
 		if($work['work_horse']==$user_id || $work['owner']==$user_id || $work['creator']==$user_id){
 			$comment_id = $this->work_model->create_comment($work_id, $this->view_data['me']['username'], $message, $attach);
+			$status = json_encode(array(
+				'comment_id' => $comment_id,
+				'work_id' => $work_id));
+			$desc = "commented";
+			$this->work_model->log_history($user_id,$work_id,'comment',$status,$desc);
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$pusher = new Pusher('228ac2292c03f22869d1', 'bd0b31eb033ee85004f0', '25715');
 			$data = array(

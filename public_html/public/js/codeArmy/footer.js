@@ -47,6 +47,6 @@ function getCookie(c_name)
 
 $(window).keypress(function() {
   if ( event.which == "`".charCodeAt(0) ) {
-	 $('#debugger:hidden').slideToggle();
+	 $('#debugger').slideToggle();
   }
 });

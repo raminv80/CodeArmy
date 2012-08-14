@@ -152,8 +152,9 @@
     	<div class="block-header">
         	<h3>My Missions</h3>
         </div>
+        <ul><a href="/missions/create" class="fancybox ui-icon-plus">Create a new mission</a>.</ul>
         <div class="list">
-        	<?php foreach($myWorkList as $list):?>
+        	<?php /*foreach($myWorkList as $list):?>
             <div class="item gray-mission">
             	<?php
 					//calc remaining time
@@ -196,11 +197,12 @@
                         <span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>
                         <span class="hrs">hrs</span>
                         </div>
-                        <a href="#" class="blue-button">Check in</a>
+                        
+                        <a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>
                     </div>
                 </div>
             </div>
-            <?php endforeach;?>
+            <?php endforeach;*/?>
             
             <?php foreach($myMissions as $list):?>
             <div class="item green-mission">
@@ -220,6 +222,8 @@
 					$remaining_min = $remaining_time % (60*60);
 					$remaining_minutes = floor($remaining_min / (60));
 					$min_to_percent = ($given_time==0)?0:(1*60)/($given_time);
+					
+					$po = ($me['user_id']==$list['owner']);
 				?>
             	<div class="mission-header">
                 	<div class="mission-title"><?=$list['title']?></div>
@@ -245,7 +249,13 @@
                         <span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>
                         <span class="hrs">hrs</span>
                         </div>
-                        <a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>
+                        <?php if($po && $list['status']=='draft'){?>
+                        	<a class="fancybox blue-button" href="/missions/edit_mission/<?=$list['work_id']?>">Edit</a>
+                        <?php }if($po){?>
+                        	<a class="fancybox blue-button" href="/missions/edit_mission/<?=$list['work_id']?>">Manage</a>
+                        <?php }else{?>
+                        	<a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>
+                        <?php }?>
                     </div>
                 </div>
             </div>
@@ -254,7 +264,13 @@
     </div>
 </div>
 <script>
-	$(function(){mins = 0; setInterval("updateTimer()",1000*60);});
+	$(function(){
+		mins = 0; setInterval("updateTimer()",1000*60);
+		$('.fancybox').fancybox({
+				type:'iframe',
+				scrolling: 'no'
+			});
+	});
 	function updateTimer(){
 		mins++;
 		if(mins%60==0){

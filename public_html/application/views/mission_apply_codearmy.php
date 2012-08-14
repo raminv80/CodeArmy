@@ -46,7 +46,7 @@
           <div class="bidhrstext">/<?=substr($arranegement,0,-2)?></div>
         </div>
         <div class="fmcb-right-textarea">
-          <textarea id="ask" name="desc" rows="3">Ask a question</textarea>
+          <textarea id="ask" name="desc" rows="3">Ask a question or place your comment</textarea>
         </div>
         <input type="hidden" name="work_id" value="<?=$work['work_id']?>">
         <input type="submit" name="submit" value="Submit" class="lnkimg" />
@@ -152,12 +152,12 @@
 	
 	$('#ask').focus(function(){
 			var val=$(this).val();
-			if (val=="Ask a question") val="";
+			if (val=="Ask a question or place your comment") val="";
 			val=$(this).val(val);
 		});
 	$('#ask').blur(function(){
 			var val=$(this).val();
-			if ($.trim(val)=="") val="Ask a question";
+			if ($.trim(val)=="") val="Ask a question or place your comment";
 			val=$(this).val(val);
 		});
 </script>

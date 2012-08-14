@@ -51,7 +51,7 @@ class Work_model extends CI_Model {
 	}
 	
 	function get_detail_work($work_id) {
-		$sql = "SELECT *, arrangement_type.type as arrangement_type FROM works, mission_category, class, subclass, arrangement_type,bids WHERE arrangement_type.id=works.est_arrangement AND works.category=mission_category.category_id AND class.class_id=works.class AND subclass.subclass_id=works.subclass AND bids.work_id=works.work_id AND bids.bid_status='Accepted' AND bids.user_id=works.work_horse";
+		$sql = "SELECT *, arrangement_type.type as arrangement_type FROM works, mission_category, class, subclass, arrangement_type,bids WHERE arrangement_type.id=works.est_arrangement AND works.category=mission_category.category_id AND class.class_id=works.class AND subclass.subclass_id=works.subclass AND bids.work_id=works.work_id AND bids.bid_status='Accepted' AND bids.user_id=works.work_horse AND works.work_id=?";
 		return $this->db->query($sql,$work_id);
 	}
 	
@@ -260,5 +260,53 @@ class Work_model extends CI_Model {
 	function get_comments($work_id){
 		$sql = "SELECT * FROM comments, users WHERE story_id = ? and users.username=comments.username ORDER BY comment_id DESC";
 		return $this->db->query($sql, $work_id)->result_array();
+	}
+	
+	function get_work_history($work_id,$limit=0){
+		$sql = "SELECT * FROM history WHERE work_id=? ORDER BY id DESC";
+		if($limit>0)$sql.=" limit 0,?";
+		return $this->db->query($sql, array($work_id,$limit))->result_array();
+	}
+	
+	function get_user_history($user_id,$limit){
+		$sql = "SELECT * FROM history WHERE user_id=? ORDER BY id DESC";
+		if($limit>0)$sql.=" limit 0,?";
+		return $this->db->query($sql, array($user_id,$limit))->result_array();
+	}
+	
+	function log_history($user_id,$work_id,$event,$status,$desc){
+		$user = $this->db->get_where('users',array('user_id'=>$user_id))->result_array();
+		$user = $user[0];
+		$work = $this->db->get_where('works',array('work_id'=>$work_id))->result_array();
+		$work = $work[0];
+		$data = array(
+			'user_id' => $user_id,
+			'work_id' => $work_id,
+			'Desc' => $desc,
+			'event' => $event,
+			'status' => $status
+		);
+		$this->db->insert('history',$data);
+		
+		require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+		$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+		$data = array(
+			'user_id' => $user_id,
+			'username' => $user['username'],
+			'work_id' => $work_id,
+			'work_title'=>$work['title'],
+			'Desc' => $desc,
+			'event' => $event,
+			'status' => $status,
+			'event_id'=> $this->db->insert_id()
+		);
+		$pusher->trigger('CA_activities', 'new-activity-'.$work_id, $data );
+	}
+	
+	function get_recent_activities($work_id,$limit=-1){
+		$sql = "SELECT history.*, works.title, users.username, users.exp FROM history, works, users WHERE works.work_id=? AND history.user_id=users.user_id AND works.work_id=history.work_id ORDER BY history.id DESC";
+		if($limit>0)$sql.=" limit 0,?";
+		$res = $this->db->query($sql, array($work_id,$limit))->result_array();
+		return $res;
 	}
 }
