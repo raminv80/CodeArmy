@@ -261,4 +261,9 @@ class Work_model extends CI_Model {
 		$sql = "SELECT * FROM comments, users WHERE story_id = ? and users.username=comments.username ORDER BY comment_id DESC";
 		return $this->db->query($sql, $work_id)->result_array();
 	}
+	
+	function get_mission_task($work_id){
+		$sql = "SELECT mission_task.*, users.username FROM mission_task INNER JOIN users ON mission_task.work_horse = users.user_id WHERE mission_task.work_id = ?";
+		return $this->db->query($sql,$work_id);
+	}
 }
