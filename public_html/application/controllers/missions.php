@@ -643,6 +643,13 @@ class Missions extends CI_Controller {
 		$this->load->view('completed_codearmy_view', $this->view_data);
 	}
 	
+	//Applicants Page
+	function applicants(){
+		$user_id = $this->view_data['me']['user_id'];
+		$this->view_data['window_title'] = "Applicants";
+		$this->load->view('applicants_codearmy_view', $this->view_data);
+	}
+	
 	function wall($work_id){
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		if(count($this->view_data['work'])!=1)die('This job is not assigned through bidding process.');
