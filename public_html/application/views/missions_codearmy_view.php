@@ -289,18 +289,6 @@
 		$(window).resize();
 	});
 	
-	function renderMarker(){
-		var loc;
-		newid = $('.marker').size() - 1;
-		
-		//for(i=0; i<jobs.length;i++){
-			loc = geoToPixel({'lat':jobs.lat, 'lng': jobs.lng});
-			var desc = jobs.num+(jobs.skill?"<br/>"+ucfirst(jobs.skill.substring(0,3)):'')+(jobs.days?"<br/>"+(jobs.days<1?"<1d":jobs.days+"d"):'')+(jobs.payout?"<br />"+(jobs.payout<1?"<10$":(jobs.payout<100?jobs.payout+'$':((jobs.payout/1000).toFixed(1)+'k$'))):'');
-			addMarker(loc.x,loc.y,'marker_'+newid,catToIcon(jobs.class),desc,'grey',0.75,500,jobs);
-			//console.log(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
-		//}
-	}
-	
 	function renderMarkers(){
 		var loc;
 		for(i=0; i<jobs.length;i++){
@@ -626,7 +614,7 @@
 		template.data({'scale':scale,'x':x,'y':y,'color':color, 'ref':data});	
 	}
 	
-	function checkMarker(lat,lng,id,icon,desc,color,scale,speed,data)
+	function checkMarker(lat,lng,num)
 	{
 		var status = false;
 		var marker = $('.marker');
@@ -635,25 +623,31 @@
 			if(data)
 				if (data.lat == lat && data.lng == lng){
 					status = true;
-					var old = $(this).find('.arrow-desc');
-					old.html(parseFloat(desc) + parseFloat(old.text()));
-	      			$(this).find('.arrow-down').css('border-top-color', color);
+					elem = $(this).find('.arrow-down-container').css('border-top-color','green');
+					setTimeout(function(){ elem.css('border-top-color','black'); },250);
+						
+					var el = $(this).find('.arrow-desc');
+					var num = parseInt(el.text());
+					el.text(num+1);
+					
 				}
 		})
 		if (!status) {
-			renderMarker(lat,lng,id,icon,desc,color,scale,speed,data);
-			/* var loc;
-			newid = marker.size() - 1;
-		
-			loc = geoToPixel({'lat':y, 'lng': x});
-			console.log(loc.x, loc.y);
-			
-			height = $('#world-map-img').height();
-			width = $('#world-map-img').width();			
-
-			addMarker(x,y,'marker_'+newid,icon,desc,color,scale,speed,data); */
-
+			renderMarker(lat,lng,num);
 		}
+	}
+	
+	function renderMarker(lat,lng,num){
+		var loc;
+		newid = $('.marker').size() - 1;
+			
+			loc = geoToPixel({'lat':jobs.lat, 'lng': jobs.lng});
+			console.log(lat,lng);
+			
+			//var desc = jobs.num+(jobs.skill?"<br/>"+ucfirst(jobs.skill.substring(0,3)):'')+(jobs.days?"<br/>"+(jobs.days<1?"<1d":jobs.days+"d"):'')+(jobs.payout?"<br />"+(jobs.payout<1?"<10$":(jobs.payout<100?jobs.payout+'$':((jobs.payout/1000).toFixed(1)+'k$'))):'');
+			//addMarker(loc.x,loc.y,'marker_'+i,catToIcon(jobs.class),desc,'grey',0.75,500,jobs);
+			addMarker(lat,lng,'marker_'+newid,catToIcon(jobs.class),'1','orange',0.75,500,jobs);
+
 	}
 	
 	//*******************End of rendering functions******************/
