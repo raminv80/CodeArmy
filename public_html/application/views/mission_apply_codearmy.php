@@ -58,7 +58,7 @@
 				$bidder = $this->users_model->get_user($bid['user_id'])->result_array();
 				$bidder = $bidder[0];
 				$lvl = $this->gamemech->get_level($bidder['exp']);
-				if(trim($bid['bid_desc'])>""){
+				if(trim($bid['bid_desc'])>"" || $bid['user_id']==$me['user_id']){
 		?>
         <div class="find-mission-down-box-row">
           <div class="find-mission-comment-box-left">
@@ -69,7 +69,7 @@
           </div>
           <div class="find-mission-comment-box-right">
             <div class="bidded-icon"></div>
-            <div class="fmcb-right-row1"><?=$bid['bid_desc']?></div>
+            <div class="fmcb-right-row1"><?=$bid['bid_desc']?><br />You placed a bid on this job. You may review your bids <a target="_top" style="text-decoration:underline" href="/missions/bid">here</a>.</div>
             <div class="fmcb-right-row2">
               <div class="commentime"><?=$bid['created_at']?></div>
               <!--<div class="replybut"><a href="#"><img src="/public/images/codeArmy/mission/reply-icon.png" /></a></div>-->
@@ -110,7 +110,7 @@
       <div class="right-col-title-bg">Materials</div>
       <?php foreach($work_files as $file):?>
       <div class="find-mission-material-row">
-        <div class="attach-file-tools"> <img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /> <span class="filename"><a href="/public/uploads/<?=$file['file_name']?>" target="_blank"><?=$file['file_name']?></a></span> <span class="filesize"><?=round($file['file_size'] / 1024)?> KB</span> </div>
+        <div class="attach-file-tools"> <img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /> <span class="filename"><a href="/public/uploads/<?=$file['file_name']?>" target="_blank"><?=(strlen($file['file_name'])>25)?substr($file['file_name'],0,15).'...'.substr($file['file_name'],-7,7):$file['file_name']?></a></span> <span class="filesize"><?=round($file['file_size'] / 1024)?> KB</span> </div>
       </div>
       <?php endforeach;?>
     </div>

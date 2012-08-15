@@ -25,7 +25,10 @@
       <div class="apply-details-right-top">Contractor's message will appear here (as per in Mission Details page). I am able to deliver it to you within 5 days.</div>
       <div class="apply-details-right-bottom">
       
-      <div class="right-bot-l"><div class="bot-left-row1"><strong>Iamawesome</strong> has bidded on your mission.</div><div class="bot-left-row2">PROPOSING:</div></div>
+      <div class="right-bot-l"><div class="bot-left-row1"><strong>Iamawesome</strong> has bidded on your mission.</div><div class="bot-left-row2">PROPOSING: 
+      <div class="proposed-price">35/hr</div>
+      <div class="proposed-time">5d&nbsp;12hr</div>
+      </div></div>
       <div class="right-bot-r"><input type="submit" class="rejimg" value="Reject" /><input type="submit" class="lnkimg" value="Accept" /></div>
       
       </div>

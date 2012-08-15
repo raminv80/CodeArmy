@@ -103,9 +103,6 @@
 <div id="dialog-proceed" class="dialog" title="Confirm Inivite">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You have selected no recommnded ctractors to be invited. Are you sure you want to proceed?</p>
 </div>
-<div id="dialog-mission-creatd" class="dialog" title="Mission Created">
-	<p><span class="ui-icon ui-icon-check" style="float:left; margin:0 7px 20px 0;"></span>Your mission is successfully created.</p>
-</div>
 <style type="text/css">
 	.ui-widget-overlay {
 	   background: #000;
@@ -192,18 +189,7 @@
 									data: {'ids':ids, 'work_id': '<?=$work_id?>', 'csrf_workpad': getCookie('csrf_workpad')},
 									success: function(msg){
 										if(msg=='success'){
-											$("#dialog-mission-creatd").dialog({
-												resizable: false,
-												height:180,
-												width:400,
-												modal: true,
-												buttons: {
-														Ok: function() {
-																$( this ).dialog( "close" );
-																parent.$.fancybox.close();
-															}
-												}
-											});
+											parent.$.fancybox.close();
 										}else{
 											alert('Error: check the console for message');
 											console.log(msg);

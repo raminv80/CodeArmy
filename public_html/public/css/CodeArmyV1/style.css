@@ -2768,6 +2768,21 @@ input.rejimg:hover {
 	width:150px;
 	margin:5px;
 }
+.proposed-time, .proposed-price {
+	float:right;
+	width:70px;
+	height:26px;
+	color:#ffd200;
+	text-shadow:3px 2px 2px #000;
+	font-size:18px;
+	position:relative;
+	padding:5px 0 0 30px;
+	background:url(/public/images/codeArmy/po/applicants/clock-icon.png) no-repeat;
+}
+.proposed-price {
+	padding:5px 0 0 25px;
+	background:url(/public/images/codeArmy/po/applicants/dollar-sign.png) no-repeat;
+}
 /* END - New Codes by Reza@RezaKabiri.com */
 
 
