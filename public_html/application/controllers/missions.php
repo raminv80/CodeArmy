@@ -787,4 +787,21 @@ class Missions extends CI_Controller {
 		if($this->work_model->cancel_my_bid($bid_id, $user_id)) echo "success";
 		else echo "error removing bid ".$bid_id;
 	}
+	
+	function Ajax_add_sub_task(){
+		$user_id = $this->session->userdata('user_id');
+		$work_id = $this->input->post('work_id');
+		$sub_task = $this->input->post('sub_task');
+		$res = array(
+			"work_id" => $work_id,
+			"user_id" => $user_id,
+			"task_name" => $sub_task
+		);
+		if($this->db->insert('mission_task', $res)){
+			$insert_id = $this->db->insert_id();
+			echo $insert_id;
+		} else {
+			echo "error";
+		}
+	}
 }
