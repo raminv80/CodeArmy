@@ -130,18 +130,22 @@ class Work_model extends CI_Model {
 	}
 	
 	function setBid($work_id,$user_id,$budget,$time,$desc){
-		$sql = "DELETE FROM bids WHERE work_id=? AND user_id=?";
-		$this->db->query($sql, array($work_id,$user_id));
-		$data=array(
-			'work_id' => $work_id,
-			'user_id' => $user_id,
-			'bid_cost' => $budget,
-			'bid_time' => $time,
-			'bid_desc' => $desc,
-			'bid_status' => 'Bid',
-			'created_at' => date('Y-m-d H:i:s')
-		);
-		$this->db->insert('bids',$data);
+		//remove my previous bids only if its not approved
+		$sql = "DELETE FROM bids WHERE work_id=? AND user_id=? AND bid_status<>'Accepted'";
+		//if i have no approved bids on this job
+		if($this->db->get_where('bids',array('user_id'=>$user_id,'work_id'=>$work_id, 'bid_status'=>'Accepted'))->num_rows()==0){
+			$this->db->query($sql, array($work_id,$user_id));
+			$data=array(
+				'work_id' => $work_id,
+				'user_id' => $user_id,
+				'bid_cost' => $budget,
+				'bid_time' => $time,
+				'bid_desc' => $desc,
+				'bid_status' => 'Bid',
+				'created_at' => date('Y-m-d H:i:s')
+			);
+			$this->db->insert('bids',$data);
+		}
 	}
 	
 	function get_work_bids($work_id){
@@ -163,6 +167,11 @@ class Work_model extends CI_Model {
 		$res = $this->db->query($sql, $work_id);
 		$res = $res->result_array();
 		return $res[0];
+	}
+	
+	function list_troopers($user_id){
+		$sql = "SELECT works.title,works.work_id,count(1) as num FROM bids,works WHERE works.owner = ? AND works.work_id=bids.work_id AND lower(works.status) IN ('open','reject','assigned') group by works.work_id order by works.title";
+		return $this->db->query($sql,$user_id)->result_array();
 	}
 	
 	function check_file($file_id, $work_id, $session_id){
@@ -297,6 +306,7 @@ class Work_model extends CI_Model {
 			'work_title'=>$work['title'],
 			'Desc' => $desc,
 			'event' => $event,
+			'time' => date('h:ia, d/m/Y'),
 			'status' => $status,
 			'event_id'=> $this->db->insert_id()
 		);
@@ -325,6 +335,10 @@ class Work_model extends CI_Model {
 		return $this->db->get_where('bids', array('bid_id'=>$bid_id))->result_array();
 	}
 	
+	function get_approved_bid($user_id,$work_id){
+		return $this->db->get_where('bids',array('work_id'=>$work_id,'user_id'=>$user_id,'bid_status'=>'Accepted'))->result_array();
+	}
+	
 	function accept_bid($bid_id){
 		$res = $this->db->get_where('bids',array('bid_id'=>$bid_id))->result_array();
 		$work = $this->get_work($res[0]['work_id'])->result_array();
@@ -333,8 +347,8 @@ class Work_model extends CI_Model {
 		$po = $this->session->userdata('user_id');
 		if($po==$work['owner']){
 			//update works
-			$sql = "UPDATE works SET status='assigned', work_horse=?, assigned_at=?, cost=? WHERE work_id=?";
-			$this->db->query($sql,array($bid['user_id'],time(),$bid['bid_cost'],$bid['work_id']));
+			$sql = "UPDATE works SET status='assigned', assigned_at=?, cost=? WHERE work_id=?";
+			$this->db->query($sql,array(date('Y-m-d H:i:s'),$bid['bid_cost'],$bid['work_id']));
 			//update bid
 			$sql = "UPDATE bids SET bid_status='Accepted' WHERE bid_id=?";
 			$this->db->query($sql,array($bid_id));
@@ -389,5 +403,94 @@ class Work_model extends CI_Model {
 	function get_active_bids($work_id){
 		$sql = "SELECT * FROM bids where work_id=? AND bid_status in ('Bid','Accepted')";
 		return $this->db->query($sql, $work_id)->result_array();
+	}
+	
+	function get_my_works($user_id, $status){
+			if(strtolower($status) == 'in progress'){
+			$query = "SELECT * FROM works where works.work_horse = ? and lower(works.status) in ('in progress', 'redo', 'assigned')";
+			$result = $this->db->query($query, array($user_id));
+			}elseif(strtolower($status)=='done'){
+			$query = "SELECT * FROM works where works.work_horse = ? and lower(works.status) in ('done','verify')";
+			$result = $this->db->query($query, array($user_id));
+			}else{
+			$query = "SELECT * FROM works where works.work_horse = ?  and lower(works.status) = ?";
+			$result = $this->db->query($query, array($user_id,strtolower($status)));
+			}
+			return $result;
+	}
+	
+	function accept_work($user_id,$work_id){
+		//check user's bid is accepted
+		$work = $this->get_work($work_id)->result_array();
+		$proposal = $this->work_model->get_approved_bid($user_id,$work_id);
+		$proposal = $proposal[0];
+		$arrangement = $this->work_model->get_work_arrangement($work_id);
+		$time = $proposal['bid_time'];
+		switch($arrangement):
+			case 'hourly': $time = $time*60*60;
+			break;
+			case 'daily': $time = $time*24*60*60;
+			break;
+			case 'weekly': $time = $time*7*24*60*60;
+			break;
+			case 'monthly': $time = $time*30*24*60*60;
+			break;
+		endswitch;
+		$work=$work[0];
+		//update work status to in progress
+		//update deadline, started at
+		//TODO: notify other accepted bids that they loosed in game of accepting the job
+		//update other accepted bids
+		$sql = "update bids set bid_status='Bid' WHERE work_id=? AND bid_status='Accepted' AND user_id<>?";
+		$this->db->query($sql,array($work_id,$user_id));
+		if($proposal){
+			$data = array(
+				'status' => 'In Progress',
+				'started_at' => date('Y-m-d H:i:s'),
+				'deadline' => date('Y-m-d H:i:s',time()+$time),
+				'work_horse' => $user_id
+			);
+			$this->db->update('works',$data,array('work_id'=>$work_id));
+			//update history
+			//generate push event
+			$event = 'Accept';
+			$status = array(
+				'work_id'=> $work_id,
+				'event'=> 'accept'
+			);
+			$status = json_encode($status);
+			$desc = "accepted to work";
+			$this->log_history($user_id,$work_id,$event,$status,$desc);
+			return true;
+		}else return false;
+	}
+	
+	function decline_work($user_id,$work_id){
+		//check user is the work horse
+		$work = $this->get_work($work_id)->result_array();
+		$proposal = $this->work_model->get_approved_bid($user_id,$work_id);
+		$proposal = $proposal[0];
+		$work=$work[0];
+		//update bid status to declined
+		if($proposal){
+			$this->db->update('bids',array('bid_status'=>'Declined'),array('bid_id'=>$proposal['bid_id']));
+			//update work_status to open only if no one's bid is accepted
+			if($this->db->get_where('bids',array('bid_status'=>'Accepted','work_id'=>$work_id))->num_rows()==0){
+				$this->db->update('works',array('status'=>'open'),array('work_id'=>$work_id));
+			}
+			return true;
+		}else return false;
+	}
+	
+	function get_pending_works($user_id){
+		$sql = "SELECT * FROM works,bids WHERE works.work_id=bids.work_id AND works.status IN ('assigned','open','reject') AND bids.bid_status='Accepted' AND bids.user_id=?";
+		$result = $this->db->query($sql, array($user_id));
+		return $result;
+	}
+	
+	function get_num_troopers($work_id){
+		$sql = "SELECT count(1) AS num FROM bids WHERE bids.work_id=? AND bid_status in ('Bid','Accepted')";
+		$res = $this->db->query($sql, array($work_id))->result_array();
+		return $res[0]['num'];
 	}
 }

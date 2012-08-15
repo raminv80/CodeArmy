@@ -653,7 +653,8 @@ class Missions extends CI_Controller {
 	
 	function my_missions(){
 		$user_id = $this->view_data['me']['user_id'];
-		$this->view_data['myWorkList'] = $this->stories->get_my_works($user_id, 'in progress')->result_array();
+		$this->view_data['myPendingList'] = $this->work_model->get_pending_works($user_id)->result_array();
+		$this->view_data['myWorkList'] = $this->work_model->get_my_works($user_id, 'in progress')->result_array();
 		$this->view_data['myMissions'] = $this->work_model->get_owner_works($user_id);
 		$this->view_data['window_title'] = "My Missions";
 		$this->load->view('mymissions_codearmy_view', $this->view_data);
@@ -662,6 +663,7 @@ class Missions extends CI_Controller {
 	function bid(){
 		$user_id = $this->view_data['me']['user_id'];
 		$this->view_data['bids'] = $this->work_model->get_my_bids($user_id);
+		$this->view_data['troops'] = $this->work_model->list_troopers($user_id);
 		$this->view_data['window_title'] = "Mission Bid";
 		$this->load->view('mybids_codearmy_view', $this->view_data);
 	}
@@ -831,7 +833,7 @@ class Missions extends CI_Controller {
 		$bid_id = $this->input->post('bid_id');
 		$user_id = $this->session->userdata('user_id');
 		if($this->work_model->accept_bid($bid_id)){
-			die('success');
+			die($bid_id);
 		}else die('error');
 	}
 	
@@ -863,7 +865,7 @@ class Missions extends CI_Controller {
 	function Ajax_remove_bid(){
 		$user_id = $this->session->userdata('user_id');
 		$bid_id = $this->input->post('bid_id');
-		$bid = $this->db->get_bid($bid_id);
+		$bid = $this->work_model->get_bid($bid_id);
 		$work_id = $bid[0]['work_id'];
 		//was user invited?
 		$res = $this->work_model->invited_to_work($user_id,$work_id);
@@ -877,8 +879,8 @@ class Missions extends CI_Controller {
 	function Ajax_reject_bid(){
 		$user_id = $this->session->userdata('user_id');
 		$bid_id = $this->input->post('bid_id');
-		if($this->work_model->remove_bid($bid_id, $user_id)) echo "success";
-		else echo "error removing bid ".$bid_id;
+		if($this->work_model->remove_bid($bid_id, $user_id)) echo $bid_id;
+		else echo "error";
 	}
 	
 	function Ajax_update_task_priority(){
@@ -921,5 +923,21 @@ class Missions extends CI_Controller {
 		} else {
 			echo "error";
 		}
+	}
+	
+	function Ajax_accept_work(){
+		$work_id = $this->input->post('work_id');
+		$user_id = $this->session->userdata('user_id');
+		if($this->work_model->accept_work($user_id,$work_id)){
+			echo $work_id;
+		}else die('error');
+	}
+	
+	function Ajax_reject_work(){
+		$work_id = $this->input->post('work_id');
+		$user_id = $this->session->userdata('user_id');
+		if($this->work_model->decline_work($user_id,$work_id)){
+			echo $work_id;
+		}else die('error');
 	}
 }
