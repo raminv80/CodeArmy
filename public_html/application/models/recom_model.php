@@ -8,6 +8,25 @@ class Recom_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function get_match($work_id,$user_id){
+		$work_skills = $this->get_work_skills($work_id);
+		if(count($work_skills)>0){
+			$user_skills = $this->get_user_skills($user_id);
+			$sum=0;
+			foreach($work_skills as $ws):
+				foreach($user_skills as $us):
+					if($us['skill_id']==$ws['skill_id']){
+						$sum +=	30-abs($ws['point']-$us['point']);
+					}
+				endforeach;
+			endforeach;
+			$match = $sum / (count($work_skills)*30) * 100;
+			return $match;
+		}else{
+			return 0;
+		}
+	}
+	
 	function get_tallents($work_id){
 		$work_skills = $this->get_work_skills($work_id);
 		//if work has no skill attached then no point to do any calculation for this match making model

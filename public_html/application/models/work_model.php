@@ -321,6 +321,10 @@ class Work_model extends CI_Model {
 		return $this->db->query($sql, array($work_id))->result_array();
 	}
 	
+	function get_bid($bid_id){
+		return $this->db->get_where('bids', array('bid_id'=>$bid_id))->result_array();
+	}
+	
 	function accept_bid($bid_id){
 		$res = $this->db->get_where('bids',array('bid_id'=>$bid_id))->result_array();
 		$work = $this->get_work($res[0]['work_id'])->result_array();
@@ -349,5 +353,41 @@ class Work_model extends CI_Model {
 			$this->db->query($sql,$bid_id);
 			return true;
 		}else return false;
+	}
+	
+	function invite($user_id,$work_id){
+		$data = array(
+			'user_id' => $user_id,
+			'work_id' => $work_id,
+			'status' => 'sent'
+		);
+		$this->db->insert('invitation',$data);
+	}
+	
+	function updateInvite($invite_id,$status){
+		$data = array('status'=>$status);
+		$whr = array('invite_id'=>$invite_id);
+		$this->db->update('invitation',$data,$whr);
+	}
+	
+	function invited_to_work($user_id, $work_id){
+		$sql = "SELECT * FROM invitation WHERE work_id=? AND user_id=? AND status='sent'";
+		$res = $this->db->query($sql,array($work_id,$user_id))->result_array();
+		return $res;
+	}
+	
+	function get_invitations($work_id){
+		$sql = "SELECT * FROM invitations WHERE work_id=?";
+		return $this->db->query($sql,array($work_id))->result_array();
+	}
+	
+	function get_pending_invitations($work_id){
+		$sql = "SELECT * FROM invitation, users WHERE invitation.user_id=users.user_id AND invitation.work_id=? AND invitation.status in ('sent','viewed')";
+		return $this->db->query($sql,array($work_id))->result_array();
+	}
+	
+	function get_active_bids($work_id){
+		$sql = "SELECT * FROM bids where work_id=? AND bid_status in ('Bid','Accepted')";
+		return $this->db->query($sql, $work_id)->result_array();
 	}
 }

@@ -244,7 +244,7 @@
                     	<?php if($po){?>
                         	<?php if(in_array($list['status'],array('open','reject'))){?>
                          <li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="/missions/applicants_temp/<?=$list['work_id']?>"><span class="icon"></span><span class="title "><span class="bidders-<?=$list['work_id']?>"><?=$list['bids']?></span> Bidders</span></a></li>
+                        <li><a href="/missions/applicants/<?=$list['work_id']?>"><span class="icon"></span><span class="title "><span class="bidders-<?=$list['work_id']?>"><?=$list['bids']?></span> Bidders</span></a></li>
                         <script type="text/javascript">
 							bids_channel.bind('new-bid-<?=$list['work_id']?>', function(data) {
 							  var el = $('.bidders-<?=$list['work_id']?>');

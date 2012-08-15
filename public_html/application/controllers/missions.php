@@ -8,6 +8,7 @@ class Missions extends CI_Controller {
 		parent::__construct();
 		
 		$this->load->model('users_model');
+		$this->load->model('recom_model');
 		$this->load->model('skill_model');
 		$this->load->model('message_model');
 		$this->load->model('projects_model');
@@ -67,6 +68,11 @@ class Missions extends CI_Controller {
 		$this->view_data['po'] = $po;
 		$poBadges = $this->skill_model->get_my_top8_badges($work['owner']);
 		if(!$poBadges){$poBadges=NULL;}
+		//was user invited?
+		$res = $this->work_model->invited_to_work($this->view_data['me']['user_id'],$work_id);
+		if(count($res)){
+			$this->work_model->updateInvite($res[0]['invite_id'],'viewed');
+		}
 		$this->view_data['po_badge'] = $poBadges;
 		$this->view_data['work_skills'] = $this->work_model->get_work_skills($work_id);
 		$this->view_data['work_files'] = $this->work_model->previewFiles($work_id);
@@ -86,7 +92,10 @@ class Missions extends CI_Controller {
 			$budget = $this->input->post('budget');
 			$desc = html_purify($this->input->post('desc'));
 			if(trim($desc)=="Ask a question or place your comment")$desc="";
+			//save the bid in db
 			$this->work_model->setBid($work_id,$user_id,$budget,$time,$desc);
+			
+			//save it in history
 			$bid_id = $this->db->insert_id();
 			$event='bid';
 			$status = json_encode(array('bid_cost' => $budget,
@@ -95,6 +104,8 @@ class Missions extends CI_Controller {
 				'work_id' => $work_id));
 			$desc = "placed a bid";
 			$this->work_model->log_history($user_id,$work_id,$event,$status,$desc);
+			
+			//push this event
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
 			$data = array(
@@ -106,6 +117,12 @@ class Missions extends CI_Controller {
 				'comment_id' => $bid_id
 			);
 			$pusher->trigger('CA_activities_bid', 'new-bid-'.$work_id, $data );
+			
+			//was user invited?
+			$res = $this->work_model->invited_to_work($this->view_data['me']['user_id'],$work_id);
+			if(count($res)){
+				$this->work_model->updateInvite($res[0]['invite_id'],'accepted');
+			}
 		}
 		redirect("/missions/apply/$work_id");
 	}
@@ -655,13 +672,6 @@ class Missions extends CI_Controller {
 		$this->load->view('completed_codearmy_view', $this->view_data);
 	}
 	
-	//Applicants Page
-	function applicants(){
-		$user_id = $this->view_data['me']['user_id'];
-		$this->view_data['window_title'] = "Applicants";
-		$this->load->view('applicants_codearmy_view', $this->view_data);
-	}
-	
 	function wall($work_id){
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		if(count($this->view_data['work'])!=1)die('This job is not assigned through bidding process.');
@@ -709,14 +719,17 @@ class Missions extends CI_Controller {
 		
 	}
 	
-	function applicants_temp($work_id){
+	function applicants($work_id){
 		$userid = $this->session->userdata('user_id');
 		$work = $this->work_model->get_work($work_id)->result_array();
+		$this->view_data['work_id'] = $work_id;
 		$this->view_data['arrangement'] = $this->work_model->get_work_arrangement($work_id);
 		$this->view_data['work'] = $work[0];
 		$this->view_data['bids'] = $this->work_model->get_bids($work_id);
+		$this->view_data['invitations'] = $this->work_model->get_pending_invitations($work_id);
+		$this->view_data['troops'] = $this->work_model->get_active_bids($work_id);
 		$this->view_data['window_title'] = "Applicants for job ".$work[0]['title'];
-		$this->load->view('applicants_temp_codearmy_view',$this->view_data);
+		$this->load->view('applicants_codearmy_view',$this->view_data);
 	}
 	
 	function getSkills(){
@@ -762,15 +775,19 @@ class Missions extends CI_Controller {
 		$work_id = $this->input->post('work_id');
 		$work = $this->work_model->get_work($work_id)->result_array();
 		if(count($work)==1){
+			//Send message
 			$subject = "Invitation to mission";
 			$msg = "You are invited to work on Mission '<a class='fancybox' href='/missions/apply/$work_id'>".$work[0]['title']."</a>'. You may <a class='fancybox' href='/missions/apply/$work_id'>click here to view mission details</a> and to apply/bid on the mission.";
 			foreach($ids as $invited_user_id){
 				$this->message_model->send_message($user_id,$invited_user_id,$subject,$msg);
 			}
+			//Log in history
 			$status = json_encode(array(
 				'work_id' => $work_id));
 			$desc = "sent invitation to talents";
 			$this->work_model->log_history($user_id,$work_id,'invite',$status,$desc);
+			//Save in invite list
+			$this->work_model->invite($user_id,$work_id);
 			echo json_encode("success");
 		}else{
 			echo json_encode("error");
@@ -846,6 +863,13 @@ class Missions extends CI_Controller {
 	function Ajax_remove_bid(){
 		$user_id = $this->session->userdata('user_id');
 		$bid_id = $this->input->post('bid_id');
+		$bid = $this->db->get_bid($bid_id);
+		$work_id = $bid[0]['work_id'];
+		//was user invited?
+		$res = $this->work_model->invited_to_work($user_id,$work_id);
+		if(count($res)){
+			$this->work_model->updateInvite($res[0]['invite_id'],'rejected');
+		}
 		if($this->work_model->remove_bid($bid_id, $user_id)) echo "success";
 		else echo "error removing bid ".$bid_id;
 	}
