@@ -106,7 +106,7 @@ class Work_model extends CI_Model {
 	}
 	
 	function store_skill_model($key){
-		$sql = "SELECT * FROM skill WHERE ? LIKE concat('%', name, '%')";
+		$sql = "SELECT * FROM skill WHERE ? LIKE concat('%', name, '%') ORDER BY name DESC";
 		$res = $this->db->query($sql, $key);
 		return $res->result_array();
 	}

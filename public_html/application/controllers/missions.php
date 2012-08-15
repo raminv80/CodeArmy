@@ -85,8 +85,9 @@ class Missions extends CI_Controller {
 			$work_id = $this->input->post('work_id');
 			$budget = $this->input->post('budget');
 			$desc = html_purify($this->input->post('desc'));
-			if(trim($desc)=="Ask a question")$desc="";
+			if(trim($desc)=="Ask a question or place your comment")$desc="";
 			$this->work_model->setBid($work_id,$user_id,$budget,$time,$desc);
+			$bid_id = $this->db->insert_id();
 			$event='bid';
 			$status = json_encode(array('bid_cost' => $budget,
 				'bid_time' => $time,
@@ -94,6 +95,17 @@ class Missions extends CI_Controller {
 				'work_id' => $work_id));
 			$desc = "placed a bid";
 			$this->work_model->log_history($user_id,$work_id,$event,$status,$desc);
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			$data = array(
+				'user_id' => $user_id,
+				'user_level' => $this->gamemech->get_level($this->view_data['me']['exp']),
+				'username' => $this->view_data['me']['username'],
+				'work_id' => $work_id,
+				'time' => date('j M Y H:i'),
+				'comment_id' => $bid_id
+			);
+			$pusher->trigger('CA_activities_bid', 'new-bid-'.$work_id, $data );
 		}
 		redirect("/missions/apply/$work_id");
 	}

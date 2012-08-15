@@ -326,13 +326,13 @@ function initCreateMission(){
 	});
 	
 	$('#post-mission').click(function(){
-		$('#reg-ajax').show();
 		if($("#form-create-mission").valid()){
 			submitHandler();
 		}
 	});
 	
 	function submitHandler() {
+		$('#reg-ajax').show();
 		var mission_title = $('#mission-title').val();
 		var mission_desc = $('#mission-desc-text').val();
 		var mission_tutorial = $('#mission-video').val();
@@ -370,6 +370,7 @@ function initCreateMission(){
 				} else {
 					alert("Error");
 				}
+				$('#reg-ajax').hide();
 			}
 		});
 	}
