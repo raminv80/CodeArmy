@@ -19,6 +19,9 @@
     </li>
 <?php endforeach;?>
 </ul>
+<div id="dialog-confirm" class="dialog" title="Mission assignment confirmation">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You are accepting <span style="colo:yellow"></span>'s proposal as your mission trooper.</p><br><p style="text-align:center">Are you sure?</p>
+</div>
 <style>
 .bid-status-Bid{background-color:#000}
 .bid-status-Declined{background-color:orange}
@@ -26,24 +29,39 @@
 .bid-status-Accepted{background-color:green}
 </style>
 <script type="text/javascript">
+var selectedBid;
 $(function(){
-	var selectedBid;
 	$('.accept').click(function(){
-		$.fancybox.showLoading();
-		selectedBid = $(this).parents('.bid-container');
-		var bid_id = selectedBid.attr('id').split('-')[1];
-		$.ajax({
-			'url': '/missions/Ajax_accept_bid',
-			'type': 'post',
-			'data': {'csrf_workpad': getCookie('csrf_workpad'), 'bid_id': bid_id},
-			'success': function(msg){
-					console.log(msg);
-					if(msg=='success'){
-						selectedBid.removeClass('bid-status-Bid').addClass('bid-status-Accepted');
-						selectedBids.find('.options').remove();
-					}
-					$.fancybox.hideLoading();
+		var pressed_button = $(this);
+		$( "#dialog-confirm" ).dialog({
+			resizable: false,
+			modal: true,
+			width: 410,
+			buttons: {
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				},
+				"Yes" : function() {
+					$.fancybox.showLoading();
+					selectedBid = pressed_button.parents('.bid-container');
+					console.log(pressed_button);
+					var bid_id = selectedBid.attr('id').split('-')[1];
+					$.ajax({
+						'url': '/missions/Ajax_accept_bid',
+						'type': 'post',
+						'data': {'csrf_workpad': getCookie('csrf_workpad'), 'bid_id': bid_id},
+						'success': function(msg){
+								console.log(msg);
+								if(msg=='success'){
+									selectedBid.removeClass('bid-status-Bid').addClass('bid-status-Accepted');
+									selectedBid.find('.options').remove();
+								}
+								$.fancybox.hideLoading();
+							}
+					});
+					$( this ).dialog( "close" );
 				}
+			}
 		});
 	});
 	$('.reject').click(function(){

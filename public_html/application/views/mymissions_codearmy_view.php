@@ -1,4 +1,8 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
+<script type="text/javascript">
+	var bids_pusher = new Pusher('deb0d323940b00c093ee');
+	var bids_channel = pusher.subscribe('CA_activities_bid');
+</script>
 <style>
 #mymission-content-area{
 	/*background:url(/public/images/codeArmy/profile/missions/temp.png) no-repeat;*/
@@ -240,7 +244,14 @@
                     	<?php if($po){?>
                         	<?php if(in_array($list['status'],array('open','reject'))){?>
                          <li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="/missions/applicants_temp/<?=$list['work_id']?>"><span class="icon"></span><span class="title"><?=$list['bids']?> Bidders</span></a></li>
+                        <li><a href="/missions/applicants/<?=$list['work_id']?>"><span class="icon"></span><span class="title "><span class="bidders-<?=$list['work_id']?>"><?=$list['bids']?></span> Bidders</span></a></li>
+                        <script type="text/javascript">
+							bids_channel.bind('new-bid-<?=$list['work_id']?>', function(data) {
+							  var el = $('.bidders-<?=$list['work_id']?>');
+							  el.html(++parseInt(el.html()));
+							  alert(bid); console.log(data);
+							});
+						</script>
                         <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
                             <?php }else{?>

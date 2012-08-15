@@ -9,7 +9,7 @@
       <div class="proj-category">
         <?=ucfirst($work['category'].(($work['class'])?' > '.$work['class_name']:'').(($work['subclass'])?' > '.$work['subclass_name']:''))?>
       </div>
-      <div class="tabs-row"> <a href="/missions/wall/<?=$work['work_id']?>" class="wall-active">Wall</a> <a class="task" href="/missions/task/<?=$work['work_id']?>">Task</a> <a class="document" href="/missions/documents/<?=$work['work_id']?>">Document</a> <a class="date" href="/missions/dates/<?=$work['work_id']?>">Date</a> </div>
+      <div class="tabs-row"> <a href="/missions/wall/<?=$work['work_id']?>" class="wall">Wall</a> <a class="task" href="/missions/task/<?=$work['work_id']?>">Task</a> <a class="document-active" href="/missions/documents/<?=$work['work_id']?>">Document</a> <a class="date" href="/missions/dates/<?=$work['work_id']?>">Date</a> </div>
       <div class="desc-row">
         <?=$work['description']?>
       </div>
@@ -18,7 +18,7 @@
       <?php
             //calc remaining time
             $remaining_time = strtotime($work['deadline'])-time();
-            if($remaining_time<0)$remaining_time=0;
+            if($remaining_time<0)$remaining_time0;
             //calc elappsed time
             $elappsed_time = time()-strtotime($work['assigned_at']);
             //calc total time he had during assignment
@@ -83,8 +83,38 @@
       </div>
     </div>
   </div>
-  <div class="wall-bottom-panel">
-  <!--TO DO-->
+  <div class="documents-bottom-panel">
+    <div class="docs-table-title">PHP Awesome Fix</div>
+    <div class="docs-table-row">
+      <div class="doc-number">1.</div>
+      <div class="doc-name">Database fix.doc</div>
+      <div class="doc-upload-by">Uploaded by Mr. Product Owner</div>
+      <div class="doc-upload-time">Latest</div>
+      <div class="doc-upload-date">27/10/12</div>
+      <div class="doc-upload-dl-icons"><a href="#"><img src="/public/images/codeArmy/po/documents/download-icon.png" /></a></div>
+    </div>
+    <div class="docs-table-row">
+      <div class="doc-number">2.</div>
+      <div class="doc-name">Planning.xls</div>
+      <div class="doc-upload-by">Uploaded by Mr. Product Owner</div>
+      <div class="doc-upload-time">2 days ago</div>
+      <div class="doc-upload-date">25/10/12</div>
+      <div class="doc-upload-dl-icons"><a href="#"><img src="/public/images/codeArmy/po/documents/download-icon.png" /></a></div>
+    </div>
+    <div class="docs-table-row">
+      <div class="doc-number">3.</div>
+      <div class="doc-name"><a href="#">awesome PHP fix.gif</a></div>
+      <div class="doc-upload-by">Uploaded by Mr. Product Owner</div>
+      <div class="doc-upload-time">4 days ago</div>
+      <div class="doc-upload-date">18/10/12</div>
+      <div class="doc-upload-dl-icons"><a href="#"><img src="/public/images/codeArmy/po/documents/share-icon.png" /></a></div>
+    </div>
+    
+    <div class="submit-doc-buttons">
+    <input type="submit" value="Post a link" class="lnkimg" />
+    <input type="submit" value="Upload a document" class="lnkimg" />
+    </div>
+    
   </div>
 </div>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>

@@ -193,6 +193,7 @@
       </div>
   </div>
 </div>
+</div>
 <script type="text/javascript">
 $(function(){
 	var pusher = new Pusher('228ac2292c03f22869d1'); // Replace with your app key
