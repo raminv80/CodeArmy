@@ -213,7 +213,7 @@ class Work_model extends CI_Model {
 	}
 	
 	function get_owner_works($user_id){
-		$sql = "SELECT * from works WHERE owner=? OR creator=? and status!='Signoff'";
+		$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE owner=? OR creator=? and status!='Signoff'";
 		$res = $this->db->query($sql, array($user_id,$user_id));
 		return $res->result_array();
 	}
@@ -313,5 +313,40 @@ class Work_model extends CI_Model {
 	function get_mission_task($work_id){
 		$sql = "SELECT mission_task.*, users.username FROM mission_task INNER JOIN users ON mission_task.work_horse = users.user_id WHERE mission_task.work_id = ?";
 		return $this->db->query($sql,$work_id);
+	}
+	
+	function get_bids($work_id){
+		$sql = "SELECT bids.*, username, exp FROM bids,users WHERE users.user_id=bids.user_id AND bids.work_id=? ORDER BY bid_status ASC, bid_id DESC";
+		return $this->db->query($sql, array($work_id))->result_array();
+	}
+	
+	function accept_bid($bid_id){
+		$res = $this->db->get_where('bids',array('bid_id'=>$bid_id))->result_array();
+		$work = $this->get_work($res[0]['work_id'])->result_array();
+		$bid = $res[0];
+		$work = $work[0];
+		$po = $this->session->userdata('user_id');
+		if($po==$work['owner']){
+			//update works
+			$sql = "UPDATE works SET status='assigned', work_horse=?, assigned_at=?, cost=? WHERE work_id=?";
+			$this->db->query($sql,array($bid['user_id'],time(),$bid['bid_cost'],$bid['work_id']));
+			//update bid
+			$sql = "UPDATE bids SET bid_status='Accepted' WHERE bid_id=?";
+			$this->db->query($sql,array($bid_id));
+			return true;
+		}else return false;
+	}
+	
+	function remove_bid($bid_id, $user_id){
+		$res = $this->db->get_where('bids',array('bid_id'=>$bid_id))->result_array();
+		$work = $this->get_work($res[0]['work_id'])->result_array();
+		$bid = $res[0];
+		$work = $work[0];
+		$po = $this->session->userdata('user_id');
+		if($po==$work['owner']){
+			$sql = "DELETE FROM bids WHERE bid_id=?";
+			$this->db->query($sql,$bid_id);
+			return true;
+		}else return false;
 	}
 }

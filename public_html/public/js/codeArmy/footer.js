@@ -14,6 +14,10 @@ $(function() {
 	 $(".datepicker").val("yyyy-mm-dd");
 	 $(".datepicker").css({color:'#666'});
 	 $(".datepicker").focus(function(){$(this).css({color:'#999'}).val('').mask("9999-99-99",{placeholder:" "});});
+	 $('.fancybox').fancybox({
+				type:'iframe',
+				scrolling: 'no'
+			});
 });
 
 //chat

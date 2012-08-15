@@ -643,6 +643,13 @@ class Missions extends CI_Controller {
 		$this->load->view('completed_codearmy_view', $this->view_data);
 	}
 	
+	//Applicants Page
+	function applicants(){
+		$user_id = $this->view_data['me']['user_id'];
+		$this->view_data['window_title'] = "Applicants";
+		$this->load->view('applicants_codearmy_view', $this->view_data);
+	}
+	
 	function wall($work_id){
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		if(count($this->view_data['work'])!=1)die('This job is not assigned through bidding process.');
@@ -688,6 +695,16 @@ class Missions extends CI_Controller {
 		$this->view_data['window_title'] = "Date";
 		$this->load->view('date_codearmy_view', $this->view_data);
 		
+	}
+	
+	function applicants_temp($work_id){
+		$userid = $this->session->userdata('user_id');
+		$work = $this->work_model->get_work($work_id)->result_array();
+		$this->view_data['arrangement'] = $this->work_model->get_work_arrangement($work_id);
+		$this->view_data['work'] = $work[0];
+		$this->view_data['bids'] = $this->work_model->get_bids($work_id);
+		$this->view_data['window_title'] = "Applicants for job ".$work[0]['title'];
+		$this->load->view('applicants_temp_codearmy_view',$this->view_data);
 	}
 	
 	function getSkills(){
@@ -781,6 +798,15 @@ class Missions extends CI_Controller {
 		die('error');
 	}
 	
+	function Ajax_accept_bid(){
+		$bid_id = $this->input->post('bid_id');
+		$user_id = $this->session->userdata('user_id');
+		if($this->work_model->accept_bid($bid_id)){
+			die('success');
+		}else die('error');
+	}
+	
+	
 	function Ajax_cancel_bid(){
 		$user_id = $this->session->userdata('user_id');
 		$bid_id = $this->input->post('bid_id');
@@ -803,5 +829,19 @@ class Missions extends CI_Controller {
 		} else {
 			echo "error";
 		}
+	}
+	
+	function Ajax_remove_bid(){
+		$user_id = $this->session->userdata('user_id');
+		$bid_id = $this->input->post('bid_id');
+		if($this->work_model->remove_bid($bid_id, $user_id)) echo "success";
+		else echo "error removing bid ".$bid_id;
+	}
+	
+	function Ajax_reject_bid(){
+		$user_id = $this->session->userdata('user_id');
+		$bid_id = $this->input->post('bid_id');
+		if($this->work_model->remove_bid($bid_id, $user_id)) echo "success";
+		else echo "error removing bid ".$bid_id;
 	}
 }

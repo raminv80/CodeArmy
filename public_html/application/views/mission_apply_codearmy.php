@@ -28,7 +28,7 @@
             <input name="time" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
           </div>
           <div class="botharrows"><a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a></div>
-          <div class="bidhrstext"><?=ucfirst(substr($arranegement,0,-2))?>s</div>
+          <div class="bidhrstext"><?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s</div>
           <!--
           <div class="small-box-hr">
             <input type="text" value="4" />
@@ -43,7 +43,7 @@
             <input name="budget" type="text" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
           </div>
           <div class="botharrows"><a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a></div>
-          <div class="bidhrstext">/<?=substr($arranegement,0,-2)?></div>
+          <div class="bidhrstext">/<?=str_replace('dai','day',substr($arranegement,0,-2))?></div>
         </div>
         <div class="fmcb-right-textarea">
           <textarea id="ask" name="desc" rows="3">Ask a question or place your comment</textarea>

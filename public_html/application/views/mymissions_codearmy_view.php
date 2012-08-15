@@ -152,9 +152,8 @@
     	<div class="block-header">
         	<h3>My Missions</h3>
         </div>
-        <ul><a href="/missions/create" class="fancybox ui-icon-plus">Create a new mission</a>.</ul>
         <div class="list">
-        	<?php /*foreach($myWorkList as $list):?>
+        	<?php foreach($myWorkList as $list):?>
             <div class="item gray-mission">
             	<?php
 					//calc remaining time
@@ -202,7 +201,7 @@
                     </div>
                 </div>
             </div>
-            <?php endforeach;*/?>
+            <?php endforeach;?>
             
             <?php foreach($myMissions as $list):?>
             <div class="item green-mission">
@@ -238,10 +237,24 @@
                 </div>
                 <div class="mission-content">
                 	<ul class="mission-icons">
+                    	<?php if($po){?>
+                        	<?php if(in_array($list['status'],array('open','reject'))){?>
+                         <li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
+                        <li><a href="/missions/applicants_temp/<?=$list['work_id']?>"><span class="icon"></span><span class="title"><?=$list['bids']?> Bidders</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                            <?php }else{?>
+                        <li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">1 Trooper</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                        	<?php }?>
+                        <?php }else{?>
                 		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">1 Trooper</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                        <?php }?>
                     </ul>
                     <div class="mission-time">
                     	<span class="time-left">Time left</span>
@@ -266,10 +279,6 @@
 <script>
 	$(function(){
 		mins = 0; setInterval("updateTimer()",1000*60);
-		$('.fancybox').fancybox({
-				type:'iframe',
-				scrolling: 'no'
-			});
 	});
 	function updateTimer(){
 		mins++;
