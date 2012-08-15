@@ -432,6 +432,20 @@ CREATE TABLE `work_skill` (
   KEY `skill_id` (`skill_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=88 ;
 
+CREATE TABLE `mission_task` (
+  `task_id` int(11) NOT NULL AUTO_INCREMENT,
+  `work_id` varchar(32) NOT NULL,
+  `user_id` varchar(48) NOT NULL,
+  `task_name` varchar(255) NOT NULL,
+  `task_priority` enum('Low','Normal','High','') NOT NULL DEFAULT 'Normal',
+  `task_deadline` date DEFAULT NULL,
+  `task_hours` int(11) DEFAULT '0',
+  `task_percentage` int(11) DEFAULT '0',
+  `task_status` enum('To Do','Working','Done','') NOT NULL DEFAULT 'To Do',
+  PRIMARY KEY (`task_id`),
+  KEY `work_id` (`work_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 ALTER TABLE `achievement_set`
   ADD CONSTRAINT `achievement_set_ibfk_1` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`achievement_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -503,3 +517,7 @@ ALTER TABLE `work_files`
 ALTER TABLE `work_skill`
   ADD CONSTRAINT `work_skill_ibfk_3` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `work_skill_ibfk_4` FOREIGN KEY (`skill_id`) REFERENCES `skill` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `mission_task`
+  ADD CONSTRAINT `mission_task_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mission_task_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;

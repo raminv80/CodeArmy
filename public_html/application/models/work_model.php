@@ -311,8 +311,9 @@ class Work_model extends CI_Model {
 	}
 	
 	function get_mission_task($work_id){
-		$sql = "SELECT mission_task.*, users.username FROM mission_task INNER JOIN users ON mission_task.work_horse = users.user_id WHERE mission_task.work_id = ?";
-		return $this->db->query($sql,$work_id);
+		$sql = "SELECT * FROM mission_task WHERE mission_task.work_id = ?";
+		$res = $this->db->query($sql,$work_id);
+		return $res;
 	}
 	
 	function get_bids($work_id){

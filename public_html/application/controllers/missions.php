@@ -844,4 +844,46 @@ class Missions extends CI_Controller {
 		if($this->work_model->remove_bid($bid_id, $user_id)) echo "success";
 		else echo "error removing bid ".$bid_id;
 	}
+	
+	function Ajax_update_task_priority(){
+		$task_id = $this->input->post('task_id');
+		$task_priority = $this->input->post('task_priority');
+		$res = array("task_priority" => $task_priority);
+		$where = array("task_id" => $task_id);
+		$this->db->update('mission_task', $res, $where);
+	}
+	
+	function Ajax_update_task_hours(){
+		$task_id = $this->input->post('task_id');
+		$task_hours = $this->input->post('task_hours');
+		$res = array("task_hours" => $task_hours);
+		$where = array("task_id" => $task_id);
+		$this->db->update('mission_task', $res, $where);
+	}
+	
+	function Ajax_update_task_percent(){
+		$task_id = $this->input->post('task_id');
+		$task_percent = $this->input->post('task_percent');
+		$res = array("task_percentage" => $task_percent);
+		$where = array("task_id" => $task_id);
+		$this->db->update('mission_task', $res, $where);
+	}
+	
+	function Ajax_update_task_status(){
+		$task_id = $this->input->post('task_id');
+		$task_status = $this->input->post('task_status');
+		$res = array("task_status" => $task_status);
+		$where = array("task_id" => $task_id);
+		$this->db->update('mission_task', $res, $where);
+	}
+	
+	function Ajax_delete_task(){
+		$task_id = $this->input->post('task_id');
+		$where = array("task_id" => $task_id);
+		if($this->db->delete('mission_task', $where)){
+			echo $task_id;
+		} else {
+			echo "error";
+		}
+	}
 }
