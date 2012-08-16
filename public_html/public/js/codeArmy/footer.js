@@ -18,6 +18,26 @@ $(function() {
 				type:'iframe',
 				scrolling: 'no'
 			});
+	 var pusher = new Pusher('deb0d323940b00c093ee'); // Replace with your app key
+	 var bid_channel = pusher.subscribe('bid');
+	 bid_channel.bind_all(function(evnt,data) {
+		  console.log(evnt,data);
+		  if(evnt.indexOf('accept-bid')>-1){
+			$( "#dialog-accept" ).dialog({
+				resizable: false,
+				modal: true,
+				width: 500,
+				buttons: {
+					"Not Now": function() {
+						$( this ).dialog( "close" );
+					},
+					"Proceed": function(){
+						window.location='/missions/my_missions';
+					}
+				}
+			});
+		  }
+		});
 });
 
 //chat

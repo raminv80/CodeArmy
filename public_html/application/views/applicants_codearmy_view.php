@@ -116,7 +116,7 @@ $(function(){
 					console.log(pressed_button);
 					var bid_id = selectedBid.attr('id').split('-')[1];
 					$.ajax({
-						'url': '/missions/Ajax_accept_bid',
+						'url': '/missions/Ajax_approve_bid',
 						'type': 'post',
 						'data': {'csrf_workpad': getCookie('csrf_workpad'), 'bid_id': bid_id},
 						'success': function(msg){

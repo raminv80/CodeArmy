@@ -296,25 +296,6 @@
 		  console.log(data);
 		  checkMarker(data.lat,data.lng,1);
 		});
-		var bid_channel = pusher.subscribe('bid');
-		bid_channel.bind_all(function(evnt,data) {
-		  console.log(evnt,data);
-		  if(evnt.indexOf('accept-bid')>-1){
-			$( "#dialog-accept" ).dialog({
-				resizable: false,
-				modal: true,
-				width: 430,
-				buttons: {
-					"Not Now": function() {
-						$( this ).dialog( "close" );
-					},
-					"Proceed": function(){
-						window.location='/missions/my_missions';
-					}
-				}
-			});
-		  }
-		});
 	});
 	
 	function renderMarkers(){

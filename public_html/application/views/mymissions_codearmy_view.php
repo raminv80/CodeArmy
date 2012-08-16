@@ -410,20 +410,6 @@
 		  }else if(evnt.indexOf('cancel-bid')>-1){
 			  var el=$('#mission-'+data.work_id).find('.bidders-'+data.work_id);
 			  el.html(Math.max(0,--parseInt(el.html())));
-		  }else if(evnt.indexOf('accept-bid')>-1){
-			$( "#dialog-accept" ).dialog({
-				resizable: false,
-				modal: true,
-				width: 430,
-				buttons: {
-					"Not Now": function() {
-						$( this ).dialog( "close" );
-					},
-					"Proceed": function(){
-						window.location='/missions/my_missions';
-					}
-				}
-			});
 		  }
 		});
 
