@@ -1,4 +1,5 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
+<div class="invite-page-container">
 <style>
 h3 {
 	font-size:18px;
@@ -65,5 +66,5 @@ Join me and be at the top of your game.
 </div>
 
 </form>
-
+</div>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>
