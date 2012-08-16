@@ -83,52 +83,33 @@
       </div>
     </div>
   </div>
-  <div class="documents-bottom-panel">
-    <!--<div class="docs-table-title">PHP Awesome Fix</div>
-    <div class="docs-table-row">
-      <div class="doc-number">1.</div>
-      <div class="doc-name">Database fix.doc</div>
-      <div class="doc-upload-by">Uploaded by Mr. Product Owner</div>
-      <div class="doc-upload-time">Latest</div>
-      <div class="doc-upload-date">27/10/12</div>
-      <div class="doc-upload-dl-icons"><a href="#"><img src="/public/images/codeArmy/po/documents/download-icon.png" /></a></div>
-    </div>
-    <div class="docs-table-row">
-      <div class="doc-number">2.</div>
-      <div class="doc-name">Planning.xls</div>
-      <div class="doc-upload-by">Uploaded by Mr. Product Owner</div>
-      <div class="doc-upload-time">2 days ago</div>
-      <div class="doc-upload-date">25/10/12</div>
-      <div class="doc-upload-dl-icons"><a href="#"><img src="/public/images/codeArmy/po/documents/download-icon.png" /></a></div>
-    </div>-->
-    
+  <div class="documents-bottom-panel">    
     <?php
 	$i = 1;
-    foreach($preview_files as $files):
+    foreach($docList as $files):
+		if(isset($files['link_id'])) {
+	?>
+    <div class="docs-table-row">
+      <div class="doc-number"><?=$i?>.</div>
+      <div class="doc-name"><a href="<?=$files['link']?>" target="_blank"><img src="/public/images/codeArmy/po/documents/share-icon.png" align="absmiddle" style="vertical-align:middle !important" border="0" /> <?=(strlen($files['link']) > 45) ? substr($files['link'],0,42).'...' : $files['link']?></a></div>
+      <div class="doc-upload-by">Uploaded by <?=$files['username']?></div>
+      <div class="doc-upload-time"><!--4 days ago-->&nbsp;</div>
+      <div class="doc-upload-date"><?=date('j/m/Y',strtotime($files['upload_at']))?></div>
+      <div class="doc-upload-dl-icons" id="<?=$files['link_id']?>"><a href="javascript:;"><img src="/public/images/codeArmy/messages/bin.png" border="0" id="delUploadLink" /></a></div>
+    </div>
+    <?php
+		} else {
 	?>
     <div class="docs-table-row">
       <div class="doc-number"><?=$i?>.</div>
       <div class="doc-name"><a href="/public/uploads/<?=$files['file_name']?>" target="_blank"><img src="/public/images/codeArmy/po/documents/download-icon.png" align="absmiddle" style="vertical-align:middle !important" border="0" /> <?=$files['file_name']?></a></div>
       <div class="doc-upload-by">&nbsp;</div>
-      <div class="doc-upload-time">4 days ago</div>
+      <div class="doc-upload-time">&nbsp;</div>
       <div class="doc-upload-date"><?=date('j/m/Y',strtotime($files['created_at']))?></div>
       <div class="doc-upload-dl-icons" id="<?=$files['file_id']?>"><a href="javascript:;"><img src="/public/images/codeArmy/messages/bin.png" border="0" id="delUploadFile" /></a></div>
     </div>
     <?php
-		$i++;
-	endforeach;
-	
-    foreach($preview_links as $links):
-	?>
-    <div class="docs-table-row">
-      <div class="doc-number"><?=$i?>.</div>
-      <div class="doc-name"><a href="<?=$links['link']?>" target="_blank"><img src="/public/images/codeArmy/po/documents/share-icon.png" align="absmiddle" style="vertical-align:middle !important" border="0" /> <?=$links['link']?></a></div>
-      <div class="doc-upload-by">Uploaded by <?=$links['username']?></div>
-      <div class="doc-upload-time">4 days ago</div>
-      <div class="doc-upload-date"><?=date('j/m/Y',strtotime($links['upload_at']))?></div>
-      <div class="doc-upload-dl-icons" id="<?=$links['link_id']?>"><a href="javascript:;"><img src="/public/images/codeArmy/messages/bin.png" border="0" id="delUploadLink" /></a></div>
-    </div>
-    <?php
+		}
 		$i++;
 	endforeach;
 	?>

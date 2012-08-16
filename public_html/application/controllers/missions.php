@@ -704,10 +704,8 @@ class Missions extends CI_Controller {
 		$this->view_data['work'] = $this->view_data['work'][0];
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
-		$preview_files = $this->work_model->previewFiles($work_id);
-		$this->view_data['preview_files'] = $preview_files;
-		$preview_links = $this->work_model->previewLinks($work_id);
-		$this->view_data['preview_links'] = $preview_links;
+		$docList = $this->work_model->getDocList($work_id);
+		$this->view_data['docList'] = $docList;
 		$this->view_data['window_title'] = "Documents";
 		$this->load->view('documents_codearmy_view', $this->view_data);
 		
