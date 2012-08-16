@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/jquery.fancybox.css?v=2.0.6" type="text/css" media="screen" />
 <link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.2" type="text/css" media="screen" />
 <link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=2.0.6" type="text/css" media="screen" />
+<link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/jquery.fancybox.css?v=2.0.6" type="text/css" media="screen" />
+<link rel="stylesheet" href="/public/pictogram/css/font-awesome.css">
 
 <link href="/public/css/CodeArmyV1/style.css" media="all" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/public/js/jquery-1.7.min.js"></script>
@@ -32,6 +34,8 @@
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=2.0.6"></script>
 <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/header.js"></script>
+<script type="text/javascript" src="/public/js/codeArmy/qtips.js"></script>
+
 <title><?=$window_title?></title>
 </head>
 

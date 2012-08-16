@@ -157,8 +157,50 @@
         	<h3>My Missions</h3>
         </div>
         <div class="list">
-        	<?php foreach($myWorkList as $list):?>
-            <div class="item gray-mission">
+        	<?php foreach($myPendingList as $list):?>
+            <div class="item gray-mission" id="mission-<?=$list['work_id']?>">
+            	<div class="mission-header">
+                	<div class="mission-title"><?=$list['title']?></div>
+                    <div class="mission-status-icon"><img src="/public/images/codeArmy/mymission/thumb-up.png" alt="thumb up" /></div>
+                    <div class="mission-progress-bg">
+                    	<div class="mission-progress-meter" style="width:0px"></div>
+                        <input type="hidden" name="percent" value="0" />
+                        <input type="hidden" name="min_to_percent" value="0" />
+                    </div>
+                    <?php
+						$proposal = $this->work_model->get_approved_bid($me['user_id'],$list['work_id']);
+						$proposal = $proposal[0];
+						$arrangement = $this->work_model->get_work_arrangement($list['work_id']);
+						$arrangement = str_replace('dai','day',substr($arrangement,0,-2)).'s';
+						$troopers = $this->work_model->get_num_troopers($list['work_id']);
+					?>
+                    <div class="mission-inputs">Proposed Timeline: <?=$proposal['bid_time'].' '.$arrangement?></div>
+                    <div class="mission-deliverables">Proposed Reward: <?=$proposal['bid_cost'].'$/'.$arrangement?></div>
+                </div>
+                <div class="mission-content">
+                	<ul class="mission-icons">
+                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
+                        <li><a href="#" title="You are competing over <?=$troopers?> trooper(s) over this job!"><span class="icon"></span><span class="title"><?=$troopers?> Troop(s)</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                    </ul>
+                    <div class="mission-time">
+                    	<span class="time-left">Time left</span>
+                        <div class="timer">
+                        <span class="time"></span>
+                        <span class="hrs">hrs</span>
+                        </div>
+                        <!-- Accept -->
+                        <a href="javascript:void(0)" style="right:7px" class="accept blue-button">Accept</a>
+                        <!-- Reject -->
+                        <a href="javascript:void(0);" style="right:126px" class="reject blue-button">Reject</a>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach;?>
+			
+			<?php foreach($myWorkList as $list):?>
+            <div class="item gray-mission" id="mission-<?=$list['work_id']?>">
             	<?php
 					//calc remaining time
 					$remaining_time = strtotime($list['deadline'])-time();
@@ -184,13 +226,20 @@
                         <input type="hidden" name="percent" value="<?=$progress_percent?>" />
                         <input type="hidden" name="min_to_percent" value="<?=$min_to_percent?>" />
                     </div>
-                    <div class="mission-inputs">Inputs: <?=trim($list['input'])==''?'not defined':$list['input']?></div>
-                    <div class="mission-deliverables">Deliverables: <?=trim($list['output'])==''?'not defined':$list['output']?></div>
+                    <?php
+						$proposal = $this->work_model->get_approved_bid($me['user_id'],$list['work_id']);
+						$proposal = $proposal[0];
+						$arrangement = $this->work_model->get_work_arrangement($list['work_id']);
+						$arrangement = str_replace('dai','day',substr($arrangement,0,-2)).'s';
+						$troopers = $this->work_model->get_num_troopers($list['work_id']);
+					?>
+                    <div class="mission-inputs">Proposed Timeline: <?=$proposal['bid_time'].' '.$arrangement?></div>
+                    <div class="mission-deliverables">Proposed Reward: <?=$proposal['bid_cost'].'$/'.$arrangement?></div>
                 </div>
                 <div class="mission-content">
                 	<ul class="mission-icons">
                 		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">1 Trooper</span></a></li>
+                        <li><a href="#" title="You are competing over <?=$troopers?> trooper(s) over this job!"><span class="icon"></span><span class="title"><?=$troopers?>Troops</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
                     </ul>
@@ -200,15 +249,16 @@
                         <span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>
                         <span class="hrs">hrs</span>
                         </div>
-                        
+                        <?php if(in_array(strtolower($list['status']),array('in progress','done','redo','signoff','verify'))){?>
                         <a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>
+                        <?php }?>
                     </div>
                 </div>
             </div>
             <?php endforeach;?>
             
             <?php foreach($myMissions as $list):?>
-            <div class="item green-mission">
+            <div class="item green-mission" id="mission-<?=$list['work_id']?>">
             	<?php
 					//calc remaining time
 					$remaining_time = strtotime($list['deadline'])-time();
@@ -242,7 +292,6 @@
                 <div class="mission-content">
                 	<ul class="mission-icons">
                     	<?php if($po){?>
-                        	<?php if(in_array($list['status'],array('open','reject'))){?>
                          <li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
                         <li><a href="/missions/applicants/<?=$list['work_id']?>"><span class="icon"></span><span class="title "><span class="bidders-<?=$list['work_id']?>"><?=$list['bids']?></span> Bidders</span></a></li>
                         <script type="text/javascript">
@@ -254,12 +303,6 @@
 						</script>
                         <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
-                            <?php }else{?>
-                        <li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">1 Trooper</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
-                        	<?php }?>
                         <?php }else{?>
                 		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">1 Trooper</span></a></li>
@@ -273,9 +316,9 @@
                         <span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>
                         <span class="hrs">hrs</span>
                         </div>
-                        <?php if($po && $list['status']=='draft'){?>
+                        <?php if($po && strtolower($list['status'])=='draft'){?>
                         	<a class="fancybox blue-button" href="/missions/edit_mission/<?=$list['work_id']?>">Edit</a>
-                        <?php }if($po){?>
+                        <?php }if($po){//TODO: if in open, assigned status allow edit but send alert to bidders on change?>
                         	<a class="fancybox blue-button" href="/missions/edit_mission/<?=$list['work_id']?>">Manage</a>
                         <?php }else{?>
                         	<a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>
@@ -287,9 +330,74 @@
         </div>
     </div>
 </div>
+<div id="dialog-confirm" class="dialog" title="Mission Agreement">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Do you agree to accept and deliver this mission?</p>
+</div>
+<div id="dialog-reject" class="dialog" title="Mission rejection">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to reject this mission?</p>
+</div>
 <script>
+	var selectedItem;
 	$(function(){
 		mins = 0; setInterval("updateTimer()",1000*60);
+		$('.accept').click(function(){
+			selectedItem = $(this).parents('.item');
+			var work_id = selectedItem.attr('id').split('-')[1];
+			console.log(work_id);
+			$( "#dialog-confirm" ).dialog({
+				resizable: false,
+				modal: true,
+				width: 430,
+				buttons: {
+					"Disagree": function() {
+						$( this ).dialog( "close" );
+					},
+					"I Agree" : function() {
+						$.fancybox.showLoading();
+						$.ajax({
+							url: '/missions/Ajax_accept_work',
+							type: 'post',
+							data: {'csrf_workpad': getCookie('csrf_workpad'), 'work_id':work_id},
+							success: function(msg){
+								console.log(msg);
+								window.location = '/missions/wall/'+msg;
+								$.fancybox.hideLoading();
+							}
+						});
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
+		$('.reject').click(function(){
+			selectedItem = $(this).parents('.item');
+			var work_id = selectedItem.attr('id').split('-')[1];
+			console.log(work_id);
+			$( "#dialog-reject" ).dialog({
+				resizable: false,
+				modal: true,
+				width: 410,
+				buttons: {
+					cancel: function() {
+						$( this ).dialog( "close" );
+					},
+					"Yes" : function() {
+						$.fancybox.showLoading();
+						$.ajax({
+							url: '/missions/Ajax_reject_work',
+							type: 'post',
+							data: {'csrf_workpad': getCookie('csrf_workpad'), 'work_id':work_id},
+							success: function(msg){
+								console.log(msg);
+								$('#mission-'+msg).slideUp(function(){$(this).remove()});
+								$.fancybox.hideLoading();
+							}
+						});
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 	});
 	function updateTimer(){
 		mins++;

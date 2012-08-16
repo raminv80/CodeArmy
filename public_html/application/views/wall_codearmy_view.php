@@ -245,6 +245,8 @@ $(function(){
 			theme.find('.wall-right-username').attr('href','/profile/show/'+data.username);
 			theme.find('.wall-right-desc').html(data.Desc);
 			theme.find('.wall-right-work-link').html(data.work_title);
+			theme.find('.wall-right-block-row2').html(data.time);
+			console.log(theme.find('.wall-right-block-row2'),data)
 			theme.attr('id','activity-'+data.event_id);
 			$('.wall-right-block-title').after(theme);
 			theme.slideDown();

@@ -5,9 +5,8 @@
   <!-- START - Mission Bid Title Block - Dev. by Reza  -->
   <div id="block-mission-bid-header">
     <div class="block-header">
-      <h3>Mission Bid</h3>
+      <h3>Mission Bids</h3>
     </div>
-    <div id="mission-bid-header-text"> You've placed a bid for </div>
   </div>
   
   <!-- START - Mission Bid Info Blocks - Dev. by Reza  -->
@@ -52,6 +51,13 @@
   </div>
   <?php endforeach;?>
 </div>
+<?php if(in_array($this->session->userdata('role'),array('admin','po'))){?>
+	<ul>
+	<?php foreach($troops as $troop):?>
+		<li><a href="/missions/applicants/<?=$troop['work_id']?>"><?=$troop['num']?> troop(s) applied for mission '<?=$troop['title']?>'</a>.</li>
+	<?php endforeach;?>
+    </ul>
+<?php }?>
 <script type="text/javascript">
 $(function(){
 		$(".fancybox").fancybox({type : 'iframe'});

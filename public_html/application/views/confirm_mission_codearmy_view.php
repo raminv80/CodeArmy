@@ -42,11 +42,16 @@
 	    </div>
 	    <div class="confirm-mission-files">
 	      <div class="confirm-mission-files-title">Files Included</div>
-	      <?php foreach($preview_files as $i=>$files): ?>
-	      <div class="confirm-mission-files-text">
-	        <div class="attach-file-tools"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /> <span class="filename"><?=$files["file_name"]?></span></div>
-	      </div>
-	      <?php endforeach; ?>
+
+	      	<div class="confirm-mission-files-text">
+				
+				<?php foreach($preview_files as $i=>$files): ?>
+
+		        <p class="attach-file-tools"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /> <span class="filename"><?=$files["file_name"]?></span></p>
+
+		      <?php endforeach; ?>
+			  </div>
+
 	    </div>
 	  </div>
 	  <div class="confirm-mission-assign-po">
@@ -63,8 +68,13 @@
 		<p><span class="ui-icon ui-icon-check" style="float:left; margin:0 7px 20px 0;"></span>Your mission is successfully created.</p>
 	</div>
 </div>
-
+<style type="text/css">
+.confirm-mission-files-text {height:150px; width:100%; overflow:auto}
+</style>
 <script type="text/javascript">
+$(function(){
+	$('.confirm-mission-files-text').jScrollPane();
+})
 //by Ramin to open edit page
 $('#edit-mission').click(function(){
 	var mission_id = $('#work_id').val();
