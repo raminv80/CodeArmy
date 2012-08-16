@@ -75,7 +75,9 @@
     <div class="message-header">
         <h4><?=$messages[0]['title']?></h4>
     </div>
-	<?php foreach($messages as $message):?>
+	<?php foreach($messages as $message):
+		$compose_to=$message['username'];
+	?>
 	<div class="message-wrapper">    	
         <div style="padding:10px">
             <div class="message-avatar" title="Click to see sender's profile"><a href="/profile/show/<?=$message['username']?>"><img src="<?=($message["avatar"] != NULL)?'/public/'.$message["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) )?>" width="60" height="60" /></a></div>
@@ -102,6 +104,43 @@
     </div>
     <?php endforeach;?>
   </div>
+  <?php if($compose_to>''){echo form_open('messages/send'); ?>
+    <div id="compose-main-area">
+      <div id="compose-avatar"> </div>
+      <div id="receiver-name">
+        <label>To:</label>
+        &nbsp;
+        <?php if (isset($form_error)){ ?>
+        <input id="msg-to" name="msg-to" value="<?=set_value('msg-to')?>" />
+		<div id="errmsg3"><?=form_error("msg-to")?></div>
+        <?php } else { ?>
+        <input id="msg-to" name="msg-to" value="<?=$compose_to?>" <?=($compose_to>'')?'':'autofocus="autofocus"'?> />
+        <?php } ?>
+      </div>
+      <div id="msg-subject">
+        <label>Subject:</label>
+        &nbsp;
+        <?php if (isset($form_error)){ ?>
+        <input id="msg-subj" name="msg-subj" value="<?=set_value('msg-subj')?>" />
+		<div id="errmsg3"><?=form_error("msg-subj")?></div>
+        <?php } else { ?>
+        <input id="msg-subj" name="msg-subj" <?=($compose_to=='')?'':'autofocus="autofocus"'?> />
+        <?php } ?>
+      </div>
+      <div id="msg-text">
+        <label>Message:</label>
+        <?php if (isset($form_error)){ ?>
+        <textarea rows="7" id="msg-text" name="msg-text"><?=set_value('msg-text')?></textarea>
+		<div id="errmsg3"><?=form_error("msg-text")?></div>
+        <?php } else { ?>
+        <textarea rows="7" id="msg-text" name="msg-text"></textarea>
+        <?php } ?>
+      </div>
+    </div>
+    <input type="hidden" name="parent_id" value="<?=$message['message_id']?>" />
+    <input type="submit" value="Send" class="lnkimg">
+    </form>
+    <?php }?>
 </div>
 <script type="text/javascript">
 	$(function(){
