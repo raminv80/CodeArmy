@@ -85,16 +85,25 @@
       </div>
     </div>
   </div>
+	<div id="toolbar" class="ui-widget-header ui-corner-all" style="padding:3px; vertical-align: middle; white-space:nowrap; overflow: hidden;">
+		<button id="BtnPreviousMonth">Previous Month</button>
+		<button id="BtnNextMonth">Next Month</button>
+		&nbsp;&nbsp;&nbsp;
+		Date: <input type="text" id="dateSelect" size="20"/>
+		&nbsp;&nbsp;&nbsp;
+		<button id="BtnDeleteAll">Delete All</button>
+		<!-- ><button id="BtnICalTest">iCal Test</button>
+		<input type="text" id="iCalSource" size="30" value="extra/fifa-world-cup-2010.ics"/> -->
+	</div>
   <div class="wall-bottom-panel">
   	<div id="mycal"></div>
   </div>
 </div>
-
 <div id="add-event-form" title="Add Events" class="dialog">
 	<form>
 	<fieldset>
-		<label for="Title">Event on <span></span></label>
-		<input type="text" name="what" id="what" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;"/>
+		<label for="Title">Event Details</label>
+		<input type="text" name="eventname" id="eventname" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;"/>
 		<table style="width:100%; padding:5px;">
 			<tr>
 				<td>
@@ -184,13 +193,14 @@
 	</fieldset>
 	</form>
 </div>
-<div id="display-event-form" title="View Agenda Item"></div>
+<div id="display-event-form" title="View Event"></div>
 <style type="text/css">
 	.dialog {font-size:.8em}
 	.dialog input:focus {outline:none; background:#111}
 </style>
 <script type="text/javascript">
 var dates = <?=json_encode($dates)?>;
+
 var clickDate = "";
 var clickAgendaItem = "";
 /**
@@ -212,9 +222,7 @@ var jfcalplugin = $("#mycal").jFrontierCal({
 
 function myDayClickHandler(eventObj){
 	var date = eventObj.data.calDayDate;
-	//alert("You clicked day " + date.toDateString());
 	$('label[for="Title"] span').text(date.toDateString());
-	//console.log(date.toDateString());
 	$('#add-event-form').dialog('open'); 
 };
 
@@ -253,15 +261,7 @@ function initDates(){
 			dates[i].title,
 			new Date(dates[i].start),
 			new Date(dates[i].end),
-			false,
-			{
-				page_work_id: "<?=$work['work_id']?>",
-				work_id: dates[i].work_id,
-			},
-			{
-				backgroundColor: "#FF0000",
-				foregroundColor: "#FFFFFF"
-			}		
+			false	
 		);
 	}
 }
@@ -299,6 +299,48 @@ $("#dateSelect").bind('change', function() {
 });
 
 /**
+ * Initialize previous month button
+ */
+$("#BtnPreviousMonth").button();
+$("#BtnPreviousMonth").click(function() {
+	jfcalplugin.showPreviousMonth("#mycal");
+	// update the jqeury datepicker value
+	var calDate = jfcalplugin.getCurrentDate("#mycal"); // returns Date object
+	var cyear = calDate.getFullYear();
+	// Date month 0-based (0=January)
+	var cmonth = calDate.getMonth();
+	var cday = calDate.getDate();
+	// jquery datepicker month starts at 1 (1=January) so we add 1
+	$("#dateSelect").datepicker("setDate",cyear+"-"+(cmonth+1)+"-"+cday);
+	return false;
+});
+/**
+ * Initialize next month button
+ */
+$("#BtnNextMonth").button();
+$("#BtnNextMonth").click(function() {
+	jfcalplugin.showNextMonth("#mycal");
+	// update the jqeury datepicker value
+	var calDate = jfcalplugin.getCurrentDate("#mycal"); // returns Date object
+	var cyear = calDate.getFullYear();
+	// Date month 0-based (0=January)
+	var cmonth = calDate.getMonth();
+	var cday = calDate.getDate();
+	// jquery datepicker month starts at 1 (1=January) so we add 1
+	$("#dateSelect").datepicker("setDate",cyear+"-"+(cmonth+1)+"-"+cday);		
+	return false;
+});
+
+/**
+ * Initialize delete all agenda items button
+ */
+$("#BtnDeleteAll").button();
+$("#BtnDeleteAll").click(function() {	
+	jfcalplugin.deleteAllAgendaItems("#mycal");	
+	return false;
+});
+
+/**
  * Initialize add event modal form
  */
 $("#add-event-form").dialog({
@@ -309,13 +351,28 @@ $("#add-event-form").dialog({
 	buttons: {
 		'Add Event': function() {
 
-			var what = jQuery.trim($("#what").val());
+			var eventname = jQuery.trim($("#eventname").val());
+			var startDate = $("#startDate").val();
+			var endDate = $("#endDate").val();
 		
-			if(what == ""){
-				alert("Please enter a short event description into the \"what\" field.");
-			}else{
+			if(eventname == ""){
+				//alert("Please enter a short event description into the \"Event Name\" field.");
+				elem = $('#eventname').css('border-color','red')
+				$('#eventname').attr('placeholder','Please enter a short event description into the field');
+				setTimeout(function(){ elem.css('border-color','#555'); },2000);
+				$('#eventname').focus(function(){$(this).attr('placeholder',' ')})
+			}else if (startDate == ""){
+				elem = $('#startDate').css('border-color','red')
+				$('#startDate').attr('placeholder','Pick start date');
+				setTimeout(function(){ elem.css('border-color','#555'); },2000);
+				$('#startDate').focus(function(){$(this).attr('placeholder',' ')})
+			} else if (endDate == ""){
+				elem = $('#endDate').css('border-color','red')
+				$('#endDate').attr('placeholder','Pick end date');
+				setTimeout(function(){ elem.css('border-color','#555'); },2000);
+				$('#endDate').focus(function(){$(this).attr('placeholder',' ')})
+			} else {
 			
-				var startDate = $("#startDate").val();
 				var startDtArray = startDate.split("-");
 				var startYear = startDtArray[0];
 				// jquery datepicker months start at 1 (1=January)		
@@ -339,7 +396,6 @@ $("#add-event-form").dialog({
 					startHour = parseInt(startHour) + 12;
 				}
 
-				var endDate = $("#endDate").val();
 				var endDtArray = endDate.split("-");
 				var endYear = endDtArray[0];
 				// jquery datepicker months start at 1 (1=January)		
@@ -364,8 +420,6 @@ $("#add-event-form").dialog({
 					endHour = parseInt(endHour) + 12;
 				}
 				
-				//alert("Start time: " + startHour + ":" + startMin + " " + startMeridiem + ", End time: " + endHour + ":" + endMin + " " + endMeridiem);
-				
 				// Dates use integers
 				var startDateObj = new Date(parseInt(startYear),parseInt(startMonth)-1,parseInt(startDay),startHour,startMin,0,0);
 				var endDateObj = new Date(parseInt(endYear),parseInt(endMonth)-1,parseInt(endDay),endHour,endMin,0,0);
@@ -375,22 +429,28 @@ $("#add-event-form").dialog({
 				// add new event to the calendar
 				jfcalplugin.addAgendaItem(
 					"#mycal",
-					what,
+					eventname,
 					startDateObj,
 					endDateObj,
 					false
-					/*{
-						fname: "Santa",
-						lname: "Claus",
-						leadReindeer: "Rudolph",
-						myDate: new Date(),
-						myNum: 42
-					},
-					{
-						backgroundColor: $("#colorBackground").val(),
-						foregroundColor: $("#colorForeground").val()
-					}*/
 				);
+				
+				/* Ajax start here
+				$.ajax({
+					type: 'post',
+					async: false,
+					url: '/missions/check_create_mission',
+					data: { 'xxx': yyy },
+					success: function(msg){
+						console.log(msg)
+						if(msg!="" && msg!='error'){
+							console.log(msg); parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
+						} else {
+							alert("Error");
+						}
+						$('#reg-ajax').hide();
+					}
+				}); */
 
 				$(this).dialog('close');
 
@@ -423,43 +483,7 @@ $("#add-event-form").dialog({
 		// initialize with the date that was clicked
 		$("#startDate").val(clickDate);
 		$("#endDate").val(clickDate);
-		// initialize color pickers
-		/* $("#colorSelectorBackground").ColorPicker({
-			color: "#333333",
-			onShow: function (colpkr) {
-				$(colpkr).css("z-index","10000");
-				$(colpkr).fadeIn(500);
-				return false;
-			},
-			onHide: function (colpkr) {
-				$(colpkr).fadeOut(500);
-				return false;
-			},
-			onChange: function (hsb, hex, rgb) {
-				$("#colorSelectorBackground div").css("backgroundColor", "#" + hex);
-				$("#colorBackground").val("#" + hex);
-			}
-		});
-		//$("#colorBackground").val("#1040b0");		
-		$("#colorSelectorForeground").ColorPicker({
-			color: "#ffffff",
-			onShow: function (colpkr) {
-				$(colpkr).css("z-index","10000");
-				$(colpkr).fadeIn(500);
-				return false;
-			},
-			onHide: function (colpkr) {
-				$(colpkr).fadeOut(500);
-				return false;
-			},
-			onChange: function (hsb, hex, rgb) {
-				$("#colorSelectorForeground div").css("backgroundColor", "#" + hex);
-				$("#colorForeground").val("#" + hex);
-			}
-		}); */
-		//$("#colorForeground").val("#ffffff");				
-		// put focus on first form input element
-		$("#what").focus();
+		$("#eventname").focus();
 	},
 	close: function() {
 		// reset form elements when we close so they are fresh when the dialog is opened again.
@@ -473,7 +497,7 @@ $("#add-event-form").dialog({
 		$("#endHour option:eq(0)").attr("selected", "selected");
 		$("#endMin option:eq(0)").attr("selected", "selected");
 		$("#endMeridiem option:eq(0)").attr("selected", "selected");			
-		$("#what").val("");
+		$("#eventname").val("");
 		//$("#colorBackground").val("#1040b0");
 		//$("#colorForeground").val("#ffffff");
 	}
@@ -484,7 +508,7 @@ $("#add-event-form").dialog({
  */
 $("#display-event-form").dialog({
 	autoOpen: false,
-	height: 250,
+	height: 400,
 	width: 400,
 	modal: true,
 	buttons: {		
@@ -522,7 +546,7 @@ $("#display-event-form").dialog({
 				);				
 			}else{
 				$("#display-event-form").append(
-					"<b>Starts:</b> " + startDate + "<br>" +
+					"<b>Starts:</b> " + startDate + "<br><br />" +
 					"<b>Ends:</b> " + endDate + "<br><br>"				
 				);				
 			}
@@ -555,7 +579,7 @@ function myApplyTooltip(divElm,agendaItem){
 	if(allDay){
 		displayData += "(All day event)<br />";
 	}else{
-		displayData += "<b>Starts:</b> " + startDate + "<br>" + "<b>Ends:</b> " + endDate + "<br><br>";
+		displayData += "<b>Starts:</b> " + startDate + "<br><br />" + "<b>Ends:</b> " + endDate + "<br><br>";
 	}
 	/*for (var propertyName in data) {
 		displayData += "<b>" + propertyName + ":</b> " + data[propertyName] + "<br>"
