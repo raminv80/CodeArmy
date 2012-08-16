@@ -129,6 +129,19 @@ class Work_model extends CI_Model {
 		return $res->result_array();
 	}
 	
+	function getDocList($work_id){
+		$sql = "SELECT * FROM work_files WHERE work_id = ?";
+		$res = $this->db->query($sql, $work_id);
+		$data1 = $res->result_array();
+		
+		$sql = "SELECT work_links.*, users.username as username FROM work_links INNER JOIN users ON users.user_id = work_links.upload_by WHERE work_id = ?";
+		$res = $this->db->query($sql, $work_id);
+		$data2 = $res->result_array();
+		
+		$data = array_merge($data1,$data2);
+		return $data;
+	}
+	
 	function setBid($work_id,$user_id,$budget,$time,$desc){
 		//remove my previous bids only if its not approved
 		$sql = "DELETE FROM bids WHERE work_id=? AND user_id=? AND bid_status<>'Accepted'";
