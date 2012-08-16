@@ -1664,6 +1664,10 @@ input.assinpo {
 	margin:0 10px;
 }
 
+/* Invite page */
+.invite-page-container textarea {
+	resize:none;
+}
 /* Confirm Mission Page By Reza@RezaKabiri.com */
 
 .confirm-mission-project-name, .confirm-mission-assign-po {

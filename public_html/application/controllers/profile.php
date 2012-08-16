@@ -196,15 +196,15 @@ class Profile extends CI_Controller {
 		} else {
 			$this->users_model->update_email($user_id);
 			
-			$this->form_validation->set_rules('country', 'Country', 'required');
+			$this->form_validation->set_rules('country', 'Country');
 			$this->form_validation->set_rules('status-msg', 'max_length[255]');
-			$this->form_validation->set_rules('fullname', 'Fullname', 'required|max_length[60]');
-			$this->form_validation->set_rules('address', 'Address', 'required');
-			$this->form_validation->set_rules('phone', 'Phone', 'required');
-			$this->form_validation->set_rules('birthday', 'Birthday', 'required');
-			$this->form_validation->set_rules('skill1');
-			$this->form_validation->set_rules('skill2');
-			$this->form_validation->set_rules('skill3');
+			$this->form_validation->set_rules('fullname', 'Fullname', 'max_length[60]');
+			$this->form_validation->set_rules('address', 'Address');
+			$this->form_validation->set_rules('phone', 'Phone');
+			$this->form_validation->set_rules('birthday', 'Birthday');
+			$this->form_validation->set_rules('skill1','Your Best Skill','required');
+			$this->form_validation->set_rules('skill2','Second skill','required');
+			$this->form_validation->set_rules('skill3','Third skill','required');
 			$this->form_validation->set_rules('skype');
 			$this->form_validation->set_rules('facebook');
 			$this->form_validation->set_rules('twitter');
@@ -216,14 +216,14 @@ class Profile extends CI_Controller {
 			$this->form_validation->set_rules('extraaddress1');
 			$this->form_validation->set_rules('extra2');
 			$this->form_validation->set_rules('extraaddress2');
-			$this->form_validation->set_rules('paypal-email', 'Paypal Email', 'required|valid_email|max_length[255]');
-			$this->form_validation->set_rules('bank-country', 'Country of Bank', 'required');
-			$this->form_validation->set_rules('bank-name', 'Bank Name', 'required|max_length[40]');
-			$this->form_validation->set_rules('bank-swift', 'SWIFT Code', 'required|max_length[40]');
-			$this->form_validation->set_rules('bank-lastname', 'Last Name', 'required|max_length[255]');
-			$this->form_validation->set_rules('bank-firstname', 'First Name', 'required|max_length[255]');
-			$this->form_validation->set_rules('bank-accountno', 'Account Number', 'required|matches[bank-accountno2]');
-			$this->form_validation->set_rules('bank-accountno2', 'Re-type Account Number', 'required');
+			$this->form_validation->set_rules('paypal-email', 'Paypal Email', 'valid_email|max_length[255]');
+			$this->form_validation->set_rules('bank-country', 'Country of Bank');
+			$this->form_validation->set_rules('bank-name', 'Bank Name', 'max_length[40]');
+			$this->form_validation->set_rules('bank-swift', 'SWIFT Code', 'max_length[40]');
+			$this->form_validation->set_rules('bank-lastname', 'Last Name', 'max_length[255]');
+			$this->form_validation->set_rules('bank-firstname', 'First Name', 'max_length[255]');
+			$this->form_validation->set_rules('bank-accountno', 'Account Number', 'matches[bank-accountno2]');
+			$this->form_validation->set_rules('bank-accountno2', 'Re-type Account Number');
 			
 			if ($this->form_validation->run() == FALSE){
 				$this->view_data['form_error'] = true;
