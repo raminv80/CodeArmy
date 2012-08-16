@@ -365,10 +365,12 @@ $("#add-event-form").dialog({
 				}
 				
 				//alert("Start time: " + startHour + ":" + startMin + " " + startMeridiem + ", End time: " + endHour + ":" + endMin + " " + endMeridiem);
-
+				
 				// Dates use integers
 				var startDateObj = new Date(parseInt(startYear),parseInt(startMonth)-1,parseInt(startDay),startHour,startMin,0,0);
 				var endDateObj = new Date(parseInt(endYear),parseInt(endMonth)-1,parseInt(endDay),endHour,endMin,0,0);
+				
+				console.log(startDateObj, endDateObj);
 
 				// add new event to the calendar
 				jfcalplugin.addAgendaItem(
@@ -376,8 +378,8 @@ $("#add-event-form").dialog({
 					what,
 					startDateObj,
 					endDateObj,
-					false,
-					{
+					false
+					/*{
 						fname: "Santa",
 						lname: "Claus",
 						leadReindeer: "Rudolph",
@@ -387,7 +389,7 @@ $("#add-event-form").dialog({
 					{
 						backgroundColor: $("#colorBackground").val(),
 						foregroundColor: $("#colorForeground").val()
-					}
+					}*/
 				);
 
 				$(this).dialog('close');
@@ -482,7 +484,7 @@ $("#add-event-form").dialog({
  */
 $("#display-event-form").dialog({
 	autoOpen: false,
-	height: 400,
+	height: 250,
 	width: 400,
 	modal: true,
 	buttons: {		
@@ -509,7 +511,7 @@ $("#display-event-form").dialog({
 			var startDate = clickAgendaItem.startDate;
 			var endDate = clickAgendaItem.endDate;
 			var allDay = clickAgendaItem.allDay;
-			var data = clickAgendaItem.data;
+			//var data = clickAgendaItem.data;
 			// in our example add agenda modal form we put some fake data in the agenda data. we can retrieve it here.
 			$("#display-event-form").append(
 				"<br><b>" + title + "</b><br><br>"		
@@ -524,9 +526,9 @@ $("#display-event-form").dialog({
 					"<b>Ends:</b> " + endDate + "<br><br>"				
 				);				
 			}
-			for (var propertyName in data) {
+			/*for (var propertyName in data) {
 				$("#display-event-form").append("<b>" + propertyName + ":</b> " + data[propertyName] + "<br>");
-			}			
+			}*/			
 		}		
 	},
 	close: function() {
@@ -548,16 +550,16 @@ function myApplyTooltip(divElm,agendaItem){
 	var startDate = agendaItem.startDate;
 	var endDate = agendaItem.endDate;
 	var allDay = agendaItem.allDay;
-	var data = agendaItem.data;
+	//var data = agendaItem.data;
 	displayData += "<strong>" + title+ "</strong><br />";
 	if(allDay){
 		displayData += "(All day event)<br />";
 	}else{
 		displayData += "<b>Starts:</b> " + startDate + "<br>" + "<b>Ends:</b> " + endDate + "<br><br>";
 	}
-	for (var propertyName in data) {
+	/*for (var propertyName in data) {
 		displayData += "<b>" + propertyName + ":</b> " + data[propertyName] + "<br>"
-	}
+	}*/
 	// apply tooltip
 	divElm.qtip({
 		content: displayData,
