@@ -180,7 +180,7 @@
       <?php foreach($activities as $activity):?>
       <div class="wall-right-block-row" id="activity-<?=$activity['id']?>">
         <ul>
-          <li><a href="/profile/show/<?=$activity['user_id']?>" class="wall-right-username"><?=$activity['username']==$me['username']?'You':$activity['username']?></a> <?=$activity['Desc']?> on <a href="/missions/wall/<?=$activity['work_id']?>"><?=$activity['title']?></a>.</li>
+          <li><a href="/profile/show/<?=$activity['username']?>" class="wall-right-username"><?=$activity['username']==$me['username']?'You':$activity['username']?></a> <?=$activity['Desc']?> on <a href="/missions/wall/<?=$activity['work_id']?>"><?=$activity['title']?></a>.</li>
         </ul>
         <div class="wall-right-block-row2"><?=date('h:ia, d/m/Y',strtotime($activity['created_at']))?></div>
       </div>
