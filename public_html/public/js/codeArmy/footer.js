@@ -23,6 +23,7 @@ $(function() {
 	 bid_channel.bind_all(function(evnt,data) {
 		  console.log(evnt,data);
 		  if(evnt.indexOf('accept-bid')>-1){
+			if(data.bidder_id==logged_user_id)
 			$( "#dialog-accept" ).dialog({
 				resizable: false,
 				modal: true,

@@ -851,6 +851,7 @@ class Missions extends CI_Controller {
 	
 	function Ajax_approve_bid(){
 		$bid_id = $this->input->post('bid_id');
+		$bid = $this->work_model->get_bid($bid_id);
 		$user_id = $this->session->userdata('user_id');
 		if($this->work_model->approve_bid($bid_id)){
 			//push this event
@@ -859,6 +860,7 @@ class Missions extends CI_Controller {
 			$data = array(
 				'user_id' => $user_id,
 				'username' => $this->view_data['me']['username'],
+				'bidder_id' => $bid[0]['user_id'],
 				'bid_id' => $bid_id,
 			);
 			$bidpusher->trigger('bid', 'accept-bid-'.$bid_id, $data );
