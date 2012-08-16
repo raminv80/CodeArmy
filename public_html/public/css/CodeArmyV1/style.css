@@ -2660,6 +2660,9 @@ input.add-subtask {
 .task-remove-icon {
 	float:right;
 	margin:0 0 0 2px;
+	background: url(/public/images/codeArmy/po/task/task-remove-icon.png) no-repeat right;
+	border:none;
+	width:15px;
 }
 .task-row-priority select, .task-row-status select, .task-row-hours input, .task-row-percent input {
 background: #3e3e3e;

@@ -139,7 +139,7 @@
     <div class="task-row-deadline"> <a href="#" class="datepicker"><img src="/public/images/codeArmy/po/task/task-date-icon.png" /></a></div>
     <div class="task-row-hours"><input type="text" name="task_hours" id="task_hours" value="0" /></div>
     <div class="task-row-percent"><input type="text" name="task_percent" id="task_percent" value="0" maxlength="3" /></div>
-    <div class="task-row-status"><select name="task_status" id="task_status"><option value="To Do">To Do</option><option value="Working">Working</option><option value="Done">Done</option></select><input type="button" style="/public/images/codeArmy/po/task/task-remove-icon.png" class="task-remove-icon" id="task_delete" /><input type="hidden" name="task_id" id="task_id" value="" /></div>
+    <div class="task-row-status"><select name="task_status" id="task_status"><option value="To Do">To Do</option><option value="Working">Working</option><option value="Done">Done</option></select><input type="button" class="task-remove-icon" id="task_delete" /><input type="hidden" name="task_id" id="task_id" value="" /></div>
     </div>
     </form>
     
