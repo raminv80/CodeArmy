@@ -87,7 +87,8 @@ class Messages extends CI_Controller {
 			$to = $to[0]['user_id'];
 			$subject = $this->input->post('msg-subj');
 			$msg = html_purify($this->input->post('msg-text'));
-			$res = $this->message_model->send_message($user_id,$to,$subject,$msg);
+			$parent_id = $this->input->post('parent_id');
+			$res = $this->message_model->send_message($user_id,$to,$subject,$msg,$parent_id);
 			if (!$res){
 				$this->compose();
 			} else {

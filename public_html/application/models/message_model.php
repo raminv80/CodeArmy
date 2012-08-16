@@ -49,12 +49,13 @@ class Message_model extends CI_Model {
 		}
 	}
 	
-	function send_message($user_id,$to,$subject,$msg){
+	function send_message($user_id,$to,$subject,$msg,$parent_id){
 		$doc = array(
 			"from" => $user_id,
 			"to" => $to,
 			"title" => htmlentities($subject),
-			"content" => $msg
+			"content" => $msg,
+			"parent_id" => $parent_id,
 		);
 		$res = $this->db->insert('messages', $doc);
 		return $res;

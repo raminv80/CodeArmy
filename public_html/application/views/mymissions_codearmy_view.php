@@ -318,7 +318,7 @@
                         </div>
                         <?php if($po && strtolower($list['status'])=='draft'){?>
                         	<a class="fancybox blue-button" href="/missions/edit_mission/<?=$list['work_id']?>">Edit</a>
-                        <?php }if($po){//TODO: if in open, assigned status allow edit but send alert to bidders on change?>
+                        <?php }if($po && (strtolower($list['status'])=='open' || strtolower($list['status'])=='assigned')){//TODO: if in open, assigned status allow edit but send alert to bidders on change?>
                         	<a class="fancybox blue-button" href="/missions/edit_mission/<?=$list['work_id']?>">Manage</a>
                         <?php }else{?>
                         	<a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>

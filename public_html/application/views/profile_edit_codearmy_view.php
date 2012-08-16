@@ -244,6 +244,9 @@ $(function() {
           <?php } ?>
           <?php endforeach; ?>
           </select>
+          <?php if (isset($form_error)){ ?>
+          <div id="errmsg2"><?=form_error("skill1")?></div>
+          <?php } ?>
           <?php if (isset($mySkills[0])){ ?>
           <input type="hidden" name="skill1" value="<?=$mySkills[0]["id"]?>" />
           <?php } ?>
@@ -259,6 +262,9 @@ $(function() {
           <?php } ?>
           <?php endforeach; ?>
           </select>
+          <?php if (isset($form_error)){ ?>
+          <div id="errmsg2"><?=form_error("skill2")?></div>
+          <?php } ?>
           <?php if (isset($mySkills[1])){ ?>
           <input type="hidden" name="skill2" value="<?=$mySkills[1]["id"]?>" />
           <?php } ?>
@@ -274,6 +280,9 @@ $(function() {
           <?php } ?>
           <?php endforeach; ?>
           </select>
+          <?php if (isset($form_error)){ ?>
+          <div id="errmsg2"><?=form_error("skill3")?></div>
+          <?php } ?>
           <?php if (isset($mySkills[2])){ ?>
           <input type="hidden" name="skill3" value="<?=$mySkills[2]["id"]?>" />
           <?php } ?>
