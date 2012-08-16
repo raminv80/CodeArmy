@@ -91,6 +91,7 @@ class Missions extends CI_Controller {
 			$work_id = $this->input->post('work_id');
 			$budget = $this->input->post('budget');
 			$desc = html_purify($this->input->post('desc'));
+			$arrangement = $this->work_model->get_work_arrangement($work_id);
 			if(trim($desc)=="Ask a question or place your comment")$desc="";
 			//save the bid in db
 			$this->work_model->setBid($work_id,$user_id,$budget,$time,$desc);
@@ -107,16 +108,19 @@ class Missions extends CI_Controller {
 			
 			//push this event
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
-			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
 			$data = array(
 				'user_id' => $user_id,
 				'user_level' => $this->gamemech->get_level($this->view_data['me']['exp']),
 				'username' => $this->view_data['me']['username'],
 				'work_id' => $work_id,
 				'time' => date('j M Y H:i'),
-				'comment_id' => $bid_id
+				'bid_id' => $bid_id,
+				'bidget' => $budget,
+				'time' => $time,
+				'arrangement' => $arrangement
 			);
-			$pusher->trigger('CA_activities_bid', 'new-bid-'.$work_id, $data );
+			$bidpusher->trigger('bid', 'new-bid-'.$work_id, $data );
 			
 			//was user invited?
 			$res = $this->work_model->invited_to_work($this->view_data['me']['user_id'],$work_id);
@@ -221,6 +225,7 @@ class Missions extends CI_Controller {
 	function create_complete(){
 		$user_id = $this->view_data['me']['user_id'];
 		$work_id = $this->input->post('work_id');
+		$work = $this->work_model->get_work($work_id)->result_array();
 		$res = array(
 			"status" => 'open'
 		);
@@ -235,6 +240,19 @@ class Missions extends CI_Controller {
 				'work_id' => $work_id));
 		$desc = "created";
 		$this->work_model->log_history($user_id,$work_id,$event,$status,$desc);
+		require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+		$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+		$data = array(
+			'event' => 'new',
+			'user_id' => $user_id,
+			'username' => $this->view_data['me']['username'],
+			'work_id' => $work_id,
+			'work_title'=>$work[0]['title'],
+			'lat' => round($work[0]['lat'],$this->percision),
+			'lng' => round($work[0]['lng'],$this->percision),
+			'time' => date('h:ia, d/m/Y'),
+		);
+		$pusher->trigger('map-channel', 'map-new', $data );
 		if($this->db->affected_rows()==1){ echo 'success';}else{echo 'Error: can not complete creation of the mission.';}
 	}
 	
@@ -831,10 +849,19 @@ class Missions extends CI_Controller {
 		die('error');
 	}
 	
-	function Ajax_accept_bid(){
+	function Ajax_approve_bid(){
 		$bid_id = $this->input->post('bid_id');
 		$user_id = $this->session->userdata('user_id');
-		if($this->work_model->accept_bid($bid_id)){
+		if($this->work_model->approve_bid($bid_id)){
+			//push this event
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $this->view_data['me']['username'],
+				'bid_id' => $bid_id,
+			);
+			$bidpusher->trigger('bid', 'accept-bid-'.$bid_id, $data );
 			die($bid_id);
 		}else die('error');
 	}
@@ -843,8 +870,18 @@ class Missions extends CI_Controller {
 	function Ajax_cancel_bid(){
 		$user_id = $this->session->userdata('user_id');
 		$bid_id = $this->input->post('bid_id');
-		if($this->work_model->cancel_my_bid($bid_id, $user_id)) echo "success";
-		else echo "error removing bid ".$bid_id;
+		if($this->work_model->cancel_my_bid($bid_id, $user_id)){
+			//push this event
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $this->view_data['me']['username'],
+				'bid_id' => $bid_id,
+			);
+			$bidpusher->trigger('bid', 'cancel-bid-'.$bid_id, $data );
+			echo "success";	
+		}else echo "error removing bid ".$bid_id;
 	}
 	
 	function Ajax_add_sub_task(){
@@ -881,8 +918,18 @@ class Missions extends CI_Controller {
 	function Ajax_reject_bid(){
 		$user_id = $this->session->userdata('user_id');
 		$bid_id = $this->input->post('bid_id');
-		if($this->work_model->remove_bid($bid_id, $user_id)) echo $bid_id;
-		else echo "error";
+		if($this->work_model->remove_bid($bid_id, $user_id)){
+			//push this event
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $this->view_data['me']['username'],
+				'bid_id' => $bid_id,
+			);
+			$bidpusher->trigger('bid', 'reject-bid-'.$bid_id, $data );
+			echo $bid_id;	
+		}else echo "error";
 	}
 	
 	function Ajax_update_task_priority(){
@@ -1076,6 +1123,15 @@ class Missions extends CI_Controller {
 		$work_id = $this->input->post('work_id');
 		$user_id = $this->session->userdata('user_id');
 		if($this->work_model->accept_work($user_id,$work_id)){
+			//push this event
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $this->view_data['me']['username'],
+				'work_id' => $work_id,
+			);
+			$bidpusher->trigger('mission', 'accept-mission-'.$work_id, $data );
 			echo $work_id;
 		}else die('error');
 	}
@@ -1084,6 +1140,15 @@ class Missions extends CI_Controller {
 		$work_id = $this->input->post('work_id');
 		$user_id = $this->session->userdata('user_id');
 		if($this->work_model->decline_work($user_id,$work_id)){
+			//push this event
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $this->view_data['me']['username'],
+				'work_id' => $work_id,
+			);
+			$bidpusher->trigger('mission', 'decline-mission-'.$work_id, $data );
 			echo $work_id;
 		}else die('error');
 	}

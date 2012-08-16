@@ -145,7 +145,7 @@ $('#confirm-mission').click(function(){
 					//window.top.location.href = 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/<?=$preview['work_id']?>';
 				<?php }?>
 			} else {
-				alert("msg");
+				alert("msg "+msg);
 				console.log(msg);
 			}
 		}

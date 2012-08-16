@@ -352,7 +352,7 @@ class Work_model extends CI_Model {
 		return $this->db->get_where('bids',array('work_id'=>$work_id,'user_id'=>$user_id,'bid_status'=>'Accepted'))->result_array();
 	}
 	
-	function accept_bid($bid_id){
+	function approve_bid($bid_id){
 		$res = $this->db->get_where('bids',array('bid_id'=>$bid_id))->result_array();
 		$work = $this->get_work($res[0]['work_id'])->result_array();
 		$bid = $res[0];
@@ -437,7 +437,7 @@ class Work_model extends CI_Model {
 		$work = $this->get_work($work_id)->result_array();
 		$proposal = $this->work_model->get_approved_bid($user_id,$work_id);
 		$proposal = $proposal[0];
-		$arrangement = $this->work_model->get_work_arrangement($work_id);
+		$arrangement = $this->get_work_arrangement($work_id);
 		$time = $proposal['bid_time'];
 		switch($arrangement):
 			case 'hourly': $time = $time*60*60;
