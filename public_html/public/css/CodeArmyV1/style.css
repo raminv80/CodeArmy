@@ -3168,8 +3168,17 @@ color: #999;
 {
 	margin: 0 -3px 0 0;
 }
-<<<<<<< HEAD
+
+.btn { 
+	cursor:pointer;
+	padding:10px;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+	background:#333 url(ui-darkness/images/ui-bg_gloss-wave_25_333333_500x100.png) 50% 50% repeat-x;
+	color:white; text-shadow:0 1px 1px black;
+	border:1px solid #333;
+}
+.btn:hover {
+	background:#333 url(ui-darkness/images/ui-bg_gloss-wave_25_333333_500x100.png) 50% 70% repeat-x;
+}
+
 /* end hazwan's
-=======
-/* end hazwan's
->>>>>>> origin/master

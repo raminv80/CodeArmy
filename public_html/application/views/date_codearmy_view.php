@@ -99,6 +99,7 @@
   	<div id="mycal"></div>
   </div>
 </div>
+
 <div id="add-event-form" title="Add Events" class="dialog">
 	<form>
 	<fieldset>
@@ -193,10 +194,110 @@
 	</fieldset>
 	</form>
 </div>
-<div id="display-event-form" title="View Event"></div>
+
+<div id="display-event-form" title="View Event">
+	<div class="show-event"></div>
+	<div class="edit-event" style="display:none">
+		<form name="Edit">
+			<fieldset>
+				<label for="Title">Edit event</label>
+				<input type="text" name="eventname" id="eventname" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;"/>
+				<table style="width:100%; padding:5px;">
+					<tr>
+						<td>
+							<label>Start Date</label>
+							<input type="text" name="startDate" id="startDate" value="" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;"/>				
+						</td>
+						<td>&nbsp;</td>
+						<td>
+							<label>Start Hour</label>
+							<select id="startHour" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
+								<option value="12" SELECTED>12</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+							</select>				
+						<td>
+						<td>
+							<label>Start Minute</label>
+							<select id="startMin" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
+								<option value="00" SELECTED>00</option>
+								<option value="10">10</option>
+								<option value="20">20</option>
+								<option value="30">30</option>
+								<option value="40">40</option>
+								<option value="50">50</option>
+							</select>				
+						<td>
+						<td>
+							<label>Start AM/PM</label>
+							<select id="startMeridiem" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
+								<option value="AM" SELECTED>AM</option>
+								<option value="PM">PM</option>
+							</select>				
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>End Date</label>
+							<input type="text" name="endDate" id="endDate" value="" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;"/>				
+						</td>
+						<td>&nbsp;</td>
+						<td>
+							<label>End Hour</label>
+							<select id="endHour" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
+								<option value="12" SELECTED>12</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+							</select>				
+						<td>
+						<td>
+							<label>End Minute</label>
+							<select id="endMin" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
+								<option value="00" SELECTED>00</option>
+								<option value="10">10</option>
+								<option value="20">20</option>
+								<option value="30">30</option>
+								<option value="40">40</option>
+								<option value="50">50</option>
+							</select>				
+						<td>
+						<td>
+							<label>End AM/PM</label>
+							<select id="endMeridiem" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
+								<option value="AM" SELECTED>AM</option>
+								<option value="PM">PM</option>
+							</select>				
+						</td>				
+					</tr>			
+				</table>
+				<button type="submit" class="btn" style="font-size:1.2em; float:right">
+				  <i class="icon-repeat"></i> Update
+				</button>
+			</fieldset>
+		</form>
+	</div>
+</div>
 <style type="text/css">
-	.dialog {font-size:.8em}
-	.dialog input:focus {outline:none; background:#111}
+	.dialog, .edit-event {font-size:.8em}
+	.dialog, input:focus {outline:none; background:#111}
 </style>
 <script type="text/javascript">
 var dates = <?=json_encode($dates)?>;
@@ -355,8 +456,8 @@ $("#add-event-form").dialog({
 			var startDate = $("#startDate").val();
 			var endDate = $("#endDate").val();
 		
+			// Validation
 			if(eventname == ""){
-				//alert("Please enter a short event description into the \"Event Name\" field.");
 				elem = $('#eventname').css('border-color','red')
 				$('#eventname').attr('placeholder','Please enter a short event description into the field');
 				setTimeout(function(){ elem.css('border-color','#555'); },2000);
@@ -424,7 +525,7 @@ $("#add-event-form").dialog({
 				var startDateObj = new Date(parseInt(startYear),parseInt(startMonth)-1,parseInt(startDay),startHour,startMin,0,0);
 				var endDateObj = new Date(parseInt(endYear),parseInt(endMonth)-1,parseInt(endDay),endHour,endMin,0,0);
 				
-				console.log(startDateObj, endDateObj);
+				//console.log(startDateObj, endDateObj);
 
 				// add new event to the calendar
 				jfcalplugin.addAgendaItem(
@@ -516,7 +617,8 @@ $("#display-event-form").dialog({
 			$(this).dialog('close');
 		},
 		'Edit': function() {
-			alert("Create edit dialog box");
+			$('.edit-event').show();
+			$('.show-event').hide();
 		},
 		'Delete': function() {
 			if(confirm("Are you sure you want to delete this agenda item?")){
@@ -529,23 +631,26 @@ $("#display-event-form").dialog({
 		}			
 	},
 	open: function(event, ui){
+		$('.edit-event').hide();
+		$('.show-event').show();
 		if(clickAgendaItem != null){
-			console.log(clickAgendaItem);
+			//console.log(clickAgendaItem);
 			var title = clickAgendaItem.title;
 			var startDate = clickAgendaItem.startDate;
 			var endDate = clickAgendaItem.endDate;
 			var allDay = clickAgendaItem.allDay;
 			//var data = clickAgendaItem.data;
 			// in our example add agenda modal form we put some fake data in the agenda data. we can retrieve it here.
-			$("#display-event-form").append(
-				"<br><b>" + title + "</b><br><br>"		
-			);				
+			
+			$(".show-event").append(
+				"<strong>" + title + "</strong><br><br>"		
+			);			
 			if(allDay){
-				$("#display-event-form").append(
+				$(".show-event").append(
 					"(All day event)<br><br>"				
 				);				
 			}else{
-				$("#display-event-form").append(
+				$(".show-event").append(
 					"<b>Starts:</b> " + startDate + "<br><br />" +
 					"<b>Ends:</b> " + endDate + "<br><br>"				
 				);				
@@ -557,7 +662,7 @@ $("#display-event-form").dialog({
 	},
 	close: function() {
 		// clear agenda data
-		$("#display-event-form").html("");
+		$(".show-event").html("");
 	}
 });
 
