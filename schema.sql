@@ -447,6 +447,17 @@ CREATE TABLE `mission_task` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `work_links` (
+  `link_id` int(11) NOT NULL AUTO_INCREMENT,
+  `link` text NOT NULL,
+  `work_id` varchar(32) NOT NULL,
+  `upload_by` varchar(48) NOT NULL,
+  `upload_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`link_id`),
+  KEY `work_id` (`work_id`),
+  KEY `upload_by` (`upload_by`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 ALTER TABLE `achievement_set`
   ADD CONSTRAINT `achievement_set_ibfk_1` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`achievement_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `achievement_set_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -521,3 +532,7 @@ ALTER TABLE `work_skill`
 ALTER TABLE `mission_task`
   ADD CONSTRAINT `mission_task_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `mission_task_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `work_links`
+  ADD CONSTRAINT `work_links_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `work_links_ibfk_2` FOREIGN KEY (`upload_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;

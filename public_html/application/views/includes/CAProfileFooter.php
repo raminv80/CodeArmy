@@ -34,6 +34,9 @@
     <img src="/public/images/codeArmy/profile/bg.jpg" />
     </div> -->
 </div>
+<div id="dialog-accept" class="dialog" title="Proposal Accepted">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Your proposal is accepted. Hurry up and be the first one to report to captain before someone else takes the mission.</p>
+</div>
 <script>
 	$('#dropdown-button').click(function(){$('#dropdown').slideToggle('fast');})
 	$('#logo').click(function(){window.location="/profile"});

@@ -1473,7 +1473,7 @@ div#compose-area .lnkimg {
 	overflow:hidden;
 	/* height:766px; */
 	width:748px;
-	padding-bottom:30px
+	padding-bottom:10px
 }
 .create-mission-container input[type="reset"], .create-mission-container input[type="button"], .confirm-mission-container input[type="reset"], .confirm-mission-container input[type="button"] {
 	cursor: pointer;
@@ -1642,6 +1642,9 @@ select.mission-arrange-month {
 	float:left;
 	width:45%;
 	position:relative;
+}
+.confirm-mission-container .submit-cancel-row {
+margin-top: -15px;
 }
 .mission-submit-row label {
 	color: #666;

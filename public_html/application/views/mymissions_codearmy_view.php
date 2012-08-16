@@ -368,6 +368,7 @@
 					}
 				}
 			});
+			
 		});
 		$('.reject').click(function(){
 			selectedItem = $(this).parents('.item');
@@ -398,6 +399,20 @@
 				}
 			});
 		});
+		var pusher = new Pusher('deb0d323940b00c093ee'); // Replace with your app key
+		var channel = pusher.subscribe('bid');
+		  channel.bind_all(function(evnt,data) {
+		  console.log(evnt,data);
+		  if(evnt.indexOf('new-bid')>-1){
+			  var el=$('#mission-'+data.work_id).find('.bidders-'+data.work_id);
+			  var val = parseInt(el.html());
+			  el.html(++val);
+		  }else if(evnt.indexOf('cancel-bid')>-1){
+			  var el=$('#mission-'+data.work_id).find('.bidders-'+data.work_id);
+			  el.html(Math.max(0,--parseInt(el.html())));
+		  }
+		});
+
 	});
 	function updateTimer(){
 		mins++;

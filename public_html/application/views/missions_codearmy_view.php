@@ -72,6 +72,9 @@
   </div>
 </div>
 <!-- end of marker template -->
+<div id="dialog-accept" class="dialog" title="Proposal Accepted">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Your proposal is accepted. Hurry up and be the first one to report to captain before someone else takes the mission.</p>
+</div>
 <style>
 	* {
 		transform-style: preserve-3d;
@@ -287,6 +290,12 @@
 		initializeEvents();
 		//run window resize
 		$(window).resize();
+		var pusher = new Pusher('deb0d323940b00c093ee'); // Replace with your app key
+		var channel = pusher.subscribe('map-channel');
+		channel.bind('map-new', function(data) {
+		  console.log(data);
+		  checkMarker(data.lat,data.lng,1);
+		});
 	});
 	
 	function renderMarkers(){
