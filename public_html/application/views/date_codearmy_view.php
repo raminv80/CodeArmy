@@ -104,90 +104,102 @@
 	<form>
 	<fieldset>
 		<label for="Title">Event Details</label>
-		<input type="text" name="eventname" id="eventname" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;"/>
-		<table style="width:100%; padding:5px;">
+		<input type="text" name="eventname" id="eventname" style="width:95%" />
+		<table style="width:100%; padding:5px; margin-top:15px">
 			<tr>
 				<td>
 					<label>Start Date</label>
-					<input type="text" name="startDate" id="startDate" value="" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;"/>				
+					<input type="text" name="startDate" id="startDate" value="" />				
 				</td>
 				<td>&nbsp;</td>
 				<td>
 					<label>Start Hour</label>
-					<select id="startHour" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-						<option value="12" SELECTED>12</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-					</select>				
+					<div class="wrapselect tiny">
+						<select id="startHour">
+							<option value="12" SELECTED>12</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+						</select>
+					</div>				
 				<td>
 				<td>
 					<label>Start Minute</label>
-					<select id="startMin" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-						<option value="00" SELECTED>00</option>
-						<option value="10">10</option>
-						<option value="20">20</option>
-						<option value="30">30</option>
-						<option value="40">40</option>
-						<option value="50">50</option>
-					</select>				
+					<div class="wrapselect tiny">
+						<select id="startMin">
+							<option value="00" SELECTED>00</option>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="40">40</option>
+							<option value="50">50</option>
+						</select>
+					</div>				
 				<td>
 				<td>
 					<label>Start AM/PM</label>
-					<select id="startMeridiem" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-						<option value="AM" SELECTED>AM</option>
-						<option value="PM">PM</option>
-					</select>				
+					<div class="wrapselect tiny">
+						<select id="startMeridiem">
+							<option value="AM" SELECTED>AM</option>
+							<option value="PM">PM</option>
+						</select>
+					</div>				
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<label>End Date</label>
-					<input type="text" name="endDate" id="endDate" value="" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;"/>				
+					<input type="text" name="endDate" id="endDate" value="" />				
 				</td>
 				<td>&nbsp;</td>
 				<td>
 					<label>End Hour</label>
-					<select id="endHour" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-						<option value="12" SELECTED>12</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-					</select>				
+					<div class="wrapselect tiny">
+						<select id="endHour" >
+							<option value="12" SELECTED>12</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+						</select>
+					</div>				
 				<td>
 				<td>
 					<label>End Minute</label>
-					<select id="endMin" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-						<option value="00" SELECTED>00</option>
-						<option value="10">10</option>
-						<option value="20">20</option>
-						<option value="30">30</option>
-						<option value="40">40</option>
-						<option value="50">50</option>
-					</select>				
+					<div class="wrapselect tiny">
+						<select id="endMin">
+							<option value="00" SELECTED>00</option>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="40">40</option>
+							<option value="50">50</option>
+						</select>
+					</div>				
 				<td>
 				<td>
 					<label>End AM/PM</label>
-					<select id="endMeridiem" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-						<option value="AM" SELECTED>AM</option>
-						<option value="PM">PM</option>
-					</select>				
+					<div class="wrapselect tiny">
+						<select id="endMeridiem">
+							<option value="AM" SELECTED>AM</option>
+							<option value="PM">PM</option>
+						</select>
+					</div>				
 				</td>				
 			</tr>			
 		</table>
@@ -198,93 +210,105 @@
 <div id="display-event-form" title="View Event">
 	<div class="show-event"></div>
 	<div class="edit-event" style="display:none">
-		<form name="Edit">
+		<form>
 			<fieldset>
 				<label for="Title">Edit event</label>
-				<input type="text" name="eventname" id="eventname" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;"/>
-				<table style="width:100%; padding:5px;">
+				<input type="text" name="eventname" id="eventname" style="width:95%" />
+				<table style="width:100%; padding:5px; margin-top:15px">
 					<tr>
 						<td>
 							<label>Start Date</label>
-							<input type="text" name="startDate" id="startDate" value="" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;"/>				
+							<input type="text" name="startDate" id="startDate" value="" />				
 						</td>
 						<td>&nbsp;</td>
 						<td>
 							<label>Start Hour</label>
-							<select id="startHour" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-								<option value="12" SELECTED>12</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-								<option value="6">6</option>
-								<option value="7">7</option>
-								<option value="8">8</option>
-								<option value="9">9</option>
-								<option value="10">10</option>
-								<option value="11">11</option>
-							</select>				
+							<div class="wrapselect tiny">
+								<select id="startHour">
+									<option value="12" SELECTED>12</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+								</select>
+							</div>				
 						<td>
 						<td>
 							<label>Start Minute</label>
-							<select id="startMin" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-								<option value="00" SELECTED>00</option>
-								<option value="10">10</option>
-								<option value="20">20</option>
-								<option value="30">30</option>
-								<option value="40">40</option>
-								<option value="50">50</option>
-							</select>				
+							<div class="wrapselect tiny">
+								<select id="startMin">
+									<option value="00" SELECTED>00</option>
+									<option value="10">10</option>
+									<option value="20">20</option>
+									<option value="30">30</option>
+									<option value="40">40</option>
+									<option value="50">50</option>
+								</select>
+							</div>				
 						<td>
 						<td>
 							<label>Start AM/PM</label>
-							<select id="startMeridiem" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-								<option value="AM" SELECTED>AM</option>
-								<option value="PM">PM</option>
-							</select>				
+							<div class="wrapselect tiny">
+								<select id="startMeridiem">
+									<option value="AM" SELECTED>AM</option>
+									<option value="PM">PM</option>
+								</select>
+							</div>				
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<label>End Date</label>
-							<input type="text" name="endDate" id="endDate" value="" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;"/>				
+							<input type="text" name="endDate" id="endDate" value="" />				
 						</td>
 						<td>&nbsp;</td>
 						<td>
 							<label>End Hour</label>
-							<select id="endHour" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-								<option value="12" SELECTED>12</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-								<option value="6">6</option>
-								<option value="7">7</option>
-								<option value="8">8</option>
-								<option value="9">9</option>
-								<option value="10">10</option>
-								<option value="11">11</option>
-							</select>				
+							<div class="wrapselect tiny">
+								<select id="endHour" >
+									<option value="12" SELECTED>12</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+								</select>
+							</div>				
 						<td>
 						<td>
 							<label>End Minute</label>
-							<select id="endMin" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-								<option value="00" SELECTED>00</option>
-								<option value="10">10</option>
-								<option value="20">20</option>
-								<option value="30">30</option>
-								<option value="40">40</option>
-								<option value="50">50</option>
-							</select>				
+							<div class="wrapselect tiny">
+								<select id="endMin">
+									<option value="00" SELECTED>00</option>
+									<option value="10">10</option>
+									<option value="20">20</option>
+									<option value="30">30</option>
+									<option value="40">40</option>
+									<option value="50">50</option>
+								</select>
+							</div>				
 						<td>
 						<td>
 							<label>End AM/PM</label>
-							<select id="endMeridiem" class="text ui-widget-content ui-corner-all" style="margin-bottom:12px; width:95%; padding: .3em;">
-								<option value="AM" SELECTED>AM</option>
-								<option value="PM">PM</option>
-							</select>				
+							<div class="wrapselect tiny">
+								<select id="endMeridiem">
+									<option value="AM" SELECTED>AM</option>
+									<option value="PM">PM</option>
+								</select>
+							</div>				
 						</td>				
 					</tr>			
 				</table>
@@ -296,8 +320,14 @@
 	</div>
 </div>
 <style type="text/css">
-	.dialog, .edit-event {font-size:.8em}
-	.dialog, input:focus {outline:none; background:#111}
+	.dialog,.edit-event {font-size:.8em}
+	.dialog input:focus, #display-event-form input:focus {outline:none; background:#f2f2f2}
+	.dialog input, #display-event-form input {
+		background:#626262; font-weight:700;
+		border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; box-shadow:inset 0px -1px 1px #222;
+		border:1px solid #333; overflow:hidden; position:relative; padding:5px;
+	}
+	.dialog select, #display-event-form select {color:#9e5c09}
 </style>
 <script type="text/javascript">
 var dates = <?=json_encode($dates)?>;
