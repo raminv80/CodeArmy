@@ -128,6 +128,12 @@ class Work_model extends CI_Model {
 		$res = $this->db->query($sql, $work_id);
 		return $res->result_array();
 	}
+
+	function previewLinks($work_id){
+		$sql = "SELECT work_links.*, users.username FROM work_links INNER JOIN users ON users.user_id = work_links.upload_by WHERE work_id = ?";
+		$res = $this->db->query($sql, $work_id);
+		return $res->result_array();
+	}
 	
 	function setBid($work_id,$user_id,$budget,$time,$desc){
 		$sql = "DELETE FROM bids WHERE work_id=? AND user_id=?";
