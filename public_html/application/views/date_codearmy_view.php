@@ -109,7 +109,7 @@
 			<tr>
 				<td>
 					<label>Start Date</label>
-					<input type="text" name="startDate" id="startDate" value="" />				
+					<input type="text" name="startDate" id="startDate" value="" />
 				</td>
 				<td>&nbsp;</td>
 				<td>
@@ -218,7 +218,7 @@
 					<tr>
 						<td>
 							<label>Start Date</label>
-							<input type="text" name="startDate" id="startDate" value="" />				
+							<input type="text" name="startDate" id="startDate2" value="" />				
 						</td>
 						<td>&nbsp;</td>
 						<td>
@@ -266,7 +266,7 @@
 					<tr>
 						<td>
 							<label>End Date</label>
-							<input type="text" name="endDate" id="endDate" value="" />				
+							<input type="text" name="endDate" id="endDate2" value="" />				
 						</td>
 						<td>&nbsp;</td>
 						<td>
@@ -312,9 +312,7 @@
 						</td>				
 					</tr>			
 				</table>
-				<button type="submit" class="btn" style="font-size:1.2em; float:right">
-				  <i class="icon-repeat"></i> Update
-				</button>
+				<button href="index.html" class="button black"><i class="icon-repeat"></i> Update</button>
 			</fieldset>
 		</form>
 	</div>
@@ -328,6 +326,76 @@
 		border:1px solid #333; overflow:hidden; position:relative; padding:5px;
 	}
 	.dialog select, #display-event-form select {color:#9e5c09}
+	.button {
+	  margin: 0 0 5px;
+	  height: 28px;
+	  line-height: 28px;
+	  padding: 0 12px;
+	  font-size: 11px;
+	  font-weight: bold;
+	  color: #555555;
+	  text-shadow: 0 1px #fff;
+	  border-width: 1px 1px 0;
+	  border-style: solid;
+	  border-color: #cecece #bababa #a8a8a8;
+	  border-radius: 3px 3px 2px 2px;
+	  outline: none;
+	  -webkit-box-sizing: content-box;
+	  -moz-box-sizing: content-box;
+	  box-sizing: content-box;
+	  display: inline-block;
+	  vertical-align: baseline;
+	  zoom: 1;
+	  *display: inline;
+	  *vertical-align: auto;
+	  background-color: #dfdfdf;
+	  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f1f1f1), color-stop(70%, #dfdfdf), color-stop(100%, #dadada));
+	  background-image: -webkit-linear-gradient(top, #f1f1f1 0%, #dfdfdf 70%, #dadada 100%);
+	  background-image: -moz-linear-gradient(top, #f1f1f1 0%, #dfdfdf 70%, #dadada 100%);
+	  background-image: -ms-linear-gradient(top, #f1f1f1 0%, #dfdfdf 70%, #dadada 100%);
+	  background-image: -o-linear-gradient(top, #f1f1f1 0%, #dfdfdf 70%, #dadada 100%);
+	  background-image: linear-gradient(top, #f1f1f1 0%, #dfdfdf 70%, #dadada 100%);
+	  -webkit-box-shadow: inset 0 1px #fdfdfd, inset 0 0 0 1px #eaeaea, 0 1px #a8a8a8, 0 3px #bbbbbb, 0 4px #a8a8a8, 0 5px 2px rgba(0, 0, 0, 0.25);
+	  box-shadow: inset 0 1px #fdfdfd, inset 0 0 0 1px #eaeaea, 0 1px #a8a8a8, 0 3px #bbbbbb, 0 4px #a8a8a8, 0 5px 2px rgba(0, 0, 0, 0.25);
+	}
+	.button:hover, .button:active {
+	  text-decoration: none;
+	  background: #dfdfdf;
+	  border-top-color: #c9c9c9;
+	  cursor: pointer;
+	}
+	.button:active, .button.green:active, .button.blue:active, .button.yellow:active, .button.red:active, .button.purple:active, .button.grey:active, .button.black:active {
+	  vertical-align: -5px;
+	  margin-bottom: 0;
+	  padding: 1px 13px 0;
+	  border-width: 0;
+	  border-radius: 3px;
+	  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(0, 0, 0, 0.4), 0 1px white;
+	  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(0, 0, 0, 0.4), 0 1px white;
+	}
+	.button.black {
+	  color: #f1f1f1;
+	  text-shadow: 0 1px #111;
+	  border-color: #505050 #414141 #2c2c2c;
+	  background-color: #4f4f4f;
+	  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #696969), color-stop(70%, #4f4f4f), color-stop(100%, #3c3c3c));
+	  background-image: -webkit-linear-gradient(top, #696969 0%, #4f4f4f 70%, #3c3c3c 100%);
+	  background-image: -moz-linear-gradient(top, #696969 0%, #4f4f4f 70%, #3c3c3c 100%);
+	  background-image: -ms-linear-gradient(top, #696969 0%, #4f4f4f 70%, #3c3c3c 100%);
+	  background-image: -o-linear-gradient(top, #696969 0%, #4f4f4f 70%, #3c3c3c 100%);
+	  background-image: linear-gradient(top, #696969 0%, #4f4f4f 70%, #3c3c3c 100%);
+	  -webkit-box-shadow: inset 0 1px #828282, inset 0 0 0 1px #555555, 0 1px #2c2c2c, 0 3px #444444, 0 4px #2c2c2c, 0 5px 2px rgba(0, 0, 0, 0.4);
+	  box-shadow: inset 0 1px #828282, inset 0 0 0 1px #555555, 0 1px #2c2c2c, 0 3px #444444, 0 4px #2c2c2c, 0 5px 2px rgba(0, 0, 0, 0.4);
+	}
+	.button.black:hover, .button.black:active {
+	  background: #4f4f4f;
+	  border-top-color: #494949;
+	}
+
+	.lt-ie9 .button {
+	  border-width: 1px;
+	  padding: 0 12px;
+	}
 </style>
 <script type="text/javascript">
 var dates = <?=json_encode($dates)?>;
@@ -611,6 +679,28 @@ $("#add-event-form").dialog({
 			showButtonPanel: true,
 			dateFormat: 'yy-mm-dd'
 		});
+		
+		$("#startDate2").datepicker({
+			showOtherMonths: true,
+			selectOtherMonths: true,
+			changeMonth: true,
+			changeYear: true,
+			showButtonPanel: true,
+			dateFormat: 'yy-mm-dd'
+		});
+		// initialize end date picker
+		$("#endDate2").datepicker({
+			showOtherMonths: true,
+			selectOtherMonths: true,
+			changeMonth: true,
+			changeYear: true,
+			showButtonPanel: true,
+			dateFormat: 'yy-mm-dd'
+		});
+		// initialize with the date that was clicked
+		$("#startDate2").val(clickDate);
+		$("#endDate2").val(clickDate);
+		
 		// initialize with the date that was clicked
 		$("#startDate").val(clickDate);
 		$("#endDate").val(clickDate);
@@ -663,6 +753,7 @@ $("#display-event-form").dialog({
 	open: function(event, ui){
 		$('.edit-event').hide();
 		$('.show-event').show();
+		
 		if(clickAgendaItem != null){
 			//console.log(clickAgendaItem);
 			var title = clickAgendaItem.title;
@@ -693,6 +784,18 @@ $("#display-event-form").dialog({
 	close: function() {
 		// clear agenda data
 		$(".show-event").html("");
+		// reset form elements when we close so they are fresh when the dialog is opened again.
+		$("#startDate").datepicker("destroy");
+		$("#endDate").datepicker("destroy");
+		$("#startDate").val("");
+		$("#endDate").val("");
+		$("#startHour option:eq(0)").attr("selected", "selected");
+		$("#startMin option:eq(0)").attr("selected", "selected");
+		$("#startMeridiem option:eq(0)").attr("selected", "selected");
+		$("#endHour option:eq(0)").attr("selected", "selected");
+		$("#endMin option:eq(0)").attr("selected", "selected");
+		$("#endMeridiem option:eq(0)").attr("selected", "selected");			
+		$("#eventname").val("");
 	}
 });
 
