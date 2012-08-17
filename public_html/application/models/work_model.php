@@ -323,7 +323,7 @@ class Work_model extends CI_Model {
 			'status' => $status,
 			'event_id'=> $this->db->insert_id()
 		);
-		$pusher->trigger('CA_activities', 'new-activity-'.$work_id, $data );
+		$pusher->trigger('history', 'new-activity-'.$work_id, $data );
 	}
 	
 	function get_recent_activities($work_id,$limit=-1){

@@ -833,7 +833,7 @@ class Missions extends CI_Controller {
 			$desc = "commented";
 			$this->work_model->log_history($user_id,$work_id,'comment',$status,$desc);
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
-			$pusher = new Pusher('228ac2292c03f22869d1', 'bd0b31eb033ee85004f0', '25715');
+			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
 			$data = array(
 				'message' => $message,
 				'user_id' => $user_id,
@@ -843,7 +843,7 @@ class Missions extends CI_Controller {
 				'time' => date('j M Y H:i'),
 				'comment_id' => $comment_id
 			);
-			$pusher->trigger('CA_Comments', 'new-comment-'.$work_id, $data );
+			$pusher->trigger('coments', 'new-comment-'.$work_id, $data );
 			die('success');
 		}
 		die('error');
@@ -853,7 +853,14 @@ class Missions extends CI_Controller {
 		$bid_id = $this->input->post('bid_id');
 		$bid = $this->work_model->get_bid($bid_id);
 		$user_id = $this->session->userdata('user_id');
+		$bid = $this->work_model->get_bid($bid_id);
 		if($this->work_model->approve_bid($bid_id)){
+			//send message to tallent
+			$subject = "Bid approved";
+			$msg = "Your bid is approved. Harry up and pick up the mission.";
+			$from = $user_id;
+			$to = $bid[0]['user_id'];
+			$this->message_model->send_message($from,$to,$subject,$msg);
 			//push this event
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
@@ -921,6 +928,14 @@ class Missions extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$bid_id = $this->input->post('bid_id');
 		if($this->work_model->remove_bid($bid_id, $user_id)){
+			$bid = $this->work_model->get_bid($bid_id);
+			
+			//send message to tallent
+			$subject = "Bid rejected";
+			$msg = "Your bid on mission '".$work[0]['title']."' is rejected.";
+			$to = $bid[0]['user_id'];
+			$from = $user_id;
+			$this->message_model->send_message($from,$to,$subject,$msg);
 			//push this event
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
@@ -1123,8 +1138,15 @@ class Missions extends CI_Controller {
 	
 	function Ajax_accept_work(){
 		$work_id = $this->input->post('work_id');
+		$work = $this->work_model->get_work($work_id);
 		$user_id = $this->session->userdata('user_id');
 		if($this->work_model->accept_work($user_id,$work_id)){
+			//send message to po
+			$subject = "Invitation to mission";
+			$msg = "An approved proposal is accepted. For more information visit <a href='/missions/my_missions'>your my mission page</a>.";
+			$from = $user_id;
+			$to = $work[0]['owner'];
+			$this->message_model->send_message($from,$to,$subject,$msg);
 			//push this event
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
@@ -1132,6 +1154,8 @@ class Missions extends CI_Controller {
 				'user_id' => $user_id,
 				'username' => $this->view_data['me']['username'],
 				'work_id' => $work_id,
+				'work_title' => $work[0]['title'],
+				'time' => date('j M Y H:i')
 			);
 			$bidpusher->trigger('mission', 'accept-mission-'.$work_id, $data );
 			echo $work_id;
@@ -1140,8 +1164,16 @@ class Missions extends CI_Controller {
 	
 	function Ajax_reject_work(){
 		$work_id = $this->input->post('work_id');
+		$work = $this->work_model->get_work($work_id);
 		$user_id = $this->session->userdata('user_id');
+		
 		if($this->work_model->decline_work($user_id,$work_id)){
+			//send message to po
+			$subject = "Invitation to mission";
+			$msg = "An approved proposal just got declined. For more information visit <a href='/missions/bid'>mission>bids</a>.";
+			$from = $user_id;
+			$to = $work[0]['owner'];
+			$this->message_model->send_message($from,$to,$subject,$msg);
 			//push this event
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');

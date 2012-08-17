@@ -196,10 +196,8 @@
 </div>
 <script type="text/javascript">
 $(function(){
-	var pusher = new Pusher('228ac2292c03f22869d1'); // Replace with your app key
-	var comment_channel = pusher.subscribe('CA_Comments');
-	var pusher1 = new Pusher('deb0d323940b00c093ee'); // Replace with your app key
-	var activity_channel = pusher1.subscribe('CA_activities');
+	var comment_channel = pusher.subscribe('comments');
+	var activity_channel = pusher1.subscribe('history');
 	
 	set_def_value($('#discussion-message'),"Share something with your team");
 	set_def_value($('.attach-url'),"Enter a URL of your image");
