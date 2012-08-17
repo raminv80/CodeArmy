@@ -669,22 +669,23 @@ $("#add-event-form").dialog({
 				
 				var startDateTime = startDtArray+','+startHour+','+startMin+',0,0';
 				var endDateTime = endDtArray+','+endHour+','+endMin+',0,0';
-				//console.log(startDateTime, endDateTime);
-				// Ajax start here
-				$.ajax({
-					type: 'post',
-					async: false,
-					url: '/missions/Ajax_add_calendar_event',
-					data: { 'csrf_workpad':getCookie('csrf_workpad'), 'work_id':<?=$work['work_id']?>, 'eventname':eventname, 'startDateTime':startDateTime, 'endDateTime':endDateTime },
-					success: function(msg){
-						console.log(msg)
-						if(msg!="" && msg!='error'){
-							console.log(msg);
-						} else {
-							alert("Error");
+
+				if(Date.parse(startDate) <= Date.parse(endDate)){
+					// Ajax start here
+					$.ajax({
+						type: 'post',
+						async: false,
+						url: '/missions/Ajax_add_calendar_event',
+						data: { 'csrf_workpad':getCookie('csrf_workpad'), 'work_id':<?=$work['work_id']?>, 'eventname':eventname, 'startDateTime':startDateTime, 'endDateTime':endDateTime },
+						success: function(msg){
+							if(msg!="" && msg!='error'){
+								console.log(msg);
+							} else {
+								alert("Error");
+							}
 						}
-					}
-				});
+					});
+				}
 
 				$(this).dialog('close');
 
@@ -882,13 +883,13 @@ $("#display-event-form").dialog({
 		$("#endDate2").datepicker("destroy");
 		$("#startDate2").val("");
 		$("#endDate2").val("");
-		$("#startHour option:eq(0)").attr("selected", "selected");
-		$("#startMin option:eq(0)").attr("selected", "selected");
-		$("#startMeridiem option:eq(0)").attr("selected", "selected");
-		$("#endHour option:eq(0)").attr("selected", "selected");
-		$("#endMin option:eq(0)").attr("selected", "selected");
-		$("#endMeridiem option:eq(0)").attr("selected", "selected");			
-		$("#eventname").val("");
+		$("#startHour2 option:eq(0)").attr("selected", "selected");
+		$("#startMin2 option:eq(0)").attr("selected", "selected");
+		$("#startMeridiem2 option:eq(0)").attr("selected", "selected");
+		$("#endHour2 option:eq(0)").attr("selected", "selected");
+		$("#endMin2 option:eq(0)").attr("selected", "selected");
+		$("#endMeridiem2 option:eq(0)").attr("selected", "selected");			
+		$("#eventname2").val("");
 	}
 });
 
@@ -969,22 +970,23 @@ $("#btnUpdate").click(function() {
 		
 		var startDateTime = startDtArray+','+startHour+','+startMin+',0,0';
 		var endDateTime = endDtArray+','+endHour+','+endMin+',0,0';
-		console.log(startDateTime, endDateTime);
-		// Ajax start here
-		$.ajax({
-			type: 'post',
-			async: false,
-			url: '/missions/Ajax_udpate_calendar_event',
-			data: { 'csrf_workpad':getCookie('csrf_workpad'), 'eventname':eventname, 'startDateTime':startDateTime, 'endDateTime':endDateTime, 'calendar_id':calendarID },
-			success: function(msg){
-				console.log(msg)
-				if(msg!="" && msg!='error'){
-					console.log(msg);
-				} else {
-					alert("Error");
+		
+		if(Date.parse(startDate) <= Date.parse(endDate)){
+			// Ajax start here
+			$.ajax({
+				type: 'post',
+				async: false,
+				url: '/missions/Ajax_udpate_calendar_event',
+				data: { 'csrf_workpad':getCookie('csrf_workpad'), 'eventname':eventname, 'startDateTime':startDateTime, 'endDateTime':endDateTime, 'calendar_id':calendarID },
+				success: function(msg){
+					if(msg!="" && msg!='error'){
+						console.log(msg);
+					} else {
+						alert("Error");
+					}
 				}
-			}
-		});
+			});
+		}
 
 		//$(this).dialog('close');
 		location.reload();
