@@ -751,7 +751,7 @@ $("#display-event-form").dialog({
 			$(this).dialog('close');
 		},
 		'Edit': function() {
-			var calendarID = clickAgendaItem.agendaId;
+			var calendarID = clickAgendaItem.data.calendar_id;
 			$.ajax({
 				type: 'get',
 				async: false,
