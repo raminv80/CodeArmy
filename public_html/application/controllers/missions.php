@@ -6,7 +6,8 @@ class Missions extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
-		
+		//enable for debugging
+		//$this->output->enable_profiler(TRUE);
 		$this->load->model('users_model');
 		$this->load->model('recom_model');
 		$this->load->model('skill_model');
@@ -693,6 +694,11 @@ class Missions extends CI_Controller {
 	}
 	
 	function wall($work_id){
+		//only po and workhorse can access this page:
+		$user_id = $this->view_data['me']['user_id'];
+		$po = $this->work_model->is_po($user_id,$work_id);
+		$wh = $this->work_model->is_workhorse($user_id,$work_id);
+		if(!$po&&!$wh)die('Unauthorised access!');
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		if(count($this->view_data['work'])!=1)die('This job is not assigned through bidding process.');
 		$this->view_data['work'] = $this->view_data['work'][0];
@@ -706,6 +712,11 @@ class Missions extends CI_Controller {
 	
 	//Tasks Page for PO
 	function task($work_id){
+		//only po and workhorse can access this page:
+		$user_id = $this->view_data['me']['user_id'];
+		$po = $this->work_model->is_po($user_id,$work_id);
+		$wh = $this->work_model->is_workhorse($user_id,$work_id);
+		if(!$po&&!$wh)die('Unauthorised access!');
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		$this->view_data['work'] = $this->view_data['work'][0];
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
@@ -718,6 +729,11 @@ class Missions extends CI_Controller {
 	
 	//Documents Page for PO
 	function documents($work_id){
+		//only po and workhorse can access this page:
+		$user_id = $this->view_data['me']['user_id'];
+		$po = $this->work_model->is_po($user_id,$work_id);
+		$wh = $this->work_model->is_workhorse($user_id,$work_id);
+		if(!$po&&!$wh)die('Unauthorised access!');
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		$this->view_data['work'] = $this->view_data['work'][0];
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
@@ -731,6 +747,11 @@ class Missions extends CI_Controller {
 	
 	//Date Page for PO
 	function dates($work_id){
+		//only po and workhorse can access this page:
+		$user_id = $this->view_data['me']['user_id'];
+		$po = $this->work_model->is_po($user_id,$work_id);
+		$wh = $this->work_model->is_workhorse($user_id,$work_id);
+		if(!$po&&!$wh)die('Unauthorised access!');
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		$this->view_data['work'] = $this->view_data['work'][0];
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
@@ -742,7 +763,11 @@ class Missions extends CI_Controller {
 	}
 	
 	function applicants($work_id){
-		$userid = $this->session->userdata('user_id');
+		//only po can access this page:
+		$user_id = $this->view_data['me']['user_id'];
+		$po = $this->work_model->is_po($user_id,$work_id);
+		if(!$po)die('Unauthorised access!');
+
 		$work = $this->work_model->get_work($work_id)->result_array();
 		$this->view_data['work_id'] = $work_id;
 		$this->view_data['arrangement'] = $this->work_model->get_work_arrangement($work_id);
@@ -792,9 +817,14 @@ class Missions extends CI_Controller {
 	}
 	
 	function Ajax_send_invites(){
-		$user_id = $this->session->userdata('user_id');
 		$ids = $this->input->post('ids');
 		$work_id = $this->input->post('work_id');
+		
+		//only po can access this page:
+		$user_id = $this->view_data['me']['user_id'];
+		$po = $this->work_model->is_po($user_id,$work_id);
+		if(!$po)die('Unauthorised access!');
+	
 		$work = $this->work_model->get_work($work_id)->result_array();
 		if(count($work)==1){
 			//Send message
@@ -810,9 +840,9 @@ class Missions extends CI_Controller {
 			$this->work_model->log_history($user_id,$work_id,'invite',$status,$desc);
 			//Save in invite list
 			$this->work_model->invite($user_id,$work_id);
-			echo json_encode("success");
+			echo "success";
 		}else{
-			echo json_encode("error");
+			echo "error";
 		}
 	}
 	
@@ -824,6 +854,12 @@ class Missions extends CI_Controller {
 		$work_id = $this->input->post('work_id');
 		$work = $this->work_model->get_work($work_id)->result_array();
 		$work = $work[0];
+		$work_id = $work['work_id'];
+		//only po and workhorse can access this page:
+		$user_id = $this->view_data['me']['user_id'];
+		$po = $this->work_model->is_po($user_id,$work_id);
+		$wh = $this->work_model->is_workhorse($user_id,$work_id);
+		if(!$po&&!$wh)die('Unauthorised access!');
 		//only workhorse and po can comment
 		if($work['work_horse']==$user_id || $work['owner']==$user_id || $work['creator']==$user_id){
 			$comment_id = $this->work_model->create_comment($work_id, $this->view_data['me']['username'], $message, $attach);
@@ -831,9 +867,9 @@ class Missions extends CI_Controller {
 				'comment_id' => $comment_id,
 				'work_id' => $work_id));
 			$desc = "commented";
-			$this->work_model->log_history($user_id,$work_id,'comment',$status,$desc);
+			$this->work_model->log_history($user_id,$work_id,'comment',$status,$desc,false);
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
-			$pusher = new Pusher('228ac2292c03f22869d1', 'bd0b31eb033ee85004f0', '25715');
+			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
 			$data = array(
 				'message' => $message,
 				'user_id' => $user_id,
@@ -843,17 +879,36 @@ class Missions extends CI_Controller {
 				'time' => date('j M Y H:i'),
 				'comment_id' => $comment_id
 			);
-			$pusher->trigger('CA_Comments', 'new-comment-'.$work_id, $data );
+			$pusher->trigger('comments', 'new-comment-'.$work_id, $data );
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $user['username'],
+				'work_id' => $work_id,
+				'work_title'=>$work['title'],
+				'Desc' => $desc,
+				'event' => 'comment',
+				'time' => date('h:ia, d/m/Y'),
+				'status' => $status,
+				'event_id'=> $this->db->insert_id()
+			);
+			$pusher->trigger('history', 'new-activity-'.$work_id, $data );
 			die('success');
 		}
 		die('error');
 	}
 	
 	function Ajax_approve_bid(){
+		$user_id = $this->view_data['me']['user_id'];
 		$bid_id = $this->input->post('bid_id');
 		$bid = $this->work_model->get_bid($bid_id);
-		$user_id = $this->session->userdata('user_id');
+		$bid = $this->work_model->get_bid($bid_id);
 		if($this->work_model->approve_bid($bid_id)){
+			//send message to tallent
+			$subject = "Bid approved";
+			$msg = "Your bid is approved. Harry up and pick up the mission.";
+			$from = $user_id;
+			$to = $bid[0]['user_id'];
+			$this->message_model->send_message($from,$to,$subject,$msg);
 			//push this event
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
@@ -887,8 +942,13 @@ class Missions extends CI_Controller {
 	}
 	
 	function Ajax_add_sub_task(){
-		$user_id = $this->session->userdata('user_id');
+		//only po and workhorse can access this page:
+		$user_id = $this->view_data['me']['user_id'];
 		$work_id = $this->input->post('work_id');
+		$po = $this->work_model->is_po($user_id,$work_id);
+		$wh = $this->work_model->is_workhorse($user_id,$work_id);
+		if(!$po&&!$wh)die('Unauthorised access!');
+		
 		$sub_task = $this->input->post('sub_task');
 		$res = array(
 			"work_id" => $work_id,
@@ -904,10 +964,15 @@ class Missions extends CI_Controller {
 	}
 	
 	function Ajax_remove_bid(){
-		$user_id = $this->session->userdata('user_id');
+		//only po and workhorse can access this page:
 		$bid_id = $this->input->post('bid_id');
 		$bid = $this->work_model->get_bid($bid_id);
 		$work_id = $bid[0]['work_id'];
+		$user_id = $this->view_data['me']['user_id'];
+		$po = $this->work_model->is_po($user_id,$work_id);
+		$wh = $this->work_model->is_workhorse($user_id,$work_id);
+		if(!$po&&!$wh)die('Unauthorised access!');
+		
 		//was user invited?
 		$res = $this->work_model->invited_to_work($user_id,$work_id);
 		if(count($res)){
@@ -921,6 +986,14 @@ class Missions extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$bid_id = $this->input->post('bid_id');
 		if($this->work_model->remove_bid($bid_id, $user_id)){
+			$bid = $this->work_model->get_bid($bid_id);
+			
+			//send message to tallent
+			$subject = "Bid rejected";
+			$msg = "Your bid on mission '".$work[0]['title']."' is rejected.";
+			$to = $bid[0]['user_id'];
+			$from = $user_id;
+			$this->message_model->send_message($from,$to,$subject,$msg);
 			//push this event
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
@@ -1123,8 +1196,15 @@ class Missions extends CI_Controller {
 	
 	function Ajax_accept_work(){
 		$work_id = $this->input->post('work_id');
+		$work = $this->work_model->get_work($work_id)->result_array();
 		$user_id = $this->session->userdata('user_id');
 		if($this->work_model->accept_work($user_id,$work_id)){
+			//send message to po
+			$subject = "Invitation to mission";
+			$msg = "An approved proposal is accepted. For more information visit <a href='/missions/my_missions'>your my mission page</a>.";
+			$from = $user_id;
+			$to = $work[0]['owner'];
+			$this->message_model->send_message($from,$to,$subject,$msg);
 			//push this event
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
@@ -1132,6 +1212,8 @@ class Missions extends CI_Controller {
 				'user_id' => $user_id,
 				'username' => $this->view_data['me']['username'],
 				'work_id' => $work_id,
+				'work_title' => $work[0]['title'],
+				'time' => date('j M Y H:i')
 			);
 			$bidpusher->trigger('mission', 'accept-mission-'.$work_id, $data );
 			echo $work_id;
@@ -1140,8 +1222,16 @@ class Missions extends CI_Controller {
 	
 	function Ajax_reject_work(){
 		$work_id = $this->input->post('work_id');
+		$work = $this->work_model->get_work($work_id);
 		$user_id = $this->session->userdata('user_id');
+		
 		if($this->work_model->decline_work($user_id,$work_id)){
+			//send message to po
+			$subject = "Invitation to mission";
+			$msg = "An approved proposal just got declined. For more information visit <a href='/missions/bid'>mission>bids</a>.";
+			$from = $user_id;
+			$to = $work[0]['owner'];
+			$this->message_model->send_message($from,$to,$subject,$msg);
 			//push this event
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');

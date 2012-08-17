@@ -1,8 +1,4 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
-<script type="text/javascript">
-	var bids_pusher = new Pusher('deb0d323940b00c093ee');
-	var bids_channel = pusher.subscribe('CA_activities_bid');
-</script>
 <style>
 #mymission-content-area{
 	/*background:url(/public/images/codeArmy/profile/missions/temp.png) no-repeat;*/
@@ -180,7 +176,7 @@
                 <div class="mission-content">
                 	<ul class="mission-icons">
                 		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#" title="You are competing over <?=$troopers?> trooper(s) over this job!"><span class="icon"></span><span class="title"><?=$troopers?> Troop(s)</span></a></li>
+                        <li><a href="#" title="You are competing with <?=$troopers?> trooper(s) on this mission!"><span class="icon"></span><span class="title"><?=$troopers?> Troop(s)</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
                     </ul>
@@ -238,10 +234,11 @@
                 </div>
                 <div class="mission-content">
                 	<ul class="mission-icons">
-                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#" title="You are competing over <?=$troopers?> trooper(s) over this job!"><span class="icon"></span><span class="title"><?=$troopers?>Troops</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                    	<?php $user = $this->users_model->get_user($list['owner'])->result_array();?>
+                		<li><a href="/messages/compose/<?=$user[0]['username']?>"><span class="icon"></span><span class="title">Captain</span></a></li>
+                        <li><a href="#" title="You are competing with <?=$troopers?> trooper(s) on this mission!"><span class="icon"></span><span class="title"><?=$troopers?>Troops</span></a></li>
+                        <li><a href="/missions/wall/<?=$list['work_id']?>"><span class="icon"></span><span class="title">Discussion</span></a></li>
+                        <li><a href="/missions/documents/<?=$list['work_id']?>"><span class="icon"></span><span class="title">Attachements</span></a></li>
                     </ul>
                     <div class="mission-time">
                     	<span class="time-left">Time left</span>
@@ -294,13 +291,6 @@
                     	<?php if($po){?>
                          <li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
                         <li><a href="/missions/applicants/<?=$list['work_id']?>"><span class="icon"></span><span class="title "><span class="bidders-<?=$list['work_id']?>"><?=$list['bids']?></span> Bidders</span></a></li>
-                        <script type="text/javascript">
-							bids_channel.bind('new-bid-<?=$list['work_id']?>', function(data) {
-							  var el = $('.bidders-<?=$list['work_id']?>');
-							  el.html(++parseInt(el.html()));
-							  alert(bid); console.log(data);
-							});
-						</script>
                         <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
                         <?php }else{?>
@@ -339,6 +329,7 @@
 <script>
 	var selectedItem;
 	$(function(){
+		$('a[title]').tipsy({trigger: 'hover', gravity: 'sw'});
 		mins = 0; setInterval("updateTimer()",1000*60);
 		$('.accept').click(function(){
 			selectedItem = $(this).parents('.item');
@@ -359,7 +350,6 @@
 							type: 'post',
 							data: {'csrf_workpad': getCookie('csrf_workpad'), 'work_id':work_id},
 							success: function(msg){
-								console.log(msg);
 								window.location = '/missions/wall/'+msg;
 								$.fancybox.hideLoading();
 							}
@@ -389,7 +379,6 @@
 							type: 'post',
 							data: {'csrf_workpad': getCookie('csrf_workpad'), 'work_id':work_id},
 							success: function(msg){
-								console.log(msg);
 								$('#mission-'+msg).slideUp(function(){$(this).remove()});
 								$.fancybox.hideLoading();
 							}
@@ -399,10 +388,9 @@
 				}
 			});
 		});
-		var pusher = new Pusher('deb0d323940b00c093ee'); // Replace with your app key
+		//Lets show number of bids on a mission in realtime
 		var channel = pusher.subscribe('bid');
 		  channel.bind_all(function(evnt,data) {
-		  console.log(evnt,data);
 		  if(evnt.indexOf('new-bid')>-1){
 			  var el=$('#mission-'+data.work_id).find('.bidders-'+data.work_id);
 			  var val = parseInt(el.html());

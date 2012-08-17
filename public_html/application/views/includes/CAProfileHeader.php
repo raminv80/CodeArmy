@@ -1,5 +1,7 @@
 <?php $this->load->view('includes/CAHeader.php'); ?>
-
+<style>
+.blur{-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";filter: alpha(opacity=50);-moz-opacity: 0.5;-khtml-opacity: 0.5;opacity: 0.5;}
+</style>
 <div id="inner">
 <div id="container">
 
@@ -9,7 +11,7 @@
       <ul id="header-links">
         <li><a href="/messages" id="Messages">
           <div id="messages-holder">
-            <div class="notification" id="messages-notification"><?=isset($myActiveMessages)?$myActiveMessages:'?' ?></div>
+            <div class="notification <?=isset($myActiveMessages)&&$myActiveMessages>0?'':'blur' ?>" id="messages-notification"><?=isset($myActiveMessages)?$myActiveMessages:'?' ?></div>
             Messages </div>
           </a> </li>
         <li><a href="/messages/notifications" id="Notifications">
@@ -26,7 +28,7 @@
           </li>
         <li><a href="/missions/my_missions" id="MyMissions">
           <div id="mymissions-holder">
-            <div class="notification" id="mymissions-notification"><?=isset($myActiveMissions)?$myActiveMissions:'?'?></div>
+            <div class="notification <?=isset($myActiveMissions)&&$myActiveMissions>0?'':'blur'?>" id="mymissions-notification"><?=isset($myActiveMissions)?$myActiveMissions:'?'?></div>
             My Missions</div>
           </a></li>
         <li> <a href="/profile" id="Profile">
@@ -40,7 +42,7 @@
           <li><a href="/about">About us</a></li>
         </ul>
         <a style="margin-top:0;" href="/login/logout" id="logout">Log out</a> </div>
-      <div id="live-feed"> 25.05.2012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Web design for KLIA website&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;30bids&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Due: 5 hours </div>
+      <div id="live-feed">Welcome back <?=$me['username']?></div>
     </div>
     <?php if(in_array($page_is,array('Profile','Missions','Achievements','Leaderboard','Invite'))):?>
     <div id="left-block">
@@ -50,6 +52,9 @@
                 <li<?php if($page_is=='Missions'){?> class="active"<?php }?>><a id="missions-toggle" href="javascript:void(0)">Missions</a></li>
                 <ul id="mission-submenue" <?php if($page_is!="Missions"){?>style="display:none"<?php }?>>
                     <li<?php if($action_is=='my_missions'){?> class="active"<?php }?>><a href="/missions/my_missions">My Missions</a></li>
+                    <?php if($this->session->userdata('role')=='po' || $this->session->userdata('role')=='admin'){?>
+                    <li<?php if($action_is=='hq'){?> class="active"<?php }?>><a href="/missions/hq">World Map</a></li>
+                    <?php }?>
                     <li<?php if($action_is=='bid'){?> class="active"<?php }?>><a href="/missions/bid">Bid</a></li>
                     <li<?php if($action_is=='completed'){?> class="active"<?php }?>><a href="/missions/completed">Completed</a></li>
                 </ul>

@@ -290,10 +290,8 @@
 		initializeEvents();
 		//run window resize
 		$(window).resize();
-		var pusher = new Pusher('deb0d323940b00c093ee'); // Replace with your app key
 		var channel = pusher.subscribe('map-channel');
 		channel.bind('map-new', function(data) {
-		  console.log(data);
 		  checkMarker(data.lat,data.lng,1);
 		});
 	});

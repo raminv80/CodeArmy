@@ -18,7 +18,16 @@ $(function() {
 				type:'iframe',
 				scrolling: 'no'
 			});
-	 var pusher = new Pusher('deb0d323940b00c093ee'); // Replace with your app key
+	var chat_channel = pusher.subscribe('chat');
+	chat_channel.bind('message', function(data) {
+		$('.chat').show().find('ul').append('<li>'+data+'</li>');
+	});
+	 var map_channel = pusher.subscribe('map-channel');
+	 map_channel.bind('map-new',updateFeed);
+	 var mission = pusher.subscribe('mission');
+	 mission.bind_all(function(evnt,data){
+		 if(evnt.indexOf('accept-mission')>-1)updateFeed(data);
+	 });
 	 var bid_channel = pusher.subscribe('bid');
 	 bid_channel.bind_all(function(evnt,data) {
 		  console.log(evnt,data);
@@ -41,11 +50,9 @@ $(function() {
 		});
 });
 
-//chat
-chat_channel.bind('message', function(data) {
-  $('.chat').show().find('ul').append('<li>'+data+'</li>');
-});
-
+function updateFeed(data){
+	$('#live-feed').hide("slide", { direction: "left" }, 1000,function(){$(this).html(data.time+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mission "'+data.work_title+'"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;published by&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+data.username)}).show("slide", { direction: "right" }, 1000);
+}
 //cookie management
 function setCookie(c_name,value,exdays)
 {

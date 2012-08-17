@@ -1,6 +1,5 @@
 // JavaScript Document
-var pusher = new Pusher('0a801e2c9876dbab914a');
-var chat_channel = pusher.subscribe('chat');
+var pusher = new Pusher('deb0d323940b00c093ee');
 (function ($, F) {
 		// Opening animation - fly from the top
 		F.transitions.dropIn = function() {
