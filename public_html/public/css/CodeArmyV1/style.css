@@ -2860,6 +2860,74 @@ input.rejimg:hover {
 .submit-doc-buttons input {
 	font-size:11px;
 }
+.completed-missions-table {
+	position:relative;
+	float:left;
+	width:770;
+}
+.completed-missions-table table{
+	width:760px;
+	border:1px solid #fff;
+	box-shadow: 0px 0px 4px #666;
+	margin: 15px 0;
+	color:#c1c0c0;
+}
+.completed-missions-table tr {
+	position:relative;
+}
+.completed-missions-table td {
+	position:relative;
+	border: 1px solid #666;
+	padding: 10px;
+	vertical-align: top;
+	width:30%;
+}
+.completed-missions-table .row-no {
+	width:10%;
+	float:left;
+	position:relative;
+}
+.com-mission-info {
+	float:right;
+	width:90%;
+	position:relative;
+}
+.com-mission-date, .com-mission-from {
+	color:#ff9c00;
+	font-size:12px;
+	float:left;
+	margin-bottom:20px;
+	font-style:italic;
+}
+.com-mission-from {
+	float:right;
+}
+.com-mission-review {
+	float:left;
+}
+.com-mission-readmore a {
+	color:#54d001;
+	font-size:10px;
+	float:right;
+	font-style:italic;
+}
+.com-mission-title, .com-mission-desc {
+	width:100%;
+	float:left;
+	position:relative;
+}
+.com-mission-rev-text {
+	float:left;
+	width:100%;
+	text-align:center;
+}
+.com-mission-pay-title, .com-mission-pay-title, .com-mission-pay-title {
+	float:left;
+	width:100%;
+}
+.com-mission-pay-title {
+	margin-bottom:20px;
+}
 /* END - New Codes by Reza@RezaKabiri.com */
 
 
