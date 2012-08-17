@@ -893,7 +893,7 @@ $("#display-event-form").dialog({
 });
 
 $("#btnUpdate").click(function() {
-	var calendarID = clickAgendaItem.agendaId;
+	var calendarID = clickAgendaItem.data.calendar_id;
 	var eventname = jQuery.trim($("#eventname2").val());
 	var startDate = $("#startDate2").val();
 	var endDate = $("#endDate2").val();
