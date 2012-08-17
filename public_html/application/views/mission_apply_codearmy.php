@@ -111,7 +111,7 @@
 	      <div class="right-col-title-bg">Materials</div>
 	      <?php foreach($work_files as $file):?>
 	      <div class="find-mission-material-row">
-	        <div class="attach-file-tools"> <img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /> <span class="filename"><a href="/public/uploads/<?=$file['file_name']?>" target="_blank"><?=(strlen($file['file_name'])>25)?substr($file['file_name'],0,15).'...'.substr($file['file_name'],-7,7):$file['file_name']?></a></span> <span class="filesize"><?=round($file['file_size'] / 1024)?> KB</span> </div>
+	        <div class="attach-file-tools"> <img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /> <span class="filename"><a href="/public/uploads/<?=$file['file_name']?>" target="_blank"><?=(strlen($file['file_name'])>25)?substr($file['file_name'],0,15).'...'.substr($file['file_name'],-7,7):$file['file_name']?></a></span> <span class="filesize"><?=byte_format($file['file_size'])?></span> </div>
 	      </div>
 	      <?php endforeach;?>
 	    </div>

@@ -103,8 +103,8 @@
     <div class="docs-table-row">
       <div class="doc-number"><?=$i?>.</div>
       <div class="doc-name"><a href="/public/uploads/<?=$files['file_name']?>" target="_blank"><img src="/public/images/codeArmy/po/documents/download-icon.png" align="absmiddle" style="vertical-align:middle !important" border="0" /> <?=$files['file_name']?></a></div>
-      <div class="doc-upload-by">&nbsp;</div>
-      <div class="doc-upload-time">&nbsp;</div>
+      <div class="doc-upload-by">Uploaded by <?=$files['username']?></div>
+      <div class="doc-upload-time"><?=byte_format($files['file_size'])?></div>
       <div class="doc-upload-date"><?=date('j/m/Y',strtotime($files['created_at']))?></div>
       <div class="doc-upload-dl-icons" id="<?=$files['file_id']?>"><a href="javascript:;"><img src="/public/images/codeArmy/messages/bin.png" border="0" id="delUploadFile" /></a></div>
     </div>

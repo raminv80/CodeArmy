@@ -27,7 +27,7 @@ CREATE TABLE `actions` (
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `code` (`code`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE `arrangement_budget` (
   `budget_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -59,13 +59,23 @@ CREATE TABLE `bids` (
   `user_id` varchar(40) DEFAULT NULL,
   `bid_cost` float DEFAULT NULL,
   `bid_time` int(11) NOT NULL,
-  `bid_desc` varchar(255) NOT NULL,
+  `bid_desc` varchar(255) NOT NULL COMMENT 'Bid, Declined, Accepted, Rejected',
   `bid_status` varchar(16) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`bid_id`),
   KEY `user_id` (`user_id`),
   KEY `work_id` (`work_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=189 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+CREATE TABLE `calendar` (
+  `calendar_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `startDate` varchar(50) NOT NULL,
+  `endDate` varchar(50) NOT NULL,
+  `work_id` varchar(32) NOT NULL,
+  `user_id` varchar(48) NOT NULL,
+  PRIMARY KEY (`calendar_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 CREATE TABLE `captcha` (
   `captcha_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
@@ -74,7 +84,7 @@ CREATE TABLE `captcha` (
   `word` varchar(20) NOT NULL,
   PRIMARY KEY (`captcha_id`),
   KEY `word` (`word`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -174,7 +184,7 @@ CREATE TABLE `history` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=292 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
 CREATE TABLE `inbox` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -189,7 +199,7 @@ CREATE TABLE `inbox` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `category` (`category`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=277 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE `invitation` (
   `invite_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -198,7 +208,7 @@ CREATE TABLE `invitation` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` enum('sent','viewed','accepted','rejected') NOT NULL,
   PRIMARY KEY (`invite_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 CREATE TABLE `messages` (
   `message_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -214,13 +224,28 @@ CREATE TABLE `messages` (
   KEY `from` (`from`),
   KEY `to` (`to`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 CREATE TABLE `mission_category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category` varchar(100) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+CREATE TABLE `mission_task` (
+  `task_id` int(11) NOT NULL AUTO_INCREMENT,
+  `work_id` varchar(32) NOT NULL,
+  `user_id` varchar(48) NOT NULL,
+  `task_name` varchar(255) NOT NULL,
+  `task_priority` enum('Low','Normal','High','') NOT NULL DEFAULT 'Normal',
+  `task_deadline` date DEFAULT NULL,
+  `task_hours` int(11) DEFAULT '0',
+  `task_percentage` int(11) DEFAULT '0',
+  `task_status` enum('To Do','Working','Done','') NOT NULL DEFAULT 'To Do',
+  PRIMARY KEY (`task_id`),
+  KEY `work_id` (`work_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 CREATE TABLE `project` (
   `project_id` int(255) NOT NULL AUTO_INCREMENT,
@@ -251,7 +276,7 @@ CREATE TABLE `skill` (
   `type` enum('soft','hard','management') NOT NULL,
   `desc` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 CREATE TABLE `skill_level` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -269,7 +294,7 @@ CREATE TABLE `skill_set` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `skill_id` (`skill_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
 
 CREATE TABLE `sprints` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -280,7 +305,7 @@ CREATE TABLE `sprints` (
   `desc` text,
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE `subclass` (
   `subclass_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -348,7 +373,7 @@ CREATE TABLE `user_profiles` (
   `avatar` varchar(255) DEFAULT NULL,
   `gender` enum('male','female') DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
-  `specialization` enum('employer','designer','developer','copywriter','unknown','product owner') DEFAULT NULL,
+  `specialization` enum('employer','designer','developer','copywriter','unknown','product owner','admin') DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -384,8 +409,8 @@ CREATE TABLE `works` (
   `created_at` datetime DEFAULT NULL,
   `work_horse` varchar(40) DEFAULT NULL,
   `bid_deadline` datetime DEFAULT NULL,
-  `deadline` datetime DEFAULT NULL,
-  `assigned_at` datetime DEFAULT NULL,
+  `deadline` timestamp NULL DEFAULT NULL,
+  `assigned_at` timestamp NULL DEFAULT NULL,
   `started_at` timestamp NULL DEFAULT NULL,
   `done_at` datetime DEFAULT NULL,
   `tutorial` text,
@@ -416,10 +441,23 @@ CREATE TABLE `work_files` (
   `file_description` text,
   `created_at` datetime DEFAULT NULL,
   `work_id` varchar(48) DEFAULT NULL,
+  `username` varchar(40) DEFAULT NULL,
   `session_id` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`file_id`),
   KEY `work_id` (`work_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `work_links` (
+  `link_id` int(11) NOT NULL AUTO_INCREMENT,
+  `link` text NOT NULL,
+  `work_id` varchar(32) NOT NULL,
+  `upload_by` varchar(48) NOT NULL,
+  `upload_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `username` varchar(48) DEFAULT NULL,
+  PRIMARY KEY (`link_id`),
+  KEY `work_id` (`work_id`),
+  KEY `upload_by` (`upload_by`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 CREATE TABLE `work_skill` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -430,43 +468,8 @@ CREATE TABLE `work_skill` (
   PRIMARY KEY (`id`),
   KEY `work_id` (`work_id`),
   KEY `skill_id` (`skill_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=88 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
 
-CREATE TABLE `mission_task` (
-  `task_id` int(11) NOT NULL AUTO_INCREMENT,
-  `work_id` varchar(32) NOT NULL,
-  `user_id` varchar(48) NOT NULL,
-  `task_name` varchar(255) NOT NULL,
-  `task_priority` enum('Low','Normal','High','') NOT NULL DEFAULT 'Normal',
-  `task_deadline` date DEFAULT NULL,
-  `task_hours` int(11) DEFAULT '0',
-  `task_percentage` int(11) DEFAULT '0',
-  `task_status` enum('To Do','Working','Done','') NOT NULL DEFAULT 'To Do',
-  PRIMARY KEY (`task_id`),
-  KEY `work_id` (`work_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-CREATE TABLE IF NOT EXISTS `work_links` (
-  `link_id` int(11) NOT NULL AUTO_INCREMENT,
-  `link` text NOT NULL,
-  `work_id` varchar(32) NOT NULL,
-  `upload_by` varchar(48) NOT NULL,
-  `upload_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`link_id`),
-  KEY `work_id` (`work_id`),
-  KEY `upload_by` (`upload_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-CREATE TABLE IF NOT EXISTS `calendar` (
-  `calendar_id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `startDate` varchar(50) NOT NULL,
-  `endDate` varchar(50) NOT NULL,
-  `work_id` varchar(32) NOT NULL,
-  `user_id` varchar(48) NOT NULL,
-  PRIMARY KEY (`calendar_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 ALTER TABLE `achievement_set`
   ADD CONSTRAINT `achievement_set_ibfk_1` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`achievement_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -507,6 +510,10 @@ ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `messages_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `messages` (`message_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+ALTER TABLE `mission_task`
+  ADD CONSTRAINT `mission_task_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mission_task_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 ALTER TABLE `project`
   ADD CONSTRAINT `project_ibfk_1` FOREIGN KEY (`project_owner_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `project_ibfk_2` FOREIGN KEY (`scrum_master_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
@@ -525,24 +532,20 @@ ALTER TABLE `user_profiles`
   ADD CONSTRAINT `user_profiles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `works`
-  ADD CONSTRAINT `works_ibfk_1` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `works_ibfk_2` FOREIGN KEY (`owner`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `works_ibfk_3` FOREIGN KEY (`work_horse`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `works_ibfk_4` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `works_ibfk_5` FOREIGN KEY (`category`) REFERENCES `mission_category` (`category_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `works_ibfk_6` FOREIGN KEY (`subclass`) REFERENCES `subclass` (`subclass_id`);
+  ADD CONSTRAINT `works_ibfk_6` FOREIGN KEY (`subclass`) REFERENCES `subclass` (`subclass_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `works_ibfk_7` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `works_ibfk_8` FOREIGN KEY (`owner`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `work_files`
   ADD CONSTRAINT `work_files_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE `work_skill`
-  ADD CONSTRAINT `work_skill_ibfk_3` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `work_skill_ibfk_4` FOREIGN KEY (`skill_id`) REFERENCES `skill` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE `mission_task`
-  ADD CONSTRAINT `mission_task_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `mission_task_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
 ALTER TABLE `work_links`
   ADD CONSTRAINT `work_links_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `work_links_ibfk_2` FOREIGN KEY (`upload_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `work_skill`
+  ADD CONSTRAINT `work_skill_ibfk_3` FOREIGN KEY (`work_id`) REFERENCES `works` (`work_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `work_skill_ibfk_4` FOREIGN KEY (`skill_id`) REFERENCES `skill` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

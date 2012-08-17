@@ -8,6 +8,7 @@ class Missions extends CI_Controller {
 		parent::__construct();
 		//enable for debugging
 		//$this->output->enable_profiler(TRUE);
+		$this->load->helper('number');
 		$this->load->model('users_model');
 		$this->load->model('recom_model');
 		$this->load->model('skill_model');
@@ -1114,6 +1115,7 @@ class Missions extends CI_Controller {
 							"file_type" => $_FILES['file']['type'],
 							"file_name" => $fileName,
 							"file_size" => $this->input->post('filesize'),
+							"username" => $this->view_data['me']['username'],
 							"created_at" => date('Y-m-d H:i:s'),
 							"work_id" => $this->input->post('work_id')
 						);
@@ -1190,7 +1192,7 @@ class Missions extends CI_Controller {
 		$link = $this->input->post('link');
 		$user_id = $this->session->userdata('user_id');
 		
-		if($this->db->insert('work_links', array('work_id'=>$work_id, 'upload_by'=>$user_id, 'link'=>$link))) echo "success";
+		if($this->db->insert('work_links', array('work_id'=>$work_id, 'upload_by'=>$user_id, 'link'=>$link, 'username'=>$this->view_data['me']['username']))) echo "success";
 		else echo "error";
 	}
 	

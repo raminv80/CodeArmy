@@ -100,8 +100,10 @@
   </div>
   
   <div class="mission-submit-row">
-    <div class="assign-po"> 
+    <div class="assign-po" style="height:25px">
+    <!-- 
     <input class="assinpo" id="assignpo" type="checkbox" value="yes" /> <label>Assign this mission to a Project Manager? </label>
+    -->
    </div>
 
 <div class="submit-cancel-row">
