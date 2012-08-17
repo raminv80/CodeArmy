@@ -49,7 +49,8 @@ class Message_model extends CI_Model {
 		}
 	}
 	
-	function send_message($user_id,$to,$subject,$msg,$parent_id){
+	function send_message($user_id,$to,$subject,$msg,$parent_id=NULL){
+		if($parent_id==0)$parent_id=NULL;
 		$doc = array(
 			"from" => $user_id,
 			"to" => $to,

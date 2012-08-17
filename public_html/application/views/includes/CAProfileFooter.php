@@ -38,7 +38,6 @@
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Your proposal is accepted. Hurry up and be the first one to report to captain before someone else takes the mission.</p>
 </div>
 <script>
-	var logged_user_id = '<?=$this->session->userdata('user_id')?>';
 	$('#dropdown-button').click(function(){$('#dropdown').slideToggle('fast');})
 	$('#logo').click(function(){window.location="/profile"});
 	$('#missions-toggle').click(function(){$('#mission-submenue').slideToggle();});

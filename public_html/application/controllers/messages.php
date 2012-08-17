@@ -7,7 +7,8 @@ class Messages extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->paginaionlimit =10;
-		
+		//enable for debugging
+		//$this->output->enable_profiler(TRUE);
 		$this->load->model('users_model');
 		$this->load->model('message_model');
 		$this->load->model('skill_model');

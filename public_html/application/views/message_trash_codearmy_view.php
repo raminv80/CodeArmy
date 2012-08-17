@@ -43,7 +43,7 @@
 				$time = date('Y-M-d',strtotime($message['created_at']));
 			}elseif($diff>=60*60){
 				$time = round($diff/(60*60)).' hours ago';
-			}elseif($dif>=60){
+			}elseif($diff>=60){
 				$time = round($diff/60).' mins ago';
 			}else{
 				$time = 'now';

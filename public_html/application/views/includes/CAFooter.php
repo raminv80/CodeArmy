@@ -21,6 +21,7 @@ display:none;
 </style>
 <!-- /Chat box-->
 <script type="text/javascript">
+  var logged_user_id = '<?=$this->session->userdata('user_id')?>';
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-32075842-1']);
   _gaq.push(['_trackPageview']);

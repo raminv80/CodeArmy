@@ -296,7 +296,7 @@ class Work_model extends CI_Model {
 		return $this->db->query($sql, array($user_id,$limit))->result_array();
 	}
 	
-	function log_history($user_id,$work_id,$event,$status,$desc){
+	function log_history($user_id,$work_id,$event,$status,$desc,$push=true){
 		$user = $this->db->get_where('users',array('user_id'=>$user_id))->result_array();
 		$user = $user[0];
 		$work = $this->db->get_where('works',array('work_id'=>$work_id))->result_array();
@@ -310,20 +310,22 @@ class Work_model extends CI_Model {
 		);
 		$this->db->insert('history',$data);
 		
-		require_once(getcwd()."/application/helpers/pusher/Pusher.php");
-		$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
-		$data = array(
-			'user_id' => $user_id,
-			'username' => $user['username'],
-			'work_id' => $work_id,
-			'work_title'=>$work['title'],
-			'Desc' => $desc,
-			'event' => $event,
-			'time' => date('h:ia, d/m/Y'),
-			'status' => $status,
-			'event_id'=> $this->db->insert_id()
-		);
-		$pusher->trigger('history', 'new-activity-'.$work_id, $data );
+		if($push){
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $user['username'],
+				'work_id' => $work_id,
+				'work_title'=>$work['title'],
+				'Desc' => $desc,
+				'event' => $event,
+				'time' => date('h:ia, d/m/Y'),
+				'status' => $status,
+				'event_id'=> $this->db->insert_id()
+			);
+			$pusher->trigger('history', 'new-activity-'.$work_id, $data );
+		}
 	}
 	
 	function get_recent_activities($work_id,$limit=-1){
@@ -435,7 +437,7 @@ class Work_model extends CI_Model {
 	function accept_work($user_id,$work_id){
 		//check user's bid is accepted
 		$work = $this->get_work($work_id)->result_array();
-		$proposal = $this->work_model->get_approved_bid($user_id,$work_id);
+		$proposal = $this->get_approved_bid($user_id,$work_id);
 		$proposal = $proposal[0];
 		$arrangement = $this->get_work_arrangement($work_id);
 		$time = $proposal['bid_time'];
@@ -505,5 +507,13 @@ class Work_model extends CI_Model {
 		$sql = "SELECT count(1) AS num FROM bids WHERE bids.work_id=? AND bid_status in ('Bid','Accepted')";
 		$res = $this->db->query($sql, array($work_id))->result_array();
 		return $res[0]['num'];
+	}
+	
+	function is_po($user_id,$work_id){
+		return ($this->db->get_where('works',array('work_id'=>$work_id,'owner'=>$user_id))->num_rows()>0);
+	}
+	
+	function is_workhorse($user_id,$work_id){
+		return ($this->db->get_where('works',array('work_id'=>$work_id,'work_horse'=>$user_id))->num_rows()>0);
 	}
 }

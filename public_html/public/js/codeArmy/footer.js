@@ -23,7 +23,7 @@ $(function() {
 		$('.chat').show().find('ul').append('<li>'+data+'</li>');
 	});
 	 var map_channel = pusher.subscribe('map-channel');
-	 map_channel.bind('map-new',updateFeed(data));
+	 map_channel.bind('map-new',updateFeed);
 	 var mission = pusher.subscribe('mission');
 	 mission.bind_all(function(evnt,data){
 		 if(evnt.indexOf('accept-mission')>-1)updateFeed(data);
@@ -51,7 +51,7 @@ $(function() {
 });
 
 function updateFeed(data){
-	$('#live-feed').hide("slide", { direction: "left" }, 1000).html(data.time+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mission "'+data.work_title+'"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;published by&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+data.username).show("slide", { direction: "right" }, 1000);
+	$('#live-feed').hide("slide", { direction: "left" }, 1000,function(){$(this).html(data.time+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mission "'+data.work_title+'"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;published by&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+data.username)}).show("slide", { direction: "right" }, 1000);
 }
 //cookie management
 function setCookie(c_name,value,exdays)

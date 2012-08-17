@@ -176,7 +176,7 @@
                 <div class="mission-content">
                 	<ul class="mission-icons">
                 		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#" title="You are competing over <?=$troopers?> trooper(s) over this job!"><span class="icon"></span><span class="title"><?=$troopers?> Troop(s)</span></a></li>
+                        <li><a href="#" title="You are competing with <?=$troopers?> trooper(s) on this mission!"><span class="icon"></span><span class="title"><?=$troopers?> Troop(s)</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
                         <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
                     </ul>
@@ -234,10 +234,11 @@
                 </div>
                 <div class="mission-content">
                 	<ul class="mission-icons">
-                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#" title="You are competing over <?=$troopers?> trooper(s) over this job!"><span class="icon"></span><span class="title"><?=$troopers?>Troops</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                    	<?php $user = $this->users_model->get_user($list['owner'])->result_array();?>
+                		<li><a href="/messages/compose/<?=$user[0]['username']?>"><span class="icon"></span><span class="title">Captain</span></a></li>
+                        <li><a href="#" title="You are competing with <?=$troopers?> trooper(s) on this mission!"><span class="icon"></span><span class="title"><?=$troopers?>Troops</span></a></li>
+                        <li><a href="/missions/wall/<?=$list['work_id']?>"><span class="icon"></span><span class="title">Discussion</span></a></li>
+                        <li><a href="/missions/documents/<?=$list['work_id']?>"><span class="icon"></span><span class="title">Attachements</span></a></li>
                     </ul>
                     <div class="mission-time">
                     	<span class="time-left">Time left</span>
@@ -328,6 +329,7 @@
 <script>
 	var selectedItem;
 	$(function(){
+		$('a[title]').tipsy({trigger: 'hover', gravity: 'sw'});
 		mins = 0; setInterval("updateTimer()",1000*60);
 		$('.accept').click(function(){
 			selectedItem = $(this).parents('.item');
@@ -348,7 +350,6 @@
 							type: 'post',
 							data: {'csrf_workpad': getCookie('csrf_workpad'), 'work_id':work_id},
 							success: function(msg){
-								console.log(msg);
 								window.location = '/missions/wall/'+msg;
 								$.fancybox.hideLoading();
 							}
@@ -378,7 +379,6 @@
 							type: 'post',
 							data: {'csrf_workpad': getCookie('csrf_workpad'), 'work_id':work_id},
 							success: function(msg){
-								console.log(msg);
 								$('#mission-'+msg).slideUp(function(){$(this).remove()});
 								$.fancybox.hideLoading();
 							}
@@ -391,7 +391,6 @@
 		//Lets show number of bids on a mission in realtime
 		var channel = pusher.subscribe('bid');
 		  channel.bind_all(function(evnt,data) {
-		  console.log(evnt,data);
 		  if(evnt.indexOf('new-bid')>-1){
 			  var el=$('#mission-'+data.work_id).find('.bidders-'+data.work_id);
 			  var val = parseInt(el.html());

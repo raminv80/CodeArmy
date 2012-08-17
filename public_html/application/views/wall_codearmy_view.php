@@ -3,7 +3,7 @@
 <div class="po-wall-container">
   <div class="top-panel">
     <div class="top-panel-left">
-      <div class="top-panel-title"><?=ucwords($work['title'])?> <a href="#"><img src="/public/images/codeArmy/po/record-icon.png" /></a></div>
+      <div class="top-panel-title"><?=ucwords($work['title'])?> <a class="fancybox" href="http://www.youtube.com/embed/<?=$work['tutorial']?$work['tutorial']:'zFNb8j3YAd4'?>?autoplay=1"><img src="/public/images/codeArmy/po/record-icon.png" /></a></div>
       <div class="proj-category"><?=ucfirst($work['category'].(($work['class'])?' > '.$work['class_name']:'').(($work['subclass'])?' > '.$work['subclass_name']:''))?></div>
       <div class="tabs-row"> <a href="#" class="wall-active">Wall</a> <a class="task" href="/missions/task/<?=$work['work_id']?>">Task</a> <a class="document" href="/missions/documents/<?=$work['work_id']?>">Document</a> <a class="date" href="/missions/dates/<?=$work['work_id']?>">Date</a> </div>
       <div class="desc-row"><?=$work['description']?></div>
@@ -55,7 +55,7 @@
           <p class="po-name"><?=$po['username']?></p>
           <p class="level">Level <?=$this->gamemech->get_level($po['exp']);?></p>
         </div>
-        <div class="po-avatar"><img src="/public/images/codeArmy/po/default-avatar.png" /></div>
+        <div class="po-avatar"><a href="/profile/show/<?=$po['username']?>"><img src="/public/images/codeArmy/po/default-avatar.png" /></a></div>
       </div>
     </div>
   </div>
@@ -197,7 +197,7 @@
 <script type="text/javascript">
 $(function(){
 	var comment_channel = pusher.subscribe('comments');
-	var activity_channel = pusher1.subscribe('history');
+	var activity_channel = pusher.subscribe('history');
 	
 	set_def_value($('#discussion-message'),"Share something with your team");
 	set_def_value($('.attach-url'),"Enter a URL of your image");
@@ -224,6 +224,7 @@ $(function(){
 		});
 		
 	comment_channel.bind('new-comment-'+<?=$work['work_id']?>, function(data) {
+		console.log(data);
 		if(data.work_id=='<?=$work['work_id']?>'){
 			var theme = $('#comment-template').clone();
 			theme.find('.fmcb-right-row1').html(data.message);
@@ -244,7 +245,6 @@ $(function(){
 			theme.find('.wall-right-desc').html(data.Desc);
 			theme.find('.wall-right-work-link').html(data.work_title);
 			theme.find('.wall-right-block-row2').html(data.time);
-			console.log(theme.find('.wall-right-block-row2'),data)
 			theme.attr('id','activity-'+data.event_id);
 			$('.wall-right-block-title').after(theme);
 			theme.slideDown();

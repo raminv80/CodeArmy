@@ -185,7 +185,7 @@
 								$.ajax({
 									type:'post',
 									url:'/missions/Ajax_send_invites',
-									dataType: "json",
+									//dataType: "json",
 									data: {'ids':ids, 'work_id': '<?=$work_id?>', 'csrf_workpad': getCookie('csrf_workpad')},
 									success: function(msg){
 										if(msg=='success'){
