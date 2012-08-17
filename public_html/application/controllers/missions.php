@@ -735,7 +735,7 @@ class Missions extends CI_Controller {
 		$this->view_data['work'] = $this->view_data['work'][0];
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
-		$this->view_data['dates'] = array();
+		$this->view_data['dates'] = $this->work_model->get_all_calendar_events($work_id);
 		$this->view_data['window_title'] = "Date";
 		$this->load->view('date_codearmy_view', $this->view_data);
 		
@@ -1153,5 +1153,48 @@ class Missions extends CI_Controller {
 			$bidpusher->trigger('mission', 'decline-mission-'.$work_id, $data );
 			echo $work_id;
 		}else die('error');
+	}
+	
+	function Ajax_add_calendar_event(){
+		$user_id = $this->session->userdata('user_id');
+		$work_id = $this->input->post('work_id');
+		$eventname = $this->input->post('eventname');
+		$startDateTime = $this->input->post('startDateTime');
+		$endDateTime = $this->input->post('endDateTime');
+		$data = array(
+			'title' => $eventname,
+			'startDate' => $startDateTime,
+			'endDate' => $endDateTime,
+			'work_id' => $work_id,
+			'user_id' => $user_id
+		);
+		if($this->db->insert('calendar', $data)) echo "success";
+		else echo "error";
+	}
+	
+	function Ajax_udpate_calendar_event(){
+		$eventname = $this->input->post('eventname');
+		$startDateTime = $this->input->post('startDateTime');
+		$endDateTime = $this->input->post('endDateTime');
+		$calendar_id = $this->input->post('calendar_id');
+		$data = array(
+			'title' => $eventname,
+			'startDate' => $startDateTime,
+			'endDate' => $endDateTime
+		);
+		if($this->db->update('calendar', $data, array("calendar_id" => $calendar_id))) echo "success";
+		else echo "error";
+	}
+	
+	function Ajax_get_calendar_event(){
+		$calendarID = $this->input->get('calendarID');
+		$events = $this->work_model->get_calendar_event($calendarID);
+		echo json_encode($events);
+	}
+	
+	function Ajax_delete_calendar_event(){
+		$calendarID = $this->input->post('calendarID');
+		if($this->db->delete('calendar', array('calendar_id' => $calendarID))) echo "success";
+		else echo "error";
 	}
 }

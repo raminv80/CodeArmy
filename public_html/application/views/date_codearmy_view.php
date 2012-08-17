@@ -90,9 +90,9 @@
 		<button id="BtnNextMonth">Next Month</button>
 		&nbsp;&nbsp;&nbsp;
 		Date: <input type="text" id="dateSelect" size="20"/>
-		&nbsp;&nbsp;&nbsp;
+		<!--&nbsp;&nbsp;&nbsp;
 		<button id="BtnDeleteAll">Delete All</button>
-		<!-- ><button id="BtnICalTest">iCal Test</button>
+		 ><button id="BtnICalTest">iCal Test</button>
 		<input type="text" id="iCalSource" size="30" value="extra/fifa-world-cup-2010.ics"/> -->
 	</div>
   <div class="wall-bottom-panel">
@@ -213,19 +213,19 @@
 		<form>
 			<fieldset>
 				<label for="Title">Edit event</label>
-				<input type="text" name="eventname" id="eventname" style="width:95%" />
+				<input type="text" name="eventname2" id="eventname2" style="width:95%" />
 				<table style="width:100%; padding:5px; margin-top:15px">
 					<tr>
 						<td>
 							<label>Start Date</label>
-							<input type="text" name="startDate" id="startDate2" value="" />				
+							<input type="text" name="startDate2" id="startDate2" value="" />				
 						</td>
 						<td>&nbsp;</td>
 						<td>
 							<label>Start Hour</label>
 							<div class="wrapselect tiny">
-								<select id="startHour">
-									<option value="12" SELECTED>12</option>
+								<select id="startHour2">
+									<option value="12">12</option>
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
@@ -243,8 +243,8 @@
 						<td>
 							<label>Start Minute</label>
 							<div class="wrapselect tiny">
-								<select id="startMin">
-									<option value="00" SELECTED>00</option>
+								<select id="startMin2">
+									<option value="00">00</option>
 									<option value="10">10</option>
 									<option value="20">20</option>
 									<option value="30">30</option>
@@ -256,8 +256,8 @@
 						<td>
 							<label>Start AM/PM</label>
 							<div class="wrapselect tiny">
-								<select id="startMeridiem">
-									<option value="AM" SELECTED>AM</option>
+								<select id="startMeridiem2">
+									<option value="AM">AM</option>
 									<option value="PM">PM</option>
 								</select>
 							</div>				
@@ -266,14 +266,14 @@
 					<tr>
 						<td>
 							<label>End Date</label>
-							<input type="text" name="endDate" id="endDate2" value="" />				
+							<input type="text" name="endDate2" id="endDate2" value="" />				
 						</td>
 						<td>&nbsp;</td>
 						<td>
 							<label>End Hour</label>
 							<div class="wrapselect tiny">
-								<select id="endHour" >
-									<option value="12" SELECTED>12</option>
+								<select id="endHour2" >
+									<option value="12">12</option>
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
@@ -291,8 +291,8 @@
 						<td>
 							<label>End Minute</label>
 							<div class="wrapselect tiny">
-								<select id="endMin">
-									<option value="00" SELECTED>00</option>
+								<select id="endMin2">
+									<option value="00">00</option>
 									<option value="10">10</option>
 									<option value="20">20</option>
 									<option value="30">30</option>
@@ -304,15 +304,15 @@
 						<td>
 							<label>End AM/PM</label>
 							<div class="wrapselect tiny">
-								<select id="endMeridiem">
-									<option value="AM" SELECTED>AM</option>
+								<select id="endMeridiem2">
+									<option value="AM">AM</option>
 									<option value="PM">PM</option>
 								</select>
 							</div>				
 						</td>				
 					</tr>			
 				</table>
-				<button href="index.html" class="button black"><i class="icon-repeat"></i> Update</button>
+				<button type="button" id="btnUpdate" class="button black" role="button" aria-disabled="false"><i class="icon-repeat"></i> Update</button>
 			</fieldset>
 		</form>
 	</div>
@@ -412,8 +412,52 @@ var jfcalplugin = $("#mycal").jFrontierCal({
 	agendaDropCallback: myAgendaDropHandler,
 	agendaMouseoverCallback: myAgendaMouseoverHandler,
 	applyAgendaTooltipCallback: myApplyTooltip,
-	dragAndDropEnabled: true
+	dragAndDropEnabled: false
 }).data("plugin");
+
+<?php
+foreach($dates as $eventItem):
+	$strStartDate = explode(",",$eventItem['startDate']);
+	if($strStartDate[1] == "1"){
+		$strStartYear = $strStartDate[0] - 1;
+		$strStartMonth = "12";
+		$strStartDay = $strStartDate[2];
+		$strStartHour = $strStartDate[3];
+		$strStartMinute = $strStartDate[4];
+	} else {
+		$strStartYear = $strStartDate[0];
+		$strStartMonth = $strStartDate[1] - 1;
+		$strStartDay = $strStartDate[2];
+		$strStartHour = $strStartDate[3];
+		$strStartMinute = $strStartDate[4];
+	}
+	$strEndDate = explode(",",$eventItem['endDate']);
+	if($strEndDate[1] == "1"){
+		$strEndYear = $strEndDate[0] - 1;
+		$strEndMonth = "12";
+		$strEndDay = $strEndDate[2];
+		$strEndHour = $strEndDate[3];
+		$strEndMinute = $strEndDate[4];
+	} else {
+		$strEndYear = $strEndDate[0];
+		$strEndMonth = $strEndDate[1] - 1;
+		$strEndDay = $strEndDate[2];
+		$strEndHour = $strEndDate[3];
+		$strEndMinute = $strEndDate[4];
+	}
+?>
+	jfcalplugin.addAgendaItem(
+		"#mycal",
+		"<?=$eventItem['title']?>",
+		new Date(<?=$strStartYear.",".$strStartMonth.",".$strStartDay.",".$strStartHour.",".$strStartMinute.",0,0"?>),
+		new Date(<?=$strEndYear.",".$strEndMonth.",".$strEndDay.",".$strEndHour.",".$strEndMinute.",0,0"?>),
+		false,
+		{
+			calendar_id: <?=$eventItem['calendar_id']?>
+		}
+	);
+	
+<?php endforeach; ?>
 
 /**
  * Get the date (Date object) of the day that was clicked from the event object
@@ -421,7 +465,8 @@ var jfcalplugin = $("#mycal").jFrontierCal({
 
 function myDayClickHandler(eventObj){
 	var date = eventObj.data.calDayDate;
-	$('label[for="Title"] span').text(date.toDateString());
+	//$('label[for="Title"] span').text(date.toDateString());
+	clickDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
 	$('#add-event-form').dialog('open'); 
 };
 
@@ -452,18 +497,6 @@ function myAgendaMouseoverHandler(eventObj){
 	var agendaItem = jfcalplugin.getAgendaItemById("#mycal",agendaId);
 	//alert("You moused over agenda item " + agendaItem.title + " at location (X=" + eventObj.pageX + ", Y=" + eventObj.pageY + ")");
 };
-
-function initDates(){
-	for(i=0;i<dates.length;i++){
-		jfcalplugin.addAgendaItem(
-			"#mycal",
-			dates[i].title,
-			new Date(dates[i].start),
-			new Date(dates[i].end),
-			false	
-		);
-	}
-}
 
 /**
  * Initialize jquery ui datepicker. set date format to yyyy-mm-dd for easy parsing
@@ -545,7 +578,7 @@ $("#BtnDeleteAll").click(function() {
 $("#add-event-form").dialog({
 	autoOpen: false,
 	height: 400,
-	width: 400,
+	width: 450,
 	modal: true,
 	buttons: {
 		'Add Event': function() {
@@ -634,22 +667,24 @@ $("#add-event-form").dialog({
 					false
 				);
 				
-				/* Ajax start here
+				var startDateTime = startDtArray+','+startHour+','+startMin+',0,0';
+				var endDateTime = endDtArray+','+endHour+','+endMin+',0,0';
+				//console.log(startDateTime, endDateTime);
+				// Ajax start here
 				$.ajax({
 					type: 'post',
 					async: false,
-					url: '/missions/check_create_mission',
-					data: { 'xxx': yyy },
+					url: '/missions/Ajax_add_calendar_event',
+					data: { 'csrf_workpad':getCookie('csrf_workpad'), 'work_id':<?=$work['work_id']?>, 'eventname':eventname, 'startDateTime':startDateTime, 'endDateTime':endDateTime },
 					success: function(msg){
 						console.log(msg)
 						if(msg!="" && msg!='error'){
-							console.log(msg); parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
+							console.log(msg);
 						} else {
 							alert("Error");
 						}
-						$('#reg-ajax').hide();
 					}
-				}); */
+				});
 
 				$(this).dialog('close');
 
@@ -680,27 +715,6 @@ $("#add-event-form").dialog({
 			dateFormat: 'yy-mm-dd'
 		});
 		
-		$("#startDate2").datepicker({
-			showOtherMonths: true,
-			selectOtherMonths: true,
-			changeMonth: true,
-			changeYear: true,
-			showButtonPanel: true,
-			dateFormat: 'yy-mm-dd'
-		});
-		// initialize end date picker
-		$("#endDate2").datepicker({
-			showOtherMonths: true,
-			selectOtherMonths: true,
-			changeMonth: true,
-			changeYear: true,
-			showButtonPanel: true,
-			dateFormat: 'yy-mm-dd'
-		});
-		// initialize with the date that was clicked
-		$("#startDate2").val(clickDate);
-		$("#endDate2").val(clickDate);
-		
 		// initialize with the date that was clicked
 		$("#startDate").val(clickDate);
 		$("#endDate").val(clickDate);
@@ -730,13 +744,58 @@ $("#add-event-form").dialog({
 $("#display-event-form").dialog({
 	autoOpen: false,
 	height: 400,
-	width: 400,
+	width: 450,
 	modal: true,
 	buttons: {		
 		Cancel: function() {
 			$(this).dialog('close');
 		},
 		'Edit': function() {
+			var calendarID = clickAgendaItem.agendaId;
+			$.ajax({
+				type: 'get',
+				async: false,
+				url: '/missions/Ajax_get_calendar_event',
+				data: { 'csrf_workpad':getCookie('csrf_workpad'), 'calendarID':calendarID },
+				success: function(msg){
+					var msg = msg.replace('[','');
+					var msg = msg.replace(']','');
+					var eventDetails = jQuery.parseJSON(msg);
+					//console.log(msg)
+					$('#eventname2').attr('value',eventDetails.title);
+					var StartDateTime = eventDetails.startDate;
+					var subStartDateTime = StartDateTime.split(',');
+					var startDate = subStartDateTime[0]+'-'+subStartDateTime[1]+'-'+subStartDateTime[2];
+					$('#startDate2').attr('value',startDate);
+					if(subStartDateTime[3] > 12){
+						var startHour = subStartDateTime[3] - 12;
+						var startMeridiem = 1;
+					} else {
+						var startHour = subStartDateTime[3];
+						var startMeridiem = 0;
+					}
+					var startMinute = parseInt(subStartDateTime[4])/10;
+					$('#startHour2 option:eq('+startHour+')').attr("selected", "selected");
+					$('#startMin2 option:eq('+startMinute+')').attr("selected", "selected");
+					$('#startMeridiem2 option:eq('+startMeridiem+')').attr("selected", "selected");
+					
+					var EndDateTime = eventDetails.endDate;
+					var subEndDateTime = EndDateTime.split(',');
+					var endDate = subEndDateTime[0]+'-'+subEndDateTime[1]+'-'+subEndDateTime[2];
+					$('#endDate2').attr('value',endDate);
+					if(subEndDateTime[3] > 12){
+						var endHour = subEndDateTime[3] - 12;
+						var endMeridiem = "PM";
+					} else {
+						var endHour = subEndDateTime[3];
+						var endMeridiem = "AM";
+					}
+					var endMinute = parseInt(subEndDateTime[4])/10;
+					$('#endHour2 option:eq('+endHour+')').attr("selected", "selected");
+					$('#endMin2 option:eq('+endMinute+')').attr("selected", "selected");
+					$('#endMeridiem2 option:eq('+endMeridiem+')').attr("selected", "selected");
+				}
+			});
 			$('.edit-event').show();
 			$('.show-event').hide();
 		},
@@ -744,7 +803,20 @@ $("#display-event-form").dialog({
 			if(confirm("Are you sure you want to delete this agenda item?")){
 				if(clickAgendaItem != null){
 					jfcalplugin.deleteAgendaItemById("#mycal",clickAgendaItem.agendaId);
-					//jfcalplugin.deleteAgendaItemByDataAttr("#mycal","myNum",42);
+					var agendaItem = clickAgendaItem.data.calendar_id;
+					$.ajax({
+						type: 'post',
+						async: false,
+						url: '/missions/Ajax_delete_calendar_event',
+						data: { 'csrf_workpad':getCookie('csrf_workpad'), 'calendarID':agendaItem },
+						success: function(msg){
+							if(msg!="" && msg!='error'){
+								console.log(msg);
+							} else {
+								alert("Error");
+							}
+						}
+					});
 				}
 				$(this).dialog('close');
 			}
@@ -753,6 +825,27 @@ $("#display-event-form").dialog({
 	open: function(event, ui){
 		$('.edit-event').hide();
 		$('.show-event').show();
+		
+		$("#startDate2").datepicker({
+			showOtherMonths: true,
+			selectOtherMonths: true,
+			changeMonth: true,
+			changeYear: true,
+			showButtonPanel: true,
+			dateFormat: 'yy-mm-dd'
+		});
+		// initialize end date picker
+		$("#endDate2").datepicker({
+			showOtherMonths: true,
+			selectOtherMonths: true,
+			changeMonth: true,
+			changeYear: true,
+			showButtonPanel: true,
+			dateFormat: 'yy-mm-dd'
+		});
+		// initialize with the date that was clicked
+		$("#startDate2").val(clickDate);
+		$("#endDate2").val(clickDate);
 		
 		if(clickAgendaItem != null){
 			//console.log(clickAgendaItem);
@@ -785,10 +878,10 @@ $("#display-event-form").dialog({
 		// clear agenda data
 		$(".show-event").html("");
 		// reset form elements when we close so they are fresh when the dialog is opened again.
-		$("#startDate").datepicker("destroy");
-		$("#endDate").datepicker("destroy");
-		$("#startDate").val("");
-		$("#endDate").val("");
+		$("#startDate2").datepicker("destroy");
+		$("#endDate2").datepicker("destroy");
+		$("#startDate2").val("");
+		$("#endDate2").val("");
 		$("#startHour option:eq(0)").attr("selected", "selected");
 		$("#startMin option:eq(0)").attr("selected", "selected");
 		$("#startMeridiem option:eq(0)").attr("selected", "selected");
@@ -796,6 +889,105 @@ $("#display-event-form").dialog({
 		$("#endMin option:eq(0)").attr("selected", "selected");
 		$("#endMeridiem option:eq(0)").attr("selected", "selected");			
 		$("#eventname").val("");
+	}
+});
+
+$("#btnUpdate").click(function() {
+	var calendarID = clickAgendaItem.agendaId;
+	var eventname = jQuery.trim($("#eventname2").val());
+	var startDate = $("#startDate2").val();
+	var endDate = $("#endDate2").val();
+
+	// Validation
+	if(eventname == ""){
+		elem = $('#eventname2').css('border-color','red')
+		$('#eventname2').attr('placeholder','Please enter a short event description into the field');
+		setTimeout(function(){ elem.css('border-color','#555'); },2000);
+		$('#eventname2').focus(function(){$(this).attr('placeholder',' ')})
+	}else if (startDate == ""){
+		elem = $('#startDate2').css('border-color','red')
+		$('#startDate2').attr('placeholder','Pick start date');
+		setTimeout(function(){ elem.css('border-color','#555'); },2000);
+		$('#startDate2').focus(function(){$(this).attr('placeholder',' ')})
+	} else if (endDate == ""){
+		elem = $('#endDate2').css('border-color','red')
+		$('#endDate2').attr('placeholder','Pick end date');
+		setTimeout(function(){ elem.css('border-color','#555'); },2000);
+		$('#endDate2').focus(function(){$(this).attr('placeholder',' ')})
+	} else {
+	
+		var startDtArray = startDate.split("-");
+		var startYear = startDtArray[0];
+		// jquery datepicker months start at 1 (1=January)		
+		var startMonth = startDtArray[1];		
+		var startDay = startDtArray[2];
+		// strip any preceeding 0's		
+		startMonth = startMonth.replace(/^[0]+/g,"");
+		startDay = startDay.replace(/^[0]+/g,"");
+		var startHour = jQuery.trim($("#startHour2").val());
+		var startMin = jQuery.trim($("#startMin2").val());
+		var startMeridiem = jQuery.trim($("#startMeridiem2").val());
+		startHour = parseInt(startHour.replace(/^[0]+/g,""));
+		if(startMin == "0" || startMin == "00"){
+			startMin = 0;
+		}else{
+			startMin = parseInt(startMin.replace(/^[0]+/g,""));
+		}
+		if(startMeridiem == "AM" && startHour == 12){
+			startHour = 0;
+		}else if(startMeridiem == "PM" && startHour < 12){
+			startHour = parseInt(startHour) + 12;
+		}
+
+		var endDtArray = endDate.split("-");
+		var endYear = endDtArray[0];
+		// jquery datepicker months start at 1 (1=January)		
+		var endMonth = endDtArray[1];		
+		var endDay = endDtArray[2];
+		// strip any preceeding 0's		
+		endMonth = endMonth.replace(/^[0]+/g,"");
+
+		endDay = endDay.replace(/^[0]+/g,"");
+		var endHour = jQuery.trim($("#endHour2").val());
+		var endMin = jQuery.trim($("#endMin2").val());
+		var endMeridiem = jQuery.trim($("#endMeridiem2").val());
+		endHour = parseInt(endHour.replace(/^[0]+/g,""));
+		if(endMin == "0" || endMin == "00"){
+			endMin = 0;
+		}else{
+			endMin = parseInt(endMin.replace(/^[0]+/g,""));
+		}
+		if(endMeridiem == "AM" && endHour == 12){
+			endHour = 0;
+		}else if(endMeridiem == "PM" && endHour < 12){
+			endHour = parseInt(endHour) + 12;
+		}
+		
+		// Dates use integers
+		var startDateObj = new Date(parseInt(startYear),parseInt(startMonth)-1,parseInt(startDay),startHour,startMin,0,0);
+		var endDateObj = new Date(parseInt(endYear),parseInt(endMonth)-1,parseInt(endDay),endHour,endMin,0,0);
+		
+		var startDateTime = startDtArray+','+startHour+','+startMin+',0,0';
+		var endDateTime = endDtArray+','+endHour+','+endMin+',0,0';
+		console.log(startDateTime, endDateTime);
+		// Ajax start here
+		$.ajax({
+			type: 'post',
+			async: false,
+			url: '/missions/Ajax_udpate_calendar_event',
+			data: { 'csrf_workpad':getCookie('csrf_workpad'), 'eventname':eventname, 'startDateTime':startDateTime, 'endDateTime':endDateTime, 'calendar_id':calendarID },
+			success: function(msg){
+				console.log(msg)
+				if(msg!="" && msg!='error'){
+					console.log(msg);
+				} else {
+					alert("Error");
+				}
+			}
+		});
+
+		//$(this).dialog('close');
+		location.reload();
 	}
 });
 

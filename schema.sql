@@ -458,6 +458,16 @@ CREATE TABLE IF NOT EXISTS `work_links` (
   KEY `upload_by` (`upload_by`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `calendar` (
+  `calendar_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `startDate` varchar(50) NOT NULL,
+  `endDate` varchar(50) NOT NULL,
+  `work_id` varchar(32) NOT NULL,
+  `user_id` varchar(48) NOT NULL,
+  PRIMARY KEY (`calendar_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 ALTER TABLE `achievement_set`
   ADD CONSTRAINT `achievement_set_ibfk_1` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`achievement_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `achievement_set_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;

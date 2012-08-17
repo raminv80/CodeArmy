@@ -506,4 +506,14 @@ class Work_model extends CI_Model {
 		$res = $this->db->query($sql, array($work_id))->result_array();
 		return $res[0]['num'];
 	}
+	
+	function get_all_calendar_events($work_id){
+		$sql = "SELECT * FROM calendar WHERE work_id = ?";
+		return $this->db->query($sql, $work_id)->result_array();
+	}
+	
+	function get_calendar_event($calendar_id){
+		$sql = "SELECT * FROM calendar WHERE calendar_id = ?";
+		return $this->db->query($sql, $calendar_id)->result_array();
+	}
 }
