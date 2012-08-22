@@ -1042,6 +1042,9 @@
 				$('#reg-error').hide();
 			}
 		});
+		$('#password').keypress(function() {if ( event.which == 13 ) {$('#register-submit').click();}});
+		$('#name').keypress(function() {if ( event.which == 13 ) {$('#register-submit').click();}});
+		$('#email').keypress(function() {if ( event.which == 13 ) {$('#register-submit').click();}});
 </script> 
 <script type="text/javascript" src="/public/js/codeArmy/footer.js"></script>
 <div id="homebg-left"><img src="/public/images/codeArmy/home/bghome-twitter.jpg" /></div>

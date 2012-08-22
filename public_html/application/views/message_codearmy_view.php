@@ -50,6 +50,8 @@
 	float:left;
 	width:650px;	
 }
+#inbox-content-area .message-content a{ text-decoration:underline; color:white}
+#inbox-content-area .message-content a:hover{color:#09F}
 </style>
 <!--<img src="/public/images/codeArmy/messages/temp_msg.png" id="preview"/>-->
 <div id="inbox-content-area"> 
