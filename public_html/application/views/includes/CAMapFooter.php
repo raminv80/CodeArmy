@@ -1,4 +1,4 @@
-<div id="footer" style="float:none; height:30px;">
+<div id="footer" style="float:none; height:30px; position:relative">
   <div id="social-links">
     <div style="display:block; width:75px;float:left">Follow us on</div>
     <a target="_blank" id="facebook" href="http://www.facebook.com/CodeArmyHQ">Facebook</a> <a id="twitter" target="_blank" href="https://twitter.com/#!/Code_Army">Twitter</a> </div>

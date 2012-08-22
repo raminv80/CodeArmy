@@ -1,8 +1,6 @@
     
     </div>
     
-    
-    
 	<div id="footer">
         <div id="social-links">
             <div style="display:block; width:75px;float:left">Follow us on</div> <a target="_blank" id="facebook" href="http://www.facebook.com/CodeArmyHQ">Facebook</a> <a id="twitter" target="_blank" href="https://twitter.com/#!/Code_Army">Twitter</a>
@@ -73,6 +71,7 @@
   <span style="position:absolute; left:373px; top:220px;">Message</span>
   <textarea name="message" id="contact-message" style="position:absolute; display:block; width:309px; height:79px; top:201px; left:450px; background:none; border:none; color:white; font-size:9pt; font-family:'Ruda', sans-serif;"></textarea>
   <?php echo form_close(); ?> <a href="javascript: void(0)" id="contact-submit" class="CAbutton" style="position:absolute; right:5px; top:300px; color:#CCC">Submit</a> </div>
+
 <script>
 	$('#dropdown-button').click(function(){$('#dropdown').slideToggle('fast');})
 	$('#logo').click(function(){window.location="/profile"});
