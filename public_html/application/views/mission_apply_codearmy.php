@@ -88,7 +88,7 @@
 	    <div class="find-mission-right-block">
 	      <div class="right-col-title-bg">Mission Captain</div>
 	      <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-	        <p>99</p>
+	        <p><?=$this->gamemech->get_level($po['exp'])?></p>
 	      </div>
 	      <div class="captainame"><?=$po['username']?></div>
 	      <div class="captainrank">Level <?=$this->gamemech->get_level($po['exp'])?></div>

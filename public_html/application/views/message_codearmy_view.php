@@ -106,6 +106,7 @@
     </div>
     <?php endforeach;?>
   </div>
+  <div id="reply-form">
   <?php if($compose_to>''){echo form_open('messages/send'); ?>
     <div id="compose-main-area">
       <div id="compose-avatar"> </div>
@@ -142,6 +143,7 @@
     <input type="hidden" name="parent_id" value="<?=$message['message_id']?>" />
     <input type="submit" value="Send" class="lnkimg">
     </form>
+    </div>
     <?php }?>
 </div>
 <script type="text/javascript">

@@ -220,6 +220,7 @@ class Missions extends CI_Controller {
 	}
 	
 	function mission_list($lat,$lng){
+		$this->load->helper('text');
 		$this->view_data['works'] = $this->stories->list_stories_map($this->percision,$lat,$lng);
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('mission_list_codearmy_view', $this->view_data);
@@ -987,9 +988,9 @@ class Missions extends CI_Controller {
 	function Ajax_reject_bid(){
 		$user_id = $this->session->userdata('user_id');
 		$bid_id = $this->input->post('bid_id');
+		$bid = $this->work_model->get_bid($bid_id);
 		if($this->work_model->remove_bid($bid_id, $user_id)){
-			$bid = $this->work_model->get_bid($bid_id);
-			
+			$work = $this->work_model->get_work($bid[0]['work_id'])->result_array();
 			//send message to tallent
 			$subject = "Bid rejected";
 			$msg = "Your bid on mission '".$work[0]['title']."' is rejected.";

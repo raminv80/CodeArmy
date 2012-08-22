@@ -31,14 +31,14 @@
 <div id="profile-toolbar" class="toolbar">
   <div id="avatar-block"> <a href="/profile"><img src="/public/images/codeArmy/mymission/profile_toolbar/avatar.png" id="avatar" alt="avatar" /></a>
     <ul id="status-icons">
-      <li><a href="#"><img title="Missions" src="/public/images/codeArmy/mymission/profile_toolbar/mission-status.png" /></a>
+      <li><a href="/missions/my_missions"><img title="Missions" src="/public/images/codeArmy/mymission/profile_toolbar/mission-status.png" /></a>
         <div class="status"><?=$myActiveMissions?></div>
       </li>
-      <li><a href="#"><img title="Messages" src="/public/images/codeArmy/mymission/profile_toolbar/message-status.png" /></a>
-        <div class="status">3</div>
+      <li><a href="/messages/inbox"><img title="Messages" src="/public/images/codeArmy/mymission/profile_toolbar/message-status.png" /></a>
+        <div class="status"><?=$myActiveMessages?></div>
       </li>
-      <li><a href="#"><img title="Notifications" src="/public/images/codeArmy/mymission/profile_toolbar/notification-status.png" /></a>
-        <div class="status">2</div>
+      <li><a href="/messages/notifications"><img title="Notifications" src="/public/images/codeArmy/mymission/profile_toolbar/notification-status.png" /></a>
+        <div class="status"><?=$myActiveNotifications?></div>
       </li>
     </ul>
   </div>

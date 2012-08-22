@@ -24,7 +24,7 @@
       </a>
     </div>
     <div class="apply-details-right-<?=($bid['bid_status']=='Bid')?'bidded':''?><?=($bid['bid_status']=='Declined')?'declined':''?>">
-      <div class="apply-details-right-top">Sorry to decline, my schedule is fully occupied currently.</div>
+      <div class="apply-details-right-top"><?=trim($bid['bid_desc']=='')?'No question or comment.':trim($bid['bid_desc'])?></div>
       <div class="apply-details-right-bottom">
       
       <div class="right-bot-l"><div class="bot-left-row1"><strong><?=$bid['username']?></strong> proposed:</div><div class="bot-left-row2"> 
@@ -137,6 +137,7 @@ $(function(){
 	$('.reject').click(function(){
 		selectedBid = $(this).parents('.bid-container');
 		var bid_id = selectedBid.attr('id').split('-')[1];
+		console.log(bid_id);
 		$( "#dialog-reject" ).dialog({
 			resizable: false,
 			modal: true,
@@ -153,6 +154,7 @@ $(function(){
 						'success': function(msg){
 								console.log(msg);
 								if(msg!='error'){
+									$( "#dialog-reject" ).dialog( "close" );
 									selectedBid.slideUp(function(){$('#bid-'+msg).remove()});
 								}
 							}

@@ -32,7 +32,7 @@ class Projects_model extends CI_Model {
 		$doc = array(
 			'user_id' => $user_id,
 			'active' => 0,
-			'redemption_at' => time()
+			'redemption_at' => date('Y-m-d H:i:s')
 		);
 		$this->db->update('voucher_po', $doc, array('code' => $code));
 		return $this->db->affected_rows()>0;

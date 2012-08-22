@@ -87,7 +87,7 @@
         <div class="mission-description-container">
         	<h2 class="mission-description-header">Description</h2>
             <div class="mission-description">
-            	<?=$work['description']?>
+            	<?=substr(strip_tags($work['description']),0,250)?><?=(strlen($work['description'])>250)?'...':''?>
             </div>
         </div>
         <div class="info">
