@@ -1,4 +1,4 @@
-<script type="application/x-javascript">
+<script type="text/javascript">
 //cookie management
 function setCookie(c_name,value,exdays)
 {
@@ -23,3 +23,5 @@ function getCookie(c_name)
 	  return false;
 }
 </script>
+</body>
+</html>
