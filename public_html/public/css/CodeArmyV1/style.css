@@ -2961,6 +2961,96 @@ input.rejimg:hover {
 	text-decoration:underline;
 	font-style:italic;
 }
+/* Contact Us Page - By Reza */
+.contact-us-container {
+	float:left;
+	position:relative;
+	width:770px;
+}
+.contact-us-left {
+	float:left;
+	width:380px;
+	position:relative;
+}
+.contact-us-right {
+	float:right;
+	position:relative;
+	width:380px;
+}
+.contact-left-content, .contact-right-content {
+	width:100%;
+	padding:20px 0 0 0;
+	float:left;
+}
+.contact-left-content a {
+	text-decoration:underline;
+	vertical-align:top;
+	padding:0 0 0 20px;
+}
+.contact-right-content input {
+	background:url(/public/images/codeArmy/profile/contact-input-bg.png) no-repeat;
+	border:none;
+	float:right;
+	width:319px;
+	height:26px;
+	color:#fff;
+	font-family:'Ruda', sans-serif;
+	font-size:14px;
+	margin-left: 20px;
+}
+.contact-right-content  label {
+	float:left;
+	width:30px;
+}
+.contact-right-content  .input-row {
+	float:left;
+	width:100%;
+}
+.contact-right-content textarea {
+	background: url("/public/images/codeArmy/mission/textarea-box-bg.jpg") no-repeat scroll 0 0 transparent;
+    border: none;
+    color: #FFFFFF;
+    float: right;
+    height: 95px;
+	resize: none;
+    width: 315px;
+	margin: 5px 0 0 0;
+}
+.contact-right-content select {
+	width:319px;
+	-webkit-appearance: none;
+	height:22px;
+	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border:none;
+	color:#fff;
+	font-family:'Ruda', sans-serif;
+	padding-left: 10px;
+	font-size:14px;
+	float:right;
+}
+.contact-right-content input.lnkimg {
+	background: url(/public/images/codeArmy/profile/savebtn_nstate.png) no-repeat;
+width: 127px;
+float: right;
+height: 49px;
+padding: 0;
+text-align: center;
+text-decoration: none;
+color: white;
+font-size: 15px;
+border: none;
+margin: 10px 0 0 0;
+}
+.contact-right-content input.lnkimg:hover {
+	background:url(/public/images/codeArmy/profile/savebtn_hoverstate.png) no-repeat;
+}
+.contact-map {
+	float:left;
+	margin:20px 0;
+}
 /* END - New Codes by Reza@RezaKabiri.com */
 
 
