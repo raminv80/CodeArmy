@@ -670,7 +670,7 @@ $("#add-event-form").dialog({
 				var startDateTime = startDtArray+','+startHour+','+startMin+',0,0';
 				var endDateTime = endDtArray+','+endHour+','+endMin+',0,0';
 
-				if(Date.parse(startDate) <= Date.parse(endDate)){
+				if(Date.parse(startDate.replace(/\-/ig, '/')) <= Date.parse(endDate.replace(/\-/ig, '/'))){
 					// Ajax start here
 					$.ajax({
 						type: 'post',
@@ -679,7 +679,7 @@ $("#add-event-form").dialog({
 						data: { 'csrf_workpad':getCookie('csrf_workpad'), 'work_id':<?=$work['work_id']?>, 'eventname':eventname, 'startDateTime':startDateTime, 'endDateTime':endDateTime },
 						success: function(msg){
 							if(msg!="" && msg!='error'){
-								console.log(msg);
+								//console.log(msg);
 							} else {
 								alert("Error");
 							}
@@ -803,8 +803,8 @@ $("#display-event-form").dialog({
 		'Delete': function() {
 			if(confirm("Are you sure you want to delete this agenda item?")){
 				if(clickAgendaItem != null){
-					jfcalplugin.deleteAgendaItemById("#mycal",clickAgendaItem.agendaId);
 					var agendaItem = clickAgendaItem.data.calendar_id;
+					jfcalplugin.deleteAgendaItemById("#mycal",clickAgendaItem.agendaId);
 					$.ajax({
 						type: 'post',
 						async: false,
@@ -812,7 +812,7 @@ $("#display-event-form").dialog({
 						data: { 'csrf_workpad':getCookie('csrf_workpad'), 'calendarID':agendaItem },
 						success: function(msg){
 							if(msg!="" && msg!='error'){
-								console.log(msg);
+								//console.log(msg);
 							} else {
 								alert("Error");
 							}
@@ -971,7 +971,7 @@ $("#btnUpdate").click(function() {
 		var startDateTime = startDtArray+','+startHour+','+startMin+',0,0';
 		var endDateTime = endDtArray+','+endHour+','+endMin+',0,0';
 		
-		if(Date.parse(startDate) <= Date.parse(endDate)){
+		if(Date.parse(startDate.replace(/\-/ig, '/')) <= Date.parse(endDate.replace(/\-/ig, '/'))){
 			// Ajax start here
 			$.ajax({
 				type: 'post',
@@ -980,7 +980,7 @@ $("#btnUpdate").click(function() {
 				data: { 'csrf_workpad':getCookie('csrf_workpad'), 'eventname':eventname, 'startDateTime':startDateTime, 'endDateTime':endDateTime, 'calendar_id':calendarID },
 				success: function(msg){
 					if(msg!="" && msg!='error'){
-						console.log(msg);
+						//console.log(msg);
 					} else {
 						alert("Error");
 					}
