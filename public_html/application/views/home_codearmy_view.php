@@ -989,7 +989,7 @@
 											if(msg=="success"){
 												if(password.length>6){
 													//submit the form.
-													console.log('submitting the form...');
+													//console.log('submitting the form...');
 													$.ajax({
 														type: 'POST',
 														url: 'register/Ajax_signup',
@@ -998,11 +998,11 @@
 															$('#reg-ajax').fadeOut();
 															if(msg=="success"){
 																//register done
-																console.log('Signup success. Redirecting...');
+																//console.log('Signup success. Redirecting...');
 																window.location="/register"
 															}else{
 																//register error
-																console.log('Signup error.',msg);
+																//console.log('Signup error.',msg);
 																text=msg;
 																$('#reg-error').html(text).stop(true,false).show().effect("bounce", {times:2, distance: 10}, 200);
 															}
