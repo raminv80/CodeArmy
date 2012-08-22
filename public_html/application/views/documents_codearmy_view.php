@@ -91,7 +91,7 @@
 	?>
     <div class="docs-table-row">
       <div class="doc-number"><?=$i?>.</div>
-      <div class="doc-name"><a href="<?=$files['link']?>" target="_blank"><img src="/public/images/codeArmy/po/documents/share-icon.png" align="absmiddle" style="vertical-align:middle !important" border="0" /> <?=(strlen($files['link']) > 45) ? substr($files['link'],0,42).'...' : $files['link']?></a></div>
+      <div class="doc-name"><a href="<?=$files['link']?>" target="_blank"><img src="/public/images/codeArmy/po/documents/share-icon.png" align="absmiddle" style="vertical-align:middle !important" border="0" /> <?=(strlen($files['link']) > 45) ? substr($files['link'],0,40).'...' : $files['link']?></a></div>
       <div class="doc-upload-by">Uploaded by <?=$files['username']?></div>
       <div class="doc-upload-time"><!--4 days ago-->&nbsp;</div>
       <div class="doc-upload-date"><?=date('j/m/Y',strtotime($files['upload_at']))?></div>
@@ -168,7 +168,7 @@
 	});
 	
 	uploader.bind('BeforeUpload', function (up, file) {
-		console.log(file.size);
+		//console.log(file.size);
 		var work_id = <?=$work['work_id']?>;
 		up.settings.multipart_params = {'filesize': file.size,'csrf_workpad': getCookie('csrf_workpad'),'work_id':work_id}
 	});
@@ -197,7 +197,7 @@
 						//$('#'+file_id).remove();
 						location.reload();
 					}else{
-						console.log(msg)
+						//console.log(msg)
 					}
 				}
 		});
@@ -216,7 +216,7 @@
 						//$('#'+file_id).remove();
 						location.reload();
 					}else{
-						console.log(msg)
+						//console.log(msg)
 					}
 				}
 		});
@@ -248,7 +248,7 @@
 						//$('#'+file_id).remove();
 						location.reload();
 					}else{
-						console.log(msg)
+						//console.log(msg)
 					}
 				}
 		});

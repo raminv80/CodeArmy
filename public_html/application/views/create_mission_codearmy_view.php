@@ -1,5 +1,7 @@
 <?php $this->load->view('includes/frame_header.php'); ?>
-
+</head>
+ 
+<body>
 <?php echo form_open('#' , array('id'=>'form-create-mission')); ?>
 <div class="create-mission-wrapper">
 <div class="create-mission-container">
@@ -266,7 +268,7 @@ function initCreateMission(){
 	});
 	
 	uploader.bind('BeforeUpload', function (up, file) {
-		console.log(file.size);
+		//console.log(file.size);
 		up.settings.multipart_params = {'filesize': file.size,'csrf_workpad': getCookie('csrf_workpad')}
 	});
 	
@@ -291,7 +293,7 @@ function initCreateMission(){
 					if(msg="success"){
 						$('#'+file_id).remove();
 					}else{
-						console.log(msg)
+						//console.log(msg)
 					}
 				}
 		});
@@ -365,9 +367,9 @@ function initCreateMission(){
 			  'csrf_workpad': getCookie('csrf_workpad') 
 			},
 			success: function(msg){
-				console.log(msg)
+				//console.log(msg)
 				if(msg!="" && msg!='error'){
-					console.log(msg);
+					//console.log(msg);
 					parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
 				} else {
 					alert("Error");
@@ -417,4 +419,5 @@ if ($('#full-page-container').width() != win.width()) {
 	win.trigger('resize');
 }
 </script>
+</body>
 <?php $this->load->view('includes/frame_footer.php'); ?>
