@@ -523,7 +523,7 @@ input.CAbutton{padding:0}
 .eraser-sel{ background:url(/public/images/codeArmy/designer_test/eraser_hover.png) no-repeat; width:144px; height:52px;}
 
 .division_button:hover{background:url(/public/images/codeArmy/registration_division/division_button_hover.png) no-repeat;}
-#footer{background:#000; width:1000px; margin:0 auto; color:white;font-family: 'Ruda', sans-serif; font-size:8.64pt; height:20px; padding-top:10px; position:relative; float:left;}
+#footer{background:#000; width:1000px; margin:0 auto; color:white;font-family: 'Ruda', sans-serif; font-size:8.64pt; height:20px; padding-top:10px; position:fixed;bottom:0; float:left; }
 #footer_links{ width:57%; float:left;}
 #social-links{ width:13%; float:left; text-align:left; padding-left:10px;}
 #footer_links li{ float:left; list-style-image:none; width:70px; list-style-type:none;}
