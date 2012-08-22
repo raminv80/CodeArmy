@@ -1,5 +1,9 @@
-<html>
-<header>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="keywords" content="code army, codearmy, codear.my, tech cofounder,tech co-founder,find web developers,recruit web developer,web developer freelance,hire web developer,freelance web developers,find web designer,online business start up,online business start,computer software development,computer software developers,computer programmer jobs,software programmer jobs,programming jobs,fun programming jobs,web designer jobs,web design jobs,web designer job listing,web designer employment,freelance web design jobs,copywriting jobs,freelance copywriting jobs,copywriter job,copywriter jobs,freelance writing work" />
+<link rel="icon" type="image/png" href="/favicon.png" />
 <link href='http://fonts.googleapis.com/css?family=Ruda' rel='stylesheet' type='text/css' />
 <link href="/public/css/reset.css" media="all" rel="stylesheet" type="text/css" />
 <link href="/public/css/v4/tipsy.css" media="all" rel="stylesheet" type="text/css" />
@@ -28,5 +32,3 @@
 <script type="text/javascript" src="/public/js/plupload/plupload.html5.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/jquery.fancybox.pack.js?v=2.0.6"></script>
 <script type="text/javascript" src="/public/js/jscrollpane.js"></script>
-</header>
-<body>
