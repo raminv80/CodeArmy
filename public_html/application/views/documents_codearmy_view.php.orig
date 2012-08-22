@@ -197,7 +197,11 @@
 						//$('#'+file_id).remove();
 						location.reload();
 					}else{
+<<<<<<< HEAD
+						if (typeof console == "object") console.log(msg)
+=======
 						//console.log(msg)
+>>>>>>> origin/master
 					}
 				}
 		});
@@ -216,7 +220,11 @@
 						//$('#'+file_id).remove();
 						location.reload();
 					}else{
+<<<<<<< HEAD
+						if (typeof console == "object") console.log(msg)
+=======
 						//console.log(msg)
+>>>>>>> origin/master
 					}
 				}
 		});
@@ -248,7 +256,11 @@
 						//$('#'+file_id).remove();
 						location.reload();
 					}else{
+<<<<<<< HEAD
+						if (typeof console == "object") console.log(msg)
+=======
 						//console.log(msg)
+>>>>>>> origin/master
 					}
 				}
 		});

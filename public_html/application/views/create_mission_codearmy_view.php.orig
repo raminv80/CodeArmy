@@ -268,7 +268,11 @@ function initCreateMission(){
 	});
 	
 	uploader.bind('BeforeUpload', function (up, file) {
+<<<<<<< HEAD
+		if (typeof console == "object") console.log(file.size);
+=======
 		//console.log(file.size);
+>>>>>>> origin/master
 		up.settings.multipart_params = {'filesize': file.size,'csrf_workpad': getCookie('csrf_workpad')}
 	});
 	
@@ -293,7 +297,11 @@ function initCreateMission(){
 					if(msg="success"){
 						$('#'+file_id).remove();
 					}else{
+<<<<<<< HEAD
+						if (typeof console == "object") console.log(msg)
+=======
 						//console.log(msg)
+>>>>>>> origin/master
 					}
 				}
 		});
@@ -367,9 +375,15 @@ function initCreateMission(){
 			  'csrf_workpad': getCookie('csrf_workpad') 
 			},
 			success: function(msg){
+<<<<<<< HEAD
+				if (typeof console == "object") console.log(msg)
+				if(msg!="" && msg!='error'){
+					if (typeof console == "object") console.log(msg);
+=======
 				//console.log(msg)
 				if(msg!="" && msg!='error'){
 					//console.log(msg);
+>>>>>>> origin/master
 					parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
 				} else {
 					alert("Error");
