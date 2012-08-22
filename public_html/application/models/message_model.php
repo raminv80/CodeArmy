@@ -59,6 +59,15 @@ class Message_model extends CI_Model {
 			"parent_id" => $parent_id,
 		);
 		$res = $this->db->insert('messages', $doc);
+		//push new message
+		require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+		$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+		$data = array(
+			'from' => $user_id,
+			'to' => $to,
+			'message_id'=> $this->db->insert_id()
+		);
+		$pusher->trigger('message-'.$to, 'new-message', $data );
 		return $res;
 	}
 		

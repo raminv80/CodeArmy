@@ -208,6 +208,7 @@
 		cursor:pointer;
 		height:36px;
 		background-image: url('/public/js/codeArmy/fancybox/source/fancybox_sprite.png');
+		z-index:1;
 	}
 	#world-map{position:relative;}
 	.marker-icon{

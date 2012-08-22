@@ -1,6 +1,10 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
 <div id="compose-content-area"> 
-  
+  <style>
+  #errmsg3 {
+	  width:100%;
+	  margin:0 0 10px 0;
+  </style>
   <!-- START - Compose Block - Dev. by Reza  -->
   <div id="block-compose-header">
     <div class="block-header">
