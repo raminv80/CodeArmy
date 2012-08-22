@@ -10,22 +10,22 @@
   <div class="create-mission-info">
     <div class="mission-title">
       <label>Mission Title</label>
-      <input type="text" id="mission-title" name="mission-title" class="required" value="" />
+      <input type="text" id="mission-title" name="mission-title" class="required" tabindex="1" autofocus value="" />
     </div>
     <div class="mission-video-url">
       <label>Mission Video</label>
-      <input type="text" id="mission-video" name="mission-video" value="" placeholder="Youtube video tag or url"/>
+      <input type="text" tabindex="8" id="mission-video" name="mission-video" value="" placeholder="Youtube video tag or url"/>
     </div>
   </div>
   <div class="mission-desc-video">
     <div class="mission-description">
       <div><span class="desc-title-text">Description</span><span class="examples-link"><a href="#">Examples</a></span></div>
-      <textarea rows="7" id="mission-desc-text" name="mission-desc-text" class="required"></textarea>
+      <textarea rows="7" tabindex="2" id="mission-desc-text" name="mission-desc-text" class="required"></textarea>
       <!--<div class="attach-file-tools"> <a href="#"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /></a> <span class="filename"><a href="#">Project-brief.ppt</a></span> <span class="filesize">(250kb)</span> <span class="filedesc">Acme online store brief...</span> <a href="#"><img src="/public/images/codeArmy/mission/binicon.png" class="binicon" /></a> </div>-->
       <div id="plupload-container" style="clear:both">
       <div id="filelist">No runtime found.</div>
-      <input type="button" id="pickfiles" class="lnkimg" value="Select files">
-      <input type="button" id="uploadfiles" class="lnkimg" value="Upload files">
+      <input type="button" tabindex="3" id="pickfiles" class="lnkimg" value="Select files">
+      <input type="button" id="uploadfiles" tabindex="4" class="lnkimg" value="Upload files">
       </div>
     </div>
     <div class="mission-video-preview">
@@ -35,7 +35,7 @@
   <div class="mission-type-n-skills">
     <div class="mission-type"> <span class="mission-type-title">Mission Type</span>
       <div class="wrapselect big right">
-      	<select id="mission-type-main" name="mission-type-main" class="required" validate="required:true">
+      	<select tabindex="5" id="mission-type-main" name="mission-type-main" class="required" validate="required:true">
 	        <option value="">--- Please select ---</option>
 	      <?php foreach($main_category as $value): ?>
 	        <option value="<?=$value['category_id']?>" <?php if($value['category_id']==$cat_selected){?>selected="selected"<?php }?>><?=$value['category']?></option>
@@ -43,7 +43,7 @@
 	      </select>
       </div>
       <div class="wrapselect big right">
-      	<select id="mission-type-class" name="mission-type-class" class="mission-type-sub">
+      	<select tabindex="6" id="mission-type-class" name="mission-type-class" class="mission-type-sub">
 	        <option value="0">--- Please select ---</option>
 	      <?php foreach($class as $value): ?>
 	        <option value="<?=$value['class_id']?>"><?=$value['class_name']?></option>
@@ -51,7 +51,7 @@
 	    </select>
       </div>
       <div class="wrapselect big right">
-      	<select id="mission-type-sub" name="mission-type-sub" class="mission-type-sub">
+      	<select tabindex="7" id="mission-type-sub" name="mission-type-sub" class="mission-type-sub">
 	        <option value="0">--- Please select ---</option>
 	      <?php foreach($sub_class as $value): ?>
 	        <option value="<?=$value['subclass_id']?>"><?=$value['subclass_name']?></option>
@@ -61,7 +61,7 @@
     </div>
     <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
       	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>-->
-		<div id="skills-required-text" contenteditable="true"></div>
+		<div id="skills-required-text" tabindex="9" contenteditable="true"></div>
 		<div class="clearfix"></div>
 		<div class="skill-tag"></div>
 		<div class="skill-msg">Type the name of someone or something...</div>
@@ -72,7 +72,7 @@
       <div class="arrange-row">
 
         <div class="wrapselect small left">
-        	<select id="mission-arrange-type" name="mission-arrange-type" class="mission-arrange-hour required" validate="required:true">
+        	<select tabindex="10" id="mission-arrange-type" name="mission-arrange-type" class="mission-arrange-hour required" validate="required:true">
 	          <option value=""></option>
               <?php foreach($arrangement_type as $type): ?>
 	          <option value="<?=$type['id']?>"><?=$type['type']?></option>
@@ -81,7 +81,7 @@
         </div>
         <span class="dashforselect"><i class="icon-chevron-right"></i></span>
         <div class="wrapselect small left">
-        	<select id="mission-arrange-duration" name="mission-arrange-duration" class="mission-arrange-month required" validate="required:true">
+        	<select tabindex="11" id="mission-arrange-duration" name="mission-arrange-duration" class="mission-arrange-month required" validate="required:true">
 	          <option value=""></option>
 	        </select>
         </div>
@@ -92,7 +92,7 @@
       <div class="arrange-row">
 
         <div class="wrapselect small">
-        	<select id="mission-budget" name="mission-budget" class="mission-budget required" validate="required:true">
+        	<select tabindex="12" id="mission-budget" name="mission-budget" class="mission-budget required" validate="required:true">
 	          <option value=""></option>
 	        </select>
         </div>
@@ -110,8 +110,8 @@
 
 <div class="submit-cancel-row">
 <div class="loader" style="margin:-40px auto 20px; padding-left:180px"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
-<input type="button" class="lnkimg" id="post-mission" value="Post Mission">
-<input type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
+<input tabindex="13" type="button" class="lnkimg" id="post-mission" value="Post Mission">
+<input tabindex="14" type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
 </div>
    
    </div>
@@ -122,6 +122,7 @@
 </form>
 <style type="text/css">
 	.create-mission-container {overflow-x:hidden}
+	select:focus{border: 2px dashed grey;}
 </style>
 <script type="text/javascript">
 	$(function(){
