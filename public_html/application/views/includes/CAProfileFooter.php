@@ -42,5 +42,10 @@
 	$('#logo').click(function(){window.location="/profile"});
 	$('#missions-toggle').click(function(){$('#mission-submenue').slideToggle();});
 	function loadEffect(){}
+	var messages_channel = pusher.subscribe('message-<?=$me['user_id']?>');
+    messages_channel.bind('new-message', function(data) {
+	  var el = $('#messages-notification');
+	  el.html(parseInt(el.html())+1).removeClass('hidden').removeClass('blur');
+    });
 </script>
 <?php $this->load->view('includes/CAFooter.php'); ?>
