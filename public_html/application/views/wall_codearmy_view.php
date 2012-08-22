@@ -224,7 +224,7 @@ $(function(){
 		});
 		
 	comment_channel.bind('new-comment-'+<?=$work['work_id']?>, function(data) {
-		console.log(data);
+		if (typeof console == "object") console.log(data);
 		if(data.work_id=='<?=$work['work_id']?>'){
 			var theme = $('#comment-template').clone();
 			theme.find('.fmcb-right-row1').html(data.message);

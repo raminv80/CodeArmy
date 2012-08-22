@@ -367,31 +367,31 @@ function save_list(){
 	$('.story_list').each(function(){
 		if($(this).data('sprint_id')!==undefined){
 			//save the order into an existing sprint id
-			//console.log('sprint id '+$(this).data('sprint_id')+' includes '+JSON.stringify($(this).sortable('toArray')));
+			//if (typeof console == "object") console.log('sprint id '+$(this).data('sprint_id')+' includes '+JSON.stringify($(this).sortable('toArray')));
 			sprint_id = $(this).data('sprint_id');
 		}
 		if($(this).data('sprint_id')===undefined){
 			//sprint is new and we don't have a sprint id
-			//console.log('New sprint. includes '+$(this).sortable('toArray'));
+			//if (typeof console == "object") console.log('New sprint. includes '+$(this).sortable('toArray'));
 			sprint_id = 'new';
 		}
 		//update priority of all user stories that belong to sprint id
 		date_from = $('.start',$(this).parent()).val();
 		date_to = $('.end',$(this).parent()).val();
-		console.log('process sprint '+sprint_id);
-		console.log('sprint is from '+date_from+' to '+date_to);
+		if (typeof console == "object") console.log('process sprint '+sprint_id);
+		if (typeof console == "object") console.log('sprint is from '+date_from+' to '+date_to);
 		data = JSON.stringify($(this).sortable('toArray'));
 		$.post(
 		'/project/AjaxSavePriority',
 		{ 'data': data, 'date_from': date_from, 'date_to': date_to, 'sprint_id': sprint_id, 'project_id': <?=$project_sel?>, 'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>' },
 		function(msg){
-			console.log('process done.');
+			if (typeof console == "object") console.log('process done.');
 			if(msg!='0'){
 				//TODO
 				if($(this).data('sprint_id')===undefined){
 					$(this).data('sprint_id',msg);
 				}
-				console.log('sprint '+msg+' successfuly saved.');
+				if (typeof console == "object") console.log('sprint '+msg+' successfuly saved.');
 			}
 		});
 	});
@@ -645,7 +645,7 @@ $('.add_sprint').click(function(){
 				$('.monthyear_date',$(this).parent().parent().parent()).last().html($.datepicker.formatDate('M yy', s));
 			} 
 		});
-		//console.log($('.datestart',tmpCurSprint));
+		//if (typeof console == "object") console.log($('.datestart',tmpCurSprint));
 		$('.datestart',tmpCurSprint).click(function(){
 				$('.start',$(this).parent().parent()).datepicker('show');
 			});

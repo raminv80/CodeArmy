@@ -334,7 +334,7 @@
 		$('.accept').click(function(){
 			selectedItem = $(this).parents('.item');
 			var work_id = selectedItem.attr('id').split('-')[1];
-			console.log(work_id);
+			if (typeof console == "object") console.log(work_id);
 			$( "#dialog-confirm" ).dialog({
 				resizable: false,
 				modal: true,
@@ -363,7 +363,7 @@
 		$('.reject').click(function(){
 			selectedItem = $(this).parents('.item');
 			var work_id = selectedItem.attr('id').split('-')[1];
-			console.log(work_id);
+			if (typeof console == "object") console.log(work_id);
 			$( "#dialog-reject" ).dialog({
 				resizable: false,
 				modal: true,

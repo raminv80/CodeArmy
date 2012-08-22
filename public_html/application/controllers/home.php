@@ -192,7 +192,7 @@ class Home extends CI_Controller {
 	function Ajax_contact(){
 		$this->users_model->send_mail(
 			$this->input->post('email'),
-			'contact@codearmy.com',
+			'ramin@codearmy.com',
 			$this->input->post('subject'),
 			"<ul><li>Date and Time: ".date('Y/m/d H:i')."</li><li>From: ".$this->input->post('name')."</li><li>Contact no:".$this->input->post('phone')."</li></ul><hr><p>".$this->input->post('message')."</p>"
 		);

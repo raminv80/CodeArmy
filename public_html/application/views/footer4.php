@@ -351,7 +351,7 @@
 	$('a.submit').click(function(){
 		test = $(this);
 		var form = $(this).parents('form');
-		console.log(form);
+		if (typeof console == "object") console.log(form);
 		form.submit();
 	});
 	$('#btnBid').click(function() {

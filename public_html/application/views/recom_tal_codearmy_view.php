@@ -192,7 +192,7 @@
 											parent.$.fancybox.close();
 										}else{
 											alert('Error: check the console for message');
-											console.log(msg);
+											if (typeof console == "object") console.log(msg);
 										}
 									}
 								});

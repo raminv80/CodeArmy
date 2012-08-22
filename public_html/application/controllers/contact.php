@@ -31,6 +31,11 @@ class Contact extends CI_Controller {
 		$check_login = $this->session->userdata('is_logged_in');
 	}
 	
+	function feedback(){
+		$this->view_data['window_title'] = "Feedback";
+		$this->load->view('feedback_codearmy_view', $this->view_data);
+	}
+	
 	function find(){
 		$this->view_data['window_title'] = "Find People";
 		$this->load->view('find_user_view', $this->view_data);

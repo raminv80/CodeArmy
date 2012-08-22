@@ -66,7 +66,7 @@
 			'/register/Ajax_voucher',
 			{ 'code': data, 'csrf_workpad': getCookie('csrf_workpad') },
 			function(msg){
-				console.log(msg);
+				if (typeof console == "object") console.log(msg);
 				msg = msg.split('~');
 				if(msg[0]=="success"){
 					$.fancybox.open({
