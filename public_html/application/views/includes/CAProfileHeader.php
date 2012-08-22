@@ -1,6 +1,7 @@
 <?php $this->load->view('includes/CAHeader.php'); ?>
 <style>
 .blur{-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";filter: alpha(opacity=50);-moz-opacity: 0.5;-khtml-opacity: 0.5;opacity: 0.5;}
+.hidden{display:none}
 </style>
 <div id="inner">
 <div id="container">
@@ -11,12 +12,12 @@
       <ul id="header-links">
         <li><a href="/messages" id="Messages">
           <div id="messages-holder">
-            <div class="notification <?=isset($myActiveMessages)&&$myActiveMessages>0?'':'blur' ?>" id="messages-notification"><?=isset($myActiveMessages)?$myActiveMessages:'?' ?></div>
+            <div class="notification <?=isset($myActiveMessages)&&$myActiveMessages>0?'':'hidden' ?>" id="messages-notification"><?=isset($myActiveMessages)?$myActiveMessages:'?' ?></div>
             Messages </div>
           </a> </li>
         <li><a href="/messages/notifications" id="Notifications">
           <div id="notifications-holder">
-            <div class="notification <?=isset($myActiveNotifications)&&$myActiveNotifications>0?'':'blur' ?>"" id="notifications-notification"><?=$myActiveNotifications?></div>
+            <div class="notification <?=isset($myActiveNotifications)&&$myActiveNotifications>0?'':'hidden' ?>"" id="notifications-notification"><?=$myActiveNotifications?></div>
             Notifications</div>
           </a></li>
         <li>
@@ -28,7 +29,7 @@
           </li>
         <li><a href="/missions/my_missions" id="MyMissions">
           <div id="mymissions-holder">
-            <div class="notification <?=isset($myActiveMissions)&&$myActiveMissions>0?'':'blur'?>" id="mymissions-notification"><?=isset($myActiveMissions)?$myActiveMissions:'?'?></div>
+            <div class="notification <?=isset($myActiveMissions)&&$myActiveMissions>0?'':'hidden'?>" id="mymissions-notification"><?=isset($myActiveMissions)?$myActiveMissions:'?'?></div>
             My Missions</div>
           </a></li>
         <li> <a href="/profile" id="Profile">
