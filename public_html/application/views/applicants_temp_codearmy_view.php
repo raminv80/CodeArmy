@@ -44,14 +44,14 @@ $(function(){
 				"Yes" : function() {
 					$.fancybox.showLoading();
 					selectedBid = pressed_button.parents('.bid-container');
-					console.log(pressed_button);
+					if (typeof console == "object") console.log(pressed_button);
 					var bid_id = selectedBid.attr('id').split('-')[1];
 					$.ajax({
 						'url': '/missions/Ajax_approve_bid',
 						'type': 'post',
 						'data': {'csrf_workpad': getCookie('csrf_workpad'), 'bid_id': bid_id},
 						'success': function(msg){
-								console.log(msg);
+								if (typeof console == "object") console.log(msg);
 								if(msg=='success'){
 									selectedBid.removeClass('bid-status-Bid').addClass('bid-status-Accepted');
 									selectedBid.find('.options').remove();
@@ -72,7 +72,7 @@ $(function(){
 			'type': 'post',
 			'data': {'csrf_workpad': getCookie('csrf_workpad'), 'bid_id': bid_id},
 			'success': function(msg){
-					console.log(msg);
+					if (typeof console == "object") console.log(msg);
 					if(msg=='success'){
 						selectedBid.slideUp(function(){$(this).remove()});
 					}
@@ -87,7 +87,7 @@ $(function(){
 			'type': 'post',
 			'data': {'csrf_workpad': getCookie('csrf_workpad'), 'bid_id': bid_id},
 			'success': function(msg){
-					console.log(msg);
+					if (typeof console == "object") console.log(msg);
 					if(msg=='success'){
 						selectedBid.slideUp(function(){$(this).remove()});
 					}

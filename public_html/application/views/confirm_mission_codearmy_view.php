@@ -173,7 +173,7 @@ $('#confirm-mission').click(function(){
 				<?php }?>
 			} else {
 				alert("msg "+msg);
-				console.log(msg);
+				if (typeof console == "object") console.log(msg);
 			}
 		}
 	);

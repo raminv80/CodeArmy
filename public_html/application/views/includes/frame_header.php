@@ -1,3 +1,5 @@
+<html>
+<header>
 <link href='http://fonts.googleapis.com/css?family=Ruda' rel='stylesheet' type='text/css' />
 <link href="/public/css/reset.css" media="all" rel="stylesheet" type="text/css" />
 <link href="/public/css/v4/tipsy.css" media="all" rel="stylesheet" type="text/css" />
@@ -26,3 +28,5 @@
 <script type="text/javascript" src="/public/js/plupload/plupload.html5.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/jquery.fancybox.pack.js?v=2.0.6"></script>
 <script type="text/javascript" src="/public/js/jscrollpane.js"></script>
+</header>
+<body>

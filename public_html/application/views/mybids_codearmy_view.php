@@ -70,11 +70,11 @@ $(function(){
 				data:{'csrf_workpad': getCookie('csrf_workpad'), 'bid_id':bid_id},
 				success: function(msg){
 					if(msg=="success"){
-						console.log(me.parents('#block-bid-container'));
+						if (typeof console == "object") console.log(me.parents('#block-bid-container'));
 						me.parents('#block-bid-container').slideUp('slow',function(){$(this).remove();});
 					}else{
 						alert('msg');
-						console.log(msg);
+						if (typeof console == "object") console.log(msg);
 					}
 				}
 			});

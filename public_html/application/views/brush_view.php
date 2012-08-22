@@ -169,7 +169,7 @@ Sketcher.prototype.updateCanvasByBrush = function (event) {
 	{
 		x = start.x + (Math.sin(angle) * z) - halfBrushW;
 		y = start.y + (Math.cos(angle) * z) - halfBrushH;
-		//console.log( x, y, angle, z );
+		//if (typeof console == "object") console.log( x, y, angle, z );
 		this.context.drawImage(this.brush, x, y);
 	}
 }

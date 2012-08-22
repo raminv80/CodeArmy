@@ -303,7 +303,7 @@
 			loc = geoToPixel({'lat':jobs[i].lat, 'lng': jobs[i].lng});
 			var desc = jobs[i].num+(jobs[i].skill?"<br/>"+ucfirst(jobs[i].skill.substring(0,3)):'')+(jobs[i].days?"<br/>"+(jobs[i].days<1?"<1d":jobs[i].days+"d"):'')+(jobs[i].payout?"<br />"+(jobs[i].payout<1?"<10$":(jobs[i].payout<100?jobs[i].payout+'$':((jobs[i].payout/1000).toFixed(1)+'k$'))):'');
 			addMarker(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
-			//console.log(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
+			//if (typeof console == "object") console.log(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
 		}
 	}
 	
@@ -649,7 +649,7 @@
 		newid = $('.marker').size() - 1;
 			
 			loc = geoToPixel({'lat':jobs.lat, 'lng': jobs.lng});
-			console.log(lat,lng);
+			if (typeof console == "object") console.log(lat,lng);
 			
 			//var desc = jobs.num+(jobs.skill?"<br/>"+ucfirst(jobs.skill.substring(0,3)):'')+(jobs.days?"<br/>"+(jobs.days<1?"<1d":jobs.days+"d"):'')+(jobs.payout?"<br />"+(jobs.payout<1?"<10$":(jobs.payout<100?jobs.payout+'$':((jobs.payout/1000).toFixed(1)+'k$'))):'');
 			//addMarker(loc.x,loc.y,'marker_'+i,catToIcon(jobs.class),desc,'grey',0.75,500,jobs);

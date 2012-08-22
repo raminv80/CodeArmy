@@ -375,7 +375,7 @@
 						$('#comments-submit').slideDown();
 						$('#ajax-loader-bar').slideUp();
 						$("#comments-text").focus();
-						console.log(res);
+						if (typeof console == "object") console.log(res);
 					}
 				});
 			}
@@ -397,7 +397,7 @@
 				'ci_csrf_token': '<?php echo $this->security->get_csrf_hash(); ?>'
 				}, function(res){
 					$('#follow-discussion').removeAttr("disabled");
-					console.log(res);
+					if (typeof console == "object") console.log(res);
 				});
 		});
 	function init_comments(){

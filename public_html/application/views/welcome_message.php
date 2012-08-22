@@ -881,7 +881,7 @@
 	
 	$('#login-submit').click(function(){
 		if(isValidEmailAddress($('#user').val())){
-			console.log('senf');
+			if (typeof console == "object") console.log('senf');
 			$('#reg-ajax').fadeIn();
 			$('#login-form').submit();
 		}else{

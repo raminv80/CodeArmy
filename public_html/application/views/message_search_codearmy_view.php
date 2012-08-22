@@ -70,7 +70,7 @@
 		$('.star a').click(switch_importance);
 		$('.bin a').click(to_trash);
 		$('.summary').click(function(){
-			console.log($(this).find("a").attr("href"))
+			if (typeof console == "object") console.log($(this).find("a").attr("href"))
 			window.location=$(this).find("a").attr("href"); return false;
 		});
 	}

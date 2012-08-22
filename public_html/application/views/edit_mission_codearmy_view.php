@@ -286,7 +286,7 @@ function initEditMission(){
 	});
 	
 	uploader.bind('BeforeUpload', function (up, file) {
-		console.log(file.size);
+		if (typeof console == "object") console.log(file.size);
 		up.settings.multipart_params = {'filesize': file.size,'csrf_workpad': getCookie('csrf_workpad')}
 	});
 	
@@ -311,7 +311,7 @@ function initEditMission(){
 					if(msg="success"){
 						$('#'+file_id).remove();
 					}else{
-						console.log(msg)
+						if (typeof console == "object") console.log(msg)
 					}
 				}
 		});
@@ -348,7 +348,7 @@ function initEditMission(){
 	});
 	
 	$('#post-mission').click(function(){
-		console.log($("#form-edit-mission").valid());
+		if (typeof console == "object") console.log($("#form-edit-mission").valid());
 		if($("#form-edit-mission").valid()){
 			$('#reg-ajax').show();
 			submitHandler();
@@ -387,7 +387,7 @@ function initEditMission(){
 			},
 			function(msg){
 				if(msg!="" && msg!='error'){
-					console.log(msg);
+					if (typeof console == "object") console.log(msg);
 					parent.$('.fancybox-iframe').attr('src','http://<?=$_SERVER['HTTP_HOST']?>/missions/mission_confirmation/'+msg);
 				} else {
 					alert("Error");

@@ -23,3 +23,5 @@ function getCookie(c_name)
 	  return false;
 }
 </script>
+</body>
+</html>

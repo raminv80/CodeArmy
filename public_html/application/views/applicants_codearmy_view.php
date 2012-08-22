@@ -113,16 +113,16 @@ $(function(){
 				"Yes" : function() {
 					$.fancybox.showLoading();
 					selectedBid = pressed_button.parents('.bid-container');
-					console.log(pressed_button);
+					if (typeof console == "object") console.log(pressed_button);
 					var bid_id = selectedBid.attr('id').split('-')[1];
 					$.ajax({
 						'url': '/missions/Ajax_approve_bid',
 						'type': 'post',
 						'data': {'csrf_workpad': getCookie('csrf_workpad'), 'bid_id': bid_id},
 						'success': function(msg){
-								console.log(msg);
+								if (typeof console == "object") console.log(msg);
 								if(msg!='error'){
-									console.log($('#bid-'+msg));
+									if (typeof console == "object") console.log($('#bid-'+msg));
 									$('#bid-'+msg).removeClass('bid-status-Bid').addClass('bid-status-Accepted').find('.apply-details-left-bidded').removeClass('apply-details-left-bidded');
 									selectedBid.find('.options').remove();
 								}
@@ -137,7 +137,7 @@ $(function(){
 	$('.reject').click(function(){
 		selectedBid = $(this).parents('.bid-container');
 		var bid_id = selectedBid.attr('id').split('-')[1];
-		console.log(bid_id);
+		if (typeof console == "object") console.log(bid_id);
 		$( "#dialog-reject" ).dialog({
 			resizable: false,
 			modal: true,
@@ -152,7 +152,7 @@ $(function(){
 						'type': 'post',
 						'data': {'csrf_workpad': getCookie('csrf_workpad'), 'bid_id': bid_id},
 						'success': function(msg){
-								console.log(msg);
+								if (typeof console == "object") console.log(msg);
 								if(msg!='error'){
 									$( "#dialog-reject" ).dialog( "close" );
 									selectedBid.slideUp(function(){$('#bid-'+msg).remove()});
@@ -171,7 +171,7 @@ $(function(){
 			'type': 'post',
 			'data': {'csrf_workpad': getCookie('csrf_workpad'), 'bid_id': bid_id},
 			'success': function(msg){
-					console.log(msg);
+					if (typeof console == "object") console.log(msg);
 					if(msg=='success'){
 						selectedBid.slideUp(function(){$(this).remove()});
 					}

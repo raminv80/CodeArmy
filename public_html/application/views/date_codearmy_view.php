@@ -656,7 +656,7 @@ $("#add-event-form").dialog({
 				var startDateObj = new Date(parseInt(startYear),parseInt(startMonth)-1,parseInt(startDay),startHour,startMin,0,0);
 				var endDateObj = new Date(parseInt(endYear),parseInt(endMonth)-1,parseInt(endDay),endHour,endMin,0,0);
 				
-				//console.log(startDateObj, endDateObj);
+				//if (typeof console == "object") console.log(startDateObj, endDateObj);
 
 				// add new event to the calendar
 				jfcalplugin.addAgendaItem(
@@ -679,7 +679,7 @@ $("#add-event-form").dialog({
 						data: { 'csrf_workpad':getCookie('csrf_workpad'), 'work_id':<?=$work['work_id']?>, 'eventname':eventname, 'startDateTime':startDateTime, 'endDateTime':endDateTime },
 						success: function(msg){
 							if(msg!="" && msg!='error'){
-								//console.log(msg);
+								//if (typeof console == "object") console.log(msg);
 							} else {
 								alert("Error");
 							}
@@ -762,7 +762,7 @@ $("#display-event-form").dialog({
 					var msg = msg.replace('[','');
 					var msg = msg.replace(']','');
 					var eventDetails = jQuery.parseJSON(msg);
-					//console.log(msg)
+					//if (typeof console == "object") console.log(msg)
 					$('#eventname2').attr('value',eventDetails.title);
 					var StartDateTime = eventDetails.startDate;
 					var subStartDateTime = StartDateTime.split(',');
@@ -812,7 +812,7 @@ $("#display-event-form").dialog({
 						data: { 'csrf_workpad':getCookie('csrf_workpad'), 'calendarID':agendaItem },
 						success: function(msg){
 							if(msg!="" && msg!='error'){
-								//console.log(msg);
+								//if (typeof console == "object") console.log(msg);
 							} else {
 								alert("Error");
 							}
@@ -849,7 +849,7 @@ $("#display-event-form").dialog({
 		$("#endDate2").val(clickDate);
 		
 		if(clickAgendaItem != null){
-			//console.log(clickAgendaItem);
+			//if (typeof console == "object") console.log(clickAgendaItem);
 			var title = clickAgendaItem.title;
 			var startDate = clickAgendaItem.startDate;
 			var endDate = clickAgendaItem.endDate;
@@ -980,7 +980,7 @@ $("#btnUpdate").click(function() {
 				data: { 'csrf_workpad':getCookie('csrf_workpad'), 'eventname':eventname, 'startDateTime':startDateTime, 'endDateTime':endDateTime, 'calendar_id':calendarID },
 				success: function(msg){
 					if(msg!="" && msg!='error'){
-						//console.log(msg);
+						//if (typeof console == "object") console.log(msg);
 					} else {
 						alert("Error");
 					}

@@ -74,7 +74,7 @@
 					$.fancybox.close();
 				}else{
 					alert("Error: registering designer division.");
-					console.log(msg);
+					if (typeof console == "object") console.log(msg);
 				}
 			}
 		});	

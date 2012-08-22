@@ -168,7 +168,7 @@
 	});
 	
 	uploader.bind('BeforeUpload', function (up, file) {
-		console.log(file.size);
+		if (typeof console == "object") console.log(file.size);
 		var work_id = <?=$work['work_id']?>;
 		up.settings.multipart_params = {'filesize': file.size,'csrf_workpad': getCookie('csrf_workpad'),'work_id':work_id}
 	});
@@ -197,7 +197,7 @@
 						//$('#'+file_id).remove();
 						location.reload();
 					}else{
-						console.log(msg)
+						if (typeof console == "object") console.log(msg)
 					}
 				}
 		});
@@ -216,7 +216,7 @@
 						//$('#'+file_id).remove();
 						location.reload();
 					}else{
-						console.log(msg)
+						if (typeof console == "object") console.log(msg)
 					}
 				}
 		});
@@ -248,7 +248,7 @@
 						//$('#'+file_id).remove();
 						location.reload();
 					}else{
-						console.log(msg)
+						if (typeof console == "object") console.log(msg)
 					}
 				}
 		});
