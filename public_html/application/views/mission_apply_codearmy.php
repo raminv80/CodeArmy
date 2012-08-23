@@ -41,7 +41,7 @@
 	        <div class="fmcb-right-row2">
 	          <div class="dollar-sign-icon"></div>
 	          <div class="small-box-hr">
-	            <input name="budget" type="text" onkeydown="increment(event, this)" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
+	            <input name="budget" type="text" autocomplete="off" onkeydown="increment(event, this)" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
 	          </div>
 	          <div class="botharrows"><a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a></div>
 	          <div class="bidhrstext">/<?=str_replace('dai','day',substr($arranegement,0,-2))?></div>
