@@ -26,9 +26,15 @@
 	          <div class="urbid">Your Bid</div>
 	          <div class="clock-icon"></div>
 	          <div class="small-box-hr"> 
-	            <input name="time" onkeydown="increment(event, this)" autocomplete="off" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
+	            <input name="time" class="time" onkeydown="increment(event, this)" autocomplete="off" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
 	          </div>
-	          <div class="botharrows"><a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a></div>
+	          <div class="botharrows">
+				<span class="arrowkey">
+					<i class="icon-plus-sign"></i>
+					<i class="icon-minus-sign"></i>
+				</span>
+				<!-- <a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a> -->
+				</div>
 	          <div class="bidhrstext"><?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s</div>
 	          <!--
 	          <div class="small-box-hr">
@@ -41,9 +47,15 @@
 	        <div class="fmcb-right-row2">
 	          <div class="dollar-sign-icon"></div>
 	          <div class="small-box-hr">
-	            <input name="budget" type="text" autocomplete="off" onkeydown="increment(event, this)" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
+	            <input name="budget" class="budget" type="text" autocomplete="off" onkeydown="increment(event, this)" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
 	          </div>
-	          <div class="botharrows"><a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a></div>
+	          <div class="botharrows">
+				<span class="arrowkey">
+					<i class="icon-plus-sign"></i>
+					<i class="icon-minus-sign"></i>
+				</span>
+				<!-- <a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a> -->
+				</div>
 	          <div class="bidhrstext">/<?=str_replace('dai','day',substr($arranegement,0,-2))?></div>
 	        </div>
 	        <div class="fmcb-right-textarea">
@@ -141,6 +153,12 @@
 	  </div>
 	</div>
 </div>
+<style type="text/css">
+	.arrowkey {font-size:1.4em; color:orange; cursor:pointer}
+	.arrowkey i:hover {color:white}
+	.arrowkey i:last-child {margin-right:5px}
+	input.budget:focus, input.time:focus {outline:0}
+</style>
 <script type="text/javascript">
 
 	function increment(e,field) {
@@ -160,6 +178,34 @@
 	    }
 	    return false;
 	}
+	
+	$('.fmcb-right-row1 i.icon-plus-sign').click(function(){
+		if($('input.time').val() > -1 ){
+			newvalue = parseInt($('input.time').val()) + 1;
+			$('input.time').val(newvalue);
+		}
+	});
+	
+	$('.fmcb-right-row1 i.icon-minus-sign').click(function(){
+		if($('input.time').val() > 0){
+			newvalue = parseInt($('input.time').val()) - 1;
+			$('input.time').val(newvalue);
+		}
+	})
+	
+	$('.fmcb-right-row2 i.icon-plus-sign').click(function(){
+		if($('input.budget').val() > -1 ){
+			newvalue = parseInt($('input.budget').val()) + 1;
+			$('input.budget').val(newvalue);
+		}
+	});
+	
+	$('.fmcb-right-row2 i.icon-minus-sign').click(function(){
+		if($('input.budget').val() > 0){
+			newvalue = parseInt($('input.budget').val()) - 1;
+			$('input.budget').val(newvalue);
+		}
+	})
 	
 	$('.arr-down-img').click(function(){
 		var val = $(this).parent().parent().siblings('.small-box-hr').find('input').val();
