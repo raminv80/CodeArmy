@@ -250,10 +250,10 @@ class Messages extends CI_Controller {
 			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
 			$data = array(
 				'user_id' => $user_id,
-				'username' => $me['username'],
-				'msg' => $msg
+				'username' => $this->view_data['me']['username'],
+				'message' => $msg
 			);
-			$pusher->trigger('chat-'.$user_id, 'new-chat', $data );
+			$pusher->trigger('presence-chat-public', 'incomming-message', $data );
 			echo $msg;
 		}
 	}
