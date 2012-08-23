@@ -1638,11 +1638,12 @@ select.mission-arrange-month {
 .mission-budget {
 	width:50%;
 }
-.assign-po, .submit-cancel-row {
+.assign-po{
 	float:left;
-	width:45%;
+	width:42.5%;
 	position:relative;
 }
+.submit-cancel-row {float:right; margin-right:5%}
 .confirm-mission-container .submit-cancel-row {
 margin-top: -15px;
 }
