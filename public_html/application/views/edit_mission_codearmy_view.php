@@ -21,8 +21,8 @@
 	      <!--<div class="attach-file-tools"> <a href="#"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /></a> <span class="filename"><a href="#">Project-brief.ppt</a></span> <span class="filesize">(250kb)</span> <span class="filedesc">Acme online store brief...</span> <a href="#"><img src="/public/images/codeArmy/mission/binicon.png" class="binicon" /></a> </div>-->
 	      <div id="plupload-container" style="clear:both">
 	      <div id="filelist">No runtime found.</div>
-	      <input type="button" id="pickfiles" class="lnkimg" value="Select files">
-	      <input type="button" id="uploadfiles" class="lnkimg" value="Upload files">
+	      <input type="button" id="pickfiles" class="lnkimg" value="Attach files">
+	      <!--<input type="button" id="uploadfiles" class="lnkimg" value="Upload files">-->
 	      </div>
 	    </div>
 	    <div class="mission-video-preview">
@@ -110,8 +110,8 @@
 
 	  <div class="mission-submit-row">
 	    <div class="assign-po"> 
-	    <input class="assinpo" id="assignpo" type="checkbox" value="yes" /> <label>Assign this mission to a Project Manager? </label>
-	   </div>
+<!--	    <input class="assinpo" id="assignpo" type="checkbox" value="yes" /> <label>Assign this mission to a Project Manager? </label>
+-->	   </div>
 
 	<div class="submit-cancel-row">
 	<input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
@@ -265,14 +265,19 @@ function initEditMission(){
 		filters : [
 			{title : "Image files", extensions : "jpg,gif,png"},
 			{title : "Zip files", extensions : "zip"}
-		]
+		],
+		init : {
+			FilesAdded: function(up, files) {
+			  up.start();
+			}
+		}
 	});
 
 	uploader.bind('Init', function(up, params) {
 		$('#filelist').html("<div style='display:none'>Current runtime: " + params.runtime + "</div>");
 	});
 	
-	uploader.bind('FilesAdded', function(up, files) {
+	uploader.bind('UploadComplete', function(up, files) {
 		//for (var i in files) {
 		$.each(files, function(i, file) {
 			$('#filelist').append('<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b> <a href="javascript:void(0);" class="removeQueue">Remove</a></div>');

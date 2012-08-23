@@ -82,8 +82,8 @@
     </div>
     <div class="submit-cancel-row">
       <input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
-      <input type="button" class="lnkimg" id="edit-mission" value="Edit">
-      <input type="button" class="lnkimg" id="confirm-mission" value="Confirm &amp; Upload">
+      <input type="button" class="lnkimg" id="edit-mission" value="Edit" tabindex="2">
+      <input type="button" class="lnkimg" id="confirm-mission" autofocus="autofocus" tabindex="1" value="Confirm &amp; Upload">
     </div>
   </div>
   </form>
@@ -94,6 +94,11 @@
 <style type="text/css">
 .confirm-mission-files-text, .confirm-mission-skills-text, .confirm-mission-type-text {height:50px; width:100%; overflow:auto}
 .brief-text-content {height:160px; width:100%; overflow:auto}
+.ui-widget-overlay {
+	background: black;
+	opacity: 0.8;
+	filter: Alpha(Opacity=80);
+}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -151,7 +156,7 @@ $('#confirm-mission').click(function(){
 									margin: 0,
 									height: 600,
 									width: 960,
-									autoSize: true,
+									autoSize: false,
 									'overlayShow': true,
 									'overlayOpacity': 0.5, 
 									afterClose: function(){},
@@ -163,7 +168,6 @@ $('#confirm-mission').click(function(){
 									nextSpeed : 250,
 									prevMethod : 'slideOut',
 									prevSpeed : 250,
-									height: 600,
 									scrolling: 'auto'
 								});
 							}

@@ -34,7 +34,7 @@
 #block-mission-list .mission-header{position:relative}
 #block-mission-list .mission-title{
 	text-shadow: -1px -1px 1px rgba(100,100,100,0.5);
-	font-size:9.99pt;
+	font-size:11pt;
 	color:white;
 	position:absolute;
 	top:15px;
@@ -156,7 +156,7 @@
         	<?php foreach($myPendingList as $list):?>
             <div class="item gray-mission" id="mission-<?=$list['work_id']?>">
             	<div class="mission-header">
-                	<div class="mission-title"><?=$list['title']?></div>
+                	<div class="mission-title"><?=character_limiter($list['title'],20)?></div>
                     <div class="mission-status-icon"><img src="/public/images/codeArmy/mymission/thumb-up.png" alt="thumb up" /></div>
                     <div class="mission-progress-bg">
                     	<div class="mission-progress-meter" style="width:0px"></div>
@@ -215,7 +215,7 @@
 					$min_to_percent = ($given_time==0)?0:(1*60)/($given_time);
 				?>
             	<div class="mission-header">
-                	<div class="mission-title"><?=$list['title']?></div>
+                	<div class="mission-title"><?=character_limiter($list['title'],20)?></div>
                     <div class="mission-status-icon"><img src="/public/images/codeArmy/mymission/thumb-up.png" alt="thumb up" /></div>
                     <div class="mission-progress-bg">
                     	<div class="mission-progress-meter" style="width:<?= round(216*$progress_percent) ?>px"></div>
@@ -276,16 +276,16 @@
 					$po = ($me['user_id']==$list['owner']);
 				?>
             	<div class="mission-header">
-                	<div class="mission-title"><?=$list['title']?></div>
+                	<div class="mission-title"><?=character_limiter($list['title'],20)?></div>
                     <div class="mission-status-icon"><?=$list['status']?></div>
                     <div class="mission-progress-bg">
                     	<div class="mission-progress-meter" style="width:<?= round(216*$progress_percent) ?>px"></div>
                         <input type="hidden" name="percent" value="<?=$progress_percent?>" />
                         <input type="hidden" name="min_to_percent" value="<?=$min_to_percent?>" />
                     </div>
-                    <div class="mission-inputs">Inputs: <?=trim($list['input'])==''?'not defined':$list['input']?></div>
+<!--                    <div class="mission-inputs">Inputs: <?=trim($list['input'])==''?'not defined':$list['input']?></div>
                     <div class="mission-deliverables">Deliverables: <?=trim($list['output'])==''?'not defined':$list['output']?></div>
-                </div>
+-->                </div>
                 <div class="mission-content">
                 	<ul class="mission-icons">
                     	<?php if($po){?>

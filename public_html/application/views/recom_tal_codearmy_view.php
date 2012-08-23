@@ -84,7 +84,7 @@
             <div class="recom-box-mis-no"><?=$completed?></div>
           </div>
           <div class="recom-box-invite-button">
-            <input type="submit" value="Invite" class="lnkimg">
+            <input type="submit" value="Invite" class="lnkimg" tabindex="<?=$i-$page*$num_per_page+2?>">
           </div>
         </div>
       </div>
@@ -94,7 +94,7 @@
 
 	<div class="recom-page-nav"><div class="holder"></div></div>
     <div class="recom-page-confirm-invite">
-      <input type="submit" value="Confirm Invite" class="lnkimg" id="submit">
+      <input type="submit" value="Confirm Invite" autofocus="autofocus" tabindex="1" class="lnkimg" id="submit">
     </div>
   </div>
 </div>
@@ -149,6 +149,8 @@
 	.holder span { margin: 0 5px; }
 	.recom-box-invite-button input.lnkimg {cursor:pointer}
 	.recom-box-invite-button input.lnkimg.selected {background: url(/public/images/codeArmy/mission/savebtn_hoverstate.png) no-repeat}
+	.recom-title-text{padding-bottom: 10px}
+	.recom-title-main{padding:0}
 </style>
 <script type="text/javascript">
 		$(function() {

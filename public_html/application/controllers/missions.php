@@ -9,6 +9,7 @@ class Missions extends CI_Controller {
 		//enable for debugging
 		//$this->output->enable_profiler(TRUE);
 		$this->load->helper('number');
+		$this->load->helper('text');
 		$this->load->model('users_model');
 		$this->load->model('recom_model');
 		$this->load->model('skill_model');

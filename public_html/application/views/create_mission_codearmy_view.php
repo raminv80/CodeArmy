@@ -24,8 +24,8 @@
       <!--<div class="attach-file-tools"> <a href="#"><img src="/public/images/codeArmy/mission/fileicon.png" class="fileicon" /></a> <span class="filename"><a href="#">Project-brief.ppt</a></span> <span class="filesize">(250kb)</span> <span class="filedesc">Acme online store brief...</span> <a href="#"><img src="/public/images/codeArmy/mission/binicon.png" class="binicon" /></a> </div>-->
       <div id="plupload-container" style="clear:both">
       <div id="filelist">No runtime found.</div>
-      <input type="button" tabindex="3" id="pickfiles" class="lnkimg" value="Select files">
-      <input type="button" id="uploadfiles" tabindex="4" class="lnkimg" value="Upload files">
+      <input type="button" tabindex="3" id="pickfiles" class="lnkimg" value="Attach files">
+      <!--<input type="button" id="uploadfiles" tabindex="4" class="lnkimg" value="Upload files">-->
       </div>
     </div>
     <div class="mission-video-preview">
@@ -61,10 +61,10 @@
     </div>
     <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
       	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>-->
-		<div id="skills-required-text" tabindex="9" contenteditable="true"></div>
+		<div id="skills-required-text" tabindex="9" contenteditable="true" title="Type @ sign to get a hint"></div>
 		<div class="clearfix"></div>
 		<div class="skill-tag"></div>
-		<div class="skill-msg">Type the name of someone or something...</div>
+		<div class="skill-msg">Type the name of a skill or proficiency level...</div>
     </div>
   </div>
   <div class="mission-arrange-budget">
@@ -224,6 +224,8 @@
 			$(".skill-msg").hide();
 			$("#skills-required-text").focus();
 		});	
+		
+		$('[title]').tipsy({'gravity':'s'});
 	});
 </script>
 
@@ -248,14 +250,19 @@ function initCreateMission(){
 		filters : [
 			{title : "Image files", extensions : "jpg,gif,png"},
 			{title : "Zip files", extensions : "zip"}
-		]
+		],
+		init : {
+			FilesAdded: function(up, files) {
+			  up.start();
+			}
+		}
 	});
 
 	uploader.bind('Init', function(up, params) {
 		$('#filelist').html("<div style='display:none'>Current runtime: " + params.runtime + "</div>");
 	});
 	
-	uploader.bind('FilesAdded', function(up, files) {
+	uploader.bind('UploadComplete', function(up, files) {
 		//for (var i in files) {
 		$.each(files, function(i, file) {
 			$('#filelist').append('<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b> <a href="javascript:void(0);" class="removeQueue">Remove</a></div>');
