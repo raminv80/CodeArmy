@@ -65,6 +65,7 @@
 		<div class="clearfix"></div>
 		<div class="skill-tag"></div>
 		<div class="skill-msg">Type the name of a skill or proficiency level...</div>
+		<input name="tags" id="skills-required" placeholder="Enter skills required..">
     </div>
   </div>
   <div class="mission-arrange-budget">
@@ -125,6 +126,17 @@
 	select:focus{border: 2px dashed grey;}
 </style>
 <script type="text/javascript">
+	$(function(){
+        var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
+
+        //-------------------------------
+        // Minimal
+        //-------------------------------
+        $('#skills-required').tagit({
+		    availableTags: sampleTags
+	    });
+	});
+	
 	$(function(){
 		initCreateMission();
 		

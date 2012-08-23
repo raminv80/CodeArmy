@@ -32,3 +32,4 @@
 <script type="text/javascript" src="/public/js/plupload/plupload.html5.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/fancybox/source/jquery.fancybox.pack.js?v=2.0.6"></script>
 <script type="text/javascript" src="/public/js/jscrollpane.js"></script>
+<script type="text/javascript" src="/public/js/tag-it.js"></script>
