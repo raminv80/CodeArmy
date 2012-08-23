@@ -26,7 +26,7 @@
 	          <div class="urbid">Your Bid</div>
 	          <div class="clock-icon"></div>
 	          <div class="small-box-hr"> 
-	            <input name="time" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
+	            <input name="time" onkeydown="increment(event, this)" autocomplete="off" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
 	          </div>
 	          <div class="botharrows"><a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a></div>
 	          <div class="bidhrstext"><?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s</div>
@@ -41,7 +41,7 @@
 	        <div class="fmcb-right-row2">
 	          <div class="dollar-sign-icon"></div>
 	          <div class="small-box-hr">
-	            <input name="budget" type="text" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
+	            <input name="budget" type="text" onkeydown="increment(event, this)" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
 	          </div>
 	          <div class="botharrows"><a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a></div>
 	          <div class="bidhrstext">/<?=str_replace('dai','day',substr($arranegement,0,-2))?></div>
@@ -141,8 +141,26 @@
 	  </div>
 	</div>
 </div>
-
 <script type="text/javascript">
+
+	function increment(e,field) {
+	    var keynum;
+
+	    if(window.event) {// IE 
+	        keynum = e.keyCode
+	    } else if(e.which) {// Netscape/Firefox/Opera 
+	        keynum = e.which
+	    }
+	    if (keynum == 38) {
+	        field.value = parseInt(field.value)+ 1;
+	    } else if (keynum == 40) {
+			if(field.value > 0){
+			field.value = parseInt(field.value) - 1;	
+			}
+	    }
+	    return false;
+	}
+	
 	$('.arr-down-img').click(function(){
 		var val = $(this).parent().parent().siblings('.small-box-hr').find('input').val();
 		$(this).parent().parent().siblings('.small-box-hr').find('input').val(--val);
