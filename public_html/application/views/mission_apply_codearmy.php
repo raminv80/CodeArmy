@@ -118,13 +118,13 @@
 	    <div class="find-mission-right-block">
 	      <div class="right-col-title-bg">Estimation</div>
 	      <div class="est-main-rows">
-	        <div class="est-row1"> <span class="est-blue-txt"><?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'Not set'?></span></div>
-	        <div class="est-row2"> <span class="est-blue-txt"><?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'Not set'?></span></div>
+	        <div class="est-row1"> <span class="est-blue-txt"><?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'?'?> <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s</span></div>
+	        <div class="est-row2"> <span class="est-blue-txt"><?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'?'?> per <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s</span></div>
 	      </div>
 	      <div class="est-average-rows">
 	        <div class="est-avg-title">Average Bids</div>
-	        <div class="est-row1"><span class="est-blue-txt"><?=round($bid_avg['avg_time'])?></span> Hours </div>
-	        <div class="est-row2"> <span class="est-blue-txt">USD<?=round($bid_avg['avg_cost'])?></span> per hour </div>
+	        <div class="est-row1"><span class="est-blue-txt"><?=round($bid_avg['avg_time'])?></span> <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s </div>
+	        <div class="est-row2"> <span class="est-blue-txt"><?=round($bid_avg['avg_cost'])?></span> per <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s </div>
 	      </div>
 	    </div>
 	    <div class="find-mission-right-block">

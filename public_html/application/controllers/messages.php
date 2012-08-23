@@ -83,7 +83,6 @@ class Messages extends CI_Controller {
 			$this->view_data['form_error'] = true;
 			$this->compose();
 		} else {
-			$this->load->helper('htmlpurifier');
 			$to = $this->input->post('msg-to');
 			$to = $this->users_model->get_user($to,'username')->result_array();
 			$to = $to[0]['user_id'];
@@ -235,5 +234,27 @@ class Messages extends CI_Controller {
 		$list = $this->input->post('message_id');
 		$list = explode(',',$list);
 		echo json_encode($this->message_model->recover($list,$user_id));
+	}
+	
+	function chat(){
+		$this->view_data['window_title'] = "Message Title";
+		$this->load->view('chat_view', $this->view_data);
+	}
+	
+	function chat_send(){
+		$user_id = $this->session->userdata('user_id');
+		$this->load->helper('htmlpurifier');
+		if($id=$user_id){
+			$msg = html_purify($this->input->post('message'));
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $me['username'],
+				'msg' => $msg
+			);
+			$pusher->trigger('chat-'.$user_id, 'new-chat', $data );
+			echo $msg;
+		}
 	}
 }

@@ -17,7 +17,7 @@
 </div>
 <?php $this->load->view('includes/CAMapFooter.php'); ?>
 <!-- dialogs -->
-<div id="filter-toolbar" class="toolbar"> <a href="#" id="filter-toolbar-logo"></a>
+<div id="filter-toolbar" class="toolbar"> <a href="/profile" id="filter-toolbar-logo"></a>
   <div id="search-bar">
     <input type="text" name="search" id="search" value="Find missions" />
     <a title="Search for missions" href="#" id="search-submit"><img id="search-loader" title="Notifications" src="/public/images/ajax-loader.gif" width="32" height="32" /></a> </div>

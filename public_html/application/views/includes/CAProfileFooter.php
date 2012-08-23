@@ -7,13 +7,15 @@
         </div>
         <ul id="footer_links">
             <li><a href="/contact">Contact us</a></li>
+            <?php if($this->uri->segment(1)!='contact'){?>
             <li><a class="contact_button" href="javascript:void(0)">Feedback</a></li>
+            <?php }?>
             <li><a href="/faq">FAQ's</a></li>
             <li><a href="/blog" target="_blank">Blog</a></li>
             <li><a href="/term">T&amp;C</a></li>
             <!--<li><a href="javascript:var firebug=document.createElement('script');firebug.setAttribute('src','http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js');document.body.appendChild(firebug);(function(){if(window.firebug.version){firebug.init();}else{setTimeout(arguments.callee);}})();void(firebug);">Firebug Lite</a></li>-->
         </ul>
-        <div id="copywrite">Copywrite &copy; 2012 CodeArmy All rights reserved</div>
+        <div id="copywrite">COPYRIGHT &copy; 2012 CodeArmy All rights reserved</div>
     </div>
 <div id="debugger" style="background: rgba(20,40,0,0.9); position:absolute;top:0;left:0;text-align:left;display:none;">
 	<h2>Console:</h2>

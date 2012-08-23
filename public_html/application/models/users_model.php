@@ -712,7 +712,7 @@ class Users_model extends CI_Model {
 				$user = $user[0];
 				$newPass = $this->createRandomPassword();
 				$sql = "update users set secret=? where user_id=?";
-				$this->notify($user['user_id'], 'Your Password is Reseted',"<p>Hi,</p><p>Your password on <a href='http://codearmy.com'>CodeArmy</a> is reseted to: ".$newPass."</p><p>Please <a href='http://".$_SERVER['HTTP_HOST']."/login'>click here to go to login page</a>.</p><p>Regards.</p>");
+				$this->notify($user['user_id'], 'Your Password is Reset',"<p>Hi,</p><p>Your password on <a href='http://codearmy.com'>CodeArmy</a> is reset to: ".$newPass."</p><p>Please <a href='http://".$_SERVER['HTTP_HOST']."/login'>click here to go to login page</a>.</p><p>Regards.</p>");
 				$this->db->query($sql, array(md5($newPass),$user['user_id']));
 				return "Dear ".$user['username'].", an email is sent to you containing your new password.";
 			}else return "Error: Invalid Code!";

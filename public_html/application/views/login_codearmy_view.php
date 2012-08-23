@@ -68,7 +68,7 @@
 							data1 = $('#pass').val();
 							if($.trim(data1)!="")
 							$.post(
-								'login/Ajax_checkPass',
+								'/login/Ajax_checkPass',
 								{'username': data,'password':data1,'csrf_workpad': getCookie('csrf_workpad') },
 								function(msg){
 									if(msg=="success"){

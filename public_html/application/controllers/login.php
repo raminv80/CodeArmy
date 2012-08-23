@@ -43,7 +43,7 @@ class Login extends CI_Controller {
 	}	
 	
 	function validate_credentials() {
-		$this->view_data['window_title'] = "Login to Worpad";
+		$this->view_data['window_title'] = "Login to CodeArmy";
 		$query = $this->users_model->validate();
 		
 		if($query != false) { // if the user's credentials validated...
