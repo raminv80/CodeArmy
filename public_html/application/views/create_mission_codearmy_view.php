@@ -60,12 +60,14 @@
       </div>
     </div>
     <div class="skills-required"> <span class="skills-required-title">Skills Required</span>
-      	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>-->
-		<div id="skills-required-text" tabindex="9" contenteditable="true" title="Type @ sign to get a hint"></div>
+      	<!--<textarea id="skills-required-text-post" name="skills-required-text-post" style="display:none"></textarea>
+		<div id="skills-required-text" tabindex="9" contenteditable="true"></div>
 		<div class="clearfix"></div>
 		<div class="skill-tag"></div>
-		<div class="skill-msg">Type the name of a skill or proficiency level...</div>
-		<input name="tags" id="skills-required" placeholder="Enter skills required..">
+		<div class="skill-msg">Type the name of a skill or proficiency level...</div>-->
+        <input type="hidden" name="tags" id="hiddenSkill" value="" disabled="true">
+		<!--<input id="skills-required" placeholder="Enter skills required..">-->
+        <ul id="skills-required"></ul>
     </div>
   </div>
   <div class="mission-arrange-budget">
@@ -127,13 +129,15 @@
 </style>
 <script type="text/javascript">
 	$(function(){
-        var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
+		var sampleTags = [<?php foreach($skills as $skill): echo "'".$skill['skills']."', "; endforeach;?><?php foreach($skillsonly as $skillonly): echo "'".$skillonly['name']."', "; endforeach;?>''];
 
         //-------------------------------
         // Minimal
         //-------------------------------
         $('#skills-required').tagit({
-		    availableTags: sampleTags
+		    availableTags: sampleTags,
+			singleField: true,
+			singleFieldNode: $('#hiddenSkill')
 	    });
 	});
 	
@@ -360,7 +364,7 @@ function initCreateMission(){
 		var mission_title = $('#mission-title').val();
 		var mission_desc = $('#mission-desc-text').val();
 		var mission_tutorial = $('#mission-video').val();
-		var mission_skills = $('#skills-required-text').html();
+		var mission_skills = $('#hiddenSkill').val();
 		var mission_type_main = $('#mission-type-main').val();
 		var mission_type_class = $('#mission-type-class').val();
 		var mission_type_subclass = $('#mission-type-sub').val();

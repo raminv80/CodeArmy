@@ -14,10 +14,12 @@ class Skill_model extends CI_Model {
 		return $result->result_array();
 	}
 	
-	function get_filter_skill($keyword){
+	function get_filter_skill(){
 		//$query = "SELECT * FROM skill WHERE name LIKE ? ORDER BY name";
-		$query = "SELECT concat(skill_level.skill_level,' ',skill.name) as skills FROM skill, skill_level WHERE skill.name LIKE ?";
-		$result = $this->db->query($query, '%'.$keyword.'%');
+		//$query = "SELECT concat(skill_level.skill_level,' ',skill.name) as skills FROM skill, skill_level WHERE skill.name LIKE ?";
+		$query = "SELECT concat(skill_level.skill_level,' ',skill.name) as skills FROM skill, skill_level";
+		//$result = $this->db->query($query, '%'.$keyword.'%');
+		$result = $this->db->query($query);
 		return $result->result_array();
 	}
 	

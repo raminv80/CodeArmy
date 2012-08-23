@@ -268,6 +268,10 @@ class Missions extends CI_Controller {
 		$this->view_data['class'] = $this->work_model->get_main_class($cat);
 		$this->view_data['sub_class'] = $this->work_model->get_sub_class($cat,'');
 		$this->view_data['arrangement_type'] = $this->work_model->get_arrangement_type();
+
+		$this->view_data['skills'] = $this->skill_model->get_filter_skill();
+		$this->view_data['skillsonly'] = $this->skill_model->get_all_skills();
+
 		$this->view_data['window_title'] = "Mission Create";
 		$this->load->view('create_mission_codearmy_view', $this->view_data);
 	}
@@ -472,6 +476,9 @@ class Missions extends CI_Controller {
 		$type = $preview[0]['est_arrangement'];
 		$this->view_data['arrangement_duration'] = $this->work_model->get_duration($type);
 		$this->view_data['arrangement_budget'] = $this->work_model->get_budget($type);
+		
+		$this->view_data['skills'] = $this->skill_model->get_filter_skill();
+		$this->view_data['skillsonly'] = $this->skill_model->get_all_skills();
 		
 		$this->view_data['window_title'] = "CodeArmy World";
 		$this->load->view('edit_mission_codearmy_view', $this->view_data);
@@ -792,7 +799,6 @@ class Missions extends CI_Controller {
 		foreach($skills as $value):
 			echo "<a href=\"#\" title=\"".$value["skills"]."\">".$value["skills"]."</a>";
 		endforeach;
-		//echo "<a href=\"#\">hello world</a>";
 	}
 	
 	function Ajax_get_class(){
