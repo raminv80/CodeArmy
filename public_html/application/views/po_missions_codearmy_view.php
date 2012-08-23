@@ -5,7 +5,8 @@
 <!--TODO: add ajax loader icons -->
 <div id="wrapper">
   <div id="find-mission-area">
-    <div id="world-map"> <img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" /> 
+    <div id="world-map" style="background:url(/public/images/codeArmy/mymission/world-map.png);width:999px;height:532px;"> <!--<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />-->
+	 
       <!-- project list -->
       <div id="dialog-project-list" class="dialog">
         <div class="container">
@@ -496,7 +497,8 @@
 	$(window).resize(function() {
 		//vertical cenerlise world map
 		$('#find-mission-area').css('height',$(window).height()-40);
-		var y = Math.round(($(window).height()-40-$('#world-map-img').attr('height'))/2);
+		//var y = Math.round(($(window).height()-40-$('#world-map-img').attr('height'))/2);
+		var y = Math.round(($(window).height()-40-$('#world-map').height())/2);
 		if(y<0)y=0;
 		$('#world-map').css('top',y);
 	});
@@ -640,8 +642,10 @@
 	function geoToPixel(geo){
 		//TODO: change the map to google map style so lat and lng will remain in straight lines
 		var x=0,y=0, width, height,lngS=-180,lngE=180,latS=-60,latE=70;
-		height = $('#world-map-img').height();
-		width = $('#world-map-img').width();
+		//height = $('#world-map-img').height();
+		//width = $('#world-map-img').width();
+		height = $('#world-map').height();	
+		width = $('#world-map').width();
 		var wt = lngE - lngS;
 		var ht = latE - latS;
 		var wd = geo.lng-lngS;
