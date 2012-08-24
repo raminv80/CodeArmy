@@ -159,7 +159,7 @@ $intCountProgress = round(($intTotalCount / $intTotalFields) * 100);
         <input title="Your Username in CodeArmy" type="text" style="color:#CCC" id="name" name="name" value="<?=$me["username"]?>" readonly="readonly" />
       </div>
       <div id="input-row">
-        <input title="Your Devision in CodeArmy" type="text" style="color:#CCC" id="title" name="title" value="<?=ucfirst($myProfile["specialization"])?>" readonly="readonly" />
+        <input title="Your Division in CodeArmy" type="text" style="color:#CCC" id="title" name="title" value="<?=ucfirst($myProfile["specialization"])?>" readonly="readonly" />
         <!--<input type="text" id="location" name="location" value="<?php if($myCountry) echo $myCountry?>" />-->
           <select title="Enter your country" name="country">
             <option value="">--- Select a country ---</option>

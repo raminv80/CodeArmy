@@ -7,7 +7,7 @@
     <div class="block-header">
       <h3>Your Achievements</h3>
     </div>
-    <div id="achievements-header-text"> Go above and beyond the call of duty to earn special awards.</div>
+    <div id="achievements-header-text"> <!--Go above and beyond the call of duty to earn special awards.--></div>
   </div>
   <div id="achievements-row">
     <?php

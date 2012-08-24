@@ -89,7 +89,7 @@ class Login extends CI_Controller {
 		redirect('home');
 	}
 	
-	function recovery_old($code=""){
+	/*function recovery_old($code=""){
 		if($this->input->post('submit')){
 			$this->view_data['login_error'] = $this->users_model->reset_pass_notify($this->input->post('username'));	
 		}else{
@@ -99,7 +99,7 @@ class Login extends CI_Controller {
 		}
 		$this->view_data['window_title'] = "Reset my Password";
 		$this->load->view('recovery_view', $this->view_data);
-	}
+	}*/
 	
 	function recovery($code=""){
 		if($this->input->post('email')){
@@ -113,10 +113,10 @@ class Login extends CI_Controller {
 		$this->load->view('recovery_codearmy_view', $this->view_data);
 	}
 	
-	function brush(){
+	/*function brush(){
 		$this->view_data['window_title'] = "Brush my balls!";
 		$this->load->view('brush_view', $this->view_data);
-	}
+	}*/
 	
 	function Ajax_checkUser(){
 		if($this->input->post('user')){

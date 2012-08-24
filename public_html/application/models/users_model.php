@@ -676,7 +676,8 @@ class Users_model extends CI_Model {
 				'created_at' => date('Y-m-d H:i:s'),
 				'validity' => date('Y-m-d H:i:s', time()+60*60),
 			);
-			$this->notify($user['user_id'],'Password Reset',"We recieved a request regarding reseting your password. If you wish to proceed with this action click on following link: <a href='".base_url()."login/recovery/".$doc['code']."'>reset password</a>");
+			$this->notify($user['user_id'],'Password Reset',"We received a request for resetting your password. If you are the one initiating the request and wish to continue, please click here: <a href='".base_url()."login/recovery/".$doc['code']."'>reset password</a>");
+			
 			$this->db->insert('actions', $doc);
 			return "An email is sent to you containing further instuctions...";
 		}else return "Uername doesn't exist!";
@@ -694,7 +695,7 @@ class Users_model extends CI_Model {
 				'created_at' => date('Y-m-d H:i:s'),
 				'validity' => date('Y-m-d H:i:s', time()+60*60),
 			);
-			$this->notify($user['user_id'],'Password Reset',"We recieved a request regarding reseting your password. If you wish to proceed with this action click on following link: <a href='".base_url()."login/recovery/".$doc['code']."'>reset password</a>");
+			$this->notify($user['user_id'],'Password Reset',"We received a request for resetting your password. If you are the one initiating the request and wish to continue, please click here: <a href='".base_url()."login/recovery/".$doc['code']."'>reset password</a>");
 			$this->db->insert('actions', $doc);
 			return "Alright sir! i've sent you an email containing a confidential link to reset your password. Please check your email ASAP.";
 		}else return "Sorry sir! but your email is not registered in our system.";
@@ -712,7 +713,7 @@ class Users_model extends CI_Model {
 				$user = $user[0];
 				$newPass = $this->createRandomPassword();
 				$sql = "update users set secret=? where user_id=?";
-				$this->notify($user['user_id'], 'Your Password is Reset',"<p>Hi,</p><p>Your password on <a href='http://codearmy.com'>CodeArmy</a> is reset to: ".$newPass."</p><p>Please <a href='http://".$_SERVER['HTTP_HOST']."/login'>click here to go to login page</a>.</p><p>Regards.</p>");
+				$this->notify($user['user_id'], 'Your Password is Reset',"<p>Hello!</p><p>Your password on <a href='http://codearmy.com'>CodeArmy</a> has been reseted to: ".$newPass."</p><p>Soldier on!</p>");
 				$this->db->query($sql, array(md5($newPass),$user['user_id']));
 				return "Dear ".$user['username'].", an email is sent to you containing your new password.";
 			}else return "Error: Invalid Code!";

@@ -55,9 +55,9 @@ Message:
 <div id="errmsg2"><?=form_error("message")?></div>
 <?php } else { ?>
 <textarea name="message" rows="12" cols="70" id="message">
-Hi! I would like to invite you to be a part of CodeAr.my, a platform that helps you to find exciting Digital Products to wok on in a Gamified Environment!
+Hi! I would like to invite you to be a part of CodeAr.my, a platform that helps you to find exciting Digital Products to wok on in a Gamified Environment! Join me and be at the top of your game. 
 
-Join me and be at the top of your game.
+Visit http://www.codearmy.com
 </textarea>
 <?php } ?>
 <br /><br />
