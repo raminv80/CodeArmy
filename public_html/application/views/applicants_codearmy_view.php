@@ -17,7 +17,7 @@
       <a href="/profile/show/<?=$bid['username']?>">
       <div class="applicant-avatar-box">
         <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-          <p><?=$this->gamemech->get_level($bid['exp'])?></p>
+          <p><?=$this->game_model->get_level($bid['exp'])?></p>
         </div>
         <div class="find-mission-comment-name"><?=$bid['username']?></div>
       </div>
@@ -76,7 +76,7 @@
           <a href="/profile/show/<?=$invitation['username']?>">
           <div class="applicant-avatar-box">
             <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-              <p><?=$this->gamemech->get_level($invitation['exp'])?></p>
+              <p><?=$this->game_model->get_level($invitation['exp'])?></p>
             </div>
             <div class="find-mission-comment-name"><?=$invitation['username']?></div>
           </div>

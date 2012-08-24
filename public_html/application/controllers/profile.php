@@ -81,8 +81,8 @@ class Profile extends CI_Controller {
 		$this->view_data['leaderBoard'] = $leaderBoard;
 		$this->view_data['last_task'] = $this->users_model->last_task($user_id);
 		$this->view_data['working_on'] = $this->users_model->working_on($user_id);
-		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
-		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
+		$this->view_data['myLevel'] = $this->game_model->get_level($this->view_data['me']['exp']);
+		$this->view_data['expProgress'] = $this->game_model->get_progress_bar($this->view_data['me']['exp']);
 		$this->view_data['window_title'] = $this->session->userdata('username');
 		$this->load->view('profile_codearmy_view', $this->view_data);
 	}
@@ -144,8 +144,8 @@ class Profile extends CI_Controller {
 		//leaderboard
 		$leaderBoard = $this->users_model->leaderboard_centered($user_id);
 		$this->view_data['leaderBoard'] = $leaderBoard;
-		$this->view_data['myLevel'] = $this->gamemech->get_level($me['exp']);
-		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($me['exp']);
+		$this->view_data['myLevel'] = $this->game_model->get_level($me['exp']);
+		$this->view_data['expProgress'] = $this->game_model->get_progress_bar($me['exp']);
 		$this->view_data['window_title'] = $me['username'];
 		$this->load->view('show_profile_codearmy_view', $this->view_data);
 	}
@@ -175,7 +175,7 @@ class Profile extends CI_Controller {
 		//CodeArmy V1
 		$user_id = $this->session->userdata('user_id');
 		
-		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
+		$this->view_data['myLevel'] = $this->game_model->get_level($this->view_data['me']['exp']);
 		$allSkills = $this->skill_model->get_all_skills();
 		$this->view_data['allSkills'] = $allSkills;
 		$mySkills = $this->skill_model->get_my_skills($user_id);

@@ -115,7 +115,7 @@ class Missions extends CI_Controller {
 			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
 			$data = array(
 				'user_id' => $user_id,
-				'user_level' => $this->gamemech->get_level($this->view_data['me']['exp']),
+				'user_level' => $this->game_model->get_level($this->view_data['me']['exp']),
 				'username' => $this->view_data['me']['username'],
 				'work_id' => $work_id,
 				'time' => date('j M Y H:i'),
@@ -141,8 +141,8 @@ class Missions extends CI_Controller {
 		$works = $this->stories->stories_map($percision);
 		$mySkills = $this->skill_model->get_my_skills($user_id);
 		$this->view_data['main_category'] = $this->work_model->get_main_category();
-		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
-		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
+		$this->view_data['myLevel'] = $this->game_model->get_level($this->view_data['me']['exp']);
+		$this->view_data['expProgress'] = $this->game_model->get_progress_bar($this->view_data['me']['exp']);
 		$this->view_data['mySkills'] = $mySkills;
 		$this->view_data['percision'] = $percision;
 		$this->view_data['works'] = $works;
@@ -155,8 +155,8 @@ class Missions extends CI_Controller {
 		$user_id = $this->view_data['me']['user_id'];
 		$works = $this->stories->stories_map($percision);
 		$mySkills = $this->skill_model->get_my_skills($user_id);
-		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
-		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
+		$this->view_data['myLevel'] = $this->game_model->get_level($this->view_data['me']['exp']);
+		$this->view_data['expProgress'] = $this->game_model->get_progress_bar($this->view_data['me']['exp']);
 		$this->view_data['mySkills'] = $mySkills;
 		$this->view_data['percision'] = $percision;
 		$this->view_data['works'] = $works;
@@ -883,7 +883,7 @@ class Missions extends CI_Controller {
 			$data = array(
 				'message' => $message,
 				'user_id' => $user_id,
-				'user_level' => $this->gamemech->get_level($user['exp']),
+				'user_level' => $this->game_model->get_level($user['exp']),
 				'username' => $user['username'],
 				'work_id' => $work_id,
 				'time' => date('j M Y H:i'),

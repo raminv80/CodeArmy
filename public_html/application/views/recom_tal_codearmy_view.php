@@ -39,7 +39,7 @@
 		$myBadges = $this->skill_model->get_my_top8_badges($user_id);
 		$completed = $this->users_model->works_compeleted($user_id);
 		if(!$myBadges){$myBadges=NULL;}
-		$level = $this->gamemech->get_level($user['exp']);
+		$level = $this->game_model->get_level($user['exp']);
 	  ?>
       <div class="recom-box-unit" id="user-<?=$user_id?>">
         <div class="recom-box-top-left">

@@ -4,7 +4,7 @@
 	<li>
     	<ul class="bid-container bid-status-<?=$bid['bid_status']?>" id="bid-<?=$bid['bid_id']?>">
         	<li>username: <?=$bid['username']?></li>
-            <li>Level: <?=$this->gamemech->get_level($bid['exp'])?></li>
+            <li>Level: <?=$this->game_model->get_level($bid['exp'])?></li>
             <li>Bid message: <?=trim($bid['bid_desc']=='')?'No question or comment.':trim($bid['bid_desc'])?></li>
             <li>Bid Time: <?=$bid['bid_time']?> <?=ucfirst(str_replace('dai','day',substr($arrangement,0,-2)))?>s</li>
             <li>Bid Cost: <?=$bid['bid_cost']?> per <?=ucfirst(str_replace('dai','day',substr($arrangement,0,-2)))?>s</li>

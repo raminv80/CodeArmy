@@ -53,7 +53,7 @@
         <div class="po-info">
           <p class="wall-box-title">Mission Captain</p>
           <p class="po-name"><?=$po['username']?></p>
-          <p class="level">Level <?=$this->gamemech->get_level($po['exp']);?></p>
+          <p class="level">Level <?=$this->game_model->get_level($po['exp']);?></p>
         </div>
         <div class="po-avatar"><a href="/profile/show/<?=$po['username']?>"><img src="/public/images/codeArmy/po/default-avatar.png" /></a></div>
       </div>
@@ -64,7 +64,7 @@
       <div class="find-mission-comment-box">
         <div class="find-mission-comment-box-left">
           <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-            <p><?=$this->gamemech->get_level($me['exp'])?></p>
+            <p><?=$this->game_model->get_level($me['exp'])?></p>
           </div>
           <div class="find-mission-comment-name"><?=$me['username']?></div>
         </div>
@@ -139,7 +139,7 @@
           <div class="find-mission-down-box-row">
             <div class="find-mission-comment-box-left">
               <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-                <p class='find-mission-comment-level'><?=$this->gamemech->get_level($comment['exp'])?></p>
+                <p class='find-mission-comment-level'><?=$this->game_model->get_level($comment['exp'])?></p>
               </div>
               <div class="find-mission-comment-name"><?=$comment['username']?></div>
             </div>

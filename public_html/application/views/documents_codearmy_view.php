@@ -76,7 +76,7 @@
             <?=$po['username']?>
           </p>
           <p class="level">Level
-            <?=$this->gamemech->get_level($po['exp']);?>
+            <?=$this->game_model->get_level($po['exp']);?>
           </p>
         </div>
         <div class="po-avatar"><img src="/public/images/codeArmy/po/default-avatar.png" /></div>

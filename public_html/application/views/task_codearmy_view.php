@@ -53,7 +53,7 @@
         <div class="po-info">
           <p class="wall-box-title">Mission Captain</p>
           <p class="po-name"><?=$po['username']?></p>
-          <p class="level">Level <?=$this->gamemech->get_level($po['exp']);?></p>
+          <p class="level">Level <?=$this->game_model->get_level($po['exp']);?></p>
         </div>
         <div class="po-avatar"><img src="/public/images/codeArmy/po/default-avatar.png" /></div>
       </div>

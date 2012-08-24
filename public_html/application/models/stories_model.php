@@ -535,7 +535,7 @@ class Stories_model extends CI_Model {
 		$me = $this->db->query($sql, array($user_id));
 		$me = $me->result_array();
 		$me = $me[0];
-		$level = $this->gamemech->get_level($me['exp']);
+		$level = $this->game_model->get_level($me['exp']);
 		$total_bids = $this->today_bids($user_id);
 		if($level<10) return 10-$total_bids;
 		if($level>=10 && $level<25) return 15-$total_bids;

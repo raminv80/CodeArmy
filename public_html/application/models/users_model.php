@@ -278,7 +278,7 @@ class Users_model extends CI_Model {
 					'username' => $this->input->post('username'),
 					'user_id' => $query_data[0]['user_id'],
 					'role' => $query_data[0]['role'],
-					'level' => $this->gamemech->get_level($query_data[0]['exp']),
+					'level' => $this->game_model->get_level($query_data[0]['exp']),
 					'tutorial' => $query_data[0]['show_tutorial'],
 					'is_logged_in' => true
 				);
@@ -321,7 +321,7 @@ class Users_model extends CI_Model {
 		$user = $user->result_array();
 		$user = $user[0];
 		if($user['role']=='admin') return 'Admin';
-		return 'lvl '.$this->gamemech->get_level($user['exp']);
+		return 'lvl '.$this->game_model->get_level($user['exp']);
 	}
 	
 	//update profile
