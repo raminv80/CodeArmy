@@ -429,8 +429,8 @@ class Missions extends CI_Controller {
 							$res = array(
 								"work_id" => $work_id,
 								"skill_id" => $skills_res[0]['id'],
-								"skill_level" => 1,
-								"point" => 1
+								"skill_level" => 2,
+								"point" => 3
 							);
 						} else {
 							$res = array(

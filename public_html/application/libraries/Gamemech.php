@@ -42,8 +42,8 @@ class Gamemech {
 		return points_per_level - ($exp % points_per_level);
 	}
 	
-	function job_points($hour, $level ){
-		
+	function cal_job_points($work_id, $user_id ){
+		return 0;
 	}
 }
 

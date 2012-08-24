@@ -526,4 +526,5 @@ class Work_model extends CI_Model {
 	function is_workhorse($user_id,$work_id){
 		return ($this->db->get_where('works',array('work_id'=>$work_id,'work_horse'=>$user_id))->num_rows()>0);
 	}
+	
 }
