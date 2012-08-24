@@ -16,7 +16,8 @@ h3 {
 $msg = $this->session->flashdata('msg');
 if($msg) echo "<b>".$msg."</b>";
 ?>
-<img style="float:right; margin-top:-30px;" id="mailimg" src="/public/images/codeArmy/invite-share-buttons.png" />
+<a href="http://www.facebook.com/share.php?u=http://www.CodeAr.my" onclick="return fbs_click()" target="_blank"><img style="float:right; margin-top:-30px;" id="mailimg" src="/public/images/codeArmy/invite-fb-share.jpg" /></a>
+<a href="http://twitter.com/home?status=Code Army – www.CodeAr.my" target="_blank"><img style="float:right; margin-top:-30px;" id="mailimg" src="/public/images/codeArmy/invite-twitter-share.jpg" /></a>
 You can invite friends by sending them an email<br />
   <!--<br /><br /><br />
   Searching from address book to invite your friends to join CodeAr.my<br />
@@ -61,7 +62,7 @@ Visit http://www.codearmy.com
 </textarea>
 <?php } ?>
 <br /><br />
-<input style="float:right" type="image" src="/public/images/codeArmy/invite.png" border="0" alt="Submit" />
+<input style="float:right" type="submit" value="Invite" class="lnkimg" />
 </div>
 </div>
 
