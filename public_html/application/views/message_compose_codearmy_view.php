@@ -2,8 +2,15 @@
 <div id="compose-content-area"> 
   <style>
   #errmsg3 {
-	  width:100%;
-	  margin:0 0 10px 0;
+	  width: 200px;
+margin: 0 0 0px 30px;}
+#msg-text #errmsg3 {
+	float:right;
+	margin: 30px;
+}
+#msg-subject input, #receiver-name input {
+	float:left;
+}
   </style>
   <!-- START - Compose Block - Dev. by Reza  -->
   <div id="block-compose-header">
