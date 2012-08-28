@@ -31,7 +31,10 @@ img {
             --><li class="active"><a href="#chat"><span>Chat</span><img src="/public/images/codeArmy/duck/icon-chat.png" alt="[chat]" /></a></li><!--
             --><li class="active"><a href="#music"><span>Music</span><img src="/public/images/codeArmy/duck/icon-music.png" alt="[music]" /></a></li><!--
             --><li><a href="#photo"><span>Photo</span><img src="/public/images/codeArmy/duck/icon-photo.png" alt="[photo]" /></a></li><!--
-            --><li><a href="javascript: mission_creator_open()"><span>Create Mission</span><img src="/public/images/codeArmy/duck/icon-text.png" alt="[text]" /></a></li><!--
+-->
+<!-- <li><a href="javascript: mission_creator_open()"><span>Create Mission</span><img src="/public/images/codeArmy/duck/icon-text.png" alt="[text]" /></a></li> -->
+<li><a href = "javascript:void(0)" class="create_mission"><span>Create Mission</span><img src="/public/images/codeArmy/duck/icon-text.png" alt="[text]" /></a></li>
+<!--
             --><li class="seperator"></li><!--
             --><li><a href="#folder?src=/apps/"><span>Applications</span><img src="/public/images/codeArmy/duck/icon-applications.png" alt="[apps]" /></a></li><!--
             --><li><a href="#folder?src=/pictures/"><span>Pictures</span><img src="/public/images/codeArmy/duck/icon-pictures.png" alt="[pictures]" /></a></li><!--

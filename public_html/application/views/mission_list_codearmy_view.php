@@ -79,7 +79,8 @@
         <div class="col7"><?=$work['end']?></div>
     </div>
     <div class="detail-row" id="detail-<?=$work['work_id']?>">
-    	<a rel="missions" href="/missions/apply/<?=$work['work_id']?>">
+    	<!-- <a rel="missions" data-fancybox-type="iframe" href="/missions/apply/<?=$work['work_id']?>?"> -->
+		<a href="javascript:void(0)" rel="/missions/apply/<?=$work['work_id']?>" class="mission_apply">
     	<div class="mission-video-preview">
       		<iframe class="youtube-player" type="text/html" width="250" height="150" src="http://www.youtube.com/embed/<?=$work['tutorial']?$work['tutorial']:'zFNb8j3YAd4'?>?wmode=opaque" frameborder="0"></iframe>
         	<h2><?=$work['title']?></h2>
@@ -123,3 +124,24 @@
     <?php endforeach;?>
 </div>
 <script type="text/javascript" src="/public/js/jscrollpane.js"></script>
+<script type="text/javascript" src="http://jscrollpane.kelvinluck.com/script/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="/public/js/codeArmy/lightboxme.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('a.mission_apply').bind('click',function(e){
+			var frame = $(this).attr('rel');
+			$('.mission-frame').lightbox_me({
+				showOverlay :true,
+				closeSelector: ".closeme",
+				//closeClick: true,
+				onLoad: function(){
+					$('.mission-frame').append('<iframe src="'+frame+'" frameborder="0" width="100%" height="100%"></iframe>');
+				},
+				onClose: function() {
+					$('.mission-frame iframe').remove();
+				}
+			});
+			e.preventDefault();
+		})
+	})
+</script>

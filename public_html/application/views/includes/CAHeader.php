@@ -35,6 +35,7 @@
 <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/header.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/qtips.js"></script>
+<script type="text/javascript" src="/public/js/codeArmy/lightboxme.js"></script>
 
 <title><?=$window_title?></title>
 </head>

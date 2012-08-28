@@ -74,6 +74,8 @@
 </div>
 <!-- end of dialogs --> 
 
+<div class="mission-frame" style="width:800px; height:550px; display:none;"><div class="closeme"><i class="icon-remove"></i></div></div>
+
 <!-- marker template -->
 <div id="marker-template" class="marker" style="display:none;">
   <div class="marker-icon">#</div>
@@ -83,6 +85,7 @@
     <div class="arrow-down"> </div>
   </div>
 </div>
+
 <!-- end of marker template -->
 <div id="dialog-accept" class="dialog" title="Proposal Accepted">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Your proposal is accepted. Hurry up and be the first one to report to captain before someone else takes the mission.</p>

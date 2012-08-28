@@ -82,7 +82,7 @@
     	<div class="class1">What do you want done?</div>
         <div class="selection">
         <select id="category" name="category">
-        	<option value="" selected="selected">--- Please select ---</option>
+        <option value="" selected="selected">--- Please select ---</option>
       <?php foreach($main_category as $value): ?>
         <option value="<?=$value['category_id']?>"><?=$value['category']?></option>
       <?php endforeach; ?>
@@ -90,6 +90,23 @@
         </div>
     </div>
 </div>
+
+<div id="mission-creator" class="theframe">
+	<div class="thebox small">
+		<h1>Create Mission</h1>
+		<div class="liner"></div>
+		<p>What do you want done?</p>
+		<select id="category" name="category">
+	    <option value="" selected="selected">- Please select -</option>
+	  <?php foreach($main_category as $value): ?>
+	    <option value="<?=$value['category_id']?>"><?=$value['category']?></option>
+	  <?php endforeach; ?>
+	    </select>
+	<div class="closeme"><i class="icon-remove"></i></div>
+	</div>
+</div>
+
+<div class="mission-frame" style="width:800px; height:550px; display:none;"><div class="closeme"><i class="icon-remove"></i></div></div>
 
 <!-- marker template -->
 <div id="marker-template" class="marker" style="display:none;">
@@ -329,6 +346,7 @@
 	}
 </style>
 <script>
+	
 	function loadEffect(){}
 	
 	var oldValue, jobs = <?php echo json_encode($works); ?>;
@@ -348,6 +366,21 @@
 		$('select').selectmenu({'width':'202', 'style':'popup'});
 		//run window resize
 		$(window).resize();
+		
+		//fixed popup
+		$('.create_mission').live('click',function(e){
+			$('#mission-creator').lightbox_me({
+				showOverlay :true,
+				closeSelector: ".closeme",
+				modalCSS: {top: '25%'}
+			});
+			e.preventDefault();
+		});
+		
+		/*$('#mission-creator select').bind('change',function(){
+			$('#mission-creator').trigger('close');
+		})*/
+	
 	});
 	
 	function renderMarkers(){
@@ -395,8 +428,7 @@
 	function initializeEvents(){
 		$("a[rel=missions]").fancybox({
 				'transitionIn'      : 'fade',
-                'transitionOut'     : 'fade',
-                'type'              : 'iframe',
+                'transitionOut'     : 'fade'
             });
 		$('select').bind("change", function(){
     		MissionCreate($('select').val());
@@ -794,6 +826,7 @@ function removeTags(html) {
   } while (html !== oldHtml);
   return html.replace(/</g, '&lt;');
 }
+
 </script>
 <!-- end of chat box -->
 <script type="text/javascript" src="/public/js/codeArmy/duck.js"></script>

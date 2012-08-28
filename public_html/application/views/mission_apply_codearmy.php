@@ -1,7 +1,7 @@
 <?php $this->load->view('includes/frame_header.php'); ?>
 
 <div class="find-mission-full-wrapper">
-	<div class="find-mission-full-container">
+	<div class="find-mission-full-container" style="width:770px; overflow:hidden">
 	  <div class="find-mission-main-col">
 	    <div class="find_mission_main_desc">
 	      <div class="find-mission-main-title">
@@ -153,12 +153,6 @@
 	  </div>
 	</div>
 </div>
-<style type="text/css">
-	.arrowkey {font-size:1.4em; color:orange; cursor:pointer}
-	.arrowkey i:hover {color:white}
-	.arrowkey i:last-child {margin-right:5px}
-	input.budget:focus, input.time:focus {outline:0}
-</style>
 <script type="text/javascript">
 
 	function increment(e,field) {
