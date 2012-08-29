@@ -3242,6 +3242,7 @@ color: #999;
 	-webkit-appearance:none; color:white; background:url(http://cdn1.iconfinder.com/data/icons/miniicons2/arrow_fat_down.gif) no-repeat right; cursor:pointer;
 	box-shadow:none; border:0; outline:0; width:98%; padding-left:2%; height:auto; font-size:14px; font-weight:700}
 .wrapselect select option {color:black}
+.wrapselect select#startHour option {color:white}
 .wrapselect.right{float:right;} .wrapselect.left{float:left}
 .wrapselect.big {width:300px;} .wrapselect.small {width:125px} .wrapselect.tiny {width:60px}
 .dashforselect {padding:6px 10px; float:left}
