@@ -36,6 +36,7 @@
 <script type="text/javascript" src="/public/js/codeArmy/header.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/qtips.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/lightboxme.js"></script>
+<script type="text/javascript" src="/public/js/codeArmy/browserdetect.js"></script>
 
 <title><?=$window_title?></title>
 </head>

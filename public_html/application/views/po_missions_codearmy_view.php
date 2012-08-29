@@ -360,7 +360,14 @@
 		addMarker(loc.x,loc.y,'t3','*','12<br/>top','#0ff',0.5,0);*/
 		renderMarkers();
 		$('#world-map .marker').fadeIn('slow');
-		$('.toolbar').draggable({ containment: '#wrapper' });
+		
+		if(BrowserDetect.browser != 'Firefox') {
+			$('.toolbar').draggable({ containment: '#wrapper' });
+		} else {
+			$('.chat-box.toolbar').draggable({ containment: '#wrapper' });
+		};
+		
+		$('.chat-box.toolbar input').focus();
 		$('.toolbar [title]').tipsy();
 		initializeEvents();
 		$('select').selectmenu({'width':'202', 'style':'popup'});
