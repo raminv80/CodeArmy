@@ -411,7 +411,7 @@ class Work_model extends CI_Model {
 	}
 	
 	function get_pending_invitations($work_id){
-		$sql = "SELECT * FROM invitation, users WHERE invitation.user_id=users.user_id AND invitation.work_id=? AND invitation.status in ('sent','viewed')";
+		$sql = "SELECT DISTINCT users.* FROM invitation, users WHERE invitation.user_id=users.user_id AND invitation.work_id=? AND invitation.status in ('sent','viewed')";
 		return $this->db->query($sql,array($work_id))->result_array();
 	}
 	
@@ -525,5 +525,17 @@ class Work_model extends CI_Model {
 	
 	function is_workhorse($user_id,$work_id){
 		return ($this->db->get_where('works',array('work_id'=>$work_id,'work_horse'=>$user_id))->num_rows()>0);
+	}
+	
+	function get_po_spend($user_id){
+		$sql = "SELECT sum(bid_cost) as num FROM works,bids WHERE bids.work_id=works.work_id and bids.bid_status = 'Accepted' and works.owner = ? and works.status='Signoff'";
+		$res = $this->db->query($sql, $user_id)->result_array();
+		return $res[0]['num'];
+	}
+	
+	function get_po_completed($user_id){
+		$sql = "SELECT count(*) as num FROM works WHERE works.owner = ? and works.status='Signoff'";
+		$res = $this->db->query($sql, $user_id)->result_array();
+		return $res[0]['num'];
 	}
 }

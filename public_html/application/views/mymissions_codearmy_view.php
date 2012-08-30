@@ -162,9 +162,10 @@
 }
 #dummy-create-mission:hover{
 	background: rgb(0, 176, 255); /* The Fallback */
-	background: rgba(0, 176, 255, 0.5);
-	color:#9FF;
+	background: rgba(0, 176, 255, 0.1);
+	color:white;
 	font-size:18pt;
+	text-shadow:0px 0px 3px white;
 }
 </style>
 <div id="mymission-content-area">
@@ -173,6 +174,47 @@
         	<h3>My Missions</h3>
         </div>
         <div class="list">
+        	<?php
+			if($myProfile["params"] != ""){
+				$params = json_decode($myProfile["params"]);
+				$hideSample = $params->hidesample;
+			} else {
+				$hideSample = false;
+			}
+			if($hideSample != true){ ?>
+        	<!-- Sample Mission : Begin -->
+            <div class="item gray-mission" id="mission-sample">
+            	<div class="mission-header">
+                	<div class="mission-title">Sample Mission</div>
+                    <div class="mission-status-icon"><img src="/public/images/codeArmy/mymission/thumb-up.png" alt="thumb up" /></div>
+                    <div class="mission-progress-bg">
+                    	<div class="mission-progress-meter" style="width:0px"></div>
+                        <input type="hidden" name="percent" value="0" />
+                        <input type="hidden" name="min_to_percent" value="0" />
+                    </div>
+                    <div class="mission-inputs">Proposed Timeline: 1 month</div>
+                    <div class="mission-deliverables">Proposed Reward: 20$/month</div>
+                </div>
+                <div class="mission-content">
+                	<ul class="mission-icons">
+                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
+                        <li><a href="#" title="You are competing with 1 trooper(s) on this mission!"><span class="icon"></span><span class="title">1 Troop(s)</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                    </ul>
+                    <div class="mission-time">
+                    	<span class="time-left">Time left</span>
+                        <div class="timer">
+                        <span class="time">720</span>
+                        <span class="hrs">hrs</span>
+                        </div>
+                        <a href="javascript:void(0);" id="removeSample" class="blue-button">Remove</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Sample Mission : End -->
+            <?php } ?>
+            
         	<?php foreach($myPendingList as $list):?>
             <div class="item gray-mission" id="mission-<?=$list['work_id']?>">
             	<div class="mission-header">
@@ -415,6 +457,20 @@
 				}
 			});
 		});
+		
+		$('#removeSample').click(function(){
+			$.ajax({
+				url: '/missions/Ajax_remove_sample',
+				type: 'post',
+				async: false,
+				data: {'csrf_workpad': getCookie('csrf_workpad')},
+				success: function(msg){
+					console.log(msg);
+					$('#mission-sample').slideUp('fast');
+				}
+			});
+		});
+		
 		//Lets show number of bids on a mission in realtime
 		var channel = pusher.subscribe('bid');
 		  channel.bind_all(function(evnt,data) {

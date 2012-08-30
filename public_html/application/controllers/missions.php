@@ -1298,4 +1298,17 @@ class Missions extends CI_Controller {
 		if($this->db->delete('calendar', array('calendar_id' => $calendarID))) echo "success";
 		else echo "error";
 	}
+	
+	function Ajax_remove_sample(){
+		$user_id = $this->session->userdata('user_id');
+		$res = array(
+			"hidesample" => "true"
+		);
+		$res = json_encode($res);
+		$doc = array(
+			"params" => $res
+		);
+		$where = array("user_id" => $user_id);
+		$this->db->update('user_profiles', $doc, $where);
+	}
 }
