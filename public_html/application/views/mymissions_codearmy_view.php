@@ -162,9 +162,10 @@
 }
 #dummy-create-mission:hover{
 	background: rgb(0, 176, 255); /* The Fallback */
-	background: rgba(0, 176, 255, 0.5);
-	color:#9FF;
+	background: rgba(0, 176, 255, 0.1);
+	color:white;
 	font-size:18pt;
+	text-shadow:0px 0px 3px white;
 }
 </style>
 <div id="mymission-content-area">
