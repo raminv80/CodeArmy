@@ -316,8 +316,11 @@
             </div>
             <?php endforeach;?>
             
-            <?php foreach($myMissions as $list):?>
-            <div class="item green-mission" id="mission-<?=$list['work_id']?>">
+            <?php foreach($myMissions as $list):
+				$color = (in_array(strtolower($list['status']),array('draft')))?'red':'green';
+				$color = (in_array(strtolower($list['status']),array('signoff')))?'grey':$color;
+			?>
+            <div class="item <?=$color?>-mission" id="mission-<?=$list['work_id']?>">
             	<?php
 					//calc remaining time
 					$remaining_time = strtotime($list['deadline'])-time();
@@ -388,10 +391,8 @@
                         <span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>
                         <span class="hrs">hrs</span>
                         </div>
-                        <?php if($po && strtolower($list['status'])=='draft'){?>
-                        	<a class="fancybox blue-button" href="/missions/edit_mission/<?=$list['work_id']?>">Edit</a>
-                        <?php }elseif($po && (strtolower($list['status'])=='open' || strtolower($list['status'])=='assigned')){//TODO: if in open, assigned status allow edit but send alert to bidders on change?>
-                        	<a class="fancybox blue-button" href="/missions/edit_mission/<?=$list['work_id']?>">Manage</a>
+                        <?php if($po && (strtolower($list['status'])=='open' || strtolower($list['status'])=='assigned' || strtolower($list['status'])=='draft')){//TODO: if in open, assigned status allow edit but send alert to bidders on change?>
+                        	<a class="blue-button" href="/missions/manage/<?=$list['work_id']?>">Manage</a>
                         <?php }else{?>
                         	<a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>
                         <?php }?>

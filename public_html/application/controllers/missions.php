@@ -87,6 +87,29 @@ class Missions extends CI_Controller {
 		$this->load->view('mission_apply_codearmy', $this->view_data);
 	}
 	
+	function manage($work_id){
+		$this->view_data['work_id'] = $work_id;
+		$this->view_data['work'] = $this->work_model->get_work($work_id)->result_array();
+		$this->view_data['work'] = $this->view_data['work'][0];
+		$work = $this->view_data['work'];
+		$this->view_data['work_skills'] = $this->work_model->get_work_skills($work_id);
+		$this->view_data['work_files'] = $this->work_model->previewFiles($work_id);
+		$arr = $this->work_model->get_work_arrangement($work_id);
+		$this->view_data['arranegement'] = $arr;
+		$estimate_time = $this->work_model->get_selected_arrangement_time($work['est_time_frame']);
+		if(!$estimate_time){$estimate_time=0;} else {$estimate_time = $estimate_time[0];}
+		$this->view_data['estimate_time'] = $estimate_time;
+		$estimate_budget = $this->work_model->get_selected_arrangement_budget($work['est_budget']);
+		if(!$estimate_budget){$estimate_budget=0;} else {$estimate_budget = $estimate_budget[0];}
+		$this->view_data['estimate_budget'] = $estimate_budget;
+		$this->view_data['bid_avg'] = $this->work_model->get_bid_avg($work_id);
+		$this->view_data['bids'] = $this->work_model->get_bids($work_id);
+		$this->view_data['invitations'] = $this->work_model->get_pending_invitations($work_id);
+		$this->view_data['troops'] = $this->work_model->get_active_bids($work_id);
+		$this->view_data['window_title'] = "CodeArmy Apply for mission";
+		$this->load->view('po_manage_codearmy', $this->view_data);
+	}
+	
 	function set_bid(){
 		$user_id = $this->session->userdata('user_id');
 		if($this->input->post('submit')){
@@ -1310,5 +1333,12 @@ class Missions extends CI_Controller {
 		);
 		$where = array("user_id" => $user_id);
 		$this->db->update('user_profiles', $doc, $where);
+	}
+	
+	function Ajax_remove_mission(){
+		$user_id = $this->session->userdata('user_id');
+		$work_id = $this->input->post('work_id');
+		$work = $this->work_model->get_work($work_id)->result_array();
+		if($work[0]['owner']==$user_id) $this->work_model->delete_work($work_id);
 	}
 }

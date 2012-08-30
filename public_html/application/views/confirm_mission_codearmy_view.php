@@ -79,7 +79,7 @@
     <div class="confirm-mission-assign-po" style="margin:70px 25px 5px 0"> 
       <!--<input type="checkbox" />
 	    <label>Assigning this mission tp a Project Manager.</label>--> 
-        <input type="checkbox" name="recom" id="need-recom" checked="checked" /><label for="need-recom">I would like system to recommend me some contractors now</label>
+        <!--<input type="checkbox" name="recom" id="need-recom" checked="checked" /><label for="need-recom">I would like system to recommend me some contractors now</label>-->
     </div>
     <div class="submit-cancel-row">
       <input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
@@ -159,7 +159,7 @@ $('#confirm-mission').click(function(){
 							Ok: function() {
 								$( this ).dialog( "close" );
 								parent.$.fancybox.close();
-								if($('#need-recom').attr('checked')) parent.$.fancybox.open({
+								parent.$.fancybox.open({
 									//type: 'inline',
 									data:{},
 									href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/<?=$preview['work_id']?>',

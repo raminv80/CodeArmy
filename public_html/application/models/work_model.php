@@ -50,6 +50,11 @@ class Work_model extends CI_Model {
 		return $this->db->get_where('works', array('work_id' => $work_id));
 	}
 	
+	function delete_work($work_id){
+		$sql = "DELETE FROM works where work_id=? and lower(status) in ('draft','reject','open')";	
+		$this->db->query($sql, $work_id);
+	}
+	
 	function get_detail_work($work_id) {
 		$sql = "SELECT *, arrangement_type.type as arrangement_type FROM works, mission_category, class, subclass, arrangement_type,bids WHERE arrangement_type.id=works.est_arrangement AND works.category=mission_category.category_id AND class.class_id=works.class AND subclass.subclass_id=works.subclass AND bids.work_id=works.work_id AND bids.bid_status='Accepted' AND bids.user_id=works.work_horse AND works.work_id=?";
 		return $this->db->query($sql,$work_id);
@@ -235,7 +240,7 @@ class Work_model extends CI_Model {
 	}
 	
 	function get_owner_works($user_id){
-		$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE owner=? OR creator=? and status!='Signoff'";
+		$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE owner=? OR creator=? and status!='Signoff' order by created_at DESC";
 		$res = $this->db->query($sql, array($user_id,$user_id));
 		return $res->result_array();
 	}

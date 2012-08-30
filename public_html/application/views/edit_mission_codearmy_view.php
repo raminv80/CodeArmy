@@ -117,7 +117,7 @@
 	<div class="submit-cancel-row">
 	<input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
 	<div class="loader" style="margin:-40px auto 20px; padding-left:180px"><img id="reg-ajax" style="display: none;"src="/public/images/codeArmy/loader4.gif"></div>
-	<input type="button" class="lnkimg" id="post-mission" value="Update Mission">
+	<input type="button" class="lnkimg" id="post-mission" value="Review">
 	<input type="reset" class="lnkimg" id="cancel-mission" value="Cancel">
 	</div>
 

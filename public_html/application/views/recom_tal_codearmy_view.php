@@ -94,7 +94,9 @@
 
 	<div class="recom-page-nav"><div class="holder"></div></div>
     <div class="recom-page-confirm-invite">
-      <input type="submit" value="Confirm Invite" autofocus="autofocus" tabindex="1" class="lnkimg" id="submit">
+    <input type="submit" value="Confirm Invite" autofocus="autofocus" tabindex="1" class="lnkimg" id="submit">
+      <input type="button" value="Skip" tabindex="2" class="lnkimg" id="skip">
+      
     </div>
   </div>
 </div>
@@ -287,6 +289,14 @@
 				$(this).val('Invite').removeClass('selected');
 			});
 			
+			$('#skip').click(function(){
+				if(parent.window.location == "http://<?=$_SERVER['HTTP_HOST']?>/missions/my_missions"){
+					parent.window.location.reload();
+				}else{
+					parent.window.location = '/missions/my_missions';
+				}
+			});
+			
 			$('.recom-page-confirm-invite').click(function(){
 				var num_contractors = $('#recom-boxes-wrapper').find('input.selected').size();
 				if(num_contractors>0){
@@ -307,6 +317,11 @@
 									data: {'ids':ids, 'work_id': '<?=$work_id?>', 'csrf_workpad': getCookie('csrf_workpad')},
 									success: function(msg){
 										if(msg=='success'){
+											if(parent.window.location == "http://<?=$_SERVER['HTTP_HOST']?>/missions/my_missions"){
+												parent.window.location.reload();
+											}else{
+												parent.window.location = '/missions/my_missions';
+											}
 											parent.$.fancybox.close();
 										}else{
 											alert('Error: check the console for message');
@@ -375,5 +390,6 @@
 			});
 			
 		});
+		
 </script>
 <?php $this->load->view('includes/frame_footer.php'); ?>
