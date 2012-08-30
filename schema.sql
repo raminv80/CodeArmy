@@ -374,6 +374,7 @@ CREATE TABLE `user_profiles` (
   `gender` enum('male','female') DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
   `specialization` enum('employer','designer','developer','copywriter','unknown','product owner','admin') DEFAULT NULL,
+  `params` TEXT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

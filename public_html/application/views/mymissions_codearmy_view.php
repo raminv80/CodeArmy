@@ -174,7 +174,14 @@
         	<h3>My Missions</h3>
         </div>
         <div class="list">
-        	<?php if(!isset($_COOKIE["samplemission"])){ ?>
+        	<?php
+			if($myProfile["params"] != ""){
+				$params = json_decode($myProfile["params"]);
+				$hideSample = $params->hidesample;
+			} else {
+				$hideSample = false;
+			}
+			if($hideSample != true){ ?>
         	<!-- Sample Mission : Begin -->
             <div class="item gray-mission" id="mission-sample">
             	<div class="mission-header">
@@ -201,7 +208,7 @@
                         <span class="time">720</span>
                         <span class="hrs">hrs</span>
                         </div>
-                        <a href="javascript:removesample();" class="blue-button">Remove</a>
+                        <a href="javascript:void(0);" id="removeSample" class="blue-button">Remove</a>
                     </div>
                 </div>
             </div>
@@ -450,6 +457,20 @@
 				}
 			});
 		});
+		
+		$('#removeSample').click(function(){
+			$.ajax({
+				url: '/missions/Ajax_remove_sample',
+				type: 'post',
+				async: false,
+				data: {'csrf_workpad': getCookie('csrf_workpad')},
+				success: function(msg){
+					console.log(msg);
+					$('#mission-sample').slideUp('fast');
+				}
+			});
+		});
+		
 		//Lets show number of bids on a mission in realtime
 		var channel = pusher.subscribe('bid');
 		  channel.bind_all(function(evnt,data) {
@@ -494,18 +515,6 @@
 				percentage_elm.val(percentage);
 				$(item).find('.mission-progress-meter').css({'width':Math.round(216*percentage)});
 			});
-	}
-	
-	function removesample(){
-		setCookie('samplemission',true,'10');
-		$('#mission-sample').slideUp('fast');
-	}
-	
-	function setCookie(c_name,value,exdays){
-		var exdate=new Date();
-		exdate.setDate(exdate.getDate() + exdays);
-		var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-		document.cookie=c_name + "=" + c_value;
 	}
 </script>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>
