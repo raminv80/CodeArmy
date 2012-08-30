@@ -168,7 +168,7 @@ $('#confirm-mission').click(function(){
 									width: 960,
 									autoSize: false,
 									'overlayShow': true,
-									'overlayOpacity': 0.5, 
+									'overlayOpacity': 0.8, 
 									afterClose: function(){},
 									openMethod : 'dropIn',
 									openSpeed : 250,
