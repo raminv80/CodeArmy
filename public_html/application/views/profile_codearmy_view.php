@@ -59,6 +59,18 @@
   </div>
   
   <!-- START - Experience Block - Dev. by Reza -->
+  <?php if($me['role']='po'){?>
+  <div class="block-mission-info">
+    <div id="mission-bid">
+      <div id="mission-bid-text">Money invested</div>
+      <div id="mission-bid-number"><?=$spend?></div>
+    </div>
+    <div id="mission-complete">
+      <div id="mission-complete-text">Missions Completed</div>
+      <div id="mission-complete-number"><?=$completed?></div>
+    </div>
+  </div>
+  <?php }else{?>
   <div class="block-mission-info">
     <div id="mission-bid">
       <div id="mission-bid-text">Mission Bid</div>
@@ -69,7 +81,7 @@
       <div id="mission-complete-number"><?=$myWorkCompleted?></div>
     </div>
   </div>
-  
+  <?php }?>
   <!-- START - Skill Progression Block - Dev. by Reza -->
   <div id="block-skill-progression">
     <div class="block-header">
