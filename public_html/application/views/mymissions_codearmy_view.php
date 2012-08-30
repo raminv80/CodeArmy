@@ -181,7 +181,7 @@
 			} else {
 				$hideSample = false;
 			}
-			if($hideSample != true){ ?>
+			if($me['role']=='po' && $hideSample != true){ ?>
         	<!-- Sample Mission : Begin -->
             <div class="item gray-mission" id="mission-sample">
             	<div class="mission-header">
@@ -336,6 +336,7 @@
 					$min_to_percent = ($given_time==0)?0:(1*60)/($given_time);
 					
 					$po = ($me['user_id']==$list['owner']);
+					
 				?>
             	<div class="mission-header">
                 	<div class="mission-title"><?=character_limiter($list['title'],20)?></div>
@@ -345,9 +346,28 @@
                         <input type="hidden" name="percent" value="<?=$progress_percent?>" />
                         <input type="hidden" name="min_to_percent" value="<?=$min_to_percent?>" />
                     </div>
-<!--                    <div class="mission-inputs">Inputs: <?=trim($list['input'])==''?'not defined':$list['input']?></div>
-                    <div class="mission-deliverables">Deliverables: <?=trim($list['output'])==''?'not defined':$list['output']?></div>
--->                </div>
+                    <?php 
+						if(in_array(strtolower($list['status']),array('draft','open','assigned'))){
+							$arr = $this->work_model->get_work_arrangement($list['work_id']);
+							$arranegement = $arr;
+							$estimate_time = $this->work_model->get_selected_arrangement_time($list['est_time_frame']);
+							if(!$estimate_time){$estimate_time=0;} else {$estimate_time = $estimate_time[0];}
+							$estimate_budget = $this->work_model->get_selected_arrangement_budget($list['est_budget']);
+							if(!$estimate_budget){$estimate_budget=0;} else {$estimate_budget = $estimate_budget[0];}
+					?>
+                    <div class="mission-inputs">About <?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'?'?> <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s, <?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'?'?>$ per <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s</div>
+                    <div class="mission-deliverables"></div>
+                    <?php 
+						}else{
+							$arr = $this->work_model->get_work_arrangement($list['work_id']);
+							$arranegement = $arr;
+							$time_cost = $this->work_model->get_actual_work_time_cost($list['work_id']);
+							if(!$time_cost){$estimate_time=0;} else {$estimate_time = $time_cost['bid_time'];}
+							if(!$time_cost){$estimate_budget=0;} else {$estimate_budget = $time_cost['bid_cost'];}
+					?>
+                    <div class="mission-deliverables"><?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'?'?> <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s, <?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'?'?>$ per <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s</div>
+                    <?php }?>
+                </div>
                 <div class="mission-content">
                 	<ul class="mission-icons">
                     	<?php if($po){?>
