@@ -790,6 +790,10 @@ class Missions extends CI_Controller {
 		$this->load->view('applicants_codearmy_view',$this->view_data);
 	}
 	
+	function recommendFrame(){
+		$this->load->view('recom_frame_codearmy_view',$this->view_data);
+	}
+	
 	function getSkills(){
 		$q = $this->input->post('searchword');
 		//$q = $_REQUEST["searchword"];

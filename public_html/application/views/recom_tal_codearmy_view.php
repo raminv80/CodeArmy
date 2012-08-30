@@ -41,7 +41,7 @@
 		if(!$myBadges){$myBadges=NULL;}
 		$level = $this->gamemech->get_level($user['exp']);
 	  ?>
-      <div class="recom-box-unit" id="user-<?=$user_id?>">
+      <div data-fancybox-type="iframe" href="/missions/recommendFrame" class="recom-box-unit" id="user-<?=$user_id?>">
         <div class="recom-box-top-left">
           <div class="recom-box-top-circle">
             <p><?=round($recoms[$i]['match'])?>%</p>
@@ -94,112 +94,9 @@
 
 	<div class="recom-page-nav"><div class="holder"></div></div>
     <div class="recom-page-confirm-invite">
-      <input type="submit" value="Confirm Invite" autofocus="autofocus" tabindex="1" class="lnkimg" id="submit">
+      <input type="submit" value="Confirm Invite" tabindex="1" class="lnkimg" id="submit">
     </div>
   </div>
-</div>
-
-<div id="recom_profile" style="display:none">
-	<div class="thebox">
-		<div class="left" style="float:left">
-			<div id="block-avatar">
-			    <div id="profile-name">beta</div>
-			    <a id="msg-icon" href="/messages/compose/beta"></a>
-			    <div id="profile-type">developer </div>
-			    <div id="avatar-pic"> <img src="/public/images/codeArmy/profile/default-avatar.png" alt="Avatar Picture"> </div>
-			    <div id="profile-desc">Hi I'm army from codear.my. Checkout my portfolio to see my latest projects </div>
-			  </div>
-			
-			<div id="mission-complete">
-			   <div id="mission-complete-text">Mission In Progress</div>
-		       <div id="mission-complete-number">0</div>
-		    </div>
-		</div>
-		
-		<div class="right" style="float:right; margin-left:30px">
-			<div id="block-experience">
-			    <div id="experience-header">
-			      <h3>Level 1 (Exp Points:0)</h3>
-			    </div> 
-			    <div id="experience-bar">
-			      <div style="width:0px" id="experience-bar-progress"> </div>
-			    </div>
-			</div>
-			<div id="block-skill-progression">
-			    <div class="block-header active">
-			      <h3>Skill Progression</h3>
-				  <div class="collapse-arrow"><i class="icon-list-ul"></i></div>
-			    </div>
-			    <div class="skill-wrapper">
-			    	<div class="skill-unit">
-				      <div id="skill-title">Problem Solver</div>
-				      <div id="skill-bar">
-				        <div style="width:0%" id="skill-bar-progress" original-title="0"></div>
-				      </div>
-				    </div>
-					<div class="skill-unit">
-				      <div id="skill-title">Planner</div>
-				      <div id="skill-bar">
-				        <div style="width:0%" id="skill-bar-progress" original-title="0"></div>
-				      </div>
-				    </div>
-					<div class="skill-unit">
-				      <div id="skill-title">Decision Maker</div>
-				      <div id="skill-bar">
-				        <div style="width:0%" id="skill-bar-progress" original-title="0"></div>
-				      </div>
-				    </div>
-					<div class="skill-unit">
-				      <div id="skill-title">Communication</div>
-				      <div id="skill-bar">
-				        <div style="width:0%" id="skill-bar-progress" original-title="0"></div>
-				      </div>
-				    </div>
-					<div class="skill-unit">
-				      <div id="skill-title">Public Relation</div>
-				      <div id="skill-bar">
-				        <div style="width:0%" id="skill-bar-progress" original-title="0"></div>
-				      </div>
-				    </div>
-			    </div>
-			</div>
-			
-			<div id="block-achievements" style="width:460px">
-			    <div class="block-header">
-			      <h3>Achievements</h3>
-			      <div class="collapse-arrow"><i class="icon-list-ul"></i></div>
-			  </div>
-			  	<div class="badge-row">
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			   </div>
-		</div>
-		
-		<div class="clearfix"></div>
-		<div class="closeme"><i class="icon-remove"></i></div>
-	</div>
 </div>
 
 <div id="dialog-confirm" class="dialog" title="Confirm Inivite">
@@ -208,18 +105,7 @@
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You have selected no recommnded ctractors to be invited. Are you sure you want to proceed?</p>
 </div>
 <style type="text/css">
-	
-	/* Contractors popup */
 	.recom-tal-container {width:960px; height:auto; overflow-x:hidden}
-	#recom_profile .thebox {width:800px; height:500px}
-	#block-avatar, #block-experience, #block-skill-progression, #mission-complete, #block-achievements {float:none; overflow:hidden}
-	#block-avatar, #experience-header, #block-skill-progression, #block-achievements {text-align:left}
-	.badge-row {display:none}
-	.block-header {overflow:hidden; cursor:pointer; width: 450px}
-	.block-header .collapse-arrow {float:right}
-	.block-header:hover, .block-header.active{color:#ff7d0f}
-	#mission-complete {margin:-5px auto 0}
-	
 	.ui-widget-overlay {
 	   background: #000;
 	   opacity: 0.75;
@@ -350,30 +236,19 @@
 					});
 				}
 			});
-			
-			//contractors popup
 			$('.recom-box-unit').css('cursor','pointer');
-			$('.recom-box-unit').bind('click',function(e){
-				$('#recom_profile').lightbox_me({
-					showOverlay :true,
-					closeSelector: ".closeme"
+			$('.recom-box-unit').click(function(e){
+				$(this).fancybox({
+					beforeShow: function(){
+					  $(".fancybox-skin").css("backgroundColor","#222");
+					 },
+					padding : 2,
+					width	: 800,
+					height	: 550,
+					autoSize	: false
 				});
 				e.preventDefault();
 			});
-			
-			$('#block-skill-progression .block-header').bind('click',function(){ 
-				$('.block-header').removeClass('active');
-				$(this).addClass('active');
-				$(this).next().slideDown("slow");
-				$('.badge-row').slideUp();
-			});
-			$('#block-achievements .block-header').bind('click',function(){ 
-				$('.block-header').removeClass('active');
-				$(this).addClass('active');
-				$(this).next().slideDown("slow");
-				$('.skill-wrapper').slideUp();
-			});
-			
 		});
 </script>
 <?php $this->load->view('includes/frame_footer.php'); ?>
