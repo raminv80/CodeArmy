@@ -153,6 +153,40 @@
         	<h3>My Missions</h3>
         </div>
         <div class="list">
+        	<?php if(!isset($_COOKIE["samplemission"])){ ?>
+        	<!-- Sample Mission : Begin -->
+            <div class="item gray-mission" id="mission-sample">
+            	<div class="mission-header">
+                	<div class="mission-title">Sample Mission</div>
+                    <div class="mission-status-icon"><img src="/public/images/codeArmy/mymission/thumb-up.png" alt="thumb up" /></div>
+                    <div class="mission-progress-bg">
+                    	<div class="mission-progress-meter" style="width:0px"></div>
+                        <input type="hidden" name="percent" value="0" />
+                        <input type="hidden" name="min_to_percent" value="0" />
+                    </div>
+                    <div class="mission-inputs">Proposed Timeline: 1 month</div>
+                    <div class="mission-deliverables">Proposed Reward: 20$/month</div>
+                </div>
+                <div class="mission-content">
+                	<ul class="mission-icons">
+                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
+                        <li><a href="#" title="You are competing with 1 trooper(s) on this mission!"><span class="icon"></span><span class="title">1 Troop(s)</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                    </ul>
+                    <div class="mission-time">
+                    	<span class="time-left">Time left</span>
+                        <div class="timer">
+                        <span class="time">720</span>
+                        <span class="hrs">hrs</span>
+                        </div>
+                        <a href="javascript:removesample();" class="blue-button">Remove</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Sample Mission : End -->
+            <?php } ?>
+            
         	<?php foreach($myPendingList as $list):?>
             <div class="item gray-mission" id="mission-<?=$list['work_id']?>">
             	<div class="mission-header">
@@ -432,6 +466,18 @@
 				percentage_elm.val(percentage);
 				$(item).find('.mission-progress-meter').css({'width':Math.round(216*percentage)});
 			});
+	}
+	
+	function removesample(){
+		setCookie('samplemission',true,'10');
+		$('#mission-sample').slideUp('fast');
+	}
+	
+	function setCookie(c_name,value,exdays){
+		var exdate=new Date();
+		exdate.setDate(exdate.getDate() + exdays);
+		var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+		document.cookie=c_name + "=" + c_value;
 	}
 </script>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>

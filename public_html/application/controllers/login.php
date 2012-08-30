@@ -65,7 +65,7 @@ class Login extends CI_Controller {
 			if($this->session->userdata('referer')){
 				redirect($this->session->userdata('referer'));
 			}else{
-				redirect('my-profile');
+				redirect('missions/my_missions');
 			}
 		}
 		else { // incorrect username or password
