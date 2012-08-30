@@ -538,4 +538,10 @@ class Work_model extends CI_Model {
 		$res = $this->db->query($sql, $user_id)->result_array();
 		return $res[0]['num'];
 	}
+	
+	function get_actual_work_time_cost($work_id){
+		$sql = "SELECT bids.bid_cost, bids.bid_time FROM bids,works where works.work_id=bids.work_id and bids.bid_status='Accepted' AND works.work_id=?";
+		$res = $this->db->query($sql, $work_id)->result_array();
+		return $res[0];
+	}
 }
