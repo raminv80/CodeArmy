@@ -9,6 +9,7 @@ class Profile extends CI_Controller {
  ini_set("display_errors", 1);
 		parent::__construct();
 		$this->load->model('users_model');
+		$this->load->model('work_model');
 		$this->load->model('skill_model');
 		$this->load->model('projects_model');
 		$this->load->model('stories_model', 'stories');
@@ -51,10 +52,16 @@ class Profile extends CI_Controller {
 		
 		$mySkills = $this->skill_model->get_my_skills($user_id);
 		$this->view_data['mySkills'] = $mySkills;
-		$myWorkBid = $this->users_model->works_bid($user_id);
-		$this->view_data['myWorkBid'] = $myWorkBid;
-		$myWorkCompleted = $this->users_model->works_compeleted($user_id);
-		$this->view_data['myWorkCompleted'] = $myWorkCompleted;
+		if($this->view_data['me']['role'] = 'po'){
+			$this->view_data['spend'] = $this->work_model->get_po_spend($user_id);
+			if(is_null($this->view_data['spend']))$this->view_data['spend']=0;
+			$this->view_data['completed'] = $this->work_model->get_po_completed($user_id);
+		}else{
+			$myWorkBid = $this->users_model->works_bid($user_id);
+			$this->view_data['myWorkBid'] = $myWorkBid;
+			$myWorkCompleted = $this->users_model->works_compeleted($user_id);
+			$this->view_data['myWorkCompleted'] = $myWorkCompleted;
+		}
 		$this->view_data['log'] = $this->users_model->get_history_log($user_id,3);
 		$contact = json_decode($this->view_data['myProfile']["contact"]);
 		$this->view_data['myCountry'] = "";
@@ -71,6 +78,7 @@ class Profile extends CI_Controller {
 				$this->view_data['myCountry'] = "";
 			}
 		}
+		
 		$myBadges = $this->skill_model->get_my_top8_badges($user_id);
 		if(!$myBadges){$myBadges=NULL;}
 		$this->view_data['myBadges'] = $myBadges;
