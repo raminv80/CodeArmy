@@ -790,7 +790,41 @@ class Missions extends CI_Controller {
 		$this->load->view('applicants_codearmy_view',$this->view_data);
 	}
 	
-	function recommendFrame(){
+	function recommendFrame($user_id){
+		$me = $this->users_model->get_user($user_id,'user_id');
+		$me = $me->result_array();
+		$me = $me[0];
+		$user_id = $me['user_id'];
+		$userProfile = $this->users_model->get_profile($user_id);
+		$userProfile = $userProfile->result_array();
+		$userProfile = $userProfile[0];
+		$this->view_data['user'] = $me;
+		$this->view_data['user_profile'] = $userProfile;
+		
+		$this->view_data['myCountry'] = "";
+		$countries = config_item('country_list');
+		$contact = json_decode($userProfile["contact"]);
+		if ($contact != ""){
+			$myCountry = $contact->country;
+			foreach($countries as $key=>$value) {
+				if ($key == $myCountry){
+					$this->view_data['myCountry'] = $value;
+				}
+			}
+		}
+		
+		$completed = $this->users_model->works_compeleted($user_id);
+		$this->view_data['completed'] = $completed;
+		
+		$this->view_data['myLevel'] = $this->gamemech->get_level($me['exp']);
+		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($me['exp']);
+		
+		$mySkills = $this->skill_model->get_my_top5_skills($user_id);
+		$this->view_data['mySkills'] = $mySkills;
+		$myBadges = $this->skill_model->get_my_top8_badges($user_id);
+		if(!$myBadges){$myBadges=NULL;}
+		$this->view_data['myBadges'] = $myBadges;
+		
 		$this->load->view('recom_frame_codearmy_view',$this->view_data);
 	}
 	

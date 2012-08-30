@@ -2,26 +2,26 @@
 <div id="recom_profile">
 		<div class="left" style="float:left">
 			<div id="block-avatar">
-			    <div id="profile-name">beta</div>
-			    <a id="msg-icon" href="/messages/compose/beta"></a>
-			    <div id="profile-type">developer </div>
+			    <div id="profile-name"><?=substr($user["username"],0,15);?></div>
+			    <a id="msg-icon" target="_blank" href="/messages/compose/<?=substr($user["username"],0,15);?>"></a>
+			    <div id="profile-type"><?=$user_profile["specialization"]?> <?php if(trim($myCountry)!=""){?>&nbsp;&nbsp; [<?=$myCountry?>] <?php }?></div>
 			    <div id="avatar-pic"> <img src="/public/images/codeArmy/profile/default-avatar.png" alt="Avatar Picture"> </div>
-			    <div id="profile-desc">Hi I'm army from codear.my. Checkout my portfolio to see my latest projects </div>
+			    <div id="profile-desc"><?=$user_profile["status_msg"]?></div>
 			  </div>
 			
 			<div id="mission-complete">
 			   <div id="mission-complete-text">Mission In Progress</div>
-		       <div id="mission-complete-number">0</div>
+		       <div id="mission-complete-number"><?=$completed?></div>
 		    </div>
 		</div>
 		
 		<div class="right" style="float:right">
 			<div id="block-experience">
 			    <div id="experience-header">
-			      <h3>Level 1 (Exp Points:0)</h3>
+			      <h3>Level <?=$myLevel?> (Exp Points:<?=$user["exp"];?>)</h3>
 			    </div> 
 			    <div id="experience-bar">
-			      <div style="width:0px" id="experience-bar-progress"> </div>
+			      <div style="width:<?=round(443*$expProgress)?>px" id="experience-bar-progress"> </div>
 			    </div>
 			</div>
 			<div id="block-skill-progression">
@@ -30,36 +30,20 @@
 				  <div class="collapse-arrow"><i class="icon-list-ul"></i></div>
 			    </div>
 			    <div class="skill-wrapper">
-			    	<div class="skill-unit">
-				      <div id="skill-title">Problem Solver</div>
-				      <div id="skill-bar">
-				        <div style="width:0%" id="skill-bar-progress" original-title="0"></div>
-				      </div>
-				    </div>
-					<div class="skill-unit">
-				      <div id="skill-title">Planner</div>
-				      <div id="skill-bar">
-				        <div style="width:0%" id="skill-bar-progress" original-title="0"></div>
-				      </div>
-				    </div>
-					<div class="skill-unit">
-				      <div id="skill-title">Decision Maker</div>
-				      <div id="skill-bar">
-				        <div style="width:0%" id="skill-bar-progress" original-title="0"></div>
-				      </div>
-				    </div>
-					<div class="skill-unit">
-				      <div id="skill-title">Communication</div>
-				      <div id="skill-bar">
-				        <div style="width:0%" id="skill-bar-progress" original-title="0"></div>
-				      </div>
-				    </div>
-					<div class="skill-unit">
-				      <div id="skill-title">Public Relation</div>
-				      <div id="skill-bar">
-				        <div style="width:0%" id="skill-bar-progress" original-title="0"></div>
-				      </div>
-				    </div>
+				<?php
+                if ($mySkills){
+                    foreach($mySkills as $skill):
+                ?>
+                <div class="skill-unit">
+                  <div id="skill-title"><?=ucfirst($skill["name"])?></div>
+                  <div id="skill-bar">
+                    <div style="width:<?=$skill["point"]?>%" id="skill-bar-progress"></div>
+                  </div>
+                </div>
+                <?php
+                    endforeach;
+                }
+                ?>
 			    </div>
 			</div>
 			
@@ -69,30 +53,24 @@
 			      <div class="collapse-arrow"><i class="icon-list-ul"></i></div>
 			  </div>
 			  	<div class="badge-row">
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
-			          <div id="achievement-unit">
-			        <div id="badge-unit"></div>
-			      </div>
+    <?php
+	if (!$myBadges){$myBadges=array();}
+		for($i=0; $i<=7; $i++){
+			if (array_key_exists($i, $myBadges)) {
+	?>
+      <div id="achievement-unit">
+        <img src="/public/<?=$myBadges[$i]["achievement_pic"]?>" width="97" height="99" alt="<?=ucfirst(strtolower($myBadges[$i]["achievement_name"]))?>" title="<?=ucfirst(strtolower($myBadges[$i]["achievement_name"]))?>" />
+      </div>
+    <?php
+			} else {
+	?>
+      <div id="achievement-unit">
+        <div id="badge-unit"></div>
+      </div>
+    <?php
+			}
+		}
+	?>
 			   </div>
 		</div>
 		

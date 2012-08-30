@@ -41,7 +41,7 @@
 		if(!$myBadges){$myBadges=NULL;}
 		$level = $this->gamemech->get_level($user['exp']);
 	  ?>
-      <div data-fancybox-type="iframe" href="/missions/recommendFrame" class="recom-box-unit" id="user-<?=$user_id?>">
+      <div data-fancybox-type="iframe" href="/missions/recommendFrame/<?=$user_id?>" class="recom-box-unit" id="user-<?=$user_id?>">
         <div class="recom-box-top-left">
           <div class="recom-box-top-circle">
             <p><?=round($recoms[$i]['match'])?>%</p>
