@@ -146,6 +146,26 @@
 	top: 8px;
 	right: 15px;
 }
+#dummy-create-mission{
+	float: left;width: 246px;height: 302px;margin: 13px 6px 52px 0;border:2px dashed #09F;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	cursor:pointer;
+	color:white;
+	font-size: 16pt;
+	line-height: 301px;
+	text-align: center;
+   transition: font-size .15s ease-in-out,background .15s ease-in-out,color .15s ease-in-out;
+   -moz-transition: font-size .15s ease-in-out,background .15s ease-in-out,color .15s ease-in-out;
+   -webkit-transition: font-size .15s ease-in-out,background .15s ease-in-out,color .15s ease-in-out;
+}
+#dummy-create-mission:hover{
+	background: rgb(0, 176, 255); /* The Fallback */
+	background: rgba(0, 176, 255, 0.5);
+	color:#9FF;
+	font-size:18pt;
+}
 </style>
 <div id="mymission-content-area">
 	<div id="block-mission-list">
@@ -308,7 +328,7 @@
                         </div>
                         <?php if($po && strtolower($list['status'])=='draft'){?>
                         	<a class="fancybox blue-button" href="/missions/edit_mission/<?=$list['work_id']?>">Edit</a>
-                        <?php }if($po && (strtolower($list['status'])=='open' || strtolower($list['status'])=='assigned')){//TODO: if in open, assigned status allow edit but send alert to bidders on change?>
+                        <?php }elseif($po && (strtolower($list['status'])=='open' || strtolower($list['status'])=='assigned')){//TODO: if in open, assigned status allow edit but send alert to bidders on change?>
                         	<a class="fancybox blue-button" href="/missions/edit_mission/<?=$list['work_id']?>">Manage</a>
                         <?php }else{?>
                         	<a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>
@@ -317,6 +337,13 @@
                 </div>
             </div>
             <?php endforeach;?>
+            <?php if(($this->session->userdata('role')=='po'||$this->session->userdata('role')=='admin')){?>
+            <a href="/missions/create" class="fancybox" id="FindMissions">
+            <div id="dummy-create-mission">
+            	<i class="icon-plus-sign"></i> Create Mission
+            </div>
+            </a>
+            <?php }?>
         </div>
     </div>
 </div>

@@ -83,6 +83,7 @@
     <div class="submit-cancel-row">
       <input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
       <input type="button" class="lnkimg" id="edit-mission" value="Edit" tabindex="2">
+      <input type="button" class="lnkimg" id="draft-mission" value="Save as Draft" tabindex="2">
       <input type="button" class="lnkimg" id="confirm-mission" autofocus="autofocus" tabindex="1" value="Confirm &amp; Upload">
     </div>
   </div>
@@ -107,6 +108,15 @@ $(function(){
 	$('.confirm-mission-files-text').jScrollPane();
 	$('.confirm-mission-skills-text').jScrollPane();
 })
+
+$('#draft-mission').click(function(){
+	parent.$.fancybox.close();
+	if(paren.window.location!="http://<?=$_SERVER['HTTP_HOST']?>/missions/my_missions"){
+		parent.window.location = "http://<?=$_SERVER['HTTP_HOST']?>/missions/my_missions";
+	}else{
+		parent.window.location.reload();
+	}
+});
 //by Ramin to open edit page
 $('#edit-mission').click(function(){
 	var mission_id = $('#work_id').val();
