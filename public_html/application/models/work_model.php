@@ -411,7 +411,7 @@ class Work_model extends CI_Model {
 	}
 	
 	function get_pending_invitations($work_id){
-		$sql = "SELECT * FROM invitation, users WHERE invitation.user_id=users.user_id AND invitation.work_id=? AND invitation.status in ('sent','viewed')";
+		$sql = "SELECT DISTINCT users.* FROM invitation, users WHERE invitation.user_id=users.user_id AND invitation.work_id=? AND invitation.status in ('sent','viewed')";
 		return $this->db->query($sql,array($work_id))->result_array();
 	}
 	

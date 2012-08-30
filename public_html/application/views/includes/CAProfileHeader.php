@@ -49,7 +49,7 @@
     <div id="left-block">
 		<div id="left-menu">
         	<ul>
-            	<li<?php if($page_is=='Profile'){?> class="active"<?php }?>><a href="/profile">Military ID</a></li>
+            	<li<?php if($page_is=='Profile'){?> class="active"<?php }?>><a href="/profile">Headquarter</a></li>
                 <li<?php if($page_is=='Missions'){?> class="active"<?php }?>><a id="missions-toggle" href="javascript:void(0)">Missions</a></li>
                 <ul id="mission-submenue" <?php if($page_is!="Missions"){?>style="display:none"<?php }?>>
                     <li<?php if($action_is=='my_missions'){?> class="active"<?php }?>><a href="/missions/my_missions">My Missions</a></li>
