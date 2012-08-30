@@ -94,9 +94,13 @@
 
 	<div class="recom-page-nav"><div class="holder"></div></div>
     <div class="recom-page-confirm-invite">
+<<<<<<< HEAD
     <input type="submit" value="Confirm Invite" autofocus="autofocus" tabindex="1" class="lnkimg" id="submit">
       <input type="button" value="Skip" tabindex="2" class="lnkimg" id="skip">
       
+=======
+      <input type="submit" value="Confirm Invite" tabindex="1" class="lnkimg" id="submit">
+>>>>>>> origin/master
     </div>
   </div>
 </div>
