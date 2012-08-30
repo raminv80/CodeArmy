@@ -139,6 +139,7 @@
 			singleField: true,
 			singleFieldNode: $('#hiddenSkill')
 	    });
+		$('.ui-autocomplete-input').attr('tabindex','8');
 	});
 	
 	$(function(){

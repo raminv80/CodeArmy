@@ -76,9 +76,10 @@
         </div>
       </div>
     </div>
-    <div class="confirm-mission-assign-po"> 
+    <div class="confirm-mission-assign-po" style="margin:70px 25px 5px 0"> 
       <!--<input type="checkbox" />
 	    <label>Assigning this mission tp a Project Manager.</label>--> 
+        <input type="checkbox" name="recom" id="need-recom" checked="checked" /><label for="need-recom">I would like system to recommend me some contractors now</label>
     </div>
     <div class="submit-cancel-row">
       <input type="hidden" name="work_id" id="work_id" value="<?=$preview['work_id']?>" />
@@ -117,6 +118,7 @@ $('#draft-mission').click(function(){
 		parent.window.location.reload();
 	}
 });
+
 //by Ramin to open edit page
 $('#edit-mission').click(function(){
 	var mission_id = $('#work_id').val();
@@ -157,7 +159,7 @@ $('#confirm-mission').click(function(){
 							Ok: function() {
 								$( this ).dialog( "close" );
 								parent.$.fancybox.close();
-								parent.$.fancybox.open({
+								if($('#need-recom').attr('checked')) parent.$.fancybox.open({
 									//type: 'inline',
 									data:{},
 									href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/<?=$preview['work_id']?>',
