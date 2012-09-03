@@ -34,3 +34,4 @@
 <script type="text/javascript" src="/public/js/jscrollpane.js"></script>
 <script type="text/javascript" src="/public/js/tag-it.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/lightboxme.js"></script>
+<script type="text/javascript" src="/public/js/codeArmy/jquery.scrollTo-1.4.3-min.js"></script>

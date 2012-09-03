@@ -14,57 +14,60 @@
 	      <div class="find-mission-main-desc"><?=$work['description']?></div>
 	    </div>
 	    <div class="find-mission-comment-box">
-	      <div class="find-mission-comment-box-left">
-	        <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-	          <p><?=$this->gamemech->get_level($me['exp'])?></p>
-	        </div>
-	        <div class="find-mission-comment-name"><?=$me['username']?></div>
-	      </div>
-	      <?php echo form_open('/missions/set_bid' , array('id'=>'form-bid')); ?>
-	      <div class="find-mission-comment-box-right">
-	        <div class="fmcb-right-row1">
-	          <div class="urbid">Your Bid</div>
-	          <div class="clock-icon"></div>
-	          <div class="small-box-hr"> 
-	            <input name="time" class="time" onkeydown="increment(event, this)" autocomplete="off" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
-	          </div>
-	          <div class="botharrows">
-				<span class="arrowkey">
-					<i class="icon-plus-sign"></i>
-					<i class="icon-minus-sign"></i>
-				</span>
-				<!-- <a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a> -->
-				</div>
-	          <div class="bidhrstext"><?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s</div>
-	          <!--
-	          <div class="small-box-hr">
-	            <input type="text" value="4" />
-	          </div>
-	          <div class="botharrows"><a href="#"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="#"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a></div>
-	          <div class="bidhrstext">Days</div>
-	          -->
-	        </div>
-	        <div class="fmcb-right-row2">
-	          <div class="dollar-sign-icon"></div>
-	          <div class="small-box-hr">
-	            <input name="budget" class="budget" type="text" autocomplete="off" onkeydown="increment(event, this)" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
-	          </div>
-	          <div class="botharrows">
-				<span class="arrowkey">
-					<i class="icon-plus-sign"></i>
-					<i class="icon-minus-sign"></i>
-				</span>
-				<!-- <a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a> -->
-				</div>
-	          <div class="bidhrstext">/<?=str_replace('dai','day',substr($arranegement,0,-2))?></div>
-	        </div>
-	        <div class="fmcb-right-textarea">
-	          <textarea id="ask" name="desc" rows="3">Ask a question or place your comment</textarea>
-	        </div>
-	        <input type="hidden" name="work_id" value="<?=$work['work_id']?>">
-	        <input type="submit" name="submit" value="Submit" class="lnkimg" />
-	      </div>
-	      </form>
+          <div id="form-bid-container">
+              <div class="find-mission-comment-box-left">
+                <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
+                  <p><?=$this->gamemech->get_level($me['exp'])?></p>
+                </div>
+                <div class="find-mission-comment-name"><?=$me['username']?></div>
+              </div>
+              <?php echo form_open('/missions/set_bid' , array('id'=>'form-bid')); ?>
+              <div class="find-mission-comment-box-right">
+                <div class="fmcb-right-row1">
+                  <div class="urbid">Your Bid</div>
+                  <div class="clock-icon"></div>
+                  <div class="small-box-hr"> 
+                    <input name="time" class="time" onkeydown="increment(event, this)" autocomplete="off" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
+                  </div>
+                  <div class="botharrows">
+                    <span class="arrowkey">
+                        <i class="icon-plus-sign"></i>
+                        <i class="icon-minus-sign"></i>
+                    </span>
+                    <!-- <a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a> -->
+                    </div>
+                  <div class="bidhrstext"><?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s</div>
+                  <!--
+                  <div class="small-box-hr">
+                    <input type="text" value="4" />
+                  </div>
+                  <div class="botharrows"><a href="#"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="#"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a></div>
+                  <div class="bidhrstext">Days</div>
+                  -->
+                </div>
+                <div class="fmcb-right-row2">
+                  <div class="dollar-sign-icon"></div>
+                  <div class="small-box-hr">
+                    <input name="budget" class="budget" type="text" autocomplete="off" onkeydown="increment(event, this)" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
+                  </div>
+                  <div class="botharrows">
+                    <span class="arrowkey">
+                        <i class="icon-plus-sign"></i>
+                        <i class="icon-minus-sign"></i>
+                    </span>
+                    <!-- <a href="javascript:void(0)"><img class="arr-up-img" src="/public/images/codeArmy/mission/arr-up.png" /></a><a href="javascript:void(0)"><img class="arr-down-img" src="/public/images/codeArmy/mission/arr-down.png" /></a> -->
+                    </div>
+                  <div class="bidhrstext">/<?=str_replace('dai','day',substr($arranegement,0,-2))?></div>
+                </div>
+                <div class="fmcb-right-textarea">
+                  <textarea id="ask" name="desc" rows="3">Ask a question or place your comment</textarea>
+                </div>
+                <input type="hidden" name="work_id" value="<?=$work['work_id']?>">
+                <img src="/public/images/codeArmy/loader4.gif" style="position:absolute; top:190px; right:50px;display:none" id="login-ajax" />
+                <input type="submit" name="submit" value="Submit" class="lnkimg" id="submit-bid" />
+              </div>
+              </form>
+          </div>
 	      <div class="find-mission-comment-box-down">
 	      	<?php 
 			  	foreach($bids as $bid):
@@ -154,7 +157,28 @@
 	</div>
 </div>
 <script type="text/javascript">
-
+	$('#submit-bid').click(function(){
+		var time = $('input[name="time"]').val();
+		var val = $('input[name="budget"]').val();
+		var desc = $('#ask').val();
+		$('#login-ajax').fadeIn();
+		$.ajax({
+			'url':'/missions/Ajax_bid',
+			'data':{'csrf_workpad': getCookie('csrf_workpad'),'time':time,'budget':val,'desc':desc, 'work_id':'<?=$work['work_id']?>'},
+			type: 'POST',
+			dataType: "json",
+			success:function(msg){
+				var template = '<div style="display:none" class="find-mission-down-box-row"><div class="find-mission-comment-box-left"><div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png"><p>'+msg.level+'</p></div><div class="find-mission-comment-name">'+msg.username+'</div></div><div class="find-mission-comment-box-right"><div class="bidded-icon"></div><div class="fmcb-right-row1"><br>You placed a bid on this job. You may review your bids <a target="_top" style="text-decoration:underline" href="/missions/bid">here</a>.</div><div class="fmcb-right-row2"><div class="commentime">'+msg.created_at+'</div></div></div></div>';
+				$('.find-mission-comment-box-down').append(template);
+				$('.find-mission-comment-box-down .find-mission-down-box-row:last').slideDown();
+				$('#login-ajax').fadeOut();
+				$('#form-bid-container').slideUp();
+				$('.find-mission-full-wrapper').jScrollPane({'showArrows': true});
+			}
+		});
+		return false;
+	});
+	
 	function increment(e,field) {
 	    var keynum;
 

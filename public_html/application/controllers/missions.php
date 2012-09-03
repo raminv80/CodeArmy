@@ -111,49 +111,8 @@ class Missions extends CI_Controller {
 	}
 	
 	function set_bid(){
-		$user_id = $this->session->userdata('user_id');
 		if($this->input->post('submit')){
-			$this->load->helper('htmlpurifier');
-			$time = $this->input->post('time');
-			$work_id = $this->input->post('work_id');
-			$budget = $this->input->post('budget');
-			$desc = html_purify($this->input->post('desc'));
-			$arrangement = $this->work_model->get_work_arrangement($work_id);
-			if(trim($desc)=="Ask a question or place your comment")$desc="";
-			//save the bid in db
-			$this->work_model->setBid($work_id,$user_id,$budget,$time,$desc);
-			
-			//save it in history
-			$bid_id = $this->db->insert_id();
-			$event='bid';
-			$status = json_encode(array('bid_cost' => $budget,
-				'bid_time' => $time,
-				'bid_desc' => $desc,
-				'work_id' => $work_id));
-			$desc = "placed a bid";
-			$this->work_model->log_history($user_id,$work_id,$event,$status,$desc);
-			
-			//push this event
-			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
-			$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
-			$data = array(
-				'user_id' => $user_id,
-				'user_level' => $this->gamemech->get_level($this->view_data['me']['exp']),
-				'username' => $this->view_data['me']['username'],
-				'work_id' => $work_id,
-				'time' => date('j M Y H:i'),
-				'bid_id' => $bid_id,
-				'bidget' => $budget,
-				'time' => $time,
-				'arrangement' => $arrangement
-			);
-			$bidpusher->trigger('bid', 'new-bid-'.$work_id, $data );
-			
-			//was user invited?
-			$res = $this->work_model->invited_to_work($this->view_data['me']['user_id'],$work_id);
-			if(count($res)){
-				$this->work_model->updateInvite($res[0]['invite_id'],'accepted');
-			}
+			$this->bid_application();
 		}
 		redirect("/missions/apply/$work_id");
 	}
@@ -1378,5 +1337,64 @@ class Missions extends CI_Controller {
 		$work_id = $this->input->post('work_id');
 		$work = $this->work_model->get_work($work_id)->result_array();
 		if($work[0]['owner']==$user_id) $this->work_model->delete_work($work_id);
+	}
+	
+	function Ajax_bid(){
+		echo json_encode($this->bid_application());
+	}
+	
+	private function bid_application(){
+		$this->load->helper('htmlpurifier');
+		$user_id = $this->session->userdata('user_id');
+		$time = $this->input->post('time');
+		$work_id = $this->input->post('work_id');
+		$budget = $this->input->post('budget');
+		$desc = html_purify($this->input->post('desc'));
+		$arrangement = $this->work_model->get_work_arrangement($work_id);
+		if(trim($desc)=="Ask a question or place your comment")$desc="";
+		//save the bid in db
+		$this->work_model->setBid($work_id,$user_id,$budget,$time,$desc);
+		
+		//save it in history
+		$bid_id = $this->db->insert_id();
+		$event='bid';
+		$status = json_encode(array('bid_cost' => $budget,
+			'bid_time' => $time,
+			'bid_desc' => $desc,
+			'work_id' => $work_id));
+		$desc = "placed a bid";
+		$this->work_model->log_history($user_id,$work_id,$event,$status,$desc);
+		
+		//push this event
+		require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+		$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+		$data = array(
+			'user_id' => $user_id,
+			'user_level' => $this->gamemech->get_level($this->view_data['me']['exp']),
+			'username' => $this->view_data['me']['username'],
+			'work_id' => $work_id,
+			'time' => date('j M Y H:i'),
+			'bid_id' => $bid_id,
+			'bidget' => $budget,
+			'time' => $time,
+			'arrangement' => $arrangement
+		);
+		$bidpusher->trigger('bid', 'new-bid-'.$work_id, $data );
+		
+		//was user invited?
+		$res = $this->work_model->invited_to_work($this->view_data['me']['user_id'],$work_id);
+		if(count($res)){
+			$this->work_model->updateInvite($res[0]['invite_id'],'accepted');
+		}
+		
+		$res = array(
+			'budget' => $budget,
+			'time' => $time,
+			'desc' => $desc,
+			'username' => $this->view_data['me']['username'],
+			'level' => $this->gamemech->get_level($this->view_data['me']['exp']),
+			'created_at' => date('Y-m-d H:i:s')
+		);
+		return $res;
 	}
 }
