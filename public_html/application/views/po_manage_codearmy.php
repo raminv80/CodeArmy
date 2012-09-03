@@ -1,7 +1,9 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
   <a class="icon-edit fancybox" href="/missions/edit_mission/<?=$work_id?>"> Edit</a> |
+  <?php if(strtolower($work['status'])!='draft'){?>
   <a class="icon-thumbs-up" href="javascript:void(0)" onClick="recom('<?=$work_id?>')"> Recommendations</a> |
-  <a class="icon-trash" id="delete-mission" href="javascript:void(0)"> Remove</a> |
+  <?php }?>
+  <a class="icon-trash" id="delete-mission" href="javascript:void(0)"> Remove</a>
 <div id="tabs" style="clear:both">
   <ul>
     <li><a href="#tabs-detail">Mission Details</a></li>
