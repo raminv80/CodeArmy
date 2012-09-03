@@ -376,11 +376,12 @@
 		
 		//fixed popup
 		$('.create_mission').live('click',function(e){
-			$('#mission-creator').lightbox_me({
+			/*$('#mission-creator').lightbox_me({
 				showOverlay :true,
 				closeSelector: ".closeme",
 				modalCSS: {top: '25%'}
-			});
+			});*/
+			MissionCreate(1);
 			e.preventDefault();
 		});
 		

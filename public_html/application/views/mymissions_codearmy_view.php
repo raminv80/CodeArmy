@@ -172,6 +172,17 @@
 	<div id="block-mission-list">
     	<div class="block-header">
         	<h3>My Missions</h3>
+            <?php if($me['role']=='po' || $me['role']=='admin'){?>
+            <div style="float:right;">
+            <select id="mission-status" style="width:150px" onchange="window.location='/missions/my_missions/'+$(this).val()">
+            	<option <?php if($status=='All'){?>selected="selected"<?php }?> value="All">All (<?=$this->work_model->get_num_state('All')?>)</option>
+                <option <?php if($status=='In_Progress'){?>selected="selected"<?php }?> value="In_Progress">In Progress (<?=$this->work_model->get_num_state('in progress')?>)</option>
+                <option <?php if($status=='Pending'){?>selected="selected"<?php }?> value="Pending">Pending  (<?=$this->work_model->get_num_state(array('assigned','open','done','verify','reject'))?>)</option>
+                <option <?php if($status=='Draft'){?>selected="selected"<?php }?> value="Draft">Drafts  (<?=$this->work_model->get_num_state('draft')?>)</option>
+                <option <?php if($status=='Completed'){?>selected="selected"<?php }?> value="Completed">Completed (<?=$this->work_model->get_num_state('signoff')?>)</option>
+            </select>
+            </div>
+            <?php }?>
         </div>
         <div class="list">
         	<?php
@@ -419,6 +430,7 @@
 <script>
 	var selectedItem;
 	$(function(){
+		$('#mission-status').selectmenu();
 		$('a[title]').tipsy({trigger: 'hover', gravity: 'sw'});
 		mins = 0; setInterval("updateTimer()",1000*60);
 		$('.accept').click(function(){
@@ -486,7 +498,7 @@
 				async: false,
 				data: {'csrf_workpad': getCookie('csrf_workpad')},
 				success: function(msg){
-					console.log(msg);
+					//console.log(msg);
 					$('#mission-sample').slideUp('fast');
 				}
 			});

@@ -45,7 +45,7 @@
       </ul>
     </div>
   </div>
-  <!-- Ramin:leader board bloclk end--> 
+  <!-- Ramin:leader board block end--> 
   </div>
   <!-- START - Experience Block - Dev. by Reza -->
   <div id="block-experience">
@@ -63,7 +63,7 @@
   <div class="block-mission-info">
     <div id="mission-bid">
       <div id="mission-bid-text">Money invested</div>
-      <div id="mission-bid-number"><?=$spend?></div>
+      <div id="mission-bid-number"><?=($spend>1000)?round($spend/1000).'K ':$spend?>$</div>
     </div>
     <div id="mission-complete">
       <div id="mission-complete-text">Missions Completed</div>

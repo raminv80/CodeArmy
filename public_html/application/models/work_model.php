@@ -239,9 +239,17 @@ class Work_model extends CI_Model {
 		return $res->result_array();
 	}
 	
-	function get_owner_works($user_id){
-		$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE owner=? OR creator=? and status!='Signoff' order by created_at DESC";
-		$res = $this->db->query($sql, array($user_id,$user_id));
+	function get_owner_works($user_id,$status){
+		if($status && $status!='All'){
+			if(is_array($status)) $status = implode("','",$status);
+			$status = strtolower($status);
+			$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE (owner=? OR creator=?) and status in (?) order by created_at DESC";
+			$res = $this->db->query($sql, array($user_id,$user_id,$status));
+		}else{
+			$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE owner=? OR creator=? order by created_at DESC";
+			$res = $this->db->query($sql, array($user_id,$user_id));
+		}
+		
 		return $res->result_array();
 	}
 	
@@ -548,5 +556,13 @@ class Work_model extends CI_Model {
 		$sql = "SELECT bids.bid_cost, bids.bid_time FROM bids,works where works.work_id=bids.work_id and bids.bid_status='Accepted' AND works.work_id=?";
 		$res = $this->db->query($sql, $work_id)->result_array();
 		return $res[0];
+	}
+	
+	function get_num_state($state){
+		if(is_array($state)) $state = implode("','",$state);
+		$state = strtolower($state);
+		$sql = "SELECT count(1) as num FROM works where ?='all' OR (LOWER(status) in (?))";
+		$res = $this->db->query($sql,array($state,$state))->result_array();
+		return $res[0]['num'];
 	}
 }

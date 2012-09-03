@@ -663,11 +663,14 @@ class Missions extends CI_Controller {
 		echo json_encode($works);
 	}
 	
-	function my_missions(){
+	function my_missions($status='All'){
+		$this->view_data['status'] = $status;
 		$user_id = $this->view_data['me']['user_id'];
 		$this->view_data['myPendingList'] = $this->work_model->get_pending_works($user_id)->result_array();
 		$this->view_data['myWorkList'] = $this->work_model->get_my_works($user_id, 'in progress')->result_array();
-		$this->view_data['myMissions'] = $this->work_model->get_owner_works($user_id);
+		if($status=='Pending')$status = array('assigned','open','done','verify','reject');
+		if($status=='In_Progress')$status = 'in progress';
+		$this->view_data['myMissions'] = $this->work_model->get_owner_works($user_id,$status);
 		$this->view_data['window_title'] = "My Missions";
 		$this->load->view('mymissions_codearmy_view', $this->view_data);
 	}

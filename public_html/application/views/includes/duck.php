@@ -25,9 +25,9 @@ img {
 <div id="duck-wrapper">
     <div id="dock">
         <ul>
-            <li><a href="#address"><span>Address</span><img src="/public/images/codeArmy/duck/icon-address.png" alt="[address]" /></a></li><!--
-            --><li><a href="#band"><span>Band</span><img src="/public/images/codeArmy/duck/icon-band.png" alt="[band]" /></a></li><!--
-            --><li><a href="#calendar"><span>Calendar</span><img src="/public/images/codeArmy/duck/icon-calendar.png" alt="[calendar]" /></a></li><!--
+            <li><a href="/messages/inbox"><span>Messages</span><img src="/public/images/codeArmy/duck/icon-address.png" alt="[address]" /></a></li><!--
+            --><li><a href="/achievements"><span>Achievements</span><img src="/public/images/codeArmy/duck/icon-band.png" alt="[band]" /></a></li><!--
+            --><li><a href="/leaderboard"><span>Leaderboard</span><img src="/public/images/codeArmy/duck/icon-calendar.png" alt="[calendar]" /></a></li><!--
             --><li class="active"><a href="#chat"><span>Chat</span><img src="/public/images/codeArmy/duck/icon-chat.png" alt="[chat]" /></a></li><!--
             --><li class="active"><a href="#music"><span>Music</span><img src="/public/images/codeArmy/duck/icon-music.png" alt="[music]" /></a></li><!--
             --><li><a href="#photo"><span>Photo</span><img src="/public/images/codeArmy/duck/icon-photo.png" alt="[photo]" /></a></li><!--
@@ -36,9 +36,9 @@ img {
 <li><a href = "javascript:void(0)" class="create_mission"><span>Create Mission</span><img src="/public/images/codeArmy/duck/icon-text.png" alt="[text]" /></a></li>
 <!--
             --><li class="seperator"></li><!--
-            --><li><a href="#folder?src=/apps/"><span>Applications</span><img src="/public/images/codeArmy/duck/icon-applications.png" alt="[apps]" /></a></li><!--
-            --><li><a href="#folder?src=/pictures/"><span>Pictures</span><img src="/public/images/codeArmy/duck/icon-pictures.png" alt="[pictures]" /></a></li><!--
-            --><li><a href="#folder?src=/documents/"><span>Documents</span><img src="/public/images/codeArmy/duck/icon-documents.png" alt="[documents]" /></a></li><!--
+            --><li><a href="/missions/my_missions"><span>My Missions</span><img src="/public/images/codeArmy/duck/icon-applications.png" alt="[apps]" /></a></li><!--
+            --><li><a href="/missions/bid"><span>My Bids</span><img src="/public/images/codeArmy/duck/icon-pictures.png" alt="[pictures]" /></a></li><!--
+            --><li><a href="/missions/completed"><span>Completed</span><img src="/public/images/codeArmy/duck/icon-documents.png" alt="[documents]" /></a></li><!--
             --><li><a href="#bin"><span>Bin</span><img src="/public/images/codeArmy/duck/icon-bin.png" alt="[bin]" /></a></li>
         </ul>
     </div>
@@ -96,7 +96,6 @@ function mission_creator_open(){
 			nextSpeed : 250,
 			prevMethod : 'slideOut',
 			prevSpeed : 250,
-			height: 600,
 			scrolling: 'no'
 		});
 	}
