@@ -167,6 +167,10 @@
 	font-size:18pt;
 	text-shadow:0px 0px 3px white;
 }
+.ui-selectmenu-status {
+line-height: 2.3em;
+text-align: left;
+}
 </style>
 <div id="mymission-content-area">
 	<div id="block-mission-list">
