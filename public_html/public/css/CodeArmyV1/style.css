@@ -3034,16 +3034,16 @@ input.rejimg:hover {
 }
 .contact-right-content input.lnkimg {
 	background: url(/public/images/codeArmy/profile/savebtn_nstate.png) no-repeat;
-width: 127px;
-float: right;
-height: 49px;
-padding: 0;
-text-align: center;
-text-decoration: none;
-color: white;
-font-size: 15px;
-border: none;
-margin: 10px 0 0 0;
+	width: 127px;
+	float: right;
+	height: 49px;
+	padding: 0;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	font-size: 15px;
+	border: none;
+	margin: 10px 0 0 0;
 }
 .contact-right-content input.lnkimg:hover {
 	background:url(/public/images/codeArmy/profile/savebtn_hoverstate.png) no-repeat;
@@ -3052,6 +3052,9 @@ margin: 10px 0 0 0;
 	float:left;
 	margin:20px 0;
 }
+/* MyMissions Page New Codes */
+
+
 /* END - New Codes by Reza@RezaKabiri.com */
 
 
