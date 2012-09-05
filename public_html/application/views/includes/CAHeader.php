@@ -39,6 +39,7 @@
 <script type="text/javascript" src="/public/js/codeArmy/browserdetect.js"></script>
 <script type="text/javascript" src="/public/js/jscrollpane.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/jquery.dotdotdot-1.5.1.js"></script>
+<script type="text/javascript" src="/public/js/codeArmy/nanoscroller.js"></script>
 <title><?=$window_title?></title>
 </head>
 

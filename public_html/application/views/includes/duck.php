@@ -28,7 +28,7 @@ img {
             <li><a href="/messages/inbox"><span>Messages</span><img src="/public/images/codeArmy/duck/icon-address.png" alt="[address]" /></a></li><!--
             --><li><a href="/achievements"><span>Achievements</span><img src="/public/images/codeArmy/duck/icon-band.png" alt="[band]" /></a></li><!--
             --><li><a href="/leaderboard"><span>Leaderboard</span><img src="/public/images/codeArmy/duck/icon-calendar.png" alt="[calendar]" /></a></li><!--
-            --><li class="active"><a href="javascript:void(0)" onclick="$('.chat-box').toggle()"><span>Chat</span><img src="/public/images/codeArmy/duck/icon-chat.png" alt="[chat]" /></a></li><!--
+            --><li class="active"><a href="javascript:void(0)" onclick="$('.chat-box').fadeToggle('fast')"><span>Chat</span><img src="/public/images/codeArmy/duck/icon-chat.png" alt="[chat]" /></a></li><!--
             <li class="active"><a href="#music"><span>Music</span><img src="/public/images/codeArmy/duck/icon-music.png" alt="[music]" /></a></li><!--
             --><li><a href="/profile"><span>Profile</span><img src="/public/images/codeArmy/duck/icon-profile.png" alt="[profile]" /></a></li><!--
 -->
@@ -43,13 +43,17 @@ img {
         </ul>
     </div>
 </div>
-
+<style type="text/css">
+	.nano { height:550px; width:100%}
+	.nano .content { padding: 10px; }
+	.nano .slider { background: #555; }
+</style>
 <script>
 var myMissions = false, $box, $boxSelector;
 //lets close the folder wrapper if user clicks outside of it
 $(function(){
 	$box = $('#folder-wrapper');
-	$('.content',$box).jScrollPane();
+	$box.addClass('nano');
 	$(document.body).click(function(e){
 		if ($box.is(':visible') && !($boxSelector.has(e.target).length || $box.has(e.target).length)) { // if the click was not within $box
 			$box.hide('fast');
@@ -81,6 +85,7 @@ function ToggleMyMissions(me){
 					});
 				boxContainer.append('<a class="mission-icon-more" href="/missions/my_missions"><div class="icon-share-alt"></div>Open MyMissions</a>');
 				$('.mission-icon').dotdotdot();
+				$box.nanoScroller();
 			}
 		});
 	}

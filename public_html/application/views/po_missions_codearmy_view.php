@@ -143,12 +143,10 @@
 		border: 1px solid black;
 		clear:both;
 		background: rgba(10, 10, 10, 0.9);
-		height: 550px;
-		width: 800px;
+		width: 100%;
 		border-radius: 10px; 
 		-moz-border-radius: 10px; 
 		-webkit-border-radius: 10px;
-		overflow:auto;
 	}
 	#folder-wrapper .arrow{
 		color:white;
