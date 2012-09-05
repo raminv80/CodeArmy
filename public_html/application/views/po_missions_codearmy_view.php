@@ -45,6 +45,7 @@
   </ul>
 </div>
 <div id="profile-toolbar" class="toolbar">
+  <a href="/login/logout" class="logout" title="Logout"><span class="icon-off"></span></a>
   <div id="avatar-block"> <a href="/profile"><img src="/public/images/codeArmy/mymission/profile_toolbar/avatar.png" id="avatar" alt="avatar" /></a>
     <ul id="status-icons">
       <li><a href="/missions/my_missions"><img title="Missions" src="/public/images/codeArmy/mymission/profile_toolbar/mission-status.png" /></a>
@@ -181,6 +182,13 @@
 	   -moz-transition: background .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
 	   -webkit-transition: background .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
 	}
+	.logout{
+		color:#800;font-size: 15pt;position: absolute;right: 12px;top: 6px;
+		transition: font-size .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	   -moz-transition: font-size .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	   -webkit-transition: font-size .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	 }
+	.logout:hover{color:red;}
 	.mission-icon span{
 		background:gray;
 		-webkit-border-radius: 5px;

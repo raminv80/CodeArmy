@@ -132,6 +132,21 @@ class Missions extends CI_Controller {
 		$this->load->view('po_missions_codearmy_view', $this->view_data);
 	}
 	
+	function tallent_map(){
+		$percision = $this->percision;
+		$user_id = $this->view_data['me']['user_id'];
+		$tallents = $this->users_model->tallents_map($percision);
+		$mySkills = $this->skill_model->get_my_skills($user_id);
+		$this->view_data['main_category'] = $this->work_model->get_main_category();
+		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
+		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
+		$this->view_data['mySkills'] = $mySkills;
+		$this->view_data['percision'] = $percision;
+		$this->view_data['tallents'] = $tallents;
+		$this->view_data['window_title'] = "CodeArmy World";
+		$this->load->view('tallent_map_codearmy_view', $this->view_data);
+	}
+	
 	function index(){
 		$percision = $this->percision;
 		$user_id = $this->view_data['me']['user_id'];

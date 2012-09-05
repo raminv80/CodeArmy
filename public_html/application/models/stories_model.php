@@ -1233,14 +1233,14 @@ class Stories_model extends CI_Model {
 	function list_stories_map($percision,$lat,$lng){
 		$sql = "SELECT works.work_id, mission_category.category, works.title, works.description, works.tutorial, (SELECT count(1) FROM bids WHERE bids.work_id = works.work_id) AS num_bids, (SELECT count(1) FROM comments WHERE story_id = works.work_id) AS num_comments, (SELECT duration FROM arrangement_time as t1 WHERE t1.time_id=works.est_time_frame) AS end, works.cost
 				FROM works as works left join mission_category on works.category = mission_category.category_id
-				WHERE lower(works.status) IN ('open','reject') AND round(lat,?) = round(?,?) AND round(lng,?) = round(?,?)";
+				WHERE lower(works.status) IN ('open','reject','assigned') AND round(lat,?) = round(?,?) AND round(lng,?) = round(?,?)";
 		$res = $this->db->query($sql,array($percision,$lat,$percision,$percision,$lng,$percision));
 		$res = $res->result_array();
 		return $res;
 	}
 	
 	function stories_map($percision){
-		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') GROUP BY round(lat,?), round(lng,?)";
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject','assigned') GROUP BY round(lat,?), round(lng,?)";
 		$res = $this->db->query($sql,array($percision,$percision));
 		$res = $res->result_array();
 		return $res;
@@ -1250,7 +1250,7 @@ class Stories_model extends CI_Model {
 		$res = array();
 		$search = '%'.trim($search).'%';
 		if(strlen($search)>2){
-			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') AND (category like ? or title like ? or description like ? or type like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?)";
+			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject','assigned') AND (category like ? or title like ? or description like ? or type like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?)";
 			$res = $this->db->query($sql,array($search,$search,$search,$search,$search,$search,$percision,$percision));
 			$res = $res->result_array();
 		}
@@ -1258,7 +1258,7 @@ class Stories_model extends CI_Model {
 	}
 	
 	function stories_map_class($percision){
-		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, category as class, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') GROUP BY round(lat,?), round(lng,?), category";
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, category as class, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject','assigned') GROUP BY round(lat,?), round(lng,?), category";
 		$res = $this->db->query($sql,array($percision,$percision));
 		$res = $res->result_array();
 		return $res;
@@ -1268,7 +1268,7 @@ class Stories_model extends CI_Model {
 		$res = array();
 		$search = '%'.trim($search).'%';
 		if(strlen($search)>2){
-			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, class.sign as class, count(*) AS num FROM works, class, subclass WHERE works.subclass = subclass.subclass_id and subclass.class_id = class.class_id and lower(works.status) IN ('open','reject') AND (title like ? or description like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), class.sign";
+			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, class.sign as class, count(*) AS num FROM works, class, subclass WHERE works.subclass = subclass.subclass_id and subclass.class_id = class.class_id and lower(works.status) IN ('open','reject','assigned') AND (title like ? or description like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), class.sign";
 			$res = $this->db->query($sql,array($search,$search,$search,$search,$percision,$percision));
 			$res = $res->result_array();
 		}
@@ -1276,7 +1276,7 @@ class Stories_model extends CI_Model {
 	}
 	
 	function stories_map_skills($percision){
-		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, skill.name as skill, count(*) AS num FROM works, work_skill, skill WHERE works.work_id = work_skill.work_id and work_skill.skill_id = skill.id and lower(works.status) IN ('open','reject') GROUP BY round(lat,?), round(lng,?), skill.name";
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, skill.name as skill, count(*) AS num FROM works, work_skill, skill WHERE works.work_id = work_skill.work_id and work_skill.skill_id = skill.id and lower(works.status) IN ('open','reject','assigned') GROUP BY round(lat,?), round(lng,?), skill.name";
 		$res = $this->db->query($sql,array($percision,$percision));
 		$res = $res->result_array();
 		return $res;
@@ -1286,7 +1286,7 @@ class Stories_model extends CI_Model {
 		$res = array();
 		$search = '%'.trim($search).'%';
 		if(strlen($search)>2){
-			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, skill.name as skill, count(*) AS num FROM works, skill, work_skill WHERE works.work_id = work_skill.work_id and work_skill.skill_id = skill.id and lower(works.status) IN ('open','reject') AND (title like ? or description like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), skill.name";
+			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, skill.name as skill, count(*) AS num FROM works, skill, work_skill WHERE works.work_id = work_skill.work_id and work_skill.skill_id = skill.id and lower(works.status) IN ('open','reject','assigned') AND (title like ? or description like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), skill.name";
 			$res = $this->db->query($sql,array($search,$search,$search,$search,$percision,$percision));
 			$res = $res->result_array();
 		}
@@ -1294,7 +1294,7 @@ class Stories_model extends CI_Model {
 	}
 	
 	function stories_map_estimation($percision){
-		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, DATEDIFF(deadline, ?) as days, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') GROUP BY round(lat,?), round(lng,?), DATEDIFF(deadline, ?)";
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, DATEDIFF(deadline, ?) as days, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject','assigned') GROUP BY round(lat,?), round(lng,?), DATEDIFF(deadline, ?)";
 		$now = date('Y-m-d');
 		$res = $this->db->query($sql,array($now,$percision,$percision,$now));
 		$res = $res->result_array();
@@ -1305,7 +1305,7 @@ class Stories_model extends CI_Model {
 		$res = array();
 		$search = '%'.trim($search).'%';
 		if(strlen($search)>2){
-			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, DATEDIFF(deadline, ?) as days, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') AND (category like ? or title like ? or description like ? or type like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), DATEDIFF(deadline, ?)";
+			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, DATEDIFF(deadline, ?) as days, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject','assigned') AND (category like ? or title like ? or description like ? or type like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), DATEDIFF(deadline, ?)";
 			$res = $this->db->query($sql,array($search,$search,$search,$search,$search,$search,$percision,$percision));
 			$res = $res->result_array();
 		}
@@ -1313,7 +1313,7 @@ class Stories_model extends CI_Model {
 	}
 	
 	function stories_map_payout($percision){
-		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, round(cost,-2) as payout, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') GROUP BY round(lat,?), round(lng,?), round(cost,-2)";
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, round(cost,-2) as payout, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject','assigned') GROUP BY round(lat,?), round(lng,?), round(cost,-2)";
 		$res = $this->db->query($sql,array($percision,$percision));
 		$res = $res->result_array();
 		return $res;
@@ -1323,7 +1323,7 @@ class Stories_model extends CI_Model {
 		$res = array();
 		$search = '%'.trim($search).'%';
 		if(strlen($search)>2){
-			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, round(cost,-2) as payout, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject') AND (category like ? or title like ? or description like ? or type like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), round(cost,-2)";
+			$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, round(cost,-2) as payout, count(*) AS num FROM works WHERE lower(works.status) IN ('open','reject','assigned') AND (category like ? or title like ? or description like ? or type like ? or output like ? or input like ?) GROUP BY round(lat,?), round(lng,?), round(cost,-2)";
 			$res = $this->db->query($sql,array($search,$search,$search,$search,$search,$search,$percision,$percision));
 			$res = $res->result_array();
 		}
@@ -1336,9 +1336,9 @@ class Stories_model extends CI_Model {
 		//TODO: when project management is implemented, Some methodologies will use sprints and some don't. To use waterfall model for task management it is temporary set to not to use sprints at all.
 		$has_sprint = false;
 		if($has_sprint){
-		$sql = "select cworks.*, IFNULL(categories.name,'General') as category_name from (SELECT project.project_name, works.category, works.work_id,works.title, works.created_at, works.description, works.cost, works.points, works.bid_deadline, (select count(*) as bid_num from bids where bids.work_id = works.work_id) as bids, (select count(*) as coment_num from comments where comments.story_id = works.work_id) as comments FROM works, project, sprints WHERE (project.project_id = works.project_id) AND works.sprint=sprints.id AND sprints.project_id=works.project_id AND curdate()>=sprints.start AND curdate()<=sprints.end AND (lower(works.status) in ('open','reject')) ";
+		$sql = "select cworks.*, IFNULL(categories.name,'General') as category_name from (SELECT project.project_name, works.category, works.work_id,works.title, works.created_at, works.description, works.cost, works.points, works.bid_deadline, (select count(*) as bid_num from bids where bids.work_id = works.work_id) as bids, (select count(*) as coment_num from comments where comments.story_id = works.work_id) as comments FROM works, project, sprints WHERE (project.project_id = works.project_id) AND works.sprint=sprints.id AND sprints.project_id=works.project_id AND curdate()>=sprints.start AND curdate()<=sprints.end AND (lower(works.status) in ('open','reject','assigned')) ";
 		}else{
-			$sql = "select cworks.*, IFNULL(categories.name,'General') as category_name from (SELECT project.project_name, works.category, works.work_id,works.title, works.created_at, works.description, works.cost, works.points, works.bid_deadline, works.lat, works.lng, (select count(*) as bid_num from bids where bids.work_id = works.work_id) as bids, (select count(*) as coment_num from comments where comments.story_id = works.work_id) as comments FROM works, project WHERE (project.project_id = works.project_id) AND curdate()<=works.deadline AND (lower(works.status) in ('open','reject')) ";
+			$sql = "select cworks.*, IFNULL(categories.name,'General') as category_name from (SELECT project.project_name, works.category, works.work_id,works.title, works.created_at, works.description, works.cost, works.points, works.bid_deadline, works.lat, works.lng, (select count(*) as bid_num from bids where bids.work_id = works.work_id) as bids, (select count(*) as coment_num from comments where comments.story_id = works.work_id) as comments FROM works, project WHERE (project.project_id = works.project_id) AND curdate()<=works.deadline AND (lower(works.status) in ('open','reject','assigned')) ";
 		}
 		$param = array();
 		if($timeS!=-1){

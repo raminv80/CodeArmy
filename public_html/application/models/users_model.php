@@ -236,9 +236,10 @@ class Users_model extends CI_Model {
 		$this->db->where('secret', md5($this->input->post('password')));
 		$query = $this->db->get('users');
 		if($query->num_rows == 1) {
+			$user = $query->result_array();
+			$this->update_user_geo($user[0]['user_id']);
 			if($this->input->post('remember')=="remember"){
 				$token = $this->get_remember_me_token();
-				$user = $query->result_array();
 				$this->db->update('users',array('remember_me_token'=>$token),array('user_id'=>$user[0]['user_id']));
 				//create cookie
 				$cookie = array(
@@ -256,6 +257,14 @@ class Users_model extends CI_Model {
 		else {
 			return false;
 		}
+	}
+	
+	function update_user_geo($user_id){
+		$info = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
+		$lat = $info['geoplugin_latitude'];
+		$lng = $info['geoplugin_longitude'];
+		$sql = "UPDATE user_profiles SET lat = ?, lng=? WHERE user_id=?";
+		$this->db->query($sql,array($lat,$lng,$user_id));
 	}
 	
 	//CodeArmy check authorisation function
@@ -882,5 +891,12 @@ class Users_model extends CI_Model {
 		$mail->AltBody = $message;
 		$mail->Send();
 	}
-		
+	
+	
+	function tallents_map($percision){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM users,user_profiles WHERE users.user_id=user_profiles.user_id AND users.role='user' GROUP BY round(lat,?), round(lng,?)";
+		$res = $this->db->query($sql,array($percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
 }

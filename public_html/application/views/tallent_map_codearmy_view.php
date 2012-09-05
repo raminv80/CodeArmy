@@ -1,9 +1,12 @@
 <?php $this->load->view('includes/CAHeader.php'); ?>
+<script src="/public/js/jquery.validate.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+
 <!--TODO: add ajax loader icons -->
 <div id="wrapper">
   <div id="find-mission-area">
     <div id="world-map" style="background:url(/public/images/codeArmy/mymission/world-map.png);width:999px;height:532px;"> <!--<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />-->
-
+	 
       <!-- project list -->
       <div id="dialog-project-list" class="dialog">
         <div class="container">
@@ -14,9 +17,9 @@
       <!-- end of project list --> 
       
       <!-- chat box -->
-      <div class="chat-box toolbar" style="position:absolute;left:10px;top:370px;width:250px;height:200px;background:rgba(60,60,60,0.6);">
-      	<div style="border-bottom:1px solid black"><span id="count">0</span> users in chatroom</div
-        ><div id="chat-message-list" style="height:143px;padding:5px;color:white; overflow:scroll"></div>
+      <div class="chat-box toolbar" style="position:absolute;left:10px;top:370px;width:250px;height:200px;background:rgba(60,60,60,0.6);z-index:2">
+      	<div style="border-bottom:1px solid black"><span id="count">0</span> users in chatroom</div>
+        <div id="chat-message-list" style="height:143px;padding:5px;color:white; overflow:scroll"></div>
         <div class="chat-box-form" style="height:25px; border-top:1px solid black;">
         <input type="text" name="msg" id="public-message-textarea" style="width:201px;height:25px;background:none;border:none;padding:0 3px 0 3px;margin:0;color:white">
         <input type="button" id="public-message-submit" value="send" disabled="disabled" style="width:40px;height:25px;border:none;padding:0;margin:0;">
@@ -26,6 +29,7 @@
     </div>
   </div>
 </div>
+<?php $this->load->view('includes/duck.php'); ?>
 <?php $this->load->view('includes/CAMapFooter.php'); ?>
 <!-- dialogs -->
 <div id="filter-toolbar" class="toolbar"> <a href="/profile" id="filter-toolbar-logo"></a>
@@ -73,7 +77,35 @@
     <div id="finishing-section"> </div>
   </div>
 </div>
-<!-- end of dialogs --> 
+<div id="mission_creator" class="dialog">
+	<div class="header">Create Mission</div>
+    <div class="content">
+    	<div class="class1">What do you want done?</div>
+        <div class="selection">
+        <select id="category" name="category">
+        <option value="" selected="selected">--- Please select ---</option>
+      <?php foreach($main_category as $value): ?>
+        <option value="<?=$value['category_id']?>"><?=$value['category']?></option>
+      <?php endforeach; ?>
+        </select>
+        </div>
+    </div>
+</div>
+
+<div id="mission-creator" class="theframe">
+	<div class="thebox small">
+		<h1>Create Mission</h1>
+		<div class="liner"></div>
+		<p>What do you want done?</p>
+		<select id="category" name="category">
+	    <option value="" selected="selected">- Please select -</option>
+	  <?php foreach($main_category as $value): ?>
+	    <option value="<?=$value['category_id']?>"><?=$value['category']?></option>
+	  <?php endforeach; ?>
+	    </select>
+	<div class="closeme"><i class="icon-remove"></i></div>
+	</div>
+</div>
 
 <div class="mission-frame" style="width:800px; height:550px; display:none;"><div class="closeme"><i class="icon-remove"></i></div></div>
 
@@ -86,11 +118,10 @@
     <div class="arrow-down"> </div>
   </div>
 </div>
-
 <!-- end of marker template -->
-<div id="dialog-accept" class="dialog" title="Proposal Accepted">
-	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Your proposal is accepted. Hurry up and be the first one to report to captain before someone else takes the mission.</p>
-</div>
+<!-- folder contents -->
+<div id="folder-wrapper"><div class="content"><img src="/public/images/ajax-loader.gif" /></div><div class="arrow"></div></div>
+<!-- end of folder contents -->
 <style>
 	* {
 		transform-style: preserve-3d;
@@ -99,6 +130,126 @@
 		-moz-backface-visibility: hidden;
 		-o-transform-style: preserve-3d;
 		-o-backface-visibility: hidden;
+	}
+	.logout{
+		color:#800;font-size: 15pt;position: absolute;right: 12px;top: 6px;
+		transition: font-size .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	   -moz-transition: font-size .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	   -webkit-transition: font-size .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	 }
+	.logout:hover{color:red;}
+	#folder-wrapper{
+		display:none;
+		position: absolute;
+		bottom: 110px;
+		left: 50%;
+		margin-left:-400px;
+		width: 800px;
+		z-index:10001;
+	}
+	#folder-wrapper .content{
+		border: 1px solid black;
+		clear:both;
+		background: rgba(10, 10, 10, 0.9);
+		width: 100%;
+		border-radius: 10px; 
+		-moz-border-radius: 10px; 
+		-webkit-border-radius: 10px;
+	}
+	#folder-wrapper .arrow{
+		color:white;
+		clear:both;
+		position:absolute;
+		top:100%;
+		left:475px;
+		width:0;
+		height:0;
+		border-color: black transparent transparent transparent; 
+		border-style: solid;
+		border-width: 10px;
+	}
+	.mission-icon div{font-size:30pt;padding:10px 10px 5px 5px;text-align: center;}
+	.mission-icon:hover{
+		background: rgb(0, 176, 255); /* The Fallback */
+		background: rgba(0, 176, 255, 0.1);
+		border-color:white;
+	}
+	.mission-icon{
+		color:white;
+		width:104px;
+		margin:8px 10px;
+		height:100px;
+		float:left;
+		padding:2px;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		border:1px solid #333;
+		transition: background .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	   -moz-transition: background .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	   -webkit-transition: background .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	}
+	.mission-icon span{
+		background:gray;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		font-size:8pt;
+	}
+	.mission-icon-more{
+		color:white;
+		width:104px;
+		margin:8px 10px;
+		height:100px;
+		float:left;
+		padding:2px;
+		-webkit-border-radius: 50px;
+		-moz-border-radius: 50px;
+		border-radius: 50px;
+		transition: text-shadow .15s ease-in-out,color .15s ease-in-out;
+	   -moz-transition: text-shadow .15s ease-in-out,color .15s ease-in-out;
+	   -webkit-transition: text-shadow .15s ease-in-out,color .15s ease-in-out;
+	}
+	.mission-icon-more div{font-size:38pt; padding:20px 30px;
+		transition: font-size .15s ease-in-out,color .15s ease-in-out;
+	   -moz-transition: font-size .15s ease-in-out,color .15s ease-in-out;
+	   -webkit-transition: font-size .15s ease-in-out,color .15s ease-in-out;
+	}
+	.mission-icon-more:hover div{
+		font-size:43pt;
+	}
+	.mission-icon-more:hover{text-shadow:0 0px 2px white;}
+	#MissionCreateDetail{
+		background:url(/public/images/codeArmy/mission/create_mission_detail_bg.png) no-repeat;
+		width:750px;
+		height:773px;
+	}
+	#mission_creator{
+	width: 460px;
+	height: 260px;
+	padding:4px;
+	background:url(/public/images/codeArmy/mission/create_mission__dialog_bg.png) no-repeat;
+	}
+	#mission_creator .header{
+		font-size:12pt;
+		text-align:center;
+		height:32px;
+		margin-top:17px;
+		width:456px;
+		color:white;
+		text-shadow:0 0 2px #FFF;
+	}
+	#mission_creator .class1{font-size:11pt; color:white; text-align:center; margin-top:40px;}
+	#mission_creator .selection{
+		margin: 44px 124px;
+		height: 27px;
+		padding:0 5px;
+		display: block;
+		width: 203px;	
+	}
+	#mission_creator select{	
+		display: block;
+		width: 203px;
 	}
 	#search-loader{margin:4px 3px; display:none;}
 	#profile-toolbar .skill-block{
@@ -150,13 +301,6 @@
 		position:relative;
 		margin-top:11px;
 	}
-	.logout{
-		color:#800;font-size: 15pt;position: absolute;right: 12px;top: 6px;
-		transition: font-size .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
-	   -moz-transition: font-size .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
-	   -webkit-transition: font-size .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
-	 }
-	.logout:hover{color:red;}
 	#profile-toolbar #avatar-block .status{
 		position:absolute;
 		top:-15px;
@@ -241,7 +385,7 @@
 		padding: 2px 0;
 		font-size: 20pt;
 	}
-	.arrow-desc{
+	.arrow-desc {
 		background: black;
 		width: 40px;
 		margin-bottom: 2px;
@@ -273,7 +417,6 @@
 		position:absolute;
 		top:200px;
 		left:200px;
-		cursor:pointer;
 		-webkit-transform-style: preserve-3d;
 		-webkit-backface-visibility: hidden;
 		text-align:center;
@@ -287,20 +430,20 @@
 	}
 	.cell{
 		background:#09dbe0;
-		width:10px;height:10px;
+		width:<?=$cell_size?>px;height:<?=$cell_size?>px;
 		position:absolute;
 		top:0;
 		left:0;
 	}
+	
 </style>
 <script>
 	
 	function loadEffect(){}
 	
-	var oldValue, jobs = <?php echo json_encode($works); ?>;
+	var oldValue, jobs = <?php echo json_encode($tallents); ?>;
 	
 	$(function(){
-		//$('.dialog').jScrollPane();
 		//create some markers
 		/*randMarkers();
 		var loc = geoToPixel({'lat':3.152480, 'lng': 101.717270});
@@ -308,6 +451,7 @@
 		var loc = geoToPixel({'lat':70, 'lng': 0});
 		addMarker(loc.x,loc.y,'t3','*','12<br/>top','#0ff',0.5,0);*/
 		renderMarkers();
+		
 		$('#world-map .marker').fadeIn('slow');
 		
 		if(BrowserDetect.browser != 'Firefox') {
@@ -316,24 +460,25 @@
 			$('.chat-box.toolbar').draggable({ containment: '#wrapper' });
 		};
 		
+		$('.chat-box.toolbar input').focus();
 		$('.toolbar [title]').tipsy();
 		initializeEvents();
 		//run window resize
 		$(window).resize();
-		var channel = pusher.subscribe('map-channel');
-		channel.bind('map-new', function(data) {
-		  checkMarker(data.lat,data.lng,1);
+		
+		//fixed popup
+		$('.create_mission').live('click',function(e){
+			MissionCreate(1);
+			e.preventDefault();
 		});
 	});
 	
 	function renderMarkers(){
 		var loc;
 		for(i=0; i<jobs.length;i++){
-			
 			loc = geoToPixel({'lat':jobs[i].lat, 'lng': jobs[i].lng});
 			var desc = jobs[i].num+(jobs[i].skill?"<br/>"+ucfirst(jobs[i].skill.substring(0,3)):'')+(jobs[i].days?"<br/>"+(jobs[i].days<1?"<1d":jobs[i].days+"d"):'')+(jobs[i].payout?"<br />"+(jobs[i].payout<1?"<10$":(jobs[i].payout<100?jobs[i].payout+'$':((jobs[i].payout/1000).toFixed(1)+'k$'))):'');
 			addMarker(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
-			//if (typeof console == "object") console.log(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
 		}
 	}
 	
@@ -346,41 +491,15 @@
 		var icon = null;
 		if(cat!== undefined){
 			switch(cat){
-				case 'a':icon = '#';break;
+				case '1':icon = '#';break;
+				case '4':icon = '@';break;
 				default: icon = cat;
 			}
 		}
 		return icon;
 	}
 	
-	function gotoMission(){
-		var mission_id=$(this).attr('id').split('-')[1];
-		window.location="/mission/view/"+mission_id;
-	}
-	
-	function controlMissionList(){
-		if($(this).hasClass('selected')){
-			$(this).removeClass('selected');
-			$(this).siblings('.detail-row').slideUp();
-		}else{
-			$(this).addClass('selected').siblings('.summary-row').removeClass('selected');
-			$(this).siblings('.detail-row').slideUp(); 
-			$(this).next('.detail-row').slideToggle();
-		}
-	}
-	
 	function initializeEvents(){
-		$("a[rel=missions]").fancybox({
-				'transitionIn'      : 'fade',
-                'transitionOut'     : 'fade',
-                'type'              : 'iframe',
-            });
-		//initial dialog close button
-		$('.dialog-close-button').click(function(){
-			var dialog = $(this).parents('.dialog');
-			dialog.animate({top:dialog.data().y, left:dialog.data().x, width:0, height:0, opacity:0},'fast',function(){$(this).hide()});
-		});
-		
 		$('#search').focus(function(){oldVal = $(this).val(); $(this).val(' ');});
 		$('#search').blur(function(){if($.trim($(this).val())=='')$(this).val(oldVal);});
 		$("#search").keypress(function() {
@@ -408,31 +527,6 @@
 				});
 			}
 		});
-		
-		$('#world-map').on('click','.marker',function(){
-					//TODO: open project list
-					var me = this;
-					$.fancybox.showLoading();
-					$.fancybox.close();
-					$.get(
-						'/missions/mission_list/'+$(this).data().ref.lat+'/'+$(this).data().ref.lng,
-						function(msg){
-							$('#dialog-project-list').css({
-								'top':$(me).data().y,
-								'left':$(me).data().x,
-								'transform-origin': '0% 0%',
-								'-webkit-transform-origin': '0% 0%',
-								'-o-transform-origin': '0% 0%',
-								'-moz-transform-origin': '0% 0%',
-								}).show().animate({top:16, left:100, width:752, height:500, opacity:1},'fast').data($(me).data());
-							$('#dialog-project-list .log').html(msg);
-						}
-					);
-					$.fancybox.hideLoading();
-			});
-			
-		$('#dialog-project-list').on('click','.summary-row',controlMissionList);
-		//$('#dialog-project-list').on('click','.detail-row',gotoMission);
 		
 		$('#world-map').on('mouseenter','.marker',
 			function(){
@@ -483,11 +577,13 @@
 	$(window).resize(function() {
 		//vertical cenerlise world map
 		$('#find-mission-area').css('height',$(window).height()-40);
+		//var y = Math.round(($(window).height()-40-$('#world-map-img').attr('height'))/2);
 		var y = Math.round(($(window).height()-40-$('#world-map').height())/2);
 		if(y<0)y=0;
 		$('#world-map').css('top',y);
 	});
 	
+	//******************************Helpers************************************/
 	function randMarkers(){
 		var icons = new Array('#','@','!','$','%','&','*');
 		var skills = new Array('php','CSS','MySQL','Rubby','PSD','Doc','PDF','Html','Java','C++');
@@ -503,113 +599,13 @@
 		}
 	}
 	
-	//*******************Start of marker filtering options******************/
-	function latest(){
-		$('#latest-loader').show();
-		var type = 'latest';
-		$('#filter-toolbar .selected').removeClass('selected');
-		$('#filter-toolbar #latest').addClass('selected');
-		$('#search').val('Find missions');
-		clearMarkers();
-		$.ajax({
-			type: 'POST',
-			dataType: "json",
-			url:'/missions/ajax_mission_map_search',
-			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type': type},
-			success:function(msg){
-				jobs = msg;
-				renderMarkers();
-				$('#latest-loader').hide();
-			}
-		});
-	}
-	
-	function classification(){
-		$('#classification-loader').show();
-		var type = 'classification';
-		$('#filter-toolbar .selected').removeClass('selected');
-		$('#filter-toolbar #classification').addClass('selected');
-		$('#search').val('Find missions');
-		clearMarkers();
-		$.ajax({
-			type: 'POST',
-			dataType: "json",
-			url:'/missions/ajax_mission_map_classification',
-			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type':type},
-			success:function(msg){
-				jobs = msg;
-				renderMarkers();
-				$('#classification-loader').hide();
-			}
-		});
-	}
-	
-	function skills(){
-		$('#skills-loader').show();
-		var type = 'skills';
-		$('#filter-toolbar .selected').removeClass('selected');
-		$('#filter-toolbar #skills').addClass('selected');
-		$('#search').val('Find missions');
-		clearMarkers();
-		$.ajax({
-			type: 'POST',
-			dataType: "json",
-			url:'/missions/ajax_mission_map_skills',
-			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type':type},
-			success:function(msg){
-				jobs = msg;
-				renderMarkers();
-				$('#skills-loader').hide();
-			}
-		});
-	}
-	
-	function estimation(){
-		$('#estimation-loader').show();
-		var type = 'estimation';
-		$('#filter-toolbar .selected').removeClass('selected');
-		$('#filter-toolbar #estimation').addClass('selected');
-		$('#search').val('Find missions');
-		clearMarkers();
-		$.ajax({
-			type: 'POST',
-			dataType: "json",
-			url:'/missions/ajax_mission_map_estimation',
-			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type':type},
-			success:function(msg){
-				jobs = msg;
-				renderMarkers();
-				$('#estimation-loader').hide();
-			}
-		});
-	}
-	
-	function payout(){
-		$('#payout-loader').show();
-		var type = 'payout';
-		$('#filter-toolbar .selected').removeClass('selected');
-		$('#filter-toolbar #payout').addClass('selected');
-		$('#search').val('Find missions');
-		clearMarkers();
-		$.ajax({
-			type: 'POST',
-			dataType: "json",
-			url:'/missions/ajax_mission_map_payout',
-			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type':type},
-			success:function(msg){
-				jobs = msg;
-				renderMarkers();
-				$('#payout-loader').hide();
-			}
-		});
-	}
-	//*******************End of marker filtering options******************/
-	
 	//*******************Start of rendering functions******************/
 	function geoToPixel(geo){
 		//TODO: change the map to google map style so lat and lng will remain in straight lines
 		var x=0,y=0, width, height,lngS=-180,lngE=180,latS=-60,latE=70;
-		height = $('#world-map').height();
+		//height = $('#world-map-img').height();
+		//width = $('#world-map-img').width();
+		height = $('#world-map').height();	
 		width = $('#world-map').width();
 		var wt = lngE - lngS;
 		var ht = latE - latS;
@@ -650,46 +646,9 @@
 			}).fadeIn(speed);
 		template.data({'scale':scale,'x':x,'y':y,'color':color, 'ref':data});	
 	}
-	
-	function checkMarker(lat,lng,num)
-	{
-		var status = false;
-		var marker = $('.marker');
-		marker.each(function(){
-			data = $(this).data().ref;
-			if(data)
-				if (data.lat == lat && data.lng == lng){
-					status = true;
-					elem = $(this).find('.arrow-down-container').css('border-top-color','green');
-					setTimeout(function(){ elem.css('border-top-color','black'); },250);
-						
-					var el = $(this).find('.arrow-desc');
-					var num = parseInt(el.text());
-					el.text(num+1);
-					
-				}
-		})
-		if (!status) {
-			renderMarker(lat,lng,num);
-		}
-	}
-	
-	function renderMarker(lat,lng,num){
-		var loc;
-		newid = $('.marker').size() - 1;
-			
-			loc = geoToPixel({'lat':jobs.lat, 'lng': jobs.lng});
-			if (typeof console == "object") console.log(lat,lng);
-			
-			//var desc = jobs.num+(jobs.skill?"<br/>"+ucfirst(jobs.skill.substring(0,3)):'')+(jobs.days?"<br/>"+(jobs.days<1?"<1d":jobs.days+"d"):'')+(jobs.payout?"<br />"+(jobs.payout<1?"<10$":(jobs.payout<100?jobs.payout+'$':((jobs.payout/1000).toFixed(1)+'k$'))):'');
-			//addMarker(loc.x,loc.y,'marker_'+i,catToIcon(jobs.class),desc,'grey',0.75,500,jobs);
-			addMarker(lat,lng,'marker_'+newid,catToIcon(jobs.class),'1','orange',0.75,500,jobs);
-
-	}
-	
 	//*******************End of rendering functions******************/
 </script>
-<!-- chat box-->
+<!-- chat box -->
 <script>
 $(function(){
 	$('#public-message-submit').click(function(){
@@ -785,8 +744,8 @@ function removeTags(html) {
   } while (html !== oldHtml);
   return html.replace(/</g, '&lt;');
 }
+
 </script>
-<!-- end of chat box-->
-<script type="text/javascript" src="/public/js/jscrollpane.js"></script>
+<!-- end of chat box -->
 <script type="text/javascript" src="/public/js/codeArmy/duck.js"></script>
 <?php $this->load->view('includes/CAFooter.php'); ?>

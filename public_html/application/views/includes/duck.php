@@ -118,6 +118,7 @@ function ToggleCompleted(me){
 					});
 				boxContainer.append('<a class="mission-icon-more" href="/missions/completed"><div class="icon-share-alt"></div>Open Completed</a>');
 				$('.mission-icon').dotdotdot();
+				$box.nanoScroller();
 			}
 		});
 	}

@@ -7,6 +7,7 @@
 <link href='http://fonts.googleapis.com/css?family=Ruda' rel='stylesheet' type='text/css' />
 <link href='http://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css' />
 <link href="/public/css/reset.css" media="all" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/public/pictogram/css/font-awesome.css">
 <link href="/public/css/v4/tipsy.css" media="all" rel="stylesheet" type="text/css" />
 <link type="text/css" href="/public/css/CodeArmyV1/ui-army/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 <link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=2.0.6" type="text/css" media="screen" />
@@ -222,14 +223,14 @@
   <a href="javascript: void(0)" id="register-submit" class="CAbutton" style="position:absolute; right:85px; top:198px; color:#CCC">Sign up</a> <?php echo form_close(); ?> </div>
 <div id="contact">
   <div class="contact_info">
-    <p>Code Gamification Sdn Bhd<br />
-      Suite 29-6, Boulevard Office, <br />
-      Mid Valley City, Lingkaran Syed Putra,<br />
-      59200 Kuala Lumpur, Malaysia.</p>
-    <ul class="contact_details">
-      <li><span class="label">Tel:</span><span class="value">603 2282 5060</span></li>
-      <li><span class="label">Fax:</span><span class="value">603 2284 5060</span></li>
-      <li><span class="label">Email:</span><span class="value">contact@codearmy.com</span></li>
+    <p style="font-size:10pt">
+      169, 11st Street<br />
+      San Francisco, CA 94103,<br />
+      United States of America.</p>
+    <ul class="contact_details" style="font-size:10pt; left:-14px; top:140px;">
+      <!--<li><span class="label">Tel:</span><span class="value">603 2282 5060</span></li>
+      <li><span class="label">Fax:</span><span class="value">603 2284 5060</span></li>-->
+      <li><span class="label"><span class="icon-envelope-alt" style="font-size:11pt; margin-right:20px;"></span></span><span class="value">contact@codearmy.com</span></li>
     </ul>
     <ul class="social_links">
       <li><span class="label"></span><a class="value" href="http://www.facebook.com/CodeArmyHQ">www.facebook.com/CodeArmyHQ</a></li>
@@ -940,6 +941,7 @@
 									}else{
 										//pass is invalid
 										$('#login-ajax').fadeOut();
+										console.log(msg);
 										$('#error').html('You password is incorrect!').show();
 										$('#pass').stop(true,false).css({border:'1px solid red'}).effect("bounce", {times:2, distance: 10}, 200);
 									}
