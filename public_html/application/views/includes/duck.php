@@ -43,13 +43,17 @@ img {
         </ul>
     </div>
 </div>
-
+<style type="text/css">
+	.nano { height:550px; width:100%}
+	.nano .content { padding: 10px; }
+	.nano .slider { background: #555; }
+</style>
 <script>
 var myMissions = false, $box, $boxSelector;
 //lets close the folder wrapper if user clicks outside of it
 $(function(){
 	$box = $('#folder-wrapper');
-	$('.content',$box).jScrollPane();
+	$box.addClass('nano');
 	$(document.body).click(function(e){
 		if ($box.is(':visible') && !($boxSelector.has(e.target).length || $box.has(e.target).length)) { // if the click was not within $box
 			$box.hide('fast');
@@ -81,6 +85,7 @@ function ToggleMyMissions(me){
 					});
 				boxContainer.append('<a class="mission-icon-more" href="/missions/my_missions"><div class="icon-share-alt"></div>Open MyMissions</a>');
 				$('.mission-icon').dotdotdot();
+				$box.nanoScroller();
 			}
 		});
 	}
