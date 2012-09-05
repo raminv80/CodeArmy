@@ -37,7 +37,8 @@
 <script type="text/javascript" src="/public/js/codeArmy/qtips.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/lightboxme.js"></script>
 <script type="text/javascript" src="/public/js/codeArmy/browserdetect.js"></script>
-
+<script type="text/javascript" src="/public/js/jscrollpane.js"></script>
+<script type="text/javascript" src="/public/js/codeArmy/jquery.dotdotdot-1.5.1.js"></script>
 <title><?=$window_title?></title>
 </head>
 

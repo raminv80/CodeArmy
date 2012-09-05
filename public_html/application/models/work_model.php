@@ -243,13 +243,11 @@ class Work_model extends CI_Model {
 		if($status && $status!='All'){
 			if(is_array($status)) $status = implode("','",$status);
 			$status = strtolower($status);
-			$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE (owner=? OR creator=?) and status in (?) order by created_at DESC";
-			$res = $this->db->query($sql, array($user_id,$user_id,$status));
+			$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE (owner=? OR creator=?) and status in ('$status') order by created_at DESC";
 		}else{
 			$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE owner=? OR creator=? order by created_at DESC";
-			$res = $this->db->query($sql, array($user_id,$user_id));
 		}
-		
+		$res = $this->db->query($sql, array($user_id,$user_id));
 		return $res->result_array();
 	}
 	
@@ -558,11 +556,11 @@ class Work_model extends CI_Model {
 		return $res[0];
 	}
 	
-	function get_num_state($state){
+	function get_num_state($user_id,$state){
 		if(is_array($state)) $state = implode("','",$state);
 		$state = strtolower($state);
-		$sql = "SELECT count(1) as num FROM works where ?='all' OR (LOWER(status) in (?))";
-		$res = $this->db->query($sql,array($state,$state))->result_array();
+		$sql = "SELECT count(1) as num FROM works where (?='all' OR (LOWER(status) in (?))) AND (creator=? OR owner=?)";
+		$res = $this->db->query($sql,array($state,$state,$user_id,$user_id))->result_array();
 		return $res[0]['num'];
 	}
 }
