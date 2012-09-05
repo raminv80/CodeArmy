@@ -279,6 +279,12 @@ class Work_model extends CI_Model {
 		return $res[0]['type'];
 	}
 	
+	function get_work_budget($work_id){
+		$sql = "SELECT arrangement_budget.amount_cal AS budget FROM arrangement_budget, works WHERE work_id=? AND est_budget = arrangement_budget.budget_id";
+		$res = $this->db->query($sql,$work_id)->result_array();
+		return $res[0]['budget'];
+	}
+	
 	function create_comment($work_id, $user_name, $message, $attach){
 		$data = array(
 			'story_id' => $work_id,
@@ -562,5 +568,31 @@ class Work_model extends CI_Model {
 		$sql = "SELECT count(1) as num FROM works where (?='all' OR (LOWER(status) in (?))) AND (creator=? OR owner=?)";
 		$res = $this->db->query($sql,array($state,$state,$user_id,$user_id))->result_array();
 		return $res[0]['num'];
+	}
+	
+	function log_notifications($work_id, $user_id, $notify_type){
+		$data = array(
+			'work_id' => $work_id,
+			'user_id' => $user_id,
+			'notify_type' => $notify_type
+		);
+		$this->db->insert('notifications',$data);
+	}
+	
+	function get_wall_notify($work_id, $user_id){
+		return ($this->db->get_where('notifications',array('work_id'=>$work_id,'user_id'=>$user_id,'notify_type'=>'wall'))->num_rows());
+	}
+	
+	function get_tasks_notify($work_id, $user_id){
+		return ($this->db->get_where('notifications',array('work_id'=>$work_id,'user_id'=>$user_id,'notify_type'=>'tasks'))->num_rows());
+	}
+	
+	function get_documents_notify($work_id, $user_id){
+		return ($this->db->get_where('notifications',array('work_id'=>$work_id,'user_id'=>$user_id,'notify_type'=>'documents'))->num_rows());
+	}
+	
+	function clear_notifications($work_id, $user_id, $notify_type){
+		$sql = "DELETE FROM notifications WHERE work_id = ? AND user_id = ? AND notify_type = ?";
+		$this->db->query($sql, array($work_id,$user_id,$notify_type));
 	}
 }

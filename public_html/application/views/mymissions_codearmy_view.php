@@ -45,10 +45,10 @@
                 </div>
                 <div class="mission-content">
                 	<ul class="mission-icons">
-                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#" title="You are competing with 1 trooper(s) on this mission!"><span class="icon"></span><span class="title">1 Troop(s)</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                		<li><a href="#"><span class="icon"></span><span class="title">Wall</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Dates</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Tasks</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Documents</span></a></li>
                     </ul>
                     <div class="mission-time">
                     	<span class="time-left">Time left</span>
@@ -83,10 +83,10 @@
                 </div>
                 <div class="mission-content">
                 	<ul class="mission-icons">
-                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#" title="You are competing with <?=$troopers?> trooper(s) on this mission!"><span class="icon"></span><span class="title"><?=$troopers?> Troop(s)</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                		<li><a href="#"><span class="icon"></span><span class="title">Wall</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Dates</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Tasks</span></a></li>
+                        <li><a href="#"><span class="icon"></span><span class="title">Documents</span></a></li>
                     </ul>
                     <div class="mission-time">
                     	<span class="time-left">Time left</span>
@@ -103,6 +103,7 @@
             </div>
             <?php endforeach;?>
 			
+            <!--- Reza --->
 			<?php foreach($myWorkList as $list):?>
             <div class="item gray-mission" id="mission-<?=$list['work_id']?>">
             	<?php
@@ -134,6 +135,7 @@
 						$proposal = $proposal[0];
 						$arrangement = $this->work_model->get_work_arrangement($list['work_id']);
 						$arrangement = str_replace('dai','day',substr($arrangement,0,-2)).'s';
+						$budget = $this->work_model->get_work_budget($list['work_id']);
 						$troopers = $this->work_model->get_num_troopers($list['work_id']);
 					?>
                     <!--<div class="mission-inputs">Proposed Timeline: <?=$proposal['bid_time'].' '.$arrangement?></div>
@@ -143,16 +145,32 @@
                 <div class="mission-content">
                 	<ul class="mission-icons">
                     	<?php $user = $this->users_model->get_user($list['owner'])->result_array();?>
-                		<li><a href="/messages/compose/<?=$user[0]['username']?>"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#" title="You are competing with <?=$troopers?> trooper(s) on this mission!"><span class="icon"></span><span class="title"><?=$troopers?>Troops</span></a></li>
-                        <li><a href="/missions/wall/<?=$list['work_id']?>"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="/missions/documents/<?=$list['work_id']?>"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                        <?php
+						$wallNotify = $this->work_model->get_wall_notify($list['work_id'], $me['user_id']);
+						?>
+                		<li><a href="/missions/wall/<?=$list['work_id']?>"><span class="icon"><?php if($wallNotify!=0) echo $wallNotify; ?></span><span class="title">Wall</span></a></li>
+                        <li><a href="/missions/dates/<?=$list['work_id']?>"><span class="icon"></span><span class="title">Dates</span></a></li>
+                        <?php
+						$tasksNotify = $this->work_model->get_tasks_notify($list['work_id'], $me['user_id']);
+						?>
+                        <li><a href="/missions/task/<?=$list['work_id']?>"><span class="icon"><?php if($tasksNotify!=0) echo $tasksNotify; ?></span><span class="title">Tasks</span></a></li>
+                        <?php
+						$documentsNotify = $this->work_model->get_documents_notify($list['work_id'], $me['user_id']);
+						?>
+                        <li><a href="/missions/documents/<?=$list['work_id']?>"><span class="icon"><?php if($documentsNotify!=0) echo $documentsNotify; ?></span><span class="title">Documents</span></a></li>
                     </ul>
                     <div class="mission-time">
-                    	<span class="time-left">Time left</span>
+                    	<!--<span class="time-left">Time left</span>-->
                         <div class="timer">
-                        <span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>
-                        <span class="hrs">hrs</span>
+                        <!--<span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>-->
+                        <span class="time"><?php
+						if($remaining_hour < 168){
+							echo $remaining_hour." hrs";
+						} else if ($remaining_hour > 336){
+							echo floor(($remaining_hour / 168))." weeks left";
+						}
+                        ?></span><br />
+                        <span class="hrs"><?='US$'.$budget." /".$arrangement?></span>
                         </div>
                         <?php if(in_array(strtolower($list['status']),array('in progress','done','redo','signoff','verify'))){?>
                         <a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>

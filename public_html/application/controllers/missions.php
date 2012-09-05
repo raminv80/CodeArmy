@@ -702,6 +702,8 @@ class Missions extends CI_Controller {
 		$this->view_data['po'] = $this->view_data['po'][0];
 		$this->view_data['activities'] = $this->work_model->get_recent_activities($work_id);
 		$this->view_data['comments'] = $this->work_model->get_comments($work_id);
+		//delete wall notification for user
+		$this->work_model->clear_notifications($work_id, $user_id, 'wall');
 		$this->view_data['window_title'] = "Wall";
 		$this->load->view('wall_codearmy_view', $this->view_data);
 	}
@@ -718,6 +720,8 @@ class Missions extends CI_Controller {
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
 		$this->view_data['mission_task'] = $this->work_model->get_mission_task($work_id)->result_array();
+		//delete wall notification for user
+		$this->work_model->clear_notifications($work_id, $user_id, 'tasks');
 		$this->view_data['window_title'] = "Task";
 		$this->load->view('task_codearmy_view', $this->view_data);
 		
@@ -736,6 +740,8 @@ class Missions extends CI_Controller {
 		$this->view_data['po'] = $this->view_data['po'][0];
 		$docList = $this->work_model->getDocList($work_id);
 		$this->view_data['docList'] = $docList;
+		//delete wall notification for user
+		$this->work_model->clear_notifications($work_id, $user_id, 'documents');
 		$this->view_data['window_title'] = "Documents";
 		$this->load->view('documents_codearmy_view', $this->view_data);
 		
@@ -894,13 +900,21 @@ class Missions extends CI_Controller {
 		$wh = $this->work_model->is_workhorse($user_id,$work_id);
 		if(!$po&&!$wh)die('Unauthorised access!');
 		//only workhorse and po can comment
-		if($work['work_horse']==$user_id || $work['owner']==$user_id || $work['creator']==$user_id){
+		if($work['work_horse']==$user_id || $work['owner']==$user_id || $work['creator']==$user_id){			
 			$comment_id = $this->work_model->create_comment($work_id, $this->view_data['me']['username'], $message, $attach);
 			$status = json_encode(array(
 				'comment_id' => $comment_id,
 				'work_id' => $work_id));
 			$desc = "commented";
-			$this->work_model->log_history($user_id,$work_id,'comment',$status,$desc,false);
+			$this->work_model->log_history($user_id,$work_id,'comment',$status,$desc,false);			
+			// insert notification
+			if($po){
+				$intReceiverID = $work['work_horse'];
+			} else {
+				$intReceiverID = $work['creator'];
+			}
+			$this->work_model->log_notifications($work_id, $intReceiverID, 'wall');
+			
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
 			$data = array(
@@ -981,6 +995,14 @@ class Missions extends CI_Controller {
 		$po = $this->work_model->is_po($user_id,$work_id);
 		$wh = $this->work_model->is_workhorse($user_id,$work_id);
 		if(!$po&&!$wh)die('Unauthorised access!');
+			$work = $this->work_model->get_work($work_id)->result_array();
+			$work = $work[0];
+			if($po){
+				$intReceiverID = $work['work_horse'];
+			} else {
+				$intReceiverID = $work['creator'];
+			}
+			$this->work_model->log_notifications($work_id, $intReceiverID, 'tasks');
 		
 		$sub_task = $this->input->post('sub_task');
 		$res = array(
@@ -989,6 +1011,8 @@ class Missions extends CI_Controller {
 			"task_name" => $sub_task
 		);
 		if($this->db->insert('mission_task', $res)){
+			// insert notification
+			
 			$insert_id = $this->db->insert_id();
 			echo $insert_id;
 		} else {
@@ -1152,6 +1176,20 @@ class Missions extends CI_Controller {
 							"work_id" => $this->input->post('work_id')
 						);
 						$this->db->insert('work_files', $res);
+						
+						$user_id = $this->view_data['me']['user_id'];
+						$work_id = $this->input->post('work_id');
+						$po = $this->work_model->is_po($user_id,$work_id);
+						$wh = $this->work_model->is_workhorse($user_id,$work_id);
+						$work = $this->work_model->get_work($work_id)->result_array();
+						$work = $work[0];
+						// insert notification
+						if($po){
+							$intReceiverID = $work['work_horse'];
+						} else {
+							$intReceiverID = $work['creator'];
+						}
+						$this->work_model->log_notifications($work_id, $intReceiverID, 'documents');
 					} else
 						die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
 						fclose($in);
@@ -1181,6 +1219,20 @@ class Missions extends CI_Controller {
 						"session_id" => $this->session->userdata('session_id')
 					);
 					$this->db->insert('work_files', $res);
+					
+					$user_id = $this->view_data['me']['user_id'];
+					$work_id = $this->input->post('work_id');
+					$po = $this->work_model->is_po($user_id,$work_id);
+					$wh = $this->work_model->is_workhorse($user_id,$work_id);
+					$work = $this->work_model->get_work($work_id)->result_array();
+					$work = $work[0];
+					// insert notification
+					if($po){
+						$intReceiverID = $work['work_horse'];
+					} else {
+						$intReceiverID = $work['creator'];
+					}
+					$this->work_model->log_notifications($work_id, $intReceiverID, 'documents');
 				} else
 					die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
 					
