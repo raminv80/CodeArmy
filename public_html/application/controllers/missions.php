@@ -1400,4 +1400,10 @@ class Missions extends CI_Controller {
 		);
 		return $res;
 	}
+	
+	function Ajax_myMissions(){
+		$user_id = $this->session->userdata('user_id');
+		$res = $this->work_model->get_owner_works($user_id,'All');
+		echo json_encode($res);
+	}
 }

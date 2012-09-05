@@ -118,6 +118,9 @@
   </div>
 </div>
 <!-- end of marker template -->
+<!-- folder contents -->
+<div id="folder-wrapper"><div class="content"><img src="/public/images/ajax-loader.gif" /></div><div class="arrow"></div></div>
+<!-- end of folder contents -->
 <style>
 	* {
 		transform-style: preserve-3d;
@@ -127,6 +130,89 @@
 		-o-transform-style: preserve-3d;
 		-o-backface-visibility: hidden;
 	}
+	#folder-wrapper{
+		display:none;
+		position: absolute;
+		bottom: 110px;
+		left: 50%;
+		margin-left:-400px;
+		width: 800px;
+		z-index:10001;
+	}
+	#folder-wrapper .content{
+		border: 1px solid black;
+		clear:both;
+		background: rgba(10, 10, 10, 0.9);
+		height: 550px;
+		width: 800px;
+		border-radius: 10px; 
+		-moz-border-radius: 10px; 
+		-webkit-border-radius: 10px;
+		overflow:auto;
+	}
+	#folder-wrapper .arrow{
+		color:white;
+		clear:both;
+		position:absolute;
+		top:100%;
+		left:475px;
+		width:0;
+		height:0;
+		border-color: black transparent transparent transparent; 
+		border-style: solid;
+		border-width: 10px;
+	}
+	.mission-icon div{font-size:30pt;padding:10px 10px 5px 5px;text-align: center;}
+	.mission-icon:hover{
+		background: rgb(0, 176, 255); /* The Fallback */
+		background: rgba(0, 176, 255, 0.1);
+		border-color:white;
+	}
+	.mission-icon{
+		color:white;
+		width:104px;
+		margin:8px 10px;
+		height:100px;
+		float:left;
+		padding:2px;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		border:1px solid #333;
+		transition: background .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	   -moz-transition: background .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	   -webkit-transition: background .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
+	}
+	.mission-icon span{
+		background:gray;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		font-size:8pt;
+	}
+	.mission-icon-more{
+		color:white;
+		width:104px;
+		margin:8px 10px;
+		height:100px;
+		float:left;
+		padding:2px;
+		-webkit-border-radius: 50px;
+		-moz-border-radius: 50px;
+		border-radius: 50px;
+		transition: text-shadow .15s ease-in-out,color .15s ease-in-out;
+	   -moz-transition: text-shadow .15s ease-in-out,color .15s ease-in-out;
+	   -webkit-transition: text-shadow .15s ease-in-out,color .15s ease-in-out;
+	}
+	.mission-icon-more div{font-size:38pt; padding:20px 30px;
+		transition: font-size .15s ease-in-out,color .15s ease-in-out;
+	   -moz-transition: font-size .15s ease-in-out,color .15s ease-in-out;
+	   -webkit-transition: font-size .15s ease-in-out,color .15s ease-in-out;
+	}
+	.mission-icon-more:hover div{
+		font-size:43pt;
+	}
+	.mission-icon-more:hover{text-shadow:0 0px 2px white;}
 	#MissionCreateDetail{
 		background:url(/public/images/codeArmy/mission/create_mission_detail_bg.png) no-repeat;
 		width:750px;
@@ -344,6 +430,7 @@
 		top:0;
 		left:0;
 	}
+	
 </style>
 <script>
 	
@@ -359,6 +446,7 @@
 		var loc = geoToPixel({'lat':70, 'lng': 0});
 		addMarker(loc.x,loc.y,'t3','*','12<br/>top','#0ff',0.5,0);*/
 		renderMarkers();
+		
 		$('#world-map .marker').fadeIn('slow');
 		
 		if(BrowserDetect.browser != 'Firefox') {

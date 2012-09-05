@@ -243,13 +243,11 @@ class Work_model extends CI_Model {
 		if($status && $status!='All'){
 			if(is_array($status)) $status = implode("','",$status);
 			$status = strtolower($status);
-			$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE (owner=? OR creator=?) and status in (?) order by created_at DESC";
-			$res = $this->db->query($sql, array($user_id,$user_id,$status));
+			$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE (owner=? OR creator=?) and status in ('$status') order by created_at DESC";
 		}else{
 			$sql = "SELECT *, (select count(1) from bids where bids.work_id=works.work_id) as bids from works WHERE owner=? OR creator=? order by created_at DESC";
-			$res = $this->db->query($sql, array($user_id,$user_id));
 		}
-		
+		$res = $this->db->query($sql, array($user_id,$user_id));
 		return $res->result_array();
 	}
 	

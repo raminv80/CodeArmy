@@ -36,7 +36,7 @@ img {
 <li><a href = "javascript:void(0)" class="create_mission"><span>Create Mission</span><img src="/public/images/codeArmy/duck/icon-text.png" alt="[text]" /></a></li>
 <!--
             --><li class="seperator"></li><!--
-            --><li><a href="/missions/my_missions"><span>My Missions</span><img src="/public/images/codeArmy/duck/icon-applications.png" alt="[apps]" /></a></li><!--
+            --><li><a href="javascript:void(0)" onclick="ToggleMyMissions(this)"><span>My Missions</span><img src="/public/images/codeArmy/duck/icon-applications.png" alt="[apps]" /></a></li><!--
             --><li><a href="/missions/bid"><span>My Bids</span><img src="/public/images/codeArmy/duck/icon-pictures.png" alt="[pictures]" /></a></li><!--
             --><li><a href="/missions/completed"><span>Completed</span><img src="/public/images/codeArmy/duck/icon-documents.png" alt="[documents]" /></a></li><!--
             --><li><a href="#bin"><span>Bin</span><img src="/public/images/codeArmy/duck/icon-bin.png" alt="[bin]" /></a></li>
@@ -45,6 +45,48 @@ img {
 </div>
 
 <script>
+var myMissions = false, $box, $boxSelector;
+//lets close the folder wrapper if user clicks outside of it
+$(function(){
+	$box = $('#folder-wrapper');
+	$('.content',$box).jScrollPane();
+	$(document.body).click(function(e){
+		if ($box.is(':visible') && !($boxSelector.has(e.target).length || $box.has(e.target).length)) { // if the click was not within $box
+			$box.hide('fast');
+		}
+	});
+});
+function ToggleMyMissions(me){
+	$boxSelector = $(me);
+	var boxContainer = $('.content',$box);
+	if(!$box.is(':visible')){
+		//fetch the data
+		$.ajax({
+			url:'/missions/Ajax_myMissions',
+			data:{},
+			type:'get',
+			dataType:'json',
+			success: function(data){
+				boxContainer.html('');
+				$(data).each(function(){
+						var status = this.status.toLowerCase();
+						ref = "/missions/manage/";
+						if($.inArray(status,['in progress','done','redo','signoff','verify'])>-1)ref = "/missions/wall/";
+						switch(status){
+						 case 'draft': icon = 'icon-pencil';break;
+						 case 'in progress': icon = 'icon-cogs';break;
+						 default: icon = 'icon-globe';
+						}
+						boxContainer.append('<a class="mission-icon '+this.status+'" href="'+ref+this.work_id+'"><div class="'+icon+'"></div>'+this.title+'</a>');
+					});
+				boxContainer.append('<a class="mission-icon-more" href="/missions/my_missions"><div class="icon-share-alt"></div>Open MyMissions</a>');
+				$('.mission-icon').dotdotdot();
+			}
+		});
+	}
+	$box.toggle('fast');
+}
+
 function mission_creator_open(){
 	$('#category>option').attr('selected', false);
 	$('#category>option:first').attr('selected', true);
