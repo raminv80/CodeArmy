@@ -16,7 +16,7 @@
             <?php }?>
         </div>
         <!-- New Dsign By Reza -->
-        <div class="redesign">
+        <div class="list">
         	<?php
 			if($myProfile["params"] != ""){
 				$params = json_decode($myProfile["params"]);
