@@ -38,7 +38,7 @@ img {
             --><li class="seperator"></li><!--
             --><li><a href="javascript:void(0)" onclick="ToggleMyMissions(this)"><span>My Missions</span><img src="/public/images/codeArmy/duck/icon-applications.png" alt="[apps]" /></a></li><!--
            <li><a href="/missions/bid"><span>My Bids</span><img src="/public/images/codeArmy/duck/icon-pictures.png" alt="[pictures]" /></a></li><!--
-            --><li><a href="/missions/completed"><span>Completed</span><img src="/public/images/codeArmy/duck/icon-documents.png" alt="[documents]" /></a></li><!--
+            --><li><a href="javascript:void(0)" onclick="ToggleCompleted(this)"><span>Completed</span><img src="/public/images/codeArmy/duck/icon-documents.png" alt="[documents]" /></a></li><!--
             <li><a href="#bin"><span>Bin</span><img src="/public/images/codeArmy/duck/icon-bin.png" alt="[bin]" /></a></li>-->
         </ul>
     </div>
@@ -84,6 +84,39 @@ function ToggleMyMissions(me){
 			}
 		});
 	}
+	$box.find('.arrow').css('left',491);
+	$box.toggle('fast');
+}
+
+function ToggleCompleted(me){
+	$boxSelector = $(me);
+	var boxContainer = $('.content',$box);
+	if(!$box.is(':visible')){
+		//fetch the data
+		$.ajax({
+			url:'/missions/Ajax_completedMissions',
+			data:{},
+			type:'get',
+			dataType:'json',
+			success: function(data){
+				boxContainer.html('');
+				$(data).each(function(){
+						var status = this.status.toLowerCase();
+						ref = "/missions/manage/";
+						if($.inArray(status,['in progress','done','redo','signoff','verify'])>-1)ref = "/missions/wall/";
+						switch(status){
+						 case 'draft': icon = 'icon-pencil';break;
+						 case 'in progress': icon = 'icon-cogs';break;
+						 default: icon = 'icon-globe';
+						}
+						boxContainer.append('<a class="mission-icon '+this.status+'" href="'+ref+this.work_id+'"><div class="'+icon+'"></div>'+this.title+'</a>');
+					});
+				boxContainer.append('<a class="mission-icon-more" href="/missions/completed"><div class="icon-share-alt"></div>Open Completed</a>');
+				$('.mission-icon').dotdotdot();
+			}
+		});
+	}
+	$box.find('.arrow').css('left',530);
 	$box.toggle('fast');
 }
 

@@ -1406,4 +1406,10 @@ class Missions extends CI_Controller {
 		$res = $this->work_model->get_owner_works($user_id,'All');
 		echo json_encode($res);
 	}
+	
+	function Ajax_completedMissions(){
+		$user_id = $this->session->userdata('user_id');
+		$res = $this->work_model->get_owner_works($user_id,'signoff');
+		echo json_encode($res);
+	}
 }
