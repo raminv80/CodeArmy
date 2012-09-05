@@ -28,18 +28,18 @@ img {
             <li><a href="/messages/inbox"><span>Messages</span><img src="/public/images/codeArmy/duck/icon-address.png" alt="[address]" /></a></li><!--
             --><li><a href="/achievements"><span>Achievements</span><img src="/public/images/codeArmy/duck/icon-band.png" alt="[band]" /></a></li><!--
             --><li><a href="/leaderboard"><span>Leaderboard</span><img src="/public/images/codeArmy/duck/icon-calendar.png" alt="[calendar]" /></a></li><!--
-            --><li class="active"><a href="#chat"><span>Chat</span><img src="/public/images/codeArmy/duck/icon-chat.png" alt="[chat]" /></a></li><!--
-            --><li class="active"><a href="#music"><span>Music</span><img src="/public/images/codeArmy/duck/icon-music.png" alt="[music]" /></a></li><!--
-            --><li><a href="#photo"><span>Photo</span><img src="/public/images/codeArmy/duck/icon-photo.png" alt="[photo]" /></a></li><!--
+            --><li class="active"><a href="javascript:void(0)" onclick="$('.chat-box').toggle()"><span>Chat</span><img src="/public/images/codeArmy/duck/icon-chat.png" alt="[chat]" /></a></li><!--
+            <li class="active"><a href="#music"><span>Music</span><img src="/public/images/codeArmy/duck/icon-music.png" alt="[music]" /></a></li><!--
+            --><li><a href="/profile"><span>Profile</span><img src="/public/images/codeArmy/duck/icon-profile.png" alt="[profile]" /></a></li><!--
 -->
 <!-- <li><a href="javascript: mission_creator_open()"><span>Create Mission</span><img src="/public/images/codeArmy/duck/icon-text.png" alt="[text]" /></a></li> -->
 <li><a href = "javascript:void(0)" class="create_mission"><span>Create Mission</span><img src="/public/images/codeArmy/duck/icon-text.png" alt="[text]" /></a></li>
 <!--
             --><li class="seperator"></li><!--
             --><li><a href="javascript:void(0)" onclick="ToggleMyMissions(this)"><span>My Missions</span><img src="/public/images/codeArmy/duck/icon-applications.png" alt="[apps]" /></a></li><!--
-            --><li><a href="/missions/bid"><span>My Bids</span><img src="/public/images/codeArmy/duck/icon-pictures.png" alt="[pictures]" /></a></li><!--
+           <li><a href="/missions/bid"><span>My Bids</span><img src="/public/images/codeArmy/duck/icon-pictures.png" alt="[pictures]" /></a></li><!--
             --><li><a href="/missions/completed"><span>Completed</span><img src="/public/images/codeArmy/duck/icon-documents.png" alt="[documents]" /></a></li><!--
-            --><li><a href="#bin"><span>Bin</span><img src="/public/images/codeArmy/duck/icon-bin.png" alt="[bin]" /></a></li>
+            <li><a href="#bin"><span>Bin</span><img src="/public/images/codeArmy/duck/icon-bin.png" alt="[bin]" /></a></li>-->
         </ul>
     </div>
 </div>

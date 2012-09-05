@@ -556,11 +556,11 @@ class Work_model extends CI_Model {
 		return $res[0];
 	}
 	
-	function get_num_state($state){
+	function get_num_state($user_id,$state){
 		if(is_array($state)) $state = implode("','",$state);
 		$state = strtolower($state);
-		$sql = "SELECT count(1) as num FROM works where ?='all' OR (LOWER(status) in (?))";
-		$res = $this->db->query($sql,array($state,$state))->result_array();
+		$sql = "SELECT count(1) as num FROM works where (?='all' OR (LOWER(status) in (?))) AND (creator=? OR owner=?)";
+		$res = $this->db->query($sql,array($state,$state,$user_id,$user_id))->result_array();
 		return $res[0]['num'];
 	}
 }
