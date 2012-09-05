@@ -28,7 +28,7 @@ img {
             <li><a href="/messages/inbox"><span>Messages</span><img src="/public/images/codeArmy/duck/icon-address.png" alt="[address]" /></a></li><!--
             --><li><a href="/achievements"><span>Achievements</span><img src="/public/images/codeArmy/duck/icon-band.png" alt="[band]" /></a></li><!--
             --><li><a href="/leaderboard"><span>Leaderboard</span><img src="/public/images/codeArmy/duck/icon-calendar.png" alt="[calendar]" /></a></li><!--
-            --><li class="active"><a href="javascript:void(0)" onclick="$('.chat-box').toggle()"><span>Chat</span><img src="/public/images/codeArmy/duck/icon-chat.png" alt="[chat]" /></a></li><!--
+            --><li class="active"><a href="javascript:void(0)" onclick="$('.chat-box').fadeToggle('fast')"><span>Chat</span><img src="/public/images/codeArmy/duck/icon-chat.png" alt="[chat]" /></a></li><!--
             <li class="active"><a href="#music"><span>Music</span><img src="/public/images/codeArmy/duck/icon-music.png" alt="[music]" /></a></li><!--
             --><li><a href="/profile"><span>Profile</span><img src="/public/images/codeArmy/duck/icon-profile.png" alt="[profile]" /></a></li><!--
 -->
