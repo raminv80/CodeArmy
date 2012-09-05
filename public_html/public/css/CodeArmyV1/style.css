@@ -3052,8 +3052,188 @@ input.rejimg:hover {
 	float:left;
 	margin:20px 0;
 }
-/* MyMissions Page New Codes */
 
+/* MyMissions Page Codes */
+#mymission-content-area{
+	/*background:url(/public/images/codeArmy/profile/missions/temp.png) no-repeat;*/
+	width:760px;
+}
+#main-content { overflow:scroll;}
+#mymission-content-area .block-header h3 {
+	margin:1px 5px;
+	height: 33px;
+	font-size:12.96pt;
+	color:white;
+	font-family:'Ruda', sans-serif;
+	text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.5);
+	display:block;
+	width:229px;
+	height:33px;
+	float:left;
+	background:url(/public/images/codeArmy/profile/block-header-line.png) no-repeat;
+}
+#mymission-content-area div.list{
+	clear:both;
+}
+#mymission-content-area div.list .item{
+	float: left;
+	width:246px;
+	height:302px;
+	margin: 13px 6px 52px 0;
+}
+#block-mission-list .list .item.gray-mission{background:url(/public/images/codeArmy/mymission/gray-mission.png) no-repeat;}
+#block-mission-list .list .item.green-mission{background:url(/public/images/codeArmy/mymission/green-mission.png) no-repeat;}
+#block-mission-list .list .item.orange-mission{background:url(/public/images/codeArmy/mymission/orange-mission.png) no-repeat;}
+#block-mission-list .list .item.red-mission{background:url(/public/images/codeArmy/mymission/red-mission.png) no-repeat;}
+#block-mission-list .mission-header{position:relative}
+#block-mission-list .mission-title{
+	text-shadow: -1px -1px 1px rgba(100,100,100,0.5);
+	font-size:11pt;
+	color:white;
+	position:absolute;
+	top:15px;
+	left: 15px;
+	width:180px;
+	text-align:justify;
+	font-weight:bold;
+}
+#block-mission-list .mission-inputs{
+	font-size:9.36pt;
+	color:white;
+	position:absolute;
+	top:85px;
+	left:15px;	
+}
+#block-mission-list .mission-deliverables{
+	font-size:9.36pt;
+	color:white;
+	position:absolute;
+	top:100px;
+	left:15px;	
+}
+#block-mission-list .mission-content{
+	position:relative;
+	top:130px;
+	height:170px;
+}
+#block-mission-list ul.mission-icons {
+	margin: 5px;
+}
+#block-mission-list  ul.mission-icons li{
+	float: left;
+	display: block;
+	margin: 0 0 3px 4px;
+	width: 100px;
+	height: 30px;
+}
+#block-mission-list .mission-icons .icon{
+	display: block;
+	width: 28px;
+	height: 29px;
+	float: left;
+	margin: 5px 0 0 5px;
+}
+#block-mission-list .mission-icons .title{
+	display: block;
+	width: 60px;
+	height: 15px;
+	float: left;
+	margin: 11px 0 0 7px;
+	font-size:8.64pt;
+}
+#block-mission-list .mission-time{
+	clear:both;
+	position:relative;
+	display:block;
+	height:80px;
+	padding:10px;
+}
+#block-mission-list .mission-time{color:white}
+#block-mission-list .mission-time .time-left{
+	font-size:7.2pt;
+	position:absolute;
+	top:39px;
+}
+#block-mission-list .mission-time .time{
+	font-size:18pt;
+}
+#block-mission-list .mission-time .hrs{
+	font-size:12pt;
+}
+#block-mission-list .timer{
+	position:absolute;
+	top:55px; 
+	left:7px;
+}
+#block-mission-list .mission-progress-bg{
+	position: absolute;
+	top: 59px;
+	height: 13px;
+	left: 15px;
+	width: 216px;
+}
+#block-mission-list .mission-progress-meter{
+	background:url(/public/images/codeArmy/mymission/progress-meter-bg.png);
+	width:100px;
+	height:13px;
+	border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px;
+}
+#block-mission-list .blue-button{
+	background: url(/public/images/codeArmy/mymission/Blue-button1.png) no-repeat;
+	width: 114px;
+	height: 48px;
+	display: block;
+	position: absolute;
+	top: 38px;
+	right: 20px;
+	text-align: center;
+	padding: 16px 0;
+	font-size:10pt;
+}
+#block-mission-list .blue-button:hover{
+	background: url(/public/images/codeArmy/mymission/Blue-button1-up.png) no-repeat;
+}
+.mission-status-icon {
+	position: absolute;
+	top: 8px;
+	right: 15px;
+}
+#dummy-create-mission{
+	float: left;width: 246px;height: 302px;margin: 13px 6px 52px 0;border:2px dashed #09F;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	cursor:pointer;
+	color:white;
+	font-size: 16pt;
+	line-height: 301px;
+	text-align: center;
+   transition: font-size .15s ease-in-out,background .15s ease-in-out,color .15s ease-in-out;
+   -moz-transition: font-size .15s ease-in-out,background .15s ease-in-out,color .15s ease-in-out;
+   -webkit-transition: font-size .15s ease-in-out,background .15s ease-in-out,color .15s ease-in-out;
+}
+#dummy-create-mission:hover{
+	background: rgb(0, 176, 255); /* The Fallback */
+	background: rgba(0, 176, 255, 0.1);
+	color:white;
+	font-size:18pt;
+	text-shadow:0px 0px 3px white;
+}
+.ui-selectmenu-status {
+line-height: 2.3em;
+text-align: left;
+}
+/* MyMissions Page Redesign Codes */
+#block-mission-list .redesign .list .item.gray-mission{background:none;}
+#block-mission-list .redesign .list .item.green-mission{background:url(/public/images/codeArmy/mymission/green-mission.png) no-repeat;}
+#block-mission-list .redesign .list .item.orange-mission{background:url(/public/images/codeArmy/mymission/orange-mission.png) no-repeat;}
+#block-mission-list .redesign .list .item.red-mission{background:url(/public/images/codeArmy/mymission/red-mission.png) no-repeat;}
+#block-mission-list .redesign .mission-title {
+	font-size:15px;
+	font-weight:normal;
+}
 
 /* END - New Codes by Reza@RezaKabiri.com */
 
