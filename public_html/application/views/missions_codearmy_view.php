@@ -45,13 +45,13 @@
   <div id="avatar-block"> <a href="/profile"><img src="/public/images/codeArmy/mymission/profile_toolbar/avatar.png" id="avatar" alt="avatar" /></a>
     <ul id="status-icons">
       <li><a href="/missions/my_missions"><img title="Missions" src="/public/images/codeArmy/mymission/profile_toolbar/mission-status.png" /></a>
-        <div class="status"><?=$myActiveMissions?></div>
+        <?php if($myActiveMissions){?><div class="status"><?=$myActiveMissions?></div><?php }?>
       </li>
       <li><a href="/messages/inbox"><img title="Messages" src="/public/images/codeArmy/mymission/profile_toolbar/message-status.png" /></a>
-        <div class="status"><?=$myActiveMessages?></div>
+        <?php if($myActiveMessages){?><div class="status"><?=$myActiveMessages?></div><?php }?>
       </li>
       <li><a href="/messages/notifications"><img title="Notifications" src="/public/images/codeArmy/mymission/profile_toolbar/notification-status.png" /></a>
-        <div class="status"><?=$myActiveNotifications?></div>
+        <?php if($myActiveNotifications){?><div class="status"><?=$myActiveNotifications?></div><?php }?>
       </li>
     </ul>
   </div>
