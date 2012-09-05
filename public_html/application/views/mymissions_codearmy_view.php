@@ -187,16 +187,16 @@ text-align: left;
             </select>
             </div>
             <?php }?>
-        </div>
+        </div>        
         <div class="list">
         	<?php
 			if($myProfile["params"] != ""){
 				$params = json_decode($myProfile["params"]);
 				$hideSample = $params->hidesample;
 			} else {
-				$hideSample = false;
+				$hideSample = "false";
 			}
-			if($me['role']=='po' && $hideSample != true){ ?>
+			if($me['role']=='po' && $hideSample != "true"){ ?>
         	<!-- Sample Mission : Begin -->
             <div class="item gray-mission" id="mission-sample">
             	<div class="mission-header">
@@ -207,8 +207,13 @@ text-align: left;
                         <input type="hidden" name="percent" value="0" />
                         <input type="hidden" name="min_to_percent" value="0" />
                     </div>
-                    <div class="mission-inputs">Proposed Timeline: 1 month</div>
-                    <div class="mission-deliverables">Proposed Reward: 20$/month</div>
+                    <!--<div class="mission-inputs">Proposed Timeline: 1 month</div>
+                    <div class="mission-deliverables">Proposed Reward: 20$/month</div>-->
+                    <div class="mission-inputs">Deadline: 
+					<?php
+					$str1Month = mktime(0, 0, 0, date("m")+1, date("d"),   date("Y"));
+					echo date("dS F Y", $str1Month);
+					?></div>
                 </div>
                 <div class="mission-content">
                 	<ul class="mission-icons">
@@ -306,246 +311,9 @@ text-align: left;
 						$arrangement = str_replace('dai','day',substr($arrangement,0,-2)).'s';
 						$troopers = $this->work_model->get_num_troopers($list['work_id']);
 					?>
-                    <div class="mission-inputs">Proposed Timeline: <?=$proposal['bid_time'].' '.$arrangement?></div>
-                    <div class="mission-deliverables">Proposed Reward: <?=$proposal['bid_cost'].'$/'.$arrangement?></div>
-                </div>
-                <div class="mission-content">
-                	<ul class="mission-icons">
-                    	<?php $user = $this->users_model->get_user($list['owner'])->result_array();?>
-                		<li><a href="/messages/compose/<?=$user[0]['username']?>"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#" title="You are competing with <?=$troopers?> trooper(s) on this mission!"><span class="icon"></span><span class="title"><?=$troopers?>Troops</span></a></li>
-                        <li><a href="/missions/wall/<?=$list['work_id']?>"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="/missions/documents/<?=$list['work_id']?>"><span class="icon"></span><span class="title">Attachements</span></a></li>
-                    </ul>
-                    <div class="mission-time">
-                    	<span class="time-left">Time left</span>
-                        <div class="timer">
-                        <span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>
-                        <span class="hrs">hrs</span>
-                        </div>
-                        <?php if(in_array(strtolower($list['status']),array('in progress','done','redo','signoff','verify'))){?>
-                        <a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>
-                        <?php }?>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach;?>
-            
-            <?php foreach($myMissions as $list):
-				$color = (in_array(strtolower($list['status']),array('draft')))?'red':'green';
-				$color = (in_array(strtolower($list['status']),array('signoff')))?'grey':$color;
-			?>
-            <div class="item <?=$color?>-mission" id="mission-<?=$list['work_id']?>">
-            	<?php
-					//calc remaining time
-					$remaining_time = strtotime($list['deadline'])-time();
-					if($remaining_time<0)$remaining_time=0;
-					//calc elappsed time
-					$elappsed_time = time()-strtotime($list['assigned_at']);
-					//calc total time he had during assignment
-					$given_time = strtotime($list['deadline']) - strtotime($list['assigned_at']);
-					if($given_time<0) $given_time = 1;
-					
-					$progress_percent = ($given_time==0)?0:$elappsed_time/$given_time;
-					$progress_percent = ($progress_percent>0)?(($progress_percent>1)?1:$progress_percent):0;
-					$remaining_hour = floor($remaining_time / (60*60));
-					$remaining_min = $remaining_time % (60*60);
-					$remaining_minutes = floor($remaining_min / (60));
-					$min_to_percent = ($given_time==0)?0:(1*60)/($given_time);
-					
-					$po = ($me['user_id']==$list['owner']);
-					
-				?>
-            	<div class="mission-header">
-                	<div class="mission-title"><?=character_limiter($list['title'],20)?></div>
-                    <div class="mission-status-icon"><?=$list['status']?></div>
-                    <div class="mission-progress-bg">
-                    	<div class="mission-progress-meter" style="width:<?= round(216*$progress_percent) ?>px"></div>
-                        <input type="hidden" name="percent" value="<?=$progress_percent?>" />
-                        <input type="hidden" name="min_to_percent" value="<?=$min_to_percent?>" />
-                    </div>
-                    <?php 
-						if(in_array(strtolower($list['status']),array('draft','open','assigned'))){
-							$arr = $this->work_model->get_work_arrangement($list['work_id']);
-							$arranegement = $arr;
-							$estimate_time = $this->work_model->get_selected_arrangement_time($list['est_time_frame']);
-							if(!$estimate_time){$estimate_time=0;} else {$estimate_time = $estimate_time[0];}
-							$estimate_budget = $this->work_model->get_selected_arrangement_budget($list['est_budget']);
-							if(!$estimate_budget){$estimate_budget=0;} else {$estimate_budget = $estimate_budget[0];}
-					?>
-                    <div class="mission-inputs">About <?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'?'?> <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s, <?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'?'?>$ per <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s</div>
-                    <div class="mission-deliverables"></div>
-                    <?php 
-						}else{
-							$arr = $this->work_model->get_work_arrangement($list['work_id']);
-							$arranegement = $arr;
-							$time_cost = $this->work_model->get_actual_work_time_cost($list['work_id']);
-							if(!$time_cost){$estimate_time=0;} else {$estimate_time = $time_cost['bid_time'];}
-							if(!$time_cost){$estimate_budget=0;} else {$estimate_budget = $time_cost['bid_cost'];}
-					?>
-                    <div class="mission-deliverables"><?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'?'?> <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s, <?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'?'?>$ per <?=ucfirst(str_replace('dai','day',substr($arranegement,0,-2)))?>s</div>
-                    <?php }?>
-                </div>
-                <div class="mission-content">
-                	<ul class="mission-icons">
-                    	<?php if($po){?>
-                         <li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="/missions/applicants/<?=$list['work_id']?>"><span class="icon"></span><span class="title "><span class="bidders-<?=$list['work_id']?>"><?=$list['bids']?></span> Bidders</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
-                        <?php }else{?>
-                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">1 Trooper</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
-                        <?php }?>
-                    </ul>
-                    <div class="mission-time">
-                    	<span class="time-left">Time left</span>
-                        <div class="timer">
-                        <span class="time"><?=($remaining_hour<24)?$remaining_hour.':'.$remaining_minutes:$remaining_hour?></span>
-                        <span class="hrs">hrs</span>
-                        </div>
-                        <?php if($po && (strtolower($list['status'])=='open' || strtolower($list['status'])=='assigned' || strtolower($list['status'])=='draft')){//TODO: if in open, assigned status allow edit but send alert to bidders on change?>
-                        	<a class="blue-button" href="/missions/manage/<?=$list['work_id']?>">Manage</a>
-                        <?php }else{?>
-                        	<a href="/missions/wall/<?=$list['work_id']?>" class="blue-button">Check in</a>
-                        <?php }?>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach;?>
-            <?php if(($this->session->userdata('role')=='po'||$this->session->userdata('role')=='admin')){?>
-            <a href="/missions/create" class="fancybox" id="FindMissions">
-            <div id="dummy-create-mission">
-            	<i class="icon-plus-sign"></i> Create Mission
-            </div>
-            </a>
-            <?php }?>
-        </div>
-        
-        <!-- New Dsign By Reza -->
-        
-        <div class="list">
-        	<?php
-			if($myProfile["params"] != ""){
-				$params = json_decode($myProfile["params"]);
-				$hideSample = $params->hidesample;
-			} else {
-				$hideSample = false;
-			}
-			if($me['role']=='po' && $hideSample != true){ ?>
-        	<!-- Sample Mission : Begin -->
-            <div class="item gray-mission" id="mission-sample">
-            	<div class="mission-header">
-                	<div class="mission-title">Sample Mission</div>
-                    <div class="mission-status-icon"><img src="/public/images/codeArmy/mymission/thumb-up.png" alt="thumb up" /></div>
-                    <div class="mission-progress-bg">
-                    	<div class="mission-progress-meter" style="width:0px"></div>
-                        <input type="hidden" name="percent" value="0" />
-                        <input type="hidden" name="min_to_percent" value="0" />
-                    </div>
-                    <div class="mission-inputs">Proposed Timeline: 1 month</div>
-                    <div class="mission-deliverables">Proposed Reward: 20$/month</div>
-                </div>
-                <div class="mission-content">
-                	<ul class="mission-icons">
-                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#" title="You are competing with 1 trooper(s) on this mission!"><span class="icon"></span><span class="title">1 Troop(s)</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
-                    </ul>
-                    <div class="mission-time">
-                    	<span class="time-left">Time left</span>
-                        <div class="timer">
-                        <span class="time">720</span>
-                        <span class="hrs">hrs</span>
-                        </div>
-                        <a href="javascript:void(0);" id="removeSample" class="blue-button">Remove</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Sample Mission : End -->
-            <?php } ?>
-            
-        	<?php foreach($myPendingList as $list):?>
-            <div class="item gray-mission" id="mission-<?=$list['work_id']?>">
-            	<div class="mission-header">
-                	<div class="mission-title"><?=character_limiter($list['title'],20)?></div>
-                    <div class="mission-status-icon"><img src="/public/images/codeArmy/mymission/thumb-up.png" alt="thumb up" /></div>
-                    <div class="mission-progress-bg">
-                    	<div class="mission-progress-meter" style="width:0px"></div>
-                        <input type="hidden" name="percent" value="0" />
-                        <input type="hidden" name="min_to_percent" value="0" />
-                    </div>
-                    <?php
-						$proposal = $this->work_model->get_approved_bid($me['user_id'],$list['work_id']);
-						$proposal = $proposal[0];
-						$arrangement = $this->work_model->get_work_arrangement($list['work_id']);
-						$arrangement = str_replace('dai','day',substr($arrangement,0,-2)).'s';
-						$troopers = $this->work_model->get_num_troopers($list['work_id']);
-					?>
-                    <div class="mission-inputs">Proposed Timeline: <?=$proposal['bid_time'].' '.$arrangement?></div>
-                    <div class="mission-deliverables">Proposed Reward: <?=$proposal['bid_cost'].'$/'.$arrangement?></div>
-                </div>
-                <div class="mission-content">
-                	<ul class="mission-icons">
-                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#" title="You are competing with <?=$troopers?> trooper(s) on this mission!"><span class="icon"></span><span class="title"><?=$troopers?> Troop(s)</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
-                    </ul>
-                    <div class="mission-time">
-                    	<span class="time-left">Time left</span>
-                        <div class="timer">
-                        <span class="time"></span>
-                        <span class="hrs">hrs</span>
-                        </div>
-                        <!-- Accept -->
-                        <a href="javascript:void(0)" style="right:7px" class="accept blue-button">Accept</a>
-                        <!-- Reject -->
-                        <a href="javascript:void(0);" style="right:126px" class="reject blue-button">Reject</a>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach;?>
-			
-			<?php foreach($myWorkList as $list):?>
-            <div class="item gray-mission" id="mission-<?=$list['work_id']?>">
-            	<?php
-					//calc remaining time
-					$remaining_time = strtotime($list['deadline'])-time();
-					if($remaining_time<0)$remaining_time=0;
-					//calc elappsed time
-					$elappsed_time = time()-strtotime($list['assigned_at']);
-					//calc total time he had during assignment
-					$given_time = strtotime($list['deadline']) - strtotime($list['assigned_at']);
-					if($given_time<0) $given_time = 1;
-					
-					$progress_percent = ($given_time==0)?0:$elappsed_time/$given_time;
-					$progress_percent = ($progress_percent>0)?(($progress_percent>1)?1:$progress_percent):0;
-					$remaining_hour = floor($remaining_time / (60*60));
-					$remaining_min = $remaining_time % (60*60);
-					$remaining_minutes = floor($remaining_min / (60));
-					$min_to_percent = ($given_time==0)?0:(1*60)/($given_time);
-				?>
-            	<div class="mission-header">
-                	<div class="mission-title"><?=character_limiter($list['title'],20)?></div>
-                    <div class="mission-status-icon"><img src="/public/images/codeArmy/mymission/thumb-up.png" alt="thumb up" /></div>
-                    <div class="mission-progress-bg">
-                    	<div class="mission-progress-meter" style="width:<?= round(216*$progress_percent) ?>px"></div>
-                        <input type="hidden" name="percent" value="<?=$progress_percent?>" />
-                        <input type="hidden" name="min_to_percent" value="<?=$min_to_percent?>" />
-                    </div>
-                    <?php
-						$proposal = $this->work_model->get_approved_bid($me['user_id'],$list['work_id']);
-						$proposal = $proposal[0];
-						$arrangement = $this->work_model->get_work_arrangement($list['work_id']);
-						$arrangement = str_replace('dai','day',substr($arrangement,0,-2)).'s';
-						$troopers = $this->work_model->get_num_troopers($list['work_id']);
-					?>
-                    <div class="mission-inputs">Proposed Timeline: <?=$proposal['bid_time'].' '.$arrangement?></div>
-                    <div class="mission-deliverables">Proposed Reward: <?=$proposal['bid_cost'].'$/'.$arrangement?></div>
+                    <!--<div class="mission-inputs">Proposed Timeline: <?=$proposal['bid_time'].' '.$arrangement?></div>
+                    <div class="mission-deliverables">Proposed Reward: <?=$proposal['bid_cost'].'$/'.$arrangement?></div>-->
+                    <div class="mission-inputs">Deadline: <?= date("dS F Y", strtotime($list["deadline"])) ?></div>
                 </div>
                 <div class="mission-content">
                 	<ul class="mission-icons">
