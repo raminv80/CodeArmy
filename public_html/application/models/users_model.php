@@ -899,4 +899,67 @@ class Users_model extends CI_Model {
 		$res = $res->result_array();
 		return $res;
 	}
+	
+	function tallents_map_search_contactors($percision,$search){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM users,user_profiles WHERE users.user_id=user_profiles.user_id AND users.role='user' AND username like ? GROUP BY round(lat,?), round(lng,?)";
+		$res = $this->db->query($sql,array('%'.$search.'%',$percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function tallents_map_po($percision){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM users,user_profiles WHERE users.user_id=user_profiles.user_id AND users.role in ('admin','po') GROUP BY round(lat,?), round(lng,?)";
+		$res = $this->db->query($sql,array($percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function tallents_map_search_po($percision,$search){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM users,user_profiles WHERE users.user_id=user_profiles.user_id AND users.role in ('admin','po') AND username like ? GROUP BY round(lat,?), round(lng,?)";
+		$res = $this->db->query($sql,array('%'.$search.'%',$percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function tallents_map_all($percision){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM users,user_profiles WHERE users.user_id=user_profiles.user_id GROUP BY round(lat,?), round(lng,?)";
+		$res = $this->db->query($sql,array($percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function tallents_map_search_all($percision,$search){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, count(*) AS num FROM users,user_profiles WHERE users.user_id=user_profiles.user_id AND username like ? GROUP BY round(lat,?), round(lng,?)";
+		$res = $this->db->query($sql,array('%'.$search.'%',$percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function tallents_map_division($percision){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, specialization as class, count(*) AS num FROM users,user_profiles WHERE users.user_id=user_profiles.user_id GROUP BY round(lat,?), round(lng,?), specialization";
+		$res = $this->db->query($sql,array($percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function tallents_map_search_division($percision,$search){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, specialization as class, count(*) AS num FROM users,user_profiles WHERE users.user_id=user_profiles.user_id AND specialization LIKE ? GROUP BY round(lat,?), round(lng,?), specialization";
+		$res = $this->db->query($sql,array('%'.$search.'%',$percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function tallents_map_skill($percision){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, skill.name as skill, count(*) AS num FROM users,skill,skill_set,user_profiles WHERE users.user_id=user_profiles.user_id AND users.user_id=skill_set.user_id AND skill_set.skill_id=skill.id GROUP BY round(lat,?), round(lng,?), skill.name";
+		$res = $this->db->query($sql,array($percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
+	
+	function tallents_map_search_skill($percision,$search){
+		$sql = "SELECT round(lat,2) AS lat, round(lng,2) AS lng, skill.name as skill, count(*) AS num FROM users,skill,skill_set,user_profiles WHERE users.user_id=user_profiles.user_id AND users.user_id=skill_set.user_id AND skill_set.skill_id=skill.id AND skill.name LIKE ? GROUP BY round(lat,?), round(lng,?), skill.name";
+		$res = $this->db->query($sql,array('%'.$search.'%',$percision,$percision));
+		$res = $res->result_array();
+		return $res;
+	}
 }

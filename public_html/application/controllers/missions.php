@@ -654,6 +654,30 @@ class Missions extends CI_Controller {
 		echo json_encode($works);
 	}
 	
+	function ajax_tallent_map_search(){
+		$percision = 0;
+		$search = trim($this->input->post('search'));
+		$type = $this->input->post('type');
+		if($search == 'all'|| (!$search)){
+			switch($type){
+				case 'po': $works = $this->users_model->tallents_map_po($percision);break;
+				case 'allusers': $works = $this->users_model->tallents_map_all($percision);break;
+				case 'classification': $works = $this->users_model->tallents_map_division($percision);break;
+				case 'skills': $works = $this->users_model->tallents_map_skill($percision);break;
+				default: $works = $this->users_model->tallents_map($percision);break;
+			}
+		}else{
+			switch($type){
+				case 'po': $works = $this->users_model->tallents_map_search_po($percision, $search);break;
+				case 'allusers': $works = $this->users_model->tallents_map_search_all($percision, $search);break;
+				case 'classification': $works = $this->users_model->tallents_map_search_division($percision, $search);break;
+				case 'skills': $works = $this->users_model->tallents_map_search_skill($percision, $search);break;
+				default: $works = $this->users_model->tallents_map_search_contactors($percision, $search);break;
+			}
+		}
+		echo json_encode($works);
+	}
+	
 	function ajax_mission_map_classification(){
 		$percision = 0;
 		$works = $this->stories->stories_map_class($percision);

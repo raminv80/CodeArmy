@@ -54,7 +54,7 @@
                 <ul id="mission-submenue" <?php if($page_is!="Missions"){?>style="display:none"<?php }?>>
                     <li<?php if($action_is=='my_missions'){?> class="active"<?php }?>><a href="/missions/my_missions">My Missions</a></li>
                     <?php if($this->session->userdata('role')=='po' || $this->session->userdata('role')=='admin'){?>
-                    <li<?php if($action_is=='hq'){?> class="active"<?php }?>><a href="/missions/hq">World Map</a></li>
+                    <li<?php if($action_is=='hq'){?> class="active"<?php }?>><a href="/missions/tallent_map">World Map</a></li>
                     <?php }else{?>
                     <li><a href="/missions">Find Mission</a></li>
                     <?php }?>

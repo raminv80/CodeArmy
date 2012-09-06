@@ -34,14 +34,14 @@
 <!-- dialogs -->
 <div id="filter-toolbar" class="toolbar"> <a href="/profile" id="filter-toolbar-logo"></a>
   <div id="search-bar">
-    <input type="text" name="search" id="search" value="Find missions" />
+    <input type="text" name="search" id="search" value="Search" />
     <a title="Search for missions" href="#" id="search-submit"><img id="search-loader" title="Notifications" src="/public/images/ajax-loader.gif" width="32" height="32" /></a> </div>
   <ul>
-    <li><a id="latest" class="menu first selected" href="javascript:latest()">Latest</a></li>
-    <li><a id="classification" class="menu first" href="javascript:classification();">Classification</a></li>
-    <li><a id="skills" class="menu first" href="javascript:skills();">Skills</a></li>
-    <li><a id="estimation" class="menu first" href="javascript:estimation();">Time Estimation</a></li>
-    <li><a id="payout" class="menu first" href="javascript:payout();">Payout</a></li>
+  	<li><a id="allusers" class="menu first" href="javascript:allusers()">All users</a></li>
+  	<li><a id="latest" class="menu first selected" href="javascript:latest()">Contractors</a></li>
+    <li><a id="po" class="menu first" href="javascript:po()">Product owners</a></li>
+  	<li><a id="skills" class="menu first" href="javascript:skills();">Skills</a></li>
+    <li><a id="classification" class="menu first" href="javascript:classification();">Divisions</a></li>
   </ul>
 </div>
 <div id="profile-toolbar" class="toolbar">
@@ -493,6 +493,13 @@
 			switch(cat){
 				case '1':icon = '#';break;
 				case '4':icon = '@';break;
+				case 'designer': icon = 'ds';break;
+				case 'developer': icon = 'dv';break;
+				case 'copywriter': icon = 'cp';break;
+				case 'unknown': icon = '?';break;
+				case 'employer': icon = 'po';break;
+				case 'product owner': icon = 'po';break;
+				case 'admin': icon = 'po';break;
 				default: icon = cat;
 			}
 		}
@@ -510,14 +517,14 @@
 		$('#search-submit').click(function(){
 			var type = $('#filter-toolbar .selected').attr('id');
 			var val = $('#search').val();
-			if(val!='Find missions'){
-				if($.trim(val).length<3)val = 'all';
+			if(val!='Find contrators'){
+				if($.trim(val)=='')val = 'all';
 				$('#search-loader').show();
 				clearMarkers();
 				$.ajax({
 					type: 'POST',
 					dataType: "json",
-					url:'/missions/ajax_mission_map_search',
+					url:'/missions/ajax_tallent_map_search',
 					data:{'csrf_workpad': getCookie('csrf_workpad'),'search':val, 'type' : type},
 					success:function(msg){
 						jobs = msg;
@@ -583,20 +590,105 @@
 		$('#world-map').css('top',y);
 	});
 	
-	//******************************Helpers************************************/
-	function randMarkers(){
-		var icons = new Array('#','@','!','$','%','&','*');
-		var skills = new Array('php','CSS','MySQL','Rubby','PSD','Doc','PDF','Html','Java','C++');
-		var lat,lng;
-		for(i=0; i< 20; i++){
-			lat = Math.round(Math.random()*120)-60;
-			lng = Math.round(Math.random()*360)-180;
-			loc = geoToPixel({'lat':lat, 'lng': lng});
-			r = Math.round(Math.random()*255);
-			g = Math.round(Math.random()*255);
-			b = Math.round(Math.random()*255);
-			addMarker(loc.x,loc.y,'test'+i,icons[Math.round(Math.random()*(icons.length-1))],'4<br/>'+skills[Math.round(Math.random()*(skills.length-1))],'rgb('+r+','+g+','+b+')',Math.random()*0.45+0.5,0);
-		}
+	//*******************Start of marker filtering options******************/
+	function allusers(){
+		$('#allusers-loader').show();
+		var type = 'allusers';
+		$('#filter-toolbar .selected').removeClass('selected');
+		$('#filter-toolbar #latest').addClass('selected');
+		$('#search').val('');
+		clearMarkers();
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url:'/missions/ajax_tallent_map_search',
+			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type': type},
+			success:function(msg){
+				jobs = msg;
+				renderMarkers();
+				$('#allusers-loader').hide();
+			}
+		});
+	}
+	
+	function latest(){
+		$('#latest-loader').show();
+		var type = 'latest';
+		$('#filter-toolbar .selected').removeClass('selected');
+		$('#filter-toolbar #allusers').addClass('selected');
+		$('#search').val('');
+		clearMarkers();
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url:'/missions/ajax_tallent_map_search',
+			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type': type},
+			success:function(msg){
+				jobs = msg;
+				renderMarkers();
+				$('#latest-loader').hide();
+			}
+		});
+	}
+	
+	function po(){
+		$('#po-loader').show();
+		var type = 'po';
+		$('#filter-toolbar .selected').removeClass('selected');
+		$('#filter-toolbar #po').addClass('selected');
+		$('#search').val('');
+		clearMarkers();
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url:'/missions/ajax_tallent_map_search',
+			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type': type},
+			success:function(msg){
+				jobs = msg;
+				renderMarkers();
+				$('#po-loader').hide();
+			}
+		});
+	}
+	
+	function classification(){
+		$('#classification-loader').show();
+		var type = 'classification';
+		$('#filter-toolbar .selected').removeClass('selected');
+		$('#filter-toolbar #classification').addClass('selected');
+		$('#search').val('');
+		clearMarkers();
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url:'/missions/ajax_tallent_map_search',
+			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type':type},
+			success:function(msg){
+				jobs = msg;
+				renderMarkers();
+				$('#classification-loader').hide();
+			}
+		});
+	}
+	
+	function skills(){
+		$('#skills-loader').show();
+		var type = 'skills';
+		$('#filter-toolbar .selected').removeClass('selected');
+		$('#filter-toolbar #skills').addClass('selected');
+		$('#search').val('');
+		clearMarkers();
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url:'/missions/ajax_tallent_map_search',
+			data:{'csrf_workpad': getCookie('csrf_workpad'), 'type':type},
+			success:function(msg){
+				jobs = msg;
+				renderMarkers();
+				$('#skills-loader').hide();
+			}
+		});
 	}
 	
 	//*******************Start of rendering functions******************/
