@@ -52,7 +52,7 @@ class Profile extends CI_Controller {
 		
 		$mySkills = $this->skill_model->get_my_skills($user_id);
 		$this->view_data['mySkills'] = $mySkills;
-		if($this->view_data['me']['role'] = 'po'){
+		if($this->view_data['me']['role'] == 'po'){
 			$this->view_data['spend'] = $this->work_model->get_po_spend($user_id);
 			if(is_null($this->view_data['spend']))$this->view_data['spend']=0;
 			$this->view_data['completed'] = $this->work_model->get_po_completed($user_id);

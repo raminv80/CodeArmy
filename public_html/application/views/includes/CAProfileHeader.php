@@ -2,8 +2,17 @@
 <style>
 .blur{-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";filter: alpha(opacity=50);-moz-opacity: 0.5;-khtml-opacity: 0.5;opacity: 0.5;}
 .hidden{display:none}
+<?php if($me['role']=='po' || $me['role']=='admin'){?>
+#main-content{margin-top:15px;}
+#left-block{top:45px;}
+.profile-header{display:none}
+#container{background:none; margin:30px auto;border:1px solid #333;}
+<?php }?>
 </style>
 <div id="inner">
+<?php if($me['role']=='po' || $me['role']=='admin'){?>
+<a href="/missions/tallent_map"><div title="Close" class="fancybox-item fancybox-close" style="position: fixed;right: 150px;top: 7px;"></div></a>
+<?php }?>
 <div id="container">
 
     <div class="profile-header"> <a href="/profile">
@@ -49,7 +58,7 @@
     <div id="left-block">
 		<div id="left-menu">
         	<ul>
-            	<li<?php if($page_is=='Profile'){?> class="active"<?php }?>><a href="/profile">Headquarter</a></li>
+            	<li<?php if($page_is=='Profile'){?> class="active"<?php }?>><a href="/profile"><?=($me['role']=='user')?'My Profile':'Headquarter'?></a></li>
                 <li<?php if($page_is=='Missions'){?> class="active"<?php }?>><a id="missions-toggle" href="javascript:void(0)">Missions</a></li>
                 <ul id="mission-submenue" <?php if($page_is!="Missions"){?>style="display:none"<?php }?>>
                     <li<?php if($action_is=='my_missions'){?> class="active"<?php }?>><a href="/missions/my_missions">My Missions</a></li>

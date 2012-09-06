@@ -4,7 +4,7 @@
 
 <!--TODO: add ajax loader icons -->
 <div id="wrapper">
-  <div id="find-mission-area">
+  <div id="find-mission-area">s
     <div id="world-map" style="background:url(/public/images/codeArmy/mymission/world-map.png);width:999px;height:532px;"> <!--<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />-->
 	 
       <!-- project list -->

@@ -59,7 +59,7 @@
   </div>
   
   <!-- START - Experience Block - Dev. by Reza -->
-  <?php if($me['role']='po'){?>
+  <?php if($me['role']=='po'){?>
   <div class="block-mission-info">
     <div id="mission-bid">
       <div id="mission-bid-text">Money invested</div>

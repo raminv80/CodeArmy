@@ -65,7 +65,11 @@ class Login extends CI_Controller {
 			if($this->session->userdata('referer')){
 				redirect($this->session->userdata('referer'));
 			}else{
-				redirect('missions/my_missions');
+				if($query_data[0]['role']=='user'){
+					redirect('/profile');
+				}else{
+					redirect('/missions/tallent_map');
+				}
 			}
 		}
 		else { // incorrect username or password
