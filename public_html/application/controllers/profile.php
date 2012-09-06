@@ -457,5 +457,10 @@ class Profile extends CI_Controller {
 		$this->view_data['hours_saved'] = $this->users_model->hours_saved($user_id);
 		$this->load->view('Ajax_tab_7_alt', $this->view_data);	
 	}
+	
+	//Hazwan's temporary page
+	function prototype(){
+		$this->load->view('prototype_demo', $this->view_data);	
+	}
 
 }	
