@@ -3127,15 +3127,18 @@ input.rejimg:hover {
 	height: 30px;
 }
 #block-mission-list .mission-icons .icon{
+	background: url(/public/images/codeArmy/mymission/notif-bg.png) no-repeat;
 	display: block;
 	width: 28px;
 	height: 29px;
 	float: left;
-	margin: 5px 0 0 5px;
+	margin: -5px 0 0 13px;
+	text-align:center;
+	font-size:10px;
 }
 #block-mission-list .mission-icons .title{
 	display: block;
-	width: 60px;
+	width: 50px;
 	height: 15px;
 	float: left;
 	margin: 11px 0 0 7px;
@@ -3155,7 +3158,7 @@ input.rejimg:hover {
 	top:39px;
 }
 #block-mission-list .mission-time .time{
-	font-size:18pt;
+	font-size:11pt;
 }
 #block-mission-list .mission-time .hrs{
 	font-size:12pt;
