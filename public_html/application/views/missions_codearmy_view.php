@@ -347,6 +347,7 @@
 		if(cat!== undefined){
 			switch(cat){
 				case 'a':icon = '#';break;
+				case '1':icon = '<span class="icon-globe"></span>';break;
 				default: icon = cat;
 			}
 		}

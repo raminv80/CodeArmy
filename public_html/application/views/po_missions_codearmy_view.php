@@ -519,7 +519,7 @@
 		var icon = null;
 		if(cat!== undefined){
 			switch(cat){
-				case '1':icon = '#';break;
+				case '1':icon = '<span class="icon-globe"></span>';break;
 				case '4':icon = '@';break;
 				default: icon = cat;
 			}
