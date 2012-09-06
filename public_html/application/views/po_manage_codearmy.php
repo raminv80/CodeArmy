@@ -7,7 +7,7 @@
 <div id="tabs" style="clear:both">
   <ul>
     <li><a href="#tabs-detail">Mission Details</a></li>
-    <li><a href="#tabs-proposal">Proposals</a></li>
+    <li><a href="#tabs-proposal" title="List of tallents who answered your call for duty (mission)">Army</a></li>
     <li><a href="#tabs-invite">Invitations</a></li>
   </ul>
   <div id="tabs-detail"> 
@@ -94,9 +94,9 @@
       <div class="applicants-container">
         <div id="block-applicants-header">
           <div class="block-header">
-            <h3>Proposals (<?=count($bids)?>)</h3>
+            <h3>Army (<?=count($bids)?>)</h3>
           </div>
-          <div id="achievements-header-text">Here is list of bidders on your mission A.K.A troopers. The green circles next to each trooper shows percentage of match between trooper's skill set and your mission skill requirements.</div>
+          <div id="achievements-header-text">Here is list of tallents A.K.A troopers who applied for this mission. The green circles next to each trooper shows percentage of match between trooper's skill set and your mission skill requirements.</div>
         </div>
         <div class="applicants-subtitle" style="float:none"></div>
         <?php foreach($bids as $bid):?>

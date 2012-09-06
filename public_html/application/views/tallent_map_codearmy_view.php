@@ -477,9 +477,10 @@
 		var loc;
 		for(i=0; i<jobs.length;i++){
 			loc = geoToPixel({'lat':jobs[i].lat, 'lng': jobs[i].lng});
-			var desc = jobs[i].num+(jobs[i].skill?"<br/>"+ucfirst(jobs[i].skill.substring(0,3)):'')+(jobs[i].days?"<br/>"+(jobs[i].days<1?"<1d":jobs[i].days+"d"):'')+(jobs[i].payout?"<br />"+(jobs[i].payout<1?"<10$":(jobs[i].payout<100?jobs[i].payout+'$':((jobs[i].payout/1000).toFixed(1)+'k$'))):'');
+			var desc = jobs[i].num+(jobs[i].skill?"<br/><div title='"+jobs[i].skill+"' href='javascript:void(0)'>"+ucfirst(jobs[i].skill.substring(0,3))+'</div>':'')+(jobs[i].days?"<br/>"+(jobs[i].days<1?"<1d":jobs[i].days+"d"):'')+(jobs[i].payout?"<br />"+(jobs[i].payout<1?"<10$":(jobs[i].payout<100?jobs[i].payout+'$':((jobs[i].payout/1000).toFixed(1)+'k$'))):'');
 			addMarker(loc.x,loc.y,'marker_'+i,catToIcon(jobs[i].class),desc,'grey',0.75,500,jobs[i]);
 		}
+		$('div [title]').tipsy();
 	}
 	
 	function ucfirst(string)
@@ -493,13 +494,13 @@
 			switch(cat){
 				case '1':icon = '#';break;
 				case '4':icon = '@';break;
-				case 'designer': icon = 'ds';break;
-				case 'developer': icon = 'dv';break;
-				case 'copywriter': icon = 'cp';break;
+				case 'designer': icon = '<div title="Designer">ds</div>';break;
+				case 'developer': icon = '<div title="Development">dv</div>';break;
+				case 'copywriter': icon = '<div title="Copy writer">cp</div>';break;
 				case 'unknown': icon = '?';break;
-				case 'employer': icon = 'po';break;
-				case 'product owner': icon = 'po';break;
-				case 'admin': icon = 'po';break;
+				case 'employer': icon = '<div title="Product owner">po</div>';break;
+				case 'product owner': icon = '<div title="Product ownerr">po</div>';break;
+				case 'admin': icon = '<div title="Product owner">Po</div>';break;
 				default: icon = cat;
 			}
 		}
