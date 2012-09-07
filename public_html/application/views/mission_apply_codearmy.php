@@ -114,13 +114,14 @@
 	    </div>
 	    <div class="find-mission-right-block">
 	      <div class="right-col-title-bg">Pre-Requisites</div>
-	      <div class="prereqicons">
+	      <ul>
 	      	<?php foreach($work_skills as $skill):?>
-	        <div class="prereqicon"><span class="skill_<?=$skill['skill_id']?>"><?=$skill['name']?></span>
-	          <p><?=$skill['point']?></p>
-	        </div>
+	        <li>
+              <span style="text-align:left;display:block;width:50%;float:left;padding:0 10px;" class="skill_<?=$skill['skill_id']?>"><?=$skill['name']?></span>
+	          <span style="text-align:right;display:block;width:30%;float:left;padding:0 10px;"><?=$skill['skill_level']?></span>
+	        </li>
 	        <?php endforeach;?>
-	      </div>
+	      </ul>
 	    </div>
 	    <div class="find-mission-right-block">
 	      <div class="right-col-title-bg">Materials</div>

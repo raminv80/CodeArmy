@@ -61,7 +61,7 @@ class Work_model extends CI_Model {
 	}
 	
 	function get_work_skills($work_id){
-		$sql = "SELECT * from work_skill, skill where work_skill.work_id = ? AND work_skill.skill_id = skill.id";
+		$sql = "SELECT * from work_skill, skill, skill_level where work_skill.work_id = ? AND work_skill.skill_id = skill.id and skill_level.skill_point=work_skill.point";
 		$res = $this->db->query($sql, $work_id);
 		return $res->result_array();
 	}

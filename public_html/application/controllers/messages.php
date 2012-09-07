@@ -83,6 +83,7 @@ class Messages extends CI_Controller {
 			$this->view_data['form_error'] = true;
 			$this->compose();
 		} else {
+			$this->load->helper('htmlpurifier');
 			$to = $this->input->post('msg-to');
 			$to = $this->users_model->get_user($to,'username')->result_array();
 			$to = $to[0]['user_id'];
