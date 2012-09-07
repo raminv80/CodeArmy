@@ -1158,8 +1158,8 @@ input.links-portfolios-boxes1 {
 }
 #time-price {
 	float:left;
-	width:260px;
 	font-size: 20px;
+	width:260px;
     margin: 15px 0 0 10px;
 }
 #bid-time {
@@ -3128,6 +3128,15 @@ input.rejimg:hover {
 }
 #block-mission-list .mission-icons .icon{
 	background: url(/public/images/codeArmy/mymission/notif-bg.png) no-repeat;
+	display: block;
+	width: 28px;
+	height: 29px;
+	float: left;
+	margin: -5px 0 0 13px;
+	text-align:center;
+	font-size:10px;
+}
+#block-mission-list .mission-icons .noicon{
 	display: block;
 	width: 28px;
 	height: 29px;
