@@ -15,8 +15,10 @@
       
       <!-- chat box -->
       <div class="chat-box toolbar" style="position:absolute;left:10px;top:370px;width:250px;height:200px;background:rgba(60,60,60,0.6);">
-      	<div style="border-bottom:1px solid black"><span id="count">0</span> users in chatroom</div
-        ><div id="chat-message-list" class="nano" style="height:143px;padding:5px;color:white; overflow:scroll"></div>
+      	<div style="border-bottom:1px solid black"><span id="count">0</span> users in chatroom</div>
+        <div class="nano-chat nano">
+        	<div id="chat-message-list" class="content"></div>
+        </div>
         <div class="chat-box-form" style="height:25px; border-top:1px solid black;">
         <input type="text" name="msg" id="public-message-textarea" style="width:201px;height:25px;background:none;border:none;padding:0 3px 0 3px;margin:0;color:white">
         <input type="button" id="public-message-submit" value="send" disabled="disabled" style="width:40px;height:25px;border:none;padding:0;margin:0;">
@@ -100,6 +102,8 @@
 		-o-transform-style: preserve-3d;
 		-o-backface-visibility: hidden;
 	}
+	.nano-chat{height:153px;}
+	.nano-chat .content{padding:5px;color:white;}
 	#search-loader{margin:4px 3px; display:none;}
 	#profile-toolbar .skill-block{
 		background:url(/public/images/codeArmy/mymission/profile_toolbar/skill_block_bg.png) no-repeat -37px 0;
@@ -714,6 +718,7 @@ $(function(){
 	  var username = (data.username=='<?=$me['username']?>')? 'me':data.username;
 	  $('#chat-message-list').prepend('<div id="msg-'+no_chat_msg+'" style="display:none"><span style="color:orange">'+username+': </span>'+data.message+'</div>');
 	  $('#msg-'+no_chat_msg).slideDown();
+	  $(".nano").nanoScroller();
 	});
 	
 	pusher.connection.bind('state_change', function(states) {

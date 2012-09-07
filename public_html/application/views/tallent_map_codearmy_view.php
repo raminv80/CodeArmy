@@ -19,7 +19,9 @@
       <!-- chat box -->
       <div class="chat-box toolbar" style="position:absolute;left:10px;top:370px;width:250px;height:200px;background:rgba(60,60,60,0.6);z-index:2">
       	<div style="border-bottom:1px solid black"><span id="count">0</span> users in chatroom</div>
-        <div id="chat-message-list" class="nano" style="height:143px;padding:5px;color:white; overflow:scroll"></div>
+        <div class="nano-chat nano">
+        	<div id="chat-message-list" class="content"></div>
+        </div>
         <div class="chat-box-form" style="height:25px; border-top:1px solid black;">
         <input type="text" name="msg" id="public-message-textarea" style="width:201px;height:25px;background:none;border:none;padding:0 3px 0 3px;margin:0;color:white">
         <input type="button" id="public-message-submit" value="send" disabled="disabled" style="width:40px;height:25px;border:none;padding:0;margin:0;">
@@ -131,6 +133,8 @@
 		-o-transform-style: preserve-3d;
 		-o-backface-visibility: hidden;
 	}
+	.nano-chat{height:153px;}
+	.nano-chat .content{padding:5px;color:white;}
 	.logout{
 		color:#800;font-size: 15pt;position: absolute;right: 12px;top: 6px;
 		transition: font-size .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
@@ -765,6 +769,7 @@ $(function(){
 	  var username = (data.username=='<?=$me['username']?>')? 'me':data.username;
 	  $('#chat-message-list').prepend('<div id="msg-'+no_chat_msg+'" style="display:none"><span style="color:orange">'+username+': </span>'+data.message+'</div>');
 	  $('#msg-'+no_chat_msg).slideDown();
+	  $(".nano-chat").nanoScroller();
 	});
 	
 	pusher.connection.bind('state_change', function(states) {
