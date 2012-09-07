@@ -19,8 +19,10 @@
       <!-- chat box -->
       <div class="chat-box toolbar" style="position:absolute;left:10px;top:370px;width:250px;height:200px;background:rgba(60,60,60,0.6);z-index:2">
       	<div style="border-bottom:1px solid black"><span id="count">0</span> users in chatroom</div>
-        <div id="chat-message-list" class="nano" style="height:143px;padding:5px;color:white; overflow:scrolll"></div>
-        <div class="chat-box-form" style="height:25px; border-top:1px solid black;">
+
+        <div id="chat-message-list" class="nano"><div class="content"></div></div>
+        
+<div class="chat-box-form" style="height:25px; border-top:1px solid black;">
         <input type="text" name="msg" id="public-message-textarea" style="width:201px;height:25px;background:none;border:none;padding:0 3px 0 3px;margin:0;color:white">
         <input type="button" id="public-message-submit" value="send" disabled="disabled" style="width:40px;height:25px;border:none;padding:0;margin:0;">
         </div>
@@ -437,6 +439,9 @@
 		left:0;
 	}
 	
+	/* Nanoscroller */
+	.nano { width: 100%; height: 143px;}
+	.nano .content {padding:5px}
 </style>
 <script>
 	
@@ -835,6 +840,7 @@
 <!-- chat box -->
 <script>
 $(function(){
+	$('.nano').nanoScroller();
 	$('#public-message-submit').click(function(){
 		var msg = $.trim(removeTags($('#public-message-textarea').val()));
 		if(msg.length>0)
@@ -844,6 +850,7 @@ $(function(){
 				data: {'id': '<?=$me['user_id']?>', 'name': '<?=$me['username']?>', 'email':'<?=$me['email']?>', 'message': msg, 'csrf_workpad': getCookie('csrf_workpad')},
 				success: function(msg){
 					$('#public-message-textarea').val('');
+					$(".nano").nanoScroller();
 				}
 			});
 	});
@@ -854,7 +861,7 @@ $(function(){
 	public_chat_channel.bind('incomming-message', function(data) {
 	  no_chat_msg++;
 	  var username = (data.username=='<?=$me['username']?>')? 'me':data.username;
-	  $('#chat-message-list').prepend('<div id="msg-'+no_chat_msg+'" style="display:none"><span style="color:orange">'+username+': </span>'+data.message+'</div>');
+	  $('#chat-message-list .content').prepend('<div id="msg-'+no_chat_msg+'" style="display:none"><span style="color:orange">'+username+': </span>'+data.message+'</div>');
 	  $('#msg-'+no_chat_msg).slideDown();
 	});
 	

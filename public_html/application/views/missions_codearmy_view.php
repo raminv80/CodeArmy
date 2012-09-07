@@ -17,9 +17,7 @@
       <div class="chat-box toolbar" style="position:absolute;left:10px;top:370px;width:250px;height:200px;background:rgba(60,60,60,0.6);">
       	<div style="border-bottom:1px solid black"><span id="count">0</span> users in chatroom</div>
 			
-			<div id="chat-message-list" class="nano">
-				<div class="content"></div>
-			</div>
+		<div id="chat-message-list" class="nano"><div class="content"></div></div>
 			
         <div class="chat-box-form" style="height:25px; border-top:1px solid black;">
         <input type="text" name="msg" id="public-message-textarea" style="width:201px;height:25px;background:none;border:none;padding:0 3px 0 3px;margin:0;color:white">
@@ -300,7 +298,6 @@
 	/* Nanoscroller */
 	.nano { width: 100%; height: 143px; }
 	.nano .content { padding: 5px; }
-	.nano .slider { background: orange; }
 </style>
 <script>
 	
@@ -703,7 +700,6 @@
 <script>
 $(function(){
 	$(".nano").nanoScroller();
-	
 	$('#public-message-submit').click(function(){
 		var msg = $.trim(removeTags($('#public-message-textarea').val()));
 		if(msg.length>0)
