@@ -429,7 +429,7 @@
 								'-webkit-transform-origin': '0% 0%',
 								'-o-transform-origin': '0% 0%',
 								'-moz-transform-origin': '0% 0%',
-								}).show().animate({top:16, left:100, width:752, height:500, opacity:1},'fast').data($(me).data());
+								}).show().animate({top:16, left:100, width:770, height:500, opacity:1},'fast').data($(me).data());
 							$('#dialog-project-list .log').html(msg);
 						}
 					);
