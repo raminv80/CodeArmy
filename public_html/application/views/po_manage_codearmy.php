@@ -200,10 +200,13 @@
   <br>
   <p style="text-align:center">Are you sure?</p>
 </div>
+<div class="pop-recom"></div>
 <style type="text/css">
 	.bid-status-Accepted{background-color:rgba(50,50,150,0.2)}
 	.mission-top-menu li{float:left; width:100px; display:block}
 	.mission-top-menu{ display:block; clear:both;}
+	.pop-recom {width:1000px; height:550px; border:2px solid #333; position:relative; display:none; z-index:2; padding:20px; background: black}
+	.pop-recom .close {position:absolute; right:-10px; top:-10px; background:black; width:25px; height:25px; line-height:25px; text-align:center; border:2px solid #999; border-radius:50%; cursor:pointer}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -316,7 +319,7 @@ $(function(){
 	});
 });
 
-function recom(work_id){
+/*function recom(work_id){
 	$.fancybox.open({
 		data:{},
 		href : 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/'+work_id,
@@ -339,6 +342,19 @@ function recom(work_id){
 		prevSpeed : 250,
 		scrolling: 'auto'
 	});	
+}*/
+
+function recom(work_id) {
+	$('.fancybox-close').css({'position' : 'absolute', 'z-index' : '1'});
+	$(".pop-recom").lightbox_me({
+		closeSelector: '.close',
+		overlayCSS	: {background: 'black', opacity: .8},
+		onLoad : function() {
+			var url = 'http://<?=$_SERVER['HTTP_HOST']?>/missions/recommended_tallents/'+work_id;
+			$('.pop-recom').html('<iframe width="100%" height="100%" src="'+url+'"></iframe><div class="close"><i class="icon-remove"></i></div>');
+		}
+	});
 }
+
 </script>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>
