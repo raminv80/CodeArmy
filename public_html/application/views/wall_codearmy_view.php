@@ -223,7 +223,7 @@ $(function(){
 			}
 		});
 		
-	comment_channel.bind('new-comment-'+<?=$work['work_id']?>, function(data) {
+	comment_channel.bind('new-comment-<?=$work['work_id']?>', function(data) {
 		if (typeof console == "object") console.log(data);
 		if(data.work_id=='<?=$work['work_id']?>'){
 			var theme = $('#comment-template').clone();
