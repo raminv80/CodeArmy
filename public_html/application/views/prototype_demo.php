@@ -195,7 +195,7 @@
 									</li>
 									<li><a href="#"><i class="icon-bullhorn"></i> Notifications</a></li>
 									<li><a href="#"><i class="icon-bar-chart"></i> Find Missions</a></li>
-									<li><a href="#"><i class="icon-copy"></i> My Missions</a></li>
+									<li><a href="#"><i class="icon-copy restart"></i> My Missions</a></li>
 									<li><a href="#"><i class="icon-user"></i> Profile</a>
 										<div class="arrow_box clearfix">
 											<div class="content">
@@ -270,6 +270,9 @@
 	<script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/webfont/1.0.19/webfont.js"></script>
 	<script type="text/javascript" src="/public/js/codeArmy/nanoscroller.js"></script>
+	<script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap/2.1.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://pushly.github.com/bootstrap-tour/deps/jquery.cookie.js"></script>
+	<script type="text/javascript" src="http://pushly.github.com/bootstrap-tour/bootstrap-tour.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$(".menu i, .overlay").click(function(){
@@ -310,6 +313,31 @@
 		        var s = document.getElementsByTagName('script')[0];
 		        s.parentNode.insertBefore(cf, s);
 		 })();		
+	</script>
+	<script type="text/javascript">
+	$(function(){
+		var tour = new Tour();
+		tour.addStep({
+		  element: ".bar", /* html element next to which the step popover should be shown */
+		  title: "This is indicator", /* title of the popover */
+		  content: "Great for project managers to see their potential contractors" /* content of the popover */
+		});
+		tour.addStep({
+		    element: ".chat",
+		    placement: "right",
+		    title: "Setup in four easy steps",
+		    content: "Easy is better, right? Easy like Bootstrap.",
+		    options: {
+		      labels: {prev: "Go back", next: "Hey", end: "Stop"}
+		    }
+		  });
+		tour.start();
+		$(".restart").click(function (e) {
+		    e.preventDefault();
+		    tour.restart();
+		    $(this).parents(".alert").alert("close");
+		  });
+	})
 	</script>
 
 </html>

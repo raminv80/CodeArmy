@@ -34,18 +34,27 @@
 <?php $this->load->view('includes/duck.php'); ?>
 <?php $this->load->view('includes/CAMapFooter.php'); ?>
 <!-- dialogs -->
+
 <div id="filter-toolbar" class="toolbar"> <a href="/profile" id="filter-toolbar-logo"></a>
+	<ul>
+		<li><a href = "javascript:void(0)" class="create_mission create">Create Mission <i class="icon-plus"></i></a></li>
+	</ul>
   <div id="search-bar">
     <input type="text" name="search" id="search" value="Find missions" />
-    <a title="Search for missions" href="#" id="search-submit"><img id="search-loader" title="Notifications" src="/public/images/ajax-loader.gif" width="32" height="32" /></a> </div>
+    <a title="Search for missions" href="#" id="search-submit">
+		<i class="icon-search"></i>
+		<img id="search-loader" title="Notifications" src="/public/images/newloader.gif" />
+	</a>
+  </div>
   <ul>
-    <li><a id="latest" class="menu first selected" href="javascript:latest()">Latest</a></li>
-    <li><a id="classification" class="menu first" href="javascript:classification();">Classification</a></li>
-    <li><a id="skills" class="menu first" href="javascript:skills();">Skills</a></li>
-    <li><a id="estimation" class="menu first" href="javascript:estimation();">Time Estimation</a></li>
-    <li><a id="payout" class="menu first" href="javascript:payout();">Payout</a></li>
+    <li><a id="latest" class="menu first selected" href="javascript:latest()">Latest <i class="icon-chevron-right"></i></a> </li>
+    <li><a id="classification" class="menu first" href="javascript:classification();">Classification <i class="icon-chevron-right"></i></a></li>
+    <li><a id="skills" class="menu first" href="javascript:skills();">Skills <i class="icon-chevron-right"></i></a></li>
+    <li><a id="estimation" class="menu first" href="javascript:estimation();">Time Estimation <i class="icon-chevron-right"></i></a></li>
+    <li><a id="payout" class="menu first" href="javascript:payout();">Payout <i class="icon-chevron-right"></i></a></li>
   </ul>
 </div>
+
 <div id="profile-toolbar" class="toolbar">
   <a href="/login/logout" class="logout" title="Logout"><span class="icon-off"></span></a>
   <div id="avatar-block"> <a href="/profile"><img src="/public/images/codeArmy/mymission/profile_toolbar/avatar.png" id="avatar" alt="avatar" /></a>
@@ -337,24 +346,109 @@
 		background:url(/public/images/codeArmy/mymission/profile_toolbar/avatar_block_bg.png) no-repeat 0px 16px;
 		height:140px;
 	}
-	#filter-toolbar{
-		background:url(/public/images/codeArmy/mymission/fillter-toolbar.png) no-repeat;
-		width:176px; height:359px;
+	
+	/* New styling filter-toolbar */
+	#filter-toolbar {
+		width:142px;
 		position:absolute;
 		top:10px;left:20px;
 		z-index:10001;
+		overflow:hidden;
+		background: -moz-linear-gradient(top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.6)), color-stop(100%,rgba(0,0,0,0.6))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%); /* IE10+ */
+		background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99000000', endColorstr='#99000000',GradientType=0 ); /* IE6-9 */;
+		font-size:.85em;
+		border: 2px solid rgba(255,255,255,.15);
+		border-bottom: none;
 	}
-	#filter-toolbar ul{font-size:8pt; color:e5e5e5;}
-	#filter-toolbar ul li a{display:block;width:120px; height:22px;padding:7px 0 0 18px;margin:1px 0 0 18px;}
-	#filter-toolbar ul li a:hover, #filter-toolbar ul li a.selected{ background:url(/public/images/codeArmy/mymission/fillter-toolbar-highlight.png) no-repeat 16px 4px; text-shadow:0 0 3px #FFF;}
-	#search-bar #search-submit{width: 32px; height:34px; float:left;}
-	#search-bar input{width:100px; height:32px; background:none; font-style:italic; float:left; color:#999; font-size:9pt; text-align:center; border:none;}
-	#search-bar{display:block;height:36px; margin:0 0 4px 18px;width:140px;}
-	a#filter-toolbar-logo{
-		width:142px;height:133px;
-		margin:0 15px 10px 15px;
+	a#filter-toolbar-logo {
+		width:100%;
+		height:142px;
+		background:url(/public/images/codeArmy/mymission/fillter-toolbar.png) no-repeat;
+		background-position:-15px 0;
 		display:block;
 	}
+	#filter-toolbar ul li {position:relative}
+	#filter-toolbar ul li a {
+		width:122px;
+		display:block;
+		padding: 5px 10px;
+		border-bottom: 2px solid rgba(255, 255, 255, .2);
+		clear:both;
+	}
+	#filter-toolbar .create {
+		background: rgb(45,146,155); /* Old browsers */
+		background: -moz-linear-gradient(top, rgba(45,146,155,1) 0%, rgba(55,165,190,1) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(45,146,155,1)), color-stop(100%,rgba(55,165,190,1))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(45,146,155,1) 0%,rgba(55,165,190,1) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(45,146,155,1) 0%,rgba(55,165,190,1) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(45,146,155,1) 0%,rgba(55,165,190,1) 100%); /* IE10+ */
+		background: linear-gradient(to bottom, rgba(45,146,155,1) 0%,rgba(55,165,190,1) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d929b', endColorstr='#37a5be',GradientType=0 ); /* IE6-9 */;
+		color:white;
+		border-bottom: 2px solid #333;
+	}
+	#filter-toolbar .create:hover {
+		background: rgb(57,180,191); /* Old browsers */
+		background: -moz-linear-gradient(top, rgba(57,180,191,1) 0%, rgba(45,131,158,1) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(57,180,191,1)), color-stop(100%,rgba(45,131,158,1))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(57,180,191,1) 0%,rgba(45,131,158,1) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(57,180,191,1) 0%,rgba(45,131,158,1) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(57,180,191,1) 0%,rgba(45,131,158,1) 100%); /* IE10+ */
+		background: linear-gradient(to bottom, rgba(57,180,191,1) 0%,rgba(45,131,158,1) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#39b4bf', endColorstr='#2d839e',GradientType=0 ); /* IE6-9 */;
+		border-bottom:2px solid #333;
+	}
+	#filter-toolbar ul li a:hover {
+		text-shadow: 0 1px 1px black;
+		background:black;
+		border-bottom: 2px solid rgba(255, 255, 255, .3);
+	}
+	#filter-toolbar ul li a i {
+		position:absolute; right:10px;
+	}
+	#filter-toolbar ul li a.selected {
+		background: -moz-linear-gradient(top, rgba(69,72,77,0.6) 0%, rgba(0,0,0,0.6) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,0.6)), color-stop(100%,rgba(0,0,0,0.6))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(69,72,77,0.6) 0%,rgba(0,0,0,0.6) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(69,72,77,0.6) 0%,rgba(0,0,0,0.6) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(69,72,77,0.6) 0%,rgba(0,0,0,0.6) 100%); /* IE10+ */
+		background: linear-gradient(to bottom, rgba(69,72,77,0.6) 0%,rgba(0,0,0,0.6) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9945484d', endColorstr='#99000000',GradientType=0 ); /* IE6-9 */
+		color:orange;
+	}
+	#filter-toolbar #search-bar {position:relative}
+	#filter-toolbar input {
+		border:none; width:102px;
+		padding: 0 5px;
+		height:32px; line-height:32px;
+		color:#999;
+	}
+	#filter-toolbar input:focus {color:black}
+	#filter-toolbar #search-submit {
+		width:30px;
+		height:32px;
+		display:block;
+		position:absolute;
+		top:0; right:0;
+		line-height:32px; 
+		text-align:center;
+		color:black;
+		font-size:1.4em;
+		background:white;
+	}
+	#filter-toolbar #search-loader {
+		position:absolute;
+		top:3px; right:4px;
+	}
+	<!--[if lt IE 9]>
+	#filter-toolbar ul li a, #filter-toolbar ul li a:hover, #filter-toolbar {border: 2px solid #222}
+	<![endif]-->
+	
 	#dialog-project-list{
 		width:0;
 		height:0;
