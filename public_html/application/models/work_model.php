@@ -595,4 +595,14 @@ class Work_model extends CI_Model {
 		$sql = "DELETE FROM notifications WHERE work_id = ? AND user_id = ? AND notify_type = ?";
 		$this->db->query($sql, array($work_id,$user_id,$notify_type));
 	}
+	
+	function job_completed($work_id){
+		$data = array(
+			'status' => 'Done',
+			'done_at' => date('Y-m-d H:i:s')
+		);
+		$whr = array('work_id'=>$work_id);
+		$this->db->update('works',$data,$whr);
+		return $this->db->affected_rows();
+	}
 }

@@ -936,15 +936,13 @@
 								'/login/Ajax_checkPass',
 								{'username': data,'password':data1,'csrf_workpad': getCookie('csrf_workpad') },
 								function(msg){
-									console.log(msg)	
 									if(msg=="success"){
 											//submit the form
 										$('#login-form').submit();
 									}else{
 										//pass is invalid
 										$('#login-ajax').fadeOut();
-										console.log(msg);
-										$('#error').html('You password is incorrect!').show();
+										$('#error').html('Your password is incorrect!').show();
 										$('#pass').stop(true,false).css({border:'1px solid red'}).effect("bounce", {times:2, distance: 10}, 200);
 									}
 								}

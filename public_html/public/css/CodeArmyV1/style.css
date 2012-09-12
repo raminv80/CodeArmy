@@ -2232,7 +2232,10 @@ input.assinpo {
 /* PO management wall page by Reza@RezaKabiri.com */
 
 .top-panel {
-	background:url(/public/images/codeArmy/po/top-panel-bg.jpg) no-repeat;
+	/*background:url(/public/images/codeArmy/po/top-panel-bg.jpg) no-repeat;*/
+	background:#222;
+	background:rgba(2,2,2,0.5);
+	border-radius:10px;
 	position:relative;
 	float:left;
 	width:100%;
@@ -2338,8 +2341,8 @@ top-panel-right {
 }
 .bg_progress_summary {
 	background:url(/public/images/codeArmy/po/bg_progress_summary.png) no-repeat;
-	width:232px;
-	height:154px;
+	width:227px;
+	height:200px;
 	float:left;
 	position: relative;
 	margin:5px 0;
@@ -3741,4 +3744,80 @@ border-radius:50%; text-align:center;-webkit-border-radius:50%; -moz-border-radi
   opacity    : 0.99;
 }
 
+.button{
+	padding: 10px 20px;
+	border-radius:5px;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	-o-border-radius:5px;
+	text-align:center;	
+	font-size:12pt;
+	border:2px solid gray;
+	margin:0 auto;
+	text-shadow:0 1px 4px rgba(30,30,30,0.64);
+	-webkit-text-shadow:0 1px 4px rgba(30,30,30,0.64);
+	-moz-text-shadow:0 1px 4px rgba(30,30,30,0.64);
+	-o-text-shadow:0 1px 4px rgba(30,30,30,0.64);
+	box-shadow:0 1px 4px black;
+	-webkit-box-shadow:0 1px 4px black;
+	-moz-box-shadow:0 1px 4px black;
+	-o-box-shadow:0 1px 4px black;
+	cursor:pointer;
+	transition: font-size .15s ease-in-out, border-color .15s ease-in-out, color .15s ease-in-out;
+	-webkit-transition: font-size .15s ease-in-out, border-color .15s ease-in-out, color .15s ease-in-out;
+	-moz-transition: font-size .15s ease-in-out, border-color .15s ease-in-out, color .15s ease-in-out;
+	-o-transition: font-size .15s ease-in-out, border-color .15s ease-in-out, color .15s ease-in-out;
+}
+.button:hover{
+	border-color:white;
+	font-size:13pt;
+	color:white;
+}
+.green{
+	background: #82c337; /* Old browsers */
+	background: -moz-linear-gradient(top,  #82c337 0%, #447a11 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#82c337), color-stop(100%,#447a11)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #82c337 0%,#447a11 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #82c337 0%,#447a11 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #82c337 0%,#447a11 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #82c337 0%,#447a11 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#82c337', endColorstr='#447a11',GradientType=0 ); /* IE6-9 */
+}
+.orange{
+background: #ff920a; /* Old browsers */
+background: -moz-linear-gradient(top,  #ff920a 0%, #ff670f 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff920a), color-stop(100%,#ff670f)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #ff920a 0%,#ff670f 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #ff920a 0%,#ff670f 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #ff920a 0%,#ff670f 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #ff920a 0%,#ff670f 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff920a', endColorstr='#ff670f',GradientType=0 ); /* IE6-9 */
+}
+.yellow{
+background: #fefcea; /* Old browsers */
+background: -moz-linear-gradient(top,  #fefcea 0%, #f1da36 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefcea), color-stop(100%,#f1da36)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #fefcea 0%,#f1da36 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #fefcea 0%,#f1da36 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #fefcea 0%,#f1da36 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #fefcea 0%,#f1da36 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */	
+}
+.documents-bottom-panel{padding:20px 0; clear:both;}
+#mission-notification{
+	display:none;
+	margin:10px 0;
+	color:white;
+	font-size:12pt;
+	padding: 10px 20px;
+	border:1px solid #333;
+	box-shadow:0 1px 4px black;
+	-webkit-box-shadow:0 1px 4px black;
+	-moz-box-shadow:0 1px 4px black;
+	-o-box-shadow:0 1px 4px black;
+	text-shadow:0 1px 4px rgba(30,30,30,0.64);
+	-webkit-text-shadow:0 1px 4px rgba(30,30,30,0.64);
+	-moz-text-shadow:0 1px 4px rgba(30,30,30,0.64);
+	-o-text-shadow:0 1px 4px rgba(30,30,30,0.64);
+}
 /* end hazwan's */

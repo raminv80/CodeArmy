@@ -232,9 +232,9 @@ class Users_model extends CI_Model {
 	
 	//validate login
 	function validate() {
-		$this->db->where('username', $this->input->post('username'));
-		$this->db->where('secret', md5($this->input->post('password')));
-		$query = $this->db->get('users');
+		$sql = "SELECT * from users WHERE (username=? OR email=?) AND secret=?";
+		$username = ($this->input->post('username'))? trim($this->input->post('username')):'none';
+		$query = $this->db->query($sql,array($username,$username,md5($this->input->post('password'))));
 		if($query->num_rows == 1) {
 			$user = $query->result_array();
 			$this->update_user_geo($user[0]['user_id']);

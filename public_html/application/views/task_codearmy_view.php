@@ -1,6 +1,10 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
 
 <div class="po-wall-container">
+  <!-- mission submission-->
+  <div id="mission-notification">
+  </div>
+  <!--mission submission-->
   <div class="top-panel">
     <div class="top-panel-left">
       <div class="top-panel-title"><?=ucwords($work['title'])?> <a href="#"><img src="/public/images/codeArmy/po/record-icon.png" /></a></div>
@@ -56,6 +60,11 @@
           <p class="level">Level <?=$this->gamemech->get_level($po['exp']);?></p>
         </div>
         <div class="po-avatar"><img src="/public/images/codeArmy/po/default-avatar.png" /></div>
+        <!-- mission submission-->
+        <?php if(strtolower($work['status'])=='open'){?>
+        <div class="button green" id="mission_complete" style="clear:both;"><img src="/public/images/codeArmy/loader4.gif" style="position:absolute;left:75px; bottom:10px; display:none;" id="mission-submit-loader" /> Complete Mission!</div>
+        <?php }?>
+        <!-- mission submission-->
       </div>
     </div>
   </div>
@@ -252,6 +261,29 @@ $(function(){
 			}
 		});
 	});
+	
+	//Mission submission 
+	$('#mission_complete').click(function(){
+		$('#mission-submit-loader').show();
+		$.ajax({
+			url:'/missions/submit',
+			data: {'csrf_workpad': getCookie('csrf_workpad'), 'work_id': '<?=$work['work_id']?>'},
+			type: 'post',
+			success: function(msg){
+				if(msg=='success'){
+					$('#mission_complete').slideUp();
+					$('#mission-notification').html('Mission is marked as completed and sent to PO for verification...<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-remove"></a>').addClass('orange').slideDown();
+				}else if (typeof console == "object") console.log(msg);
+			}
+		});
+		
+	});
+	
+	switch('<?=strtolower($work['status'])?>'){
+		case 'done': $('#mission-notification').html('Pending for verification by PO...<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-eye-close"></a>').addClass('orange').slideDown();
+		break;
+	}
+	//end of mission submission
 });
 
 function delete_task(task_id){

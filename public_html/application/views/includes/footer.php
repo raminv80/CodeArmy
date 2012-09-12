@@ -70,7 +70,7 @@
 				<p>&copy;Motionworks sdn bhd 2011</p>
 			</div>
 		</div>
-
+		<script src="/public/js/codeArmy/bootstrap.min.js"></script>
     	<script type="text/javascript" src="/public/scripts/footer_script.js"></script>
 </body>
 </html>
