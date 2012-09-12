@@ -90,9 +90,10 @@
   <div class="marker-icon">#</div>
   <div class="arrow-desc">12<br/>
     PHP</div>
-  <div class="arrow-down-container">
+  <!-- <div class="arrow-down-container">
     <div class="arrow-down"> </div>
-  </div>
+  </div> -->
+  <div class="arrow_box"></div>
 </div>
 
 <!-- end of marker template -->
@@ -244,6 +245,7 @@
 		padding: 5px 10px;
 		border-bottom: 2px solid rgba(255, 255, 255, .2);
 		clear:both;
+		text-shadow: 0 1px 1px black;
 	}
 	#filter-toolbar .create {
 		background: rgb(45,146,155); /* Old browsers */
@@ -269,7 +271,6 @@
 		border-bottom:2px solid #333;
 	}
 	#filter-toolbar ul li a:hover {
-		text-shadow: 0 1px 1px black;
 		background:black;
 		border-bottom: 2px solid rgba(255, 255, 255, .3);
 	}
@@ -310,10 +311,20 @@
 		position:absolute;
 		top:3px; right:4px;
 	}
-	<!--[if lt IE 9]>
-	#filter-toolbar ul li a, #filter-toolbar ul li a:hover, #filter-toolbar {border: 2px solid #222}
-	<![endif]-->
 	
+	/* End new arrow */
+	
+	#dialog-project-list{
+			width:0;
+			height:0;
+			background:rgba(0,0,0,0.8);
+			display:none;
+			position:absolute;
+			top:16px;
+			left:100px;
+			z-index:1;
+			overflow:auto;
+	}
 	.dialog{padding:0}
 	.dialog .container{
 		position:relative;
@@ -330,22 +341,55 @@
 		z-index:1;
 	}
 	#world-map{position:relative;}
+	
 	.marker-icon{
 		background: black;
-		width: 40px;
-		margin-bottom: 2px;
+		margin-bottom: 1px;
 		padding: 2px 0;
-		font-size: 20pt;
 	}
+	
+	/* New arrow */
 	.arrow-desc{
-		background: black;
-		width: 40px;
+		background: #555;
 		margin-bottom: 2px;
-		font-size: 12px;
-		padding: 2px 0;
+		font-size: 1.3em;
 		color:white;
-		font-style:italic;
+		padding:3px 10px;
+		border:4px solid black;
 	}
+	
+	.arrow_box {
+		position: relative;
+		background: #333;
+		border: 3px solid #000000;
+	}
+	.arrow_box:after, .arrow_box:before {
+		top: 100%;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+
+	.arrow_box:after {
+		border-color: rgba(68, 68, 68, 0);
+		border-top-color: #333;
+		border-width: 6px;
+		left: 50%;
+		margin-left: -6px;
+	}
+	.arrow_box:before {
+		border-color: rgba(0, 0, 0, 0);
+		border-top-color: #000000;
+		border-width: 10px;
+		left: 50%;
+		margin-left: -10px;
+	}
+	
+	/* End new arrow */
+	
 	.arrow-down-container {
 		width: 0px;
 		height: 0;
