@@ -8,14 +8,11 @@
   </div>
   
   <div class="contact-left-content">
-  Code Gamification Sdn Bhd <br />
-Suite 29-6, Boulevard Office, <br />
-Mid Valley City, Lingkaran Syed Putra,<br /> 
-59200 Kuala Lumpur, Malaysia.<br />
-<br />
-Tel: 603 2282 5060<br />
-Fax: 603 2284 5060<br />
-Email:  contact@codearmy.com<br />
+  <p>
+  169, 11st Street<br />
+      San Francisco, CA 94103,<br />
+      United States of America.</p><br />
+	 <div><span class="label"><span class="icon-envelope-alt" style="font-size:11pt; margin-right:20px;"></span></span><span class="value">contact@codearmy.com</span></div>
 <br />
 	   <img src="/public/images/codeArmy/profile/contact-fb-icon.png" /> <a href="http://www.facebook.com/CodeArmyHQ" target="_blank">www.facebook.com/CodeArmyHQ</a><br />
 	 <img src="/public/images/codeArmy/profile/contact-twitter-icon.png" />  <a href="http://www.twitter.com/Code_Army" target="_blank">www.twitter.com/Code_Army</a><br />

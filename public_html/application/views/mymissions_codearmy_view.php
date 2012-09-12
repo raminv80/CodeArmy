@@ -1,4 +1,10 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
+<style>
+.hidden{
+	text-indent:-9000px !important;
+background:none !important; 
+}
+</style>
 <div id="mymission-content-area">
 	<div id="block-mission-list">
     	<div class="block-header">
@@ -237,15 +243,15 @@
                 <div class="mission-content">
                 	<ul class="mission-icons">
                     	<?php if($po){?>
-                         <li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="/missions/applicants/<?=$list['work_id']?>"><span class="icon"></span><span class="title "><span class="bidders-<?=$list['work_id']?>"><?=$list['bids']?></span> Bidders</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                         <li><a href="#"><span class="icon hidden"></span><span class="title">Captain</span></a></li>
+                        <li><a href="/missions/applicants/<?=$list['work_id']?>"><span class="icon <?=($list['bids']>0)?'':'hidden'?> bidders-<?=$list['work_id']?>"><?=$list['bids']?></span><span class="title "> Bidders</span></a></li>
+                        <li><a href="#"><span class="icon hidden"></span><span class="title">Discussion</span></a></li>
+                        <li><a href="#"><span class="icon hidden"></span><span class="title">Attachements</span></a></li>
                         <?php }else{?>
-                		<li><a href="#"><span class="icon"></span><span class="title">Captain</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">1 Trooper</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Discussion</span></a></li>
-                        <li><a href="#"><span class="icon"></span><span class="title">Attachements</span></a></li>
+                		<li><a href="#"><span class="icon hidden"></span><span class="title">Captain</span></a></li>
+                        <li><a href="#"><span class="icon hidden"></span><span class="title">1 Trooper</span></a></li>
+                        <li><a href="#"><span class="icon hidden"></span><span class="title">Discussion</span></a></li>
+                        <li><a href="#"><span class="icon hidden"></span><span class="title">Attachements</span></a></li>
                         <?php }?>
                     </ul>
                     <div class="mission-time">
