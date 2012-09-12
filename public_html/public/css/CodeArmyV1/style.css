@@ -3693,7 +3693,7 @@ border-radius:50%; text-align:center;-webkit-border-radius:50%; -moz-border-radi
 /** initial setup **/
 .nano {
   position : relative;
-  overflow : hidden;
+  /* overflow : hidden; */
 }
 .nano .content {
   position      : absolute;;

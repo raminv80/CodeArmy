@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="../../public/css/CodeArmyV1/bootstrap-custom.css" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css'>
+
 <style>
 	.fancybox-nav span {visibility: visible;}
 	.fancybox-nav{top:30px;height:90%; width:60px;}
@@ -55,7 +58,16 @@
 	.info .data-row .col2{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:73px;padding-left:10px; text-align:center;border:1px solid #da921f;background:white;color:#cc6600;}
 	.info .data-row .col3{float:left;width:229px;color:white; font-size:11pt;text-align:left;height:73px;line-height:35px;padding-left:10px;background:white;border:1px solid #da921f;color:#cc6600;}
 	.detail-row{cursor:pointer;}
+	
+	.mission-list h1 {font-family: 'Black Ops One', cursive; font-size:2em; color:#FFA800}
 </style>
+
+<div class="mission-list container-fluid">
+	<div class="row-fluid">
+		<h1>Kuala Lumpur</h1>
+	</div>
+</div>
+
 <div id="mission_list">
 	<div class="mission_list_header">Latest Missions (All)</div>
     <div class="down-arrow"></div>
