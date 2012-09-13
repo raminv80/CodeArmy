@@ -202,7 +202,7 @@
 		position:absolute;
 		/*background:url(/public/images/codeArmy/mymission/profile-toolbar-temp.png) no-repeat;*/
 		width:160px;
-		top:10px;right:20px;
+		top:10px;right:0px;
 		z-index:10000;
 		margin-right:10px;
 	}
