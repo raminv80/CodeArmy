@@ -345,6 +345,7 @@ CREATE TABLE `users` (
   `early_done` int(11) NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
+  `reminder` datetime DEFAULT NULL,
   `user_status` enum('enable','disable') DEFAULT NULL COMMENT 'Is user a PO?',
   `show_tutorial` smallint(6) NOT NULL DEFAULT '1' COMMENT '1:bidding, 2:submit, 3:dev-tut-done, 4:dev-waiting-accept-bid',
   `attempt` tinyint(4) NOT NULL DEFAULT '0',
