@@ -19,7 +19,7 @@
           <div id="form-bid-container">
               <div class="find-mission-comment-box-left">
                 <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-                  <p><?=$this->gamemech->get_level($me['exp'])?></p>
+                  <p><?=$this->game_model->get_level($me['exp'])?></p>
                 </div>
                 <div class="find-mission-comment-name"><?=$me['username']?></div>
               </div>
@@ -75,7 +75,7 @@
 			  	foreach($bids as $bid):
 					$bidder = $this->users_model->get_user($bid['user_id'])->result_array();
 					$bidder = $bidder[0];
-					$lvl = $this->gamemech->get_level($bidder['exp']);
+					$lvl = $this->game_model->get_level($bidder['exp']);
 					if(trim($bid['bid_desc'])>"" || $bid['user_id']==$me['user_id']){
 			?>
 	        <div class="find-mission-down-box-row">
@@ -105,10 +105,10 @@
 	    <div class="find-mission-right-block">
 	      <div class="right-col-title-bg">Mission Captain</div>
 	      <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-	        <p><?=$this->gamemech->get_level($po['exp'])?></p>
+	        <p><?=$this->game_model->get_level($po['exp'])?></p>
 	      </div>
 	      <div class="captainame"><?=$po['username']?></div>
-	      <div class="captainrank">Level <?=$this->gamemech->get_level($po['exp'])?></div>
+	      <div class="captainrank">Level <?=$this->game_model->get_level($po['exp'])?></div>
 	      <div class="rankicons">
 	      	<?php if($po_badge != "") foreach($po_badge as $badge):?>
 	        <img src="/public/<?=$badge["achievement_pic"]?>" width="34" height="26" alt="<?=ucfirst(strtolower($badge["achievement_name"]))?>">
@@ -150,7 +150,7 @@
 	      <div class="bidders-avatars">
 	      	<?php foreach($bidders as $bidder):?>
 	        <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-	          <p><?=$this->gamemech->get_level($bidder['exp'])?></p>
+	          <p><?=$this->game_model->get_level($bidder['exp'])?></p>
 	          <div class="find-mission-comment-name"><?=$bidder['username']?></div>
 	        </div>
 	        <?php endforeach;?>
