@@ -967,6 +967,8 @@ class Missions extends CI_Controller {
 		if(!in_array(strtolower($this->view_data['work']['status']),array('in progress','done','redo','verify','signoff')))redirect('/missions/my_missions');
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
+		$this->view_data['contractor'] = $this->users_model->get_user($this->view_data['work']['work_horse'])->result_array();
+		if(count($this->view_data['contractor'])>0) $this->view_data['contractor'] = $this->view_data['contractor'][0];
 		$this->view_data['mission_task'] = $this->work_model->get_mission_task($work_id)->result_array();
 		//delete wall notification for user
 		$this->work_model->clear_notifications($work_id, $user_id, 'tasks');
@@ -987,6 +989,8 @@ class Missions extends CI_Controller {
 		if(!in_array(strtolower($this->view_data['work']['status']),array('in progress','done','redo','verify','signoff')))redirect('/missions/my_missions');
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
+		$this->view_data['contractor'] = $this->users_model->get_user($this->view_data['work']['work_horse'])->result_array();
+		if(count($this->view_data['contractor'])>0) $this->view_data['contractor'] = $this->view_data['contractor'][0];
 		$docList = $this->work_model->getDocList($work_id);
 		$this->view_data['docList'] = $docList;
 		//delete wall notification for user
@@ -1008,6 +1012,8 @@ class Missions extends CI_Controller {
 		if(!in_array(strtolower($this->view_data['work']['status']),array('in progress','done','redo','verify','signoff')))redirect('/missions/my_missions');
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
+		$this->view_data['contractor'] = $this->users_model->get_user($this->view_data['work']['work_horse'])->result_array();
+		if(count($this->view_data['contractor'])>0) $this->view_data['contractor'] = $this->view_data['contractor'][0];
 		$this->view_data['dates'] = $this->work_model->get_all_calendar_events($work_id);
 		$this->view_data['window_title'] = "Date";
 		$this->load->view('date_codearmy_view', $this->view_data);
