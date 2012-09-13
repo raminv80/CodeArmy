@@ -773,8 +773,9 @@
 						}
 					});
 			});
-			
-		$('#dialog-project-list').on('click','.summary-row',controlMissionList);
+		
+		$('.missionlist').on('click','.summary-row',controlMissionList);	
+		//$('#dialog-project-list').on('click','.summary-row',controlMissionList);
 		//$('#dialog-project-list').on('click','.detail-row',gotoMission);
 		
 		$('#world-map').on('mouseenter','.marker',
