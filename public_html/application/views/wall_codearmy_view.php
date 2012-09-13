@@ -62,7 +62,7 @@
         <div class="po-avatar"><a href="/profile/show/<?=$po['username']?>"><img src="/public/images/codeArmy/po/default-avatar.png" /></a></div>
         <!-- mission submission-->
         <?php if(($work['work_horse']==$me['user_id'])&&(strtolower($work['status'])=='in progress' || strtolower($work['status'])=='redo')){?>
-        <div class="button green" id="mission_complete" style="clear:both;"><img src="/public/images/codeArmy/loader4.gif" style="position:absolute;left:75px; bottom:10px; display:none;" id="mission-submit-loader" /> Complete Mission!</div>
+        <div class="button green" id="mission_complete" style="clear:both;"><img src="/public/images/codeArmy/loader4.gif" style="position:absolute;left:75px; bottom:5px; display:none;" id="mission-submit-loader" /> Complete Mission!</div>
         <?php }?>
         <!-- mission submission-->
       </div>

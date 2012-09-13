@@ -62,7 +62,7 @@
         <div class="po-avatar"><img src="/public/images/codeArmy/po/default-avatar.png" /></div>
         <!-- mission submission-->
         <?php if(($work['work_horse']==$me['user_id'])&&(strtolower($work['status'])=='in progress' || strtolower($work['status'])=='redo')){?>
-        <div class="button green" id="mission_complete" style="clear:both;"><img src="/public/images/codeArmy/loader4.gif" style="position:absolute;left:75px; bottom:10px; display:none;" id="mission-submit-loader" /> Complete Mission!</div>
+        <div class="button green" id="mission_complete" style="clear:both;"><img src="/public/images/codeArmy/loader4.gif" style="position:absolute;left:75px; bottom:5px; display:none;" id="mission-submit-loader" /> Complete Mission!</div>
         <?php }?>
         <!-- mission submission-->
       </div>
@@ -76,11 +76,12 @@
     <div class="profile-n-edit-icon"><a href="#"><img src="/public/images/codeArmy/po/task/profile-icon.png" /></a><a href="#"><img src="/public/images/codeArmy/po/task/edit-icon.png" /></a></div>
     </div>-->
     
-    
+    <?php if(in_array(strtolower($work['status']),array('in progress','done','redo'))){?>
     <div class="sub-task-bar">
     <div class="add-subtask-field"><input class="add-subtask" name="add-subtask" id="add-subtask" type="text" placeholder="Type here to add a subtask" /> <input type="hidden" name="work_id" id="work_id" value="<?=$work['work_id']?>" />  <input type="submit" value="Add sub-task" name="add-subtask-btn" id="add-subtask-btn" class="lnkimg" /></div>
     <!--<div class="ta-hours"><div class="total-hrs">Total Hours: 100 hrs</div><div class="assigned-hrs">Assigned Hours: 89 hrs</div></div>-->
     </div>
+    <?php }?>
     
     <div class="tasks-table">
     
@@ -94,17 +95,18 @@
     </div>
     
     <?php
+	$disable = !(in_array(strtolower($work['status']),array('in progress','done','redo')));
     foreach($mission_task as $task):
-	if($task['task_status'] != "Done"){
+		if($task['task_status'] != "Done"){
 	?>
     <?php echo form_open('#' , array('id'=>'form_sub_task_'.$task['task_id'])); ?>
     <div id="task-template" class="task-table-row">
-    <div class="task-row-priority"><select name="task_priority" id="sub_task_priority_<?=$task['task_id']?>" onchange="javascript:update_priority(<?=$task['task_id']?>);"><option value="Low"<?php if($task['task_priority']=="Low") echo " selected";?>>Low</option><option value="Normal"<?php if($task['task_priority']=="Normal") echo " selected";?>>Normal</option><option value="High"<?php if($task['task_priority']=="High") echo " selected";?>>High</option></select></div>
+    <div class="task-row-priority"><select <?=($disable)?'disabled="disabled"':''?> name="task_priority" id="sub_task_priority_<?=$task['task_id']?>" onchange="javascript:update_priority(<?=$task['task_id']?>);"><option value="Low"<?php if($task['task_priority']=="Low") echo " selected";?>>Low</option><option value="Normal"<?php if($task['task_priority']=="Normal") echo " selected";?>>Normal</option><option value="High"<?php if($task['task_priority']=="High") echo " selected";?>>High</option></select></div>
     <div class="task-row-taskname"><?=$task['task_name']?></div>
     <div class="task-row-deadline"> <a href="#" class="datepicker"><img src="/public/images/codeArmy/po/task/task-date-icon.png" /></a></div>
-    <div class="task-row-hours"><input type="text" name="task_hours" id="sub_task_hours_<?=$task['task_id']?>" value="<?=$task['task_hours']?>" onkeyup="javascript:update_hours(<?=$task['task_id']?>);" /></div>
-    <div class="task-row-percent"><input type="text" name="task_percent" id="sub_task_percent_<?=$task['task_id']?>" value="<?=$task['task_percentage']?>" onkeyup="javascript:update_percent(<?=$task['task_id']?>);" maxlength="3" /></div>
-    <div class="task-row-status"><select name="task_status" id="sub_task_status_<?=$task['task_id']?>" onchange="javascript:update_status(<?=$task['task_id']?>);"><option value="To Do"<?php if($task['task_status']=="To Do") echo " selected"; ?>>To Do</option><option value="Working"<?php if($task['task_status']=="Working") echo " selected"; ?>>Working</option><option value="Done">Done</option></select><a href="javascript:;" onclick="delete_task(<?=$task['task_id']?>)"><img src="/public/images/codeArmy/po/task/task-remove-icon.png" class="task-remove-icon" /></a></div>
+    <div class="task-row-hours"><input <?=($disable)?'disabled="disabled"':''?> type="text" name="task_hours" id="sub_task_hours_<?=$task['task_id']?>" value="<?=$task['task_hours']?>" onkeyup="javascript:update_hours(<?=$task['task_id']?>);" /></div>
+    <div class="task-row-percent"><input <?=($disable)?'disabled="disabled"':''?> type="text" name="task_percent" id="sub_task_percent_<?=$task['task_id']?>" value="<?=$task['task_percentage']?>" onkeyup="javascript:update_percent(<?=$task['task_id']?>);" maxlength="3" /></div>
+    <div class="task-row-status"><select <?=($disable)?'disabled="disabled"':''?> name="task_status" id="sub_task_status_<?=$task['task_id']?>" onchange="javascript:update_status(<?=$task['task_id']?>);"><option value="To Do"<?php if($task['task_status']=="To Do") echo " selected"; ?>>To Do</option><option value="Working"<?php if($task['task_status']=="Working") echo " selected"; ?>>Working</option><option value="Done">Done</option></select><a href="javascript:;" onclick="delete_task(<?=$task['task_id']?>)"><img src="/public/images/codeArmy/po/task/task-remove-icon.png" class="task-remove-icon" /></a></div>
     </div>
     </form>
     <?php } else { ?>
@@ -143,12 +145,12 @@
     
     <?php echo form_open('#' , array('id'=>'form-update-task','style'=>'display:none')); ?>
     <div id="task-template" class="task-table-row">
-    <div class="task-row-priority"><select name="task_priority" id="task_priority"><option value="Low">Low</option><option value="Normal" selected="selected">Normal</option><option value="High">High</option></select></div>
+    <div class="task-row-priority"><select <?=($disable)?'disabled="disabled"':''?> name="task_priority" id="task_priority"><option value="Low">Low</option><option value="Normal" selected="selected">Normal</option><option value="High">High</option></select></div>
     <div class="task-row-taskname"></div>
     <div class="task-row-deadline"> <a href="#" class="datepicker"><img src="/public/images/codeArmy/po/task/task-date-icon.png" /></a></div>
-    <div class="task-row-hours"><input type="text" name="task_hours" id="task_hours" value="0" /></div>
-    <div class="task-row-percent"><input type="text" name="task_percent" id="task_percent" value="0" maxlength="3" /></div>
-    <div class="task-row-status"><select name="task_status" id="task_status"><option value="To Do">To Do</option><option value="Working">Working</option><option value="Done">Done</option></select><input type="button" class="task-remove-icon" id="task_delete" /><input type="hidden" name="task_id" id="task_id" value="" /></div>
+    <div class="task-row-hours"><input <?=($disable)?'disabled="disabled"':''?> type="text" name="task_hours" id="task_hours" value="0" /></div>
+    <div class="task-row-percent"><input <?=($disable)?'disabled="disabled"':''?> type="text" name="task_percent" id="task_percent" value="0" maxlength="3" /></div>
+    <div class="task-row-status"><select <?=($disable)?'disabled="disabled"':''?> name="task_status" id="task_status"><option value="To Do">To Do</option><option value="Working">Working</option><option value="Done">Done</option></select><input <?=($disable)?'disabled="disabled"':''?> type="button" class="task-remove-icon" id="task_delete" /><input type="hidden" name="task_id" id="task_id" value="" /></div>
     </div>
     </form>
     
@@ -159,6 +161,7 @@
 </div>
 <script type="text/javascript">
 $(function(){
+	<?php if(in_array(strtolower($work['status']),array('in progress','done','redo'))){?>
 	$('#add-subtask-btn').click(function(){
 		if($('#add-subtask').val() != ""){
 			var sub_task = get_value('#add-subtask');
@@ -261,6 +264,7 @@ $(function(){
 			}
 		});
 	});
+	<?php }?>
 	
 	//Mission submission 
 	var _lock=false;
@@ -357,6 +361,7 @@ $(function(){
 	//end of mission submission
 });
 
+<?php if(in_array(strtolower($work['status']),array('in progress','done','redo'))){?>
 function delete_task(task_id){
 	$.ajax({
 		type: 'post',
@@ -426,6 +431,7 @@ function update_status(task_id){
 		}
 	});
 }
+<?php }?>
 
 function get_value(el){
 	var el=$(el);

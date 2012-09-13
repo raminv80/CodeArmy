@@ -1374,6 +1374,14 @@ class Missions extends CI_Controller {
 	}
 	
 	function doc_uploadfiles(){
+		$user_id = $this->view_data['me']['user_id'];
+		$work_id = $this->input->post('work_id');
+		$po = $this->work_model->is_po($user_id,$work_id);
+		$wh = $this->work_model->is_workhorse($user_id,$work_id);
+		$work = $this->work_model->get_work($work_id)->result_array();
+		$work = $work[0];
+		
+		if(!in_array(strtolower($work['status']),array('in progress','redo')))die('Error: file upload is dissabled');
 		//$targetDir = ini_get("upload_tmp_dir") . DIRECTORY_SEPARATOR . "plupload";
 		//$targetDir = 'public/uploads/';
 		$targetDir = FCPATH.'public/uploads/';
@@ -1444,12 +1452,6 @@ class Missions extends CI_Controller {
 						);
 						$this->db->insert('work_files', $res);
 						
-						$user_id = $this->view_data['me']['user_id'];
-						$work_id = $this->input->post('work_id');
-						$po = $this->work_model->is_po($user_id,$work_id);
-						$wh = $this->work_model->is_workhorse($user_id,$work_id);
-						$work = $this->work_model->get_work($work_id)->result_array();
-						$work = $work[0];
 						// insert notification
 						if($po){
 							$intReceiverID = $work['work_horse'];

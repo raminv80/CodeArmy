@@ -86,7 +86,7 @@
         <div class="po-avatar"><img src="/public/images/codeArmy/po/default-avatar.png" /></div>
         <!-- mission submission-->
         <?php if(($work['work_horse']==$me['user_id'])&&(strtolower($work['status'])=='in progress' || strtolower($work['status'])=='redo')){?>
-        <div class="button green" id="mission_complete" style="clear:both;"><img src="/public/images/codeArmy/loader4.gif" style="position:absolute;left:75px; bottom:10px; display:none;" id="mission-submit-loader" /> Complete Mission!</div>
+        <div class="button green" id="mission_complete" style="clear:both;"><img src="/public/images/codeArmy/loader4.gif" style="position:absolute;left:75px; bottom:5px; display:none;" id="mission-submit-loader" /> Complete Mission!</div>
         <?php }?>
         <!-- mission submission-->
       </div>
@@ -124,16 +124,19 @@
 	?>
         
     <div class="submit-doc-buttons" id="plupload-container">
-    <div id="filelist">No runtime found.</div>
+    <div id="filelist"></div>
+    <?php if(!in_array(strtolower($work['status']),array('done','verify','signoff'))){?>
     <input type="button" id="postlink" value="Post a link" class="lnkimg" />
     <input type="button" id="pickfiles" class="lnkimg" value="Select a files">
     <input type="button" id="uploadfiles" value="Upload a document" class="lnkimg" />
+    <?php }?>
     </div>
     
     <div id="<?=$work['work_id']?>" style="display:none"><input class="add-subtask" name="doc-url" id="doc-url" type="text" placeholder="Paste your url here" /> <input type="button" id="savelink" value="Save" class="lnkimg" /></div>
 
   </div>
 </div>
+<?php if(!in_array(strtolower($work['status']),array('done','verify','signoff'))){?>
 <script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
 <script type="text/javascript" src="/public/js/plupload/plupload.js"></script>
 <script type="text/javascript" src="/public/js/plupload/plupload.gears.js"></script>
@@ -142,6 +145,7 @@
 <script type="text/javascript" src="/public/js/plupload/plupload.browserplus.js"></script>
 <script type="text/javascript" src="/public/js/plupload/plupload.html4.js"></script>
 <script type="text/javascript" src="/public/js/plupload/plupload.html5.js"></script>
+
 <script>
 	var uploader = new plupload.Uploader({
 		runtimes : 'gears,html5,flash,silverlight,browserplus',
@@ -263,7 +267,9 @@
 		});
 		$('#<?=$work['work_id']?>').hide();
 	});
-	
+</script>
+<?php }?>
+<script>
 	$(function(){
 		//Mission submission 
 	var _lock=false;
