@@ -15,11 +15,11 @@
 	      </div>
 	      <div class="find-mission-main-desc"><?=$work['description']?></div>
 	    </div>
-	    <div class="find-mission-comment-box">
+	    <div class="find-mission-comment-box clearfix">
           <div id="form-bid-container">
               <div class="find-mission-comment-box-left">
                 <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-                  <p><?=$this->gamemech->get_level($me['exp'])?></p>
+                  <p><?=$this->game_model->get_level($me['exp'])?></p>
                 </div>
                 <div class="find-mission-comment-name"><?=$me['username']?></div>
               </div>
@@ -29,7 +29,7 @@
                   <div class="urbid">Your Bid</div>
                   <div class="clock-icon"></div>
                   <div class="small-box-hr"> 
-                    <input name="time" class="time" onkeydown="increment(event, this)" autocomplete="off" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
+                    <input name="time" class="time input-small" onkeydown="increment(event, this)" autocomplete="off" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
                   </div>
                   <div class="botharrows">
                     <span class="arrowkey">
@@ -50,7 +50,7 @@
                 <div class="fmcb-right-row2">
                   <div class="dollar-sign-icon"></div>
                   <div class="small-box-hr">
-                    <input name="budget" class="budget" type="text" autocomplete="off" onkeydown="increment(event, this)" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
+                    <input name="budget" class="budget input-small" type="text" autocomplete="off" onkeydown="increment(event, this)" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
                   </div>
                   <div class="botharrows">
                     <span class="arrowkey">
@@ -66,7 +66,7 @@
                 </div>
                 <input type="hidden" name="work_id" value="<?=$work['work_id']?>">
                 <img src="/public/images/codeArmy/loader4.gif" style="position:absolute; top:190px; right:50px;display:none" id="login-ajax" />
-                <input type="submit" name="submit" value="Submit" class="lnkimg" id="submit-bid" />
+                <div class="pull-right" style="padding-right:40px"><input type="submit" name="submit" value="Submit" class="btn btn-warning btn-large" id="submit-bid" /></div>
               </div>
               </form>
           </div>
@@ -75,7 +75,7 @@
 			  	foreach($bids as $bid):
 					$bidder = $this->users_model->get_user($bid['user_id'])->result_array();
 					$bidder = $bidder[0];
-					$lvl = $this->gamemech->get_level($bidder['exp']);
+					$lvl = $this->game_model->get_level($bidder['exp']);
 					if(trim($bid['bid_desc'])>"" || $bid['user_id']==$me['user_id']){
 			?>
 	        <div class="find-mission-down-box-row">
@@ -105,10 +105,10 @@
 	    <div class="find-mission-right-block">
 	      <div class="right-col-title-bg">Mission Captain</div>
 	      <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-	        <p><?=$this->gamemech->get_level($po['exp'])?></p>
+	        <p><?=$this->game_model->get_level($po['exp'])?></p>
 	      </div>
 	      <div class="captainame"><?=$po['username']?></div>
-	      <div class="captainrank">Level <?=$this->gamemech->get_level($po['exp'])?></div>
+	      <div class="captainrank">Level <?=$this->game_model->get_level($po['exp'])?></div>
 	      <div class="rankicons">
 	      	<?php if($po_badge != "") foreach($po_badge as $badge):?>
 	        <img src="/public/<?=$badge["achievement_pic"]?>" width="34" height="26" alt="<?=ucfirst(strtolower($badge["achievement_name"]))?>">
@@ -150,7 +150,7 @@
 	      <div class="bidders-avatars">
 	      	<?php foreach($bidders as $bidder):?>
 	        <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
-	          <p><?=$this->gamemech->get_level($bidder['exp'])?></p>
+	          <p><?=$this->game_model->get_level($bidder['exp'])?></p>
 	          <div class="find-mission-comment-name"><?=$bidder['username']?></div>
 	        </div>
 	        <?php endforeach;?>

@@ -154,16 +154,16 @@ background:none !important;
                         <?php
 						$wallNotify = $this->work_model->get_wall_notify($list['work_id'], $me['user_id']);
 						?>
-                		<li><a href="/missions/wall/<?=$list['work_id']?>"><span class="icon"><?php if($wallNotify!=0) echo $wallNotify; ?></span><span class="title">Wall</span></a></li>
-                        <li><a href="/missions/dates/<?=$list['work_id']?>"><span class="icon"></span><span class="title">Dates</span></a></li>
+                		<li><a href="/missions/wall/<?=$list['work_id']?>"><span class="icon <?=($wallNotify>0)?'':'hidden'?>"><?php if($wallNotify!=0) echo $wallNotify; ?></span><span class="title">Wall</span></a></li>
+                        <li><a href="/missions/dates/<?=$list['work_id']?>"><span class="icon hidden"></span><span class="title">Dates</span></a></li>
                         <?php
 						$tasksNotify = $this->work_model->get_tasks_notify($list['work_id'], $me['user_id']);
 						?>
-                        <li><a href="/missions/task/<?=$list['work_id']?>"><span class="icon"><?php if($tasksNotify!=0) echo $tasksNotify; ?></span><span class="title">Tasks</span></a></li>
+                        <li><a href="/missions/task/<?=$list['work_id']?>"><span class="icon <?=($tasksNotify>0)?'':'hidden'?>"><?php if($tasksNotify!=0) echo $tasksNotify; ?></span><span class="title">Tasks</span></a></li>
                         <?php
 						$documentsNotify = $this->work_model->get_documents_notify($list['work_id'], $me['user_id']);
 						?>
-                        <li><a href="/missions/documents/<?=$list['work_id']?>"><span class="icon"><?php if($documentsNotify!=0) echo $documentsNotify; ?></span><span class="title">Documents</span></a></li>
+                        <li><a href="/missions/documents/<?=$list['work_id']?>"><span class="icon <?=($documentsNotify>0)?'':'hidden'?>"><?php if($documentsNotify!=0) echo $documentsNotify; ?></span><span class="title">Documents</span></a></li>
                     </ul>
                     <div class="mission-time">
                     	<!--<span class="time-left">Time left</span>-->
@@ -187,7 +187,7 @@ background:none !important;
             <?php endforeach;?>
             <?php foreach($myMissions as $list):
 				$color = (in_array(strtolower($list['status']),array('draft')))?'red':'green';
-				$color = (in_array(strtolower($list['status']),array('signoff')))?'grey':$color;
+				$color = (in_array(strtolower($list['status']),array('signoff')))?'gray':$color;
 			?>
             <div class="item <?=$color?>-mission" id="mission-<?=$list['work_id']?>">
             	<?php
