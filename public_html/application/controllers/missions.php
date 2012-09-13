@@ -942,7 +942,7 @@ class Missions extends CI_Controller {
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		if(count($this->view_data['work'])!=1)die('This job is not assigned through bidding process.');
 		$this->view_data['work'] = $this->view_data['work'][0];
-		if(!in_array(strtolower($this->view_data['work']),array('in prgress','done','redo','verify','signoff')))redirect('/missions/my_missions');
+		if(!in_array(strtolower($this->view_data['work']['status']),array('in prgress','done','redo','verify','signoff')))redirect('/missions/my_missions');
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
 		$this->view_data['contractor'] = $this->users_model->get_user($this->view_data['work']['work_horse'])->result_array();
@@ -964,7 +964,7 @@ class Missions extends CI_Controller {
 		if(!$po&&!$wh)die('Unauthorised access!');
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		$this->view_data['work'] = $this->view_data['work'][0];
-		if(!in_array(strtolower($this->view_data['work']),array('in prgress','done','redo','verify','signoff')))redirect('/missions/my_missions');
+		if(!in_array(strtolower($this->view_data['work']['status']),array('in prgress','done','redo','verify','signoff')))redirect('/missions/my_missions');
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
 		$this->view_data['mission_task'] = $this->work_model->get_mission_task($work_id)->result_array();
@@ -984,7 +984,7 @@ class Missions extends CI_Controller {
 		if(!$po&&!$wh)die('Unauthorised access!');
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		$this->view_data['work'] = $this->view_data['work'][0];
-		if(!in_array(strtolower($this->view_data['work']),array('in prgress','done','redo','verify','signoff')))redirect('/missions/my_missions');
+		if(!in_array(strtolower($this->view_data['work']['status']),array('in prgress','done','redo','verify','signoff')))redirect('/missions/my_missions');
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
 		$docList = $this->work_model->getDocList($work_id);
@@ -1005,7 +1005,7 @@ class Missions extends CI_Controller {
 		if(!$po&&!$wh)die('Unauthorised access!');
 		$this->view_data['work'] = $this->work_model->get_detail_work($work_id)->result_array();
 		$this->view_data['work'] = $this->view_data['work'][0];
-		if(!in_array(strtolower($this->view_data['work']),array('in prgress','done','redo','verify','signoff')))redirect('/missions/my_missions');
+		if(!in_array(strtolower($this->view_data['work']['status']),array('in prgress','done','redo','verify','signoff')))redirect('/missions/my_missions');
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
 		$this->view_data['dates'] = $this->work_model->get_all_calendar_events($work_id);
