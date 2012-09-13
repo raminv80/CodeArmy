@@ -94,21 +94,24 @@
 		<?php foreach($works as $i=>$work):?>
 		<a href="javascript:void(0)" rel="/missions/apply/<?=$work['work_id']?>" class="mission_apply">
 			<div class="row-fluid lists">
-				<div class="span1"><img src="../../public/images/codeArmy/missionlist/icon_design.png" width="70" height="60" alt="Icon Design"></div>
+				<div class="span1"><img src="/public/images/codeArmy/missionlist/<?=$work['image_file']?>" width="70" height="60" alt="Icon Design"></div>
 				<div class="span4"><?=$work['title']?></div>
 				<div class="span2 skillset clearfix">
+                	<?php $skills = $this->skill_model->get_work_skills($work['work_id'],3); ?>
+                    <?php foreach($skills as $skill):?>
 					<article>
-						<img src="../../public/images/codeArmy/missionlist/icon-skill.png" width="32" height="32" alt="Icon Skill">
-						<span class="level">11</span>
+						<img src="../../public/images/codeArmy/missionlist/<?=$skill['image_file']?>" width="32" height="32" alt="Icon Skill">
+						<span class="level"><?=$skill['point']?></span>
 					</article>
-					<article>
+                    <?php endforeach;?>
+					<!--<article>
 						<img src="../../public/images/codeArmy/missionlist/icon-skill.png" width="32" height="32" alt="Icon Skill">
 						<span class="level">6</span>
 					</article>
 					<article>
 						<img src="../../public/images/codeArmy/missionlist/icon-skill.png" width="32" height="32" alt="Icon Skill">
 						<span class="level">3</span>
-					</article>
+					</article>-->
 				</div>
 				<div class="span1"><?=$work['num_bids']?></div>
 				<div class="span2"><?=$work['end']?></div>
