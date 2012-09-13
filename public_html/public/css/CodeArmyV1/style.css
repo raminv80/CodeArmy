@@ -1977,8 +1977,10 @@ input.assinpo {
 	margin:25px;
 }
 .find-mission-comment-box {
-		background:url(/public/images/codeArmy/mission/comment-box-bg.gif) repeat-x #333;
+		/*background:url(/public/images/codeArmy/mission/comment-box-bg.gif) repeat-x #333; */
+		background: #222;
 		margin:20px 0;
+		padding-bottom:20px;
 }
 .find-mission-comment-box-left {
 	float:left;
@@ -2035,14 +2037,15 @@ input.assinpo {
 	margin:0 5px;
 }
 .small-box-hr input {
-	background:url(/public/images/codeArmy/mission/small-box-bg.png) no-repeat;
+	/*background:url(/public/images/codeArmy/mission/small-box-bg.png) no-repeat;
 	width:75px;
-	padding:0 30px 0px 10px;
+	padding:0 30px 0px 10px; */
+	background: #111 !important;
 	color:#ccc;
 	font-size:16.67px;
 	height:35px;
 	float:left;
-	border:none;
+	border:none !important;
 }
 .arr-up-img {
 	margin-bottom:10px;
@@ -2052,9 +2055,9 @@ input.assinpo {
 	margin-top:10px
 }
 .botharrows {
-	margin-left:-22px;
+	margin-left:10px;
 	float:left;
-	margin-top:11px;
+	margin-top:6px;
 }
 .bidhrstext {
 	float:left;
@@ -2086,7 +2089,8 @@ input.assinpo {
 	float:left;
 }
 .find-mission-down-box-row {
-	background:url(/public/images/codeArmy/mission/comment-box-bg.png) no-repeat #000;
+	/* background:url(/public/images/codeArmy/mission/comment-box-bg.png) no-repeat #000; */
+	background: #222;
 	width:525px;
 	min-height:125px;
 	position:relative;

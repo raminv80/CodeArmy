@@ -15,7 +15,7 @@
 	      </div>
 	      <div class="find-mission-main-desc"><?=$work['description']?></div>
 	    </div>
-	    <div class="find-mission-comment-box">
+	    <div class="find-mission-comment-box clearfix">
           <div id="form-bid-container">
               <div class="find-mission-comment-box-left">
                 <div class="find-mission-comment-avatar"><img src="/public/images/codeArmy/mission/default-avatar.png" />
@@ -29,7 +29,7 @@
                   <div class="urbid">Your Bid</div>
                   <div class="clock-icon"></div>
                   <div class="small-box-hr"> 
-                    <input name="time" class="time" onkeydown="increment(event, this)" autocomplete="off" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
+                    <input name="time" class="time input-small" onkeydown="increment(event, this)" autocomplete="off" type="text" value="<?=($estimate_time['time_cal'])?$estimate_time['time_cal']:'18'?>" />
                   </div>
                   <div class="botharrows">
                     <span class="arrowkey">
@@ -50,7 +50,7 @@
                 <div class="fmcb-right-row2">
                   <div class="dollar-sign-icon"></div>
                   <div class="small-box-hr">
-                    <input name="budget" class="budget" type="text" autocomplete="off" onkeydown="increment(event, this)" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
+                    <input name="budget" class="budget input-small" type="text" autocomplete="off" onkeydown="increment(event, this)" value="<?=($estimate_budget['amount_cal'])?$estimate_budget['amount_cal']:'35'?>" />
                   </div>
                   <div class="botharrows">
                     <span class="arrowkey">
@@ -66,7 +66,7 @@
                 </div>
                 <input type="hidden" name="work_id" value="<?=$work['work_id']?>">
                 <img src="/public/images/codeArmy/loader4.gif" style="position:absolute; top:190px; right:50px;display:none" id="login-ajax" />
-                <input type="submit" name="submit" value="Submit" class="lnkimg" id="submit-bid" />
+                <div class="pull-right" style="padding-right:40px"><input type="submit" name="submit" value="Submit" class="btn btn-warning btn-large" id="submit-bid" /></div>
               </div>
               </form>
           </div>
