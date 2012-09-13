@@ -2,7 +2,7 @@
 
 <div class="po-wall-container">
   <!-- mission submission-->
-  <div id="mission-notification">
+  <div id="mission-notification" class="container-fluid">
   </div>
   <!--mission submission-->
   <div class="top-panel">
@@ -61,7 +61,7 @@
         </div>
         <div class="po-avatar"><img src="/public/images/codeArmy/po/default-avatar.png" /></div>
         <!-- mission submission-->
-        <?php if(strtolower($work['status'])=='open'){?>
+        <?php if(($work['work_horse']==$me['user_id'])&&(strtolower($work['status'])=='in progress' || strtolower($work['status'])=='redo')){?>
         <div class="button green" id="mission_complete" style="clear:both;"><img src="/public/images/codeArmy/loader4.gif" style="position:absolute;left:75px; bottom:10px; display:none;" id="mission-submit-loader" /> Complete Mission!</div>
         <?php }?>
         <!-- mission submission-->
@@ -263,7 +263,33 @@ $(function(){
 	});
 	
 	//Mission submission 
+	var _lock=false;
+	var mission_channel = pusher.subscribe('mission');
+	
+	<?php if($work['owner']==$me['user_id']){//push events for PO?>
+	mission_channel.bind('done-mission-<?=$work['work_id']?>',function(data){
+		if(data.work_id=='<?=$work['work_id']?>'){
+			$('#mission-notification').html('<div class="row-fluid"><div class="span8"><span style="margin:0 5px" class="icon-comment"></span><?=ucfirst($contractor['username'])?> has marked this mission complete!</div><div class="span4"><button id="redo-mission" type="button" class="btn btn-danger">Don\'t accept</button><button id="verify-mission" type="button" class="btn btn-success">Accept</button></div></div>').removeClass('blue green red yellow orange').addClass('orange').slideDown();
+		}
+	});
+	<?php }elseif($work['work_horse']==$me['user_id']){//push events for contractor?>
+	mission_channel.bind('redo-mission-<?=$work['work_id']?>',function(data){
+		if(data.work_id=='<?=$work['work_id']?>'){
+			$('#mission-notification').html('<span style="margin:0 5px" class="icon-icon-exclamation-sign"></span>Captain asked you to revise your work. Please discuss the requirements on mission wall<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-eye-close"></a>').removeClass('blue green orange yellow red').addClass('red').slideDown();
+			$('#mission_complete').hide().delay(1).slideDown();
+			$('#mission-submit-loader').hide();
+		}
+	});
+	mission_channel.bind('verify-mission-<?=$work['work_id']?>',function(data){
+		if(data.work_id=='<?=$work['work_id']?>'){
+			$('#mission-notification').html('<span style="margin:0 5px" class="icon-ok"></span>Mission accomplished. Nice work and Congradulations!<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-eye-close"></a>').removeClass('blue red orange yellow green').addClass('green').slideDown();
+		}
+	});
+	<?php }?>
+	
 	$('#mission_complete').click(function(){
+		if(_lock)return false;
+		_lock = true;
 		$('#mission-submit-loader').show();
 		$.ajax({
 			url:'/missions/Ajax_submit',
@@ -272,17 +298,62 @@ $(function(){
 			success: function(msg){
 				if(msg=='success'){
 					$('#mission_complete').slideUp();
-					$('#mission-notification').html('Mission is marked as completed and sent to captain for verification...<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-remove"></a>').addClass('orange').slideDown();
+					$('#mission-notification').html('<span style="margin:0 5px" class="icon-ok"></span>Mission is marked as completed and sent to captain for verification...<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-remove"></a>').addClass('blue').slideDown();
 				}else if (typeof console == "object") console.log(msg);
+				_lock=false;
 			}
 		});
 		
 	});
-	
+	<?php if($work['work_horse']==$me['user_id']){//Show to contractor?>
 	switch('<?=strtolower($work['status'])?>'){
-		case 'done': $('#mission-notification').html('Pending for verification by captain...<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-eye-close"></a>').addClass('orange').slideDown();
+		case 'done': $('#mission-notification').html('<span class="icon-comment" style="margin:0 5px"></span>Pending for verification by captain...<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-eye-close"></a>').addClass('orange').slideDown();
 		break;
 	}
+	<?php }elseif($work['owner']==$me['user_id']){//Show to po?>
+	switch('<?=strtolower($work['status'])?>'){
+		case 'done': $('#mission-notification').html('<div class="row-fluid"><div class="span8"><span style="margin:0 5px" class="icon-comment"></span><?=ucfirst($contractor['username'])?> has marked this mission complete!</div><div class="span4"><button id="redo-mission" type="button" class="btn btn-danger">Don\'t accept</button><button id="verify-mission" type="button" class="btn btn-success">Accept</button></div></div>').addClass('orange').slideDown();
+		break;
+	}
+	
+	$('#verify-mission').live('click',function(){
+		if(_lock)return false;
+		_lock=true;
+		$('#redo-mission').hide();
+		$(this).html('Accept<img src="/public/images/codeArmy/loader4.gif" id="Ajax-Loader" />');
+		
+		$.ajax({
+			'url':'/missions/Ajax_verify_mission',
+			'data':{'csrf_workpad': getCookie('csrf_workpad'), 'work_id':'<?=$work['work_id']?>'},
+			'type':'post',
+			success:function(msg){
+					if(msg=='success'){
+						$('#mission-notification').html('<span style="margin:0 5px" class="icon-ok"></span>Mission is successfuly completed and verified.<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-eye-close"></a>').removeClass('orange').addClass('green');
+					}else if (typeof console == "object") console.log(msg);
+					_lock=false;
+				}
+		});
+	});
+	
+	$('#redo-mission').live('click',function(){
+		if(_lock)return false;
+		_lock=true;
+		$('#verify-mission').hide();
+		$(this).html('Don\'t accept<img src="/public/images/codeArmy/loader4.gif" id="Ajax-Loader" />');
+		
+		$.ajax({
+			'url':'/missions/Ajax_redo_mission',
+			'data':{'csrf_workpad': getCookie('csrf_workpad'), 'work_id':'<?=$work['work_id']?>'},
+			'type':'post',
+			success:function(msg){
+				if(msg=='success'){
+						$('#mission-notification').html('<span style="margin:0 5px" class="icon-comment"></span>Mission is sent back to contractor for revision.<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-eye-close"></a>').removeClass('orange').addClass('red');
+					}else if (typeof console == "object") console.log(msg);
+				_lock=false;
+			}
+		});
+	});
+	<?php }?>
 	//end of mission submission
 });
 
