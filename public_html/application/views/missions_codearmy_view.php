@@ -115,7 +115,7 @@
 		-o-transform-style: preserve-3d;
 		-o-backface-visibility: hidden;
 	}
-	.missionlist.nano { width:860px; height:85%; border:2px solid #333; display:none; outline: 0;}
+	.missionlist.nano { width:860px; height:85%; border:2px solid #333; display:none; outline: 0; overflow:hidden}
 	.missionlist.nano .closeit {position:absolute; right:-10px; top:-10px; background:black; width:25px; height:25px; line-height:25px; text-align:center; border:2px solid #999; border-radius:50%; cursor:pointer; z-index:9266; color:white}
 	.missionlist.nano .content {padding:20px 0}
 	
@@ -178,6 +178,10 @@
 	   -webkit-transition: font-size .15s ease-in-out,color .15s ease-in-out,border .15s ease-in-out,color .15s ease-in-out;
 	 }
 	.logout:hover{color:red;}
+	
+	.toolbar {-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;}
+	
 	#profile-toolbar #avatar-block .status{
 		position:absolute;
 		top:-15px;
