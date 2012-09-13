@@ -110,7 +110,14 @@ class Missions extends CI_Controller {
 		$this->load->view('po_manage_codearmy', $this->view_data);
 	}
 	
-	function submit(){
+	function set_bid(){
+		if($this->input->post('submit')){
+			$this->bid_application();
+		}
+		redirect("/missions/apply/$work_id");
+	}
+	
+	function Ajax_submit(){
 		//user flagged a mission as complete
 		
 		//check if he is authorised
@@ -119,7 +126,7 @@ class Missions extends CI_Controller {
 		$work = $this->work_model->get_work($work_id)->result_array();
 		if(count($work)!=1)die('Error: job is not selected properly!');
 		if($work[0]['work_horse']!=$user_id)die('Error: only the contrator of selected job can submit it!');
-		
+		if(!in_array(strtolower($work[0]['status']),array('in progress','redo')))die('Error:job status is not right!');
 		//update job details
 		if($this->work_model->job_completed($work_id)==1){
 			//push the submission event
@@ -167,11 +174,146 @@ class Missions extends CI_Controller {
 		}
 	}
 	
-	function set_bid(){
-		if($this->input->post('submit')){
-			$this->bid_application();
-		}
-		redirect("/missions/apply/$work_id");
+	function Ajax_verify_mission(){
+		$work_id = $this->input->post('work_id');
+		$user_id = $this->view_data['me']['user_id'];
+		$work = $this->work_model->get_work($work_id)->result_array();
+		//chck if user is po and job is in right mode
+		if($work[0]['owner']==$user_id && $work[0]['status']=='Done' || true){
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			//update work data
+			$this->work_model->job_verified_and_paid($work_id);
+			
+			//Award contractor
+			//Exp award
+			$contractor = $this->users_model->get_user($work[0]['work_horse'])->result_array();
+			$difficulty = $this->work_model->get_work_difficulty($work_id);
+			$level = $this->game_model->get_level($contractor[0]['exp']);
+			$hours = $this->work_model->mission_completed_hours($work_id);
+			$award_exp = $this->game_model->mission_accomplished_point($difficulty, $hours, $level);
+			$this->users_model->add_exp($contractor[0]['user_id'],$award_exp);
+			$contractor = $this->users_model->get_user($work[0]['work_horse'])->result_array();
+			$new_level = $this->game_model->get_level($contractor[0]['exp']);
+			//Skill award
+			$this->work_model->award_user_skills_from($contractor[0]['user_id'],$work_id);
+			
+			//trigger mission channel for exp up
+			$data = array(
+				'user_id' => $contractor[0]['user_id'],
+				'username' => $contractor[0]['username'],
+				'work_id' => $work_id,
+				'work_title' => $work[0]['title'],
+				'exp' => $award_exp,
+				'time' => date('j M Y H:i')
+			);
+			$pusher->trigger('game-'.$contractor[0]['user_id'], 'exp-up', $data );
+			
+			if($new_level>$level){
+				//trigger mission channel for lvl up
+				$data = array(
+					'user_id' => $contractor[0]['user_id'],
+					'username' => $contractor[0]['username'],
+					'work_id' => $work_id,
+					'work_title' => $work[0]['title'],
+					'level' => $new_level,
+					'time' => date('j M Y H:i')
+				);
+				$pusher->trigger('game-'.$contractor[0]['user_id'], 'lvl-up', $data );
+			}
+			
+			//trigger mission chanel
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $this->view_data['me']['username'],
+				'work_id' => $work_id,
+				'work_title' => $work[0]['title'],
+				'time' => date('j M Y H:i')
+			);
+			$pusher->trigger('mission', 'verify-mission-'.$work_id, $data );
+			
+			//save the event in history
+			$desc = "verified submited work";
+			$status = '';
+			$this->work_model->log_history($user_id,$work_id,'verify',$status,$desc,false);
+			$event_id = $this->db->insert_id();
+			
+			//generate a one time notification for po
+			// insert notification
+			$intReceiverID = $work[0]['work_horse'];
+			$this->work_model->log_notifications($work_id, $intReceiverID, 'wall');
+			
+			//push this event in activity channel
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $this->view_data['me']['username'],
+				'work_id' => $work_id,
+				'work_title'=>$work[0]['title'],
+				'Desc' => $desc,
+				'event' => 'verify',
+				'time' => date('h:ia, d/m/Y'),
+				'event_id'=> $event_id
+			);
+			$pusher->trigger('history', 'new-activity-'.$work_id, $data );
+			
+			//send a message to user
+			$msg = '<p>Congradulations! Captain <a href="/profile/show/'.$user_id.'">'.$this->view_data['me']['username'].'</a> approved mission <a href="/mission/wall/'.$work_id.'">'.$work[0]['title'].'</a></p>';
+			$this->message_model->send_message($user_id,$work[0]['work_horse'],'Mission '.trim($work[0]['title']).' Accomplished!',$msg);
+			die('success');
+		}else die('Error: wrong user or wrong job is selected.');
+	}
+	
+	function Ajax_redo_mission(){
+		$work_id = $this->input->post('work_id');
+		$user_id = $this->view_data['me']['user_id'];
+		$work = $this->work_model->get_work($work_id)->result_array();
+		//chck if user is po and job is in right mode
+		if($work[0]['owner']==$user_id && $work[0]['status']=='Done' || true){
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			//update work data
+			$this->work_model->job_redo($work_id);
+			
+			//trigger mission chanel
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $this->view_data['me']['username'],
+				'work_id' => $work_id,
+				'work_title' => $work[0]['title'],
+				'time' => date('j M Y H:i')
+			);
+			$pusher->trigger('mission', 'redo-mission-'.$work_id, $data );
+			
+			//save the event in history
+			$desc = "asked for revision";
+			$status = '';
+			$this->work_model->log_history($user_id,$work_id,'redo',$status,$desc,false);
+			$event_id = $this->db->insert_id();
+			
+			//generate a one time notification for po
+			// insert notification
+			$intReceiverID = $work[0]['work_horse'];
+			$this->work_model->log_notifications($work_id, $intReceiverID, 'wall');
+			
+			//push this event in activity channel
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $this->view_data['me']['username'],
+				'work_id' => $work_id,
+				'work_title'=>$work[0]['title'],
+				'Desc' => $desc,
+				'event' => 'redo',
+				'time' => date('h:ia, d/m/Y'),
+				'event_id'=> $event_id
+			);
+			$pusher->trigger('history', 'new-activity-'.$work_id, $data );
+			
+			//send a message to user
+			$msg = '<p>Captain <a href="/profile/show/'.$user_id.'">'.$this->view_data['me']['username'].'</a> needs you to revise your work on mission <a href="/mission/wall/'.$work_id.'">'.$work[0]['title'].'</a></p><p>Please use the <a href="/mission/wall/'.$work_id.'">mission wall</a> to discuss requirements in detail.</p><p>Thank you</p>';
+			$this->message_model->send_message($user_id,$work[0]['work_horse'],'Mission '.trim($work[0]['title']).' needs more work!',$msg);
+			
+			die('success');
+		}else die('Error: wrong user or wrong job is selected.');
 	}
 	
 	function hq(){
@@ -180,8 +322,8 @@ class Missions extends CI_Controller {
 		$works = $this->stories->stories_map($percision);
 		$mySkills = $this->skill_model->get_my_skills($user_id);
 		$this->view_data['main_category'] = $this->work_model->get_main_category();
-		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
-		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
+		$this->view_data['myLevel'] = $this->game_model->get_level($this->view_data['me']['exp']);
+		$this->view_data['expProgress'] = $this->game_model->get_progress_bar($this->view_data['me']['exp']);
 		$this->view_data['mySkills'] = $mySkills;
 		$this->view_data['percision'] = $percision;
 		$this->view_data['works'] = $works;
@@ -195,8 +337,8 @@ class Missions extends CI_Controller {
 		$tallents = $this->users_model->tallents_map($percision);
 		$mySkills = $this->skill_model->get_my_skills($user_id);
 		$this->view_data['main_category'] = $this->work_model->get_main_category();
-		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
-		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
+		$this->view_data['myLevel'] = $this->game_model->get_level($this->view_data['me']['exp']);
+		$this->view_data['expProgress'] = $this->game_model->get_progress_bar($this->view_data['me']['exp']);
 		$this->view_data['mySkills'] = $mySkills;
 		$this->view_data['percision'] = $percision;
 		$this->view_data['tallents'] = $tallents;
@@ -209,8 +351,8 @@ class Missions extends CI_Controller {
 		$user_id = $this->view_data['me']['user_id'];
 		$works = $this->stories->stories_map($percision);
 		$mySkills = $this->skill_model->get_my_skills($user_id);
-		$this->view_data['myLevel'] = $this->gamemech->get_level($this->view_data['me']['exp']);
-		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($this->view_data['me']['exp']);
+		$this->view_data['myLevel'] = $this->game_model->get_level($this->view_data['me']['exp']);
+		$this->view_data['expProgress'] = $this->game_model->get_progress_bar($this->view_data['me']['exp']);
 		$this->view_data['mySkills'] = $mySkills;
 		$this->view_data['percision'] = $percision;
 		$this->view_data['works'] = $works;
@@ -763,7 +905,7 @@ class Missions extends CI_Controller {
 		$this->view_data['status'] = $status;
 		$user_id = $this->view_data['me']['user_id'];
 		$this->view_data['myPendingList'] = $this->work_model->get_pending_works($user_id)->result_array();
-		$this->view_data['myWorkList'] = $this->work_model->get_my_works($user_id, 'in progress')->result_array();
+		$this->view_data['myWorkList'] = $this->work_model->get_my_works($user_id, 'active')->result_array();
 		if($status=='Pending')$status = array('assigned','open','done','verify','reject');
 		if($status=='In_Progress')$status = 'in progress';
 		$this->view_data['myMissions'] = $this->work_model->get_owner_works($user_id,$status);
@@ -781,6 +923,12 @@ class Missions extends CI_Controller {
 	
 	function completed(){
 		$user_id = $this->view_data['me']['user_id'];
+		if($this->view_data['me']['role']=='po' || $this->view_data['me']['role']=='admin'){
+			$missions = $this->work_model->po_completed($user_id);
+		}else{
+			$missions = $this->work_model->contractor_completed($user_id);
+		}
+		$this->view_data['missions'] = $missions;
 		$this->view_data['window_title'] = "Missions Completed";
 		$this->load->view('completed_codearmy_view', $this->view_data);
 	}
@@ -905,8 +1053,8 @@ class Missions extends CI_Controller {
 		$completed = $this->users_model->works_compeleted($user_id);
 		$this->view_data['completed'] = $completed;
 		
-		$this->view_data['myLevel'] = $this->gamemech->get_level($me['exp']);
-		$this->view_data['expProgress'] = $this->gamemech->get_progress_bar($me['exp']);
+		$this->view_data['myLevel'] = $this->game_model->get_level($me['exp']);
+		$this->view_data['expProgress'] = $this->game_model->get_progress_bar($me['exp']);
 		
 		$mySkills = $this->skill_model->get_my_top5_skills($user_id);
 		$this->view_data['mySkills'] = $mySkills;
@@ -1027,7 +1175,7 @@ class Missions extends CI_Controller {
 			$data = array(
 				'message' => $message,
 				'user_id' => $user_id,
-				'user_level' => $this->gamemech->get_level($user['exp']),
+				'user_level' => $this->game_model->get_level($user['exp']),
 				'username' => $user['username'],
 				'work_id' => $work_id,
 				'time' => date('j M Y H:i'),
@@ -1534,7 +1682,7 @@ class Missions extends CI_Controller {
 		$bidpusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
 		$data = array(
 			'user_id' => $user_id,
-			'user_level' => $this->gamemech->get_level($this->view_data['me']['exp']),
+			'user_level' => $this->game_model->get_level($this->view_data['me']['exp']),
 			'username' => $this->view_data['me']['username'],
 			'work_id' => $work_id,
 			'time' => date('j M Y H:i'),
@@ -1556,7 +1704,7 @@ class Missions extends CI_Controller {
 			'time' => $time,
 			'desc' => $desc,
 			'username' => $this->view_data['me']['username'],
-			'level' => $this->gamemech->get_level($this->view_data['me']['exp']),
+			'level' => $this->game_model->get_level($this->view_data['me']['exp']),
 			'created_at' => date('Y-m-d H:i:s')
 		);
 		return $res;

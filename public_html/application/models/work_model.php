@@ -438,7 +438,10 @@ class Work_model extends CI_Model {
 	}
 	
 	function get_my_works($user_id, $status){
-			if(strtolower($status) == 'in progress'){
+			if(strtolower($status) == 'active'){
+			$query = "SELECT * FROM works where works.work_horse = ? and lower(works.status) in ('in progress', 'redo', 'assigned','done','verify')";
+			$result = $this->db->query($query, array($user_id));
+			}elseif(strtolower($status) == 'in progress'){
 			$query = "SELECT * FROM works where works.work_horse = ? and lower(works.status) in ('in progress', 'redo', 'assigned')";
 			$result = $this->db->query($query, array($user_id));
 			}elseif(strtolower($status)=='done'){
@@ -604,5 +607,76 @@ class Work_model extends CI_Model {
 		$whr = array('work_id'=>$work_id);
 		$this->db->update('works',$data,$whr);
 		return $this->db->affected_rows();
+	}
+	
+	function job_verified_and_paid($work_id){
+		$data = array(
+			'status' => 'Signoff'
+		);
+		$whr = array('work_id'=>$work_id);
+		$this->db->update('works',$data,$whr);
+		return $this->db->affected_rows();
+	}
+	
+	function get_work_difficulty($work_id){
+		//Find max_skill_level
+		$sql = "SELECT (SELECT max(skill_point) FROM skill_level)*(SELECT max(weight) FROM skill) as max_skill_level";
+		$res = $this->db->query($sql)->result_array();
+		$max_skill_level = $res[0]['max_skill_level'];
+
+		//Find max_work_skill_level
+		$sql = "SELECT max(skill.weight * work_skill.point) as max_work_skill_level FROM work_skill,skill WHERE work_id=? AND skill_id=skill.id";
+		$res = $this->db->query($sql,$work_id)->result_array();
+		$max_work_skill_level = $res[0]['max_work_skill_level'];
+
+		return $max_work_skill_level/$max_skill_level;
+	}
+	
+	function mission_completed_hours($work_id){
+		$sql = "SELECT bid_time*arrangement_type.weight AS hours FROM works, arrangement_type, bids where works.work_id=? AND arrangement_type.id=works.est_arrangement AND bids.work_id=works.work_id AND bids.bid_status='Accepted'";
+		$res = $this->db->query($sql,$work_id)->result_array();
+		return $res[0]['hours'];
+	}
+	
+	function po_completed($user_id){
+		$sql = "SELECT * from works WHERE owner=? AND status = 'Signoff'";
+		return $this->db->query($sql,$user_id)->result_array();
+	}
+	
+	function contractor_completed($user_id){
+		$sql = "SELECT * from works WHERE work_horse=? AND status='Signoff'";
+		return $this->db->query($sql, $user_id)->result_array();
+	}
+	
+	function job_redo($work_id){
+		$data = array(
+			'status' => 'Redo',
+		);
+		$whr = array('work_id'=>$work_id);
+		$this->db->update('works',$data,$whr);
+		return $this->db->affected_rows();
+	}
+	
+	function award_user_skills_from($user_id,$work_id){
+		$user_skills = $this->db->get('skill_set',array('user_id'=>$user_id))->result_array();
+		$user_set = array();
+		foreach($user_skills as $skill)$user_set[] = $skill['skill_id']; 
+		$work_skills = $this->get_work_skills($work_id);
+		foreach($work_skills as $award_skill):
+			//does user already have this skill?
+			if(in_array($award_skill['skill_id'],$user_set)){
+				//update point
+				$sql = "UPDATE skill_set SET poin=point+? WHERE user_id=? and skill_id=?";
+				$this->db->query($sql,array($award_skill['point'],$user_id,$award_skill['skill_id']));
+			}else{
+				//insert skill
+				$data = array(
+					'user_id' => $user_id,
+					'skill_id' => $award_skill['skill_id'],
+					'point' => $award_skill['point'],
+				);
+				$this->db->insert('skill_set',$data);
+			}
+		endforeach;
 	}
 }

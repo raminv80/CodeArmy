@@ -26,7 +26,7 @@
           </a> </li>
         <li><a href="/messages/notifications" id="Notifications">
           <div id="notifications-holder">
-            <div class="notification <?=isset($myActiveNotifications)&&$myActiveNotifications>0?'':'hidden' ?>"" id="notifications-notification"><?=$myActiveNotifications?></div>
+            <div class="notification <?=isset($myActiveNotifications)&&$myActiveNotifications>0?'':'hidden' ?>" id="notifications-notification"><?=$myActiveNotifications?></div>
             Notifications</div>
           </a></li>
         <li>

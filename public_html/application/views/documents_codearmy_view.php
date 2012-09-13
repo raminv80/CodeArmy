@@ -80,7 +80,7 @@
             <?=$po['username']?>
           </p>
           <p class="level">Level
-            <?=$this->gamemech->get_level($po['exp']);?>
+            <?=$this->game_model->get_level($po['exp']);?>
           </p>
         </div>
         <div class="po-avatar"><img src="/public/images/codeArmy/po/default-avatar.png" /></div>
@@ -269,13 +269,13 @@
 		$('#mission_complete').click(function(){
 			$('#mission-submit-loader').show();
 			$.ajax({
-				url:'/missions/submit',
+				url:'/missions/Ajax_submit',
 				data: {'csrf_workpad': getCookie('csrf_workpad'), 'work_id': '<?=$work['work_id']?>'},
 				type: 'post',
 				success: function(msg){
 					if(msg=='success'){
 						$('#mission_complete').slideUp();
-						$('#mission-notification').html('Mission is marked as completed and sent to PO for verification...<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-remove"></a>').addClass('orange').slideDown();
+						$('#mission-notification').html('Mission is marked as completed and sent to captain for verification...<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-remove"></a>').addClass('orange').slideDown();
 					}else if (typeof console == "object") console.log(msg);
 				}
 			});
@@ -283,7 +283,7 @@
 		});
 		
 		switch('<?=strtolower($work['status'])?>'){
-			case 'done': $('#mission-notification').html('Pending for verification by PO...<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-eye-close"></a>').addClass('orange').slideDown();
+			case 'done': $('#mission-notification').html('Pending for verification by captain...<a href="javascript:$(\'#mission-notification\').slideUp()" style="float:right" class="icon-eye-close"></a>').addClass('orange').slideDown();
 			break;
 		}
 		//end of mission submission
