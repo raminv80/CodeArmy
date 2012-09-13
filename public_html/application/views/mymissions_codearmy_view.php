@@ -187,7 +187,7 @@ background:none !important;
             <?php endforeach;?>
             <?php foreach($myMissions as $list):
 				$color = (in_array(strtolower($list['status']),array('draft')))?'red':'green';
-				$color = (in_array(strtolower($list['status']),array('signoff')))?'grey':$color;
+				$color = (in_array(strtolower($list['status']),array('signoff')))?'gray':$color;
 			?>
             <div class="item <?=$color?>-mission" id="mission-<?=$list['work_id']?>">
             	<?php
