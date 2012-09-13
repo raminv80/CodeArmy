@@ -134,6 +134,10 @@
 <!-- folder contents -->
 <div id="folder-wrapper"><div class="content"><img src="/public/images/ajax-loader.gif" /></div><div class="arrow"></div></div>
 <!-- end of folder contents -->
+
+<!-- Mission List -->
+<div class="missionlist nano"><div class="log content"></div></div>
+
 <style>
 	* {
 		transform-style: preserve-3d;
@@ -143,6 +147,11 @@
 		-o-transform-style: preserve-3d;
 		-o-backface-visibility: hidden;
 	}
+	
+	.missionlist.nano { width:860px; height:85%; border:2px solid #333; display:none;}
+	.missionlist.nano .closeit {position:absolute; right:-10px; top:-10px; background:black; width:25px; height:25px; line-height:25px; text-align:center; border:2px solid #999; border-radius:50%; cursor:pointer; z-index:9266; color:white}
+	.missionlist.nano .content {padding:20px 0}
+	
 	.nano-chat{height:153px;}
 	.nano-chat .content{padding:5px;color:white;}
 	#folder-wrapper{
@@ -428,6 +437,8 @@
 		padding: 0 5px;
 		height:32px; line-height:32px;
 		color:#999;
+		border-radius:0;
+		font-size:1em;
 	}
 	#filter-toolbar input:focus {color:black}
 	#filter-toolbar #search-submit {
@@ -730,7 +741,7 @@
 		
 		$('#world-map').on('click','.marker',function(){
 					//TODO: open project list
-					var me = this;
+					/* var me = this;
 					$.fancybox.showLoading();
 					$.get(
 						'/missions/mission_list/'+$(this).data().ref.lat+'/'+$(this).data().ref.lng,
@@ -746,7 +757,21 @@
 							$('#dialog-project-list .log').html(msg);
 						}
 					);
-					$.fancybox.hideLoading();
+					$.fancybox.hideLoading(); */
+					var me = this;
+					var url = '/missions/mission_list/'+$(this).data().ref.lat+'/'+$(this).data().ref.lng;
+					$('.missionlist').lightbox_me({
+						closeSelector: '.maplink',
+						overlayCSS	: {background: 'black', opacity: .8},
+						onLoad : function() { 
+							$.get(url,function(msg){
+									$('.missionlist').data($(me).data());
+									$('.missionlist .log').html(msg);
+									$('.nano').nanoScroller();
+								}
+							);
+						}
+					});
 			});
 			
 		$('#dialog-project-list').on('click','.summary-row',controlMissionList);
