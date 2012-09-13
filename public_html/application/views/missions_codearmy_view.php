@@ -202,7 +202,7 @@
 		position:absolute;
 		/*background:url(/public/images/codeArmy/mymission/profile-toolbar-temp.png) no-repeat;*/
 		width:160px;
-		top:10px;right:0px;
+		top:10px;right:20px;
 		z-index:10000;
 		margin-right:10px;
 	}
@@ -231,7 +231,7 @@
 	#filter-toolbar {
 		width:142px;
 		position:absolute;
-		top:10px;left:20px;
+		top:10px;left:40px;
 		z-index:10001;
 		overflow:hidden;
 		background: -moz-linear-gradient(top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%); /* FF3.6+ */
