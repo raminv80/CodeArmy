@@ -83,7 +83,7 @@
 </div>
 <!-- end of dialogs --> 
 
-<div class="mission-frame" style="width:800px; height:550px; display:none;"><div class="closeme"><i class="icon-remove"></i></div></div>
+<div class="mission-frame" style="width:860px; height:86%; display:none;"><div class="closeme"><i class="icon-remove"></i></div></div>
 
 <!-- marker template -->
 <div id="marker-template" class="marker" style="display:none;">
@@ -103,7 +103,7 @@
 
 <div class="missionlist nano">
 	<div class="log content"></div>
-	<div class="closeit"><i class="icon-remove"></i></div>
+	<!-- <div class="closeit"><i class="icon-remove"></i></div> -->
 </div>
 
 <style>
@@ -115,9 +115,9 @@
 		-o-transform-style: preserve-3d;
 		-o-backface-visibility: hidden;
 	}
-	.missionlist.nano { width:860px; height:85%; border:2px solid #333; display:none;}
+	.missionlist.nano { width:860px; height:85%; border:2px solid #333; display:none; outline: 0;}
 	.missionlist.nano .closeit {position:absolute; right:-10px; top:-10px; background:black; width:25px; height:25px; line-height:25px; text-align:center; border:2px solid #999; border-radius:50%; cursor:pointer; z-index:9266; color:white}
-	.missionlist.nano .content {padding:10px}
+	.missionlist.nano .content {padding:20px 0}
 	
 	.nano-chat{height:153px;}
 	.nano-chat .content{padding:5px;color:white;}
@@ -240,6 +240,7 @@
 		font-size:.85em;
 		border: 2px solid rgba(255,255,255,.15);
 		border-bottom: none;
+		
 	}
 	a#filter-toolbar-logo {
 		width:100%;
@@ -303,6 +304,8 @@
 		padding: 0 5px;
 		height:32px; line-height:32px;
 		color:#999;
+		border-radius:0;
+		font-size:1em;
 	}
 	#filter-toolbar input:focus {color:black}
 	#filter-toolbar #search-submit {
@@ -585,7 +588,7 @@
 					var me = this;
 					var url = '/missions/mission_list/'+$(this).data().ref.lat+'/'+$(this).data().ref.lng;
 					$('.missionlist').lightbox_me({
-						closeSelector: '.closeit',
+						closeSelector: '.maplink',
 						overlayCSS	: {background: 'black', opacity: .8},
 						onLoad : function() { 
 							$.get(url,function(msg){
@@ -594,6 +597,9 @@
 									$('.nano').nanoScroller();
 								}
 							);
+						},
+						onClose : function() {
+							$('.slideapply, .slidelist').hide();
 						}
 					});
 			});

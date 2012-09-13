@@ -3573,7 +3573,11 @@ color: #999;
 	margin: 0 -3px 0 0;
 }
 
+<<<<<<< HEAD
+/*.btn { 
+=======
 /* .btn { 
+>>>>>>> origin/master
 	cursor:pointer;
 	padding:10px;
 	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
@@ -3583,7 +3587,11 @@ color: #999;
 }
 .btn:hover {
 	background:#333 url(ui-darkness/images/ui-bg_gloss-wave_25_333333_500x100.png) 50% 70% repeat-x;
+<<<<<<< HEAD
+}*/
+=======
 } */
+>>>>>>> origin/master
 
 ul.tagit {
     padding: 1px 5px;

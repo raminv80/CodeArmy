@@ -9,6 +9,7 @@ class Login extends CI_Controller {
 		$this->load->model('projects_model');
 		$this->load->model('users_model');
 		$this->load->model('stories_model', 'stories');
+		$this->load->model('cron_model');
 		$this->view_data['page_is'] = 'login';
 		$this->view_data['action_is'] = $this->uri->segment(2);
 		
@@ -37,6 +38,7 @@ class Login extends CI_Controller {
 	
 	// index page
 	function index() {
+		$this->cron_model->loginreminder();
 		$this->view_data['main_content'] = 'login_form';
 		$this->view_data['window_title'] = "Login to Workpad";
 		$this->load->view('login_codearmy_view', $this->view_data);
