@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=2.0.6" type="text/css" media="screen" />
 <link rel="stylesheet" href="/public/js/codeArmy/fancybox/source/jquery.fancybox.css?v=2.0.6" type="text/css" media="screen" />
 <link rel="stylesheet" href="/public/pictogram/css/font-awesome.css">
-<link href="/public/css/CodeArmyV1/bootstrap.min.css" rel="stylesheet">
+<link href="/public/css/CodeArmyV1/bootstrap.css" rel="stylesheet">
 
 <link href="/public/css/CodeArmyV1/style.css" media="all" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/public/js/jquery-1.7.min.js"></script>
