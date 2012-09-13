@@ -1,3 +1,5 @@
+<link href='http://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css'>
+
 <style>
 	.fancybox-nav span {visibility: visible;}
 	.fancybox-nav{top:30px;height:90%; width:60px;}
@@ -55,7 +57,99 @@
 	.info .data-row .col2{float:left;width:100px;color:white; font-size:11pt;text-align:left;line-height:73px;padding-left:10px; text-align:center;border:1px solid #da921f;background:white;color:#cc6600;}
 	.info .data-row .col3{float:left;width:229px;color:white; font-size:11pt;text-align:left;height:73px;line-height:35px;padding-left:10px;background:white;border:1px solid #da921f;color:#cc6600;}
 	.detail-row{cursor:pointer;}
+	
+	.mission-list {padding-bottom:20px}
+	.mission-list .maplink {text-align:right; padding-top:20px } .mission-list .maplink a {color:#FFA800}
+	.mission-list h1 {font-family: 'Black Ops One', cursive; font-size:1.6em; color:#FFA800; padding-bottom: 15px}
+	.mission-list .headbox {background: #FFA800; color:black; font-weight:700; line-height:30px}
+	.mission-list div[class*="span"] {border-left:1px solid black; padding-left:5px}
+	.mission-list .lists div[class*="span"] {cursor:pointer; border:none; padding-top:10px}
+	.mission-list .lists:nth-child(even) {background:#1f1f1f}
+	.mission-list .lists:nth-child(odd) {background:#161616}
+	.mission-list .lists:hover {background: #402800} 
+	.mission-list .lists:hover > div[class*="span"] {color:white; text-shadow: 0 1px 1px black}
+	.mission-list .lists div[class*="span"]:nth-child(3),
+	.mission-list .lists div[class*="span"]:nth-child(4),
+	.mission-list .lists div[class*="span"]:nth-child(5),
+	.mission-list .lists div[class*="span"]:nth-child(6) {text-align:center}
+	.mission-list .skillset article {position:relative; width:32px; float:left; padding-left:7px}
+	.mission-list .skillset article .level {position:absolute; top:-2px; right:-2px; background:#333; color:white; border-radius:50%; width:15px; height:15px; line-height:15px; border:1px solid black; font-size:.8em;}
 </style>
+
+<div class="mission-list container-fluid">
+	<div class="row-fluid">
+		<div class="pull-left span6"><h1>Latest Missions (All)</h1></div>
+		<div class="pull-right span6 maplink"><a href="#"><i class="icon-globe"></i> Back to world map</a></div>
+	</div>
+	<div class="row-fluid headbox">
+		<div class="span1">Category</div>
+		<div class="span4">Title</div>
+		<div class="span2">Skills Required</div>
+		<div class="span1">Bids</div>
+		<div class="span2">Time Left</div>
+		<div class="span2">Payout (USD)</div>
+	</div>
+	<div class="row-fluid lists">
+		<div class="span1"><img src="../../public/images/codeArmy/missionlist/icon_design.png" width="70" height="60" alt="Icon Design"></div>
+		<div class="span4">ThirtyTwoSpaces Needs a New Web home.</div>
+		<div class="span2 skillset clearfix">
+			<article>
+				<img src="../../public/images/codeArmy/missionlist/icon-skill.png" width="32" height="32" alt="Icon Skill">
+				<span class="level">11</span>
+			</article>
+			<article>
+				<img src="../../public/images/codeArmy/missionlist/icon-skill.png" width="32" height="32" alt="Icon Skill">
+				<span class="level">6</span>
+			</article>
+			<article>
+				<img src="../../public/images/codeArmy/missionlist/icon-skill.png" width="32" height="32" alt="Icon Skill">
+				<span class="level">3</span>
+			</article>
+		</div>
+		<div class="span1">3</div>
+		<div class="span2">12 hours</div>
+		<div class="span2">USD999 / hour</div>
+	</div>
+	<div class="row-fluid lists">
+		<div class="span1"><img src="../../public/images/codeArmy/missionlist/icon_dev-front.png" width="70" height="60" alt="Icon Dev Front"></div>
+		<div class="span4">A New Name for a Boutique Store.</div>
+		<div class="span2 skillset clearfix">
+			<article>
+				<img src="../../public/images/codeArmy/missionlist/icon-skill.png" width="32" height="32" alt="Icon Skill">
+				<span class="level">1</span>
+			</article>
+			<article>
+				<img src="../../public/images/codeArmy/missionlist/icon-skill.png" width="32" height="32" alt="Icon Skill">
+				<span class="level">9</span>
+			</article>
+		</div>
+		<div class="span1">3</div>
+		<div class="span2">12 hours</div>
+		<div class="span2">USD999 / hour</div>
+	</div>
+	<div class="row-fluid lists">
+		<div class="span1"><img src="../../public/images/codeArmy/missionlist/icon_dev-front.png" width="70" height="60" alt="Icon Dev Front"></div>
+		<div class="span4">A New Name for a Boutique Store A New Name for a Boutique Store.</div>
+		<div class="span2 skillset clearfix">
+			<article>
+				<img src="../../public/images/codeArmy/missionlist/icon-skill.png" width="32" height="32" alt="Icon Skill">
+				<span class="level">22</span>
+			</article>
+			<article>
+				<img src="../../public/images/codeArmy/missionlist/icon-skill.png" width="32" height="32" alt="Icon Skill">
+				<span class="level">4</span>
+			</article>
+			<article>
+				<img src="../../public/images/codeArmy/missionlist/icon-skill.png" width="32" height="32" alt="Icon Skill">
+				<span class="level">13</span>
+			</article>
+		</div>
+		<div class="span1">3</div>
+		<div class="span2">12 hours</div>
+		<div class="span2">USD999 / hour</div>
+	</div>
+</div>
+
 <div id="mission_list">
 	<div class="mission_list_header">Latest Missions (All)</div>
     <div class="down-arrow"></div>

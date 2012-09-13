@@ -110,6 +110,63 @@ class Missions extends CI_Controller {
 		$this->load->view('po_manage_codearmy', $this->view_data);
 	}
 	
+	function submit(){
+		//user flagged a mission as complete
+		
+		//check if he is authorised
+		$user_id = $this->view_data['me']['user_id'];
+		$work_id = $this->input->post('work_id');
+		$work = $this->work_model->get_work($work_id)->result_array();
+		if(count($work)!=1)die('Error: job is not selected properly!');
+		if($work[0]['work_horse']!=$user_id)die('Error: only the contrator of selected job can submit it!');
+		
+		//update job details
+		if($this->work_model->job_completed($work_id)==1){
+			//push the submission event
+			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
+			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			
+			//trigger mission chanel
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $this->view_data['me']['username'],
+				'work_id' => $work_id,
+				'work_title' => $work[0]['title'],
+				'time' => date('j M Y H:i')
+			);
+			$pusher->trigger('mission', 'done-mission-'.$work_id, $data );
+			
+			//save the event in history
+			$desc = "finished working";
+			$status = '';
+			$this->work_model->log_history($user_id,$work_id,'submit',$status,$desc,false);
+			$event_id = $this->db->insert_id();
+			
+			//generate a one time notification for po
+			// insert notification
+			$intReceiverID = $work[0]['owner'];
+			$this->work_model->log_notifications($work_id, $intReceiverID, 'wall');
+			
+			//push this event in activity channel
+			$data = array(
+				'user_id' => $user_id,
+				'username' => $this->view_data['me']['username'],
+				'work_id' => $work_id,
+				'work_title'=>$work[0]['title'],
+				'Desc' => $desc,
+				'event' => 'submit',
+				'time' => date('h:ia, d/m/Y'),
+				'event_id'=> $event_id
+			);
+			$pusher->trigger('history', 'new-activity-'.$work_id, $data );
+			
+			//send a message to user
+			$msg = "User ".$this->view_data['me']['username']." flagged mission <a href='/missions/wall/".$work_id."'>".trim($work[0]['title']).'</a> complete. Please <a href="/missions/wall/'.$work_id.'">click here</a> to go to this mission and verify if mission is completed successfully.';
+			$this->message_model->send_message($user_id,$work[0]['owner'],'Mission '.trim($work[0]['title']).' completed',$msg);
+			echo 'success';
+		}
+	}
+	
 	function set_bid(){
 		if($this->input->post('submit')){
 			$this->bid_application();
@@ -739,6 +796,8 @@ class Missions extends CI_Controller {
 		$this->view_data['work'] = $this->view_data['work'][0];
 		$this->view_data['po'] = $this->users_model->get_user($this->view_data['work']['owner'])->result_array();
 		$this->view_data['po'] = $this->view_data['po'][0];
+		$this->view_data['contractor'] = $this->users_model->get_user($this->view_data['work']['work_horse'])->result_array();
+		if(count($this->view_data['contractor'])>0) $this->view_data['contractor'] = $this->view_data['contractor'][0];
 		$this->view_data['activities'] = $this->work_model->get_recent_activities($work_id);
 		$this->view_data['comments'] = $this->work_model->get_comments($work_id);
 		//delete wall notification for user
@@ -939,13 +998,19 @@ class Missions extends CI_Controller {
 		$wh = $this->work_model->is_workhorse($user_id,$work_id);
 		if(!$po&&!$wh)die('Unauthorised access!');
 		//only workhorse and po can comment
-		if($work['work_horse']==$user_id || $work['owner']==$user_id || $work['creator']==$user_id){			
+		if($work['work_horse']==$user_id || $work['owner']==$user_id || $work['creator']==$user_id){	
+			//save comment in database 		
 			$comment_id = $this->work_model->create_comment($work_id, $this->view_data['me']['username'], $message, $attach);
+			
+			//save this event in history
 			$status = json_encode(array(
 				'comment_id' => $comment_id,
 				'work_id' => $work_id));
 			$desc = "commented";
-			$this->work_model->log_history($user_id,$work_id,'comment',$status,$desc,false);			
+			$this->work_model->log_history($user_id,$work_id,'comment',$status,$desc,false);
+			$event_id = $this->db->insert_id();
+			
+			//generate one time notification for other party in DB
 			// insert notification
 			if($po){
 				$intReceiverID = $work['work_horse'];
@@ -954,8 +1019,11 @@ class Missions extends CI_Controller {
 			}
 			$this->work_model->log_notifications($work_id, $intReceiverID, 'wall');
 			
+			//now push events
 			require_once(getcwd()."/application/helpers/pusher/Pusher.php");
 			$pusher = new Pusher('deb0d323940b00c093ee', '9ab20336af22c4e7fa77', '25755');
+			
+			//trigger event channel
 			$data = array(
 				'message' => $message,
 				'user_id' => $user_id,
@@ -966,6 +1034,8 @@ class Missions extends CI_Controller {
 				'comment_id' => $comment_id
 			);
 			$pusher->trigger('comments', 'new-comment-'.$work_id, $data );
+			
+			//trigger history channel
 			$data = array(
 				'user_id' => $user_id,
 				'username' => $user['username'],
@@ -975,7 +1045,7 @@ class Missions extends CI_Controller {
 				'event' => 'comment',
 				'time' => date('h:ia, d/m/Y'),
 				'status' => $status,
-				'event_id'=> $this->db->insert_id()
+				'event_id'=> $event_id
 			);
 			$pusher->trigger('history', 'new-activity-'.$work_id, $data );
 			die('success');
