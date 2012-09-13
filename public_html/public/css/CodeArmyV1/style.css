@@ -2344,9 +2344,13 @@ top-panel-right {
 	-moz-border-radius: 15px;
 }
 .bg_progress_summary {
-	background:url(/public/images/codeArmy/po/bg_progress_summary.png) no-repeat;
+	/* background:url(/public/images/codeArmy/po/bg_progress_summary.png) no-repeat; */
+	background: rgba(0,0,0,.2);
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
 	width:227px;
-	height:200px;
+	min-height:200px;
 	float:left;
 	position: relative;
 	margin:5px 0;
@@ -2356,6 +2360,10 @@ top-panel-right {
 	margin:5px 8px;
 	padding: 0 8px;
 	float:left;
+	background: rgba(0,0,0,.8);
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 }
 .top-panel-right p.wall-box-title {
 	font-size:10.5px;
