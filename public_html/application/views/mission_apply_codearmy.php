@@ -1,8 +1,10 @@
 <?php $this->load->view('includes/frame_header.php'); ?>
 
-<div class="find-mission-full-wrapper">
-	<div class="find-mission-full-container" style="width:770px; overflow:hidden">
-	  <div class="find-mission-main-col">
+<link rel="stylesheet" href="../../public/css/CodeArmyV1/bootstrap.css" type="text/css">
+
+<div class="find-mission-full-wrappers row-fluid content">
+	<div class="find-mission-full-containers" style="overflow:hidden">
+	  <div class="find-mission-main-cols span8">
 	    <div class="find_mission_main_desc">
 	      <div class="find-mission-main-title">
 	        <div class="find-mission-title-logo"></div>
@@ -98,7 +100,7 @@
 	      </div>
 	    </div>
 	  </div>
-	  <div class="find-mission-right-col">
+	  <div class="find-mission-right-cols span4">
 	    <!--<div class="closebut"><a href="#">X CLOSE</a></div>-->
 	    <div class="find-mission-right-block">
 	      <div class="right-col-title-bg">Mission Captain</div>
@@ -247,45 +249,5 @@
 			val=$(this).val(val);
 		});
 		
-		$(function(){
-			var win = $(window);
-			// Full body scroll
-			var isResizing = false;
-			win.bind(
-				'resize',
-				function()
-				{
-					if (!isResizing) {
-						isResizing = true;
-						var container = $('.find-mission-full-wrapper');
-						// Temporarily make the container tiny so it doesn't influence the
-						// calculation of the size of the document
-						container.css(
-							{
-								'width': 1,
-								'height': 1
-							}
-						);
-						// Now make it the size of the window...
-						container.css(
-							{
-								'width': win.width(),
-								'height': win.height()
-							}
-						);
-						isResizing = false;
-						container.jScrollPane(
-							{
-								'showArrows': true
-							}
-						);
-					}
-				}
-			).trigger('resize');
-			/* IE calculates the width incorrectly first time round (it doesn't count the space used by the native scrollbar) so we re-trigger if necessary. */
-			if ($('#full-page-container').width() != win.width()) {
-				win.trigger('resize');
-			}
-		})
 </script>
 <?php $this->load->view('includes/frame_footer.php'); ?>

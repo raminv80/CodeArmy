@@ -115,7 +115,7 @@
 		-o-transform-style: preserve-3d;
 		-o-backface-visibility: hidden;
 	}
-	.missionlist.nano { width:860px; height:85%; border:2px solid #333; display:none;}
+	.missionlist.nano { width:860px; height:85%; border:2px solid #333; display:none; outline: 0;}
 	.missionlist.nano .closeit {position:absolute; right:-10px; top:-10px; background:black; width:25px; height:25px; line-height:25px; text-align:center; border:2px solid #999; border-radius:50%; cursor:pointer; z-index:9266; color:white}
 	.missionlist.nano .content {padding:20px 0}
 	
@@ -305,6 +305,7 @@
 		height:32px; line-height:32px;
 		color:#999;
 		border-radius:0;
+		font-size:1em;
 	}
 	#filter-toolbar input:focus {color:black}
 	#filter-toolbar #search-submit {
@@ -596,6 +597,9 @@
 									$('.nano').nanoScroller();
 								}
 							);
+						},
+						onClose : function() {
+							$('.slideapply, .slidelist').hide();
 						}
 					});
 			});
