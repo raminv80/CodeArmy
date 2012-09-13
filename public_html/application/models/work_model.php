@@ -658,7 +658,8 @@ class Work_model extends CI_Model {
 	}
 	
 	function award_user_skills_from($user_id,$work_id){
-		$user_skills = $this->db->get('skill_set',array('user_id'=>$user_id))->result_array();
+		$sql = "SELECT * from skill_set WHERE user_id=?";
+		$user_skills = $this->db->query($sql,array($user_id))->result_array();
 		$user_set = array();
 		foreach($user_skills as $skill)$user_set[] = $skill['skill_id']; 
 		$work_skills = $this->get_work_skills($work_id);
@@ -666,8 +667,8 @@ class Work_model extends CI_Model {
 			//does user already have this skill?
 			if(in_array($award_skill['skill_id'],$user_set)){
 				//update point
-				$sql = "UPDATE skill_set SET poin=point+? WHERE user_id=? and skill_id=?";
-				$this->db->query($sql,array($award_skill['point'],$user_id,$award_skill['skill_id']));
+				$sql = "UPDATE skill_set SET point=(point+".$award_skill['point'].") WHERE user_id=? and skill_id=?";
+				$this->db->query($sql,array($user_id,$award_skill['skill_id']));
 			}else{
 				//insert skill
 				$data = array(
