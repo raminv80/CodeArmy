@@ -38,7 +38,7 @@ class Login extends CI_Controller {
 	
 	// index page
 	function index() {
-		$this->cron_model->loginreminder();
+		//$this->cron_model->loginreminder();
 		$this->view_data['main_content'] = 'login_form';
 		$this->view_data['window_title'] = "Login to Workpad";
 		$this->load->view('login_codearmy_view', $this->view_data);
