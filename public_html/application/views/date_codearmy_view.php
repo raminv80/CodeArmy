@@ -476,7 +476,9 @@ function myDayClickHandler(eventObj){
 	var date = eventObj.data.calDayDate;
 	//$('label[for="Title"] span').text(date.toDateString());
 	clickDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+	<?php if($work['status'] != 'Signoff'){ ?>
 	$('#add-event-form').dialog('open'); 
+	<?php } ?>
 };
 
 /**
@@ -488,7 +490,9 @@ function myAgendaClickHandler (eventObj){
 	// pull agenda item from calendar
 	var agendaItem = jfcalplugin.getAgendaItemById("#mycal",agendaId);
 	clickAgendaItem = agendaItem;
+	<?php if($work['status'] != 'Signoff'){ ?>
 	$("#display-event-form").dialog('open');
+	<?php } ?>
 };
 /**
  * get the agenda item that was dropped. It's start and end dates will be updated.
