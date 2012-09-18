@@ -1,20 +1,34 @@
 <?php $this->load->view('includes/frame_header.php'); ?>
 
 <link rel="stylesheet" href="../../public/css/CodeArmyV1/bootstrap.css" type="text/css">
-
+<style type="text/css">
+	.find-mission-full-wrappers {font-family: 'Ruda', Lucida Grande, serif;}
+</style>
 <div class="find-mission-full-wrappers row-fluid content">
 	<div class="find-mission-full-containers" style="overflow:hidden">
 	  <div class="find-mission-main-cols span8">
-	    <div class="find_mission_main_desc">
+	    
+		<!-- Main Desc -->
+		<div class="find_mission_main_desc">
 	      <div class="find-mission-main-title">
 	        <div class="find-mission-title-logo"></div>
 	        <div class="find-mission-title-text"><?=$work['title']?></div>
 	      </div>
 	      <div class="find-mission-video-block">
-	        <iframe width="475" height="280" frameborder="0" src="http://www.youtube.com/embed/<?=$work['tutorial']?$work['tutorial']:'zFNb8j3YAd4'?>?wmode=opaque" type="text/html" class="youtube-player"></iframe>
+	        <iframe width="541" height="366" frameborder="0" src="http://www.youtube.com/embed/<?=$work['tutorial']?$work['tutorial']:'zFNb8j3YAd4'?>?wmode=opaque" type="text/html" class="youtube-player"></iframe>
 	      </div>
 	      <div class="find-mission-main-desc"><?=$work['description']?></div>
 	    </div>
+		
+		<!-- Bid -->
+		
+		<div class="bid-box" style="background:orange">
+			<div style="width:30%">Hourly</div>
+			<div style="width:70%">
+				<p>Your Bid</p>
+			</div>
+		</div>
+		
 	    <div class="find-mission-comment-box clearfix">
           <div id="form-bid-container">
               <div class="find-mission-comment-box-left">

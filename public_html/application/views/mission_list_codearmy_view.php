@@ -59,7 +59,7 @@
 	.detail-row{cursor:pointer;}
 	
 	.mission-list {padding-bottom:20px;}
-	.mission-list .maplink {text-align:right; padding-top:20px } .mission-list .maplink a {color:#FFA800}
+	.mission-list .maplink {text-align:right} .mission-list .maplink a {color:#FFA800}
 	.mission-list h1 {font-family: 'Black Ops One', cursive; font-size:1.6em; color:#FFA800; padding-bottom: 15px}
 	.mission-list .headbox {background: #FFA800; color:black; font-weight:700; line-height:30px}
 	.mission-list div[class*="span"] {border-left:1px solid black; padding-left:5px}
