@@ -151,11 +151,11 @@
 	margin-left: -8px;
 }
 
-.logo {background: url(http://codearmy.local/public/images/codeArmy/mymission/fillter-toolbar.png); height:134px; width:142px; background-position:-16px 0px; margin: 10px 0 0 10px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px}
+.logo {background: url(/public/images/codeArmy/mymission/fillter-toolbar.png); height:134px; width:142px; background-position:-16px 0px; margin: 10px 0 0 10px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px}
 
 hr {border-top-color:black; border-bottom-color:#444}
 
-.profile-header .alert {margin-top:5px; margin-bottom:5px; background:none; border:none; color:orange; text-shadow:none}
+.profile-header .alert {margin-top:5px; margin-bottom:5px; background:none; border:none; color:orange; text-shadow:none; display:none}
 .profile-header .alert .close {color:white; text-shadow:0 1px 1px black}
 </style>
 <div id="inner">
@@ -328,9 +328,10 @@ hr {border-top-color:black; border-bottom-color:#444}
     <?php endif;?>
     <div id="main-content" style="margin-top:0; overflow:hidden; padding-top:10px">
 	
-	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.0/bootstrap.min.js"></script>
-	<script type="text/javascript" src="http://raw.github.com/sebnitu/HorizontalNav/master/jquery.horizontalNav.js"></script>
-	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.js"></script>
+	<script src="../../../public/js/codeArmy/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../public/js/codeArmy/horizontalNav.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../public/js/codeArmy/cookie.js" type="text/javascript" charset="utf-8"></script>
+	
 	<script type="text/javascript">
 	$(function(){
 		
@@ -354,14 +355,13 @@ hr {border-top-color:black; border-bottom-color:#444}
 			//alert( $.cookie("active") );	
 		});
 		$('a.profile-setting').click(function(){
-			$('.arrow_box').slideToggle();
+			$('.arrow_box').slideToggle('fast');
 		});
 		
 		$('.logo').click(function(){
 			$.cookie("active", 2, { expires : 1, path: '/' } );
 		});
 		
-		//For notifications or announcements, just edit .alert text and enable it
-		//$(".alert").alert(); 
+		//For notifications or announcements, just edit .alert text and enable it 
 	})
 	</script>
