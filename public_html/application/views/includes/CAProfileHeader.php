@@ -175,15 +175,15 @@ hr {border-top-color:black; border-bottom-color:#444}
 					<li><a href="/messages/inbox" rel=""><i class="icon-envelope-alt"></i> <br />Messages</a>
 						<nav class="child">
 							<ul class="childnav">
-								<li><a href="#">Inbox</a></li>
-								<li><a href="#">Compose</a></li>
-								<li><a href="#">Sent</a></li>
-								<li><a href="#">Archive</a></li>
-								<li><a href="#">Trash</a></li>
+								<li><a href="/messages/inbox">Inbox</a></li>
+								<li><a href="/messages/compose">Compose</a></li>
+								<li><a href="/messages/sent">Sent</a></li>
+								<li><a href="/messages/archive">Archive</a></li>
+								<li><a href="/messages/trash">Trash</a></li>
 							</ul>
 						</nav>
 					</li>
-					<li><a href="javascript:void()" rel="/messages/notifications" ><i class="icon-bullhorn"></i> <br />Notifications</a></li>
+					<li><a href="/messages/notifications" ><i class="icon-bullhorn"></i> <br />Notifications</a></li>
 					<li>
 						<?php if(($this->session->userdata('role')=='po'||$this->session->userdata('role')=='admin')){?>
 				          <a href="/missions/create"><i class="icon-globe"></i><br />Create Mission</a>
@@ -339,7 +339,7 @@ hr {border-top-color:black; border-bottom-color:#444}
 		if (now != 2) {
 			$('.topnav > li').eq(now).find('a').addClass('active');
 		}
-		$('.topnav > li').eq(now).find('.child').fadeIn();
+		$('.topnav > li').eq(now).find('.child').fadeIn('fast');
 		
 		$('.child').horizontalNav();
 		$('.topnav li').on('click',function(){
