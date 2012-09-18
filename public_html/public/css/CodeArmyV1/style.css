@@ -885,7 +885,7 @@ input.lnkimg:hover {
 }
 #contact-boxes input {
 	width:225px;
-	height:22px;
+	height:15px;
 	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -948,6 +948,13 @@ input.lnkimg:hover {
 	padding-left: 10px;
 	font-size:14px;
 }
+#block-basic-info input {
+	height:15px;
+}
+#block-basic-info select {
+	padding-top:0;
+	padding-bottom:0;
+}
 #block-basic-info option {
 	color:#000;
 }
@@ -963,7 +970,7 @@ input.lnkimg:hover {
 }
 #personal-info-boxes input {
 	width:320px;
-	height:22px;
+	height:15px;
 	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -1012,6 +1019,10 @@ input.lnkimg:hover {
 	font-size:14px;
 	float:left;
 }
+#block-skill-progression select {
+	padding-top:0;
+	padding-bottom:0;
+}
 #block-skill-progression option {
 	color:#000;
 }
@@ -1026,7 +1037,7 @@ input.lnkimg:hover {
 }
 .links-portfolios-boxes input {
 	width:280px;
-	height:22px;
+	height:15px;
 	background:url(/public/images/codeArmy/profile/text-input-bg.gif) repeat-x;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -1041,7 +1052,7 @@ input.lnkimg:hover {
 	float:right;
 }
 input.links-portfolios-boxes1 {
-	width:100px;
+	width:80px;
 	float:left;
 }
 .links-portfolios-boxes #input-row {
@@ -1075,6 +1086,13 @@ input.links-portfolios-boxes1 {
 	padding-left: 10px;
 	font-size:14px;
 	float:left;
+}
+#send-pay-boxes input {
+	height:15px;
+}
+#send-pay-boxes select {
+	padding-top:0;
+	padding-bottom:0;
 }
 #send-pay-boxes select {
 -webkit-appearance: none;
@@ -1454,13 +1472,14 @@ input.links-portfolios-boxes1 {
 	float:left;
 }
 #msg-text textarea {
-	width:578px;
-	margin:7px 0;
-	float:left;
-	border:none;
-	color:#fff;
-	resize: none;
-	background:none;
+	width: 560px;
+margin: 0 35px 0 0;
+border: none;
+color: white;
+resize: none;
+background: none;
+float: right;
+height: 100px;
 }
 div#compose-area .lnkimg {
 	float:right;
