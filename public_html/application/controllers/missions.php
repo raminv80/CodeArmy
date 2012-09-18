@@ -309,7 +309,7 @@ class Missions extends CI_Controller {
 			$pusher->trigger('history', 'new-activity-'.$work_id, $data );
 			
 			//send a message to user
-			$msg = '<p>Captain <a href="/profile/show/'.$user_id.'">'.$this->view_data['me']['username'].'</a> needs you to revise your work on mission <a href="/mission/wall/'.$work_id.'">'.$work[0]['title'].'</a></p><p>Please use the <a href="/mission/wall/'.$work_id.'">mission wall</a> to discuss requirements in detail.</p><p>Thank you</p>';
+			$msg = '<p>Captain <a href="/profile/show/'.$this->view_data['me']['username'].'">'.$this->view_data['me']['username'].'</a> needs you to revise your work on mission <a href="/missions/wall/'.$work_id.'">'.$work[0]['title'].'</a></p><p>Please use the <a href="/mission/wall/'.$work_id.'">mission wall</a> to discuss requirements in detail.</p><p>Thank you</p>';
 			$this->message_model->send_message($user_id,$work[0]['work_horse'],'Mission '.trim($work[0]['title']).' needs more work!',$msg);
 			
 			die('success');
