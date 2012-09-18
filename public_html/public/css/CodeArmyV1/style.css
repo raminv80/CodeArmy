@@ -45,7 +45,7 @@ a:hover{color:white}
 	background:none;
 }
 #main-content {
-	width: 765px;
+	/* width: 765px; */
 	margin-top:170px;
 	position: relative;
 	float:right;
