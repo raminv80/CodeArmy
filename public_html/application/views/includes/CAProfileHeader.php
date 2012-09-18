@@ -355,7 +355,7 @@ hr {border-top-color:black; border-bottom-color:#444}
 			$('.topnav li a').removeClass('active');
 			$('a', this).addClass('active');
 			$('.child').not($('.child', this)).hide();
-			$('.child', this).stop().slideToggle();
+			//$('.child', this).stop().slideToggle();
 			//alert( $.cookie("active") );	
 		});
 		$('a.profile-setting').click(function(){
