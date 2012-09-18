@@ -257,7 +257,7 @@ class Missions extends CI_Controller {
 			$pusher->trigger('history', 'new-activity-'.$work_id, $data );
 			
 			//send a message to user
-			$msg = '<p>Congradulations! Captain <a href="/profile/show/'.$user_id.'">'.$this->view_data['me']['username'].'</a> approved mission <a href="/mission/wall/'.$work_id.'">'.$work[0]['title'].'</a></p>';
+			$msg = '<p>Congradulations! Captain <a href="/profile/show/'.$this->view_data['me']['username'].'">'.$this->view_data['me']['username'].'</a> approved mission <a href="/missions/wall/'.$work_id.'">'.$work[0]['title'].'</a></p>';
 			$this->message_model->send_message($user_id,$work[0]['work_horse'],'Mission '.trim($work[0]['title']).' Accomplished!',$msg);
 			die('success');
 		}else die('Error: wrong user or wrong job is selected.');
