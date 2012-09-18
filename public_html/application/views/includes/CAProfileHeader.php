@@ -157,6 +157,8 @@ hr {border-top-color:black; border-bottom-color:#444}
 
 .profile-header .alert {margin-top:5px; margin-bottom:5px; background:none; border:none; color:orange; text-shadow:none; display:none}
 .profile-header .alert .close {color:white; text-shadow:0 1px 1px black}
+
+#left-block {display:none}
 </style>
 <div id="inner">
 <?php if($me['role']=='po' || $me['role']=='admin'){?>
@@ -266,6 +268,7 @@ hr {border-top-color:black; border-bottom-color:#444}
 	
 	<hr />
     <?php if(in_array($page_is,array('Profile','Missions','Achievements','Leaderboard','Invite'))):?>
+
 	<!-- Left block -->
 	<div id="left-block" style="top:10px">
 		<div id="left-menu">
@@ -291,7 +294,6 @@ hr {border-top-color:black; border-bottom-color:#444}
     <?php endif;?>
     <?php if(in_array($page_is,array('Messages'))):?>
 	
-	<!-- Left block -->
     <div id="left-block">
 		<div id="left-menu">
         	<ul>
@@ -313,7 +315,7 @@ hr {border-top-color:black; border-bottom-color:#444}
             </form>
         </div>
     </div>
-    <?php endif;?>
+    <?php endif;?> 
     <?php if(in_array($page_is,array('About','FAQ','Contact', 'Term'))):?>
     <div id="left-block">
 		<div id="left-menu">
