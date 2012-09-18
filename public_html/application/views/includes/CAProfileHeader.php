@@ -201,7 +201,7 @@ hr {border-top-color:black; border-bottom-color:#444}
 					</li>
 					<li>
 						<a href="/profile">
-							<div class="avatar"><img src="http://avatars.io/auto/mohdhazwan" alt="" /></div>
+							<div class="avatar"><img src="http://avatars.io/auto/demo" alt="" /></div>
 						</a>
 						<a href="#" class="profile-setting"><i class="icon-caret-down"></i></a>
 						<div class="arrow_box">
