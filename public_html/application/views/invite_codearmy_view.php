@@ -5,67 +5,68 @@ h3 {
 	font-size:18px;
 	font-weight:bold;
 }
-#mailimg { margin:5px;}
-#invitebutton { float:right;}
+.share a {font-size:.9em}
 </style>
 
-<h3>Invite Friends</h3>
-<img src="/public/images/codeArmy/content/title-bg.png" id="preview"/> <br />
-<br />
-<?php
-$msg = $this->session->flashdata('msg');
-if($msg) echo "<b>".$msg."</b>";
-?>
-<a href="http://www.facebook.com/share.php?u=http://www.CodeAr.my" onclick="return fbs_click()" target="_blank"><img style="float:right; margin-top:-30px;" id="mailimg" src="/public/images/codeArmy/invite-fb-share.jpg" /></a>
-<a href="http://twitter.com/home?status=Code Army – www.CodeAr.my" target="_blank"><img style="float:right; margin-top:-30px;" id="mailimg" src="/public/images/codeArmy/invite-twitter-share.jpg" /></a>
-You can invite friends by sending them an email<br />
-  <!--<br /><br /><br />
-  Searching from address book to invite your friends to join CodeAr.my<br />
-  <br /><br />
-  <img id="mailimg" src="/public/images/codeArmy/yahoomail.png" />&nbsp;&nbsp;
-  <img id="mailimg" src="/public/images/codeArmy/hotmail.png" />&nbsp;&nbsp;
-  <img id="mailimg" src="/public/images/codeArmy/gmail.png" />&nbsp;&nbsp;
-  <img id="mailimg" src="/public/images/codeArmy/skype.png" />-->
-<br /><br />
+<div class="container-fluid">
+		
+		<div class="row-fluid">
+			<div class="span10 offset1" style="text-align:center; margin-bottom:20px">
+				<h3>Invite Friends</h3>
+				<img src="/public/images/codeArmy/content/title-bg.png" id="preview"/> <br />
+				
+			</div>
+		</div>
+		
+		<div class="row-fluid" style="margin:10px 0 50px">
+			<div class="span5 offset1">
+				<?php
+				$msg = $this->session->flashdata('msg');
+				if($msg) echo "<b>".$msg."</b>";
+				?>
+				<p>You can invite friends by sending them an email</p>
+			</div>
+			<div class="span5 share">
+				<div class="pull-right">
+					<a href="http://www.facebook.com/share.php?u=http://www.CodeAr.my" target="_blank" onclick="return fbs_click()" class="btn btn-primary"><i class="icon-facebook"></i> Share</a> 
+					<a href="http://twitter.com/home?status=Code Army – www.CodeAr.my" class="btn btn-info" target="_blank"><i class="icon-twitter"></i> Share</a>
+				</div>
+			</div>
+		</div>
 
-<?php echo form_open('invite/sent'); ?>
+		<?php echo form_open('invite/sent'); ?>
 
-<div style="height:200px;">
-<div style="float:left; width:100px;">
-Email Addresses:
-</div>
-<div style="float:right">
-<?php if (isset($form_error)){ ?>
-<textarea name="email" rows="7" cols="70" id="email"><?=set_value('email')?></textarea><br />
-<div id="errmsg2"><?=form_error("email")?></div>
-<?php } else { ?>
-<textarea name="email" rows="7" cols="70" id="email"></textarea>
-<?php } ?>
-<br /><br />
-Enter email addresses manually, please separate email addresses with commas.<br />
-</div>
-</div>
-
-<div>
-<div style="float:left; width:100px;">
-Message:
-</div>
-<div style="float:right">
-<?php if (isset($form_error)){ ?>
-<textarea name="message" rows="12" cols="70" id="message"><?=set_value('message')?></textarea><br />
-<div id="errmsg2"><?=form_error("message")?></div>
-<?php } else { ?>
-<textarea name="message" rows="12" cols="70" id="message">
-Hi! I would like to invite you to be a part of CodeAr.my, a platform that helps you to find exciting Digital Products to wok on in a Gamified Environment! Join me and be at the top of your game. 
+		<div class="row-fluid" style="margin-bottom:25px">
+			<div class="span2 offset1" style="text-align:right">Email Addresses:</div>
+			<div class="span8">
+				<?php if (isset($form_error)){ ?>
+				<textarea name="email" class="span12" id="email"><?=set_value('email')?></textarea><br />
+				<div id="errmsg2"><?=form_error("email")?></div>
+				<?php } else { ?>
+				<textarea name="email" class="span12" id="email"></textarea>
+				<?php } ?>
+				<p><small>Enter email addresses manually, please separate email addresses with commas.</small></p>
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span2 offset1" style="text-align:right">Message:</div>
+			<div class="span8">
+				
+				<?php if (isset($form_error)){ ?>
+				<textarea name="message" id="message"><?=set_value('message')?></textarea><br />
+				<div id="errmsg2"><?=form_error("message")?></div>
+				<?php } else { ?>
+				<textarea name="message" id="message" rows="7" class="span12">Hi! I would like to invite you to be a part of CodeAr.my, a platform that helps you to find exciting Digital Products to wok on in a Gamified Environment! Join me and be at the top of your game.
 
 Visit http://www.codearmy.com
-</textarea>
-<?php } ?>
-<br /><br />
-<input style="float:right" type="submit" value="Invite" class="lnkimg" />
-</div>
+				</textarea>
+				<?php } ?>
+				
+				<p class="pull-right"><input type="submit" value="Invite" class="lnkimg" /></p>
+				</form>
+			</div>
+		</div>
 </div>
 
-</form>
-</div>
 <?php $this->load->view('includes/CAProfileFooter.php'); ?>
