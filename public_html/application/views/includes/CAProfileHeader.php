@@ -340,7 +340,6 @@ hr {border-top-color:black; border-bottom-color:#444}
 		}
 		$('.topnav > li').eq(now).find('.child').fadeIn();
 		
-		$(".alert").alert(); 
 		$('.child').horizontalNav();
 		$('.topnav li').on('click',function(){
 			
@@ -360,6 +359,9 @@ hr {border-top-color:black; border-bottom-color:#444}
 		
 		$('.logo').click(function(){
 			$.cookie("active", 2, { expires : 1, path: '/' } );
-		})
+		});
+		
+		//For notifications or announcements, just edit .alert text and enable it
+		//$(".alert").alert(); 
 	})
 	</script>
