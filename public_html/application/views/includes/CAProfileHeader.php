@@ -150,6 +150,7 @@
 	left: 50%;
 	margin-left: -8px;
 }
+.topnav .arrow_box hr {margin:2px 0; border-top:1px solid #333; border-bottom:none}
 
 .logo {background: url(/public/images/codeArmy/mymission/fillter-toolbar.png); height:134px; width:142px; background-position:-16px 0px; margin: 10px 0 0 10px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px}
 
@@ -209,8 +210,9 @@ hr {border-top-color:black; border-bottom-color:#444}
 						<div class="arrow_box">
 							<a href="/about"><i class="icon-briefcase"></i> About Us</a> <br />
 							<a href="/faq"><i class="icon-info-sign"></i> FAQ's</a> <br />
-							<a href="/login/logout"><i class="icon-signout"></i> Log Out</a> <br />
 							<a href="/invite"><i class="icon-share"></i> Invite Friends</a>
+							<hr />
+							<a href="/login/logout"><i class="icon-signout"></i> Log Out</a>
 						</div>
 					</li>
 				</ul>
@@ -353,7 +355,7 @@ hr {border-top-color:black; border-bottom-color:#444}
 			$('.topnav li a').removeClass('active');
 			$('a', this).addClass('active');
 			$('.child').not($('.child', this)).hide();
-			$('.child', this).stop().slideToggle();
+			//$('.child', this).stop().slideToggle();
 			//alert( $.cookie("active") );	
 		});
 		$('a.profile-setting').click(function(){
