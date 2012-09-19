@@ -54,98 +54,108 @@
 #inbox-content-area .message-content a:hover{color:#09F}
 </style>
 <!--<img src="/public/images/codeArmy/messages/temp_msg.png" id="preview"/>-->
-<div id="inbox-content-area"> 
-  
-  <!-- START - Inbox Block - Dev. by Reza  -->
-  <div id="block-inbox-header">
-    <div class="block-header">
-      <h3>Messages</h3>
-    </div>
-  </div>
-  <div id="inbox-area">
-    <div id="inbox-top-bar">
-      <div id="back"><a title="Goto previous page" href="/messages/inbox">Back</a></div>
-      <div id="mark-unread"><a title="Mark all selected messages as unread" href="javascript: unread()">Mark as unread</a></div>
-      <div id="star" class="<?=($messages[0]['category']=='important')?'important':'';?>"><a href="javascript: switch_importance()" title="Mark all selected messages as important" ><img src="/public/images/codeArmy/messages/star<?=($messages[0]['category']=='important')?'_hover':'';?>.png" /></a></div>
-      <div id="bin"><a title="Move all selected messages into trash" href="javascript: to_trash()"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
-      <!--
-      <div id="msg-no"></div>
-      <div id="arrow-left"><a title="Goto previous page" href="#"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
-      <div id="arrow-right"><a title="Goto next page" href="#"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
-      -->
-    </div>
-    <div class="message-header">
-        <h4><?=$messages[0]['title']?></h4>
-    </div>
-	<?php foreach($messages as $message):
-		$compose_to=$message['username'];
-	?>
-	<div class="message-wrapper">    	
-        <div style="padding:10px">
-            <div class="message-avatar" title="Click to see sender's profile"><a href="/profile/show/<?=$message['username']?>"><img src="<?=($message["avatar"] != NULL)?'/public/'.$message["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) )?>" width="60" height="60" /></a></div>
-            <div class="message-sender"><a title="Click to see sender's profile" href="/profile/show/<?=$message['username']?>"><?=$message['username']?></a></div>
-            <div class="message-date">
-                <?php
-                    $diff = abs(strtotime($message['created_at'])-time());
-                    if($diff>(24*60*60)){
-                        $time = date('Y-M-d',strtotime($message['created_at']));
-                    }elseif($diff>=60*60){
-                        $time = round($diff/(60*60)).' hours ago';
-                    }elseif($diff>=60){
-                        $time = round($diff/60).' mins ago';
-                    }else{
-                        $time = 'now';
-                    }
-                    echo $time;
-                ?>
-            </div>
-            <div class="message-content">
-                <?=$message['content']?>
-            </div>
-        </div>
-    </div>
-    <?php endforeach;?>
-  </div>
-  <div id="reply-form">
-  <?php if($compose_to>''){echo form_open('messages/send'); ?>
-    <div id="compose-main-area">
-      <div id="compose-avatar"> </div>
-      <div id="receiver-name">
-        <label>To:</label>
-        &nbsp;
-        <?php if (isset($form_error)){ ?>
-        <input id="msg-to" name="msg-to" value="<?=set_value('msg-to')?>" />
-		<div id="errmsg3"><?=form_error("msg-to")?></div>
-        <?php } else { ?>
-        <input id="msg-to" name="msg-to" value="<?=$compose_to?>" <?=($compose_to>'')?'':'autofocus="autofocus"'?> />
-        <?php } ?>
-      </div>
-      <div id="msg-subject">
-        <label>Subject:</label>
-        &nbsp;
-        <?php if (isset($form_error)){ ?>
-        <input id="msg-subj" name="msg-subj" value="<?=set_value('msg-subj')?>" />
-		<div id="errmsg3"><?=form_error("msg-subj")?></div>
-        <?php } else { ?>
-        <input id="msg-subj" name="msg-subj" <?=($compose_to=='')?'':'autofocus="autofocus"'?> />
-        <?php } ?>
-      </div>
-      <div id="msg-text">
-        <label>Message:</label>
-        <?php if (isset($form_error)){ ?>
-        <textarea rows="7" id="msg-text" name="msg-text"><?=set_value('msg-text')?></textarea>
-		<div id="errmsg3"><?=form_error("msg-text")?></div>
-        <?php } else { ?>
-        <textarea rows="7" id="msg-text" name="msg-text"></textarea>
-        <?php } ?>
-      </div>
-    </div>
-    <input type="hidden" name="parent_id" value="<?=$message['message_id']?>" />
-    <input type="submit" value="Send" class="lnkimg">
-    </form>
-    </div>
-    <?php }?>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		
+		<!-- Page start -->
+		<div id="inbox-content-area" class="span10 offset1"> 
+
+		  <!-- START - Inbox Block - Dev. by Reza  -->
+		  <div id="block-inbox-header">
+		    <div class="block-header">
+		      <h3>Messages</h3>
+		    </div>
+		  </div>
+		  <div id="inbox-area">
+		    <div id="inbox-top-bar">
+		      <div id="back"><a title="Goto previous page" href="/messages/inbox">Back</a></div>
+		      <div id="mark-unread"><a title="Mark all selected messages as unread" href="javascript: unread()">Mark as unread</a></div>
+		      <div id="star" class="<?=($messages[0]['category']=='important')?'important':'';?>"><a href="javascript: switch_importance()" title="Mark all selected messages as important" ><img src="/public/images/codeArmy/messages/star<?=($messages[0]['category']=='important')?'_hover':'';?>.png" /></a></div>
+		      <div id="bin"><a title="Move all selected messages into trash" href="javascript: to_trash()"><img src="/public/images/codeArmy/messages/bin.png" /></a></div>
+		      <!--
+		      <div id="msg-no"></div>
+		      <div id="arrow-left"><a title="Goto previous page" href="#"><img src="/public/images/codeArmy/messages/arrow-left.png" /></a></div>
+		      <div id="arrow-right"><a title="Goto next page" href="#"><img src="/public/images/codeArmy/messages/arrow-right.png" /></a></div>
+		      -->
+		    </div>
+		    <div class="message-header">
+		        <h4><?=$messages[0]['title']?></h4>
+		    </div>
+			<?php foreach($messages as $message):
+				$compose_to=$message['username'];
+			?>
+			<div class="message-wrapper">    	
+		        <div style="padding:10px">
+		            <div class="message-avatar" title="Click to see sender's profile"><a href="/profile/show/<?=$message['username']?>"><img src="<?=($message["avatar"] != NULL)?'/public/'.$message["avatar"]:'http://www.gravatar.com/avatar/'.md5( strtolower( trim( $message['email'] ) ) )?>" width="60" height="60" /></a></div>
+		            <div class="message-sender"><a title="Click to see sender's profile" href="/profile/show/<?=$message['username']?>"><?=$message['username']?></a></div>
+		            <div class="message-date">
+		                <?php
+		                    $diff = abs(strtotime($message['created_at'])-time());
+		                    if($diff>(24*60*60)){
+		                        $time = date('Y-M-d',strtotime($message['created_at']));
+		                    }elseif($diff>=60*60){
+		                        $time = round($diff/(60*60)).' hours ago';
+		                    }elseif($diff>=60){
+		                        $time = round($diff/60).' mins ago';
+		                    }else{
+		                        $time = 'now';
+		                    }
+		                    echo $time;
+		                ?>
+		            </div>
+		            <div class="message-content">
+		                <?=$message['content']?>
+		            </div>
+		        </div>
+		    </div>
+		    <?php endforeach;?>
+		  </div>
+		  <div id="reply-form">
+		  <?php if($compose_to>''){echo form_open('messages/send'); ?>
+		    <div id="compose-main-area">
+		      <div id="compose-avatar"> </div>
+		      <div id="receiver-name">
+		        <label>To:</label>
+		        &nbsp;
+		        <?php if (isset($form_error)){ ?>
+		        <input id="msg-to" name="msg-to" value="<?=set_value('msg-to')?>" />
+				<div id="errmsg3"><?=form_error("msg-to")?></div>
+		        <?php } else { ?>
+		        <input id="msg-to" name="msg-to" value="<?=$compose_to?>" <?=($compose_to>'')?'':'autofocus="autofocus"'?> />
+		        <?php } ?>
+		      </div>
+		      <div id="msg-subject">
+		        <label>Subject:</label>
+		        &nbsp;
+		        <?php if (isset($form_error)){ ?>
+		        <input id="msg-subj" name="msg-subj" value="<?=set_value('msg-subj')?>" />
+				<div id="errmsg3"><?=form_error("msg-subj")?></div>
+		        <?php } else { ?>
+		        <input id="msg-subj" name="msg-subj" <?=($compose_to=='')?'':'autofocus="autofocus"'?> />
+		        <?php } ?>
+		      </div>
+		      <div id="msg-text">
+		        <label>Message:</label>
+		        <?php if (isset($form_error)){ ?>
+		        <textarea rows="7" id="msg-text" name="msg-text"><?=set_value('msg-text')?></textarea>
+				<div id="errmsg3"><?=form_error("msg-text")?></div>
+		        <?php } else { ?>
+		        <textarea rows="7" id="msg-text" name="msg-text"></textarea>
+		        <?php } ?>
+		      </div>
+		    </div>
+		    <input type="hidden" name="parent_id" value="<?=$message['message_id']?>" />
+		    <input type="submit" value="Send" class="lnkimg">
+		    </form>
+		    </div>
+		    <?php }?>
+		</div>
+		<!-- Page ends -->
+		
+	</div>
 </div>
+
 <script type="text/javascript">
 	$(function(){
 		initEvents();

@@ -14,7 +14,7 @@
 .topnav li:last-child {position:relative;}
 .topnav li a {
 	color:#ff8000; font-size:1em; height: 40px; padding:10px 0;margin-left:3px; 
-	text-shadow:0 1px 1px black; box-shadow:inset 0 1px 1px #666;
+	text-shadow:0 1px 1px black; box-shadow:inset 0 1px 1px #666; position:relative;
 	border-radius:5px; border:1px solid #111;
 	background: rgb(69,72,77); /* Old browsers */
 	background: -moz-linear-gradient(top, rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
@@ -159,6 +159,21 @@ hr {border-top-color:black; border-bottom-color:#444}
 .profile-header .alert {margin-top:5px; margin-bottom:5px; background:none; border:none; color:orange; text-shadow:none; display:none}
 .profile-header .alert .close {color:white; text-shadow:0 1px 1px black}
 
+span.notification {
+	position: absolute;
+	top: 0px;
+	right: 60px;
+	background: red;
+	width: 15px;
+	height: 15px;
+	line-height: 15px;
+	border-radius: 50%;
+	box-shadow: 0 1px 2px black;
+	color:white;
+	text-shadow:0 1px 1px black;
+	font-size:.8em;
+}
+
 #left-block {display:none}
 </style>
 <div id="inner">
@@ -175,7 +190,10 @@ hr {border-top-color:black; border-bottom-color:#444}
 			</div>
 			<div class="span10">
 				<ul class="nav topnav">
-					<li><a href="/messages/inbox" rel=""><i class="icon-envelope-alt"></i> <br />Messages</a>
+					<li><a href="/messages/inbox" rel=""><i class="icon-envelope-alt"></i> <br />Messages
+						<span class="notification <?=isset($myActiveMessages)&&$myActiveMessages>0?'':'hidden' ?>" id="messages-notification"><?=isset($myActiveMessages)?$myActiveMessages:'?' ?></span>
+						</a>
+						
 						<nav class="child">
 							<ul class="childnav">
 								<li><a href="/messages/inbox">Inbox</a></li>
@@ -186,7 +204,9 @@ hr {border-top-color:black; border-bottom-color:#444}
 							</ul>
 						</nav>
 					</li>
-					<li><a href="/messages/notifications" ><i class="icon-bullhorn"></i> <br />Notifications</a></li>
+					<li><a href="/messages/notifications" ><i class="icon-bullhorn"></i> <br />Notifications
+						<span class="notification <?=isset($myActiveNotifications)&&$myActiveNotifications>0?'':'hidden' ?>" id="notifications-notification"><?=$myActiveNotifications?></span>
+						</a></li>
 					<li>
 						<?php if(($this->session->userdata('role')=='po'||$this->session->userdata('role')=='admin')){?>
 				          <a href="/missions/create"><i class="icon-globe"></i><br />Create Mission</a>
@@ -194,7 +214,9 @@ hr {border-top-color:black; border-bottom-color:#444}
 				          <a href="/missions" class="mid"><i class="icon-globe"></i><br />Find Missions</a>
 				          <?php }?>
 					</li>
-					<li><a href="/missions/my_missions"><i class="icon-folder-open"></i> <br />My Mission</a>
+					<li><a href="/missions/my_missions"><i class="icon-folder-open"></i> <br />My Mission
+						<span class="notification <?=isset($myActiveMissions)&&$myActiveMissions>0?'':'hidden'?>" id="mymissions-notification"><?=isset($myActiveMissions)?$myActiveMissions:'?'?></span>
+						</a>
 						<nav class="child">
 							<ul class="childnav">
 								<li><a href="/missions/bid">Bidded</a></li>
