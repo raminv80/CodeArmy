@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="../../public/css/CodeArmyV1/bootstrap.css" type="text/css">
 <style type="text/css">
-	.find-mission-full-wrappers {font-family: 'Ruda', Lucida Grande, serif;}
+	.find-mission-full-wrappers {font-family: 'Ruda', Lucida Grande, serif; color:#ccc}
 </style>
 <div class="find-mission-full-wrappers row-fluid content">
 	<div class="find-mission-full-containers" style="overflow:hidden">
@@ -21,13 +21,6 @@
 	    </div>
 		
 		<!-- Bid -->
-		
-		<div class="bid-box" style="background:orange">
-			<div style="width:30%">Hourly</div>
-			<div style="width:70%">
-				<p>Your Bid</p>
-			</div>
-		</div>
 		
 	    <div class="find-mission-comment-box clearfix">
           <div id="form-bid-container">

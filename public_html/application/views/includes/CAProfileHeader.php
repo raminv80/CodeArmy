@@ -226,7 +226,7 @@ span.notification {
 					</li>
 					<li>
 						<a href="/profile">
-							<div class="avatar"><img src="http://avatars.io/auto/demo" alt="" /></div>
+							<div class="avatar"><img src="/public/images/codeArmy/profile/avatar.png" border="0"></div>
 						</a>
 						<a href="#" class="profile-setting"><i class="icon-caret-down"></i></a>
 						<div class="arrow_box">
