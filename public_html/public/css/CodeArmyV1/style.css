@@ -48,11 +48,8 @@ a:hover{color:white}
 	/* width: 765px; */
 	margin-top:170px;
 	position: relative;
-<<<<<<< HEAD
-	/* float:right; */
-=======
-	float:left;
->>>>>>> Css
+	/* float:right;
+	float:left;  */
 	padding: 30px 20px;
 	text-align: justify;
 	margin-left: 100px;
