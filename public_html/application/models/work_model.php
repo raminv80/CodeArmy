@@ -81,7 +81,7 @@ class Work_model extends CI_Model {
 			$sql = "SELECT class.* FROM class ORDER BY class_id";
 			$res = $this->db->query($sql);
 		}else{
-			$sql = "SELECT class.* FROM class  WHERE class.category_id=? ORDER BY class_id";
+			$sql = "SELECT class.* FROM class WHERE class.category_id = ? ORDER BY class_id";
 			$res = $this->db->query($sql,$cat);
 		}
 		return $res->result_array();
@@ -93,10 +93,10 @@ class Work_model extends CI_Model {
 			$res = $this->db->query($sql);
 		}else{
 			if($cat==''){
-				$sql = "SELECT * FROM subclass WHERE class_id=? ORDER BY class_id";
+				$sql = "SELECT * FROM subclass WHERE class_id = ? ORDER BY class_id";
 				$res = $this->db->query($sql,$class_id);
 			}else{
-				$sql = "SELECT subclass.* FROM subclass,class WHERE class.class_id=subclass.class_id AND class.category_id=? ORDER BY class_id";
+				$sql = "SELECT subclass.* FROM subclass, class WHERE class.class_id = subclass.class_id AND class.category_id = ? ORDER BY class_id";
 				$res = $this->db->query($sql,$cat);
 			}
 		}

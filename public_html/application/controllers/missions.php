@@ -1093,7 +1093,8 @@ class Missions extends CI_Controller {
 	}
 	
 	function Ajax_get_subclass(){
-		$q = $this->input->post('category');
+		//$q = $this->input->post('category');
+		$q = "";
 		$q1 = $this->input->post('class');
 		$subclass = $this->work_model->get_sub_class($q,$q1);
 		echo json_encode($subclass);
