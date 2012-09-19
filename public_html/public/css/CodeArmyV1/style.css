@@ -52,7 +52,6 @@ a:hover{color:white}
 	float:left;  */
 	padding: 30px 20px;
 	text-align: justify;
-	margin-left: 100px;
 	min-height:600px;
 }
 #errmsg1 {font-size:14px;font-weight:bold;margin:0 30px 10px 0; color:#F00;float:right}
