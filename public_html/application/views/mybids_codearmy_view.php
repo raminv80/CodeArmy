@@ -98,7 +98,7 @@ function view_mission(work_id){
 			margin: 0,
 			height: 600,
 			autoSize: false,
-			width:770,
+			width:860,
 			'overlayShow': true,
 			'overlayOpacity': 0.5, 
 			afterClose: function(){},
