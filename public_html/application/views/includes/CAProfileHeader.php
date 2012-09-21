@@ -6,7 +6,9 @@
 #main-content{margin-top:15px;}
 #left-block{top:45px;}
 .profile-header{display:none}
-#container{background:none; margin:30px auto;border:1px solid #333;}
+#container {padding-top:100px}
+#footer {display:none}
+/* #container{background:none; margin:30px auto;border:1px solid #333;} */
 <?php }?>
 
 .topnav {margin-top:20px;text-align:center;}
@@ -178,7 +180,7 @@ span.notification {
 </style>
 <div id="inner">
 <?php if($me['role']=='po' || $me['role']=='admin'){?>
-<a href="/missions/tallent_map"><div title="Close" class="fancybox-item fancybox-close" style="position: fixed;right: 150px;top: 7px;"></div></a>
+<!-- <a href="/missions/tallent_map"><div title="Close" class="fancybox-item fancybox-close" style="position: fixed;right: 150px;top: 7px;"></div></a> -->
 <?php }?>
 <div id="container" style="background:none" class="container-fluid">
 

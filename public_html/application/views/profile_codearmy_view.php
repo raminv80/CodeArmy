@@ -3,7 +3,6 @@
 
 <div class="container-fluid">
 	<div class="row-fluid">
-		
 		<!-- Page start -->
 		<div id="profile-content-area" class="span10 offset1"> 
 

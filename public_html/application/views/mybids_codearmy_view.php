@@ -1,9 +1,27 @@
 <?php $this->load->view('includes/CAProfileHeader.php'); ?>
+<style type="text/css">
+ .alert {margin-top:5px; margin-bottom:50px; background:black; border:none; color:orange; text-shadow:none; display:none}
+ .alert .close {color:white; text-shadow:0 1px 1px black}
+.alert a {color:orange}
+</style>
 
 <div class="container-fluid">
 	<div class="row-fluid" style="padding-bottom:50px">
 		
 		<!-- Page start -->
+		
+			<?php if(in_array($this->session->userdata('role'),array('admin','po'))){?>
+			<div class="clearfix span10 offset1 alert alert-error">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				<ul>
+				<?php foreach($troops as $troop):?>
+					<li><a href="/missions/applicants/<?=$troop['work_id']?>"><?=$troop['num']?> troop(s) applied for mission '<?=$troop['title']?>'</a>.</li>
+				<?php endforeach;?>
+			    </ul>
+			</div>
+			<?php }?>
+		
+		
 		<div id="mybids-content-area" class="span10 offset1"> 
 
 		  <!-- START - Mission Bid Title Block - Dev. by Reza  -->
@@ -55,13 +73,7 @@
 		  </div>
 		  <?php endforeach;?>
 		</div>
-		<?php if(in_array($this->session->userdata('role'),array('admin','po'))){?>
-			<ul>
-			<?php foreach($troops as $troop):?>
-				<li><a href="/missions/applicants/<?=$troop['work_id']?>"><?=$troop['num']?> troop(s) applied for mission '<?=$troop['title']?>'</a>.</li>
-			<?php endforeach;?>
-		    </ul>
-		<?php }?>
+		
 		<!-- Page ends -->
 		
 	</div>

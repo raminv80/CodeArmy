@@ -1,11 +1,271 @@
 <?php $this->load->view('includes/CAHeader.php'); ?>
 <script src="/public/js/jquery.validate.js" type="text/javascript"></script>
 <script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+<script src="/public/js/codeArmy/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/public/js/codeArmy/horizontalNav.js" type="text/javascript" charset="utf-8"></script>
+<script src="/public/js/codeArmy/cookie.js" type="text/javascript" charset="utf-8"></script>
+
+<style type="text/css">
+
+	.topnav {margin-top:10px;text-align:center;}
+	.topnav li {width:19.5%; float:left; cursor:pointer}
+	.topnav li:last-child {position:relative;}
+	.topnav li a {
+		color:#ff8000; font-size:1em; height: 40px; padding:10px 0;margin-left:3px; 
+		text-shadow:0 1px 1px black; box-shadow:inset 0 1px 1px #666; position:relative;
+		border-radius:5px; border:1px solid #111;
+		background: rgb(69,72,77); /* Old browsers */
+		background: -moz-linear-gradient(top, rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
+		background: linear-gradient(to bottom, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */}
+	.topnav li a:hover, .topnav li a.active {
+		background: rgb(255,128,0); /* Old browsers */
+		background: -moz-linear-gradient(top, rgba(255,128,0,1) 0%, rgba(147,88,0,1) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,128,0,1)), color-stop(100%,rgba(147,88,0,1))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(255,128,0,1) 0%,rgba(147,88,0,1) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(255,128,0,1) 0%,rgba(147,88,0,1) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(255,128,0,1) 0%,rgba(147,88,0,1) 100%); /* IE10+ */
+		background: linear-gradient(to bottom, rgba(255,128,0,1) 0%,rgba(147,88,0,1) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff8000', endColorstr='#935800',GradientType=0 ); /* IE6-9 */
+		color:black; text-shadow: 0 -1px 1px #ff8000
+		}	
+	.topnav li a i {font-size:1.6em}
+	.topnav li:first-child {margin-left:0}
+	.topnav li a.mid {height:40px; padding-top:15px; margin-top:-3px;}
+	.topnav li a.mid:hover {
+		background: rgb(18,88,158); /* Old browsers */
+		background: -moz-linear-gradient(top, rgba(18,88,158,1) 0%, rgba(53,106,160,1) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(18,88,158,1)), color-stop(100%,rgba(53,106,160,1))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(18,88,158,1) 0%,rgba(53,106,160,1) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(18,88,158,1) 0%,rgba(53,106,160,1) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(18,88,158,1) 0%,rgba(53,106,160,1) 100%); /* IE10+ */
+		background: linear-gradient(to bottom, rgba(18,88,158,1) 0%,rgba(53,106,160,1) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#12589e', endColorstr='#356aa0',GradientType=0 ); /* IE6-9 */	color:white; text-shadow: 0 1px 1px black;
+	}
+	.topnav li a.mid i {font-size:2.4em}
+	.topnav li a.profile-setting {
+		position:absolute; width: 30px; right:0; top:0; border-left:1px solid rgba(255,255,255,.1); 
+		background: rgb(69,72,77); /* Old browsers */
+		background: -moz-linear-gradient(top, rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
+		background: linear-gradient(to bottom, rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */ 
+		border-radius:0;
+		-webkit-border-top-right-radius: 5px;
+		-webkit-border-bottom-right-radius: 5px;
+		-moz-border-radius-topright: 5px;
+		-moz-border-radius-bottomright: 5px;
+		border-top-right-radius: 5px;
+		border-bottom-right-radius: 5px;
+		color: #ff8000 !important;
+		}
+	.topnav li a.profile-setting:hover {
+		background: rgb(0,0,0); /* Old browsers */
+		background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(69,72,77,1) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(100%,rgba(69,72,77,1))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%,rgba(69,72,77,1) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, rgba(0,0,0,1) 0%,rgba(69,72,77,1) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%,rgba(69,72,77,1) 100%); /* IE10+ */
+		background: linear-gradient(to bottom, rgba(0,0,0,1) 0%,rgba(69,72,77,1) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#45484d',GradientType=0 ); /* IE6-9 */color:#ff8000;
+	}
+	.topnav li .avatar {
+		width:50px; height:50px; margin-top:-5px; overflow:hidden; border-radius:25%; margin-left:25%; border:1px solid rgba(255,255,255,.1); box-shadow: 0 -1px 1px black}
+	.topnav li .avatar img {width:105%}
+
+	.topnav .child {
+		width:776px;
+		margin-top:5px;
+		display:none;
+		position:absolute; right:40px;
+	}
+	.topnav .child ul {
+	    float: left;
+	    text-align: center;
+	}
+	.topnav .child ul li {
+	    float: left;
+	}
+	.topnav .child ul li a {
+	    display: block;
+		background:black;
+		color: orange;
+		text-shadow:0 1px 1px black;
+	    padding: 8px 20px;
+		height: 20px;
+		line-height:20px;
+	}
+	.topnav .child ul li a:hover {
+	    background: orange;
+		color: black;
+		text-shadow:none;
+	}
+
+	.topnav .arrow_box {
+		position: absolute;
+		background: #111;
+		border: 2px solid #333;
+		width:110px;
+		top:68px;
+		right:-40px;
+		padding:2px 5px;
+		text-align:left !important;
+		display:none;
+		z-index:9266;
+	}
+	.topnav .arrow_box i {font-size:.9em}
+	.topnav .arrow_box a, .topnav .arrow_box a:hover, .topnav .arrow_box a.active {background:none; border:none; text-shadow:none; box-shadow:none; font-size:.85em; border-radius:0; text-transform: uppercase}
+	.topnav .arrow_box a {color:#ff8000 !important}
+	.topnav .arrow_box a:hover {color:orange !important}
+	.topnav .arrow_box:after, .topnav .arrow_box:before {
+		bottom: 100%;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+
+	.topnav .arrow_box:after {
+		border-color: rgba(17, 17, 17, 0);
+		border-bottom-color: #111;
+		border-width: 5px;
+		left: 50%;
+		margin-left: -5px;
+	}
+	.topnav .arrow_box:before {
+		border-color: rgba(85, 85, 85, 0);
+		border-bottom-color: #333;
+		border-width: 8px;
+		left: 50%;
+		margin-left: -8px;
+	}
+	.topnav .arrow_box hr {margin:2px 0; border-top:1px solid #333; border-bottom:none}
+
+	.logo {background: url(/public/images/codeArmy/mymission/fillter-toolbar.png); height:100px; width:142px; background-position:-16px -15px; margin: 10px 0 0 10px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; border:2px solid #111}
+
+	hr {border-top-color:black; border-bottom-color:#444}
+
+	.profile-header .alert {margin-top:5px; margin-bottom:5px; background:none; border:none; color:orange; text-shadow:none; display:none}
+	.profile-header .alert .close {color:white; text-shadow:0 1px 1px black}
+
+	span.notification {
+		position: absolute;
+		top: 0px;
+		right: 60px;
+		background: red;
+		width: 15px;
+		height: 15px;
+		line-height: 15px;
+		border-radius: 50%;
+		box-shadow: 0 1px 2px black;
+		color:white;
+		text-shadow:0 1px 1px black;
+		font-size:.8em;
+	}
+	
+	/* PO style */
+	.stickynav {width:1000px; margin:0 auto; position:absolute; z-index:99999999}
+	.ajax-frame {min-height:100%; display:none}
+</style>
 
 <!--TODO: add ajax loader icons -->
 <div id="wrapper">
+	
   <div id="find-mission-area">
-    <div id="world-map" style="background:url(/public/images/codeArmy/mymission/world-map.png);width:999px;height:532px;"> <!--<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />-->
+	
+	<!-- New nav -->
+	<div class="stickynav">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span2">
+					<a href="/missions/tallent_map"><div class="logo"></div></a>
+				</div>
+				<div class="span10">
+					<ul class="nav topnav">
+						<li><a rel="/messages/inbox"><i class="icon-envelope-alt"></i> <br />Messages
+							<span class="notification <?=isset($myActiveMessages)&&$myActiveMessages>0?'':'hidden' ?>" id="messages-notification"><?=isset($myActiveMessages)?$myActiveMessages:'?' ?></span>
+							</a>
+
+							<nav class="child">
+								<ul class="childnav">
+									<li><a rel="/messages/inbox">Inbox</a></li>
+									<li><a rel="/messages/compose">Compose</a></li>
+									<li><a rel="/messages/sent">Sent</a></li>
+									<li><a rel="/messages/archive">Archive</a></li>
+									<li><a rel="/messages/trash">Trash</a></li>
+								</ul>
+							</nav>
+						</li>
+						<li><a rel="/messages/notifications" ><i class="icon-bullhorn"></i> <br />Notifications
+							<span class="notification <?=isset($myActiveNotifications)&&$myActiveNotifications>0?'':'hidden' ?>" id="notifications-notification"><?=$myActiveNotifications?></span>
+							</a></li>
+						<li>
+							<a rel="/missions/createnew" class="mid"><i class="icon-globe"></i><br />Find Tallent</a>
+							<nav class="child">
+								<ul class="childnav">
+									<li>
+										<select name="select" id="">
+											<option value="a">Level All</option>
+											<option value="b">Skills</option>
+											<option value="c">Payout</option>
+										</select>
+									</li>
+									<li>
+										<select name="select" id="">
+											<option value="a">Skill All</option>
+											<option value="b">Skills</option>
+											<option value="c">Payout</option>
+										</select>
+									</li>
+									<li><a rel="/missions/create">Create Mission</a></li>
+									<li><div><input type="search" /></div></li>
+								</ul>
+							</nav>
+						</li>
+						<li><a rel="/missions/my_missions"><i class="icon-folder-open"></i> <br />My Mission
+							<span class="notification <?=isset($myActiveMissions)&&$myActiveMissions>0?'':'hidden'?>" id="mymissions-notification"><?=isset($myActiveMissions)?$myActiveMissions:'?'?></span>
+							</a>
+							<nav class="child">
+								<ul class="childnav">
+									<li><a rel="/missions/bid">Bidded</a></li>
+									<li><a rel="/missions/completed">Completed</a></li>
+								</ul>
+							</nav>
+						</li>
+						<li>
+							<a rel="/profile">
+								<div class="avatar"><img src="/public/images/codeArmy/profile/avatar.png" border="0"></div>
+							</a>
+							<a class="profile-setting"><i class="icon-caret-down"></i></a>
+							<div class="arrow_box">
+								<a rel="/about"><i class="icon-briefcase"></i> About Us</a> <br />
+								<a rel="/faq"><i class="icon-info-sign"></i> FAQ's</a> <br />
+								<a rel="/invite"><i class="icon-share"></i> Invite Friends</a>
+								<hr />
+								<a href="/login/logout"><i class="icon-signout"></i> Log Out</a>
+							</div>
+						</li>
+					</ul>
+					<div class="clearfix"></div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Ends new nav -->
+	
+	<div class="ajax-frame"></div>
+	
+    <div id="world-map" style="background:url(/public/images/codeArmy/mymission/world-map.png) no-repeat;width:999px;height:532px"> <!--<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />-->
 	 
       <!-- project list -->
       <div id="dialog-project-list" class="dialog">
@@ -31,11 +291,11 @@
     </div>
   </div>
 </div>
-<?php $this->load->view('includes/duck.php'); ?>
+<?php //$this->load->view('includes/duck.php'); ?>
 <?php $this->load->view('includes/CAMapFooter.php'); ?>
 <!-- dialogs -->
 
-<div id="filter-toolbar" class="toolbar"> <a href="/profile" id="filter-toolbar-logo"></a>
+<!-- <div id="filter-toolbar" class="toolbar"> <a href="/profile" id="filter-toolbar-logo"></a>
   	<ul>
 		<li><a href = "javascript:void(0)" class="create_mission create">Create Mission <i class="icon-plus"></i></a></li>
 	</ul>
@@ -53,8 +313,9 @@
   	<li><a id="skills" class="menu first" href="javascript:skills();">Skills <i class="icon-chevron-right"></i></a></li>
     <li><a id="classification" class="menu first" href="javascript:classification();">Divisions <i class="icon-chevron-right"></i></a></li>
   </ul>
-</div>
-<div id="profile-toolbar" class="toolbar">
+</div> -->
+
+<!-- <div id="profile-toolbar" class="toolbar">
   <a href="/login/logout" class="logout" title="Logout"><span class="icon-off"></span></a>
   <div id="avatar-block"> <a href="/profile"><img src="/public/images/codeArmy/mymission/profile_toolbar/avatar.png" id="avatar" alt="avatar" /></a>
     <ul id="status-icons">
@@ -100,7 +361,7 @@
         </select>
         </div>
     </div>
-</div>
+</div> -->
 
 <div id="mission-creator" class="theframe">
 	<div class="thebox small">
@@ -136,8 +397,8 @@
 	* {
 		transform-style: preserve-3d;
 		backface-visibility: hidden;
-		-moz-transform-style: preserve-3d;
-		-moz-backface-visibility: hidden;
+		/* -moz-transform-style: preserve-3d;
+		-moz-backface-visibility: hidden; */
 		-o-transform-style: preserve-3d;
 		-o-backface-visibility: hidden;
 	}
@@ -537,6 +798,48 @@
 	
 </style>
 <script>
+
+	//Nav script by MHN
+	$(function(){
+		
+		var now = $.cookie("active");
+		if (now != 2) {
+			$('.topnav > li').eq(now).find('a').addClass('active');
+		}
+		$('.topnav > li').eq(now).find('.child').fadeIn('fast');
+		
+		$('.child').horizontalNav();
+		$('.topnav li').on('click',function(){
+			
+			/* var self   = $(this),
+			    index  = self.index();
+		    $.cookie("active", index, { expires : 1, path: '/' } ); */
+			
+			$('.topnav li a').removeClass('active');
+			$('a', this).addClass('active');
+			$('.child').not($('.child', this)).hide();
+			$('.child', this).stop().slideToggle();
+			//alert( $.cookie("active") );	
+		});
+		$('a.profile-setting').click(function(){
+			$('.arrow_box').stop().slideToggle('fast');
+		});
+		
+		$('.logo').click(function(){
+			$.cookie("active", 2, { expires : 1, path: '/' } );
+		});
+		
+		$('.topnav li a').not('.profile-setting').click(function(){
+			var links = $(this).attr('rel');
+			var height = $(window).height()-10;
+			//console.log(links);
+			$('.arrow_box').stop().slideUp('fast');
+			$('#world-map').hide();
+			$('.ajax-frame').html();
+			$('.ajax-frame').show().html('<iframe src="'+links+'" width="100%" height="'+height+'" scrollable="no" frameborder="0"></iframe>')
+		})
+		//For notifications or announcements, just edit .alert text and enable it 
+	})
 	
 	function loadEffect(){}
 	
@@ -570,6 +873,7 @@
 			MissionCreate(1);
 			e.preventDefault();
 		});
+		
 	});
 	
 	function renderMarkers(){
@@ -940,5 +1244,5 @@ function removeTags(html) {
 
 </script>
 <!-- end of chat box -->
-<script type="text/javascript" src="/public/js/codeArmy/duck.js"></script>
+<!-- <script type="text/javascript" src="/public/js/codeArmy/duck.js"></script> -->
 <?php $this->load->view('includes/CAFooter.php'); ?>

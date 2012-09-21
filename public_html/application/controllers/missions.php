@@ -472,6 +472,21 @@ class Missions extends CI_Controller {
 		$this->load->view('create_mission_codearmy_view', $this->view_data);
 	}
 	
+	function createnew($cat=''){
+		$this->session->sess_update();
+		$this->view_data['cat_selected'] = $cat;
+		$this->view_data['main_category'] = $this->work_model->get_main_category();
+		$this->view_data['class'] = $this->work_model->get_main_class($cat);
+		$this->view_data['sub_class'] = $this->work_model->get_sub_class($cat,'');
+		$this->view_data['arrangement_type'] = $this->work_model->get_arrangement_type();
+
+		$this->view_data['skills'] = $this->skill_model->get_filter_skill();
+		$this->view_data['skillsonly'] = $this->skill_model->get_all_skills();
+
+		$this->view_data['window_title'] = "Mission Create";
+		$this->load->view('createnew_mission_codearmy_view', $this->view_data);
+	}
+	
 	function check_create_mission(){
 		$user_id = $this->view_data['me']['user_id'];
 		$this->load->helper('htmlpurifier');
