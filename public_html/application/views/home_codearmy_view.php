@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>CodeAr.my</title>
+<meta name="description" content="Online workplace helping businesses, developers and designers work together in a fun and product environment." />
+<title>CodeArmy</title>
 <link rel="icon" type="image/png" href="/favicon.png" />
 <link href='http://fonts.googleapis.com/css?family=Ruda' rel='stylesheet' type='text/css' />
 <link href='http://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css' />
