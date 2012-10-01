@@ -6,7 +6,7 @@
 #main-content{margin-top:15px;}
 #left-block{top:45px;}
 .profile-header{display:none}
-#container {padding-top:100px}
+#container {margin-top:-20px}
 #footer {display:none}
 /* #container{background:none; margin:30px auto;border:1px solid #333;} */
 <?php }?>

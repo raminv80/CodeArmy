@@ -189,8 +189,8 @@
 	.topnav .filter .filterwrap {display:none}
 	
 	/* PO style */
-	.stickynav {width:1000px; margin:0 auto; position:absolute; z-index:99999999}
-	.ajax-frame {min-height:100%; display:none}
+	.stickynav {width:1000px; margin:0 auto; position:relative; z-index:99999999; padding-bottom:10px; border-bottom:1px solid black}
+	.ajax-frame {display:none}
 </style>
 
 <!--TODO: add ajax loader icons -->
@@ -318,7 +318,7 @@
 	
 	<div class="ajax-frame"></div>
 	
-    <div id="world-map" style="background:url(/public/images/codeArmy/mymission/world-map.png) bottom no-repeat;width:999px;height:532px; padding-top:60px"> <!--<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />-->
+    <div id="world-map" style="background:url(/public/images/codeArmy/mymission/world-map.png) no-repeat;width:999px;height:532px; "> <!--<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />-->
 	 
       <!-- project list -->
       <div id="dialog-project-list" class="dialog">
@@ -879,7 +879,7 @@
 		});
 		
 		$('.filter .all').mouseenter(function(){
-			$('.filterwrap').slideDown();
+			$('.filterwrap').slideDown('fast');
 		});
 		$('.filter').mouseleave(function(){
 			$('.filterwrap').slideUp();
@@ -893,7 +893,7 @@
 	function loadFrame(){
 		$('.topnav li.first a').not('.profile-setting').not('#search-submit').not('.mid').click(function(){
 			var links = $(this).attr('rel');
-			var height = $(window).height()-10;
+			var height = $(window).height()-140;
 			
 			$('.arrow_box').stop().slideUp('fast');
 			$('#world-map').hide();
@@ -1063,7 +1063,7 @@
 		//vertical cenerlise world map
 		$('#find-mission-area').css('height',$(window).height()-40);
 		//var y = Math.round(($(window).height()-40-$('#world-map-img').attr('height'))/2);
-		var y = Math.round(($(window).height()-40-$('#world-map').height())/2);
+		var y = Math.round(($(window).height()-150-$('#world-map').height())/2);
 		if(y<0)y=0;
 		$('#world-map').css('top',y);
 	});
