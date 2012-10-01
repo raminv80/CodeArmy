@@ -35,7 +35,7 @@ class Home extends CI_Controller {
 	
 	function index(){
 		//codeArmy v1.0
-		if($this->session->userdata('username')) redirect('my-profile');
+		if($this->session->userdata('username')) redirect('/missions/tallent_map');
 		$this->view_data['window_title'] = "CodeArmy | Home";
 		$this->view_data['window_title'] = get_cookie('remember_me_token');
 		$this->load->view('home_codearmy_view', $this->view_data);
