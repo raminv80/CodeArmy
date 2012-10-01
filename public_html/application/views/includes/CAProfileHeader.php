@@ -151,9 +151,11 @@
 	margin-left: -8px;
 }
 .topnav .arrow_box hr {margin:2px 0; border-top:1px solid #333; border-bottom:none}
-
+<?php if(in_array($controller,array("missions","messages"))){?>
 .logo {background: url(/public/images/codeArmy/mymission/fillter-toolbar.png); height:134px; width:142px; background-position:-16px 0px; margin: 10px 0 0 10px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px}
-
+<?php }else{?>
+.logo {background: url(/public/images/codeArmy/mymission/fillter-toolbar.png); height:91pxpx; width:142px; background-position:-16px -18px; margin: 10px 0 0 10px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px}
+<?php }?>
 hr {border-top-color:black; border-bottom-color:#444}
 
 .profile-header .alert {margin-top:5px; margin-bottom:5px; background:none; border:none; color:orange; text-shadow:none; display:none}
