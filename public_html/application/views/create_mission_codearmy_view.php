@@ -1,4 +1,11 @@
 <?php $this->load->view('includes/frame_header.php'); ?>
+<?php if($me['role']=='po' || $me['role']=='admin'){?>
+<style type="text/css">
+	.create-mission-wrapper {padding:150px 0 50px}
+	.create-mission-container {margin: 0 auto}
+	/* #container{background:none; margin:30px auto;border:1px solid #333;} */
+</style>
+<?php }?>
 </head>
  
 <body>

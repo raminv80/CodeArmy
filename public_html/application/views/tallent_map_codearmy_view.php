@@ -79,7 +79,7 @@
 	.topnav li .avatar {
 		width:50px; height:50px; margin-top:-5px; overflow:hidden; border-radius:25%; margin-left:25%; border:1px solid rgba(255,255,255,.1); box-shadow: 0 -1px 1px black}
 	.topnav li .avatar img {width:105%}
-
+	
 	.topnav .child {
 		width:776px;
 		margin-top:5px;
@@ -172,6 +172,22 @@
 		font-size:.8em;
 	}
 	
+	.topselectwrap {position:relative}
+	.topselectwrap div {position:absolute; color:white; top:9px; right:10px}
+	
+	.topnav select {background:black; -webkit-appearance: none; border:none; height:35px; line-height:35px; width:180px; padding:0 0 0 10px; margin:0; text-shadow:0 1px 1px black; box-shadow:inset 0 1px 1px #666; color:orange; }
+	
+	.topnav input {margin:0; padding:5px}
+	
+	.topnav li a.cmission {
+		background:#2f9cad !important; /* Old browsers */
+		color:white !important;		
+	}
+	.topnav a#search-submit {position:absolute; background:none; border:none; box-shadow:none; top:2px; right:-10px; color:black; text-shadow:none}
+	
+	.topnav .filter div {background:black; height:36px; line-height:36px; text-shadow:0 1px 1px black; box-shadow:inset 0 1px 1px #666; color:orange}
+	.topnav .filter .filterwrap {display:none}
+	
 	/* PO style */
 	.stickynav {width:1000px; margin:0 auto; position:absolute; z-index:99999999}
 	.ajax-frame {min-height:100%; display:none}
@@ -191,7 +207,8 @@
 				</div>
 				<div class="span10">
 					<ul class="nav topnav">
-						<li><a rel="/messages/inbox"><i class="icon-envelope-alt"></i> <br />Messages
+						<li class="first">
+							<a rel="/messages/inbox"><i class="icon-envelope-alt"></i> <br />Messages
 							<span class="notification <?=isset($myActiveMessages)&&$myActiveMessages>0?'':'hidden' ?>" id="messages-notification"><?=isset($myActiveMessages)?$myActiveMessages:'?' ?></span>
 							</a>
 
@@ -205,33 +222,69 @@
 								</ul>
 							</nav>
 						</li>
-						<li><a rel="/messages/notifications" ><i class="icon-bullhorn"></i> <br />Notifications
+						<li class="first">
+							<a rel="/messages/notifications" ><i class="icon-bullhorn"></i> <br />Notifications
 							<span class="notification <?=isset($myActiveNotifications)&&$myActiveNotifications>0?'':'hidden' ?>" id="notifications-notification"><?=$myActiveNotifications?></span>
-							</a></li>
-						<li>
-							<a rel="/missions/createnew" class="mid"><i class="icon-globe"></i><br />Find Tallent</a>
+							</a>
+						</li>
+						<li class="first">
+							<a rel="/missions/tallent_map" class="mid"><i class="icon-globe"></i><br />Find Talent</a>
 							<nav class="child">
 								<ul class="childnav">
+									<!-- <li class="void">
+										<div class="topselectwrap">
+											<div><i class="icon-chevron-down"></i></div>
+											<select name="select" id="">
+												<option value="#">Level (All)</option>
+												<option value="1">1-20</option>
+												<option value="20">20-40</option>
+												<option value="40">40-60</option>
+												<option value="60">60-80</option>
+												<option value="80-100">80-99</option>
+											</select>
+										</div>
+									</li> 
+									<li class="void">
+										<div class="topselectwrap">
+											<div><i class="icon-chevron-down"></i></div>
+											<select name="select" id="filter">
+												<option value="#">Skill (All)</option>
+												<option value="mobile-app">Mobile App Dev</option>
+												<option value="social-network">Social Network Dev</option>
+												<option value="website-design">Website Design</option>
+												<option value="online-store">Online Store</option>
+												<option value="blog">Blog</option>
+												<option value="content-writing">Content Writing</option>
+											</select>
+											
+										</div>
+									</li> -->
 									<li>
-										<select name="select" id="">
-											<option value="a">Level All</option>
-											<option value="b">Skills</option>
-											<option value="c">Payout</option>
-										</select>
+										<div class="filter">
+											<div class="all" onClick="javascript:allusers()">All User</div>
+											<div class="filterwrap">
+												<div onClick="javascript:latest()">Contractors</div>
+												<div onClick="javascript:po()">Product Owners</div>
+												<div onClick="javascript:skills()">Skills</div>
+												<div onClick="javascript:classification()">Division</div>
+											</div>
+										</div>
 									</li>
+									<li><a rel="/missions/create" class="cmission">Create Mission</a></li>
+									<!-- <li><div><input type="search" /></div></li> -->
 									<li>
-										<select name="select" id="">
-											<option value="a">Skill All</option>
-											<option value="b">Skills</option>
-											<option value="c">Payout</option>
-										</select>
+										<div id="search-bar" style="position:relative">
+									    <input type="text" name="search" id="search" value="Find missions" style="width:90%"/>
+									    <a title="Search for missions" href="#" id="search-submit">
+											<i class="icon-search"></i>
+											<img id="search-loader" title="Notifications" src="/public/images/newloader.gif" />
+										</a>
+									  </div>
 									</li>
-									<li><a rel="/missions/create">Create Mission</a></li>
-									<li><div><input type="search" /></div></li>
 								</ul>
 							</nav>
 						</li>
-						<li><a rel="/missions/my_missions"><i class="icon-folder-open"></i> <br />My Mission
+						<li class="first"><a rel="/missions/my_missions"><i class="icon-folder-open"></i> <br />My Mission
 							<span class="notification <?=isset($myActiveMissions)&&$myActiveMissions>0?'':'hidden'?>" id="mymissions-notification"><?=isset($myActiveMissions)?$myActiveMissions:'?'?></span>
 							</a>
 							<nav class="child">
@@ -241,7 +294,7 @@
 								</ul>
 							</nav>
 						</li>
-						<li>
+						<li class="first">
 							<a rel="/profile">
 								<div class="avatar"><img src="/public/images/codeArmy/profile/avatar.png" border="0"></div>
 							</a>
@@ -265,7 +318,7 @@
 	
 	<div class="ajax-frame"></div>
 	
-    <div id="world-map" style="background:url(/public/images/codeArmy/mymission/world-map.png) no-repeat;width:999px;height:532px"> <!--<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />-->
+    <div id="world-map" style="background:url(/public/images/codeArmy/mymission/world-map.png) bottom no-repeat;width:999px;height:532px; padding-top:60px"> <!--<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />-->
 	 
       <!-- project list -->
       <div id="dialog-project-list" class="dialog">
@@ -276,7 +329,7 @@
       </div>
       <!-- end of project list --> 
       
-      <!-- chat box -->
+      <!-- chat box
       <div class="chat-box toolbar" style="position:absolute;left:10px;top:370px;width:250px;height:200px;background:rgba(60,60,60,0.6);z-index:2">
       	<div style="border-bottom:1px solid black"><span id="count">0</span> users in chatroom</div>
         <div class="nano-chat nano">
@@ -287,7 +340,7 @@
         <input type="button" id="public-message-submit" value="send" disabled="disabled" style="width:40px;height:25px;border:none;padding:0;margin:0;">
         </div>
       </div>
-      <!-- end of chat box -->
+       end of chat box -->
     </div>
   </div>
 </div>
@@ -803,24 +856,15 @@
 	$(function(){
 		
 		var now = $.cookie("active");
+		$('.topnav > li').eq(now).find('a').addClass('active');
+		console.log(now);
 		if (now != 2) {
 			$('.topnav > li').eq(now).find('a').addClass('active');
 		}
 		$('.topnav > li').eq(now).find('.child').fadeIn('fast');
 		
 		$('.child').horizontalNav();
-		$('.topnav li').on('click',function(){
-			
-			/* var self   = $(this),
-			    index  = self.index();
-		    $.cookie("active", index, { expires : 1, path: '/' } ); */
-			
-			$('.topnav li a').removeClass('active');
-			$('a', this).addClass('active');
-			$('.child').not($('.child', this)).hide();
-			$('.child', this).stop().slideToggle();
-			//alert( $.cookie("active") );	
-		});
+		
 		$('a.profile-setting').click(function(){
 			$('.arrow_box').stop().slideToggle('fast');
 		});
@@ -829,17 +873,47 @@
 			$.cookie("active", 2, { expires : 1, path: '/' } );
 		});
 		
-		$('.topnav li a').not('.profile-setting').click(function(){
+		$('.topnav li a.mid').click(function(){
+			$('.ajax-frame').hide();
+			$('#world-map').show();
+		});
+		
+		$('.filter .all').mouseenter(function(){
+			$('.filterwrap').slideDown();
+		});
+		$('.filter').mouseleave(function(){
+			$('.filterwrap').slideUp();
+		})
+		
+		loadFrame();
+		loadChild();
+		//For notifications or announcements, just edit .alert text and enable it 
+	})
+	
+	function loadFrame(){
+		$('.topnav li.first a').not('.profile-setting').not('#search-submit').not('.mid').click(function(){
 			var links = $(this).attr('rel');
 			var height = $(window).height()-10;
-			//console.log(links);
+			
 			$('.arrow_box').stop().slideUp('fast');
 			$('#world-map').hide();
 			$('.ajax-frame').html();
 			$('.ajax-frame').show().html('<iframe src="'+links+'" width="100%" height="'+height+'" scrollable="no" frameborder="0"></iframe>')
-		})
-		//For notifications or announcements, just edit .alert text and enable it 
-	})
+		});
+	}
+	
+	function loadChild(){
+		$('.topnav li.first').click(function(){
+			/* var self   = $(this),
+			    index  = self.index();
+		    $.cookie("active", index, { expires : 1, path: '/' } ); */
+			
+			$('.topnav li a').removeClass('active');
+			$('a', this).addClass('active');
+			$('.child').not($('.child', this)).hide();
+			$('.child', this).stop().slideDown();
+		});
+	}
 	
 	function loadEffect(){}
 	
