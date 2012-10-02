@@ -4,9 +4,356 @@
 	text-indent:-9000px !important;
 background:none !important; 
 }
+.tleft {text-align:left} .tright {text-align:right}
+.fgrey, small {color:#aaa}
+.btn.small {font-size:.8em; padding-left:5px; padding-right: 5px; line-height:12px}
+.fyellow, .fyellow small {color: yellow}
+.fred {color:#ff0000; text-shadow:0 0 1px black}
+.fblue {color:#06c7f9}
+.btn-success, .green {
+	background: rgb(85,137,0); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(85,137,0,1) 0%, rgba(68,94,19,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(85,137,0,1)), color-stop(100%,rgba(68,94,19,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(85,137,0,1) 0%,rgba(68,94,19,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(85,137,0,1) 0%,rgba(68,94,19,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(85,137,0,1) 0%,rgba(68,94,19,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(85,137,0,1) 0%,rgba(68,94,19,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#558900', endColorstr='#445e13',GradientType=0 ); /* IE6-9 */
+}
+.red {
+	background: rgb(150,39,12); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(150,39,12,1) 0%, rgba(92,11,6,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(150,39,12,1)), color-stop(100%,rgba(92,11,6,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(150,39,12,1) 0%,rgba(92,11,6,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(150,39,12,1) 0%,rgba(92,11,6,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(150,39,12,1) 0%,rgba(92,11,6,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(150,39,12,1) 0%,rgba(92,11,6,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#96270c', endColorstr='#5c0b06',GradientType=0 ); /* IE6-9 */
+}
+.orange {
+	background: rgb(196,148,6); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(196,148,6,1) 0%, rgba(178,112,0,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(196,148,6,1)), color-stop(100%,rgba(178,112,0,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(196,148,6,1) 0%,rgba(178,112,0,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(196,148,6,1) 0%,rgba(178,112,0,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(196,148,6,1) 0%,rgba(178,112,0,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(196,148,6,1) 0%,rgba(178,112,0,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c49406', endColorstr='#b27000',GradientType=0 ); /* IE6-9 */
+}
+.brown {
+	background: rgb(134,111,19); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(134,111,19,1) 0%, rgba(92,85,0,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(134,111,19,1)), color-stop(100%,rgba(92,85,0,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(134,111,19,1) 0%,rgba(92,85,0,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(134,111,19,1) 0%,rgba(92,85,0,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(134,111,19,1) 0%,rgba(92,85,0,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(134,111,19,1) 0%,rgba(92,85,0,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#866f13', endColorstr='#5c5500',GradientType=0 ); /* IE6-9 */
+}
+.grey {
+	background: rgb(153,153,153); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(153,153,153,1) 0%, rgba(85,85,85,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(153,153,153,1)), color-stop(100%,rgba(85,85,85,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(153,153,153,1) 0%,rgba(85,85,85,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(153,153,153,1) 0%,rgba(85,85,85,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(153,153,153,1) 0%,rgba(85,85,85,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(153,153,153,1) 0%,rgba(85,85,85,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#999999', endColorstr='#555555',GradientType=0 ); /* IE6-9 */
+}
+.container.missions h1 {font-size:1.6em; color:white}
+.boxmission { min-height:260px; text-align:center; color:white; margin-bottom:25px;
+	background: -moz-linear-gradient(top, rgba(153,153,153,0.3) 0%, rgba(153,153,153,0.3) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(153,153,153,0.3)), color-stop(100%,rgba(153,153,153,0.3))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(153,153,153,0.3) 0%,rgba(153,153,153,0.3) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(153,153,153,0.3) 0%,rgba(153,153,153,0.3) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(153,153,153,0.3) 0%,rgba(153,153,153,0.3) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(153,153,153,0.3) 0%,rgba(153,153,153,0.3) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99999999', endColorstr='#99999999',GradientType=0 ); /* IE6-9 */; border-radius:10px; box-shadow: 0 1px 1px #111}
+	.boxmission header {padding:15px 10px 5px; text-align:left; -webkit-border-top-left-radius: 10px; -webkit-border-top-right-radius: 10px; -moz-border-radius-topleft: 10px; -moz-border-radius-topright: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom:1px solid #333}
+	.boxmission header .title {height:40px; text-shadow: 0 1px 1px black}
+	.boxmission header .date {font-size:.85em; height:20px}
+	.boxmission .wrapbar {height:30px}
+	.boxmission .progress {background: #333; height:12px; border:1px solid #333; margin-bottom:10px}
+	.boxmission .head {padding:10px 0; height:60px}
+	.boxmission .head article {position:relative}
+	.boxmission .head article .accept {color:#06c7f9}
+	.boxmission .head article.copy {padding:0 5px; font-size:.9em}
+	.boxmission .head aside {position:absolute; top:-5px; left:5px; width:15px; height:15px; line-height:15px; text-align:center; background: orange; color:black; border-radius:50%; font-size:.8em}
+	.boxmission .head article i {padding:0 3px 0 15px; font-size:1.6em; line-height:.2em; text-shadow:0; color:#222; text-shadow:0 1px 1px #777}
+	.boxmission .bottom {padding:0 10px}
 </style>
 
-<div class="container-fluid">
+<!-- NEW PAGE -->
+<div class="container missions">
+	<div class="row">
+		<div class="span12">
+			<div class="pull-left"><h1>My Missions</h1></div>
+			<div class="pull-right">
+				<?php if($me['role']=='po' || $me['role']=='admin'){?>
+				<a href="#" class="btn btn-success">Create Mission</a>
+				<?php }?>
+			</div>
+		</div>
+		<div class="span12"><hr /></div>
+	</div>
+	
+	<!-- FOR PO -->
+	<div class="row">
+	
+		<!-- Sample green -->
+		<div class="span3 boxmission">
+			<header class="green">
+				<p class="title">A manly wordpress blog template with custom plugins ...</p>
+				<div class="wrapbar">
+					<div class="progress progress-striped active progress-danger">
+					  <div class="bar" style="width: 33%;"></div>
+					</div>
+				</div>
+				<p class="date">Dateline: 10 September 2012</p>
+			</header>
+			<section>
+				<div class="head tleft">
+					<div class="row-fluid">
+						<article class="span6"><i class="icon-comments"></i> <small>Wall</small> <aside>2</aside></article>
+						<article class="span6"><i class="icon-calendar"></i> <small>Dates</small></article>
+					</div>
+					<div class="row-fluid">
+						<article class="span6"><i class="icon-copy"></i> <small>Tasks</small></article>
+						<article class="span6"><i class="icon-paper-clip"></i> <small>Documents</small> <aside>8</aside></article>
+					</div>
+				</div>
+				<div class="bottom">
+					<div class="pull-left tleft">99 <small>WEEKS LEFT</small> <br /> US$60 <small>/hr</small></div>
+					<div class="pull-right"><a href="#" class="btn  btn-success">Check In</a></div>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Sample Brown -->
+		<div class="span3 boxmission">
+			<header class="brown">
+				<p class="title">Ecommerce for online boutique with MOLpay integration</p>
+				<div class="wrapbar">
+					<div class="progress progress-striped active progress-warning">
+					  <div class="bar" style="width: 50%;"></div>
+					</div>
+				</div>
+				<p class="date">Dateline: 10 September 2012</p>
+			</header>
+			<section>
+				<div class="head tleft">
+					<div class="row-fluid">
+						<article class="span6"><i class="icon-comments"></i> <small>Comments</small> <aside>2</aside></article>
+						<article class="span6"><i class="icon-group"></i> <small>Bidder</small></article>
+					</div>
+				</div>
+				<div class="bottom">
+					<div class="pull-left tleft">99 <small>WEEKS LEFT</small> <br /> US$60 <small>/hr</small></div>
+					<div class="pull-right"><a href="#" class="btn btn-success">Edit</a></div>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Sample Brown -->
+		<div class="span3 boxmission">
+			<header class="brown">
+				<p class="title">Ecommerce for online boutique with MOLpay integration</p>
+				<div class="wrapbar">
+					<div class="progress progress-striped active progress-success">
+					  <div class="bar" style="width: 75%;"></div>
+					</div>
+				</div>
+				<p class="date">Dateline: 10 September 2012</p>
+			</header>
+			<section>
+				<div class="head tleft">
+					<div class="row-fluid">
+						<article class="span6"><i class="icon-comments"></i> <small>Comments</small> <aside>2</aside></article>
+						<article class="span6"><i class="icon-group"></i> <small>Bidder</small></article>
+					</div>
+				</div>
+				<div class="bottom">
+					<div class="pull-left tleft">99 <small>WEEKS LEFT</small> <br /> US$60 <small>/hr</small></div>
+					<div class="pull-right"><a href="#" class="btn btn-success">Edit</a></div>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Sample Grey -->
+		<div class="span3 boxmission">
+			<header class="grey">
+				<p class="title">Facebook landing page</p>
+				<div class="wrapbar">
+					<!-- <div class="progress progress-striped active progress-warning">
+					  <div class="bar" style="width: 40%;"></div>
+					</div> -->
+				</div>
+				<p class="date"><!-- Dateline: 10 September 2012 --></p>
+			</header>
+			<section>
+				<div class="head tleft">
+					<!-- <div class="row-fluid">
+						<article class="span6"><i class="icon-comments"></i> <small>Wall</small> <aside>2</aside></article>
+						<article class="span6"><i class="icon-calendar"></i> <small>Dates</small></article>
+					</div>
+					<div class="row-fluid">
+						<article class="span6"><i class="icon-copy"></i> <small>Tasks</small></article>
+						<article class="span6"><i class="icon-paper-clip"></i> <small>Documents</small> <aside>8</aside></article>
+					</div> -->
+				</div>
+				<div class="bottom">
+					<div class="pull-left tleft"><!-- 99 <small>WEEKS LEFT</small> --><br /> US$60 <small>/hr</small></div>
+					<div class="pull-right"><a href="#" class="btn btn-success">Edit</a></div>
+				</div>
+			</section>
+		</div>
+		
+	</div> <!-- End PO row -->
+	
+	<!-- FOR TALENT -->
+	<div class="row">
+	
+		<!-- Sample green -->
+		<div class="span3 boxmission">
+			<header class="green">
+				<p class="title">A manly wordpress blog template with custom plugins ...</p>
+				<div class="wrapbar">
+					<div class="progress progress-striped active progress-danger">
+					  <div class="bar" style="width: 33%;"></div>
+					</div>
+				</div>
+				<p class="date">Dateline: 10 September 2012</p>
+			</header>
+			<section>
+				<div class="head tleft">
+					<div class="row-fluid">
+						<article class="span6"><i class="icon-comments"></i> <small>Wall</small> <aside>2</aside></article>
+						<article class="span6"><i class="icon-calendar"></i> <small>Dates</small></article>
+					</div>
+					<div class="row-fluid">
+						<article class="span6"><i class="icon-copy"></i> <small>Tasks</small></article>
+						<article class="span6"><i class="icon-paper-clip"></i> <small>Documents</small> <aside>8</aside></article>
+					</div>
+				</div>
+				<div class="bottom">
+					<div class="pull-left tleft">99 <small>WEEKS LEFT</small> <br /> US$60 <small>/hr</small></div>
+					<div class="pull-right"><a href="#" class="btn  btn-success">Check In</a></div>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Sample orange -->
+		<div class="span3 boxmission">
+			<header class="orange">
+				<p class="title">Ecommerce for online boutique with MOLpay integration</p>
+				<div class="wrapbar">
+					<!-- <div class="progress progress-striped active progress-warning">
+					  <div class="bar" style="width: 50%;"></div>
+					</div> -->
+				</div>
+				<p class="date">
+					<span class="pull-left">Hourly, 2-4 Weeks</span>
+					<span class="pull-right">11 Bids</span>
+				</p>
+			</header>
+			<section>
+				<div class="head tcenter">
+					<div class="row-fluid">
+						<article class="copy">
+							<p class="accept">Offer Accepted!</p>
+						</article>
+					</div>
+					<div class="row-fluid">
+						<article class="span4"><span class="fblue">Your Bid</span></article>
+						<article class="span3">30 days</article>
+						<article class="span1">MYR</article>
+						<article class="span4">4,000</article>
+					</div>
+				</div>
+				<div class="bottom">
+					<div class="pull-left tleft">42 <small>hr/week</small> <br /> US$60 <small>/hr</small></div>
+					<div class="pull-right"><a href="#" class="btn btn-danger small"> <i class="icon-remove"></i><br />Decline</a> <a href="#" class="btn btn-success small"><i class="icon-ok"></i> <br />Accept</a></div>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Sample Brown -->
+		<div class="span3 boxmission">
+			<header class="brown">
+				<p class="title">Ecommerce for online boutique with MOLpay integration</p>
+				<div class="wrapbar">
+					<!-- <div class="progress progress-striped active progress-success">
+					  <div class="bar" style="width: 75%;"></div>
+					</div> -->
+				</div>
+				<p class="date">
+					<span class="pull-left">Fixed</span>
+					<span class="pull-right">9 Bids</span>
+				</p>
+			</header>
+			<section>
+				<div class="head">
+					<div class="row-fluid fgrey">
+						<article class="span4"><small>Latest Bid</small></article>
+						<article class="span3">30 days</article>
+						<article class="span1">MYR</article>
+						<article class="span4">4,000</article>
+					</div>
+					<div class="row-fluid">
+						<article class="span4"><span class="fyellow">Your Bid</span></article>
+						<article class="span3">30 days</article>
+						<article class="span1">MYR</article>
+						<article class="span4">4,000</article>
+					</div>
+				</div>
+				<div class="bottom">
+					<div class="pull-left tleft">36 <small>days</small> <br /> US$60 <small>/hr</small></div>
+					<div class="pull-right"><!-- <a href="#" class="btn btn-success">Edit</a>--></div>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Sample red -->
+		<div class="span3 boxmission">
+			<header class="red">
+				<p class="title">Facebook landing page</p>
+				<div class="wrapbar">
+					<!-- <div class="progress progress-striped active progress-warning">
+					  <div class="bar" style="width: 40%;"></div>
+					</div> -->
+				</div>
+				<p class="date">
+					<span class="pull-left">Hourly, 2-4 Weeks</span>
+					<span class="pull-right">11 Bids</span>
+				</p>
+			</header>
+			<section>
+				<div class="head tcenter">
+					<div class="row-fluid">
+						<article class="copy">
+							<p class="fred">Offer Rejected!</p>
+						</article>
+					</div>
+					<div class="row-fluid">
+						<article class="span3"><span class="fred">Your Bid</span></article>
+						<article class="span4">30 <small>hr/week</small></article>
+						<article class="span2">MYR</article>
+						<article class="span3">42 <small>/hr</small></article>
+					</div>	
+				</div>
+				<div class="bottom">
+					<div class="pull-left tleft">36 <small>hr/week</small> <br /> US$60 <small>/hr</small></div>
+					<div class="pull-right"><a href="#" class="btn btn-danger small"><i class="icon-remove"></i><br /> Remove</a></div>
+				</div>
+			</section>
+		</div>
+		
+	</div> <!-- End Talent row>
+	
+</div>
+
+<!-- OLD PAGE -->
+<div class="container-fluid" style="padding-top:500px">
 	<div class="row-fluid">
 		
 		<!-- Page start -->
