@@ -11,7 +11,6 @@ background:none !important;
 .fred {color:#e95a56; text-shadow:0 0 1px black}
 .fblue {color:#06c7f9}
 .doubleline {padding-top:2px; line-height:10px;}
-.input-micro {width:50px}
 .btn-success, .green {
 	background: rgb(85,137,0); /* Old browsers */
 	background: -moz-linear-gradient(top, rgba(85,137,0,1) 0%, rgba(68,94,19,1) 100%); /* FF3.6+ */
@@ -382,9 +381,9 @@ background:none !important;
 					</div>
 					<div class="row-fluid">
 						<article class="span2">days</article>
-						<article class="span3"><input type="text" style="width:30px" placeholder="5" /></article>
+						<article class="span3"><input type="text" style="width:30px;height:15px" placeholder="5" /></article>
 						<article class="span2">MYR</article>
-						<article class="span5"><input type="text" style="width:60px" placeholder="1250" /></article>
+						<article class="span5"><input type="text" style="width:60px; height:15px" placeholder="1250" /></article>
 					</div>	
 				</div>
 				<div class="bottom">
