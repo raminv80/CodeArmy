@@ -898,7 +898,7 @@
 			$('.arrow_box').stop().slideUp('fast');
 			$('#world-map').hide();
 			$('.ajax-frame').html();
-			$('.ajax-frame').show().html('<iframe src="'+links+'" width="100%" height="'+height+'" scrollable="no" frameborder="0"></iframe>')
+			$('.ajax-frame').show().html('<iframe onload="this.contentWindow.scrollTo(0,0)" src="'+links+'" width="100%" height="'+height+'" scrollable="no" frameborder="0"></iframe>')
 		});
 	}
 	
