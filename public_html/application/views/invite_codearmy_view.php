@@ -24,7 +24,7 @@ h3 {
 				$msg = $this->session->flashdata('msg');
 				if($msg) echo "<b>".$msg."</b>";
 				?>
-				<p>You can invite friends by sending them an email</p>
+				<p>Get your friends in the action. Send them an invite!</p>
 			</div>
 			<div class="span5 share">
 				<div class="pull-right">
@@ -45,7 +45,7 @@ h3 {
 				<?php } else { ?>
 				<textarea name="email" class="span12" id="email"></textarea>
 				<?php } ?>
-				<p><small>Enter email addresses manually, please separate email addresses with commas.</small></p>
+				<p><small>Enter email addresses manually. Please separate each email address with a comma.</small></p>
 			</div>
 		</div>
 		
@@ -57,10 +57,12 @@ h3 {
 				<textarea name="message" id="message"><?=set_value('message')?></textarea><br />
 				<div id="errmsg2"><?=form_error("message")?></div>
 				<?php } else { ?>
-				<textarea name="message" id="message" rows="7" class="span12">Hi! I would like to invite you to be a part of CodeAr.my, a platform that helps you to find exciting Digital Products to wok on in a Gamified Environment! Join me and be at the top of your game.
-
-Visit http://www.codearmy.com
-				</textarea>
+				<textarea name="message" id="message" rows="7" class="span12">Greetings!
+We are CodeAr.my, a platform that will help you to find exciting Digital Products to work on in a Gamified Environment.
+Your friend <?=$me["username"]?> has nominated you for our attention.
+Join our troop and be at the top of your game!!
+                
+Visit http://www.codearmy.com</textarea>
 				<?php } ?>
 				
 				<p class="pull-right"><input type="submit" value="Invite" class="lnkimg" /></p>

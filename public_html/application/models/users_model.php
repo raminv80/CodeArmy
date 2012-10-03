@@ -722,9 +722,9 @@ class Users_model extends CI_Model {
 				$user = $user[0];
 				$newPass = $this->createRandomPassword();
 				$sql = "update users set secret=? where user_id=?";
-				$this->notify($user['user_id'], 'Your Password is Reset',"<p>Hello!</p><p>Your password on <a href='http://codearmy.com'>CodeArmy</a> has been reseted to: ".$newPass."</p><p>Soldier on!</p>");
+				$this->notify($user['user_id'], 'Your password has been reset',"<p>Hello!</p><p>Your password on <a href='http://codearmy.com'>CodeArmy</a> has been reset to: ".$newPass."</p><p>Soldier on!</p>");
 				$this->db->query($sql, array(md5($newPass),$user['user_id']));
-				return "Dear ".$user['username'].", an email is sent to you containing your new password.";
+				return "Dear ".$user['username'].", an email containing your new password has been sent to you.";
 			}else return "Error: Invalid Code!";
 			$sql = "DELETE FROM actions where code = ?";
 			$this->db->query($sql, array($code));
@@ -828,7 +828,7 @@ class Users_model extends CI_Model {
 	function send_invites($user_id){
 		$strEmail = strtolower($this->input->post('email'));
 		$strMessage = $this->input->post('message');
-		$subject = "Invite you to be a part of CodeAr.my";
+		$subject = "Join the troops in CodeAr.my";
 		
 		$strFormatEmailList = str_replace(";", ",", $strEmail); // replace ; with , if any
 		$strFormatEmailList = str_replace(" ", "", $strFormatEmailList); // remove space

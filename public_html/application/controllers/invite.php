@@ -54,7 +54,7 @@ class Invite extends CI_Controller {
 		
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('email', 'Email', 'required');
-		$this->form_validation->set_rules('message', 'Message', 'required|max_length[255]');
+		$this->form_validation->set_rules('message', 'Message', 'required');
 		
 		if ($this->form_validation->run() == FALSE){
 			$this->view_data['form_error'] = true;
