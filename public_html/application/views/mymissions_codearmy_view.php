@@ -8,8 +8,10 @@ background:none !important;
 .fgrey, small {color:#aaa}
 .btn.small {font-size:.8em; padding-left:5px; padding-right: 5px; line-height:12px}
 .fyellow, .fyellow small {color: yellow}
-.fred {color:#ff0000; text-shadow:0 0 1px black}
+.fred {color:#e95a56; text-shadow:0 0 1px black}
 .fblue {color:#06c7f9}
+.doubleline {padding-top:2px; line-height:10px;}
+.input-micro {width:50px}
 .btn-success, .green {
 	background: rgb(85,137,0); /* Old browsers */
 	background: -moz-linear-gradient(top, rgba(85,137,0,1) 0%, rgba(68,94,19,1) 100%); /* FF3.6+ */
@@ -19,6 +21,17 @@ background:none !important;
 	background: -ms-linear-gradient(top, rgba(85,137,0,1) 0%,rgba(68,94,19,1) 100%); /* IE10+ */
 	background: linear-gradient(to bottom, rgba(85,137,0,1) 0%,rgba(68,94,19,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#558900', endColorstr='#445e13',GradientType=0 ); /* IE6-9 */
+}
+.btn-blue, .blue {
+	color:white; text-shadow:none;
+	background: rgb(37,189,232); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(37,189,232,1) 0%, rgba(1,107,197,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(37,189,232,1)), color-stop(100%,rgba(1,107,197,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(37,189,232,1) 0%,rgba(1,107,197,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(37,189,232,1) 0%,rgba(1,107,197,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(37,189,232,1) 0%,rgba(1,107,197,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(37,189,232,1) 0%,rgba(1,107,197,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#25bde8', endColorstr='#016bc5',GradientType=0 ); /* IE6-9 */
 }
 .red {
 	background: rgb(150,39,12); /* Old browsers */
@@ -264,10 +277,11 @@ background:none !important;
 						</article>
 					</div>
 					<div class="row-fluid">
-						<article class="span4"><span class="fblue">Your Bid</span></article>
-						<article class="span3">30 days</article>
+						<article class="span4"><span class="fyellow">Your Bid</span></article>
+						<article class="span1">12</article>
+						<article class="span2 tleft doubleline"><small>hr/ week</small></article>
 						<article class="span1">MYR</article>
-						<article class="span4">4,000</article>
+						<article class="span4">4 <small>/hour</small></article>
 					</div>
 				</div>
 				<div class="bottom">
@@ -331,18 +345,84 @@ background:none !important;
 				<div class="head tcenter">
 					<div class="row-fluid">
 						<article class="copy">
-							<p class="fred">Offer Rejected!</p>
+							<p class="fred">Sorry your offer rejected</p>
 						</article>
 					</div>
 					<div class="row-fluid">
-						<article class="span3"><span class="fred">Your Bid</span></article>
-						<article class="span4">30 <small>hr/week</small></article>
-						<article class="span2">MYR</article>
-						<article class="span3">42 <small>/hr</small></article>
+						<article class="span4"><span class="fyellow">Your Bid</span></article>
+						<article class="span1">30</article>
+						<article class="span2 tleft doubleline"><small>hr/ week</small></article>
+						<article class="span1">MYR</article>
+						<article class="span4">42 <small>/hr</small></article>
 					</div>	
 				</div>
 				<div class="bottom">
 					<div class="pull-left tleft">36 <small>hr/week</small> <br /> US$60 <small>/hr</small></div>
+					<div class="pull-right"><a href="#" class="btn btn-danger small"><i class="icon-remove"></i><br /> Remove</a></div>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Sample blue -->
+		<div class="span3 boxmission">
+			<header class="blue">
+				<p class="title">Facebook landing page</p>
+				<div class="wrapbar"></div>
+				<p class="date">
+					<span class="pull-left">Hourly, 2-4 Weeks</span>
+					<span class="pull-right">11 Bids</span>
+				</p>
+			</header>
+			<section>
+				<div class="head tcenter">
+					<div class="row-fluid">
+						<article class="copy">
+							<p class="fblue">You have been invited to bid</p>
+						</article>
+					</div>
+					<div class="row-fluid">
+						<article class="span2">days</article>
+						<article class="span3"><input type="text" style="width:30px" placeholder="5" /></article>
+						<article class="span2">MYR</article>
+						<article class="span5"><input type="text" style="width:60px" placeholder="1250" /></article>
+					</div>	
+				</div>
+				<div class="bottom">
+					<div class="pull-left tleft">36 <small>hr/week</small> <br /> US$60 <small>/hr</small></div>
+					<div class="pull-right"><a href="#" class="btn btn-danger small"> <i class="icon-remove"></i><br />Decline</a> <a href="#" class="btn btn-blue small"><i class="icon-ok"></i> <br />Place Bid</a></div>
+				</div>
+			</section>
+		</div>
+		
+		<!-- Sample Grey -->
+		<div class="span3 boxmission">
+			<header class="grey">
+				<p class="title">My Little Pony Design</p>
+				<div class="wrapbar">
+					<!-- <div class="progress progress-striped active progress-warning">
+					  <div class="bar" style="width: 40%;"></div>
+					</div> -->
+				</div>
+				<p class="date">
+					<span class="pull-left">Hourly, 3-4 Weeks</span>
+					<span class="pull-right">11 Bids</span>
+				</p>
+			</header>
+			<section>
+				<div class="head">
+					<div class="row-fluid">
+						<p class="tcenter fred">Bidding for this mission has ended</p>
+					</div>
+					<div class="row-fluid">
+						<article class="span4"><span class="fyellow">Your Bid</span></article>
+						<article class="span1">30</article>
+						<article class="span2 tleft doubleline"><small>hr/ week</small></article>
+						<article class="span1">MYR</article>
+						<article class="span4">42 <small>/hr</small></article>
+					</div>
+				</div>
+				<div class="bottom">
+					<div class="pull-left tleft"> 12 <small>hr/week</small><br /> US$60 <small>/hr</small></div>
 					<div class="pull-right"><a href="#" class="btn btn-danger small"><i class="icon-remove"></i><br /> Remove</a></div>
 				</div>
 			</section>
