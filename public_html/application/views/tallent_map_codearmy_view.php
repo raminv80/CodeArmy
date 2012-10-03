@@ -270,7 +270,7 @@
 											</div>
 										</div>
 									</li>
-									<li><a rel="/missions/create" class="cmission">Create Mission</a></li>
+									<li><a rel="/missions/createnew" class="cmission">Create Mission</a></li>
 									<!-- <li><div><input type="search" /></div></li> -->
 									<li>
 										<div id="search-bar" style="position:relative">
