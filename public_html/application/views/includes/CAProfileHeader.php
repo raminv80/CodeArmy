@@ -37,7 +37,7 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff8000', endColorstr='#935800',GradientType=0 ); /* IE6-9 */
 	color:black; text-shadow: 0 -1px 1px #ff8000
 	}	
-.topnav li a i {font-size:1.6em}
+.topnav li a i {font-size:1.6em; position:relative; top:-4px; right:5px}
 .topnav li:first-child {margin-left:0}
 .topnav li a.mid {height:50px; padding-top:20px; margin-top:-10px;}
 .topnav li a.mid:hover {
@@ -106,7 +106,7 @@
 	height: 20px;
 	line-height:20px;
 }
-.topnav .child ul li a:hover {
+.topnav .child ul li a:hover, .topnav .child ul li a.active {
     background: orange;
 	color: black;
 	text-shadow:none;
@@ -176,6 +176,17 @@ span.notification {
 	font-size:.8em;
 }
 
+.topnav input {margin:0; padding:5px}
+
+.topnav li a.cmission {
+	background:#2f9cad !important; /* Old browsers */
+	color:white !important;		
+}
+.topnav a#search-submit {position:absolute; background:none; border:none; box-shadow:none; top:2px; right:-10px; color:black; text-shadow:none}
+
+.topnav .filter div {background:black; height:36px; line-height:36px; text-shadow:0 1px 1px black; box-shadow:inset 0 1px 1px #666; color:orange; position:relative; z-index:9266; cursor:pointer}
+.topnav .filter .filterwrap {display:none;}
+#search-loader {position:relative; top:-8px; left:-10px}
 #left-block {display:none}
 </style>
 <div id="inner">
@@ -215,6 +226,34 @@ span.notification {
 				          <?php }else{?>
 				          <a href="/missions" class="mid"><i class="icon-globe"></i><br />Find Missions</a>
 				          <?php }?>
+							
+							<nav class="child">
+								<ul class="childnav">
+									<li>
+										<div class="filter">
+											<div class="all" onClick="javascript:allusers()">All User</div>
+											<div class="filterwrap">
+												<div onClick="javascript:classification()">Classification</div>
+												<div onClick="javascript:skills()">Skills</div>
+												<div onClick="javascript:estimation()">Time Estimation</div>
+												<div onClick="javascript:payout()">Payout</div>
+											</div>
+										</div>
+									</li>
+									<!-- <li><a rel="/missions/createnew" class="cmission">Create Mission</a></li> -->
+									<!-- <li><div><input type="search" /></div></li> -->
+									<li>
+										<div id="search-bar" style="position:relative">
+									    <input type="text" name="search" id="search" value="Find missions" style="width:90%"/>
+									    <a title="Search for missions" href="#" id="search-submit">
+											<i class="icon-search"></i>
+											<img id="search-loader" title="Notifications" src="/public/images/newloader.gif" />
+										</a>
+									  </div>
+									</li>
+								</ul>
+							</nav>
+							
 					</li>
 					<li><a href="/missions/my_missions"><i class="icon-folder-open"></i> <br />My Mission
 						<span class="notification <?=isset($myActiveMissions)&&$myActiveMissions>0?'':'hidden'?>" id="mymissions-notification"><?=isset($myActiveMissions)?$myActiveMissions:'?'?></span>
@@ -292,7 +331,7 @@ span.notification {
     <!-- <div id="live-feed">Welcome back <?=$me['username']?></div> -->
     </div>
 	
-	<hr />
+	<hr style="margin-top:0"/>
     <?php if(in_array($page_is,array('Profile','Missions','Achievements','Leaderboard','Invite'))):?>
 
 	<!-- Left block -->
@@ -362,34 +401,60 @@ span.notification {
 	
 	<script type="text/javascript">
 	$(function(){
+		//New nav function
 		
-		var now = $.cookie("active");
-		if (now != 2) {
-			$('.topnav > li').eq(now).find('a').addClass('active');
+		var cname = 'nav', 
+		chname = 'child',
+		coption = {expires: 1, path: '/'},
+		cook = $.cookie(cname),
+		chook = $.cookie(chname);
+		console.log(chook);
+		
+		if (!cook){ 
+			$('.topnav > li').eq(0).find('a').addClass('active');
+		} else {
+			$('.topnav > li').eq(cook).find('a').addClass('active');
+			$('.topnav > li').eq(cook).find('.child').show().find('.childnav a').removeClass('active');
+			
+			if(!chook){
+				$('.topnav .childnav li').eq(0).find('a').addClass('active');
+			} else {
+				$('.topnav > li').eq(cook).find('.childnav li').eq(chook).find('a').addClass('active');
+			}
+			
 		}
-		$('.topnav > li').eq(now).find('.child').fadeIn('fast');
+		
+		$('.topnav li').bind({
+			click : function(e){
+				e.preventDefault;
+				var self = $(this), index = self.index();
+				$.cookie(cname, index, coption);
+				$.cookie(chname, null);
+			}
+		})
+		
+		$('.topnav .childnav li').bind({
+			click : function(){
+				var self = $(this), index = self.index();
+				$.cookie(chname, index, coption);
+			}
+		})
+		
+		$('.profile-setting').bind({
+			click : function(){
+				$('.arrow_box').slideToggle();
+			}
+		});
+		
+		$('.filter .all').mouseenter(function(){
+			$(this).next().slideDown('fast');
+		});	
+		
+		$('.filter .filterwrap').mouseleave(function(){
+			$(this).slideUp('fast');
+		});
 		
 		$('.child').horizontalNav();
-		$('.topnav li').on('click',function(){
-			
-			var self   = $(this),
-			    index  = self.index();
-		    $.cookie("active", index, { expires : 1, path: '/' } );
-			
-			$('.topnav li a').removeClass('active');
-			$('a', this).addClass('active');
-			$('.child').not($('.child', this)).hide();
-			//$('.child', this).stop().slideToggle();
-			//alert( $.cookie("active") );	
-		});
-		$('a.profile-setting').click(function(){
-			$('.arrow_box').slideToggle('fast');
-		});
-		
-		$('.logo').click(function(){
-			$.cookie("active", 2, { expires : 1, path: '/' } );
-		});
-		
-		//For notifications or announcements, just edit .alert text and enable it 
-	})
+	});
+	
 	</script>

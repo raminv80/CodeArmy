@@ -1,8 +1,13 @@
-<?php $this->load->view('includes/CAHeader.php'); ?>
+<?php //$this->load->view('includes/CAHeader.php'); ?>
+<?php $this->load->view('includes/CAProfileHeader.php'); ?>
+<style type="text/css">
+	#find-mission-area {margin-top:-80px !important;background:none !important}
+	#main-content {min-height:inherit !important; padding: 0 !important}
+</style>
 <!--TODO: add ajax loader icons -->
 <div id="wrapper">
   <div id="find-mission-area">
-    <div id="world-map" style="background:url(/public/images/codeArmy/mymission/world-map.png);width:999px;height:532px;"> <!--<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />-->
+    <div id="world-map" style="background:url(/public/images/codeArmy/mymission/world-map.png);width:999px;height:532px"> <!--<img id="world-map-img" src="/public/images/codeArmy/mymission/world-map.png" width="999" height="532" />-->
 
       <!-- project list -->
       <div id="dialog-project-list" class="dialog">
@@ -13,7 +18,7 @@
       </div>
       <!-- end of project list --> 
       
-      <!-- chat box -->
+      <!-- chat box
       <div class="chat-box toolbar" style="position:absolute;left:10px;top:370px;width:250px;height:200px;background:rgba(60,60,60,0.6);">
       	<div style="border-bottom:1px solid black"><span id="count">0</span> users in chatroom</div>
         <div class="nano-chat nano">
@@ -23,7 +28,7 @@
         <input type="text" name="msg" id="public-message-textarea" style="width:201px;height:25px;background:none;border:none;padding:0 3px 0 3px;margin:0;color:white">
         <input type="button" id="public-message-submit" value="send" disabled="disabled" style="width:40px;height:25px;border:none;padding:0;margin:0;">
         </div>
-      </div>
+      </div> -->
       <!-- end of chat box -->
     </div>
   </div>
@@ -31,7 +36,7 @@
 <?php $this->load->view('includes/CAMapFooter.php'); ?>
 <!-- dialogs -->
 
-<div id="filter-toolbar" class="toolbar"> <a href="/profile" id="filter-toolbar-logo"></a>
+<!-- <div id="filter-toolbar" class="toolbar"> <a href="/profile" id="filter-toolbar-logo"></a>
   <div id="search-bar">
     <input type="text" name="search" id="search" value="Find missions" />
     <a title="Search for missions" href="#" id="search-submit">
@@ -46,9 +51,9 @@
     <li><a id="estimation" class="menu first" href="javascript:estimation();">Time Estimation <i class="icon-chevron-right"></i></a></li>
     <li><a id="payout" class="menu first" href="javascript:payout();">Payout <i class="icon-chevron-right"></i></a></li>
   </ul>
-</div>
+</div> -->
 
-<div id="profile-toolbar" class="toolbar">
+<!-- <div id="profile-toolbar" class="toolbar">
   <a href="/login/logout" class="logout" title="Logout"><span class="icon-off"></span></a>
   <div id="avatar-block"> <a href="/profile"><img src="/public/images/codeArmy/mymission/profile_toolbar/avatar.png" id="avatar" alt="avatar" /></a>
     <ul id="status-icons">
@@ -80,7 +85,7 @@
     <?php endforeach;?>
     <div id="finishing-section"> </div>
   </div>
-</div>
+</div> -->
 <!-- end of dialogs --> 
 
 <div class="mission-frame" style="width:860px; height:86%; display:none;"><div class="closeme"><i class="icon-remove"></i></div></div>
